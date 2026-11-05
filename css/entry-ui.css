@@ -56,4 +56,19 @@
 .deck-import-counts dt { color: #cbd5e1; font-size: .69rem; }
 .deck-import-counts dd { color: #c7d2fe; font-size: 1.25rem; font-weight: 800; }
 .deck-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.user-guide-dialog { color: #e2e8f0; }
+.user-guide-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.user-guide-notice {
+  padding: 12px;
+  border: 1px solid #8e4555;
+  border-radius: 10px;
+  background: #341c2b;
+  color: #ffe4e6;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+.user-guide-tools { display: grid; gap: 10px; font-size: .82rem; line-height: 1.55; }
+.user-guide-tools > div + div { padding-top: 10px; border-top: 1px solid #334155; }
+.user-guide-tools dt { font-weight: 800; color: #c7d2fe; }
+.user-guide-tools dd { margin: 2px 0 0; }
 #toast { z-index: 70; }

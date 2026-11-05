@@ -58,7 +58,13 @@ function renderProfileMenu(user) {
 
 export function updateProfileLock() {
   const modalOpen = $('modal-login') && !$('modal-login').hidden;
-  const dialogOpen = modalOpen || context.deckDialogOpen;
+  const primaryDialogOpen = modalOpen || context.deckDialogOpen;
+  const guide = $('modal-user-guide');
+  if (primaryDialogOpen && guide?.hidden === false) {
+    guide.hidden = true;
+    $('btn-user-guide').setAttribute('aria-expanded', 'false');
+  }
+  const dialogOpen = primaryDialogOpen || guide?.hidden === false;
   const drawer = $('drawer'), drawerOpen = drawer && !drawer.classList.contains('-translate-x-full');
   const main = document.querySelector('main'), header = document.querySelector('body > header');
   main?.classList.toggle('hidden', !context.currentUser && !dialogOpen);
@@ -296,7 +302,36 @@ export function updateStatusBadge(ok, text) {
   if (dot) dot.dataset.ok = String(ok);
 }
 
+function setupUserGuide() {
+  const trigger = $('btn-user-guide'), guide = $('modal-user-guide'), close = $('btn-close-user-guide');
+  const dismiss = () => {
+    guide.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+    updateProfileLock();
+    if (trigger.closest('[inert]')) return;
+    if (context.currentUser && !$('view-review').classList.contains('hidden')) context.renderActiveCard();
+    trigger.focus();
+  };
+  trigger.addEventListener('click', () => {
+    if (trigger.closest('[inert]')) return;
+    context.pausePracticeAudio();
+    guide.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    updateProfileLock();
+    close.focus();
+  });
+  close.addEventListener('click', dismiss);
+  guide.addEventListener('click', event => { if (event.target === guide) dismiss(); });
+  guide.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' && event.key !== 'Tab') return;
+    event.preventDefault();
+    if (event.key === 'Escape') dismiss();
+    else close.focus();
+  });
+}
+
 export function setupNavigation({ retryStartup } = {}) {
+  setupUserGuide();
   const drawer = $('drawer'), backdrop = $('drawer-backdrop'), trigger = $('btn-open-drawer');
   const navigation = $('drawer-navigation'), practicePanel = $('practice-panel'), heading = $('practice-panel-heading');
   const openPractice = $('btn-practice-panel'), backToMenu = $('btn-practice-panel-back');

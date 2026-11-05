@@ -499,7 +499,7 @@ export function setupPracticeControls() {
   $('btn-review-topic-selector')?.addEventListener('click', () => $('review-topic-upward-menu').classList.toggle('hidden'));
   document.addEventListener('keydown', event => {
     if (event.repeat || event.ctrlKey || event.metaKey || event.altKey || event.target.closest?.('input,textarea,select,[contenteditable="true"]') ||
-      !$('drawer')?.classList.contains('-translate-x-full') || $('profile-dropdown')?.hidden === false || context.deckDialogOpen ||
+      !$('drawer')?.classList.contains('-translate-x-full') || $('profile-dropdown')?.hidden === false || context.deckDialogOpen || $('modal-user-guide')?.hidden === false ||
       $('view-review')?.classList.contains('hidden') || !$('modal-login')?.classList.contains('hidden') || !$('modal-merge-topics')?.classList.contains('hidden')) return;
     if (event.code === 'Space' || event.key === ' ') {
       if (event.target.closest?.('button,a[href],summary,[role="button"]')) return;

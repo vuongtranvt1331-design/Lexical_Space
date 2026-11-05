@@ -348,7 +348,7 @@ button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,summary:focus
   white-space: nowrap;
 }
 
-.topbar-menu-button, .profile-avatar-button {
+.topbar-menu-button, .topbar-guide-button, .profile-avatar-button {
   flex: none;
   display: grid;
   place-items: center;
@@ -363,7 +363,11 @@ button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,summary:focus
 }
 .topbar-menu-button:hover, .topbar-menu-button[aria-expanded="true"] { background: #334155; }
 
-.profile-menu-anchor { position: relative; flex: none; }
+.profile-menu-anchor { position: relative; display: flex; align-items: center; gap: 8px; flex: none; }
+
+.topbar-guide-button { color: #fda4af; background: #241722; }
+.topbar-guide-button:hover, .topbar-guide-button[aria-expanded="true"] { background: #3a202d; }
+.topbar-guide-button svg { width: 20px; height: 20px; }
 
 .profile-avatar-button {
   position: relative;
