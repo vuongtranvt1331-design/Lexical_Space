@@ -1,1007 +1,353 @@
-import { context } from "../core/context.js";
+import { canSyncProfile, context } from '../core/context.js';
+import { mutateWords, readUserWords, idbPut } from '../core/idb-manager.js';
+import { validateVocabulary, wordTopics } from '../core/vocabulary.js';
+import { icon } from '../core/icons.js';
+import { targetSegments } from '../core/recall-utils.js';
+import { trackIntentionalClicks } from '../utils/intentional-click.js';
+const flippedCards = new Set();
+const $ = id => document.getElementById(id);
+const esc = value => context.escapeHtml(value);
+const isActiveUser = (user, generation) => user === context.currentUser && generation === context.accountGeneration;
+function report(error) { console.error(error); context.showToast(error.message || 'Could not save this change.', 'error'); }
+function closeMergeModal() {
+  const modal = $('modal-merge-topics');
+  modal?.classList.add('hidden');
+  modal?.classList.remove('flex');
+}
+export function resetLibraryForUser() {
+  flippedCards.clear();
+  context.libraryTab = 'unknown';
+  context.librarySelectedTopic = 'ALL';
+  context.userTopics = [];
+  for (const id of ['lib-search-input', 'input-lib-topic-name', 'input-merge-new-name']) {
+    if ($(id)) $(id).value = '';
+  }
+  for (const id of ['btn-lib-clear-search', 'lib-topic-create-box', 'lib-topic-upward-menu']) $(id)?.classList.add('hidden');
+  for (const id of ['library-list-container', 'lib-topic-options-list', 'merge-topic-checkboxes']) $(id)?.replaceChildren();
+  if ($('lib-count-status')) $('lib-count-status').textContent = 'Showing: 0 words';
+  if ($('lib-selected-topic-label')) $('lib-selected-topic-label').textContent = 'Topic: All topics';
+  if ($('lib-topic-menu-count')) $('lib-topic-menu-count').textContent = '0 topics';
+  updateLibraryTabsUI();
+  closeMergeModal();
+}
 export function loadUserTopics() {
-  const key = `vocab_topics_${context.currentUser}`;
-  const saved = localStorage.getItem(key);
-  if (saved) {
-    try {
-      context.userTopics = JSON.parse(saved);
-    } catch (e) {
-      context.userTopics = [];
-    }
-  } else {
-    context.userTopics = [];
+  const user = context.currentUser;
+  try {
+    const saved = user ? JSON.parse(localStorage.getItem(`vocab_topics_${user}`) || '[]') : [];
+    context.userTopics = Array.isArray(saved) ? saved.filter(topic => typeof topic === 'string') : [];
   }
-  if (!context.userTopics.includes(context.DEFAULT_TOPIC)) {
-    context.userTopics.unshift(context.DEFAULT_TOPIC);
-  }
-  context.saveUserTopics();
+  catch { context.userTopics = []; }
+  if (!context.userTopics.includes(context.DEFAULT_TOPIC)) context.userTopics.unshift(context.DEFAULT_TOPIC);
 }
 export function saveUserTopics() {
-  const key = `vocab_topics_${context.currentUser}`;
-  localStorage.setItem(key, JSON.stringify(context.userTopics));
-}
-export function addUserTopic(topicName) {
-  const trimmed = topicName.trim();
-  if (!trimmed) return false;
-  if (!context.userTopics.some(t => t.toLowerCase() === trimmed.toLowerCase())) {
-    context.userTopics.push(trimmed);
-    context.saveUserTopics();
-    context.updateTopicDropdowns();
-  }
-  return true;
-}
-
-/* Hàm dọn dẹp topic trống tự động */
-export
-/* Tạo studentKey ổn định từ username */
-/* Cập nhật lại metadata wordCount lên Firebase và IndexedDB */
-function checkAndCleanupEmptyTopics() {
-  const existingTopics = [...context.userTopics];
-  context.userTopics = existingTopics.filter(topic => {
-    if (topic === context.DEFAULT_TOPIC) return true;
-    const hasWords = context.wordsData.some(w => (w.topic || context.DEFAULT_TOPIC).toLowerCase() === topic.toLowerCase());
-    return hasWords;
-  });
-  if (context.activeTopic !== 'ALL' && !context.userTopics.some(t => t.toLowerCase() === context.activeTopic.toLowerCase())) {
-    context.activeTopic = 'ALL';
-  }
-  if (context.librarySelectedTopic !== 'ALL' && !context.userTopics.some(t => t.toLowerCase() === context.librarySelectedTopic.toLowerCase())) {
-    context.librarySelectedTopic = 'ALL';
-  }
-  context.saveUserTopics();
-}
-export function sortTopicsNumericFirst(topics) {
-  return [...topics].sort((a, b) => {
-    const parseTopic = t => {
-      const match = String(t || "").trim().match(/^(\d+)(?:\.|\s|-|_)?(.*)$/);
-      if (match) {
-        return {
-          hasNumber: true,
-          num: parseInt(match[1], 10),
-          rest: match[2].trim()
-        };
-      }
-      return {
-        hasNumber: false,
-        num: Infinity,
-        rest: String(t || "").trim()
-      };
-    };
-    const parsedA = parseTopic(a);
-    const parsedB = parseTopic(b);
-    if (parsedA.hasNumber && parsedB.hasNumber) {
-      if (parsedA.num !== parsedB.num) return parsedA.num - parsedB.num;
-      return parsedA.rest.localeCompare(parsedB.rest, 'vi', {
-        sensitivity: 'base',
-        numeric: true
-      });
-    }
-    if (parsedA.hasNumber && !parsedB.hasNumber) return -1;
-    if (!parsedA.hasNumber && parsedB.hasNumber) return 1;
-    return parsedA.rest.localeCompare(parsedB.rest, 'vi', {
-      sensitivity: 'base',
-      numeric: true
-    });
-  });
-}
-export function getAlphabeticalTopics() {
-  context.checkAndCleanupEmptyTopics();
-  return context.sortTopicsNumericFirst(context.userTopics);
-}
-export async function updateStudentMetadataCount() {
   if (!context.currentUser) return;
-  const studentKey = context.getStudentKey(context.currentUser);
-  const currentCount = context.wordsData.length;
-  const localMetaKey = `studentWordCount_${studentKey}`;
-
-  // Lưu local metadata
-  await context.idbPut("metadata", {
-    key: localMetaKey,
-    count: currentCount
-  });
-
-  // Lưu Firebase metadata nếu có mạng
-  if (context.db && navigator.onLine) {
-    try {
-      await context.db.collection("metadata").doc(`userWordStats_${studentKey}`).set({
-        username: context.currentUser,
-        wordCount: currentCount
-      }, {
-        merge: true
-      });
-    } catch (err) {
-      console.warn("Failed to update remote metadata count:", err);
-    }
-  }
+  try { localStorage.setItem(`vocab_topics_${context.currentUser}`, JSON.stringify(context.userTopics)); }
+  catch { /* Keep the active topics available when browser storage is restricted. */ }
+}
+export function addUserTopic(name) {
+  const topic = String(name || '').trim();
+  if (!context.currentUser || !topic) return false;
+  if (!context.userTopics.includes(topic)) context.userTopics.push(topic);
+  saveUserTopics(); updateTopicDropdowns(); return true;
+}
+export function checkAndCleanupEmptyTopics() {
+  // Empty topics are intentional destinations for the next word; rendering must not delete them.
+  context.userTopics = [...new Set([context.DEFAULT_TOPIC, ...context.userTopics, ...context.wordsData.flatMap(wordTopics)])];
+}
+export const sortTopicsNumericFirst = topics => [...topics].sort((a, b) => a.localeCompare(b, 'vi', { numeric: true, sensitivity: 'base' }));
+export function getAlphabeticalTopics() { checkAndCleanupEmptyTopics(); return sortTopicsNumericFirst(context.userTopics); }
+export async function updateStudentMetadataCount() {
+  if (context.currentUser) await idbPut('metadata', { key: `studentWordCount_${encodeURIComponent(context.currentUser)}`, count: context.wordsData.length });
+  // Remote wordCount is updated in the same Firestore transaction as the word mutation.
 }
 export async function cleanupAndMigrateVocabularyData() {
-  // 1. Local IndexedDB migration for vocabulary words
-  try {
-    const allWords = await context.idbGetAll("words");
-    let localChanged = false;
-    for (const w of allWords) {
-      let modified = false;
-      // Strip obsolete fields
-      if ("hasBeenStudied" in w) {
-        delete w.hasBeenStudied;
-        modified = true;
-      }
-      if ("studiedAt" in w) {
-        delete w.studiedAt;
-        modified = true;
-      }
-      if ("lastReviewedAt" in w) {
-        delete w.lastReviewedAt;
-        modified = true;
-      }
-      if ("createdAt" in w) {
-        delete w.createdAt;
-        modified = true;
-      }
-      if ("studyCount" in w) {
-        delete w.studyCount;
-        modified = true;
-      }
-      if ("reviewCount" in w) {
-        delete w.reviewCount;
-        modified = true;
-      }
-      if ("lastStudied" in w) {
-        delete w.lastStudied;
-        modified = true;
-      }
-      if ("reviewedAt" in w) {
-        delete w.reviewedAt;
-        modified = true;
-      }
-
-      // Normalize isFavorite to boolean (false if missing/falsy)
-      if (w.isFavorite === undefined || typeof w.isFavorite !== "boolean") {
-        w.isFavorite = Boolean(w.isFavorite);
-        modified = true;
-      }
-
-      // Normalize memoryStatus to exactly STATUS.KNOWN ("mastered") or STATUS.NOT_KNOWN ("not_remembered")
-      if (w.memoryStatus === "known" || w.memoryStatus === "mastered" || w.memoryStatus === context.STATUS.KNOWN) {
-        if (w.memoryStatus !== context.STATUS.KNOWN) {
-          w.memoryStatus = context.STATUS.KNOWN;
-          modified = true;
-        }
-      } else {
-        if (w.memoryStatus !== context.STATUS.NOT_KNOWN) {
-          w.memoryStatus = context.STATUS.NOT_KNOWN;
-          modified = true;
-        }
-      }
-      if (modified) {
-        await context.idbPut("words", w);
-        localChanged = true;
-      }
-    }
-
-    // Clean pendingOps to ensure no obsolete fields are queued
-    const pending = await context.idbGetAll("pendingOps");
-    for (const op of pending) {
-      let opModified = false;
-      if (op.data) {
-        ["hasBeenStudied", "studiedAt", "lastReviewedAt", "createdAt", "studyCount", "reviewCount", "lastStudied", "reviewedAt"].forEach(f => {
-          if (f in op.data) {
-            delete op.data[f];
-            opModified = true;
-          }
-          if (op.data.updates && f in op.data.updates) {
-            delete op.data.updates[f];
-            opModified = true;
-          }
-        });
-        if (op.type === "ADD" && (op.data.isFavorite === undefined || typeof op.data.isFavorite !== "boolean")) {
-          op.data.isFavorite = Boolean(op.data.isFavorite);
-          opModified = true;
-        }
-      }
-      if (opModified) {
-        await context.idbPut("pendingOps", op);
-      }
-    }
-    if (localChanged) {
-      const refreshed = await context.idbGetAll("words");
-      context.wordsData = refreshed.filter(w => !w.username || w.username.toLowerCase() === context.currentUser.toLowerCase());
-      context.updateBadges();
-      context.renderLibrary();
-      if (context.reviewMode === "favorites") context.startNewSession();
-    }
-  } catch (err) {
-    console.warn("Local vocabulary cleanup error:", err);
-  }
-
-  // Remote changes are handled by the incremental vocabulary listener.
+  // Schema defaults are applied non-destructively by readUserWords/normalizeRemoteVocabulary.
+  // Historical due/interval/repetition/easeFactor/review timestamps are never stripped.
 }
 export async function loadIndexedDBWordsData() {
+  const user = context.currentUser;
+  if (!user) return;
+  const generation = context.accountGeneration;
+  const ticket = ++context.userLoadGeneration;
+  const isCurrent = () => isActiveUser(user, generation) && ticket === context.userLoadGeneration;
   try {
-    await context.cleanupAndMigrateVocabularyData();
-    const allWords = await context.idbGetAll("words");
-    context.wordsData = allWords.filter(w => !w.username || w.username.toLowerCase() === context.currentUser.toLowerCase());
-    context.wordsData.forEach(w => {
-      if (w.topic && !context.userTopics.some(t => t.toLowerCase() === w.topic.toLowerCase())) {
-        context.userTopics.push(w.topic);
-      }
-    });
-    if (!context.userTopics.includes(context.DEFAULT_TOPIC)) {
-      context.userTopics.unshift(context.DEFAULT_TOPIC);
-    }
-    context.checkAndCleanupEmptyTopics();
-    context.saveUserTopics();
-    context.updateTopicDropdowns();
-    context.updateBadges();
-    if (context.activeSessionWords.length === 0) context.startNewSession();
-    context.renderLibrary();
-
-    // Nạp trạng thái chờ đồng bộ activityLogTimestamp (nếu có từ phiên offline trước) mà không tạo timestamp giả
-    await context.resumePendingActivitySyncForCurrentUser();
-
-    // Thực hiện Quy trình đồng bộ theo học sinh
-    if (context.db && navigator.onLine) {
-      await context.syncPendingOperations();
-      await context.checkStudentVocabularyMetadata();
-    }
-  } catch (err) {
-    console.warn("IndexedDB load error:", err);
+    const records = await readUserWords(user);
+    if (!isCurrent()) return;
+    context.wordsData = records; context.dbSyncError = null;
+    updateTopicDropdowns();
+    updateBadges();
+    if (!$('view-library')?.classList.contains('hidden')) renderLibrary();
+    await context.startNewSession({ restore: true });
+  } catch (error) {
+    if (!isCurrent()) return;
+    context.dbSyncError = error;
+    context.showToast('Storage unavailable. Your session has not been started.', 'error');
+    return;
+  }
+  if (!isCurrent()) return;
+  try {
+    checkStudentVocabularyMetadata();
+    void context.resumePendingActivitySyncForCurrentUser().catch(error => console.warn('Activity sync unavailable:', error));
+    void context.syncPendingOperations();
+  } catch (error) {
+    console.warn('Cloud sync unavailable:', error);
+    context.updateStatusBadge(false, 'Local library ready · sync unavailable');
   }
 }
-export async function checkStudentVocabularyMetadata() {
-  if (!context.db || !context.currentUser) return;
-  await context.firebasePersistenceReady;
-  context.vocabularySync.start(context.currentUser);
+export function checkStudentVocabularyMetadata() {
+  if (context.db && canSyncProfile(context.currentUser)) context.vocabularySync.start(context.currentUser);
+}
+export async function commitVocabularyChanges(changes, metadata = [], user = context.currentUser) {
+  if (!user || user !== context.currentUser) throw new Error('The active profile changed before this edit could be saved.');
+  const generation = context.accountGeneration;
+  const prepared = changes.map(change => ({ ...change, username: user }));
+  const records = await mutateWords(prepared, metadata);
+  if (isActiveUser(user, generation)) {
+    const byId = new Map(context.wordsData.map(w => [w.id, w]));
+    records.forEach(w => w.deleted ? byId.delete(w.id) : byId.set(w.id, w));
+    context.wordsData = [...byId.values()]; updateBadges();
+    if (!$('view-library')?.classList.contains('hidden')) renderLibrary();
+    context.updateStatusBadge(false, canSyncProfile(user) ? 'Saved locally · sync pending' : 'Guest library · saved on this device');
+    void context.syncPendingOperations();
+    if (!metadata.length) void context.reconcileSession().catch(error => { if (isActiveUser(user, generation)) report(error); });
+  } else if (user === context.currentUser) {
+    // The transaction finished after this profile was reopened. Read the latest
+    // data for the new activation rather than applying an old in-memory patch.
+    const currentGeneration = context.accountGeneration;
+    void context.refreshVocabulary(user).catch(error => { if (isActiveUser(user, currentGeneration)) report(error); });
+  }
+  return records;
 }
 export function updateBadges() {
-  const libCountEl = document.getElementById("badge-library-count");
-  const revCountEl = document.getElementById("badge-review-count");
-  if (libCountEl) libCountEl.textContent = context.wordsData.length;
-  const eligibleReviewCount = context.wordsData.filter(w => context.isWordEligibleForReview(w)).length;
-  const learningCount = context.wordsData.filter(w => w.memoryStatus !== context.STATUS.KNOWN).length;
-  const favoritesCount = context.wordsData.filter(w => w.isFavorite).length;
-  if (revCountEl) {
-    if (context.reviewMode === "favorites") revCountEl.textContent = favoritesCount;else if (context.reviewMode === "review") revCountEl.textContent = eligibleReviewCount;else revCountEl.textContent = learningCount;
+  if ($('badge-library-count')) $('badge-library-count').textContent = context.wordsData.length;
+}
+export function renderLibraryTopicUpwardMenu(topics) {
+  const list = $('lib-topic-options-list'); if (!list) return;
+  list.replaceChildren();
+  for (const topic of new Set(['ALL', 'FAVORITES', ...topics])) {
+    const row = document.createElement('div'); row.className = 'topic-option';
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'topic-option-label';
+    button.textContent = topic === 'ALL' ? 'All topics' : topic === 'FAVORITES' ? 'Favorites' : topic;
+    button.addEventListener('click', () => { context.librarySelectedTopic = topic; $('lib-topic-upward-menu').classList.add('hidden'); renderLibrary(); updateTopicDropdowns(); });
+    row.append(button);
+    if (!['ALL', 'FAVORITES'].includes(topic)) {
+      const actions = document.createElement('div');
+      actions.className = 'topic-option-actions';
+      actions.setAttribute('role', 'group');
+      actions.setAttribute('aria-label', `${topic} deck actions`);
+      const controls = [];
+      if (topic !== context.DEFAULT_TOPIC) {
+        controls.push(['merge', 'Merge Decks', () => window.openMergeModalForTopic(topic)]);
+        controls.push(['delete', 'Delete Deck', () => window.deleteTopicDirectly(topic)]);
+      }
+      controls.push(['share', 'Share Deck', control => context.shareTopic(topic, control)]);
+      for (const [symbol, label, action] of controls) {
+        const control = document.createElement('button');
+        control.type = 'button';
+        control.className = 'topic-option-action';
+        control.dataset.deckAction = symbol;
+        control.title = label;
+        control.setAttribute('aria-label', label);
+        control.innerHTML = icon(symbol);
+        if (symbol === 'share') context.renderShareButton?.(topic, control);
+        control.addEventListener('click', () => action(control));
+        actions.append(control);
+      }
+      row.append(actions);
+    }
+    list.append(row);
   }
+  $('lib-topic-menu-count').textContent = `${topics.length} topics`;
+  $('lib-selected-topic-label').textContent = `Topic: ${context.librarySelectedTopic === 'ALL' ? 'All topics' : context.librarySelectedTopic}`;
 }
 export function updateTopicDropdowns() {
-  context.checkAndCleanupEmptyTopics();
-  const sortedTopics = context.getAlphabeticalTopics();
-  context.renderReviewTopicUpwardMenu(sortedTopics);
-  const entrySelect = document.getElementById("select-entry-topic");
-  if (entrySelect) {
-    const curEntry = context.draftWord.topic || entrySelect.value || context.DEFAULT_TOPIC;
-    entrySelect.innerHTML = "";
-    sortedTopics.forEach(t => {
-      const opt = document.createElement("option");
-      opt.value = t;
-      opt.textContent = t;
-      if (t === curEntry) opt.selected = true;
-      entrySelect.appendChild(opt);
-    });
-    entrySelect.value = curEntry;
-    context.draftWord.topic = curEntry;
-  }
-  context.renderEntryTopicCards(sortedTopics);
-  context.renderLibraryTopicUpwardMenu(sortedTopics);
+  const topics = getAlphabeticalTopics(); saveUserTopics();
+  context.renderReviewTopicUpwardMenu(topics); context.renderEntryTopicCards(topics); renderLibraryTopicUpwardMenu(topics);
 }
-export function renderLibraryTopicUpwardMenu(sortedTopics) {
-  const listEl = document.getElementById("lib-topic-options-list");
-  if (!listEl) return;
-  const libMenuCountEl = document.getElementById("lib-topic-menu-count");
-  if (libMenuCountEl) libMenuCountEl.textContent = `${sortedTopics.length + 1} Topics`;
-  let html = `
-        <div onclick="selectLibraryTopic('ALL')" class="w-full min-h-[40px] px-3 py-2 rounded-xl text-left text-xs font-bold transition-all flex items-center justify-between cursor-pointer ${context.librarySelectedTopic === 'ALL' ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-800'}">
-          <span>All Topics</span>
-          ${context.librarySelectedTopic === 'ALL' ? '<i class="ph-bold ph-check text-sm"></i>' : ''}
-        </div>
-        <div onclick="selectLibraryTopic('FAVORITES')" class="w-full min-h-[40px] px-3 py-2 rounded-xl text-left text-xs font-bold transition-all flex items-center justify-between cursor-pointer ${context.librarySelectedTopic === 'FAVORITES' ? 'bg-red-950/80 text-red-200 border border-red-500/80' : 'text-red-400 hover:bg-slate-800'}">
-          <span class="flex items-center gap-1.5"><i class="ph-fill ph-heart text-red-500"></i> Favorites ❤️</span>
-          ${context.librarySelectedTopic === 'FAVORITES' ? '<i class="ph-bold ph-check text-sm"></i>' : ''}
-        </div>
-      `;
-  sortedTopics.forEach(t => {
-    const isSelected = context.librarySelectedTopic === t;
-    const isDefault = t === context.DEFAULT_TOPIC;
-    html += `
-          <div onclick="selectLibraryTopic('${context.escapeQuotes(t)}')" class="w-full min-h-[40px] px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center justify-between cursor-pointer group ${isSelected ? 'bg-indigo-600 text-white' : 'text-slate-300 hover:bg-slate-800'}">
-            <span class="truncate pr-2">${context.escapeHtml(t)}</span>
-            <div class="flex items-center gap-1.5 flex-shrink-0" onclick="event.stopPropagation()">
-              <button type="button" onclick="openMergeModalForTopic('${context.escapeQuotes(t)}')" class="w-6 h-6 rounded-lg bg-slate-950/70 hover:bg-indigo-700 text-indigo-300 hover:text-white border border-indigo-800/60 flex items-center justify-center active:scale-95 transition-all" title="Merge topics"><i class="ph-bold ph-plus text-xs"></i></button>
-              ${isDefault ? `<span class="w-6 h-6 rounded-lg bg-slate-950/40 text-slate-600 border border-slate-800 flex items-center justify-center cursor-not-allowed"><i class="ph-bold ph-lock text-xs"></i></span>` : `<button type="button" onclick="deleteTopicDirectly('${context.escapeQuotes(t)}')" class="w-6 h-6 rounded-lg bg-rose-950/70 hover:bg-rose-700 text-rose-300 hover:text-white border border-rose-800/60 flex items-center justify-center active:scale-95 transition-all" title="Delete topic"><i class="ph-bold ph-trash text-xs"></i></button>`}
-            </div>
-          </div>
-        `;
-  });
-  listEl.innerHTML = html;
-  const libLabelEl = document.getElementById("lib-selected-topic-label");
-  if (libLabelEl) {
-    if (context.librarySelectedTopic === 'FAVORITES') {
-      libLabelEl.textContent = 'Collection: Favorites ❤️';
-    } else {
-      libLabelEl.textContent = `Topic: ${context.librarySelectedTopic === 'ALL' ? 'All Topics' : context.librarySelectedTopic}`;
-    }
-  }
+export async function toggleWordFavorite(id) {
+  const word = context.wordsData.find(w => w.id === id); if (!word) return;
+  await commitVocabularyChanges([{ id, patch: { isFavorite: !word.isFavorite } }]);
 }
-export function install_selectLibraryTopic() {
-  window.selectLibraryTopic = topic => {
-    context.SoundManager.playSelect();
-    context.librarySelectedTopic = topic;
-    document.getElementById("lib-topic-upward-menu").classList.add("hidden");
-    document.getElementById("lib-topic-chevron").classList.remove("rotate-180");
-    context.updateTopicDropdowns();
-    context.renderLibrary();
-  };
+export async function editWord(id, patch) {
+  const word = context.wordsData.find(w => w.id === id); if (!word) throw new Error('Word not found.');
+  const validation = validateVocabulary({ ...word, ...patch }); if (!validation.valid) throw new Error(validation.errors.join(' '));
+  return commitVocabularyChanges([{ id, expectedVersion: word, patch: validation.word }]);
 }
-export async function toggleWordFavorite(docId, animate = false) {
-  if (context.isTogglingFavorite) return;
-  const target = context.wordsData.find(w => w.id === docId);
-  if (!target) return;
-  context.isTogglingFavorite = true;
-  try {
-    const newFav = !target.isFavorite;
-    target.isFavorite = newFav;
-    if (context.activeSessionWords[context.sessionCurrentIndex]?.id === docId) {
-      context.updateCardFavoriteVisual(newFav, animate);
-    }
-    await context.idbPut("words", target);
-    context.renderLibrary();
-    if (context.reviewMode === "favorites" && !newFav) {
-      context.activeSessionWords = context.activeSessionWords.filter(w => w.id !== docId);
-      if (context.sessionCurrentIndex >= context.activeSessionWords.length) {
-        context.sessionCurrentIndex = Math.max(0, context.activeSessionWords.length - 1);
-      }
-      context.renderActiveCard();
-    }
-    const updatePayload = {
-      isFavorite: newFav
-    };
-    if (context.db && navigator.onLine) {
-      try {
-        await context.db.collection("words").doc(docId).update(updatePayload);
-      } catch (e) {
-        await context.idbPut("pendingOps", {
-          id: `fav_${docId}_${Date.now()}`,
-          type: "UPDATE",
-          data: {
-            id: docId,
-            updates: updatePayload
-          }
-        });
-      }
-    } else {
-      await context.idbPut("pendingOps", {
-        id: `fav_${docId}_${Date.now()}`,
-        type: "UPDATE",
-        data: {
-          id: docId,
-          updates: updatePayload
-        }
-      });
-    }
-  } finally {
-    context.isTogglingFavorite = false;
-  }
-}
-export function install_toggleWordQuickSave() {
-  window.toggleWordQuickSave = () => {};
-}
-export function install_toggleLibraryWordFavorite() {
-  window.toggleLibraryWordFavorite = async function (docId) {
-    const target = context.wordsData.find(w => w.id === docId);
-    if (!target) return;
-    const newFav = !target.isFavorite;
-    target.isFavorite = newFav;
-    if (context.activeSessionWords[context.sessionCurrentIndex]?.id === docId) {
-      context.updateCardFavoriteVisual(newFav, false);
-    }
-    await context.idbPut("words", target);
-    context.updateBadges();
-    if (context.libraryTab === "favorites") {
-      context.renderLibrary();
-    } else {
-      const icon = document.getElementById(`lib-fav-icon-${docId}`);
-      const btn = document.getElementById(`lib-fav-${docId}`);
-      if (icon) {
-        icon.className = `${newFav ? 'ph-fill ph-heart text-red-500' : 'ph ph-bold ph-heart text-white'} text-base`;
-        icon.classList.remove("animate-heart-pop", "animate-heart-unpop");
-        void icon.offsetWidth;
-        icon.classList.add(newFav ? "animate-heart-pop" : "animate-heart-unpop");
-      }
-      if (btn) {
-        btn.title = newFav ? "Remove from favorites" : "Add to favorites";
-        btn.setAttribute("aria-label", newFav ? "Remove from favorites" : "Add to favorites");
-      }
-    }
-    if (context.reviewMode === "favorites" && !newFav) {
-      context.activeSessionWords = context.activeSessionWords.filter(w => w.id !== docId);
-      if (context.sessionCurrentIndex >= context.activeSessionWords.length) {
-        context.sessionCurrentIndex = Math.max(0, context.activeSessionWords.length - 1);
-      }
-      context.renderActiveCard();
-    }
-    const updatePayload = {
-      isFavorite: newFav
-    };
-    if (context.db && navigator.onLine) {
-      try {
-        await context.db.collection("words").doc(docId).update(updatePayload);
-      } catch (e) {
-        await context.idbPut("pendingOps", {
-          id: `fav_${docId}_${Date.now()}`,
-          type: "UPDATE",
-          data: {
-            id: docId,
-            updates: updatePayload
-          }
-        });
-      }
-    } else {
-      await context.idbPut("pendingOps", {
-        id: `fav_${docId}_${Date.now()}`,
-        type: "UPDATE",
-        data: {
-          id: docId,
-          updates: updatePayload
-        }
-      });
-    }
-  };
-}
-export async function updateWordMemory(docId, newStatus, fromStudySession = false) {
-  const target = context.wordsData.find(w => w.id === docId);
-  if (target) {
-    if (target.memoryStatus === newStatus && !fromStudySession) return;
-    target.memoryStatus = newStatus;
-    delete target.hasBeenStudied;
-    delete target.studiedAt;
-    delete target.lastReviewedAt;
-    delete target.createdAt;
-    delete target.studyCount;
-    delete target.reviewCount;
-    if (target.isFavorite === undefined) target.isFavorite = false;
-    await context.idbPut("words", target);
-  }
-
-  // Ghi nhận thời điểm hoạt động học tập gần nhất (cập nhật IndexedDB ngay, gộp ghi Firestore)
-  context.recordLearningActivity(fromStudySession ? "study_swipe" : "library_status_toggle");
-  context.updateBadges();
-  context.renderLibrary();
-  const updatePayload = {
-    memoryStatus: newStatus
-  };
-  if (context.db && navigator.onLine) {
-    try {
-      await context.db.collection("words").doc(docId).update(updatePayload);
-    } catch (e) {
-      await context.idbPut("pendingOps", {
-        id: `upd_${docId}_${Date.now()}`,
-        type: "UPDATE",
-        data: {
-          id: docId,
-          updates: updatePayload
-        }
-      });
-    }
-  } else {
-    await context.idbPut("pendingOps", {
-      id: `upd_${docId}_${Date.now()}`,
-      type: "UPDATE",
-      data: {
-        id: docId,
-        updates: updatePayload
-      }
-    });
-  }
+export async function updateWordMemory(id, status) {
+  if (status === 'mastered') throw new Error('Mastery is earned through scheduled recall on three separate days.');
+  await commitVocabularyChanges([{ id, patch: { repetition: 0, interval: 0, memoryStatus: 'not_remembered', dueDate: new Date().toISOString() } }]);
 }
 export function updateLibraryTabsUI() {
-  const btnKnown = document.getElementById("btn-lib-tab-known");
-  const btnFavs = document.getElementById("btn-lib-tab-favorites");
-  const btnUnknown = document.getElementById("btn-lib-tab-unknown");
-  const iconFavs = document.getElementById("lib-bottom-fav-icon");
-  const activeRectClass = "flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 bg-indigo-600 text-white border-indigo-500 shadow-sm active:scale-95 truncate";
-  const inactiveRectClass = "flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 bg-slate-900 text-slate-300 border-slate-800 hover:bg-slate-800 active:scale-95 truncate";
-  if (btnKnown) btnKnown.className = context.libraryTab === "known" ? activeRectClass : inactiveRectClass;
-  if (btnUnknown) btnUnknown.className = context.libraryTab === "unknown" ? activeRectClass : inactiveRectClass;
-  if (btnFavs) {
-    if (context.libraryTab === "favorites") {
-      btnFavs.className = "w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center shadow-lg transition-all active:scale-90 border bg-red-950/80 border-red-500/80 text-white relative shadow-[0_0_14px_rgba(239,68,68,0.35)]";
-      btnFavs.title = "Favorites Collection (Active)";
-      btnFavs.setAttribute("aria-label", "Favorites Collection (Active)");
-      if (iconFavs) iconFavs.className = "ph-fill ph-heart text-xl text-red-500";
-    } else {
-      btnFavs.className = "w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center shadow-md transition-all active:scale-90 border bg-slate-900 hover:bg-slate-800 border-slate-800 text-white relative";
-      btnFavs.title = "Favorites Collection";
-      btnFavs.setAttribute("aria-label", "Favorites Collection");
-      if (iconFavs) iconFavs.className = "ph-bold ph-heart text-xl text-white";
-    }
+  for (const [id, tab] of [['btn-lib-tab-known', 'known'], ['btn-lib-tab-unknown', 'unknown'], ['btn-lib-tab-favorites', 'favorites']]) $(id)?.setAttribute('aria-pressed', String(context.libraryTab === tab));
+}
+export function renderVocabularyCardHtml(word) {
+  const flipped = flippedCards.has(word.id), id = esc(word.id);
+  const highlighted = targetSegments(word.exampleSentence, word.word, { inflections: true }).map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');
+  const actions = [
+    { action: 'flip', label: 'Flip library card', pressed: flipped, controls: `library-flip-${id}` },
+    { action: 'favorite', symbol: 'heart', label: 'Favorite word', pressed: Boolean(word.isFavorite) },
+    { action: 'audio', label: 'Pronounce word' },
+    { action: 'edit', label: 'Edit word' },
+    { action: 'delete', label: 'Delete word' }
+  ];
+  const rail = actions.map(({ action, symbol, label, pressed, controls }) => {
+    const toggle = pressed === undefined ? '' : ` aria-pressed="${pressed}"`;
+    const controlsAttribute = controls ? ` aria-controls="${controls}"` : '';
+    return `<button type="button" class="library-rail-button" data-action="${action}" data-id="${id}" aria-label="${label}" title="${label}"${toggle}${controlsAttribute}>${icon(symbol || action)}</button>`;
+  }).join('');
+  return `<article class="library-flip-card${flipped ? ' is-flipped' : ''}" data-word-id="${id}" aria-label="${esc(word.word)} vocabulary card">
+    <div class="library-toolbar" role="toolbar" aria-label="Word actions" aria-orientation="vertical">${rail}</div>
+    <div class="library-flip-inner" id="library-flip-${id}">
+      <section class="library-card-face library-card-front" aria-hidden="${flipped}"${flipped ? ' inert' : ''}>
+        <div class="library-face-content">
+          <div class="library-card-heading"><div>
+            <p class="library-meta">${esc(word.pos)}</p>
+            <h3>${esc(word.word)}</h3>
+          </div></div>
+          ${word.phonetic ? `<p class="library-phonetic">${esc(word.phonetic)}</p>` : ''}
+          <p class="library-meaning" lang="vi">${esc(word.meaning)}</p>
+          <div class="library-word-details"><h4>Synonyms</h4><p>${esc((word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · ')) || '—'}</p>
+          <h4>Collocations</h4><p>${word.collocations.map(esc).join(' · ') || '—'}</p></div>
+          <footer>${wordTopics(word).map(esc).join(' · ')} · ${word.memoryStatus === 'mastered' ? 'Mastered' : word.reviewCount ? 'Learning' : 'New'}</footer>
+        </div>
+      </section>
+      <section class="library-card-face library-card-back" aria-hidden="${!flipped}"${!flipped ? ' inert' : ''}>
+        <div class="library-face-content"><p class="library-meta">In context</p><h3>${esc(word.word)}</h3>
+          <blockquote class="library-example">${highlighted || 'Add an example sentence using Edit.'}</blockquote>
+          <h4>Usage notes</h4><p class="library-usage">${esc(word.usageNotes) || 'No usage notes yet.'}</p>
+          ${word.sense ? `<h4>Target sense</h4><p>${esc(word.sense)}</p>` : ''}
+        </div>
+      </section>
+    </div>
+  </article>`;
+}
+export function flipLibraryCard(id) {
+  const card = [...($('library-list-container')?.querySelectorAll('.library-flip-card') || [])].find(card => card.dataset.wordId === id);
+  if (!card) return;
+  const flipped = card.classList.toggle('is-flipped');
+  if (flipped) flippedCards.add(id);
+  else flippedCards.delete(id);
+  for (const face of card.querySelectorAll('.library-card-face')) {
+    const hidden = face.classList.contains('library-card-front') ? flipped : !flipped;
+    face.inert = hidden; face.toggleAttribute('inert', hidden); face.setAttribute('aria-hidden', String(hidden));
+  }
+  card.querySelector('[data-action="flip"]').setAttribute('aria-pressed', String(flipped));
+}
+export function renderLibrary() {
+  updateLibraryTabsUI(); const container = $('library-list-container'); if (!container) return;
+  const query = ($('lib-search-input')?.value || '').toLocaleLowerCase();
+  $('btn-lib-clear-search')?.classList.toggle('hidden', !query);
+  const activeButton = container.contains(document.activeElement) ? document.activeElement.closest('button[data-action]') : null;
+  const filtered = context.wordsData.filter(w => (context.libraryTab !== 'known' || w.memoryStatus === 'mastered') &&
+    (context.libraryTab !== 'unknown' || w.memoryStatus !== 'mastered') && (context.libraryTab !== 'favorites' || w.isFavorite) &&
+    (context.librarySelectedTopic !== 'FAVORITES' || w.isFavorite) &&
+    (['ALL', 'FAVORITES'].includes(context.librarySelectedTopic) || wordTopics(w).includes(context.librarySelectedTopic)) &&
+    [w.word, w.meaning, w.sense, w.pos].some(v => v.toLowerCase().includes(query))).sort((a, b) => a.word.localeCompare(b.word));
+  $('lib-count-status').textContent = `Showing: ${filtered.length} words`;
+  container.innerHTML = filtered.length ? filtered.map(renderVocabularyCardHtml).join('') : '<p class="empty-library">No matching words. Add vocabulary or change your filters.</p>';
+  if (activeButton) {
+    const { id, action } = activeButton.dataset;
+    const replacement = [...container.querySelectorAll('button[data-action]')].find(button => button.dataset.id === id && button.dataset.action === action);
+    (replacement || $('lib-search-input'))?.focus({ preventScroll: true });
   }
 }
 export function setupLibraryModule() {
-  const btnKnown = document.getElementById("btn-lib-tab-known");
-  const btnFavs = document.getElementById("btn-lib-tab-favorites");
-  const btnUnknown = document.getElementById("btn-lib-tab-unknown");
-  const btnAddTopic = document.getElementById("btn-lib-create-topic");
-  const box = document.getElementById("lib-topic-create-box");
-  const search = document.getElementById("lib-search-input");
-  const clearSearch = document.getElementById("btn-lib-clear-search");
-  const triggerTopic = document.getElementById("btn-lib-topic-selector");
-  const upwardMenu = document.getElementById("lib-topic-upward-menu");
-  const chevron = document.getElementById("lib-topic-chevron");
-  triggerTopic?.addEventListener("click", e => {
-    e.stopPropagation();
-    context.SoundManager.playSelect();
-    upwardMenu?.classList.toggle("hidden");
-    chevron?.classList.toggle("rotate-180");
+  for (const [id, tab] of [['btn-lib-tab-known', 'known'], ['btn-lib-tab-unknown', 'unknown'], ['btn-lib-tab-favorites', 'favorites']]) $(id)?.addEventListener('click', () => { context.libraryTab = tab; renderLibrary(); });
+  $('btn-lib-create-topic')?.addEventListener('click', () => $('lib-topic-create-box').classList.toggle('hidden'));
+  $('btn-close-lib-topic-box')?.addEventListener('click', () => $('lib-topic-create-box').classList.add('hidden'));
+  $('btn-save-lib-topic')?.addEventListener('click', () => { if (addUserTopic($('input-lib-topic-name').value)) { $('input-lib-topic-name').value = ''; $('lib-topic-create-box').classList.add('hidden'); } });
+  $('lib-search-input')?.addEventListener('input', renderLibrary);
+  $('btn-lib-clear-search')?.addEventListener('click', () => { $('lib-search-input').value = ''; renderLibrary(); });
+  $('btn-lib-topic-selector')?.addEventListener('click', () => $('lib-topic-upward-menu').classList.toggle('hidden'));
+  const list = $('library-list-container');
+  if (!list) return;
+  const isIntentionalClick = trackIntentionalClicks(list, target => {
+    if (target.closest('button,a,input,select,textarea,[contenteditable]')) return null;
+    return target.closest('.library-card-face:not([inert])');
   });
-  document.addEventListener("click", e => {
-    if (!e.target.closest("#lib-topic-popover-container")) {
-      upwardMenu?.classList.add("hidden");
-      chevron?.classList.remove("rotate-180");
-    }
-  });
-  btnKnown?.addEventListener("click", () => {
-    context.SoundManager.playSelect();
-    context.libraryTab = "known";
-    context.updateLibraryTabsUI();
-    context.renderLibrary();
-  });
-  btnFavs?.addEventListener("click", () => {
-    context.SoundManager.playSelect();
-    context.libraryTab = "favorites";
-    context.updateLibraryTabsUI();
-    context.renderLibrary();
-  });
-  btnUnknown?.addEventListener("click", () => {
-    context.SoundManager.playSelect();
-    context.libraryTab = "unknown";
-    context.updateLibraryTabsUI();
-    context.renderLibrary();
-  });
-  btnAddTopic?.addEventListener("click", () => {
-    context.SoundManager.playSelect();
-    box?.classList.toggle("hidden");
-    if (!box?.classList.contains("hidden")) document.getElementById("input-lib-topic-name").focus();
-  });
-  document.getElementById("btn-close-lib-topic-box")?.addEventListener("click", () => box?.classList.add("hidden"));
-  document.getElementById("btn-save-lib-topic")?.addEventListener("click", () => {
-    const val = document.getElementById("input-lib-topic-name").value.trim();
-    if (!val) {
-      context.SoundManager.playError();
-      context.showToast("Enter topic name.", "error");
+  list.addEventListener('click', async event => {
+    const flipFromFace = isIntentionalClick(event);
+    const button = event.target.closest('button[data-action]');
+    if (!button) {
+      if (flipFromFace) flipLibraryCard(event.target.closest('.library-flip-card').dataset.wordId);
       return;
     }
-    context.addUserTopic(val);
-    document.getElementById("input-lib-topic-name").value = "";
-    box?.classList.add("hidden");
-    context.SoundManager.playSuccess();
-    context.showToast("Topic created!", "success");
-    context.renderLibrary();
-  });
-  search?.addEventListener("input", () => {
-    clearSearch?.classList.toggle("hidden", !search.value);
-    context.renderLibrary();
-  });
-  clearSearch?.addEventListener("click", () => {
-    search.value = "";
-    clearSearch.classList.add("hidden");
-    context.renderLibrary();
-  });
-}
-
-/* ========================================================
-   TÍNH NĂNG XÓA TOPIC (ĐÃ SỬA TRIỆT ĐỂ)
-   ======================================================== */
-export function install_deleteTopicDirectly() {
-  window.deleteTopicDirectly = async topicName => {
-    if (!topicName || topicName.toLowerCase() === context.DEFAULT_TOPIC.toLowerCase()) {
-      context.showToast("Cannot delete default topic.", "error");
-      return;
-    }
-    if (!confirm(`Are you sure you want to delete topic "${topicName}" and ALL words inside it?`)) {
-      return;
-    }
-    context.SoundManager.playSelect();
+    const word = context.wordsData.find(w => w.id === button.dataset.id); if (!word) return;
+    const user = context.currentUser, generation = context.accountGeneration;
     try {
-      // 1. Xác định chính xác các từ vựng thuộc topic này của học sinh hiện tại
-      const wordsToDelete = context.wordsData.filter(w => (w.topic || context.DEFAULT_TOPIC).toLowerCase() === topicName.toLowerCase());
-      const wordIdsToDelete = wordsToDelete.map(w => w.id);
-      // A queued offline add or edit must not resurrect a deleted word later.
-      const queued = await context.idbGetAll('pendingOps');
-      for (const op of queued) if (wordIdsToDelete.includes(op?.data?.id)) await context.idbDelete('pendingOps', op.id);
-
-      // 2. Xóa tất cả từ vựng khỏi IndexedDB
-      for (const id of wordIdsToDelete) {
-        await context.idbDelete("words", id);
-      }
-
-      // 3. Xóa tất cả từ vựng khỏi Firebase Firestore (Xử lý batch tối đa 500 từ mỗi batch)
-      if (context.db && navigator.onLine) {
-        const batchSize = 400;
-        for (let i = 0; i < wordIdsToDelete.length; i += batchSize) {
-          const chunk = wordIdsToDelete.slice(i, i + batchSize);
-          const batch = context.db.batch();
-          chunk.forEach(id => {
-            const ref = context.db.collection("words").doc(id);
-            batch.delete(ref);
-          });
-          await batch.commit();
-        }
-      } else {
-        // Nếu offline, ghi queue pendingOps để xóa remote sau
-        for (const id of wordIdsToDelete) {
-          await context.idbPut("pendingOps", {
-            id: `del_${id}`,
-            type: "DELETE",
-            data: {
-              id
-            }
-          });
-        }
-      }
-
-      // 4. Loại bỏ từ khỏi mảng wordsData local và xóa topic khỏi userTopics
-      context.wordsData = context.wordsData.filter(w => (w.topic || context.DEFAULT_TOPIC).toLowerCase() !== topicName.toLowerCase());
-      context.userTopics = context.userTopics.filter(t => t.toLowerCase() !== topicName.toLowerCase());
-      if (!context.userTopics.includes(context.DEFAULT_TOPIC)) context.userTopics.unshift(context.DEFAULT_TOPIC);
-      context.saveUserTopics();
-
-      // 5. Cập nhật lại metadata wordCount & ghi nhận hoạt động
-      context.recordLearningActivity("delete_topic");
-      await context.updateStudentMetadataCount();
-
-      // 6. Cập nhật lại giao diện
-      if (context.librarySelectedTopic.toLowerCase() === topicName.toLowerCase()) {
-        context.librarySelectedTopic = 'ALL';
-      }
-      if (context.activeTopic.toLowerCase() === topicName.toLowerCase()) {
-        context.activeTopic = 'ALL';
-      }
-      context.updateTopicDropdowns();
-      context.updateBadges();
-      context.renderLibrary();
-      context.startNewSession();
-      context.SoundManager.playSuccess();
-      context.showToast(`Topic "${topicName}" and its words deleted successfully!`, "success");
-    } catch (err) {
-      console.error("Error deleting topic:", err);
-      context.SoundManager.playError();
-      context.showToast("Failed to delete topic completely. Please check network.", "error");
-    }
-  };
-}
-export
-/* ========================================================
-   TÍNH NĂNG GOM TOPIC (MERGE TOPICS) - ĐÃ SỬA TRIỆT ĐỂ
-   ======================================================== */
-function setupMergeTopicsModal() {
-  const modal = document.getElementById("modal-merge-topics");
-  const checkboxesContainer = document.getElementById("merge-topic-checkboxes");
-  const inputNewName = document.getElementById("input-merge-new-name");
-  const btnConfirm = document.getElementById("btn-confirm-merge");
-  const btnCancel = document.getElementById("btn-cancel-merge");
-  const btnClose = document.getElementById("btn-close-merge-modal");
-  window.openMergeModalForTopic = (preselectedTopic = null) => {
-    context.SoundManager.playSelect();
-    const sortedTopics = context.getAlphabeticalTopics().filter(t => t.toLowerCase() !== context.DEFAULT_TOPIC.toLowerCase());
-    if (sortedTopics.length === 0) {
-      context.showToast("No custom topics available to merge.", "error");
-      return;
-    }
-    checkboxesContainer.innerHTML = sortedTopics.map(t => `
-          <label class="flex items-center gap-2 p-1.5 rounded hover:bg-slate-900 cursor-pointer">
-            <input type="checkbox" value="${context.escapeHtml(t)}" ${preselectedTopic && t.toLowerCase() === preselectedTopic.toLowerCase() ? 'checked' : ''} class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0">
-            <span class="text-slate-200 font-semibold truncate">${context.escapeHtml(t)}</span>
-          </label>
-        `).join("");
-    inputNewName.value = preselectedTopic ? `${preselectedTopic} (Merged)` : "";
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-  };
-  const closeModal = () => {
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  };
-  btnCancel?.addEventListener("click", closeModal);
-  btnClose?.addEventListener("click", closeModal);
-  btnConfirm?.addEventListener("click", async () => {
-    const checkedBoxes = checkboxesContainer.querySelectorAll("input[type='checkbox']:checked");
-    const sourceTopics = Array.from(checkedBoxes).map(cb => cb.value);
-    const newName = inputNewName.value.trim();
-    if (sourceTopics.length < 1) {
-      context.SoundManager.playError();
-      context.showToast("Please select at least one source topic.", "error");
-      return;
-    }
-    if (!newName) {
-      context.SoundManager.playError();
-      context.showToast("Please enter a new topic name.", "error");
-      return;
-    }
-    context.SoundManager.playSelect();
-    try {
-      // 1. Lấy toàn bộ từ vựng thuộc các topic nguồn
-      const wordsToUpdate = context.wordsData.filter(w => sourceTopics.some(st => st.toLowerCase() === (w.topic || context.DEFAULT_TOPIC).toLowerCase()));
-      if (wordsToUpdate.length === 0) {
-        context.showToast("No words found in selected source topics.", "error");
-        closeModal();
-        return;
-      }
-
-      // 2. Cập nhật topic của các từ sang topic đích trong IndexedDB
-      const conn = await context.openIndexedDB();
-      await new Promise((resolve, reject) => {
-        const tx = conn.transaction("words", "readwrite");
-        const store = tx.objectStore("words");
-        tx.oncomplete = () => resolve();
-        tx.onerror = e => reject(e.target.error);
-        wordsToUpdate.forEach(w => {
-          w.topic = newName;
-          store.put(w);
-        });
-      });
-
-      // 3. Cập nhật trên Firebase Firestore (Batch update)
-      if (context.db && navigator.onLine) {
-        const batchSize = 400;
-        for (let i = 0; i < wordsToUpdate.length; i += batchSize) {
-          const chunk = wordsToUpdate.slice(i, i + batchSize);
-          const batch = context.db.batch();
-          chunk.forEach(w => {
-            const ref = context.db.collection("words").doc(w.id);
-            batch.update(ref, {
-              topic: newName
-            });
-          });
-          await batch.commit();
-        }
-      } else {
-        for (const w of wordsToUpdate) {
-          await context.idbPut("pendingOps", {
-            id: `upd_${w.id}`,
-            type: "UPDATE",
-            data: {
-              id: w.id,
-              updates: {
-                topic: newName
-              }
-            }
-          });
-        }
-      }
-
-      // 4. Thêm topic mới vào danh sách userTopics và loại bỏ topic nguồn cũ nếu đã trống hoàn toàn
-      context.addUserTopic(newName);
-
-      // Cập nhật lại mảng local wordsData
-      context.wordsData.forEach(w => {
-        if (sourceTopics.some(st => st.toLowerCase() === (w.topic || context.DEFAULT_TOPIC).toLowerCase())) {
-          w.topic = newName;
-        }
-      });
-      context.recordLearningActivity("merge_topics");
-      context.checkAndCleanupEmptyTopics();
-      context.saveUserTopics();
-      context.updateTopicDropdowns();
-      context.updateBadges();
-      context.renderLibrary();
-      context.startNewSession();
-      closeModal();
-      context.SoundManager.playSuccess();
-      context.showToast(`Successfully merged topics into "${newName}"!`, "success");
-    } catch (err) {
-      console.error("Error merging topics:", err);
-      context.SoundManager.playError();
-      context.showToast("Failed to merge topics. Please try again.", "error");
-    }
+      if (button.dataset.action === 'favorite') await toggleWordFavorite(word.id);
+      if (button.dataset.action === 'flip') flipLibraryCard(word.id);
+      if (button.dataset.action === 'audio') context.playAudio(word);
+      if (button.dataset.action === 'delete') await window.deleteWordDirectly(word.id);
+      if (button.dataset.action === 'edit') context.openWordEditor(word);
+    } catch (error) { if (isActiveUser(user, generation)) report(error); }
   });
-}
-export function renderVocabularyCardHtml(w) {
-  const isWordKnown = w.memoryStatus === context.STATUS.KNOWN;
-  const cardBorderClass = isWordKnown ? "border-2 border-emerald-500/80 shadow-[0_0_12px_rgba(16,185,129,0.12)]" : "border-2 border-rose-500/80 shadow-[0_0_12px_rgba(244,63,94,0.12)]";
-  const individualSynonyms = [w.synonym1, w.synonym2].map(s => (s || "").trim()).filter(Boolean).map((synText, idx) => `
-        <div class="flex items-center justify-between gap-2 bg-slate-950/75 px-2.5 py-1.5 rounded-xl border border-slate-800/90">
-          <div class="flex items-center gap-2 min-w-0">
-            <span class="text-[9px] font-black uppercase tracking-wider text-indigo-400 bg-indigo-950/80 px-1.5 py-0.5 rounded border border-indigo-800/50 flex-shrink-0">Syn ${idx + 1}</span>
-            <span class="text-xs sm:text-sm font-bold text-slate-200 break-words leading-snug">${context.escapeHtml(synText)}</span>
-          </div>
-          <button type="button" onclick="playAudio('${context.escapeQuotes(synText)}')" class="min-w-[28px] min-h-[28px] rounded-lg bg-slate-800 hover:bg-indigo-600 text-indigo-300 text-white flex items-center justify-center flex-shrink-0 active:scale-90 transition-all" title="Listen">
-            <i class="ph-fill ph-speaker-high text-xs"></i>
-          </button>
-        </div>
-      `).join("");
-  return `
-        <div class="bg-slate-900/95 rounded-xl p-3 shadow-md flex flex-col gap-2.5 transition-all ${cardBorderClass}">
-          <!-- Main 3-Row Two-Column Grid: Left (Info) vs Right (Actions) -->
-          <div class="grid grid-cols-[1fr_88px] gap-x-3 gap-y-2 items-center" style="grid-template-columns: 1fr 88px; column-gap: 12px; row-gap: 8px;">
-            <!-- Row 1 Left: English Vocabulary Word (Largest Row) -->
-            <div class="min-w-0 text-left">
-              <h3 class="inline-block max-w-full text-base sm:text-lg font-black text-white break-words leading-tight text-left">${context.escapeHtml(w.word)}</h3>
-            </div>
-            <!-- Row 1 Right: Circular Favourite and Speaker buttons -->
-            <div class="w-[88px] min-w-[88px] flex items-center justify-end gap-2 flex-shrink-0">
-              <button type="button" onclick="toggleLibraryWordFavorite('${w.id}')" id="lib-fav-${w.id}" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-indigo-600 hover:bg-indigo-500 active:scale-90 text-white flex items-center justify-center shadow-md border border-indigo-400/30 transition-all flex-shrink-0 relative" title="${w.isFavorite ? 'Remove from favorites' : 'Add to favorites'}" aria-label="${w.isFavorite ? 'Remove from favorites' : 'Add to favorites'}" data-action="favorite">
-                <i id="lib-fav-icon-${w.id}" class="${w.isFavorite ? 'ph-fill ph-heart text-red-500' : 'ph ph-bold ph-heart text-white'} text-base"></i>
-              </button>
-              <button type="button" onclick="playAudio('${context.escapeQuotes(w.word)}')" id="lib-sound-${w.id}" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-indigo-600 hover:bg-indigo-500 active:scale-90 text-white flex items-center justify-center shadow-md border border-indigo-400/30 transition-all flex-shrink-0" title="Listen" aria-label="Listen" data-action="audio">
-                <i class="ph-fill ph-speaker-high text-base text-white"></i>
-              </button>
-            </div>
-
-            <!-- Row 2 Left: Vietnamese Meaning -->
-            <div class="min-w-0 text-left">
-              <p class="inline-block max-w-full text-xs sm:text-[13px] font-semibold text-slate-300 break-words leading-snug text-left">${context.escapeHtml(w.meaning)}</p>
-            </div>
-            <!-- Row 2 Right: Knowledge Status Change Button (Unknown -> Know, Known -> Unknown) -->
-            <div class="w-[88px] min-w-[88px] flex items-center justify-end flex-shrink-0">
-              <button type="button" onclick="toggleWordStatus('${w.id}', '${isWordKnown ? context.STATUS.NOT_KNOWN : context.STATUS.KNOWN}')" id="lib-status-${w.id}" style="width: 88px; min-width: 88px; height: 28px;" class="w-[88px] min-w-[88px] h-[28px] ${isWordKnown ? 'bg-slate-900 hover:bg-rose-950/60 text-slate-300 hover:text-rose-300 border-slate-800 hover:border-rose-800/80' : 'bg-emerald-600/90 hover:bg-emerald-500 text-white border-emerald-500/80 shadow-sm'} border rounded-lg font-extrabold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all flex-shrink-0" title="${isWordKnown ? 'Mark as Unknown' : 'Mark as Known'}" aria-label="${isWordKnown ? 'Mark as Unknown' : 'Mark as Known'}" data-action="status" data-status-action="${isWordKnown ? 'unknown' : 'know'}">
-                ${isWordKnown ? '<i class="ph-bold ph-warning-circle text-xs text-rose-400"></i>' : '<i class="ph-bold ph-check text-xs"></i>'}
-                <span>${isWordKnown ? 'Unknown' : 'Know'}</span>
-              </button>
-            </div>
-
-            <!-- Row 3 Left: Topic Badge -->
-            <div class="min-w-0 flex items-center text-left">
-              <span class="inline-block font-bold text-[10px] uppercase tracking-wider text-[#F3D060] bg-slate-950 border border-[#D4AF37]/35 px-2.5 py-1 rounded max-w-[170px] sm:max-w-[220px] truncate self-start text-left" title="${context.escapeHtml(w.topic || context.DEFAULT_TOPIC)}">
-                ${context.escapeHtml(w.topic || context.DEFAULT_TOPIC)}
-              </span>
-            </div>
-            <!-- Row 3 Right: Compact Delete Button -->
-            <div class="w-[88px] min-w-[88px] flex items-center justify-end flex-shrink-0">
-              <button type="button" onclick="deleteWordDirectly('${w.id}')" id="lib-del-${w.id}" style="width: 88px; min-width: 88px; height: 28px;" class="w-[88px] min-w-[88px] h-[28px] rounded-lg bg-slate-900 hover:bg-rose-950/60 text-slate-400 hover:text-rose-400 border border-slate-800 hover:border-rose-800/60 font-extrabold text-[11px] flex items-center justify-center gap-1 active:scale-95 transition-all flex-shrink-0" title="Delete word" aria-label="Delete word" data-action="delete">
-                <i class="ph-bold ph-trash text-xs text-rose-400/80"></i>
-                <span>Delete</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Supplementary Synonyms (if any) positioned below main 3-row section -->
-          ${individualSynonyms ? `<div class="flex flex-col gap-1.5 pt-2 border-t border-slate-800/80">${individualSynonyms}</div>` : ''}
-        </div>
-      `;
-}
-export function renderFavoritesCollection() {
-  const container = document.getElementById("review-favorites-container");
-  if (!container) return;
-  const favWords = context.wordsData.filter(w => w.isFavorite);
-  favWords.sort((a, b) => (a.word || "").localeCompare(b.word || ""));
-  if (favWords.length === 0) {
-    container.innerHTML = `
-          <div class="text-center py-8 px-4 bg-slate-900/90 rounded-2xl border border-slate-800 my-auto">
-            <div class="w-12 h-12 rounded-2xl bg-red-950/60 border border-red-800/60 text-red-400 flex items-center justify-center text-2xl mx-auto mb-2">
-              <i class="ph-bold ph-heart"></i>
-            </div>
-            <h3 class="text-sm font-black text-white">No Favorites Yet</h3>
-            <p class="text-xs font-semibold text-slate-400 mt-1 max-w-xs mx-auto leading-relaxed">
-              No vocabulary items marked as favorites yet. Tap the heart ♡ on any card to add it to your collection!
-            </p>
-          </div>
-        `;
-    return;
-  }
-  const headerHtml = `
-        <div class="flex-shrink-0 flex items-center justify-between px-1 py-1 text-xs">
-          <span class="font-black text-red-400 uppercase text-[10px] tracking-wide flex items-center gap-1.5">
-            <i class="ph-fill ph-heart text-red-500"></i> Favorites Collection
-          </span>
-          <span class="text-slate-400 font-extrabold text-[11px]">
-            Showing: ${favWords.length} ${favWords.length === 1 ? 'word' : 'words'}
-          </span>
-        </div>
-      `;
-  container.innerHTML = headerHtml + favWords.map(w => context.renderVocabularyCardHtml(w)).join("");
-}
-export function renderLibrary() {
-  context.checkAndCleanupEmptyTopics();
-  if (typeof context.updateLibraryTabsUI === "function") {
-    context.updateLibraryTabsUI();
-  }
-  const container = document.getElementById("library-list-container");
-  if (!container) return;
-  const search = document.getElementById("lib-search-input")?.value.toLowerCase().trim() || "";
-  let filtered = context.wordsData.filter(w => {
-    // 1. Tab collection filter (Known vs Favorites vs Unknown)
-    if (context.libraryTab === "favorites") {
-      if (!w.isFavorite) return false;
-    } else if (context.libraryTab === "known") {
-      if (w.memoryStatus !== context.STATUS.KNOWN) return false;
-    } else if (context.libraryTab === "unknown") {
-      if (w.memoryStatus !== context.STATUS.NOT_KNOWN) return false;
-    }
-
-    // 2. Topic filter
-    if (context.librarySelectedTopic !== "ALL" && context.librarySelectedTopic !== "FAVORITES") {
-      if ((w.topic || "").toLowerCase() !== context.librarySelectedTopic.toLowerCase()) return false;
-    }
-
-    // 3. Search query
-    if (!search) return true;
-    return w.word && w.word.toLowerCase().includes(search) || w.meaning && w.meaning.toLowerCase().includes(search);
-  });
-  filtered.sort((a, b) => (a.word || "").localeCompare(b.word || ""));
-  const countStatus = document.getElementById("lib-count-status");
-  if (countStatus) countStatus.textContent = `Showing: ${filtered.length} ${filtered.length === 1 ? 'word' : 'words'}`;
-  if (filtered.length === 0) {
-    let emptyMsg = "No words found";
-    let emptySub = "";
-    let emptyIcon = "ph-notebook";
-    if (context.libraryTab === "favorites") {
-      emptyMsg = "No Favorites Yet";
-      emptySub = "No vocabulary items marked as favorites yet. Tap the heart ♡ on any card to add it to Favorites!";
-      emptyIcon = "ph-heart text-red-400";
-    } else if (context.libraryTab === "known") {
-      emptyMsg = "No Known Words";
-      emptySub = "No words marked as Known yet. Study words to mark them as Known!";
-      emptyIcon = "ph-check-circle text-emerald-400";
-    } else if (context.libraryTab === "unknown") {
-      emptyMsg = "No Unknown Words";
-      emptySub = "All words in this collection are marked as Known!";
-      emptyIcon = "ph-warning-circle text-amber-400";
-    }
-    container.innerHTML = `
-          <div class="text-center py-8 px-4 bg-slate-900/90 rounded-2xl border border-slate-800 my-auto">
-            <i class="ph-bold ${emptyIcon} text-3xl text-slate-500 mb-1"></i>
-            <p class="text-sm font-extrabold text-slate-300">${emptyMsg}</p>
-            ${emptySub ? `<p class="text-xs font-semibold text-slate-400 mt-1 max-w-xs mx-auto leading-relaxed">${emptySub}</p>` : ''}
-          </div>
-        `;
-    return;
-  }
-  container.innerHTML = filtered.map(w => context.renderVocabularyCardHtml(w)).join("");
-}
-export function install_toggleWordStatus() {
-  window.toggleWordStatus = async (id, targetStatus) => {
-    if (context.isStatusUpdating) return;
-    const target = context.wordsData.find(w => w.id === id);
-    if (!targetStatus && target) {
-      targetStatus = target.memoryStatus === context.STATUS.KNOWN ? context.STATUS.NOT_KNOWN : context.STATUS.KNOWN;
-    }
-    if (target && target.memoryStatus === targetStatus) return;
-    context.isStatusUpdating = true;
-    try {
-      if (targetStatus === context.STATUS.KNOWN) context.SoundManager.playSuccess();else context.SoundManager.playSelect();
-      await context.updateWordMemory(id, targetStatus, false);
-      context.showToast("Status updated!", "success");
-    } catch (e) {} finally {
-      context.isStatusUpdating = false;
-    }
-  };
 }
 export function install_deleteWordDirectly() {
   window.deleteWordDirectly = async id => {
-    context.SoundManager.playSelect();
-    const queued = await context.idbGetAll('pendingOps');
-    for (const op of queued) if (op?.data?.id === id) await context.idbDelete('pendingOps', op.id);
-    context.wordsData = context.wordsData.filter(w => w.id !== id);
-    context.checkAndCleanupEmptyTopics();
-    context.saveUserTopics();
-    await context.idbDelete("words", id);
-    context.updateBadges();
-    context.recordLearningActivity("delete_word");
-    await context.updateStudentMetadataCount();
-    context.renderLibrary();
-    context.startNewSession();
-    if (context.db && navigator.onLine) {
-      try {
-        await context.db.collection("words").doc(id).delete();
-      } catch (e) {
-        await context.idbPut("pendingOps", {
-          id: `del_${id}`,
-          type: "DELETE",
-          data: {
-            id
-          }
-        });
-      }
-    } else {
-      await context.idbPut("pendingOps", {
-        id: `del_${id}`,
-        type: "DELETE",
-        data: {
-          id
-        }
-      });
-    }
-    context.showToast("Word deleted.", "success");
+    if (!context.wordsData.some(word => word.id === id) || !confirm('Delete this vocabulary item?')) return;
+    const user = context.currentUser, generation = context.accountGeneration;
+    await commitVocabularyChanges([{ id, type: 'DELETE' }]);
+    if (isActiveUser(user, generation)) updateTopicDropdowns();
   };
+}
+export function install_deleteTopicDirectly() {
+  window.deleteTopicDirectly = async topic => {
+    if (!context.currentUser || ['ALL', 'FAVORITES', context.DEFAULT_TOPIC].includes(topic) ||
+      !confirm(`Delete "${topic}"? Words in other decks will stay in those decks. Words only in this deck will be deleted.`)) return;
+    const user = context.currentUser, generation = context.accountGeneration;
+    try {
+      const changes = [];
+      for (const word of context.wordsData) {
+        const topics = wordTopics(word);
+        if (!topics.includes(topic)) continue;
+        const remaining = topics.filter(name => name !== topic);
+        const change = { id: word.id, expectedVersion: word };
+        changes.push(remaining.length ? { ...change, patch: { topic: remaining[0], topics: remaining } } : { ...change, type: 'DELETE' });
+      }
+      if (changes.length) await commitVocabularyChanges(changes);
+      if (!isActiveUser(user, generation)) return;
+      context.userTopics = context.userTopics.filter(t => t !== topic);
+      if (context.librarySelectedTopic === topic) context.librarySelectedTopic = 'ALL';
+      if (context.activeTopic === topic) context.activeTopic = 'ALL';
+      updateTopicDropdowns(); renderLibrary();
+    } catch (error) { if (isActiveUser(user, generation)) report(error); }
+  };
+}
+export function setupMergeTopicsModal() {
+  window.openMergeModalForTopic = topic => {
+    if (!context.currentUser) return;
+    const container = $('merge-topic-checkboxes'); container.replaceChildren();
+    for (const name of getAlphabeticalTopics().filter(t => t !== context.DEFAULT_TOPIC)) {
+      const label = document.createElement('label'), input = document.createElement('input'); input.type = 'checkbox'; input.value = name; input.checked = name === topic;
+      label.append(input, document.createTextNode(name)); container.append(label);
+    }
+    $('input-merge-new-name').value = topic || ''; $('modal-merge-topics').classList.remove('hidden'); $('modal-merge-topics').classList.add('flex');
+  };
+  for (const id of ['btn-cancel-merge', 'btn-close-merge-modal']) $(id)?.addEventListener('click', closeMergeModal);
+  $('btn-confirm-merge')?.addEventListener('click', async () => {
+    const sources = [...$('merge-topic-checkboxes').querySelectorAll('input:checked')].map(i => i.value), topic = $('input-merge-new-name').value.trim();
+    if (!context.currentUser || !sources.length || !topic || ['ALL', 'FAVORITES'].includes(topic)) return;
+    const user = context.currentUser, generation = context.accountGeneration;
+    const sourceSet = new Set(sources);
+    try {
+      const changes = [];
+      for (const word of context.wordsData) {
+        const topics = wordTopics(word);
+        if (!topics.some(name => sourceSet.has(name))) continue;
+        const merged = [...new Set(topics.map(name => sourceSet.has(name) ? topic : name))];
+        changes.push({ id: word.id, expectedVersion: word, patch: { topic: merged[0], topics: merged } });
+      }
+      if (changes.length) await commitVocabularyChanges(changes);
+      if (!isActiveUser(user, generation)) return;
+      context.userTopics = context.userTopics.filter(t => !sources.includes(t));
+      if (sourceSet.has(context.librarySelectedTopic)) context.librarySelectedTopic = topic;
+      if (sourceSet.has(context.activeTopic)) context.activeTopic = topic;
+      addUserTopic(topic);
+      renderLibrary();
+      closeMergeModal();
+    } catch (error) { if (isActiveUser(user, generation)) report(error); }
+  });
 }

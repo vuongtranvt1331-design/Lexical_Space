@@ -1,7 +1,7 @@
-const VERSION='1a3463a8f1408286';
+const VERSION='7a0d406a707dcf95';
 const PREFIX='lexicalspace-shell-'+encodeURIComponent(new URL(self.registration.scope).pathname)+'-';
 const CACHE=PREFIX+VERSION;
-const CORE=["./", "./index.html", "./assets/ls-loading-normalized.wav", "./assets/ls-loading.mp3", "./css/animations.css", "./css/main.css", "./css/no-script.css", "./js/core/context.js", "./js/core/firebase-config.js", "./js/core/firebase-sync.js", "./js/core/idb-manager.js", "./js/core/offline.js", "./js/core/sound-manager.js", "./js/features/activity.js", "./js/features/application.js", "./js/features/auth.js", "./js/features/entry.js", "./js/features/flashcard.js", "./js/features/library.js", "./js/features/loading-failsafe.js", "./js/features/loading.js", "./js/main.js", "./js/utils/helpers.js"];
+const CORE=["./", "./assets/ls-loading-normalized.wav", "./assets/ls-loading.mp3", "./css/animations.css", "./css/entry-ui.css", "./css/main.css", "./css/no-script.css", "./css/recall-ui.css", "./index.html", "./js/core/ai-vocabulary.js", "./js/core/context.js", "./js/core/firebase-config.js", "./js/core/firebase-sync.js", "./js/core/icons.js", "./js/core/idb-manager.js", "./js/core/offline.js", "./js/core/pronunciation.js", "./js/core/quick-fill.js", "./js/core/recall-utils.js", "./js/core/settings.js", "./js/core/shared-decks.js", "./js/core/sound-manager.js", "./js/core/srs.js", "./js/core/vocabulary.js", "./js/features/activity.js", "./js/features/application.js", "./js/features/auth.js", "./js/features/deck-sharing.js", "./js/features/entry.js", "./js/features/flashcard.js", "./js/features/in-class-check.js", "./js/features/library.js", "./js/features/loading-failsafe.js", "./js/features/loading.js", "./js/main.js", "./js/utils/helpers.js", "./js/utils/intentional-click.js"];
 const EXTERNAL=[
   'https://cdn.tailwindcss.com',
   'https://unpkg.com/@phosphor-icons/web',
@@ -10,10 +10,6 @@ const EXTERNAL=[
 ];
 self.addEventListener('install',event=>event.waitUntil((async()=>{
   const cache=await caches.open(CACHE);await cache.addAll(CORE);
-  await Promise.allSettled(EXTERNAL.map(async url=>{
-    const request=new Request(url,{mode:'no-cors'}),response=await fetch(request);
-    if(response.ok||response.type==='opaque')await cache.put(request,response);
-  }));
   await self.skipWaiting();
 })()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{

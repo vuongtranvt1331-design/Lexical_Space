@@ -1,0 +1,148 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { context } from '../js/core/context.js';
+import { mutateWords, readUserWords } from '../js/core/idb-manager.js';
+import { getAlphabeticalTopics, install_deleteTopicDirectly, renderLibraryTopicUpwardMenu, resetLibraryForUser, renderLibrary, setupLibraryModule, setupMergeTopicsModal } from '../js/features/library.js';
+import { escapeHtml } from '../js/utils/helpers.js';
+import { wordTopics } from '../js/core/vocabulary.js';
+
+const require = createRequire(process.env.LEXICALSPACE_TEST_MODULES || import.meta.url);
+const { JSDOM } = require('jsdom');
+const { indexedDB, IDBKeyRange } = require('fake-indexeddb');
+
+test('library flips from either face, preserves rail focus, and clears profile-local view state', async () => {
+  const html = await fs.readFile(new URL('../index.html', import.meta.url), 'utf8');
+  const { window } = new JSDOM(html, { url: 'http://localhost:8771/' });
+  Object.assign(globalThis, { window, document: window.document, indexedDB, IDBKeyRange });
+  const $ = id => document.getElementById(id);
+  const card = () => document.querySelector('[data-word-id="shared"]');
+  const user = 'LibraryFixture';
+  const pronunciations = [];
+  const records = await mutateWords([{ id: 'shared', username: user, patch: {
+    word: 'adapt', meaning: 'thích nghi', topic: 'One profile', exampleSentence: 'They adapted quickly.',
+    audioUrl: 'https://recording.test/adapt.mp3'
+  } }]);
+  Object.assign(context, { currentUser: user, accountGeneration: 1, DEFAULT_TOPIC: 'New Words',
+    wordsData: records, userTopics: ['One profile'], libraryTab: 'unknown', librarySelectedTopic: 'ALL',
+    escapeHtml, syncPendingOperations: async () => {}, reconcileSession: async () => {},
+    playAudio: word => pronunciations.push(word), showToast: message => assert.fail(message)
+  });
+  try {
+    setupLibraryModule();
+    setupMergeTopicsModal();
+    $('view-library').classList.remove('hidden');
+    renderLibrary();
+    assert.deepEqual([...card().querySelectorAll('.library-toolbar button')].map(button => button.dataset.action),
+      ['flip', 'favorite', 'audio', 'edit', 'delete']);
+
+    const heading = card().querySelector('.library-card-front h3');
+    const selection = window.getSelection();
+    selection.selectAllChildren(heading);
+    heading.click();
+    assert.equal(card().classList.contains('is-flipped'), false);
+    selection.removeAllRanges();
+    heading.click();
+    assert.equal(card().querySelector('.library-card-front').hasAttribute('inert'), true);
+    card().querySelector('.library-card-back h3').click();
+    assert.equal(card().querySelector('.library-card-back').hasAttribute('inert'), true);
+    card().querySelector('[data-action="flip"]').click();
+    assert.equal(card().querySelector('[data-action="flip"]').getAttribute('aria-pressed'), 'true');
+    card().querySelector('[data-action="audio"]').click();
+    assert.equal(pronunciations.length, 1);
+    assert.equal(pronunciations[0].word, 'adapt');
+    assert.equal(pronunciations[0].audioUrl, 'https://recording.test/adapt.mp3');
+    assert.equal(card().classList.contains('is-flipped'), true);
+
+    const favorite = card().querySelector('[data-action="favorite"]');
+    favorite.focus();
+    const saved = new Promise(resolve => { context.updateStatusBadge = resolve; });
+    favorite.click();
+    await saved;
+    assert.equal(card().classList.contains('is-flipped'), true);
+    assert.equal(document.activeElement, card().querySelector('[data-action="favorite"]'));
+    assert.equal((await readUserWords(user))[0].isFavorite, true);
+
+    $('lib-search-input').value = 'ad';
+    context.librarySelectedTopic = 'One profile';
+    window.openMergeModalForTopic('One profile');
+    context.accountGeneration++;
+    resetLibraryForUser();
+    assert.equal(card(), null);
+    assert.equal($('lib-search-input').value, '');
+    assert.equal(context.librarySelectedTopic, 'ALL');
+    assert.equal($('modal-merge-topics').classList.contains('hidden'), true);
+    assert.equal($('merge-topic-checkboxes').childElementCount, 0);
+    renderLibrary();
+    assert.equal(card().classList.contains('is-flipped'), false);
+  } finally { window.close(); }
+});
+
+test('deck actions are icon controls and deleting or merging a deck preserves other memberships', async () => {
+  const html = await fs.readFile(new URL('../index.html', import.meta.url), 'utf8');
+  const { window } = new JSDOM(html, { url: 'http://localhost:8771/' });
+  const originalConfirm = globalThis.confirm;
+  Object.assign(globalThis, { window, document: window.document, localStorage: window.localStorage, indexedDB, IDBKeyRange,
+    confirm: () => true });
+  const $ = id => document.getElementById(id);
+  const user = 'DeckFixture';
+  const shared = [];
+  const records = await mutateWords([
+    { id: 'primary', topic: 'Research', topics: ['Practice'], interval: 7 },
+    { id: 'only', topic: 'Research' },
+    { id: 'secondary', topic: 'Other', topics: ['Research', 'Weekly'] },
+    { id: 'additional', topic: 'Archive', topics: ['Practice'] }
+  ].map(({ id, ...patch }) => ({ id, username: user, patch: { word: id, meaning: id, ...patch } })));
+  Object.assign(context, { currentUser: user, accountGeneration: 2, DEFAULT_TOPIC: 'New Words',
+    wordsData: records, userTopics: [], libraryTab: 'unknown', librarySelectedTopic: 'ALL', activeTopic: 'ALL',
+    escapeHtml, syncPendingOperations: async () => {}, reconcileSession: async () => {}, updateStatusBadge() {},
+    renderReviewTopicUpwardMenu() {}, renderEntryTopicCards() {},
+    shareTopic: (topic, button) => shared.push({ topic, button }), showToast: message => assert.fail(message)
+  });
+  try {
+    resetLibraryForUser();
+    install_deleteTopicDirectly();
+    setupMergeTopicsModal();
+    $('view-library').classList.remove('hidden');
+    const topics = getAlphabeticalTopics();
+    assert.ok(topics.includes('Practice'));
+    assert.ok(topics.includes('Weekly'));
+    renderLibraryTopicUpwardMenu(topics);
+    const group = [...document.querySelectorAll('.topic-option-actions')].find(element => element.getAttribute('aria-label') === 'Research deck actions');
+    const buttons = [...group.querySelectorAll('button')];
+    assert.deepEqual(buttons.map(button => button.title), ['Merge Decks', 'Delete Deck', 'Share Deck']);
+    assert.ok(buttons.every(button => button.title === button.getAttribute('aria-label') && button.querySelector('svg') && !button.textContent.trim()));
+    buttons[2].click();
+    assert.deepEqual(shared, [{ topic: 'Research', button: buttons[2] }]);
+    assert.equal(context.librarySelectedTopic, 'ALL');
+    const defaultActions = [...document.querySelectorAll('.topic-option-actions')].find(element => element.getAttribute('aria-label') === 'New Words deck actions');
+    assert.deepEqual([...defaultActions.querySelectorAll('button')].map(button => button.title), ['Share Deck']);
+
+    context.librarySelectedTopic = 'Practice';
+    renderLibrary();
+    assert.deepEqual([...document.querySelectorAll('.library-flip-card')].map(card => card.dataset.wordId), ['additional', 'primary']);
+    await window.deleteTopicDirectly('Research');
+    let byId = new Map((await readUserWords(user)).map(word => [word.id, word]));
+    assert.equal(byId.has('only'), false);
+    assert.equal(byId.get('primary').topic, 'Practice');
+    assert.equal(byId.get('primary').interval, 7);
+    assert.deepEqual(wordTopics(byId.get('secondary')), ['Other', 'Weekly']);
+    assert.ok(!getAlphabeticalTopics().includes('Research'));
+
+    window.openMergeModalForTopic('Practice');
+    [...document.querySelectorAll('#merge-topic-checkboxes input')].find(input => input.value === 'Weekly').checked = true;
+    $('input-merge-new-name').value = 'Consolidated';
+    const saved = new Promise(resolve => { context.updateStatusBadge = resolve; });
+    $('btn-confirm-merge').click();
+    await saved;
+    byId = new Map((await readUserWords(user)).map(word => [word.id, word]));
+    assert.deepEqual(wordTopics(byId.get('primary')), ['Consolidated']);
+    assert.deepEqual(wordTopics(byId.get('secondary')), ['Other', 'Consolidated']);
+    assert.deepEqual(wordTopics(byId.get('additional')), ['Archive', 'Consolidated']);
+    assert.equal(context.librarySelectedTopic, 'Consolidated');
+  } finally {
+    globalThis.confirm = originalConfirm;
+    window.close();
+  }
+});

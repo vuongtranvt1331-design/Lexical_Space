@@ -1,479 +1,246 @@
-import { context } from "../core/context.js";
-export function renderEntryTopicCards(sortedTopics = context.getAlphabeticalTopics()) {
-  const container = document.getElementById("entry-topic-cards-list");
-  if (!container) return;
-  const selectedTopic = context.draftWord.topic && sortedTopics.includes(context.draftWord.topic) ? context.draftWord.topic : context.DEFAULT_TOPIC;
-  context.draftWord.topic = selectedTopic;
-  const entrySelect = document.getElementById("select-entry-topic");
-  if (entrySelect) entrySelect.value = selectedTopic;
-  const topicBadge = document.getElementById("confirm-display-topic");
-  if (topicBadge) topicBadge.textContent = selectedTopic;
-  container.innerHTML = sortedTopics.map(t => {
-    const isSelected = t === selectedTopic;
-    return `
-          <button type="button" onclick="selectEntryTopic('${context.escapeQuotes(t)}')"
-            class="w-full min-h-[40px] px-3 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-between border ${isSelected ? 'bg-indigo-600 text-white border-[#D4AF37] shadow-md' : 'bg-slate-900/90 text-slate-300 border-slate-800 hover:bg-slate-800'}">
-            <span class="flex items-center gap-2 truncate pr-2">
-              <i class="ph-fill ${isSelected ? 'ph-folder-open text-[#F3D060]' : 'ph-folder text-slate-400'} text-sm flex-shrink-0"></i>
-              <span class="truncate">${context.escapeHtml(t)}</span>
-            </span>
-            ${isSelected ? '<span class="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-[#F3D060] flex-shrink-0"><i class="ph-bold ph-check-circle text-sm"></i> Selected</span>' : '<span class="w-4 h-4 rounded-full border border-slate-700 flex-shrink-0"></span>'}
-          </button>
-        `;
-  }).join("");
+import { context } from '../core/context.js';
+import { validateVocabulary, senseKey, newId, wordTopics } from '../core/vocabulary.js';
+import { buildAIPrompt, parseAIBatch } from '../core/ai-vocabulary.js';
+import { DICTIONARY_NOT_FOUND, dictionaryDetails, quickFillCollocations, translateQuickFillWord } from '../core/quick-fill.js';
+const $ = id => document.getElementById(id);
+const fields = { word: 'input-word', phonetic: 'input-phonetic', pos: 'input-pos', meaning: 'confirm-input-meaning',
+  collocations: 'input-collocations', synonyms: 'input-synonyms', exampleSentence: 'input-example', clozeSentence: 'input-cloze',
+  sense: 'input-sense', usageNotes: 'input-usage-notes' };
+const listFields = new Set(['collocations', 'synonyms']);
+const contentFields = [...Object.keys(fields), 'topic', 'synonym1', 'synonym2'];
+const newReviewState = () => ({ createdAt: Date.now(), dueDate: new Date().toISOString(), interval: 0, repetition: 0, easeFactor: 2.5,
+  reviewCount: 0, successfulDays: [], memoryStatus: 'not_remembered', isFavorite: false });
+const contentPatch = word => Object.fromEntries(contentFields.map(key => [key, word[key]]));
+let editor = null, saving = false, importing = false, quickFillRequest;
+function status(id, message = '', error = false) { const element = $(id); if (element) { element.textContent = message; element.dataset.error = String(error); } }
+function asFieldValue(key, value) { return listFields.has(key) ? (Array.isArray(value) ? value.join(', ') : '') : String(value ?? ''); }
+function formData() {
+  const values = {};
+  for (const [key, id] of Object.entries(fields)) {
+    const value = $(id).value.trim(); values[key] = listFields.has(key) ? value.split(/[,;]+/).map(part => part.trim()).filter(Boolean) : value;
+  }
+  values.topic = $('select-entry-topic').value || context.DEFAULT_TOPIC;
+  return values;
 }
-export function install_selectEntryTopic() {
-  window.selectEntryTopic = topicName => {
-    context.SoundManager.playSelect();
-    context.draftWord.topic = topicName;
-    const entrySelect = document.getElementById("select-entry-topic");
-    if (entrySelect) entrySelect.value = topicName;
-    const topicBadge = document.getElementById("confirm-display-topic");
-    if (topicBadge) topicBadge.textContent = topicName;
-    context.renderEntryTopicCards();
+const viewIsVisible = id => $(id)?.classList.contains('hidden') === false;
+const singleEntryIsVisible = () => viewIsVisible('view-entry') && $('entry-phase-1')?.hidden === false;
+export function focusEntryWord() { if (singleEntryIsVisible()) $('input-word')?.focus({ preventScroll: true }); }
+export function cancelQuickFill() {
+  if (!quickFillRequest) return;
+  quickFillRequest.abort();
+  quickFillRequest = undefined;
+  const button = $('btn-entry-quickfill');
+  button.disabled = false;
+  button.removeAttribute('aria-busy');
+}
+function clearForm() {
+  cancelQuickFill(); editor = null;
+  for (const id of Object.values(fields)) $(id).value = '';
+  context.draftWord = { topic: context.DEFAULT_TOPIC };
+  $('entry-details').open = false; $('inline-create-topic-box').hidden = true;
+  $('entry-heading').textContent = 'Add to your library'; $('btn-confirm-save-text').textContent = 'Save word';
+  status('quickfill-status'); renderEntryTopicCards();
+}
+export function renderEntryTopicCards(topics = context.getAlphabeticalTopics()) {
+  const select = $('select-entry-topic'); if (!select) return;
+  const selected = context.draftWord.topic || context.DEFAULT_TOPIC;
+  select.replaceChildren();
+  for (const topic of topics) {
+    const option = document.createElement('option'); option.value = topic; option.textContent = topic; select.append(option);
+  }
+  select.value = topics.includes(selected) ? selected : context.DEFAULT_TOPIC;
+}
+export function openWordEditor(word) {
+  cancelQuickFill();
+  const returnView = ['view-library', 'view-review'].find(viewIsVisible);
+  editor = { word, returnView };
+  context.draftWord = { ...word };
+  context.switchView('view-entry');
+  for (const [key, id] of Object.entries(fields)) $(id).value = asFieldValue(key, word[key]);
+  $('entry-heading').textContent = 'Edit vocabulary'; $('btn-confirm-save-text').textContent = 'Save changes'; $('entry-details').open = true;
+  status('entry-save-status'); status('quickfill-status'); renderEntryTopicCards(); focusEntryWord();
+}
+export async function saveWord(input, id = editor?.word.id) {
+  const ticket = context.accountGeneration, validation = validateVocabulary(input);
+  if (!validation.valid) throw new Error(validation.errors.join(' '));
+  const previous = id && context.wordsData.find(word => word.id === id);
+  if (id && !previous) throw new Error('This word was removed. Refresh the library.');
+  if (context.wordsData.some(word => word.id !== id && senseKey(word) === senseKey(validation.word))) throw new Error('This word and sense already exist. Edit that item or choose another sense.');
+  const patch = contentPatch(validation.word);
+  if (!previous) Object.assign(patch, newReviewState());
+  else if (patch.topic !== previous.topic) {
+    const secondary = wordTopics(previous).filter(topic => topic !== previous.topic && topic !== patch.topic);
+    patch.topics = [patch.topic, ...secondary];
+  }
+  const expectedVersion = previous && (id === editor?.word.id ? editor.word : previous);
+  const [record] = await context.commitVocabularyChanges([{ id: id || `word_${newId()}`, patch, ...(expectedVersion ? { expectedVersion } : {}) }]);
+  if (ticket === context.accountGeneration) context.addUserTopic(record.topic);
+  return record;
+}
+export async function importVocabulary(entries, { overwrite = false } = {}) {
+  const ticket = context.accountGeneration, unique = new Map(), changes = []; let skipped = 0, added = 0, updated = 0;
+  for (const input of entries) {
+    const result = validateVocabulary(input); if (!result.valid) throw new Error(result.errors.join(' '));
+    unique.set(senseKey(result.word), result.word);
+  }
+  const existing = new Map(context.wordsData.map(word => [senseKey(word), word]));
+  for (const word of unique.values()) {
+    const previous = existing.get(senseKey(word));
+    if (previous && !overwrite) { skipped++; continue; }
+    const patch = contentPatch(word);
+    if (previous) updated++; else { Object.assign(patch, newReviewState()); added++; }
+    changes.push({ id: previous?.id || `word_${newId()}`, patch, ...(previous ? { expectedVersion: previous } : {}) });
+  }
+  // One commit for the complete validated batch and its outbox records.
+  const records = changes.length ? await context.commitVocabularyChanges(changes) : [];
+  if (ticket === context.accountGeneration) for (const topic of new Set(records.map(word => word.topic))) context.addUserTopic(topic);
+  return { added, updated, skipped };
+}
+export async function quickFillEntry() {
+  if (!context.currentUser) return;
+  const word = $('input-word').value.trim(), ticket = context.accountGeneration, activeEditor = editor;
+  if (!word || word.length > 200) { status('quickfill-status', 'Enter a target word or phrase first.', true); focusEntryWord(); return; }
+  cancelQuickFill();
+  function wordNotFound() {
+    status('quickfill-status', DICTIONARY_NOT_FOUND, true);
+    context.showToast(DICTIONARY_NOT_FOUND, 'error');
+  }
+  if (navigator.onLine === false) { wordNotFound(); return; }
+
+  const controller = new AbortController(); quickFillRequest = controller;
+  const options = { signal: controller.signal };
+  const button = $('btn-entry-quickfill'), original = new Map(Object.values(fields).map(id => [id, $(id).value]));
+  const current = () => quickFillRequest === controller && !controller.signal.aborted &&
+    ticket === context.accountGeneration && activeEditor === editor && word === $('input-word').value.trim();
+  let filled = false;
+  const fill = (key, value) => {
+    const id = fields[key], element = $(id), suggestion = asFieldValue(key, value);
+    if (!current() || !suggestion || element.value !== original.get(id)) return;
+    element.value = suggestion;
+    filled = true;
   };
+  button.disabled = true;
+  button.setAttribute('aria-busy', 'true');
+  status('quickfill-status', 'Looking up dictionary, translation and collocation suggestions...');
+  try {
+    const translation = translateQuickFillWord(word, options).then(meaning => fill('meaning', meaning)).catch(() => {});
+    const dictionary = await dictionaryDetails(word, options).catch(() => undefined);
+    if (!current()) return;
+    if (navigator.onLine === false) {
+      wordNotFound();
+      return;
+    }
+    if (dictionary === null) wordNotFound();
+    if (dictionary) {
+      fill('phonetic', dictionary.phonetic);
+      fill('pos', dictionary.pos);
+      fill('synonyms', dictionary.synonyms);
+      fill('exampleSentence', dictionary.exampleSentence);
+      if ($('input-example').value.trim() === dictionary.exampleSentence) fill('clozeSentence', dictionary.clozeSentence);
+      $('entry-details').open = true;
+    }
+    const collocations = quickFillCollocations(word, $('input-pos').value, options)
+      .then(pairs => fill('collocations', pairs)).catch(() => {});
+    await Promise.all([translation, collocations]);
+    if (!current()) return;
+    if (filled) $('entry-details').open = true;
+    if (dictionary === null) return;
+    if (!dictionary && !filled) { wordNotFound(); return; }
+    status('quickfill-status', filled ? 'Filled available details. Review before saving.' : 'No suggestions available. You can enter the details manually.', !filled);
+  } finally {
+    if (quickFillRequest === controller) cancelQuickFill();
+  }
+}
+function showSavedLibraryCard(id) {
+  context.switchView('view-library');
+  const cards = $('library-list-container')?.querySelectorAll('[data-word-id]') || [];
+  const card = [...cards].find(item => item.dataset.wordId === id);
+  const focus = card?.querySelector('[data-action="edit"]') || $('lib-search-input');
+  focus?.focus({ preventScroll: true });
+  card?.scrollIntoView?.({ block: 'nearest' });
+  context.showToast('Changes saved.');
 }
 export function setupEntryModule() {
-  const btnOk = document.getElementById("btn-entry-ok");
-  const btnAiTranslate = document.getElementById("btn-entry-ai-translate") || document.getElementById("btn-entry-quickfill");
-  const btnConfirmBack = document.getElementById("btn-confirm-back");
-  const btnConfirmSave = document.getElementById("btn-confirm-save");
-  const btnQuickTopic = document.getElementById("btn-quick-create-topic");
-  const inlineBox = document.getElementById("inline-create-topic-box");
-  const btnSaveInline = document.getElementById("btn-save-inline-topic");
-  const inputWord = document.getElementById("input-word");
-  btnQuickTopic?.addEventListener("click", () => {
-    context.SoundManager.playSelect();
-    inlineBox.classList.toggle("hidden");
-    if (!inlineBox.classList.contains("hidden")) {
-      document.getElementById("input-inline-topic-name").focus();
-    }
-  });
-  btnSaveInline?.addEventListener("click", () => {
-    const input = document.getElementById("input-inline-topic-name");
-    const val = input.value.trim();
-    if (!val) {
-      context.SoundManager.playError();
-      context.showToast("Please enter a topic name.", "error");
-      return;
-    }
-    context.addUserTopic(val);
-    context.draftWord.topic = val;
-    input.value = "";
-    inlineBox.classList.add("hidden");
-    context.renderEntryTopicCards();
-    context.SoundManager.playSuccess();
-    context.showToast(`Topic "${val}" selected!`, "success");
-  });
-  btnOk?.addEventListener("click", () => {
-    const word = inputWord.value.trim();
-    if (!word) {
-      context.SoundManager.playError();
-      context.showToast("Please enter an English word or phrase.", "error");
-      inputWord.focus();
-      return;
-    }
-    context.SoundManager.playSelect();
-    context.draftWord.word = word;
-    context.draftWord.meaning = document.getElementById("confirm-input-meaning").value.trim();
-    context.draftWord.synonym1 = document.getElementById("confirm-input-syn1").value.trim();
-    context.draftWord.synonym2 = document.getElementById("confirm-input-syn2").value.trim();
-    if (!context.draftWord.topic) context.draftWord.topic = context.DEFAULT_TOPIC;
-    document.getElementById("entry-phase-1").classList.add("hidden");
-    document.getElementById("entry-phase-2").classList.remove("hidden");
-    document.getElementById("entry-step-indicator").textContent = "Step 2/2 · Select Topic & Save";
-    document.getElementById("confirm-display-word").textContent = context.draftWord.word;
-    document.getElementById("confirm-display-meaning").textContent = context.draftWord.meaning || "No meaning provided";
-    context.renderEntryTopicCards();
-  });
-  let isAiTranslating = false;
-  btnAiTranslate?.addEventListener("click", async () => {
-    if (isAiTranslating) return;
-    const word = inputWord.value.trim();
-    if (!word) {
-      context.SoundManager?.playError();
-      context.showToast("Please enter an English word to translate.", "error");
-      inputWord.focus();
-      return;
-    }
-    const meaningInput = document.getElementById("confirm-input-meaning");
-    const existingMeaning = meaningInput ? meaningInput.value.trim() : "";
-    if (existingMeaning) {
-      const proceed = window.confirm(`The Vietnamese meaning already contains text:\n\n"${existingMeaning}"\n\nDo you want to replace it with the AI translation?`);
-      if (!proceed) {
-        return;
-      }
-    }
-    context.SoundManager?.playSelect();
-    isAiTranslating = true;
-    btnAiTranslate.disabled = true;
-    btnAiTranslate.classList.remove("lightning-pulse", "animate-pulse");
-    const iconEl = document.getElementById("icon-entry-ai-translate");
-    if (iconEl) iconEl.className = "ph-bold ph-spinner animate-spin text-amber-300 text-sm";
-    const statusLabel = document.getElementById("api-loading-status");
-    if (statusLabel) {
-      statusLabel.classList.remove("hidden");
-      const span = statusLabel.querySelector("span");
-      if (span) span.textContent = "Fetching AI translation...";
-    }
+  $('single-entry-form')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (saving || !context.currentUser) return;
+    saving = true;
+    const ticket = context.accountGeneration, submittedEditor = editor, button = $('btn-confirm-save');
+    const sameForm = () => ticket === context.accountGeneration && submittedEditor === editor;
+    button.disabled = true;
+    status('entry-save-status');
     try {
-      let translatedMeaning = "";
-      let syn1 = "";
-      let syn2 = "";
-
-      // 1. First attempt: call secure local backend API
-      try {
-        const currentTopic = context.draftWord && context.draftWord.topic ? context.draftWord.topic : "";
-        const apiResp = await fetch(`/api/translate?word=${encodeURIComponent(word)}&topic=${encodeURIComponent(currentTopic)}`);
-        if (apiResp.ok) {
-          const apiData = await apiResp.json();
-          if (apiData && apiData.ok && apiData.meaning) {
-            translatedMeaning = apiData.meaning;
-            if (Array.isArray(apiData.synonyms)) {
-              syn1 = apiData.synonyms[0] || "";
-              syn2 = apiData.synonyms[1] || "";
-            }
-          }
-        }
-      } catch (backendErr) {
-        console.warn("Backend /api/translate not reachable, trying client fallback...", backendErr);
-      }
-
-      // 2. Direct client-side Google Neural fallback (if standalone or backend not running)
-      if (!translatedMeaning) {
-        try {
-          const gUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&dt=bd&q=${encodeURIComponent(word)}`;
-          const gRes = await fetch(gUrl);
-          if (gRes.ok) {
-            const gData = await gRes.json();
-            if (Array.isArray(gData) && gData[0] && gData[0][0] && gData[0][0][0]) {
-              let t = gData[0][0][0].trim();
-              if (t.endsWith(".")) t = t.slice(0, -1);
-              translatedMeaning = t;
-            }
-          }
-        } catch (gErr) {
-          console.warn("Google direct fallback failed:", gErr);
-        }
-      }
-
-      // 3. Direct client-side MyMemory fallback (secondary fallback)
-      if (!translatedMeaning) {
-        try {
-          const mUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(word)}&langpair=en|vi`;
-          const mRes = await fetch(mUrl);
-          if (mRes.ok) {
-            const mData = await mRes.json();
-            if (mData?.responseData?.translatedText) {
-              let m = mData.responseData.translatedText.trim();
-              if (m.endsWith(".")) m = m.slice(0, -1);
-              translatedMeaning = m;
-            }
-          }
-        } catch (mErr) {
-          console.warn("MyMemory fallback failed:", mErr);
-        }
-      }
-
-      // Enrich synonyms from Datamuse if not populated yet
-      if (!syn1 && !syn2) {
-        try {
-          const synRes = await fetch(`https://api.datamuse.com/words?rel_syn=${encodeURIComponent(word.toLowerCase())}`);
-          if (synRes.ok) {
-            const synData = await synRes.json();
-            if (Array.isArray(synData) && synData.length > 0) {
-              syn1 = synData[0]?.word || "";
-              syn2 = synData[1]?.word || "";
-            }
-          }
-        } catch (synErr) {}
-      }
-      if (!translatedMeaning) {
-        throw new Error("Unable to obtain translation from available services.");
-      }
-
-      // Populate the Vietnamese Meaning field without saving automatically
-      if (meaningInput) {
-        meaningInput.value = translatedMeaning;
-      }
-
-      // Fill synonyms if currently empty
-      const syn1Input = document.getElementById("confirm-input-syn1");
-      const syn2Input = document.getElementById("confirm-input-syn2");
-      if (syn1Input && !syn1Input.value.trim() && syn1) {
-        syn1Input.value = syn1;
-      }
-      if (syn2Input && !syn2Input.value.trim() && syn2) {
-        syn2Input.value = syn2;
-      }
-      context.SoundManager?.playSuccess();
-      context.showToast("AI translation loaded! You can review and edit before saving.", "success");
-    } catch (err) {
-      console.error("AI translation error:", err);
-      context.SoundManager?.playError();
-      context.showToast("Translation service unavailable. Please enter meaning manually.", "error");
+      const record = await saveWord(formData());
+      if (!sameForm()) return;
+      const stillEditing = singleEntryIsVisible();
+      clearForm();
+      if (submittedEditor?.returnView === 'view-library' && stillEditing) showSavedLibraryCard(record.id);
+      else if (submittedEditor?.returnView === 'view-review' && stillEditing) {
+        context.switchView('view-review');
+        context.showToast('Changes saved.');
+      } else { status('entry-save-status', 'Saved to your library.'); focusEntryWord(); }
+    } catch (error) {
+      if (sameForm()) status('entry-save-status', error.message, true);
     } finally {
-      isAiTranslating = false;
-      btnAiTranslate.disabled = false;
-      btnAiTranslate.classList.add("lightning-pulse", "animate-pulse");
-      if (iconEl) iconEl.className = "ph-fill ph-lightning text-amber-300 text-sm";
-      if (statusLabel) statusLabel.classList.add("hidden");
+      if (ticket === context.accountGeneration) { saving = false; button.disabled = false; }
     }
   });
-  btnConfirmBack?.addEventListener("click", () => {
-    context.SoundManager.playSelect();
-    document.getElementById("entry-phase-2").classList.add("hidden");
-    document.getElementById("entry-phase-1").classList.remove("hidden");
-    document.getElementById("entry-step-indicator").textContent = "Step 1/2 · Enter Vocabulary Info";
+  $('btn-entry-quickfill')?.addEventListener('click', () => void quickFillEntry());
+  $('input-word')?.addEventListener('input', () => { cancelQuickFill(); status('quickfill-status'); status('entry-save-status'); });
+  $('select-entry-topic')?.addEventListener('change', event => { context.draftWord.topic = event.target.value; });
+  $('btn-quick-create-topic')?.addEventListener('click', () => { const box = $('inline-create-topic-box'); box.hidden = !box.hidden; if (!box.hidden) $('input-inline-topic-name').focus(); });
+  $('btn-save-inline-topic')?.addEventListener('click', () => {
+    const name = $('input-inline-topic-name').value.trim(); if (!context.addUserTopic(name)) return;
+    context.draftWord.topic = name; $('input-inline-topic-name').value = ''; $('inline-create-topic-box').hidden = true; renderEntryTopicCards();
   });
-  let isSavingWord = false;
-  btnConfirmSave?.addEventListener("click", async () => {
-    if (isSavingWord) return;
-    const meaning = document.getElementById("confirm-input-meaning").value.trim();
-    if (!meaning) {
-      context.SoundManager.playError();
-      context.showToast("Please enter Vietnamese meaning.", "error");
-      return;
-    }
-    isSavingWord = true;
-    btnConfirmSave.disabled = true;
-    document.getElementById("btn-confirm-save-text").textContent = "Saving...";
-    const recordId = `word_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
-    const record = {
-      id: recordId,
-      username: context.currentUser,
-      word: context.draftWord.word,
-      meaning: meaning,
-      synonym1: document.getElementById("confirm-input-syn1").value.trim(),
-      synonym2: document.getElementById("confirm-input-syn2").value.trim(),
-      topic: context.draftWord.topic || context.DEFAULT_TOPIC,
-      memoryStatus: context.STATUS.NOT_KNOWN,
-      isFavorite: false
-    };
-    try {
-      await context.idbPut("words", record);
-      context.wordsData.push(record);
-      context.addUserTopic(record.topic);
-      context.updateBadges();
-      context.recordLearningActivity("add_word");
-      await context.updateStudentMetadataCount();
-      if (context.db && navigator.onLine) {
-        await context.db.collection("words").doc(recordId).set(record);
-      } else {
-        await context.idbPut("pendingOps", {
-          id: `add_${recordId}`,
-          type: "ADD",
-          data: record
-        });
-      }
-      context.SoundManager.playSuccess();
-      context.showToast(`"${context.draftWord.word}" saved successfully!`, "success");
-      inputWord.value = "";
-      document.getElementById("confirm-input-meaning").value = "";
-      document.getElementById("confirm-input-syn1").value = "";
-      document.getElementById("confirm-input-syn2").value = "";
-      context.draftWord = {
-        word: "",
-        topic: context.DEFAULT_TOPIC,
-        meaning: "",
-        synonym1: "",
-        synonym2: ""
-      };
-      document.getElementById("entry-phase-2").classList.add("hidden");
-      document.getElementById("entry-phase-1").classList.remove("hidden");
-      document.getElementById("entry-step-indicator").textContent = "Step 1/2 · Enter Vocabulary Info";
-    } catch (err) {
-      context.SoundManager.playError();
-      context.showToast("Failed to save word.", "error");
-    } finally {
-      isSavingWord = false;
-      btnConfirmSave.disabled = false;
-      document.getElementById("btn-confirm-save-text").textContent = "Save Word";
-    }
-  });
+}
+function selectTab(ai) {
+  $('entry-phase-1').hidden = ai; $('section-ai-library').hidden = !ai;
+  $('btn-entry-single').setAttribute('aria-selected', String(!ai)); $('btn-toggle-ai-library').setAttribute('aria-selected', String(ai));
+  if (ai) $('ai-raw-words').focus({ preventScroll: true }); else focusEntryWord();
 }
 export function setupQuickImport() {
-  const modal = document.getElementById("modal-quick-import");
-  const toggleBtn = document.getElementById("btn-toggle-ai-library") || document.getElementById("btn-open-quick-import");
-  const aiSec = document.getElementById("section-ai-library");
-  const toggleText = document.getElementById("btn-toggle-ai-library-text");
-  const toggleChevron = document.getElementById("btn-toggle-ai-library-chevron");
-  let isAiLibraryExpanded = false;
-  function updateAiLibraryVisibility(expanded) {
-    isAiLibraryExpanded = !!expanded;
-    if (aiSec) {
-      if (isAiLibraryExpanded) {
-        aiSec.classList.remove("hidden");
-        if (toggleBtn) {
-          toggleBtn.setAttribute("aria-expanded", "true");
-          toggleBtn.title = "Hide AI Library";
-        }
-        if (toggleText) toggleText.textContent = "Hide AI Library";
-        if (toggleChevron) {
-          toggleChevron.classList.remove("ph-caret-down");
-          toggleChevron.classList.add("ph-caret-up");
-        }
-      } else {
-        aiSec.classList.add("hidden");
-        if (toggleBtn) {
-          toggleBtn.setAttribute("aria-expanded", "false");
-          toggleBtn.title = "Open AI Library";
-        }
-        if (toggleText) toggleText.textContent = "AI Library";
-        if (toggleChevron) {
-          toggleChevron.classList.remove("ph-caret-up");
-          toggleChevron.classList.add("ph-caret-down");
-        }
-      }
-    }
-  }
-
-  // Initial state: Collapsed (zero layout footprint apart from button)
-  updateAiLibraryVisibility(false);
-  function handleToggleClick() {
-    context.SoundManager?.playSelect();
-    const phase1 = document.getElementById("entry-phase-1");
-    const phase2 = document.getElementById("entry-phase-2");
-    if (phase1?.classList.contains("hidden")) {
-      phase1.classList.remove("hidden");
-      phase2?.classList.add("hidden");
-      document.getElementById("entry-step-indicator").textContent = "Step 1/2 · Enter Vocabulary Info";
-    }
-    updateAiLibraryVisibility(!isAiLibraryExpanded);
-    if (isAiLibraryExpanded && aiSec) {
-      aiSec.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-      });
-      document.getElementById("import-raw-input")?.focus();
-    }
-  }
-  toggleBtn?.addEventListener("click", handleToggleClick);
-  document.getElementById("btn-open-quick-import")?.addEventListener("click", handleToggleClick);
-  window.toggleAiLibrarySection = updateAiLibraryVisibility;
-  window.isAiLibraryExpanded = () => isAiLibraryExpanded;
-  document.getElementById("btn-close-quick-import")?.addEventListener("click", () => modal?.classList.add("hidden"));
-  document.getElementById("btn-cancel-import")?.addEventListener("click", () => {
-    context.SoundManager?.playSelect();
-    document.getElementById("import-preview-section")?.classList.add("hidden");
-    document.getElementById("import-input-section")?.classList.remove("hidden");
-    modal?.classList.add("hidden");
-  });
-  document.getElementById("btn-copy-template")?.addEventListener("click", () => {
-    navigator.clipboard.writeText(document.getElementById("template-text").innerText).then(() => context.showToast("Copied template!", "success"));
-  });
-  document.getElementById("btn-back-to-input")?.addEventListener("click", () => {
-    document.getElementById("import-input-section")?.classList.remove("hidden");
-    document.getElementById("import-preview-section")?.classList.add("hidden");
-  });
-  document.getElementById("btn-preview-import")?.addEventListener("click", () => {
-    const raw = document.getElementById("import-raw-input").value;
-    context.parsedImportEntries = context.parseMultiTopicMessage(raw);
-    if (context.parsedImportEntries.length === 0) {
-      context.showToast("No valid entries found.", "error");
-      return;
-    }
-    context.renderImportPreview();
-    document.getElementById("import-input-section")?.classList.add("hidden");
-    document.getElementById("import-preview-section")?.classList.remove("hidden");
-  });
-  document.getElementById("btn-execute-import")?.addEventListener("click", async () => {
-    const valid = context.parsedImportEntries.filter(e => e.isValid);
-    if (valid.length === 0) return;
+  window.toggleAiLibrarySection = ai => selectTab(Boolean(ai));
+  $('btn-entry-single')?.addEventListener('click', () => selectTab(false));
+  $('btn-toggle-ai-library')?.addEventListener('click', () => selectTab(true));
+  $('btn-copy-ai-prompt')?.addEventListener('click', async () => {
+    const ticket = context.accountGeneration;
+    let prompt;
+    try { prompt = buildAIPrompt($('ai-raw-words').value); }
+    catch (error) { status('batch-import-status', error.message, true); return; }
     try {
-      const newT = new Set();
-      const batchRecs = [];
-      valid.forEach(e => {
-        const top = e.topic || context.DEFAULT_TOPIC;
-        newT.add(top);
-        const rec = {
-          id: `word_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-          username: context.currentUser,
-          word: e.word,
-          meaning: e.meaning,
-          synonym1: e.synonym1,
-          synonym2: e.synonym2,
-          topic: top,
-          memoryStatus: context.STATUS.NOT_KNOWN,
-          isFavorite: false
-        };
-        context.wordsData.push(rec);
-        batchRecs.push(rec);
-      });
-      newT.forEach(t => context.addUserTopic(t));
-      for (const r of batchRecs) {
-        await context.idbPut("words", r);
-      }
-      context.updateBadges();
-      context.recordLearningActivity("quick_import");
-      await context.updateStudentMetadataCount();
-      context.renderLibrary();
-      if (context.db && navigator.onLine) {
-        const b = context.db.batch();
-        batchRecs.forEach(r => {
-          const ref = context.db.collection("words").doc(r.id);
-          b.set(ref, r);
-        });
-        await b.commit();
-      } else {
-        for (const r of batchRecs) {
-          await context.idbPut("pendingOps", {
-            id: `add_${r.id}`,
-            type: "ADD",
-            data: r
-          });
-        }
-      }
-      context.showToast("Imported successfully!", "success");
-      document.getElementById("import-raw-input").value = "";
-      document.getElementById("import-preview-section")?.classList.add("hidden");
-      document.getElementById("import-input-section")?.classList.remove("hidden");
-      modal?.classList.add("hidden");
-    } catch (e) {
-      context.showToast("Import failed.", "error");
+      await navigator.clipboard.writeText(prompt);
+      if (ticket === context.accountGeneration) status('batch-import-status', 'Prompt copied. Paste it into your AI, then bring back the JSON.');
+    } catch {
+      if (ticket !== context.accountGeneration) return;
+      const preview = $('ai-prompt-preview');
+      preview.hidden = false; $('ai-prompt-preview-label').hidden = false; preview.value = prompt; preview.focus(); preview.select();
+      status('batch-import-status', 'Clipboard unavailable. Copy the selected prompt manually.');
+    }
+  });
+  $('btn-execute-import')?.addEventListener('click', async () => {
+    if (importing || !context.currentUser) return;
+    importing = true;
+    const button = $('btn-execute-import'), ticket = context.accountGeneration;
+    button.disabled = true;
+    try {
+      const entries = parseAIBatch($('import-raw-input').value, $('ai-raw-words').value);
+      const result = await importVocabulary(entries, { overwrite: $('import-opt-overwrite').checked });
+      if (ticket !== context.accountGeneration) return;
+      status('batch-import-status', `${result.added} added · ${result.updated} updated · ${result.skipped} already in your library.`);
+      $('import-raw-input').value = '';
+    } catch (error) {
+      if (ticket === context.accountGeneration) status('batch-import-status', error.message, true);
+    } finally {
+      if (ticket === context.accountGeneration) { importing = false; button.disabled = false; }
     }
   });
 }
-export function parseMultiTopicMessage(text) {
-  const lines = text.split(/\r?\n/);
-  let curT = "";
-  const res = [];
-  lines.forEach((l, idx) => {
-    const line = l.trim();
-    if (!line) return;
-    const tm = line.match(/^Topic\s*:\s*(.+)$/i);
-    if (tm) {
-      curT = tm[1].trim();
-      return;
-    }
-    const p = line.split("|").map(x => x.trim());
-    if (!curT || p.length < 2 || !p[0] || !p[1]) return;
-    const syns = (p[2] || "").split(",").map(s => s.trim()).filter(Boolean);
-    res.push({
-      id: `entry_${idx}`,
-      word: p[0],
-      meaning: p[1],
-      synonym1: syns[0] || "",
-      synonym2: syns[1] || "",
-      topic: curT,
-      isValid: true
-    });
-  });
-  return res;
-}
-export function renderImportPreview() {
-  const list = document.getElementById("import-preview-list");
-  if (!list) return;
-  list.innerHTML = context.parsedImportEntries.map(e => `
-        <div class="p-1.5 rounded-lg border bg-slate-900 border-slate-800 text-slate-200 flex items-center justify-between text-[11px]">
-          <div><strong class="text-white">${context.escapeHtml(e.word)}</strong>: ${context.escapeHtml(e.meaning)} <span class="text-indigo-400">(${context.escapeHtml(e.topic)})</span></div>
-          <button type="button" onclick="removeImportItem('${e.id}')" class="text-slate-500 hover:text-rose-400"><i class="ph-bold ph-trash text-xs"></i></button>
-        </div>
-      `).join('');
-}
-export function install_removeImportItem() {
-  window.removeImportItem = id => {
-    context.parsedImportEntries = context.parsedImportEntries.filter(e => e.id !== id);
-    context.renderImportPreview();
-  };
+export function resetEntryForUser() {
+  clearForm();
+  saving = false; importing = false; quickFillRequest = null;
+  for (const id of ['btn-confirm-save', 'btn-entry-quickfill', 'btn-execute-import']) $(id).disabled = false;
+  for (const id of ['ai-raw-words', 'import-raw-input', 'ai-prompt-preview', 'input-inline-topic-name']) $(id).value = '';
+  $('ai-prompt-preview').hidden = true; $('ai-prompt-preview-label').hidden = true; $('import-opt-overwrite').checked = false;
+  status('entry-save-status'); status('batch-import-status'); selectTab(false);
 }

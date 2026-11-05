@@ -1,0 +1,222 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { createRequire } from 'node:module';
+
+const require = createRequire(process.env.LEXICALSPACE_TEST_MODULES || import.meta.url);
+const { JSDOM } = require('jsdom');
+const { indexedDB, IDBKeyRange } = require('fake-indexeddb');
+
+test('login, profile switch and sign-out restore only the selected profile’s queue, settings and stats', async () => {
+  const markup = await fs.readFile(new URL('../index.html', import.meta.url), 'utf8');
+  const { window } = new JSDOM(markup, { url: 'http://localhost:8769/', pretendToBeVisual: true });
+  const { document, localStorage, sessionStorage } = window;
+  Object.assign(globalThis, { window, document, localStorage, sessionStorage, indexedDB, IDBKeyRange });
+  Object.defineProperty(globalThis, 'navigator', { value: window.navigator, configurable: true });
+  const { context } = await import('../js/core/context.js');
+  const storage = await import('../js/core/idb-manager.js');
+  const flash = await import('../js/features/flashcard.js');
+  const { calendarDay } = await import('../js/core/srs.js');
+  const { loadSettings, saveSettings } = await import('../js/core/settings.js');
+  const $ = id => document.getElementById(id);
+  const nav = target => document.querySelector(`#drawer-navigation [data-target="${target}"]`);
+  const recallDirection = () => $('recall-direction').querySelector('input:checked')?.value;
+  const openProfileMenu = () => {
+    $('user-display').click();
+    assert.equal($('profile-dropdown').hidden, false);
+  };
+  const waitFor = async condition => {
+    for (let i = 0; i < 150; i++) {
+      if (condition()) return;
+      await new Promise(resolve => setTimeout(resolve, 8));
+    }
+    assert.fail('Timed out waiting for the profile view.');
+  };
+  const selectProfile = async name => {
+    $('input-username').value = name;
+    $('btn-login-submit').click();
+    await waitFor(() => context.currentUser === name && !context.profileLoading);
+  };
+  const alpha = 'Profile A';
+  const beta = 'Profile B';
+  assert.equal($('btn-continue-guest').disabled, true);
+  saveSettings(alpha, { autoPronounce: false, recallDirection: 'en-vi', dailyNewLimit: 5, dailyReviewLimit: 12, soundEffects: false });
+  saveSettings(beta, { autoPronounce: false, recallDirection: 'vi-en' });
+  await storage.mutateWords([
+    { id: 'same-id', username: alpha, patch: { word: 'apricot', meaning: 'quả mơ' } },
+    { id: 'same-id', username: beta, patch: { word: 'banana', meaning: 'quả chuối' } }
+  ]);
+  await storage.idbPut('metadata', {
+    key: `practice:v2:${encodeURIComponent(alpha)}:${calendarDay()}`,
+    username: alpha, completedAttempts: 3, successfulIds: ['same-id']
+  });
+  const ready = new Promise(resolve => document.addEventListener('lexicalspace:ready', resolve, { once: true }));
+  await import('../js/features/application.js');
+  await ready;
+  try {
+    assert.equal(document.querySelector('main').inert, true);
+    assert.equal($('btn-continue-guest').disabled, false);
+    await selectProfile(alpha);
+    assert.equal($('fc-front-word').textContent, 'apricot');
+    await flash.revealCard();
+    const resumed = flash.getSessionState().sessionId;
+    assert.equal($('primary-nav'), null);
+    assert.equal($('btn-global-sound'), null);
+    assert.equal($('recall-direction').parentElement, $('view-review'));
+    assert.equal($('recall-direction').nextElementSibling, $('review-flashcard-stage'));
+    assert.deepEqual([...$('recall-direction').querySelectorAll('input[type="radio"]')].map(input => input.value), ['en-vi', 'vi-en']);
+    assert.equal(recallDirection(), 'en-vi');
+    assert.equal($('drawer').querySelector('#btn-logout'), null);
+    assert.equal($('drawer').querySelector('.space-brand'), null);
+    const menuToggle = $('btn-open-drawer');
+    assert.equal(menuToggle.textContent.trim(), '');
+    assert.equal(menuToggle.getAttribute('aria-label'), 'Menu');
+    assert.equal(menuToggle.querySelector('svg').getAttribute('aria-hidden'), 'true');
+    const practiceIcon = menuToggle.innerHTML;
+    assert.ok(menuToggle.querySelector('rect'));
+    assert.equal($('drawer').firstElementChild, $('drawer-navigation'));
+    assert.equal($('drawer-heading'), null);
+    context.switchView('view-library');
+    const libraryIcon = menuToggle.innerHTML;
+    assert.notEqual(libraryIcon, practiceIcon);
+    context.switchView('view-in-class-check');
+    assert.notEqual(menuToggle.innerHTML, libraryIcon);
+    assert.notEqual(menuToggle.innerHTML, practiceIcon);
+    assert.equal(nav('view-in-class-check').getAttribute('aria-current'), 'page');
+    context.switchView('view-review');
+    assert.equal(menuToggle.innerHTML, practiceIcon);
+    assert.equal(nav('view-stats'), null);
+    assert.equal(nav('view-settings'), null);
+    const grammar = $('btn-drawer-grammarspace'), arcade = $('btn-drawer-arcadespace');
+    assert.equal(grammar.href, 'https://vuongtranvt1331-design.github.io/Grammar_Space/');
+    assert.equal(arcade.href, 'https://vuongtranvt1331-design.github.io/Arcadehub/');
+    assert.deepEqual([grammar, arcade].map(link => link.textContent.trim()), ['GrammarSpace', 'ArcadeSpace']);
+    const footer = $('drawer').lastElementChild;
+    assert.equal(footer.tagName, 'FOOTER');
+    assert.match(footer.textContent, /LexicalSpace v\d+\.\d+\.\d+/);
+    assert.match(footer.textContent, /LexicalSpace-v\d+/);
+    assert.match(footer.querySelector('time').dateTime, /^\d{4}-\d{2}-\d{2}$/);
+    assert.equal($('drawer').inert, true);
+    $('btn-open-drawer').click();
+    assert.equal(document.activeElement, nav('view-review'));
+    assert.equal($('btn-open-drawer').getAttribute('aria-expanded'), 'true');
+    assert.equal(document.querySelector('main').inert, true);
+    nav('view-review').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
+    assert.equal(document.activeElement, $('btn-close-drawer'));
+    $('btn-close-drawer').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    assert.equal(document.activeElement, nav('view-review'));
+    $('drawer').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    assert.equal(document.activeElement, $('btn-open-drawer'));
+    assert.equal($('drawer').inert, true);
+    assert.equal(document.querySelector('main').inert, false);
+    $('btn-open-drawer').click();
+    $('btn-practice-panel').click();
+    assert.equal($('drawer-navigation').hidden, true);
+    assert.equal($('practice-panel').hidden, false);
+    assert.equal(document.activeElement, $('practice-panel-heading'));
+    assert.deepEqual([...$('practice-panel').querySelectorAll('h3')].map(h => h.textContent),
+      ['Learning Analytics & Stats', 'Practice Settings & Preferences']);
+    await waitFor(() => $('stats-attempts').textContent === '3');
+    assert.equal($('stats-total').textContent, '1');
+    assert.equal($('stats-recalled').textContent, '1');
+    assert.equal($('setting-daily-new-limit').value, '5');
+    assert.equal($('setting-daily-review-limit').value, '12');
+    assert.equal($('setting-auto-pronounce').checked, false);
+    assert.equal($('setting-sound-effects').checked, false);
+    $('btn-practice-panel-back').focus();
+    $('btn-practice-panel-back').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
+    assert.equal(document.activeElement, $('btn-close-drawer'));
+    $('btn-practice-panel-back').click();
+    assert.equal($('drawer-navigation').hidden, false);
+    assert.equal($('practice-panel').hidden, true);
+    assert.equal(document.activeElement, $('btn-practice-panel'));
+    $('btn-close-drawer').click();
+
+    openProfileMenu();
+    assert.equal($('current-user-name').textContent, alpha);
+    assert.equal(document.activeElement, $('btn-switch-user'));
+    assert.equal($('btn-logout').hidden, false);
+    assert.equal($('btn-profile-sign-in').hidden, true);
+    $('btn-switch-user').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    assert.equal($('profile-dropdown').hidden, true);
+    assert.equal(document.activeElement, $('user-display'));
+    openProfileMenu();
+    document.body.click();
+    assert.equal($('profile-dropdown').hidden, true);
+    openProfileMenu();
+    $('btn-switch-user').click();
+    assert.equal($('profile-dropdown').hidden, true);
+    assert.equal(document.activeElement, $('input-username'));
+    assert.equal($('input-username').value, alpha);
+    await selectProfile(beta);
+    assert.equal($('fc-front-word').textContent, 'quả chuối');
+    assert.equal($('fc-answer-target').textContent, '');
+    assert.notEqual(flash.getSessionState().sessionId, resumed);
+    assert.equal(recallDirection(), 'vi-en');
+    $('recall-en-vi').click();
+    await waitFor(() => loadSettings(beta).recallDirection === 'en-vi' && $('fc-front-word').textContent === 'banana');
+    $('btn-open-drawer').click();
+    $('btn-practice-panel').click();
+    assert.equal($('practice-panel').hidden, false);
+    assert.equal($('setting-daily-new-limit').value, '');
+    assert.equal($('setting-sound-effects').checked, true);
+    assert.equal(recallDirection(), 'en-vi');
+    $('setting-auto-pronounce').checked = true;
+    $('setting-auto-pronounce').dispatchEvent(new window.Event('change'));
+    assert.equal(loadSettings(beta).autoPronounce, true);
+    assert.equal(loadSettings(alpha).autoPronounce, false);
+    await waitFor(() => $('stats-attempts').textContent === '0');
+    $('drawer').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    assert.equal($('practice-panel').hidden, true);
+    assert.equal(document.activeElement, $('btn-open-drawer'));
+
+    openProfileMenu();
+    $('btn-logout').click();
+    assert.equal(context.currentUser, '');
+    assert.deepEqual(context.wordsData, []);
+    assert.equal(flash.getSessionState(), null);
+    assert.equal($('fc-front-word').textContent, '');
+    assert.equal(document.querySelector('main').inert, true);
+    assert.equal($('modal-login').hidden, true);
+    assert.equal(document.activeElement, $('user-display'));
+    openProfileMenu();
+    assert.equal($('btn-switch-user').hidden, true);
+    assert.equal($('btn-logout').hidden, true);
+    assert.equal(document.activeElement, $('btn-profile-sign-in'));
+    $('btn-profile-sign-in').click();
+    assert.equal($('modal-login').hidden, false);
+    await selectProfile(alpha);
+    assert.equal(flash.getSessionState().sessionId, resumed);
+    assert.equal(flash.getSessionState().cardQueue[0].revealed, true);
+    assert.equal($('fc-front-word').textContent, 'apricot');
+
+    openProfileMenu();
+    $('btn-switch-user').click();
+    $('input-username').value = '';
+    $('btn-continue-guest').click();
+    await waitFor(() => context.currentUser === 'Guest' && !context.profileLoading);
+    assert.equal($('modal-login').hidden, true);
+    assert.deepEqual(context.wordsData, []);
+    assert.match($('sync-status').textContent, /saved on this device/);
+    await context.commitVocabularyChanges([{ id: 'guest-word', patch: { word: 'cherry', meaning: 'quả anh đào' } }]);
+    context.recordLearningActivity('practice');
+    assert.equal((await storage.readUserWord('Guest', 'guest-word')).word, 'cherry');
+    assert.deepEqual(await storage.pendingOperations('Guest'), []);
+    assert.equal(await storage.readUserWord(alpha, 'guest-word'), null);
+    assert.deepEqual(Object.keys(context.activityStateByStudent), []);
+    openProfileMenu();
+    assert.equal($('current-user-name').textContent, 'Guest');
+    assert.equal($('btn-switch-user').hidden, true);
+    assert.equal($('btn-logout').hidden, true);
+    $('btn-profile-sign-in').click();
+    assert.equal($('input-username').value, '');
+    $('btn-login-cancel').click();
+    assert.equal($('modal-login').hidden, true);
+    assert.equal(document.activeElement, $('user-display'));
+    assert.equal(context.currentUser, 'Guest');
+  } finally {
+    flash.resetForUser();
+    context.clearActivityTimers();
+    window.close();
+  }
+});

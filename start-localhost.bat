@@ -28,7 +28,7 @@ if errorlevel 1 (
 echo Opening LexicalSpace at http://127.0.0.1:8780/
 echo Keep this window open. An internet connection is required for Firebase.
 echo Press Ctrl+C or close this window to stop.
-%LS_PYTHON% -c "import http.server,webbrowser; server=http.server.ThreadingHTTPServer(('127.0.0.1',8780),http.server.SimpleHTTPRequestHandler); webbrowser.open('http://127.0.0.1:8780/'); server.serve_forever()"
+%LS_PYTHON% serve_local.py
 echo.
 echo The local server stopped. If it did not start, check the message above.
 pause

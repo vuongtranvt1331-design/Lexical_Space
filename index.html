@@ -6,45 +6,34 @@
   <title>LexicalSpace - Smart Vocabulary Notebook</title>
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23818cf8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='%230a1020' stroke='%23818cf8'/%3E%3Ctext x='8' y='39' font-family='sans-serif' font-weight='900' font-size='22' fill='url(%23g)'%3E%3E/_%3C/text%3E%3C/svg%3E">
-  <script src="./js/features/loading-failsafe.js"></script>
-  <script defer src="./js/features/loading.js?v=cinematic4"></script>
 
 
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script async src="https://cdn.tailwindcss.com"></script>
   <!-- Phosphor Icons CDN -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script async src="https://unpkg.com/@phosphor-icons/web"></script>
   <!-- Google Fonts: Plus Jakarta Sans, Be Vietnam Pro -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 
-  <!-- Firebase v10 Compat SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-
+  <script src="./js/features/loading-failsafe.js"></script>
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/animations.css">
+  <link rel="stylesheet" href="./css/recall-ui.css?v=39">
+  <link rel="stylesheet" href="./css/entry-ui.css">
+  <script defer src="./js/features/loading.js"></script>
   <script defer src="./js/core/offline.js"></script>
 </head>
 <body class="flex flex-col antialiased selection:bg-indigo-500 selection:text-white overflow-hidden">
-  <!-- Shared cinematic loader: animations and audio use one media clock. -->
-  <section id="space-loader" class="space-loader space-loader--ls" data-space-loader="ls" role="status" aria-label="Loading LexicalSpace" aria-busy="true">
-    <audio data-loader-audio preload="auto" src="assets/ls-loading-normalized.wav?v=cinematic2" hidden></audio>
-    <div class="space-loader__stage" aria-hidden="true">
-      <div class="space-loader__logo">
-        <div class="space-brand space-brand--ls"><span class="space-brand__mark">&gt;/_</span></div>
-      </div>
-      <div class="space-loader__prompt"><span data-loader-lead>&gt; /_</span><span data-loader-text></span><span class="space-loader__cursor" data-loader-cursor>_</span></div>
+  <section id="space-loader" class="startup-loader" role="status" aria-label="Opening LexicalSpace">
+    <div class="startup-panel"><div class="startup-mark" aria-hidden="true">&gt;/_</div>
+      <p class="startup-type" aria-hidden="true"><span data-loader-text></span><span class="startup-caret">_</span></p>
+      <p>Opening your library…</p>
     </div>
   </section>
-  <noscript><link rel="stylesheet" href="./css/no-script.css"></noscript>
 
-  <!-- ================= SMALL FLOATING TOP SWIPE FEEDBACK PILL ================= -->
-  <div id="swipe-toast-pill" class="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black tracking-wide border shadow-xl backdrop-blur-md">
-    <i id="swipe-toast-icon" class="ph-bold text-xs"></i>
-    <span id="swipe-toast-text">Known</span>
-  </div>
+<noscript><link rel="stylesheet" href="./css/no-script.css"></noscript>
 
   <!-- Regular Alert Toast Notification -->
   <div id="toast" class="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-2xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none translate-y-[-20px] font-bold text-xs max-w-[92vw] text-center bg-slate-800 text-white border border-slate-700">
@@ -52,35 +41,28 @@
     <span id="toast-msg">Notification</span>
   </div>
 
-  <!-- Mobile Header -->
-  <header class="flex-shrink-0 bg-[#0c1322]/95 backdrop-blur-md border-b border-slate-800/80 px-3 py-2 flex items-center justify-between shadow-sm z-30">
-    <div class="flex items-center gap-2">
-      <div class="relative flex items-center">
-        <button id="btn-open-drawer" aria-label="Open Menu" class="min-w-[42px] min-h-[42px] flex items-center justify-center rounded-xl bg-slate-800/80 hover:bg-slate-700 active:scale-95 transition-all text-slate-200 border border-slate-700/60 relative">
-          <i class="ph-bold ph-list text-xl"></i>
-        </button>
-      </div>
-      <div class="flex items-center gap-1.5">
-        <div class="space-brand space-brand--ls" style="--space-brand-size:2rem" title="LexicalSpace Flashcard"><span class="space-brand__mark">&gt;/_</span></div>
-        <h1 class="text-base sm:text-lg font-black tracking-tight text-white">
-          Lexical<span class="text-indigo-400">Space</span>
-        </h1>
+  <!-- Top bar -->
+  <header class="app-topbar flex-shrink-0 bg-[#0c1322]/95 backdrop-blur-md border-b border-slate-800/80 shadow-sm z-30">
+    <div class="topbar-brand">
+      <button id="btn-open-drawer" type="button" aria-label="Menu" title="Menu" aria-controls="drawer" aria-expanded="false" aria-haspopup="dialog" class="drawer-control topbar-menu-button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="13" height="14" rx="2"/><path d="M4 17V5a2 2 0 0 1 2-2h11"/></svg>
+      </button>
+      <div class="topbar-wordmark">
+        <div class="space-brand space-brand--ls" style="--space-brand-size:2rem" aria-hidden="true"><span class="space-brand__mark">&gt;/_</span></div>
+        <h1 class="font-black tracking-tight text-white">Lexical<span class="text-indigo-400">Space</span></h1>
       </div>
     </div>
 
-    <!-- Active User, Sound Toggle & Header Status -->
-    <div class="flex items-center gap-1.5">
-      <button id="btn-global-sound" type="button" title="Toggle UI Sounds" aria-label="Toggle Sound" class="min-w-[38px] min-h-[38px] flex items-center justify-center rounded-xl bg-slate-800/90 hover:bg-slate-700 text-[#D4AF37] border border-slate-700/70 active:scale-95 transition-all">
-        <i id="global-sound-icon" class="ph-bold ph-speaker-high text-base"></i>
+    <div class="profile-menu-anchor">
+      <button id="user-display" type="button" class="profile-avatar-button" aria-label="Profile menu" aria-controls="profile-dropdown" aria-expanded="false">
+        <span id="header-user-avatar" aria-hidden="true">–</span>
+        <span id="connection-dot" class="profile-connection-dot" aria-hidden="true" hidden></span>
       </button>
-
-      <!-- Active User Display with Integrated Online Green Dot on Avatar -->
-      <div id="user-display" class="min-h-[38px] px-2.5 flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl cursor-pointer active:scale-95 transition-all border border-slate-700/70">
-        <div class="relative w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 shadow-sm">
-          <span id="header-user-avatar">S</span>
-          <span id="connection-dot" class="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-slate-900 transition-colors"></span>
-        </div>
-        <span id="current-user-name" class="max-w-[70px] truncate">Student</span>
+      <div id="profile-dropdown" class="profile-dropdown" role="group" aria-label="Profile actions" hidden>
+        <p id="current-user-name" class="profile-menu-name">Signed out</p>
+        <button id="btn-switch-user" type="button" aria-haspopup="dialog" hidden>Switch Profile</button>
+        <button id="btn-logout" type="button" hidden>Sign Out</button>
+        <button id="btn-profile-sign-in" type="button" aria-haspopup="dialog">Sign In</button>
       </div>
     </div>
   </header>
@@ -88,76 +70,129 @@
 
 
   <!-- Navigation Drawer -->
-  <div id="drawer-backdrop" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
-  <aside id="drawer" class="fixed top-0 bottom-0 left-0 z-50 w-72 max-w-[85vw] bg-slate-900 border-r border-slate-800 shadow-2xl transition-transform duration-300 ease-out -translate-x-full flex flex-col">
-    <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-      <div class="flex items-center gap-2"><div class="space-brand space-brand--ls" style="--space-brand-size:2rem"><span class="space-brand__mark">&gt;/_</span></div><h2 class="font-extrabold text-white text-base tracking-tight">Lexical<span class="text-indigo-400">Space</span></h2></div>
-      <button id="btn-close-drawer" class="min-w-[40px] min-h-[40px] rounded-xl flex items-center justify-center text-slate-400 hover:text-white active:bg-slate-800 transition-colors">
-        <i class="ph-bold ph-x text-lg"></i>
-      </button>
-    </div>
-
-    <!-- Hidden element anchors to preserve existing JS event listeners without DOM errors -->
-    <div class="hidden" aria-hidden="true">
-      <span id="drawer-user-avatar"></span>
-      <span id="drawer-connection-dot"></span>
-      <span id="drawer-user-name"></span>
-      <button id="btn-switch-user" type="button"></button>
-    </div>
-
-    <nav class="p-2.5 space-y-1.5 flex-1 overflow-y-auto">
-      <button data-target="view-review" class="nav-item min-h-[48px] w-full flex items-center gap-3 px-3.5 rounded-xl font-bold text-sm bg-indigo-600 text-white transition-all active:scale-[0.98]">
-        <i class="ph-bold ph-cards text-xl text-indigo-300"></i>
-        <div class="flex-1 text-left flex items-center justify-between">
-          <span>Learning & Review</span>
-          <span id="badge-review-count" class="bg-indigo-900/80 text-indigo-200 text-xs px-2 py-0.5 rounded-full font-black border border-indigo-700/50">0</span>
-        </div>
+  <div id="drawer-backdrop" aria-hidden="true" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <div id="drawer" role="dialog" aria-modal="true" aria-label="Navigation" inert class="fixed top-0 bottom-0 left-0 z-50 w-72 max-w-[85vw] bg-slate-900 border-r border-slate-800 shadow-2xl transition-transform duration-300 ease-out -translate-x-full flex flex-col">
+    <nav id="drawer-navigation" class="drawer-nav p-2.5 space-y-1.5 flex-1 overflow-y-auto" aria-label="Main navigation">
+      <button type="button" data-target="view-review" aria-current="page" class="nav-item">
+        <i class="ph-bold ph-cards" aria-hidden="true"></i>
+        <span class="drawer-nav-label">Practice</span>
+        <span id="badge-review-count" class="drawer-count" title="Words remaining in the selected practice mode and topic" aria-hidden="true">0</span>
       </button>
 
-      <button data-target="view-entry" class="nav-item min-h-[48px] w-full flex items-center gap-3 px-3.5 rounded-xl font-bold text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all active:scale-[0.98]">
-        <i class="ph-bold ph-plus-circle text-xl text-emerald-300"></i>
-        <span>Add New Words</span>
+      <button type="button" data-target="view-library" class="nav-item">
+        <i class="ph-bold ph-books" aria-hidden="true"></i>
+        <span class="drawer-nav-label">Library</span>
+        <span id="badge-library-count" class="drawer-count" aria-hidden="true">0</span>
       </button>
 
-      <button data-target="view-library" class="nav-item min-h-[48px] w-full flex items-center gap-3 px-3.5 rounded-xl font-bold text-sm text-slate-300 hover:bg-slate-800 hover:text-white transition-all active:scale-[0.98]">
-        <i class="ph-bold ph-books text-xl text-blue-400"></i>
-        <div class="flex-1 text-left flex items-center justify-between">
-          <span>Vocabulary Library</span>
-          <span id="badge-library-count" class="bg-slate-800 text-slate-300 text-xs px-2.5 py-0.5 rounded-full font-black border border-slate-700">0</span>
-        </div>
+      <button type="button" data-target="view-in-class-check" class="nav-item">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3m-6 9 2 2 4-4"/></svg>
+        <span class="drawer-nav-label">In-Class Check</span>
       </button>
 
-      <!-- Application launchers -->
-      <div class="pt-2.5 mt-2.5 border-t border-slate-800/80">
-        <a id="btn-drawer-grammarspace" href="https://vuongtranvt1331-design.github.io/Grammar_Space/" class="min-h-[48px] w-full flex items-center gap-3 px-3.5 mb-2 rounded-xl font-extrabold text-sm text-indigo-300 bg-gradient-to-r from-indigo-950/40 via-purple-950/30 to-transparent hover:from-indigo-900/50 hover:to-purple-900/30 transition-all active:scale-[0.98] border border-indigo-500/30 group" title="Launch Grammar Space">
-          <span class="text-xl group-hover:scale-110 transition-transform" aria-hidden="true">📚</span>
-          <div class="flex-1 text-left flex items-center justify-between">
-            <span class="tracking-wide">Grammar Space</span>
-            <span class="bg-indigo-400/20 text-indigo-300 text-[10px] px-2 py-0.5 rounded-full font-black border border-indigo-400/40 tracking-wider">LEARN</span>
-          </div>
+      <button type="button" data-target="view-entry" class="nav-item">
+        <i class="ph-bold ph-plus-circle" aria-hidden="true"></i>
+        <span class="drawer-nav-label">Add New Words</span>
+      </button>
+
+      <button id="btn-practice-panel" type="button" class="nav-item" aria-controls="practice-panel">
+        <i class="ph-bold ph-chart-bar" aria-hidden="true"></i>
+        <span class="drawer-nav-label">Practice &amp; Progress</span>
+      </button>
+
+      <div class="drawer-app-links">
+        <a id="btn-drawer-grammarspace" class="nav-item" href="https://vuongtranvt1331-design.github.io/Grammar_Space/">
+          <i class="ph-bold ph-book-open-text" aria-hidden="true"></i>
+          <span class="drawer-nav-label">GrammarSpace</span>
         </a>
-
-        <a id="btn-drawer-arcadespace" href="https://vuongtranvt1331-design.github.io/Arcadehub/" class="min-h-[48px] w-full flex items-center gap-3 px-3.5 rounded-xl font-extrabold text-sm text-cyan-300 bg-gradient-to-r from-cyan-950/40 via-purple-950/30 to-transparent hover:from-cyan-900/50 hover:to-purple-900/30 transition-all active:scale-[0.98] border border-cyan-500/30 shadow-[0_0_12px_rgba(0,240,255,0.15)] group" title="Launch Arcade Space">
-          <span class="text-xl group-hover:scale-110 transition-transform">🕹️</span>
-          <div class="flex-1 text-left flex items-center justify-between">
-            <span class="tracking-wide">Arcade Space</span>
-            <span class="bg-cyan-400/20 text-cyan-300 text-[10px] px-2 py-0.5 rounded-full font-black border border-cyan-400/40 tracking-wider">PLAY</span>
-          </div>
+        <a id="btn-drawer-arcadespace" class="nav-item" href="https://vuongtranvt1331-design.github.io/Arcadehub/">
+          <i class="ph-bold ph-game-controller" aria-hidden="true"></i>
+          <span class="drawer-nav-label">ArcadeSpace</span>
         </a>
       </div>
+
+      <p id="sync-status" class="sync-status" role="status" aria-live="polite">Opening local library…</p>
     </nav>
 
-    <!-- Sidebar Footer Signature -->
-    <div class="flex-shrink-0 px-4 py-3.5 border-t border-slate-800/80 text-center select-none pointer-events-none">
-      <p class="text-[11px] font-semibold text-slate-400/80 tracking-wide font-mono">build28.2.1stable</p>
-    </div>
-  </aside>
+    <section id="practice-panel" class="practice-panel" aria-labelledby="practice-panel-heading" hidden>
+      <header class="practice-panel-title">
+        <button id="btn-practice-panel-back" type="button" aria-label="Back to navigation" class="drawer-control drawer-icon-button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7m-7 7h14"/></svg>
+        </button>
+        <h2 id="practice-panel-heading" tabindex="-1">Practice &amp; Progress</h2>
+      </header>
+      <section class="practice-panel-group" aria-labelledby="stats-heading">
+        <h3 id="stats-heading">Learning Analytics &amp; Stats</h3>
+        <div class="profile-section">
+          <h4>Today</h4>
+          <dl class="stats-grid">
+            <div><dt>Recall attempts</dt><dd id="stats-attempts">0</dd></div>
+            <div><dt>Words recalled</dt><dd id="stats-recalled">0</dd></div>
+          </dl>
+        </div>
+        <div class="profile-section">
+          <h4>Library</h4>
+          <dl class="stats-grid">
+            <div><dt>Total words</dt><dd id="stats-total">0</dd></div>
+            <div><dt>New words</dt><dd id="stats-new">0</dd></div>
+            <div><dt>Reviews due</dt><dd id="stats-due">0</dd></div>
+            <div><dt>Mastered</dt><dd id="stats-mastered">0</dd></div>
+          </dl>
+        </div>
+      </section>
+      <section class="practice-panel-group" aria-labelledby="practice-preferences-heading">
+        <h3 id="practice-preferences-heading">Practice Settings &amp; Preferences</h3>
+        <div class="profile-section settings-fields">
+          <h4>Daily limits</h4>
+          <p id="settings-limit-help">Leave a limit blank for unlimited. Use 0 to skip that category. Missed-card retries do not count again.</p>
+          <div class="settings-limit-grid">
+            <label>Maximum new words per day
+              <input id="setting-daily-new-limit" class="entry-input" type="number" min="0" step="1" max="9007199254740991"
+                inputmode="numeric" placeholder="Unlimited" aria-describedby="settings-limit-help">
+            </label>
+            <label>Maximum review cards per day
+              <input id="setting-daily-review-limit" class="entry-input" type="number" min="0" step="1" max="9007199254740991"
+                inputmode="numeric" placeholder="Unlimited" aria-describedby="settings-limit-help">
+            </label>
+          </div>
+        </div>
+        <div class="profile-section settings-fields">
+          <h4>Audio and sound</h4>
+          <label class="entry-check"><input id="setting-auto-pronounce" type="checkbox" checked> Auto-pronounce words</label>
+          <label class="entry-check"><input id="setting-sound-effects" type="checkbox" checked> Sound effects</label>
+          <p>In Vietnamese to English recall, pronunciation waits until you check or reveal the answer.</p>
+        </div>
+      </section>
+    </section>
+    <footer class="drawer-footer">
+      <div class="drawer-build">
+        <p>LexicalSpace v39.0.0 <span class="drawer-build-ref">LexicalSpace-v39</span></p>
+        <p>Updated <time datetime="2026-11-06">Nov 6, 2026</time></p>
+      </div>
+      <button id="btn-close-drawer" type="button" aria-label="Close menu" class="drawer-control drawer-icon-button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </footer>
+  </div>
 
   <!-- ================= MAIN CONTAINER ================= -->
   <main class="flex-1 w-full max-w-md mx-auto px-3 py-1 flex flex-col justify-between overflow-hidden">
 
     <!-- ================= VIEW 1: LEARNING & REVIEW TAB ================= -->
     <section id="view-review" class="view-panel h-full flex flex-col justify-between pt-1 pb-1">
+      <fieldset id="recall-direction" class="recall-direction-switch" disabled>
+        <legend class="recall-direction-legend">Recall direction</legend>
+        <div class="recall-direction-segments">
+          <label>
+            <input id="recall-en-vi" name="recall-direction" type="radio" value="en-vi" checked>
+            <span>English → Vietnamese</span>
+          </label>
+          <label>
+            <input id="recall-vi-en" name="recall-direction" type="radio" value="vi-en">
+            <span>Vietnamese → English</span>
+          </label>
+        </div>
+      </fieldset>
 
       <!-- 1. PRIMARY FOCUS: Compact Flashcard Stage at the Very Top -->
       <div id="review-flashcard-stage" class="flex-1 flex items-stretch justify-center min-h-0 pb-1.5">
@@ -175,11 +210,11 @@
             
             <div id="session-stats-box" class="w-full max-w-xs my-2.5 bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 space-y-1 text-left font-bold text-xs">
               <div class="flex items-center justify-between text-emerald-400">
-                <span class="flex items-center gap-1"><i class="ph-bold ph-check text-sm"></i> Words Known:</span>
+                <span class="flex items-center gap-1"><i class="ph-bold ph-check text-sm"></i> Successfully recalled:</span>
                 <span id="stat-known-count" class="text-sm font-black">0</span>
               </div>
               <div class="flex items-center justify-between text-rose-400 border-t border-slate-800/80 pt-1">
-                <span class="flex items-center gap-1"><i class="ph-bold ph-x text-sm"></i> Words Not Known:</span>
+                <span class="flex items-center gap-1"><i class="ph-bold ph-x text-sm"></i> Still awaiting recall:</span>
                 <span id="stat-unknown-count" class="text-sm font-black">0</span>
               </div>
             </div>
@@ -191,120 +226,66 @@
               </button>
               <button id="btn-session-restart" class="min-h-[40px] w-full py-1.5 px-3 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-extrabold text-xs rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-1.5">
                 <i class="ph-bold ph-arrows-clockwise text-sm text-slate-300"></i>
-                <span>Study Again</span>
+                <span>Check for more cards</span>
               </button>
             </div>
           </div>
 
-          <!-- Flashcard -->
-          <div id="swipe-card" class="w-full h-full max-h-[290px] sm:max-h-[310px] relative cursor-grab active:cursor-grabbing select-none my-auto">
-            <div id="card-inner" class="flip-card-inner">
-              
-              <!-- FRONT FACE -->
-              <div id="card-face-front" class="card-face playing-card-frame p-3.5 flex flex-col justify-between">
-                <!-- Top: Topic Badge above the word on left; Card Counter on right -->
-                <div class="flex items-center justify-between w-full">
-                  <span id="fc-front-topic-badge" class="inline-block font-bold text-[10px] uppercase tracking-wider text-[#F3D060] bg-slate-950 border border-[#D4AF37]/35 px-2.5 py-0.5 rounded max-w-[170px] sm:max-w-[220px] truncate" title="Topic Name">
-                    Topic Name
-                  </span>
-                  <div class="flex items-center gap-1.5">
-                    <span id="card-num-front" class="text-xs font-bold text-slate-400">
-                      01 / 25
-                    </span>
-                  </div>
-                </div>
-
-                <!-- Center: Vocabulary word as main focal point & supporting controls below -->
-                <div class="text-center my-auto px-2 pointer-events-none">
-                  <h2 id="fc-front-word" class="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight break-words">
-                    Word
-                  </h2>
-
-                  <div class="mt-3.5 flex items-center justify-center gap-3.5 pointer-events-auto">
-                    <!-- Favorite Toggle Button (Heart beside Speaker) -->
-                    <button type="button" id="btn-fc-fav" aria-label="Favorite word" title="Favorite Word ♡" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-indigo-600 hover:bg-indigo-500 active:scale-90 text-white flex items-center justify-center shadow-md border border-indigo-400/30 transition-all relative">
-                      <i id="fc-fav-icon" class="ph-bold ph-heart text-base text-white"></i>
-                    </button>
-
-                    <!-- Speaker Button (Preserved) -->
-                    <button type="button" id="btn-fc-sound" aria-label="Pronounce word" title="Pronounce Word" class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-full bg-indigo-600 hover:bg-indigo-500 active:scale-90 text-white flex items-center justify-center shadow-md border border-indigo-400/30 transition-all">
-                      <i class="ph-fill ph-speaker-high text-base"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Bottom: Minimal directional swipe instructions -->
-                <div class="flex items-center justify-between text-[10px] font-bold text-slate-400 pt-1.5 border-t border-slate-800/60 px-1 select-none pointer-events-none">
-                  <span class="flex items-center gap-1 text-slate-400" title="Swipe left"><i class="ph-bold ph-arrow-left text-xs text-rose-400"></i><span class="text-[9px] uppercase tracking-wider">Swipe left</span></span>
-                  <span class="flex items-center gap-1 text-slate-400" title="Swipe up"><i class="ph-bold ph-arrow-up text-xs text-amber-300"></i><span class="text-[9px] uppercase tracking-wider">Swipe up</span></span>
-                  <span class="flex items-center gap-1 text-slate-400" title="Swipe right"><span class="text-[9px] uppercase tracking-wider">Swipe right</span> <i class="ph-bold ph-arrow-right text-xs text-emerald-400"></i></span>
-                </div>
-              </div>
-
-              <!-- BACK FACE -->
-              <div id="card-face-back" class="card-face card-face-back playing-card-frame-back text-white p-3.5 flex flex-col justify-between">
-                <!-- Top: Topic Badge on left; Card Counter on right -->
-                <div class="flex items-center justify-between w-full">
-                  <span id="fc-back-topic-badge" class="inline-block font-bold text-[10px] uppercase tracking-wider text-[#F3D060] bg-slate-950 border border-[#D4AF37]/35 px-2.5 py-0.5 rounded max-w-[170px] sm:max-w-[220px] truncate" title="Topic Name">
-                    Topic Name
-                  </span>
-                  <div class="flex items-center gap-1.5">
-                    <span id="card-num-back" class="text-xs font-bold text-slate-400">
-                      01 / 25
-                    </span>
-                  </div>
-                </div>
-
-                <div class="flex-1 flex flex-col justify-center space-y-1.5 px-1 overflow-y-auto min-h-0 pointer-events-none my-1">
-                  <!-- Original Word Box -->
-                  <div class="bg-slate-950/80 px-3 py-1.5 rounded-xl border border-slate-800 flex items-center justify-between gap-2 pointer-events-auto">
-                    <h3 id="fc-back-word-title" class="text-sm font-black text-white leading-tight break-words">
-                      Word
-                    </h3>
-                    <button type="button" id="btn-fc-back-sound" aria-label="Pronounce original word" title="Pronounce Word" class="min-w-[30px] min-h-[30px] rounded-lg bg-indigo-600 hover:bg-indigo-500 active:scale-90 text-white flex items-center justify-center flex-shrink-0 transition-all">
-                      <i class="ph-fill ph-speaker-high text-xs"></i>
-                    </button>
-                  </div>
-
-                  <!-- Vietnamese Meaning -->
-                  <div class="bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-800/80">
-                    <p id="fc-back-meaning" class="text-sm font-bold leading-snug text-slate-100 break-words">
-                      Meaning
-                    </p>
-                  </div>
-
-                  <!-- Synonyms -->
-                  <div id="fc-synonyms-block" class="space-y-1 pt-0.5">
-                    <div id="fc-back-synonyms-list" class="flex flex-col gap-1 pointer-events-auto"></div>
-                  </div>
-                </div>
-
-                <!-- Bottom: Minimal directional swipe instructions -->
-                <div class="flex items-center justify-between text-[10px] font-bold text-slate-400 pt-1.5 border-t border-slate-800/60 px-1 select-none flex-shrink-0 pointer-events-none">
-                  <span class="flex items-center gap-1 text-slate-400" title="Swipe left"><i class="ph-bold ph-arrow-left text-xs text-rose-400"></i><span class="text-[9px] uppercase tracking-wider">Swipe left</span></span>
-                  <span class="flex items-center gap-1 text-slate-400" title="Swipe up"><i class="ph-bold ph-arrow-up text-xs text-amber-300"></i><span class="text-[9px] uppercase tracking-wider">Swipe up</span></span>
-                  <span class="flex items-center gap-1 text-slate-400" title="Swipe right"><span class="text-[9px] uppercase tracking-wider">Swipe right</span> <i class="ph-bold ph-arrow-right text-xs text-emerald-400"></i></span>
-                </div>
-              </div>
-
+          <article id="practice-card" class="retrieval-card" aria-label="Vocabulary recall card">
+            <div class="library-toolbar recall-card-tools" role="group" aria-label="Flashcard actions">
+              <button id="btn-fc-reveal" class="library-rail-button" data-action="flip" type="button" aria-label="Flip card (Space)" title="Flip card (Space)" aria-keyshortcuts="Space" aria-controls="fc-answer" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-4-4m6 12H6l4 4M4 8v5m16 3v-5"/></svg>
+              </button>
+              <button id="btn-fc-previous" class="library-rail-button" data-action="previous" type="button" aria-label="Previous card" title="Previous card" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+              </button>
+              <button id="btn-fc-fav" class="library-rail-button" data-action="favorite" type="button" aria-label="Favorite word" title="Favorite word" aria-pressed="false">
+                <svg id="fc-fav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+              </button>
+              <button id="btn-fc-sound" class="library-rail-button" data-action="audio" type="button" aria-label="Pronounce word (R)" title="Pronounce word (R)" aria-keyshortcuts="R">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m11 5-6 4H2v6h3l6 4V5Zm4 3a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>
+              </button>
+              <button id="btn-fc-edit" class="library-rail-button" data-action="edit" type="button" aria-label="Edit word" title="Edit word">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 4 5 5M4 20l5-1L21 7a2 2 0 0 0-5-5L4 14v6Z"/></svg>
+              </button>
+              <button id="btn-fc-delete" class="library-rail-button" data-action="delete" type="button" aria-label="Delete word" title="Delete word">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></svg>
+              </button>
             </div>
-          </div>
-
-          <!-- Special 15-Swipe Easter Egg Collectible Card Container -->
-          <div id="easter-egg-card-container" class="hidden w-full h-full max-h-[290px] sm:max-h-[310px] relative select-none my-auto perspective-container cursor-pointer">
-            <div id="ee-card-inner" class="flip-card-inner">
-              <!-- FRONT FACE -->
-              <div id="ee-card-face-front" class="card-face rounded-2xl overflow-hidden shadow-2xl">
-              </div>
-
-              <!-- BACK FACE -->
-              <div id="ee-card-face-back" class="card-face card-face-back rounded-2xl overflow-hidden shadow-2xl">
+            <div class="recall-card-content">
+              <div class="recall-card-header"><span id="fc-front-topic-badge"></span><span id="card-num-front"></span></div>
+              <p id="fc-word-meta" class="word-meta"></p>
+              <h2><button id="fc-front-word" type="button" title="Flip card (Space)" aria-controls="fc-answer" aria-expanded="false"></button></h2>
+              <p id="fc-front-context" class="context-example"></p>
+              <p id="fc-prompt-collocations" class="prompt-collocations" hidden></p>
+              <form id="reverse-recall-form" class="reverse-recall-form" hidden autocomplete="off">
+                <label for="recall-answer-input" class="visually-hidden">English word or phrase</label>
+                <input id="recall-answer-input" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Type the English word…" aria-describedby="reverse-recall-help" maxlength="200">
+                <button type="submit" aria-label="Check English answer" title="Check answer (Enter)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></button>
+                <p id="reverse-recall-help">Enter to check · Target word or synonym</p>
+              </form>
+              <p id="recall-feedback" class="recall-feedback" role="status" aria-live="polite" hidden></p>
+              <p id="recall-instruction" class="recall-instruction">Recall the meaning before revealing the answer.</p>
+              <div id="fc-answer" class="hidden recall-answer" aria-hidden="true" hidden>
+                <h3 id="fc-answer-label">Meaning</h3><p id="fc-answer-target" class="answer-target" hidden></p><p id="fc-back-meaning"></p><p id="fc-back-sense"></p>
+                <p id="fc-answer-context" class="context-example"></p>
+                <h3>Collocations</h3><p id="fc-collocations"></p>
+                <h3>Related words</h3><p id="fc-back-synonyms-list"></p>
               </div>
             </div>
-          </div>
+          </article>
         </div>
       </div>
 
+      <div id="retrieval-controls" class="retrieval-controls">
+        <div class="recall-action-bar" role="group" aria-label="Recall actions">
+          <button type="button" class="grade-button grade-0" data-recall-grade="0" aria-keyshortcuts="1" disabled>Again <kbd>1</kbd></button>
+          <button type="button" class="grade-button grade-1" data-recall-grade="1" aria-keyshortcuts="2" disabled>Hard <kbd>2</kbd></button>
+          <button type="button" class="grade-button grade-2" data-recall-grade="2" aria-keyshortcuts="3" disabled>Good <kbd>3</kbd></button>
+          <button type="button" class="grade-button grade-3" data-recall-grade="3" aria-keyshortcuts="4" disabled>Easy <kbd>4</kbd></button>
+          <button id="btn-fc-next" class="grade-button practice-next-button" type="button" hidden>Next card</button>
+        </div>
+      </div>
       <!-- Favorites Collection View in Review Screen -->
       <div id="review-favorites-container" class="hidden flex-1 overflow-y-auto space-y-2 py-1 pr-0.5 min-h-0"></div>
 
@@ -330,23 +311,20 @@
           </button>
         </div>
 
-        <!-- Bottom Controls: [Unknown] [♡ Favorites Mode] [Known] -->
+        <!-- Practice modes -->
         <div class="flex items-center gap-2 w-full">
-          <!-- Unknown Button (previously Learning) -->
-          <button id="btn-mode-learning" type="button" class="flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 bg-indigo-600 text-white border-indigo-500 shadow-sm active:scale-95 truncate" title="Unknown Vocabulary" aria-label="Unknown Vocabulary">
-            <i class="ph-bold ph-warning-circle text-base flex-shrink-0 text-amber-400"></i>
-            <span class="truncate">Unknown</span>
+          <button id="btn-mode-learning" type="button" aria-pressed="true" class="practice-mode-button flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 active:scale-95 truncate" title="Daily practice" aria-label="Daily practice">
+            <i class="ph-bold ph-warning-circle text-base flex-shrink-0"></i>
+            <span class="truncate">Daily practice</span>
           </button>
 
-          <!-- Round Central Favorite Button (Favorites Mode) -->
-          <button type="button" id="btn-bottom-fav" aria-label="Favorites Mode" title="Favorites Mode" class="w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center shadow-md transition-all active:scale-90 border bg-slate-900 hover:bg-slate-800 border-slate-800 text-white relative">
-            <i id="bottom-fav-icon" class="ph-bold ph-heart text-xl text-white"></i>
+          <button type="button" id="btn-bottom-fav" aria-label="Favorites Mode" title="Favorites Mode" aria-pressed="false" class="practice-mode-button w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center transition-all active:scale-90 border relative">
+            <i id="bottom-fav-icon" class="ph-bold ph-heart text-xl"></i>
           </button>
 
-          <!-- Known Button (previously Review) -->
-          <button id="btn-mode-review" type="button" class="flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 bg-slate-900 text-slate-300 border-slate-800 hover:bg-slate-800 active:scale-95 truncate" title="Known Vocabulary" aria-label="Known Vocabulary">
+          <button id="btn-mode-review" type="button" aria-pressed="false" class="practice-mode-button flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 active:scale-95 truncate" title="Due reviews" aria-label="Due reviews">
             <i class="ph-bold ph-check-circle text-base flex-shrink-0"></i>
-            <span class="truncate">Known</span>
+            <span class="truncate">Due reviews</span>
           </button>
         </div>
       </div>
@@ -354,219 +332,53 @@
     </section>
 
     <!-- ================= VIEW 2: ADD NEW WORDS TAB ================= -->
-    <section id="view-entry" class="view-panel hidden h-full overflow-x-hidden overflow-y-auto no-scrollbar">
-      <div id="entry-adaptive-wrapper" class="keyboard-adaptive-container py-1">
-        <div class="playing-card-frame rounded-2xl p-3.5 sm:p-4 space-y-3 max-w-sm sm:max-w-md mx-auto w-full my-auto relative">
-          
-          <div class="flex items-center justify-between border-b border-slate-800/80 pb-2 gap-2">
-            <div class="min-w-0">
-              <div class="flex items-center gap-1.5">
-                <div class="space-brand space-brand--ls" style="--space-brand-size:1.75rem"><span class="space-brand__mark">&gt;/_</span></div>
-                <span class="text-white font-black text-sm tracking-tight truncate">Add New Words</span>
-              </div>
-              <p id="entry-step-indicator" class="text-[10px] font-extrabold uppercase tracking-wider text-[#F3D060] mt-0.5">
-                Step 1/2 · Enter Vocabulary Info
-              </p>
-            </div>
+    <section id="view-entry" class="view-panel hidden entry-view">
+      <header class="entry-heading"><p>Vocabulary</p><h2 id="entry-heading">Add to your library</h2></header>
+      <div class="entry-tabs" role="tablist" aria-label="Vocabulary entry">
+        <button id="btn-entry-single" type="button" role="tab" aria-controls="entry-phase-1" aria-selected="true">Single word</button>
+        <button id="btn-toggle-ai-library" type="button" role="tab" aria-controls="section-ai-library" aria-selected="false">AI Library Generator</button>
+      </div>
+      <div id="entry-phase-1" role="tabpanel" aria-labelledby="btn-entry-single">
+        <form id="single-entry-form" class="entry-sheet" autocomplete="off">
+          <label for="input-word">Target Word</label><input id="input-word" class="entry-input target-input" type="text" maxlength="200" placeholder="e.g. resilient, give up" autofocus required>
+          <div class="quick-fill-row">
+            <button id="btn-entry-quickfill" type="button" class="entry-primary">
+              <span class="quick-fill-spinner" aria-hidden="true"></span>
+              <span>Quick Fill / Điền nhanh</span>
+            </button>
+            <p id="quickfill-status" role="status" aria-live="polite"></p>
           </div>
-
-          <!-- SCREEN 1 -->
-          <div id="entry-phase-1" class="space-y-3">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label for="input-word" class="block text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">English Word or Phrase (*)</label>
-              </div>
-              <input type="text" id="input-word" placeholder="e.g. resilient, give up..." autocomplete="off"
-                class="min-h-[44px] w-full text-sm sm:text-base font-bold px-3 py-2 bg-slate-950/90 border border-slate-800 rounded-xl focus:border-indigo-500 outline-none transition-all placeholder:text-slate-500 text-white shadow-xs" />
+          <label for="confirm-input-meaning">Vietnamese Meaning</label><textarea id="confirm-input-meaning" class="entry-input" rows="2" maxlength="2000" lang="vi" placeholder="Nghĩa tiếng Việt…" required></textarea>
+          <details id="entry-details" class="entry-details"><summary>Pronunciation &amp; context</summary>
+            <div class="entry-detail-grid">
+              <label>IPA<input id="input-phonetic" class="entry-input" placeholder="/rɪˈzɪliənt/" maxlength="200"></label>
+              <label>POS<select id="input-pos" class="entry-input"><option value="">Unspecified</option><option value="n">n</option><option value="v">v</option><option value="adj">adj</option><option value="adv">adv</option><option value="pron">pron</option><option value="prep">prep</option><option value="conj">conj</option><option value="det">det</option><option value="interj">interj</option><option value="phrase">phrase</option></select></label>
+              <label class="entry-wide">Collocations <small>comma-separated</small><input id="input-collocations" class="entry-input" placeholder="highly resilient, resilient community"></label>
+              <label class="entry-wide">Synonyms <small>comma-separated</small><input id="input-synonyms" class="entry-input" placeholder="hardy, adaptable"></label>
+              <label class="entry-wide">Example Sentence<textarea id="input-example" class="entry-input" rows="2" maxlength="2000" placeholder="A resilient community can recover after a crisis."></textarea></label>
+              <label class="entry-wide">Cloze Sentence<textarea id="input-cloze" class="entry-input" rows="2" maxlength="2000" placeholder="A [ _____ ] community can recover after a crisis."></textarea></label>
+              <label class="entry-wide">Target sense <small>optional</small><input id="input-sense" class="entry-input" maxlength="2000"></label>
+              <label class="entry-wide">Usage notes <small>optional</small><textarea id="input-usage-notes" class="entry-input" rows="2" maxlength="4000"></textarea></label>
             </div>
-
-            <div id="api-loading-status" class="hidden text-[11px] font-bold text-[#F3D060] flex items-center gap-1.5 px-1">
-              <i class="ph-bold ph-spinner animate-spin text-sm"></i>
-              <span>Fetching AI translation...</span>
-            </div>
-
-            <div>
-              <label for="confirm-input-meaning" class="block text-[11px] font-extrabold uppercase text-slate-400 tracking-wider mb-1">Vietnamese Meaning (*)</label>
-              <div class="relative w-full">
-                <textarea id="confirm-input-meaning" rows="2" placeholder="Enter Vietnamese meaning..."
-                  class="w-full text-xs sm:text-sm font-semibold pl-3 pr-11 py-2 bg-slate-950/90 border border-slate-800 rounded-xl focus:border-indigo-500 outline-none text-white placeholder:text-slate-500 resize-none leading-snug"></textarea>
-                <button type="button" id="btn-entry-ai-translate"
-                  class="absolute right-2 top-2 w-7 h-7 sm:w-8 sm:h-8 aspect-square rounded-lg bg-indigo-600/90 hover:bg-indigo-500 active:scale-95 text-white flex items-center justify-center shadow-md border border-indigo-400/40 transition-all lightning-pulse animate-pulse motion-reduce:animate-none cursor-pointer"
-                  title="AI Translation" aria-label="AI Translation">
-                  <i id="icon-entry-ai-translate" class="ph-fill ph-lightning text-amber-300 text-sm"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="space-y-1">
-              <label class="block text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">English Synonyms</label>
-              <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="confirm-input-syn1" placeholder="Synonym 1" autocomplete="off"
-                  class="min-h-[40px] w-full font-semibold px-3 py-1.5 bg-slate-950/90 border border-slate-800 rounded-xl focus:border-indigo-500 outline-none text-xs text-white placeholder:text-slate-500" />
-                <input type="text" id="confirm-input-syn2" placeholder="Synonym 2" autocomplete="off"
-                  class="min-h-[40px] w-full font-semibold px-3 py-1.5 bg-slate-950/90 border border-slate-800 rounded-xl focus:border-indigo-500 outline-none text-xs text-white placeholder:text-slate-500" />
-              </div>
-            </div>
-
-            <div class="pt-1">
-              <button type="button" id="btn-entry-ok" class="min-h-[46px] w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-extrabold text-sm rounded-xl shadow-md border border-indigo-400/30 transition-all flex items-center justify-center gap-1.5">
-                <span>Switch to Enter Topic</span>
-                <i class="ph-bold ph-arrow-right text-base"></i>
-              </button>
-            </div>
-
-            <!-- AI Library Toggle Button (Directly below Switch to Enter Topic - The final manual entry item) -->
-            <div class="pt-1.5">
-              <button type="button" id="btn-toggle-ai-library" class="min-h-[42px] w-full py-2 px-3 bg-slate-900/90 hover:bg-slate-800 active:scale-98 text-indigo-300 hover:text-white font-extrabold text-xs sm:text-sm rounded-xl border border-indigo-500/30 hover:border-indigo-400/60 transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer" aria-expanded="false" aria-controls="section-ai-library" title="Open AI Library">
-                <i class="ph-bold ph-sparkle text-amber-300 text-sm"></i>
-                <span id="btn-toggle-ai-library-text">AI Library</span>
-                <i id="btn-toggle-ai-library-chevron" class="ph-bold ph-caret-down text-xs text-indigo-400 transition-transform"></i>
-              </button>
-            </div>
-
-            <!-- COLLAPSIBLE AI LIBRARY SECTION (Hidden by default, expands directly below toggle button) -->
-            <div id="section-ai-library" class="hidden pt-3 border-t border-slate-800/80 space-y-3">
-              <!-- AI Library Header -->
-              <div class="flex items-center justify-between pb-1">
-                <div class="flex items-center gap-2">
-                  <div class="w-7 h-7 rounded-lg bg-indigo-950 text-indigo-400 border border-indigo-800/60 flex items-center justify-center">
-                    <i class="ph-bold ph-sparkle text-amber-300 text-sm"></i>
-                  </div>
-                  <div>
-                    <h3 class="font-black text-sm text-white leading-tight">AI Library</h3>
-                    <p class="text-[10px] text-slate-400">Import structured vocabulary into library</p>
-                  </div>
-                </div>
-                <button id="btn-copy-template" type="button" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 active:scale-95 text-indigo-300 font-bold rounded-lg border border-slate-700 text-[10px] flex items-center gap-1 transition-all">
-                  <i class="ph-bold ph-copy text-xs"></i> Copy Template
-                </button>
-              </div>
-
-              <!-- How to use AI Library Instructions -->
-              <div class="bg-indigo-950/30 border border-indigo-800/40 rounded-xl p-3 text-slate-300 space-y-1.5">
-                <h4 class="text-xs font-black text-indigo-300 flex items-center gap-1.5">
-                  <i class="ph-bold ph-info text-indigo-400"></i>
-                  <span>How to use AI Library</span>
-                </h4>
-                <div class="space-y-1 text-[11px] text-slate-300/90 pl-1 leading-relaxed font-medium">
-                  <p>1. Prepare your vocabulary data in the supported format.</p>
-                  <p>2. Paste or import your vocabulary content into the AI Library input.</p>
-                  <p>3. Check the imported words and meanings carefully.</p>
-                  <p>4. Review the results and confirm before saving them to your vocabulary library.</p>
-                </div>
-              </div>
-
-              <!-- Multi-Topic Format Template Box -->
-              <div class="bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80 space-y-1.5">
-                <span class="block text-[10px] font-black uppercase text-indigo-400 tracking-wider">Required Multi-Topic Format:</span>
-                <pre id="template-text" class="text-[10px] bg-[#0b0f19] p-2 rounded-lg border border-slate-800/80 text-slate-300 font-mono overflow-x-auto leading-relaxed select-all">Topic: Environment
-sustainable | bền vững | eco-friendly, renewable
-pollution | ô nhiễm | contamination, environmental damage</pre>
-              </div>
-
-              <!-- Import Input Section -->
-              <div id="import-input-section" class="space-y-1.5">
-                <label class="block text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Paste your vocabulary here:</label>
-                <textarea id="import-raw-input" rows="5" placeholder="Topic: Technology&#10;algorithm | thuật toán | procedure, calculation"
-                  class="w-full text-xs font-mono p-2.5 bg-slate-950 border border-slate-800 rounded-xl focus:border-indigo-500 outline-none text-white placeholder:text-slate-600 transition-all"></textarea>
-                
-                <button id="btn-preview-import" type="button" class="w-full min-h-[42px] py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5">
-                  <i class="ph-bold ph-eye text-base"></i> Preview Import
-                </button>
-              </div>
-
-              <!-- Import Preview Section -->
-              <div id="import-preview-section" class="hidden space-y-2.5">
-                <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
-                  <span class="text-xs font-black text-white uppercase tracking-wider">Import Preview</span>
-                  <div class="flex items-center gap-2">
-                    <label class="text-[10px] text-slate-400 font-semibold flex items-center gap-1">
-                      <input type="checkbox" id="import-opt-overwrite" class="rounded bg-slate-800 border-slate-700 text-indigo-600">
-                      Update existing
-                    </label>
-                    <button id="btn-back-to-input" type="button" class="text-xs text-indigo-400 hover:underline font-bold">Edit Raw</button>
-                  </div>
-                </div>
-
-                <div id="import-preview-list" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
-                <div id="import-result-summary" class="hidden p-2 rounded-xl border text-xs font-bold"></div>
-
-                <div class="grid grid-cols-2 gap-2 pt-1">
-                  <button id="btn-cancel-import" type="button" class="min-h-[40px] py-1.5 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 font-extrabold text-xs rounded-xl border border-slate-700 transition-all">Cancel</button>
-                  <button id="btn-execute-import" type="button" class="min-h-[40px] py-1.5 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5">
-                    <i class="ph-bold ph-check text-base"></i>
-                    <span id="btn-execute-import-text">Import Words</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Red Notice Beneath Instructions & Import Controls -->
-              <div id="ai-library-teacher-notice" class="p-2.5 rounded-xl border border-rose-500/40 bg-rose-950/30 text-rose-300 text-xs font-bold flex items-center gap-2 shadow-xs">
-                <i class="ph-bold ph-warning-circle text-rose-400 text-base flex-shrink-0"></i>
-                <span>NOTICE: Ask teacher V for the use of this function.</span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- SCREEN 2 -->
-          <div id="entry-phase-2" class="hidden space-y-2.5">
-            <div class="p-2.5 bg-indigo-950/55 rounded-xl border border-indigo-900/60 flex items-center justify-between gap-2">
-              <div class="min-w-0 flex-1">
-                <p class="text-[9px] font-black uppercase tracking-wider text-indigo-400">Word Preview</p>
-                <h3 id="confirm-display-word" class="text-sm sm:text-base font-black text-white truncate">Word</h3>
-                <p id="confirm-display-meaning" class="text-[11px] font-semibold text-slate-300 truncate">Meaning</p>
-              </div>
-              <div class="text-right flex-shrink-0">
-                <span class="block text-[9px] font-black uppercase tracking-wider text-slate-400 mb-0.5">Selected Topic</span>
-                <span id="confirm-display-topic" class="inline-block text-xs font-extrabold text-[#F3D060] bg-slate-900 px-2.5 py-0.5 rounded-full border border-[#D4AF37]/50 max-w-[130px] truncate">
-                  New Words
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Choose Topic (*)</label>
-                <button type="button" id="btn-quick-create-topic" class="min-h-[30px] text-xs font-black text-[#D4AF37] hover:text-[#F3D060] flex items-center gap-1 active:scale-95 transition-all">
-                  <i class="ph-bold ph-plus"></i> New Topic
-                </button>
-              </div>
-
-              <div id="inline-create-topic-box" class="hidden mb-2 p-2 bg-indigo-950/50 rounded-xl border border-indigo-900/60 space-y-1.5">
-                <span class="block text-[10px] font-black text-indigo-300 uppercase">Create New Topic</span>
-                <div class="flex gap-1.5">
-                  <input type="text" id="input-inline-topic-name" placeholder="Topic name..."
-                    class="min-h-[38px] flex-1 text-xs font-semibold px-2.5 py-1 bg-slate-900 border border-slate-700 rounded-lg outline-none text-white" />
-                  <button type="button" id="btn-save-inline-topic" class="min-h-[38px] px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-extrabold active:scale-95 transition-all">
-                    Save
-                  </button>
-                </div>
-              </div>
-
-              <select id="select-entry-topic" class="hidden" aria-hidden="true"></select>
-
-              <div id="entry-topic-cards-list" class="max-h-[168px] overflow-y-auto no-scrollbar space-y-1.5 p-1 bg-slate-950/75 border border-slate-800/90 rounded-xl">
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2 pt-1">
-              <button type="button" id="btn-confirm-back" class="min-h-[46px] py-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-extrabold text-xs sm:text-sm rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-1">
-                <i class="ph-bold ph-arrow-left text-sm"></i>
-                <span>Back</span>
-              </button>
-              <button type="button" id="btn-confirm-save" class="min-h-[46px] py-2 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-1">
-                <i class="ph-bold ph-check text-base"></i>
-                <span id="btn-confirm-save-text">Save Word</span>
-              </button>
-            </div>
-          </div>
-
-        </div>
+          </details>
+          <label for="select-entry-topic">Topic</label><div class="entry-topic-row"><select id="select-entry-topic" class="entry-input"></select><button id="btn-quick-create-topic" type="button" class="entry-secondary">New topic</button></div>
+          <div id="inline-create-topic-box" class="entry-topic-row" hidden><label for="input-inline-topic-name" class="visually-hidden">Topic name</label><input id="input-inline-topic-name" class="entry-input" maxlength="200" placeholder="Topic name"><button id="btn-save-inline-topic" type="button" class="entry-secondary">Add</button></div>
+          <p id="entry-save-status" role="status" aria-live="polite" class="entry-status"></p>
+          <button id="btn-confirm-save" type="submit" class="entry-primary"><span id="btn-confirm-save-text">Save word</span></button>
+        </form>
+      </div>
+      <div id="section-ai-library" role="tabpanel" aria-labelledby="btn-toggle-ai-library" class="entry-sheet ai-sheet" hidden>
+        <p>Paste a list of English words, copy the prompt to your AI, then bring back its JSON response.</p>
+        <label for="ai-raw-words">Word list</label><textarea id="ai-raw-words" class="entry-input" rows="4" placeholder="resilient&#10;give up&#10;curriculum"></textarea>
+        <button id="btn-copy-ai-prompt" class="entry-secondary" type="button">Copy AI Prompt</button>
+        <label id="ai-prompt-preview-label" for="ai-prompt-preview" hidden>Prompt to copy</label><textarea id="ai-prompt-preview" class="entry-input" rows="5" readonly hidden></textarea>
+        <label for="import-raw-input">JSON response</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder='[{"word":"resilient", …}]'></textarea>
+        <label class="overwrite-label"><input id="import-opt-overwrite" type="checkbox"> Update matching words and keep their review history</label>
+        <p id="batch-import-status" class="entry-status" role="status" aria-live="polite"></p>
+        <button id="btn-execute-import" class="entry-primary" type="button">Validate &amp; Import to Library</button>
       </div>
     </section>
 
-    <!-- ================= VIEW 3: VOCABULARY LIBRARY TAB ================= -->
     <section id="view-library" class="view-panel hidden h-full flex flex-col justify-between">
       <div class="flex-shrink-0 flex items-center justify-between px-1 py-1 text-xs">
         <span class="font-black text-indigo-300 uppercase text-[10px] tracking-wide flex items-center gap-1">
@@ -639,10 +451,67 @@ pollution | ô nhiễm | contamination, environmental damage</pre>
 
           <button id="btn-lib-tab-known" type="button" class="flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 bg-slate-900 text-slate-300 border-slate-800 hover:bg-slate-800 active:scale-95 truncate" title="Known Vocabulary">
             <i class="ph-bold ph-check-circle text-base flex-shrink-0"></i>
-            <span class="truncate">Known</span>
+            <span class="truncate">Mastered</span>
           </button>
         </div>
       </div>
+    </section>
+
+    <section id="view-in-class-check" class="view-panel check-view hidden" aria-labelledby="check-heading">
+      <header class="entry-heading"><h2 id="check-heading" tabindex="-1">In-Class Check</h2></header>
+
+      <section id="check-intro" class="check-panel" aria-labelledby="check-intro-heading" hidden>
+        <h3 id="check-intro-heading">Ready to check your recall?</h3>
+        <p>Read the Vietnamese meaning and type the English word that fits.</p>
+        <p class="check-count">Words available <strong id="check-available-count">0</strong></p>
+        <p id="check-pool-description" class="check-pool-description"></p>
+        <div class="check-actions">
+          <button type="button" id="btn-check-start" class="entry-primary">Start check</button>
+          <button type="button" data-check-done class="entry-secondary">Back to Practice</button>
+        </div>
+      </section>
+
+      <section id="check-empty" class="check-panel" aria-labelledby="check-empty-heading" hidden>
+        <h3 id="check-empty-heading" tabindex="-1">No learned words to check yet</h3>
+        <p>Review a word in Practice, then come back to check your recall.</p>
+        <div class="check-actions">
+          <button type="button" data-check-done class="entry-primary">Back to Practice</button>
+        </div>
+      </section>
+
+      <section id="check-question" class="check-panel" aria-labelledby="check-question-heading" hidden>
+        <h3 id="check-question-heading" class="visually-hidden">Recall prompt</h3>
+        <div class="check-prompt" role="status" aria-atomic="true">
+          <p id="check-progress" class="check-progress"></p>
+          <div>
+            <p class="check-prompt-label">Vietnamese meaning</p>
+            <p id="check-meaning" class="check-meaning" lang="vi" dir="auto"></p>
+          </div>
+          <p id="check-cloze" class="check-cloze" lang="en"></p>
+        </div>
+        <form id="check-form" class="check-form" autocomplete="off">
+          <label for="check-answer">English word or phrase</label>
+          <input id="check-answer" class="entry-input" type="text" aria-describedby="check-meaning check-cloze" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" maxlength="200" required>
+          <button type="submit" class="entry-primary">Submit answer</button>
+        </form>
+      </section>
+
+      <section id="check-results" class="check-panel" aria-labelledby="check-results-heading" hidden>
+        <h3 id="check-results-heading" tabindex="-1">Check complete</h3>
+        <dl class="check-result-metrics">
+          <div><dt>Overall score</dt><dd id="check-score"></dd></div>
+          <div><dt>Completion time</dt><dd id="check-time"></dd></div>
+        </dl>
+        <div id="check-missed" class="check-missed" hidden>
+          <h4>Words to review</h4>
+          <ul id="check-missed-list"></ul>
+        </div>
+        <div class="check-actions">
+          <button type="button" id="btn-check-review-misses" class="entry-primary" hidden>Add missed words to review queue</button>
+          <button type="button" data-check-done class="entry-secondary">Done / Back to Practice</button>
+        </div>
+      </section>
+      <p id="check-status" class="check-status" role="status"></p>
     </section>
 
   </main>
@@ -686,23 +555,59 @@ pollution | ô nhiễm | contamination, environmental damage</pre>
     </div>
   </div>
 
-  <div id="modal-login" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="modal-import-deck" class="deck-modal" role="dialog" aria-modal="true" aria-labelledby="import-deck-title" hidden>
+    <section class="deck-dialog">
+      <p class="deck-dialog-kicker">Import shared deck</p>
+      <h2 id="import-deck-title"></h2>
+      <p class="deck-import-profile">Import to <strong id="import-deck-profile"></strong></p>
+      <dl class="deck-import-counts">
+        <div><dt>Total cards</dt><dd id="import-deck-total">0</dd></div>
+        <div><dt>Brand-new cards</dt><dd id="import-deck-new">–</dd></div>
+        <div><dt>Existing cards</dt><dd id="import-deck-existing">–</dd></div>
+      </dl>
+      <p id="import-deck-status" class="deck-dialog-status" role="status" aria-live="polite"></p>
+      <div class="deck-dialog-actions">
+        <button id="btn-cancel-deck-import" type="button" class="entry-secondary">Cancel</button>
+        <button id="btn-confirm-deck-import" type="button" class="entry-primary" disabled>Import to My Library</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="modal-share-link" class="deck-modal" role="dialog" aria-modal="true" aria-labelledby="share-link-heading" hidden>
+    <section class="deck-dialog">
+      <h2 id="share-link-heading">Shareable deck link</h2>
+      <label for="shared-deck-url">Copy this link to share the deck</label>
+      <input id="shared-deck-url" class="entry-input" type="url" readonly>
+      <p id="share-link-status" class="deck-dialog-status" role="status" aria-live="polite"></p>
+      <div class="deck-dialog-actions">
+        <button id="btn-close-share-link" type="button" class="entry-secondary">Close</button>
+        <button id="btn-copy-share-link" type="button" class="entry-primary">Copy Link</button>
+      </div>
+    </section>
+  </div>
+
+  <div id="modal-login" role="dialog" aria-modal="true" aria-labelledby="login-heading" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="playing-card-frame w-full max-w-sm rounded-3xl p-5 shadow-2xl text-center space-y-3.5 relative">
       <div class="space-brand space-brand--ls" style="--space-brand-size:4rem">
         <span class="space-brand__mark">&gt;/_</span>
       </div>
       <div>
-        <h3 class="text-xl font-black text-white">Welcome to LexicalSpace</h3>
-        <p class="text-xs text-slate-400 mt-1 font-medium">Enter your username to access your personal study notebook.</p>
+        <h3 id="login-heading" class="text-xl font-black text-white">Welcome to LexicalSpace</h3>
+        <p class="text-xs text-slate-400 mt-1 font-medium">Enter a username to open your profile, or use this browser’s guest library.</p>
       </div>
-      <input type="text" id="input-username" placeholder="e.g. Alex, Linh..."
+      <input type="text" id="input-username" aria-label="Username" maxlength="100" placeholder="e.g. Alex, Linh..."
         class="min-h-[48px] w-full text-center text-base font-bold px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl outline-none focus:border-indigo-500 text-white" />
-      <button id="btn-login-submit" type="button" class="min-h-[48px] w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-extrabold text-sm rounded-xl shadow-lg transition-all">
+      <button id="btn-login-submit" type="button" disabled class="min-h-[48px] w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-extrabold text-sm rounded-xl shadow-lg transition-all disabled:opacity-50">
         Continue
       </button>
+      <button id="btn-continue-guest" type="button" class="entry-secondary" disabled>Continue as guest</button>
+      <p id="login-status" class="text-sm text-slate-300" role="status" aria-live="polite">Opening your library…</p>
+      <button id="btn-startup-retry" type="button" class="entry-secondary" hidden>Try again</button>
+      <a id="link-startup-reload" class="entry-secondary" href="" hidden>Reload LexicalSpace</a>
+      <button id="btn-login-cancel" type="button" class="hidden text-xs font-bold text-slate-300">Cancel</button>
     </div>
   </div>
 
-  <script type="module" src="./js/main.js"></script>
+  <script id="lexicalspace-app" type="module" src="./js/main.js"></script>
 </body>
 </html>

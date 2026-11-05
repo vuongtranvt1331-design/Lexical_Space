@@ -1,6 +1,8 @@
+import { loadSettings } from './settings.js';
+
     /* ================= SOUND MANAGER ================= */
     const SoundManager = {
-      enabled: localStorage.getItem("vocab_sound_enabled") !== "false",
+      enabled: true,
       ctx: null,
       lastSoundTime: 0,
       ensureContext() {
@@ -14,14 +16,8 @@
         }
         return this.ctx;
       },
-      toggle() {
-        this.enabled = !this.enabled;
-        localStorage.setItem("vocab_sound_enabled", String(this.enabled));
-        const icon = document.getElementById("global-sound-icon");
-        if (icon) {
-          icon.className = this.enabled ? "ph-bold ph-speaker-high text-base text-[#D4AF37]" : "ph-bold ph-speaker-slash text-base text-rose-400";
-        }
-        if (this.enabled) this.playSelect();
+      loadForUser(username) {
+        this.enabled = loadSettings(username).soundEffects;
       },
       playSelect() {
         const ctx = this.ensureContext();

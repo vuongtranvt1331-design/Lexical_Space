@@ -1,4 +1,8 @@
-import { context } from "../core/context.js";
+import { canSyncProfile, context } from '../core/context.js';
+import { readStudentStats } from '../core/firebase-sync.js';
+import { timestamp } from '../core/vocabulary.js';
+import { getLegacyStudentKey } from '../utils/helpers.js';
+const activityFlights = new Set();
 export function maskStudentKey(key) {
   if (!key) return "unknown";
   const s = String(key);
@@ -10,7 +14,7 @@ export function logActivityDebug(msg, extra = {}) {
   console.log(`[LexicalActivity] ${msg}`, extra);
 }
 export function getActivityMetaKey(studentKey) {
-  return `studentActivity_${studentKey}`;
+  return `studentActivity:v3:${studentKey}`;
 }
 export function clearActivityTimers() {
   if (context.activityThrottleTimer) {
@@ -26,18 +30,24 @@ export function clearActivityTimers() {
     context.activityRetryTimer = null;
   }
 }
+export function resetActivityForUser() {
+  clearActivityTimers();
+  context.activityStateByStudent = Object.create(null);
+  context.lastRecordedActivityAt = 0;
+}
 export async function loadLocalActivityState(username) {
   const cleanUser = (username || "").trim();
   const studentKey = context.getStudentKey(cleanUser);
   if (!studentKey) return null;
-  if (context.activityStateByStudent[studentKey]) {
-    return context.activityStateByStudent[studentKey];
-  }
+  const cache = context.activityStateByStudent;
+  if (cache[studentKey]) return cache[studentKey];
   try {
-    const stored = await context.idbGet("metadata", context.getActivityMetaKey(studentKey));
-    if (stored && typeof stored.activityLogTimestamp === "number") {
-      context.activityStateByStudent[studentKey] = {
-        username: stored.username || cleanUser,
+    const stored = await context.idbGet("metadata", getActivityMetaKey(studentKey))
+      || await context.idbGet("metadata", `studentActivity_${getLegacyStudentKey(cleanUser)}`);
+    if (cache[studentKey]) return cache[studentKey];
+    if (stored?.username === cleanUser && typeof stored.activityLogTimestamp === "number") {
+      cache[studentKey] = {
+        username: cleanUser,
         studentKey: studentKey,
         activityLogTimestamp: stored.activityLogTimestamp,
         pendingSync: Boolean(stored.pendingSync),
@@ -45,7 +55,7 @@ export async function loadLocalActivityState(username) {
         lastWriteAttemptAt: 0,
         retryCount: 0
       };
-      return context.activityStateByStudent[studentKey];
+      return cache[studentKey];
     }
   } catch (err) {
     context.logActivityDebug("IndexedDB read activity state warning", {
@@ -55,15 +65,23 @@ export async function loadLocalActivityState(username) {
   return null;
 }
 export async function saveLocalActivityState(state) {
-  if (!state || !state.studentKey || typeof state.activityLogTimestamp !== "number") return;
+  if (!state?.username || state.studentKey !== context.getStudentKey(state.username) || typeof state.activityLogTimestamp !== "number") return;
   try {
-    await context.idbPut("metadata", {
-      key: context.getActivityMetaKey(state.studentKey),
+    const key = getActivityMetaKey(state.studentKey);
+    const snapshot = {
+      key,
       username: state.username,
       studentKey: state.studentKey,
       activityLogTimestamp: state.activityLogTimestamp,
       pendingSync: Boolean(state.pendingSync),
       lastSyncedTimestamp: state.lastSyncedTimestamp || 0
+    };
+    await context.updateMetadata([key], records => {
+      const previous = records[key];
+      const activityLogTimestamp = Math.max(previous?.activityLogTimestamp || 0, snapshot.activityLogTimestamp);
+      const lastSyncedTimestamp = Math.max(previous?.lastSyncedTimestamp || 0, snapshot.lastSyncedTimestamp);
+      const pendingSync = (previous?.pendingSync || snapshot.pendingSync) && activityLogTimestamp > lastSyncedTimestamp;
+      return { records: [{ ...snapshot, activityLogTimestamp, lastSyncedTimestamp, pendingSync }] };
     });
   } catch (err) {
     context.logActivityDebug("IndexedDB write activity state warning", {
@@ -78,14 +96,8 @@ export async function saveLocalActivityState(state) {
  * - Đánh dấu pendingSync = true.
  * - Lên lịch đồng bộ Firestore theo cơ chế throttle 45s và idle 15s.
  */
-export
-/**
- * Đồng bộ activityLogTimestamp mới nhất lên Firestore metadata/userWordStats_${studentKey}.
- * - Chỉ cập nhật trường cần thiết bằng set(..., { merge: true }), không đọc hay ghi đè wordCount.
- * - Bảo đảm an toàn khi chuyển tài khoản và khi có timestamp mới hơn phát sinh trong lúc đang ghi.
- */
-function recordLearningActivity(reason = "study_action") {
-  if (!context.currentUser) return;
+export function recordLearningActivity(reason = "study_action") {
+  if (!canSyncProfile(context.currentUser)) return;
   const cleanUser = context.currentUser.trim();
   const studentKey = context.getStudentKey(cleanUser);
   if (!studentKey) return;
@@ -138,7 +150,7 @@ export function scheduleActivitySync(studentKey) {
     }
   }, context.ACTIVITY_IDLE_FLUSH_MS);
 
-  // Bộ đếm Throttle định kỳ (45s): KHÔNG reset khi học sinh vuốt liên tiếp để bảo đảm luôn đồng bộ định kỳ
+  // Keep the periodic throttle timer active during consecutive grades.
   if (!context.activityThrottleTimer) {
     const elapsedSinceLastWrite = Date.now() - (state.lastWriteAttemptAt || 0);
     const delay = elapsedSinceLastWrite >= context.ACTIVITY_SYNC_THROTTLE_MS ? context.ACTIVITY_MIN_INTERVAL_MS : Math.max(context.ACTIVITY_MIN_INTERVAL_MS, context.ACTIVITY_SYNC_THROTTLE_MS - elapsedSinceLastWrite);
@@ -184,9 +196,11 @@ export async function flushActivityLogSync(options = {}) {
     targetUsername = null
   } = options;
   const resolvedUsername = (targetUsername || context.currentUser || "").trim();
-  const studentKey = targetStudentKey || context.getStudentKey(resolvedUsername);
-  if (!studentKey) return false;
-  let state = context.activityStateByStudent[studentKey];
+  if (!canSyncProfile(resolvedUsername)) return false;
+  const studentKey = context.getStudentKey(resolvedUsername);
+  if (!studentKey || (targetStudentKey && targetStudentKey !== studentKey)) return false;
+  const cache = context.activityStateByStudent;
+  let state = cache[studentKey];
   if (!state) {
     state = await context.loadLocalActivityState(resolvedUsername);
   }
@@ -215,21 +229,20 @@ export async function flushActivityLogSync(options = {}) {
     context.scheduleActivitySync(studentKey);
     return false;
   }
-  if (context.isActivitySyncInFlight) {
-    return false;
-  }
-  context.isActivitySyncInFlight = true;
+  if (activityFlights.has(studentKey)) return false;
+  activityFlights.add(studentKey);
   const snapshotTimestamp = state.activityLogTimestamp;
   const snapshotUsername = state.username || resolvedUsername;
   state.lastWriteAttemptAt = now;
   try {
-    await context.db.collection("metadata").doc(`userWordStats_${studentKey}`).set({
-      username: snapshotUsername,
-      activityLogTimestamp: snapshotTimestamp
-    }, {
-      merge: true
+    const db = context.db;
+    await db.runTransaction(async tx => {
+      const { ref, data } = await readStudentStats(db, snapshotUsername, doc => tx.get(doc));
+      const update = { username: snapshotUsername, activityLogTimestamp: Math.max(snapshotTimestamp, timestamp(data.activityLogTimestamp)) };
+      if (data.wordCount != null) update.wordCount = data.wordCount;
+      tx.set(ref, update, { merge: true });
     });
-    const latestState = context.activityStateByStudent[studentKey] || state;
+    const latestState = cache[studentKey] || state;
     latestState.lastSyncedTimestamp = Math.max(latestState.lastSyncedTimestamp || 0, snapshotTimestamp);
     latestState.retryCount = 0;
 
@@ -251,7 +264,7 @@ export async function flushActivityLogSync(options = {}) {
     }
     return true;
   } catch (err) {
-    const latestState = context.activityStateByStudent[studentKey] || state;
+    const latestState = cache[studentKey] || state;
     latestState.pendingSync = true;
     latestState.retryCount = (latestState.retryCount || 0) + 1;
     await context.saveLocalActivityState(latestState);
@@ -266,12 +279,14 @@ export async function flushActivityLogSync(options = {}) {
     }
     return false;
   } finally {
-    context.isActivitySyncInFlight = false;
+    activityFlights.delete(studentKey);
   }
 }
 export async function resumePendingActivitySyncForCurrentUser() {
-  if (!context.currentUser) return;
-  const state = await context.loadLocalActivityState(context.currentUser);
+  const username = context.currentUser, cache = context.activityStateByStudent;
+  if (!canSyncProfile(username)) return;
+  const state = await context.loadLocalActivityState(username);
+  if (username !== context.currentUser || cache !== context.activityStateByStudent) return;
   if (state && state.pendingSync && typeof state.activityLogTimestamp === "number") {
     context.logActivityDebug("Found pending activityLogTimestamp for current user on load/login", {
       student: context.maskStudentKey(state.studentKey),

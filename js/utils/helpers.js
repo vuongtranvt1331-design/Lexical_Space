@@ -1,6 +1,10 @@
-    function getStudentKey(username) {
-      return (username || "").trim().replace(/[^a-zA-Z0-9_-]/g, "_");
-    }
+function getStudentKey(username) {
+  return encodeURIComponent(String(username ?? '').trim());
+}
+
+function getLegacyStudentKey(username) {
+  return String(username ?? '').trim().replace(/[^a-zA-Z0-9_-]/g, '_');
+}
     let toastTimeout = null;
     function showToast(msg, type = "success") {
       const toast = document.getElementById("toast");
@@ -33,4 +37,4 @@
       if (!str) return "";
       return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;');
     }
-export { getStudentKey, showToast, escapeHtml, escapeQuotes };
+export { getStudentKey, getLegacyStudentKey, showToast, escapeHtml, escapeQuotes };
