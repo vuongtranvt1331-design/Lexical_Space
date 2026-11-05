@@ -365,8 +365,8 @@ button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,summary:focus
 
 .profile-menu-anchor { position: relative; display: flex; align-items: center; gap: 8px; flex: none; }
 
-.topbar-guide-button { color: #fda4af; background: #241722; }
-.topbar-guide-button:hover, .topbar-guide-button[aria-expanded="true"] { background: #3a202d; }
+.topbar-guide-button { color: #fcd34d; background: #282113; }
+.topbar-guide-button:hover, .topbar-guide-button[aria-expanded="true"] { background: #3b2c14; }
 .topbar-guide-button svg { width: 20px; height: 20px; }
 
 .profile-avatar-button {
