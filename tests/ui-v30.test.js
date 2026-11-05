@@ -143,7 +143,7 @@ test('practice, library, and entry workflows', async t => {
       context.switchView('view-library'); const card = document.querySelector('[data-word-id="fixture_0"]');
       assert.ok(card.querySelector('.library-card-front').textContent.includes(fixtureWord.phonetic));
       assert.ok(card.querySelector('.library-card-front').textContent.includes('robust'));
-      assert.deepEqual([...card.querySelectorAll('.library-toolbar button')].map(b => b.dataset.action), ['flip', 'favorite', 'audio', 'edit', 'delete']);
+      assert.deepEqual([...card.querySelectorAll('.library-toolbar button')].map(b => b.dataset.action), ['flip', 'mastery', 'favorite', 'audio', 'edit', 'delete']);
       assert.equal(card.querySelector('.library-card-back').hasAttribute('inert'), true);
       card.querySelector('[data-action="flip"]').click(); assert.equal(card.classList.contains('is-flipped'), true);
       assert.equal(card.querySelector('.library-card-front').hasAttribute('inert'), true);

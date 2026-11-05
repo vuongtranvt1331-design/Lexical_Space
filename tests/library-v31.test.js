@@ -22,7 +22,9 @@ test('library flips from either face, preserves rail focus, and clears profile-l
   const pronunciations = [];
   const records = await mutateWords([{ id: 'shared', username: user, patch: {
     word: 'adapt', meaning: 'thích nghi', topic: 'One profile', exampleSentence: 'They adapted quickly.',
-    audioUrl: 'https://recording.test/adapt.mp3'
+    audioUrl: 'https://recording.test/adapt.mp3', reviewCount: 2, repetition: 2, interval: 6,
+    easeFactor: 2.4, successfulDays: ['2026-10-27', '2026-10-28'],
+    lastReviewedAt: Date.parse('2026-10-28T12:00:00Z'), dueDate: '2026-11-03T12:00:00Z'
   } }]);
   Object.assign(context, { currentUser: user, accountGeneration: 1, DEFAULT_TOPIC: 'New Words',
     wordsData: records, userTopics: ['One profile'], libraryTab: 'unknown', librarySelectedTopic: 'ALL',
@@ -35,7 +37,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     $('view-library').classList.remove('hidden');
     renderLibrary();
     assert.deepEqual([...card().querySelectorAll('.library-toolbar button')].map(button => button.dataset.action),
-      ['flip', 'favorite', 'audio', 'edit', 'delete']);
+      ['flip', 'mastery', 'favorite', 'audio', 'edit', 'delete']);
 
     const heading = card().querySelector('.library-card-front h3');
     const selection = window.getSelection();
@@ -63,6 +65,32 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     assert.equal(card().classList.contains('is-flipped'), true);
     assert.equal(document.activeElement, card().querySelector('[data-action="favorite"]'));
     assert.equal((await readUserWords(user))[0].isFavorite, true);
+
+    async function toggleMastery(pressed, title) {
+      const button = card().querySelector('[data-action="mastery"]');
+      assert.equal(button.getAttribute('aria-label'), 'Mastered');
+      assert.equal(button.getAttribute('aria-pressed'), String(pressed));
+      assert.equal(button.title, title);
+      button.focus();
+      const committed = new Promise(resolve => { context.updateStatusBadge = resolve; });
+      button.click();
+      await committed;
+      assert.equal(card(), null);
+      assert.equal(document.activeElement, $('lib-search-input'));
+      const [updated] = await readUserWords(user);
+      for (const field of ['reviewCount', 'repetition', 'interval', 'easeFactor', 'successfulDays', 'lastReviewedAt', 'dueDate']) {
+        assert.deepEqual(updated[field], records[0][field], field);
+      }
+      return updated.memoryStatus;
+    }
+
+    assert.equal(await toggleMastery(false, 'Mark as Mastered'), 'mastered');
+    $('btn-lib-tab-known').click();
+    assert.match(card().querySelector('footer').textContent, /Mastered$/);
+    assert.equal(await toggleMastery(true, 'Mark as Unknown'), 'not_remembered');
+    $('btn-lib-tab-unknown').click();
+    assert.match(card().querySelector('footer').textContent, /Unknown$/);
+    assert.equal(card().classList.contains('is-flipped'), true);
 
     $('lib-search-input').value = 'ad';
     context.librarySelectedTopic = 'One profile';

@@ -16,6 +16,7 @@ const scopeKey = (user, day, scope) => `session:v2:${JSON.stringify([user, day, 
 const scopePointerKey = (user, scope) => `session:scope:${JSON.stringify([user, ...scope])}`;
 const currentScope = () => [context.reviewMode, context.activeTopic, context.activeSpecialCollection];
 const actionsBlocked = () => busy || loading;
+const practiceIsVisible = card => card && $('view-review')?.classList.contains('hidden') === false && !card.closest('[inert]');
 const entry = wordId => ({ wordId, entryId: newId(), revealed: false, graded: false });
 const limitFields = { 'setting-daily-new-limit': 'dailyNewLimit', 'setting-daily-review-limit': 'dailyReviewLimit' };
 export function getSessionState() { return session && clone(session); }
@@ -221,7 +222,7 @@ export function renderActiveCard() {
   const card = $('practice-card');
   if (!card) return;
   const item = current(), word = item && context.wordsData.find(w => w.id === item.wordId);
-  const visibleView = !$('view-review')?.classList.contains('hidden') && !card.closest('[inert]');
+  const visibleView = practiceIsVisible(card);
   const reverse = session ? reverseMode() : loadSettings(context.currentUser).recallDirection === 'vi-en';
   const renderedKey = word ? `${session.sessionId}:${item.entryId}:${reverse}` : '';
   if (lastRenderedEntry !== renderedKey) {
@@ -291,7 +292,7 @@ export function renderActiveCard() {
   $('btn-fc-next').hidden = !item.graded;
   $('btn-fc-next').disabled = actionsBlocked();
   updateCardFavoriteVisual(word.isFavorite);
-  if (visibleView && (!reverse || item.revealed) && lastSpokenEntry !== renderedKey) {
+  if (visibleView && !reverse && lastSpokenEntry !== renderedKey) {
     lastSpokenEntry = renderedKey;
     if (loadSettings(context.currentUser).autoPronounce) void pronunciation.say(word);
   }
@@ -331,14 +332,16 @@ export async function submitReverseAnswer() {
     if (ticket === generation && current()?.graded) $('btn-fc-next').focus({ preventScroll: true });
     return;
   }
-  busy = true; const ticket = generation, next = clone(session);
+  busy = true;
+  const ticket = generation, user = context.currentUser, navigation = context.navigationGeneration, next = clone(session);
   Object.assign(next.cardQueue[next.queueIndex], { revealed: true, answerCorrect: true, answerAttempt: answer });
-  try { await persist(next); if (ticket === generation) session = next; }
+  try { await persist(next); if (ticket === generation && user === context.currentUser) session = next; }
   catch (error) { if (ticket === generation) notifyFailure(error); }
-  finally {
-    finishAction(ticket);
-    if (ticket === generation && current()?.answerCorrect) document.querySelector(`[data-recall-grade="${current()?.assisted ? 0 : 2}"]`)?.focus({ preventScroll: true });
-  }
+  finally { finishAction(ticket); }
+  if (ticket !== generation || session !== next || user !== context.currentUser ||
+      navigation !== context.navigationGeneration || !practiceIsVisible($('practice-card'))) return;
+  if (!document.hidden && loadSettings(user).autoPronounce) void pronunciation.say(word);
+  document.querySelector(`[data-recall-grade="${current().assisted ? 0 : 2}"]`)?.focus({ preventScroll: true });
 }
 async function useWordHint(action) {
   const item = current(), word = context.wordsData.find(w => w.id === item?.wordId); if (!word || actionsBlocked()) return;

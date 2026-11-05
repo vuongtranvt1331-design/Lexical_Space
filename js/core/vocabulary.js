@@ -21,6 +21,9 @@ export function withoutLegacyLevel(record) {
   const { cefr: _legacyLevel, ...fields } = record;
   return fields;
 }
+export function memoryStatusFor({ masteryOverride, repetition, successfulDays }) {
+  return masteryOverride ?? (repetition >= 3 && successfulDays.length >= 3 ? 'mastered' : 'not_remembered');
+}
 export function normalizeRemoteVocabulary(record, id = record.id) {
   const word = { ...withoutLegacyLevel(record), id: text(id), username: text(record.username), word: text(record.word), meaning: text(record.meaning) };
   for (const field of ['pos', 'sense', 'exampleSentence', 'synonym1', 'synonym2', 'phonetic', 'usageNotes', 'clozeSentence']) word[field] = text(record[field]);
@@ -41,8 +44,10 @@ export function normalizeRemoteVocabulary(record, id = record.id) {
   word.dueDate = record.dueDate === null && record.due == null ? null : new Date(timestamp(record.dueDate ?? record.due, 0)).toISOString();
   if (record.createdAt != null) word.createdAt = timestamp(record.createdAt);
   if (record.lastReviewedAt != null) word.lastReviewedAt = timestamp(record.lastReviewedAt);
-  word.selfReportedKnown = record.selfReportedKnown === true || ['known', 'mastered'].includes(record.memoryStatus);
-  word.memoryStatus = word.repetition >= 3 && word.successfulDays.length >= 3 ? 'mastered' : 'not_remembered';
+  if (!['mastered', 'not_remembered'].includes(word.masteryOverride)) delete word.masteryOverride;
+  word.selfReportedKnown = record.selfReportedKnown === true || record.memoryStatus === 'known' ||
+    (!word.masteryOverride && record.memoryStatus === 'mastered');
+  word.memoryStatus = memoryStatusFor(word);
   return word;
 }
 export function compareVersions(a = {}, b = {}) {

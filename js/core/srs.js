@@ -1,4 +1,4 @@
-import { normalizeRemoteVocabulary, timestamp, wordTopics } from './vocabulary.js';
+import { memoryStatusFor, normalizeRemoteVocabulary, timestamp, wordTopics } from './vocabulary.js';
 export const DAY_MS = 86400000;
 export function calendarDay(value = Date.now()) {
   const d = new Date(value); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
@@ -24,7 +24,7 @@ export function scheduleReview(record, grade, now = Date.now()) {
   }
   return { ...word, repetition, interval, easeFactor, successfulDays, dueDate, lastReviewedAt: now, lastGrade: grade,
     reviewCount: word.reviewCount + 1, lapses: word.lapses + (grade === 0 ? 1 : 0),
-    memoryStatus: repetition >= 3 && successfulDays.length >= 3 ? 'mastered' : 'not_remembered' };
+    memoryStatus: memoryStatusFor({ masteryOverride: word.masteryOverride, repetition, successfulDays }) };
 }
 function withinDailyLimit(words, limit, used, counted, preferred) {
   if (limit == null) return words;

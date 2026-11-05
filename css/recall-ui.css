@@ -118,6 +118,8 @@
 
 .library-rail-button[data-action="favorite"][aria-pressed="true"] { color: #fb7185; }
 .library-rail-button[data-action="favorite"][aria-pressed="true"] svg { fill: #fb7185; }
+.library-rail-button[data-action="mastery"] { color: #86efac; }
+.library-rail-button[data-action="mastery"][aria-pressed="true"] { color: #fda4af; }
 
 .topic-option > .topic-option-label {
   min-width: 0;

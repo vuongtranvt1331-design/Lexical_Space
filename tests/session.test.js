@@ -174,5 +174,59 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
         assert.ok((await storage.pendingOperations(user)).some(op => op.type === 'DELETE' && op.wordId === removed));
       } finally { window.confirm = realConfirm; }
     });
+    await t.test('reverse recall auto-pronounces only after a correct typed answer in the active view', async () => {
+      const user = 'Reverse audio fixture';
+      const { saveSettings } = await import('../js/core/settings.js');
+      saveSettings(user, { recallDirection: 'vi-en', autoPronounce: true });
+      await storage.mutateWords(['alpha', 'bravo', 'charlie', 'delta'].map(word => ({ id: word, username: user, patch: { word, meaning: `Nghĩa của ${word}` } })));
+      const count = spoken.length;
+      await context.activateUser(user);
+      assert.equal(flash.getSessionState().recallDirection, 'vi-en');
+      assert.equal(spoken.length, count);
+
+      await flash.revealCard();
+      assert.equal(spoken.length, count);
+      await flash.revealCard();
+      $('recall-answer-input').value = 'incorrect';
+      await flash.submitReverseAnswer();
+      assert.equal(flash.getSessionState().cardQueue[0].grade, 0);
+      assert.equal(spoken.length, count);
+
+      $('btn-fc-next').click();
+      await until(() => flash.getSessionState().queueIndex === 1);
+      $('recall-answer-input').value = 'bravo';
+      await flash.submitReverseAnswer();
+      assert.deepEqual(spoken.slice(count), ['bravo']);
+      flash.renderActiveCard();
+      flash.resetForUser();
+      await flash.startNewSession({ restore: true });
+      assert.equal(flash.getSessionState().cardQueue[1].answerCorrect, true);
+      await flash.gradeRecall(2);
+      await flash.previousCard();
+      assert.deepEqual(spoken.slice(count), ['bravo']);
+      $('btn-fc-next').click();
+      await until(() => flash.getSessionState().queueIndex === 2);
+
+      $('setting-auto-pronounce').checked = false;
+      $('setting-auto-pronounce').dispatchEvent(new window.Event('change', { bubbles: true }));
+      $('recall-answer-input').value = 'charlie';
+      await flash.submitReverseAnswer();
+      assert.deepEqual(spoken.slice(count), ['bravo']);
+      await flash.replayCurrentAudio();
+      assert.deepEqual(spoken.slice(count), ['bravo', 'charlie']);
+      await flash.gradeRecall(2);
+
+      $('setting-auto-pronounce').checked = true;
+      $('setting-auto-pronounce').dispatchEvent(new window.Event('change', { bubbles: true }));
+      $('recall-answer-input').value = 'delta';
+      const pending = flash.submitReverseAnswer();
+      context.switchView('view-library');
+      await pending;
+      context.switchView('view-review');
+      flash.resetForUser();
+      await flash.startNewSession({ restore: true });
+      assert.equal(flash.getSessionState().cardQueue[3].answerCorrect, true);
+      assert.deepEqual(spoken.slice(count), ['bravo', 'charlie']);
+    });
   } finally { flash.resetForUser(); context.clearActivityTimers(); window.close(); }
 });

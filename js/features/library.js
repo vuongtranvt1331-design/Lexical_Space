@@ -176,26 +176,31 @@ export async function editWord(id, patch) {
   return commitVocabularyChanges([{ id, expectedVersion: word, patch: validation.word }]);
 }
 export async function updateWordMemory(id, status) {
-  if (status === 'mastered') throw new Error('Mastery is earned through scheduled recall on three separate days.');
-  await commitVocabularyChanges([{ id, patch: { repetition: 0, interval: 0, memoryStatus: 'not_remembered', dueDate: new Date().toISOString() } }]);
+  if (status !== 'mastered' && status !== 'not_remembered') throw new Error('Invalid mastery status.');
+  const word = context.wordsData.find(w => w.id === id); if (!word) return;
+  await commitVocabularyChanges([{ id, expectedVersion: word, patch: { masteryOverride: status } }]);
 }
 export function updateLibraryTabsUI() {
   for (const [id, tab] of [['btn-lib-tab-known', 'known'], ['btn-lib-tab-unknown', 'unknown'], ['btn-lib-tab-favorites', 'favorites']]) $(id)?.setAttribute('aria-pressed', String(context.libraryTab === tab));
 }
 export function renderVocabularyCardHtml(word) {
   const flipped = flippedCards.has(word.id), id = esc(word.id);
+  const mastered = word.memoryStatus === 'mastered';
+  const status = mastered ? 'Mastered' : word.masteryOverride === 'not_remembered' ? 'Unknown' : word.reviewCount ? 'Learning' : 'New';
   const highlighted = targetSegments(word.exampleSentence, word.word, { inflections: true }).map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');
   const actions = [
     { action: 'flip', label: 'Flip library card', pressed: flipped, controls: `library-flip-${id}` },
+    { action: 'mastery', symbol: mastered ? 'again' : 'check', label: 'Mastered',
+      title: mastered ? 'Mark as Unknown' : 'Mark as Mastered', pressed: mastered },
     { action: 'favorite', symbol: 'heart', label: 'Favorite word', pressed: Boolean(word.isFavorite) },
     { action: 'audio', label: 'Pronounce word' },
     { action: 'edit', label: 'Edit word' },
     { action: 'delete', label: 'Delete word' }
   ];
-  const rail = actions.map(({ action, symbol, label, pressed, controls }) => {
+  const rail = actions.map(({ action, symbol, label, title = label, pressed, controls }) => {
     const toggle = pressed === undefined ? '' : ` aria-pressed="${pressed}"`;
     const controlsAttribute = controls ? ` aria-controls="${controls}"` : '';
-    return `<button type="button" class="library-rail-button" data-action="${action}" data-id="${id}" aria-label="${label}" title="${label}"${toggle}${controlsAttribute}>${icon(symbol || action)}</button>`;
+    return `<button type="button" class="library-rail-button" data-action="${action}" data-id="${id}" aria-label="${label}" title="${title}"${toggle}${controlsAttribute}>${icon(symbol || action)}</button>`;
   }).join('');
   return `<article class="library-flip-card${flipped ? ' is-flipped' : ''}" data-word-id="${id}" aria-label="${esc(word.word)} vocabulary card">
     <div class="library-toolbar" role="toolbar" aria-label="Word actions" aria-orientation="vertical">${rail}</div>
@@ -210,7 +215,7 @@ export function renderVocabularyCardHtml(word) {
           <p class="library-meaning" lang="vi">${esc(word.meaning)}</p>
           <div class="library-word-details"><h4>Synonyms</h4><p>${esc((word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · ')) || '—'}</p>
           <h4>Collocations</h4><p>${word.collocations.map(esc).join(' · ') || '—'}</p></div>
-          <footer>${wordTopics(word).map(esc).join(' · ')} · ${word.memoryStatus === 'mastered' ? 'Mastered' : word.reviewCount ? 'Learning' : 'New'}</footer>
+          <footer>${wordTopics(word).map(esc).join(' · ')} · ${status}</footer>
         </div>
       </section>
       <section class="library-card-face library-card-back" aria-hidden="${!flipped}"${!flipped ? ' inert' : ''}>
@@ -277,6 +282,7 @@ export function setupLibraryModule() {
     const word = context.wordsData.find(w => w.id === button.dataset.id); if (!word) return;
     const user = context.currentUser, generation = context.accountGeneration;
     try {
+      if (button.dataset.action === 'mastery') await updateWordMemory(word.id, word.memoryStatus === 'mastered' ? 'not_remembered' : 'mastered');
       if (button.dataset.action === 'favorite') await toggleWordFavorite(word.id);
       if (button.dataset.action === 'flip') flipLibraryCard(word.id);
       if (button.dataset.action === 'audio') context.playAudio(word);
