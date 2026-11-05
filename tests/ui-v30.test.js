@@ -42,6 +42,7 @@ test('practice, library, and entry workflows', async t => {
       assert.equal($('session-progress'), null);
       assert.equal($('action-guidance'), null);
       assert.equal(document.querySelector('.practice-progress-row'), null);
+      assert.equal($('practice-card').lastElementChild, $('recall-instruction'));
       assert.ok($('btn-fc-next').closest('.recall-action-bar'));
       assert.ok($('btn-fc-next').hidden);
       const prompt = $('fc-front-context');
@@ -68,6 +69,7 @@ test('practice, library, and entry workflows', async t => {
       $('fc-front-word').click();
       await until(() => current().revealed);
       assert.equal($('btn-fc-reveal').getAttribute('aria-expanded'), 'true');
+      assert.equal($('recall-instruction').textContent, 'Grade your first recall attempt honestly.');
       $('btn-fc-reveal').click();
       await until(() => !current().revealed);
       prompt.click();

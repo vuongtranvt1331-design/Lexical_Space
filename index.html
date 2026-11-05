@@ -20,7 +20,7 @@
   <script src="./js/features/loading-failsafe.js"></script>
   <link rel="stylesheet" href="./css/main.css?v=40">
   <link rel="stylesheet" href="./css/animations.css">
-  <link rel="stylesheet" href="./css/recall-ui.css?v=40">
+  <link rel="stylesheet" href="./css/recall-ui.css?v=41">
   <link rel="stylesheet" href="./css/entry-ui.css?v=40">
   <script defer src="./js/features/loading.js"></script>
   <script defer src="./js/core/offline.js"></script>
@@ -169,7 +169,7 @@
     </section>
     <footer class="drawer-footer">
       <div class="drawer-build">
-        <p>LexicalSpace v40.0.0 <span class="drawer-build-ref">LexicalSpace-v40</span></p>
+        <p>LexicalSpace v41.0.0 <span class="drawer-build-ref">LexicalSpace-v41</span></p>
         <p>Updated <time datetime="2026-11-06">Nov 6, 2026</time></p>
       </div>
       <button id="btn-close-drawer" type="button" aria-label="Close menu" class="drawer-control drawer-icon-button">
@@ -268,7 +268,6 @@
                 <p id="reverse-recall-help">Enter to check · Target word or synonym</p>
               </form>
               <p id="recall-feedback" class="recall-feedback" role="status" aria-live="polite" hidden></p>
-              <p id="recall-instruction" class="recall-instruction">Recall the meaning before revealing the answer.</p>
               <div id="fc-answer" class="hidden recall-answer" aria-hidden="true" hidden>
                 <h3 id="fc-answer-label">Meaning</h3><p id="fc-answer-target" class="answer-target" hidden></p><p id="fc-back-meaning"></p><p id="fc-back-sense"></p>
                 <p id="fc-answer-context" class="context-example"></p>
@@ -276,6 +275,7 @@
                 <h3>Related words</h3><p id="fc-back-synonyms-list"></p>
               </div>
             </div>
+            <p id="recall-instruction" class="recall-instruction">Recall the meaning before revealing the answer.</p>
           </article>
         </div>
       </div>
