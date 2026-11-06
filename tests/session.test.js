@@ -174,6 +174,81 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
         assert.ok((await storage.pendingOperations(user)).some(op => op.type === 'DELETE' && op.wordId === removed));
       } finally { window.confirm = realConfirm; }
     });
+    await t.test('switching directions rotates pending cards and preserves an Again retry and graded history', async () => {
+      const user = 'Direction switch fixture';
+      await storage.mutateWords(['alpha', 'bravo', 'charlie'].map(word => ({ id: word, username: user, patch: { word, meaning: `Nghĩa của ${word}` } })));
+      await context.activateUser(user);
+      await flash.revealCard();
+      await flash.gradeRecall(0);
+      await flash.revealCard();
+      await flash.previousCard();
+      const before = flash.getSessionState();
+      assert.equal(before.cardQueue[before.queueIndex].wordId, 'alpha');
+      assert.equal(before.cardQueue[1].revealed, true);
+
+      $('recall-vi-en').click();
+      await until(() => flash.getSessionState().recallDirection === 'vi-en');
+      const reverse = flash.getSessionState();
+      assert.equal(reverse.sessionId, before.sessionId);
+      assert.deepEqual(reverse.cardQueue.map(item => item.wordId), ['alpha', 'bravo', 'charlie', 'alpha']);
+      assert.deepEqual(reverse.cardQueue[0], before.cardQueue[0]);
+      assert.equal(reverse.queueIndex, 1);
+      assert.equal(reverse.cardQueue[1].revealed, false);
+      assert.equal($('fc-front-word').textContent, 'Nghĩa của bravo');
+      assert.deepEqual(reverse.pendingMisses, ['alpha']);
+      assert.equal(reverse.completedAttempts, before.completedAttempts);
+      $('recall-answer-input').value = 'unfinished answer';
+
+      $('recall-en-vi').click();
+      await until(() => flash.getSessionState().recallDirection === 'en-vi');
+      const switchedBack = flash.getSessionState();
+      assert.equal($('fc-front-word').textContent, 'charlie');
+      assert.equal($('recall-answer-input').value, '');
+      assert.equal($('fc-answer').hidden, true);
+      assert.deepEqual(switchedBack.cardQueue.map(item => item.wordId), ['alpha', 'charlie', 'alpha', 'bravo']);
+      assert.deepEqual(await storage.idbGet('metadata', switchedBack.key), switchedBack);
+      flash.resetForUser();
+      await flash.startNewSession({ restore: true });
+      assert.deepEqual(flash.getSessionState(), switchedBack);
+    });
+    await t.test('a direction switch defers duplicate spellings and equivalent Vietnamese prompts', async () => {
+      const user = 'Duplicate direction fixture';
+      await storage.mutateWords([
+        { id: 'a', username: user, patch: { word: 'auditorium', meaning: 'hội trường' } },
+        { id: 'b', username: user, patch: { word: 'Auditorium', meaning: 'khán phòng' } },
+        { id: 'c', username: user, patch: { word: 'hall', meaning: 'Hội trường' } },
+        { id: 'd', username: user, patch: { word: 'stage', meaning: 'sân khấu' } }
+      ]);
+      await context.activateUser(user);
+      assert.equal($('fc-front-word').textContent, 'auditorium');
+      await flash.setRecallDirection('vi-en');
+      assert.equal($('fc-front-word').textContent, 'sân khấu');
+      assert.equal($('fc-answer').hidden, true);
+      assert.deepEqual(flash.getSessionState().cardQueue.map(item => item.wordId), ['d', 'a', 'b', 'c']);
+    });
+    await t.test('a direction switch waits if it would show the same remaining word', async () => {
+      const user = 'One-card direction fixture';
+      await storage.mutateWords([{ id: 'only', username: user, patch: { word: 'only', meaning: 'duy nhất' } }]);
+      await context.activateUser(user);
+      const before = flash.getSessionState();
+      $('recall-vi-en').click();
+      assert.equal($('recall-en-vi').checked, true);
+      assert.equal($('fc-front-word').textContent, 'only');
+      assert.equal($('fc-answer').hidden, true);
+      assert.deepEqual(flash.getSessionState(), before);
+      await flash.revealCard();
+      await flash.gradeRecall(2);
+      await flash.setRecallDirection('vi-en');
+      assert.equal(flash.getSessionState().recallDirection, 'vi-en');
+      assert.equal(context.sessionCompleted, true);
+
+      const { saveSettings } = await import('../js/core/settings.js');
+      saveSettings(user, { recallDirection: 'en-vi' });
+      await storage.mutateWords([{ id: 'new', username: user, patch: { word: 'new', meaning: 'mới' } }]);
+      await context.refreshVocabulary(user);
+      assert.equal(flash.getSessionState().recallDirection, 'en-vi');
+      assert.equal($('fc-front-word').textContent, 'new');
+    });
     await t.test('reverse recall auto-pronounces only after a correct typed answer in the active view', async () => {
       const user = 'Reverse audio fixture';
       const { saveSettings } = await import('../js/core/settings.js');

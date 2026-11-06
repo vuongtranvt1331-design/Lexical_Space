@@ -1,6 +1,6 @@
 import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
-import { exampleSourceUrl, newId } from '../core/vocabulary.js';
+import { exampleSourceUrl, newId, normalizeTerm } from '../core/vocabulary.js';
 import { scheduleReview, selectPracticeWords, calendarDay, isDue, isNewWord } from '../core/srs.js';
 import { loadSettings, saveSettings } from '../core/settings.js';
 import { pronunciation } from '../core/pronunciation.js';
@@ -68,11 +68,31 @@ function matchingSessionKey(key, user, scope) {
     return owner === user && /^\d{4}-\d{2}-\d{2}$/.test(day) && JSON.stringify(storedScope) === JSON.stringify(scope);
   } catch { return false; }
 }
-function adjustDirection(next, direction) {
+function adjustDirection(next, direction, activeWordId, wordsById) {
   if ((next.recallDirection || 'en-vi') === direction) return next;
-  const cardQueue = [...next.cardQueue], item = cardQueue[next.queueIndex];
-  if (item && !item.graded) cardQueue[next.queueIndex] = { ...item, revealed: false, answerCorrect: false, answerAttempt: '', assisted: false };
-  return { ...next, recallDirection: direction, cardQueue };
+  if (!activeWordId) return { ...next, recallDirection: direction };
+  const active = wordsById.get(activeWordId);
+  const target = normalizeTerm(active?.word);
+  const meaning = direction === 'vi-en' ? normalizeTerm(active?.meaning) : '';
+  const repeatsAnswer = wordId => {
+    const word = wordsById.get(wordId);
+    return wordId === activeWordId || (target && normalizeTerm(word?.word) === target) ||
+      (meaning && normalizeTerm(word?.meaning) === meaning);
+  };
+  const history = next.cardQueue.slice(0, next.queueIndex);
+  const remaining = [], deferred = [];
+  for (const item of next.cardQueue.slice(next.queueIndex)) {
+    if (item.graded) history.push(item);
+    else if (repeatsAnswer(item.wordId)) deferred.push(item);
+    else remaining.push(item);
+  }
+  // Switching to the opposite prompt must never expose the current word's answer.
+  if (!remaining.length && deferred.length) return next;
+  const pending = [...remaining, ...deferred].map(item =>
+    item.revealed || item.answerCorrect || item.answerAttempt || item.assisted
+      ? { ...item, revealed: false, answerCorrect: false, answerAttempt: '', assisted: false }
+      : item);
+  return { ...next, recallDirection: direction, queueIndex: history.length, cardQueue: [...history, ...pending] };
 }
 function reconcileQueue(saved, words, selection, day, direction, inClassMisses, priorityIds) {
   const byId = new Map(words.map(word => [word.id, word]));
@@ -98,14 +118,15 @@ function reconcileQueue(saved, words, selection, day, direction, inClassMisses, 
     const isPriority = item => !item.graded && priority.has(item.wordId);
     cardQueue.push(...tail.filter(isPriority), ...tail.filter(item => !isPriority(item)));
   }
-  if (day === saved.day && direction === (saved.recallDirection || 'en-vi') && queueIndex === saved.queueIndex &&
+  const activeWordId = saved.cardQueue[saved.queueIndex]?.wordId;
+  const next = adjustDirection({ ...saved, day, ledgerKey: ledgerKey(saved.username, day), queueIndex, cardQueue, pendingMisses, inClassMisses },
+    direction, activeWordId, byId);
+  if (day === saved.day && next.recallDirection === saved.recallDirection && next.queueIndex === saved.queueIndex &&
       pendingMisses.length === saved.pendingMisses.length && pendingMisses.every((id, i) => id === saved.pendingMisses[i]) &&
       inClassMisses.length === (saved.inClassMisses?.length || 0) && inClassMisses.every((id, i) => id === saved.inClassMisses[i]) &&
-      cardQueue.length === saved.cardQueue.length &&
-      cardQueue.every((item, i) => item === saved.cardQueue[i])) return saved;
-  const next = { ...saved, day, ledgerKey: ledgerKey(saved.username, day), queueIndex, cardQueue, pendingMisses, inClassMisses,
-    sessionVersion: (saved.sessionVersion || 0) + 1 };
-  return adjustDirection(next, direction);
+      next.cardQueue.length === saved.cardQueue.length &&
+      next.cardQueue.every((item, i) => item === saved.cardQueue[i])) return saved;
+  return { ...next, sessionVersion: (saved.sessionVersion || 0) + 1 };
 }
 export async function startNewSession(options = {}) {
   const user = context.currentUser;
@@ -316,7 +337,12 @@ export async function setRecallDirection(direction) {
   const ticket = generation;
   try {
     if (session) {
-      const next = adjustDirection(session, direction);
+      const byId = new Map(context.wordsData.map(word => [word.id, word]));
+      const next = adjustDirection(session, direction, current()?.wordId, byId);
+      if ((next.recallDirection || 'en-vi') !== direction) {
+        context.showToast('Finish the current word before switching direction.');
+        return;
+      }
       if (next !== session) {
         await persist(next);
         if (ticket !== generation) return;
@@ -481,7 +507,7 @@ export function renderSettings() {
     const input = $(id);
     if (input && input !== document.activeElement) input.value = settings[field] ?? '';
   }
-  renderRecallSelector(settings.recallDirection);
+  renderRecallSelector(session ? (session.recallDirection || 'en-vi') : settings.recallDirection);
 }
 export function setupPracticeControls() {
   $('btn-fc-reveal')?.addEventListener('click', () => void revealCard());

@@ -93,8 +93,10 @@ test('practice, library, and entry workflows', async t => {
       }
     });
     await t.test('reverse mode masks the target and audio, autofocuses, and queues wrong answers atomically', async () => {
-      const before = flash.getSessionState(), target = context.wordsData.find(word => word.id === current().wordId), count = spoken.length;
+      const before = flash.getSessionState(), previousWordId = current().wordId, count = spoken.length;
       await flash.setRecallDirection('vi-en'); assert.equal(flash.getSessionState().sessionId, before.sessionId);
+      assert.notEqual(current().wordId, previousWordId);
+      const target = context.wordsData.find(word => word.id === current().wordId);
       assert.equal($('fc-front-word').textContent, target.meaning); assert.match($('fc-front-context').textContent, /\[ _____ \]/);
       assert.ok(!$('fc-prompt-collocations').textContent.toLowerCase().includes(target.word.toLowerCase()));
       assert.equal(document.activeElement, $('recall-answer-input')); assert.equal(spoken.length, count);

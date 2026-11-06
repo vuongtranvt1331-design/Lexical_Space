@@ -44,7 +44,8 @@ test('login, profile switch and sign-out restore only the selected profile’s q
   saveSettings(beta, { autoPronounce: false, recallDirection: 'vi-en' });
   await storage.mutateWords([
     { id: 'same-id', username: alpha, patch: { word: 'apricot', meaning: 'quả mơ' } },
-    { id: 'same-id', username: beta, patch: { word: 'banana', meaning: 'quả chuối' } }
+    { id: 'same-id', username: beta, patch: { word: 'banana', meaning: 'quả chuối' } },
+    { id: 'second-id', username: beta, patch: { word: 'blueberry', meaning: 'quả việt quất' } }
   ]);
   await storage.idbPut('metadata', {
     key: `practice:v2:${encodeURIComponent(alpha)}:${calendarDay()}`,
@@ -188,7 +189,7 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     assert.notEqual(flash.getSessionState().sessionId, resumed);
     assert.equal(recallDirection(), 'vi-en');
     $('recall-en-vi').click();
-    await waitFor(() => loadSettings(beta).recallDirection === 'en-vi' && $('fc-front-word').textContent === 'banana');
+    await waitFor(() => loadSettings(beta).recallDirection === 'en-vi' && $('fc-front-word').textContent === 'blueberry');
     $('btn-open-drawer').click();
     $('btn-practice-panel').click();
     assert.equal($('practice-panel').hidden, false);
