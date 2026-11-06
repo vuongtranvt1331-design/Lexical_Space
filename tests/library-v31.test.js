@@ -91,11 +91,16 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     }
 
     assert.equal(await toggleMastery(false, 'Mark as Mastered'), 'mastered');
+    const tabs = ['unknown', 'favorites', 'known'].map(tab => $(`btn-lib-tab-${tab}`));
+    assert.ok(tabs.every(tab => tab.classList.contains('practice-mode-button') && !tab.classList.contains('bg-indigo-600')));
+    const selectedTabs = () => tabs.filter(tab => tab.getAttribute('aria-pressed') === 'true');
     $('btn-lib-tab-known').click();
+    assert.deepEqual(selectedTabs(), [tabs[2]]);
     assert.match(card().querySelector('footer').textContent, /Mastered$/);
     assert.ok(card().classList.contains('grade-2'));
     assert.equal(await toggleMastery(true, 'Mark as Unknown'), 'not_remembered');
     $('btn-lib-tab-unknown').click();
+    assert.deepEqual(selectedTabs(), [tabs[0]]);
     assert.match(card().querySelector('footer').textContent, /Unknown$/);
     assert.ok(card().classList.contains('grade-2'));
     assert.equal(card().classList.contains('is-flipped'), true);

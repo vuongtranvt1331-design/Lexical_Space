@@ -16,7 +16,7 @@ function contentPatch(word, previous) {
   else if (previous?.exampleSourceId && word.exampleSentence !== previous.exampleSentence) patch.exampleSourceId = null;
   return patch;
 }
-let editor = null, exampleSource = null, saving = false, importing = false, quickFillRequest;
+let editor = null, exampleSource = null, saving = false, importing = false, importPreview = null, quickFillRequest;
 function status(id, message = '', error = false) { const element = $(id); if (element) { element.textContent = message; element.dataset.error = String(error); } }
 function asFieldValue(key, value) { return listFields.has(key) ? (Array.isArray(value) ? value.join(', ') : '') : String(value ?? ''); }
 function formData() {
@@ -213,7 +213,40 @@ export function setupEntryModule() {
 function selectTab(ai) {
   $('entry-phase-1').hidden = ai; $('section-ai-library').hidden = !ai;
   $('btn-entry-single').setAttribute('aria-selected', String(!ai)); $('btn-toggle-ai-library').setAttribute('aria-selected', String(ai));
-  if (ai) $('ai-raw-words').focus({ preventScroll: true }); else focusEntryWord();
+  if (ai) $(importPreview ? 'ai-import-preview-heading' : 'ai-raw-words').focus({ preventScroll: true }); else focusEntryWord();
+}
+function batchInput() {
+  return { raw: $('import-raw-input').value, words: $('ai-raw-words').value, overwrite: $('import-opt-overwrite').checked,
+    ticket: context.accountGeneration, user: context.currentUser };
+}
+function clearImportPreview() {
+  importPreview = null;
+  const preview = $('ai-import-preview');
+  if (!preview) return;
+  preview.hidden = true;
+  $('ai-import-editor').hidden = false;
+  $('ai-import-preview-list').replaceChildren();
+}
+function editImportInput(message = '', error = false) {
+  clearImportPreview();
+  status('batch-import-status', message, error);
+  if (viewIsVisible('view-entry') && !$('section-ai-library').hidden) $('import-raw-input').focus();
+}
+function previewImportWord(word) {
+  const item = document.createElement('li'), target = document.createElement('h4'), meaning = document.createElement('p');
+  target.lang = 'en'; target.textContent = word.word;
+  meaning.className = 'ai-review-meaning'; meaning.lang = 'vi'; meaning.textContent = word.meaning;
+  const details = document.createElement('details'), summary = document.createElement('summary'), list = document.createElement('dl');
+  details.className = 'entry-details'; summary.textContent = 'Word details';
+  for (const [label, value] of Object.entries({ IPA: word.phonetic, POS: word.pos, Sense: word.sense,
+    Synonyms: word.synonyms.join(', '), Collocations: word.collocations.join(', '), Example: word.exampleSentence,
+    Cloze: word.clozeSentence, 'Usage notes': word.usageNotes, Topic: word.topic })) {
+    if (!value) continue;
+    const term = document.createElement('dt'), description = document.createElement('dd');
+    term.textContent = label; description.textContent = value; list.append(term, description);
+  }
+  details.append(summary, list); item.append(target, meaning, details);
+  return item;
 }
 export function setupQuickImport() {
   window.toggleAiLibrarySection = ai => selectTab(Boolean(ai));
@@ -221,41 +254,70 @@ export function setupQuickImport() {
   $('btn-toggle-ai-library')?.addEventListener('click', () => selectTab(true));
   $('btn-copy-ai-prompt')?.addEventListener('click', async () => {
     const ticket = context.accountGeneration;
+    const stillEditing = () => ticket === context.accountGeneration && !$('ai-import-editor')?.hidden;
     let prompt;
     try { prompt = buildAIPrompt($('ai-raw-words').value); }
     catch (error) { status('batch-import-status', error.message, true); return; }
     try {
       await navigator.clipboard.writeText(prompt);
-      if (ticket === context.accountGeneration) status('batch-import-status', 'Prompt copied. Paste it into your AI, then bring back the JSON.');
+      if (stillEditing()) status('batch-import-status', 'Prompt copied. Paste it into your AI, then bring back the JSON.');
     } catch {
-      if (ticket !== context.accountGeneration) return;
+      if (!stillEditing()) return;
       const preview = $('ai-prompt-preview');
       preview.hidden = false; $('ai-prompt-preview-label').hidden = false; preview.value = prompt; preview.focus(); preview.select();
       status('batch-import-status', 'Clipboard unavailable. Copy the selected prompt manually.');
     }
   });
-  $('btn-execute-import')?.addEventListener('click', async () => {
-    if (importing || !context.currentUser) return;
-    importing = true;
-    const button = $('btn-execute-import'), ticket = context.accountGeneration;
-    button.disabled = true;
+  const previewInvalidated = 'Your batch changed. Review the updated words before saving.';
+  const invalidatePreview = () => { if (importPreview && !importing) editImportInput(previewInvalidated, true); };
+  for (const id of ['import-raw-input', 'ai-raw-words']) $(id)?.addEventListener('input', invalidatePreview);
+  $('import-opt-overwrite')?.addEventListener('change', invalidatePreview);
+  $('btn-edit-import')?.addEventListener('click', () => { if (!importing) editImportInput(); });
+  $('btn-preview-import')?.addEventListener('click', event => {
+    if (importing || !context.currentUser || event.currentTarget.closest('[hidden], .hidden, [inert]')) return;
+    const input = batchInput();
     try {
-      const entries = parseAIBatch($('import-raw-input').value, $('ai-raw-words').value);
-      const result = await importVocabulary(entries, { overwrite: $('import-opt-overwrite').checked });
-      if (ticket !== context.accountGeneration) return;
-      status('batch-import-status', `${result.added} added · ${result.updated} updated · ${result.skipped} already in your library.`);
+      const entries = parseAIBatch(input.raw, input.words);
+      $('ai-import-preview-list').replaceChildren(...entries.map(previewImportWord));
+      importPreview = { input, entries };
+      $('ai-import-preview-heading').textContent = `Review ${entries.length} ${entries.length === 1 ? 'word' : 'words'}`;
+      $('ai-import-preview-summary').textContent = input.overwrite ? 'Matching words will be updated and keep their review history.' : 'Matching words already in your library will be skipped.';
+      $('ai-import-editor').hidden = true;
+      $('ai-import-preview').hidden = false;
+      $('ai-import-preview-list').scrollTop = 0;
+      status('batch-import-status');
+      $('ai-import-preview-heading').focus();
+    } catch (error) { status('batch-import-status', error.message, true); }
+  });
+  $('btn-execute-import')?.addEventListener('click', async event => {
+    if (importing || !importPreview || !context.currentUser || event.currentTarget.closest('[hidden], .hidden, [inert]')) return;
+    const { entries, input } = importPreview;
+    if (Object.entries(batchInput()).some(([key, value]) => value !== input[key])) {
+      editImportInput(previewInvalidated, true);
+      return;
+    }
+    importing = true;
+    const button = event.currentTarget, back = $('btn-edit-import');
+    button.disabled = true; back.disabled = true;
+    status('batch-import-status', 'Saving to your library…');
+    try {
+      const result = await importVocabulary(entries, { overwrite: input.overwrite });
+      if (input.ticket !== context.accountGeneration) return;
       $('import-raw-input').value = '';
+      editImportInput(`${result.added} added · ${result.updated} updated · ${result.skipped} already in your library.`);
     } catch (error) {
-      if (ticket === context.accountGeneration) status('batch-import-status', error.message, true);
+      if (input.ticket === context.accountGeneration) status('batch-import-status', error.message, true);
     } finally {
-      if (ticket === context.accountGeneration) { importing = false; button.disabled = false; }
+      if (input.ticket === context.accountGeneration) { importing = false; button.disabled = false; back.disabled = false; }
     }
   });
 }
 export function resetEntryForUser() {
   clearForm();
+  clearImportPreview();
   saving = false; importing = false; quickFillRequest = null;
   for (const id of ['btn-confirm-save', 'btn-entry-quickfill', 'btn-execute-import']) $(id).disabled = false;
+  if ($('btn-edit-import')) $('btn-edit-import').disabled = false;
   for (const id of ['ai-raw-words', 'import-raw-input', 'ai-prompt-preview', 'input-inline-topic-name']) $(id).value = '';
   $('ai-prompt-preview').hidden = true; $('ai-prompt-preview-label').hidden = true; $('import-opt-overwrite').checked = false;
   status('entry-save-status'); status('batch-import-status'); selectTab(false);

@@ -75,6 +75,54 @@ test('uncapped practice still tracks distinct words, without double charging or 
   assert.equal(next.completedAttempts, 2);
 });
 
+test('an early review consumes a separate slot for a word learned today and competing reviews commit only once', async () => {
+  const username = 'Extra review';
+  await storage.mutateWords([word(username, 'a'), word(username, 'b')]);
+  await storage.mutateWords([grade(username, 'a')], [recall(username, 'a')]);
+  const early = (id, options) => recall(username, id, { kind: 'review', extraReview: true, limit: 1, ...options });
+  const patch = { username, id: 'a', patch: { reviewCount: 2 } };
+  await assert.rejects(storage.mutateWords([patch], [early('a', { limit: 0 })]), { code: 'daily-limit' });
+  const sessions = ['first', 'second'].map(id => session(username, id));
+  const results = await Promise.allSettled(sessions.map(state => storage.mutateWords(
+    [patch], [state, early('a', { success: false })]
+  )));
+  const accepted = results.findIndex(result => result.status === 'fulfilled');
+  assert.ok(accepted >= 0);
+  const rejected = results[1 - accepted];
+  assert.equal(rejected.status, 'rejected');
+  assert.equal(rejected.reason.code, 'daily-review-complete');
+  assert.equal((await storage.readUserWord(username, 'a')).reviewCount, 2);
+  assert.equal(await storage.idbGet('metadata', sessions[1 - accepted].key), null);
+  assert.equal((await storage.pendingOperations(username)).length, 4);
+  await assert.rejects(storage.mutateWords([grade(username, 'b')], [early('b')]), { code: 'daily-limit' });
+  await storage.mutateWords([{ ...patch, patch: { reviewCount: 3 } }], [recall(username, 'a', { kind: 'review', retry: true, limit: 0 })]);
+  const ledger = await storage.idbGet('metadata', ledgerKey(username));
+  assert.deepEqual(ledger.dailyNewIds, ['a']);
+  assert.deepEqual(ledger.dailyReviewIds, ['a']);
+  assert.equal(ledger.completedAttempts, 3);
+  assert.deepEqual(ledger.successfulIds, ['a']);
+});
+
+test('manual rounds reuse review slots until disabled and reserve slots for newly reviewed cards', async () => {
+  const username = 'Voluntary rounds';
+  await storage.mutateWords([word(username, 'a'), word(username, 'b')]);
+  await storage.mutateWords([grade(username, 'a'), grade(username, 'b')], [recall(username, 'a'), recall(username, 'b')]);
+  const repeat = (id, options) => recall(username, id, { kind: 'review', repeat: true, limit: 1, ...options });
+  const patch = (id, reviewCount) => ({ username, id, patch: { reviewCount } });
+  await storage.mutateWords([patch('a', 2)], [repeat('a', { extraReview: true })]);
+  await storage.mutateWords([patch('a', 3)], [repeat('a')]);
+  await storage.mutateWords([patch('a', 4)], [repeat('a', { extraReview: true })]);
+  await assert.rejects(storage.mutateWords([patch('a', 5)], [repeat('a', { limit: 0 })]), { code: 'daily-limit' });
+  await assert.rejects(storage.mutateWords([patch('b', 2)], [repeat('b')]), { code: 'daily-limit' });
+  await assert.rejects(storage.mutateWords([patch('a', 5)], [repeat('a', { retry: true })]), /Invalid daily practice attempt/);
+  const ledger = await storage.idbGet('metadata', ledgerKey(username));
+  assert.deepEqual(ledger.dailyNewIds, ['a', 'b']);
+  assert.deepEqual(ledger.dailyReviewIds, ['a']);
+  assert.equal(ledger.completedAttempts, 5);
+  assert.equal((await storage.readUserWord(username, 'a')).reviewCount, 4);
+  assert.equal((await storage.readUserWord(username, 'b')).reviewCount, 1);
+});
+
 test('categorized attempts cannot use a foreign key and a rejected batch reserves no slots', async () => {
   const username = 'One profile', other = 'Another profile';
   await storage.mutateWords([word(username, 'a'), word(username, 'b'), word(other, 'a')]);

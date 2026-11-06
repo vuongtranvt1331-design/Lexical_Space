@@ -211,6 +211,72 @@ test('practice queues the full eligible backlog and prioritizes oldest due revie
   const reviewOnly = selectPracticeWords(words, { mode: 'review', now });
   assert.equal(reviewOnly.review.length, 900); assert.equal(reviewOnly.fresh.length, 0);
 });
+test('Daily practice gives Hard and Good review priority and budgets early reviews separately from new words', () => {
+  const now = new Date(2026, 10, 6, 9).getTime();
+  const card = (id, lastGrade, days, extra = {}) => normalize({
+    ...patch, id, lastGrade, reviewCount: 1, lastReviewedAt: now - 60_000, dueDate: addCalendarDays(now, days), ...extra
+  });
+  const words = [
+    card('easy-due', 3, -10), card('easy-future', 3, 3), card('good-due', 2, -8), card('good-future', 2, 1),
+    card('hard-due', 1, -2), card('hard-new-today', 1, 2), card('hard-future', '1', 4), card('already-reviewed', 2, 3),
+    card('retry', 1, 5), card('fresh', null, 0, { reviewCount: 0, lastReviewedAt: null })
+  ];
+  const ledger = { dailyNewIds: ['hard-new-today'], dailyReviewIds: ['already-reviewed'] };
+  const ids = words => words.map(word => word.id);
+  const daily = selectPracticeWords(words, { now, ledger, retryIds: ['retry'] });
+  assert.deepEqual(ids(daily.fresh), ['fresh']);
+  assert.deepEqual(ids(daily.review), ['hard-due', 'hard-new-today', 'hard-future', 'good-due', 'good-future', 'easy-due']);
+  assert.equal(daily.limited, false);
+  const limited = selectPracticeWords(words, { now, ledger, settings: { dailyReviewLimit: 2 }, preferredIds: ['good-due', 'hard-new-today'] });
+  assert.deepEqual(ids(limited.review), ['hard-new-today']);
+  assert.equal(limited.limited, true);
+  const exhausted = selectPracticeWords(words, { now, ledger, settings: { dailyReviewLimit: 1 } });
+  assert.deepEqual(ids(exhausted.review), []);
+  const dueOnly = selectPracticeWords(words, { now, ledger, mode: 'review' });
+  assert.deepEqual(ids(dueOnly.review), ['easy-due', 'good-due', 'hard-due']);
+  assert.deepEqual(dueOnly.fresh, []);
+  const favorites = selectPracticeWords(words.map(word => ({ ...word, isFavorite: true })), { now, ledger, mode: 'favorites', favorites: true });
+  assert.deepEqual(ids(favorites.review), ids(dueOnly.review));
+  assert.deepEqual(ids(favorites.fresh), ['fresh']);
+});
+test('manual Daily practice rounds can repeat counted cards without adding new cards or bypassing a zero review cap', () => {
+  const now = new Date(2026, 10, 6, 9).getTime();
+  const card = (id, lastGrade, reviewCount = 1) => normalize({
+    ...patch, id, lastGrade, reviewCount, lastReviewedAt: reviewCount ? now - 60_000 : null, dueDate: addCalendarDays(now, 1)
+  });
+  const words = [card('easy-counted', 3), card('easy-new-review', 3), card('hard', 1), card('good', 2), card('fresh', null, 0)];
+  const options = { now, repeat: true, ledger: { dailyNewIds: ['hard'], dailyReviewIds: ['easy-counted'] } };
+  const reviewIds = settings => selectPracticeWords(words, { ...options, settings }).review.map(word => word.id);
+  assert.deepEqual(selectPracticeWords(words, options).fresh, []);
+  assert.deepEqual(reviewIds({}), ['hard', 'good', 'easy-counted', 'easy-new-review']);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 2 }), ['hard', 'easy-counted']);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 1 }), ['easy-counted']);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 0 }), []);
+  assert.equal(selectPracticeWords(words, { ...options, settings: { dailyReviewLimit: 0 } }).limited, true);
+  assert.deepEqual(selectPracticeWords(words, { ...options, mode: 'review' }).review, []);
+});
+test('successful early reviews record a grade without moving scheduled repetition or due date', () => {
+  const now = new Date(2026, 10, 6, 9).getTime();
+  const word = normalize({ ...patch, id: 'early', reviewCount: 4, lastGrade: 2, goodReviewCount: 2,
+    repetition: 2, interval: 6, dueDate: addCalendarDays(now, 2), successfulDays: ['2026-11-01', '2026-11-02'] });
+  const good = scheduleReview(word, 2, now, { earlyReview: true });
+  assert.equal(good.dueDate, word.dueDate);
+  assert.equal(good.repetition, word.repetition);
+  assert.equal(good.interval, word.interval);
+  assert.deepEqual(good.successfulDays, word.successfulDays);
+  assert.equal(good.lastReviewedAt, now);
+  assert.equal(good.lastGrade, 2);
+  assert.equal(good.reviewCount, 5);
+  assert.equal(good.goodReviewCount, 3);
+  assert.equal(good.memoryStatus, 'mastered');
+  const hard = scheduleReview(word, 1, now, { earlyReview: true });
+  assert.ok(hard.easeFactor < word.easeFactor);
+  const lapse = scheduleReview(good, 0, now, { earlyReview: true });
+  assert.equal(lapse.dueDate, new Date(now + 10 * 60_000).toISOString());
+  assert.equal(lapse.repetition, 0);
+  assert.equal(lapse.interval, 0);
+  assert.equal(lapse.memoryStatus, 'not_remembered');
+});
 test('content validation and both import formats retain sense-specific fields without levels', () => {
   const value = { ...patch, pos: 'adj', sense: 'able to recover', collocations: ['highly resilient', 'resilient economy'], exampleSentence: 'The economy is resilient.' };
   assert.equal(validateVocabulary(value, { requireContext: true }).valid, true);
@@ -235,6 +301,31 @@ test('speech remains available without a recording player and cancellation drops
   const promise = controller.say('first'); assert.equal(spoken[0].text, 'first'); await promise;
   spoken[0].onerror({ error: 'not-allowed' }); await controller.say('second'); controller.unlock();
   assert.deepEqual(spoken.map(u => u.text), ['first', 'second']); assert.equal(cancels, 2);
+});
+test('long examples use sequential browser speech and stop when a newer audio attempt starts', () => {
+  const spoken = [];
+  const speech = { cancel() {}, speak: utterance => spoken.push(utterance) };
+  class Utterance { constructor(text) { this.text = text; } }
+  const controller = createPronunciationController({
+    speech, Utterance, AudioClass: class {},
+    fetcher: () => assert.fail('Full examples use speech directly')
+  });
+  const example = 'Hundreds of excited students gathered in the auditorium for the graduation ceremony. '.repeat(14).trim();
+  assert.equal(controller.sayExample(example), true);
+  assert.equal(spoken.length, 1);
+  for (let i = 0; i < spoken.length; i++) {
+    assert.ok(i < 20 && spoken[i].text.length <= 150);
+    assert.equal(spoken[i].lang, 'en-GB');
+    spoken[i].onend();
+  }
+  assert.equal(spoken.map(utterance => utterance.text).join(' '), example);
+  controller.sayExample(example);
+  const finishOldChunk = spoken.at(-1).onend;
+  controller.sayExample('Read this new example.');
+  const count = spoken.length;
+  finishOldChunk();
+  assert.equal(spoken.length, count);
+  assert.equal(spoken.at(-1).text, 'Read this new example.');
 });
 test('dictionary lookup cancellation stops late recordings playing out of order', async () => {
   const requests = [], played = []; class Audio { pause() {} removeAttribute() {} load() {} async play() { played.push(this.src); } }

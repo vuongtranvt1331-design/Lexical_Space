@@ -7,7 +7,7 @@ import { pronunciation } from '../core/pronunciation.js';
 import { targetSegments, clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
 import { trackIntentionalClicks } from '../utils/intentional-click.js';
 const $ = id => document.getElementById(id);
-let session = null, generation = 0, busy = false, loading = false, refreshRequested = false, dailyLimitReached = false;
+let session = null, generation = 0, busy = false, loading = false, refreshRequested = false, dailyLimitReached = false, canContinue = false;
 let writes = Promise.resolve(), rollover, lastSpokenEntry = '', lastRenderedEntry = '', lastFocusedEntry = '';
 const clone = value => JSON.parse(JSON.stringify(value));
 const ledgerKey = (user, day) => `practice:v2:${encodeURIComponent(user)}:${day}`;
@@ -17,7 +17,7 @@ const scopePointerKey = (user, scope) => `session:scope:${JSON.stringify([user, 
 const currentScope = () => [context.reviewMode, context.activeTopic, context.activeSpecialCollection];
 const actionsBlocked = () => busy || loading;
 const practiceIsVisible = card => card && $('view-review')?.classList.contains('hidden') === false && !card.closest('[inert]');
-const entry = wordId => ({ wordId, entryId: newId(), revealed: false, graded: false });
+const entry = (wordId, repeat = false) => ({ wordId, entryId: newId(), revealed: false, graded: false, ...(repeat && { repeat }) });
 const limitFields = { 'setting-daily-new-limit': 'dailyNewLimit', 'setting-daily-review-limit': 'dailyReviewLimit' };
 export function getSessionState() { return session && clone(session); }
 function syncLegacyState() {
@@ -48,7 +48,7 @@ function persist(next) {
 function notifyFailure(error) { console.error(error); context.showToast(error.message || 'Could not save practice progress.', 'error'); }
 export function resetForUser() {
   generation++; session = null; busy = false; loading = false; refreshRequested = false;
-  dailyLimitReached = false;
+  dailyLimitReached = false; canContinue = false;
   const checkMore = $('btn-session-restart');
   if (checkMore) checkMore.disabled = false;
   lastSpokenEntry = ''; lastRenderedEntry = ''; lastFocusedEntry = '';
@@ -94,9 +94,8 @@ function adjustDirection(next, direction, activeWordId, wordsById) {
       : item);
   return { ...next, recallDirection: direction, queueIndex: history.length, cardQueue: [...history, ...pending] };
 }
-function reconcileQueue(saved, words, selection, day, direction, inClassMisses, priorityIds) {
+function reconcileQueue(saved, words, candidates, repeat, day, direction, inClassMisses, priorityIds) {
   const byId = new Map(words.map(word => [word.id, word]));
-  const candidates = [...selection.review, ...selection.fresh];
   const eligibleIds = new Set(candidates.map(word => word.id));
   const pendingMisses = [...new Set([...saved.pendingMisses.filter(id => byId.has(id) && !(byId.get(id).lastGrade > 0)), ...inClassMisses])];
   const missing = new Set(pendingMisses);
@@ -105,12 +104,12 @@ function reconcileQueue(saved, words, selection, day, direction, inClassMisses, 
   saved.cardQueue.forEach((item, index) => {
     if (!byId.has(item.wordId)) return;
     if (index < saved.queueIndex) queueIndex++;
-    else if (!item.graded && !eligibleIds.has(item.wordId) && !missing.has(item.wordId)) return;
+    else if (!item.graded && !missing.has(item.wordId) && (!eligibleIds.has(item.wordId) || (item.repeat && !repeat))) return;
     cardQueue.push(item);
   });
   const queued = new Set(cardQueue.slice(queueIndex).filter(item => !item.graded).map(item => item.wordId));
-  for (const id of [...pendingMisses, ...candidates.map(word => word.id)]) {
-    if (!queued.has(id)) { cardQueue.push(entry(id)); queued.add(id); }
+  for (const id of [...pendingMisses, ...eligibleIds]) {
+    if (!queued.has(id)) { cardQueue.push(entry(id, repeat && !missing.has(id))); queued.add(id); }
   }
   if (priorityIds.length) {
     const priority = new Set(priorityIds);
@@ -164,21 +163,38 @@ export async function startNewSession(options = {}) {
       const priorityIds = requestedMisses.filter(id => availableIds.has(id));
       if (requestedMisses.length && !priorityIds.length) return { records: [], result: null };
       const inClassMisses = [...new Set([...(saved?.inClassMisses || []), ...priorityIds])].filter(id => availableIds.has(id));
-      const preferredIds = saved?.cardQueue.slice(saved.queueIndex).filter(item => !item.graded).map(item => item.wordId);
+      const pending = saved?.cardQueue.slice(saved.queueIndex).filter(item => !item.graded) || [];
+      const preferredIds = pending.map(item => item.wordId);
       const settings = loadSettings(user), ledger = values[dayLedgerKey];
-      const selection = selectPracticeWords(words, { mode, topic, favorites: mode === 'favorites' || special === 'FAVORITES', now,
+      const selectionOptions = { mode, topic, favorites: mode === 'favorites' || special === 'FAVORITES', now,
         ledger: !ledger?.username || ledger.username === user ? ledger : null, settings, preferredIds,
-        retryIds: [...(saved?.pendingMisses || []), ...inClassMisses] });
+        retryIds: [...(saved?.pendingMisses || []), ...inClassMisses] };
+      const selection = selectPracticeWords(words, selectionOptions);
+      let candidates = mode === 'learning' && selection.fresh.length ? selection.fresh : [...selection.review, ...selection.fresh];
+      let repeat = false, repeatLimited = false, moreRounds = false;
+      if (mode === 'learning' && !selectionOptions.favorites) {
+        const repeatIds = new Set(pending.filter(item => item.repeat).map(item => item.wordId));
+        const repeatOptions = { ...selectionOptions, repeat: true };
+        const nextRound = !candidates.length ? selectPracticeWords(words, repeatOptions) : null;
+        const chosen = repeatIds.size ? selectPracticeWords(words.filter(word => repeatIds.has(word.id)), repeatOptions) :
+          options.continueLearning ? nextRound : null;
+        if (chosen?.review.length) { candidates = chosen.review; repeat = true; }
+        repeatLimited = !!(nextRound?.limited || chosen?.limited);
+        moreRounds = !!nextRound?.review.length;
+      }
       const direction = settings.recallDirection;
-      const result = saved ? reconcileQueue(saved, words, selection, day, direction, inClassMisses, priorityIds) : {
+      const startingRound = repeat && options.continueLearning && saved &&
+        saved.queueIndex >= saved.cardQueue.length && !saved.pendingMisses.length;
+      const previous = startingRound ? { ...saved, queueIndex: 0, cardQueue: [] } : saved;
+      const result = previous ? reconcileQueue(previous, words, candidates, repeat, day, direction, inClassMisses, priorityIds) : {
         key, scopeId, schemaVersion: 2, sessionId: `${encodeURIComponent(user)}:${newId()}`, username: user, day, ledgerKey: dayLedgerKey,
-        cardQueue: [...inClassMisses, ...selection.review.map(word => word.id), ...selection.fresh.map(word => word.id)].map(entry),
+        cardQueue: [...inClassMisses.map(id => entry(id)), ...candidates.map(word => entry(word.id, repeat))],
         queueIndex: 0, sessionVersion: 0, pendingMisses: inClassMisses, inClassMisses,
         completedAttempts: 0, successfulIds: [], createdAt: now, recallDirection: direction
       };
       const records = result === saved ? [] : [result];
       if (!options.refresh || result.key !== session?.key) records.push({ ...active, sessionKey: result.key }, { key: scopeId, username: user, sessionKey: result.key });
-      return { records, result: { session: result, limited: selection.limited, queued: priorityIds.length } };
+      return { records, result: { session: result, limited: selection.limited || repeatLimited, moreRounds, queued: priorityIds.length } };
     });
     if (!isCurrent() || !next) return 0;
     if (next.queued) {
@@ -189,6 +205,7 @@ export async function startNewSession(options = {}) {
     }
     session = next.session;
     dailyLimitReached = next.limited;
+    canContinue = next.moreRounds;
     clearTimeout(rollover);
     const midnight = new Date(); midnight.setHours(24, 0, 0, 20);
     rollover = setTimeout(() => { void startNewSession(); }, midnight.getTime() - Date.now());
@@ -214,11 +231,13 @@ export async function reconcileSession() {
   if (session?.username === context.currentUser) await startNewSession({ refresh: true });
 }
 function runRequestedRefresh() {
-  if (refreshRequested) { refreshRequested = false; void reconcileSession(); }
+  if (refreshRequested) { refreshRequested = false; return reconcileSession(); }
 }
 function finishAction(ticket) {
   if (ticket !== generation) return;
-  busy = false; renderActiveCard(); runRequestedRefresh();
+  busy = false;
+  if (refreshRequested) return runRequestedRefresh();
+  renderActiveCard();
 }
 function current() { return session?.cardQueue[session.queueIndex]; }
 function show(id, visible) { const element = $(id); if (element) { element.hidden = !visible; element.classList.toggle('hidden', !visible); } }
@@ -253,11 +272,14 @@ export function renderActiveCard() {
     if ($('recall-answer-input')) $('recall-answer-input').value = '';
   }
   show('practice-card', !!word); show('retrieval-controls', !!word); show('card-empty-state', !word);
+  show('btn-adjust-daily-limits', !word && dailyLimitReached);
+  show('btn-session-continue', !word && canContinue);
   renderRecallSelector(reverse ? 'vi-en' : 'en-vi');
   if (!word) {
     pronunciation.cancel();
-    setText('empty-state-title', session?.cardQueue.length ? 'Practice complete' : dailyLimitReached ? 'Daily limit reached' : 'No cards ready in this view');
-    setText('empty-state-subtitle', dailyLimitReached ? 'More cards are ready after your daily limit resets. You can also change the limit in Practice & Progress.' :
+    setText('empty-state-title', dailyLimitReached ? 'Daily limit reached' : session?.cardQueue.length ? 'Practice complete' : 'No cards ready in this view');
+    setText('empty-state-subtitle', dailyLimitReached ? 'Raise the limit for new words or reviews, or clear it for unlimited practice. Your daily limit resets each day.' :
+      canContinue ? 'Start another round with words you have already studied.' :
       context.reviewMode === 'review' ? 'No reviews are due in this selection. You can switch to Daily practice for new words.' :
       'Check for newly due cards, choose another topic, or add new words.');
     show('empty-state-subtitle', true); show('session-stats-box', !!session?.cardQueue.length);
@@ -288,6 +310,8 @@ export function renderActiveCard() {
   setText('fc-back-synonyms-list', (word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · '));
   setText('fc-collocations', word.collocations.join(' · '));
   renderSentence($('fc-answer-context'), word.exampleSentence, word.word);
+  const exampleAudio = $('btn-fc-example-audio');
+  if (exampleAudio) exampleAudio.disabled = actionsBlocked() || !item.revealed || !word.exampleSentence;
   const source = $('fc-answer-source'), sourceUrl = exampleSourceUrl(word.exampleSourceId);
   if (source) {
     if (sourceUrl) source.href = sourceUrl;
@@ -385,6 +409,12 @@ async function useWordHint(action) {
   } else action(word);
 }
 export function replayCurrentAudio() { return useWordHint(playAudio); }
+function readCurrentExample() {
+  const item = current();
+  if (!item?.revealed || actionsBlocked() || !practiceIsVisible($('practice-card'))) return;
+  const example = context.wordsData.find(word => word.id === item.wordId)?.exampleSentence;
+  if (example && !pronunciation.sayExample(example)) context.showToast('Example audio is unavailable in this browser.', 'error');
+}
 export async function revealCard() {
   if (actionsBlocked() || !current()) return;
   if (session.day !== calendarDay()) { await startNewSession(); return; }
@@ -409,11 +439,13 @@ export async function gradeRecall(grade, { submission = null, holdCard = false }
     if (ticket !== generation || user !== context.currentUser) return;
     const now = Date.now();
     if (next.day !== calendarDay(now)) { refreshRequested = true; return; }
-    const scheduled = scheduleReview(word, grade, now);
     const kind = isNewWord(word) ? 'new' : 'review';
     const settings = loadSettings(user);
     const limit = (kind === 'new' ? settings.dailyNewLimit : settings.dailyReviewLimit) ?? null;
     const retry = next.pendingMisses.includes(word.id);
+    const repeat = kind === 'review' && !retry && graded.repeat === true;
+    const earlyReview = kind === 'review' && !retry && context.reviewMode === 'learning' && !isDue(word, now);
+    const scheduled = scheduleReview(word, grade, now, { earlyReview });
     graded.graded = true; graded.grade = grade; graded.revealed = true; next.completedAttempts++;
     if (submission !== null) Object.assign(graded, { answerAttempt: submission, answerCorrect: false });
     if (grade === 0) {
@@ -425,28 +457,37 @@ export async function gradeRecall(grade, { submission = null, holdCard = false }
       if (!next.successfulIds.includes(word.id)) next.successfulIds.push(word.id);
     }
     if (!holdCard) next.queueIndex++;
-    const ledger = { key: next.ledgerKey, username: user, recallAttempt: { wordId: word.id, success: grade > 0, kind, limit, retry } };
+    const ledger = { key: next.ledgerKey, username: user, recallAttempt: {
+      wordId: word.id, success: grade > 0, kind, limit, retry, extraReview: earlyReview || repeat, repeat
+    } };
     // No cloud wait: the word, outbox record and exact next card are one commit.
     await context.commitVocabularyChanges([{ id: word.id, patch: { ...scheduled, lastRecallDirection: next.recallDirection || 'en-vi' }, expectedVersion: word }], [next, ledger], user);
     if (ticket !== generation || user !== context.currentUser) return;
     session = next; context.recordLearningActivity('recall_attempt');
+    if (!current()) refreshRequested = true;
   } catch (error) {
     if (ticket !== generation) return;
-    if (error?.code === 'daily-limit') {
+    if (error?.code === 'daily-limit' || error?.code === 'daily-review-complete') {
       refreshRequested = true;
-      context.showToast('Your daily limit for these cards was reached. The queue will refresh.', 'error');
+      context.showToast(error.message, 'error');
       try { await context.refreshVocabulary(user); }
       catch (refreshError) { console.warn('Could not refresh daily practice vocabulary:', refreshError); }
     } else notifyFailure(error);
   }
-  finally { finishAction(ticket); }
+  finally { await finishAction(ticket); }
 }
 async function stepCard(offset) {
   if (actionsBlocked() || !session) return;
   busy = true; const ticket = generation, next = clone(session); next.queueIndex += offset;
-  try { await persist(next); if (ticket === generation) session = next; }
+  try {
+    await persist(next);
+    if (ticket === generation) {
+      session = next;
+      if (!current()) refreshRequested = true;
+    }
+  }
   catch (error) { if (ticket === generation) notifyFailure(error); }
-  finally { finishAction(ticket); }
+  finally { await finishAction(ticket); }
 }
 export function previousCard() { if (session?.queueIndex > 0) return stepCard(-1); }
 function continueCard() { if (current()?.graded) return stepCard(1); }
@@ -521,6 +562,7 @@ export function setupPracticeControls() {
   $('btn-fc-next')?.addEventListener('click', () => void continueCard());
   for (const button of document.querySelectorAll('[data-recall-grade]')) button.addEventListener('click', () => void gradeRecall(Number(button.dataset.recallGrade)));
   $('btn-fc-sound')?.addEventListener('click', () => void replayCurrentAudio());
+  $('btn-fc-example-audio')?.addEventListener('click', readCurrentExample);
   $('btn-fc-edit')?.addEventListener('click', () => void useWordHint(word => {
     if (!$('view-review').classList.contains('hidden') && !card.closest('[inert]')) context.openWordEditor(word);
   }));
@@ -603,6 +645,9 @@ export function setupPracticeControls() {
 }
 export function setupSessionEndButtons() {
   $('btn-session-add-words')?.addEventListener('click', () => context.switchView('view-entry'));
+  $('btn-session-continue')?.addEventListener('click', () => {
+    if (canContinue && !current() && !actionsBlocked()) void startNewSession({ continueLearning: true });
+  });
   const checkMore = $('btn-session-restart');
   checkMore?.addEventListener('click', async () => {
     const user = context.currentUser, profile = context.accountGeneration, navigation = context.navigationGeneration;

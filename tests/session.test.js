@@ -25,7 +25,7 @@ await until(() => flash.getSessionState()?.cardQueue.length > 0);
 test('integrated recall flow, keyboard, exact resume, import and missed-card completion', async t => {
   try {
     await t.test('first card auto-pronounces once and answer/grades start hidden/disabled', () => {
-      assert.equal(flash.getSessionState().cardQueue.length, 40); assert.equal(spoken.length, 1);
+      assert.equal(flash.getSessionState().cardQueue.length, 10); assert.deepEqual(spoken, ['word30']);
       assert.equal($('fc-answer').classList.contains('hidden'), true);
       assert.ok([...document.querySelectorAll('[data-recall-grade]')].every(b => b.disabled));
       flash.renderActiveCard(); assert.equal(spoken.length, 1);
@@ -39,7 +39,7 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       document.body.dispatchEvent(new window.KeyboardEvent('keydown', { key: '1', bubbles: true }));
       await until(() => flash.getSessionState().queueIndex === 1);
       const state = flash.getSessionState(); assert.equal(state.pendingMisses[0], first); assert.equal(state.cardQueue[4].wordId, first);
-      assert.equal(state.cardQueue.length, 41); assert.equal(spoken.length, 2);
+      assert.equal(state.cardQueue.length, 11); assert.equal(spoken.length, 2);
       const stored = await storage.idbGet('metadata', state.key); assert.equal(stored.queueIndex, 1); assert.equal(stored.pendingMisses[0], first);
     });
     await t.test('navigation and reload restore the exact card and reveal state', async () => {
@@ -114,12 +114,12 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       await flash.startNewSession();
       assert.deepEqual(flash.getSessionState().cardQueue.map(item => item.wordId), ['late_a', 'late_b']);
       await flash.revealCard();
-      await flash.gradeRecall(2);
+      await flash.gradeRecall(3);
       context.activeTopic = 'ALL';
       await flash.startNewSession();
       assert.deepEqual(flash.getSessionState().cardQueue.map(item => item.wordId), ['late_b']);
       await flash.revealCard();
-      await flash.gradeRecall(2);
+      await flash.gradeRecall(3);
       assert.equal(context.sessionCompleted, true);
       await storage.mutateWords([{ id: 'late_c', username: user, patch: { word: 'third', meaning: 'third meaning', topic: 'Shared topic' } }]);
       await context.refreshVocabulary(user);
@@ -237,7 +237,7 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       assert.equal($('fc-answer').hidden, true);
       assert.deepEqual(flash.getSessionState(), before);
       await flash.revealCard();
-      await flash.gradeRecall(2);
+      await flash.gradeRecall(3);
       await flash.setRecallDirection('vi-en');
       assert.equal(flash.getSessionState().recallDirection, 'vi-en');
       assert.equal(context.sessionCompleted, true);

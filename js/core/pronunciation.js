@@ -1,5 +1,20 @@
 const DICTIONARY_ENDPOINT = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 const CACHE_LIMIT = 128;
+const EXAMPLE_CHUNK_LENGTH = 150;
+
+function exampleChunks(text) {
+  const chunks = [];
+  let chunk = '';
+  for (const word of text.split(/\s+/)) {
+    if (chunk && chunk.length + word.length + 1 > EXAMPLE_CHUNK_LENGTH) {
+      chunks.push(chunk);
+      chunk = '';
+    }
+    chunk = chunk ? `${chunk} ${word}` : word;
+  }
+  if (chunk) chunks.push(chunk);
+  return chunks;
+}
 
 export function pronunciationUrl(value) {
   const text = typeof value === 'string' ? value.trim() : '';
@@ -97,7 +112,7 @@ export function createPronunciationController({
   function speak(attempt) {
     if (active !== attempt || !speech || !Utterance) return;
     try {
-      const next = new Utterance(attempt.word);
+      const next = new Utterance(attempt.chunks?.[attempt.chunkIndex] ?? attempt.word);
       next.lang = 'en-GB';
       const voice = speech.getVoices?.()?.find(candidate => /^en[-_]gb$/i.test(candidate.lang));
       if (voice) next.voice = voice;
@@ -105,7 +120,11 @@ export function createPronunciationController({
       next.onerror = event => {
         if (active === attempt && utterance === next && ['not-allowed', 'audio-busy'].includes(event.error)) attempt.blocked = 'speech';
       };
-      next.onend = () => { if (utterance === next) utterance = null; };
+      next.onend = () => {
+        if (active !== attempt || utterance !== next) return;
+        utterance = null;
+        if (attempt.chunks && ++attempt.chunkIndex < attempt.chunks.length) speak(attempt);
+      };
       speech.speak(next);
     } catch (error) {
       if (active === attempt && error?.name === 'NotAllowedError') attempt.blocked = 'speech';
@@ -178,7 +197,17 @@ export function createPronunciationController({
     });
   }
 
-  return { say, cancel, unlock };
+  function sayExample(value) {
+    const text = typeof value === 'string' ? value.trim() : '';
+    if (!text || !speech || !Utterance) return false;
+    cancel();
+    const attempt = { chunks: exampleChunks(text), chunkIndex: 0, abort: new AbortController() };
+    active = attempt;
+    speak(attempt);
+    return true;
+  }
+
+  return { say, sayExample, cancel, unlock };
 }
 
 export const pronunciation = createPronunciationController();

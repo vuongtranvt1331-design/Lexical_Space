@@ -20,8 +20,8 @@
   <script src="./js/features/loading-failsafe.js"></script>
   <link rel="stylesheet" href="./css/main.css?v=42">
   <link rel="stylesheet" href="./css/animations.css">
-  <link rel="stylesheet" href="./css/recall-ui.css?v=43.0.1-r2">
-  <link rel="stylesheet" href="./css/entry-ui.css?v=40">
+  <link rel="stylesheet" href="./css/recall-ui.css?v=43.0.1-r4">
+  <link rel="stylesheet" href="./css/entry-ui.css?v=43.0.1-r4">
   <script defer src="./js/features/loading.js"></script>
   <script defer src="./js/core/offline.js"></script>
 </head>
@@ -82,6 +82,11 @@
         <span id="badge-review-count" class="drawer-count" title="Words remaining in the selected practice mode and topic" aria-hidden="true">0</span>
       </button>
 
+      <button type="button" data-target="view-entry" class="nav-item">
+        <i class="ph-bold ph-plus-circle" aria-hidden="true"></i>
+        <span class="drawer-nav-label">Add New Words</span>
+      </button>
+
       <button type="button" data-target="view-library" class="nav-item">
         <i class="ph-bold ph-books" aria-hidden="true"></i>
         <span class="drawer-nav-label">Library</span>
@@ -91,11 +96,6 @@
       <button type="button" data-target="view-in-class-check" class="nav-item">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3m-6 9 2 2 4-4"/></svg>
         <span class="drawer-nav-label">In-Class Check</span>
-      </button>
-
-      <button type="button" data-target="view-entry" class="nav-item">
-        <i class="ph-bold ph-plus-circle" aria-hidden="true"></i>
-        <span class="drawer-nav-label">Add New Words</span>
       </button>
 
       <button id="btn-practice-panel" type="button" class="nav-item" aria-controls="practice-panel">
@@ -145,9 +145,9 @@
       </section>
       <section class="practice-panel-group" aria-labelledby="practice-preferences-heading">
         <h3 id="practice-preferences-heading">Practice Settings &amp; Preferences</h3>
-        <div class="profile-section settings-fields">
-          <h4>Daily limits</h4>
-          <p id="settings-limit-help">Leave a limit blank for unlimited. Use 0 to skip that category. Missed-card retries do not count again.</p>
+        <section id="practice-daily-limits" class="profile-section settings-fields" tabindex="-1" aria-labelledby="daily-limits-heading">
+          <h4 id="daily-limits-heading">Daily limits</h4>
+          <p id="settings-limit-help">Leave a limit blank for unlimited. Use 0 to skip that category. Repeating a reviewed card does not use another review slot.</p>
           <div class="settings-limit-grid">
             <label>Maximum new words per day
               <input id="setting-daily-new-limit" class="entry-input" type="number" min="0" step="1" max="9007199254740991"
@@ -158,7 +158,7 @@
                 inputmode="numeric" placeholder="Unlimited" aria-describedby="settings-limit-help">
             </label>
           </div>
-        </div>
+        </section>
         <div class="profile-section settings-fields">
           <h4>Audio and sound</h4>
           <label class="entry-check"><input id="setting-auto-pronounce" type="checkbox" checked> Auto-pronounce words</label>
@@ -223,6 +223,14 @@
             </div>
 
             <div class="w-full max-w-xs space-y-1.5 mt-1">
+              <button id="btn-session-continue" type="button" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
+                <i class="ph-bold ph-play text-sm" aria-hidden="true"></i>
+                <span>Continue studying</span>
+              </button>
+              <button id="btn-adjust-daily-limits" type="button" aria-haspopup="dialog" aria-controls="drawer" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-extrabold text-xs rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-1.5">
+                <i class="ph-bold ph-sliders-horizontal text-sm" aria-hidden="true"></i>
+                <span>Manage daily limits</span>
+              </button>
               <button id="btn-session-add-words" class="min-h-[40px] w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
                 <i class="ph-bold ph-plus-circle text-sm"></i>
                 <span>Add New Words</span>
@@ -248,6 +256,12 @@
               <button id="btn-fc-sound" class="library-rail-button" data-action="audio" type="button" aria-label="Pronounce word (R)" title="Pronounce word (R)" aria-keyshortcuts="R">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m11 5-6 4H2v6h3l6 4V5Zm4 3a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>
               </button>
+              <button id="btn-fc-example-audio" class="library-rail-button example-audio-button" data-action="example-audio" type="button" aria-label="Read example sentence" title="Read example sentence" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2.5 12c3-1.5 5.5-5 8-5 .6 0 1.1.5 1.5 1 .4-.5.9-1 1.5-1 2.5 0 5 3.5 8 5-2.8 2-5.5 5.5-9.5 5.5S5.3 14 2.5 12Z"/>
+                  <path d="M2.5 12c4-1 7 1 9.5 1s5.5-2 9.5-1"/>
+                </svg>
+              </button>
               <button id="btn-fc-edit" class="library-rail-button" data-action="edit" type="button" aria-label="Edit word" title="Edit word">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15 4 5 5M4 20l5-1L21 7a2 2 0 0 0-5-5L4 14v6Z"/></svg>
               </button>
@@ -270,7 +284,7 @@
               <p id="recall-feedback" class="recall-feedback" role="status" aria-live="polite" hidden></p>
               <div id="fc-answer" class="hidden recall-answer" aria-hidden="true" hidden>
                 <h3 id="fc-answer-label">Meaning</h3><p id="fc-answer-target" class="answer-target" hidden></p><p id="fc-back-meaning"></p><p id="fc-back-sense"></p>
-                <p id="fc-answer-context" class="context-example"></p>
+                <p id="fc-answer-context" class="context-example" lang="en"></p>
                 <a id="fc-answer-source" class="example-source hidden" target="_blank" rel="noopener noreferrer" hidden>Example from Tatoeba</a>
                 <h3>Collocations</h3><p id="fc-collocations"></p>
                 <h3>Related words</h3><p id="fc-back-synonyms-list"></p>
@@ -372,14 +386,25 @@
         </form>
       </div>
       <div id="section-ai-library" role="tabpanel" aria-labelledby="btn-toggle-ai-library" class="entry-sheet ai-sheet" hidden>
-        <p>Paste a list of English words, copy the prompt to your AI, then bring back its JSON response.</p>
-        <label for="ai-raw-words">Word list</label><textarea id="ai-raw-words" class="entry-input" rows="4" placeholder="resilient&#10;give up&#10;curriculum"></textarea>
-        <button id="btn-copy-ai-prompt" class="entry-secondary" type="button">Copy AI Prompt</button>
-        <label id="ai-prompt-preview-label" for="ai-prompt-preview" hidden>Prompt to copy</label><textarea id="ai-prompt-preview" class="entry-input" rows="5" readonly hidden></textarea>
-        <label for="import-raw-input">JSON response</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder='[{"word":"resilient", …}]'></textarea>
-        <label class="overwrite-label"><input id="import-opt-overwrite" type="checkbox"> Update matching words and keep their review history</label>
+        <div id="ai-import-editor" class="ai-import-stage">
+          <p>Paste a list of English words, copy the prompt to your AI, then bring back its JSON response.</p>
+          <label for="ai-raw-words">Word list</label><textarea id="ai-raw-words" class="entry-input" rows="4" placeholder="resilient&#10;give up&#10;curriculum"></textarea>
+          <button id="btn-copy-ai-prompt" class="entry-secondary" type="button">Copy AI Prompt</button>
+          <label id="ai-prompt-preview-label" for="ai-prompt-preview" hidden>Prompt to copy</label><textarea id="ai-prompt-preview" class="entry-input" rows="5" readonly hidden></textarea>
+          <label for="import-raw-input">JSON response</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder='[{"word":"resilient", …}]'></textarea>
+          <label class="overwrite-label"><input id="import-opt-overwrite" type="checkbox"> Update matching words and keep their review history</label>
+          <button id="btn-preview-import" class="entry-primary" type="button">Review words</button>
+        </div>
+        <section id="ai-import-preview" class="ai-import-stage" aria-labelledby="ai-import-preview-heading" hidden>
+          <h3 id="ai-import-preview-heading" tabindex="-1">Review words</h3>
+          <p id="ai-import-preview-summary"></p>
+          <ol id="ai-import-preview-list" class="ai-review-list" aria-label="Words ready for review" tabindex="0"></ol>
+          <div class="ai-review-actions">
+            <button id="btn-edit-import" class="entry-secondary" type="button">Back to edit</button>
+            <button id="btn-execute-import" class="entry-primary" type="button">Approve &amp; save to Library</button>
+          </div>
+        </section>
         <p id="batch-import-status" class="entry-status" role="status" aria-live="polite"></p>
-        <button id="btn-execute-import" class="entry-primary" type="button">Validate &amp; Import to Library</button>
       </div>
     </section>
 
@@ -444,16 +469,16 @@
 
         <!-- Bottom Controls: [Unknown] [♡ Favorites Collection] [Known] -->
         <div class="flex items-center gap-2 w-full">
-          <button id="btn-lib-tab-unknown" type="button" class="flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 bg-indigo-600 text-white border-indigo-500 shadow-sm active:scale-95 truncate" title="Unknown Vocabulary">
+          <button id="btn-lib-tab-unknown" type="button" aria-pressed="true" class="practice-mode-button flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 shadow-sm active:scale-95 truncate" title="Unknown Vocabulary">
             <i class="ph-bold ph-warning-circle text-base flex-shrink-0 text-amber-400"></i>
             <span class="truncate">Unknown</span>
           </button>
 
-          <button type="button" id="btn-lib-tab-favorites" aria-label="Favorites Collection" title="Favorites Collection" class="w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center shadow-md transition-all active:scale-90 border bg-slate-900 hover:bg-slate-800 border-slate-800 text-white relative">
-            <i id="lib-bottom-fav-icon" class="ph-bold ph-heart text-xl text-white"></i>
+          <button type="button" id="btn-lib-tab-favorites" aria-label="Favorites Collection" aria-pressed="false" title="Favorites Collection" class="practice-mode-button w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center shadow-md transition-all active:scale-90 border relative">
+            <i id="lib-bottom-fav-icon" class="ph-bold ph-heart text-xl"></i>
           </button>
 
-          <button id="btn-lib-tab-known" type="button" class="flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 bg-slate-900 text-slate-300 border-slate-800 hover:bg-slate-800 active:scale-95 truncate" title="Known Vocabulary">
+          <button id="btn-lib-tab-known" type="button" aria-pressed="false" class="practice-mode-button flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 active:scale-95 truncate" title="Mastered Vocabulary">
             <i class="ph-bold ph-check-circle text-base flex-shrink-0"></i>
             <span class="truncate">Mastered</span>
           </button>

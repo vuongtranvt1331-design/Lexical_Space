@@ -364,15 +364,22 @@ export function setupNavigation({ retryStartup } = {}) {
   const closeDrawer = () => setDrawer(false);
   $('btn-close-drawer').addEventListener('click', closeDrawer);
   backdrop.addEventListener('click', closeDrawer);
-  openPractice.addEventListener('click', () => {
-    if (drawer.inert || !context.currentUser || context.profileLoading) return;
+  function openPracticeSettings(focusTarget = heading) {
+    if (!context.currentUser || context.profileLoading) return;
     context.SoundManager.playSelect();
     context.pausePracticeAudio();
     setPracticePanel(true);
+    if (drawer.inert) setDrawer(true);
     practicePanel.scrollTop = 0;
     context.renderSettings();
     void context.renderStats();
-    heading.focus();
+    focusTarget.focus();
+  }
+  openPractice.addEventListener('click', () => {
+    if (!drawer.inert) openPracticeSettings();
+  });
+  $('btn-adjust-daily-limits')?.addEventListener('click', event => {
+    if (!event.currentTarget.closest('[hidden], [inert]')) openPracticeSettings($('practice-daily-limits'));
   });
   backToMenu.addEventListener('click', () => {
     setPracticePanel(false);

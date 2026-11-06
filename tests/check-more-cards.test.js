@@ -43,9 +43,9 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
     assert.equal(checkMore.disabled, true);
     await waitFor(() => !checkMore.disabled);
   };
-  const passCard = async () => {
+  const passCard = async grade => {
     await flash.revealCard();
-    await flash.gradeRecall(2);
+    await flash.gradeRecall(grade);
   };
   const word = (id, patch = {}, username = user) => ({ id, username, patch: { word: id, meaning: 'nghĩa', topic: 'A', ...patch } });
   saveSettings(user, { dailyNewLimit: 1, dailyReviewLimit: 1, autoPronounce: false, soundEffects: false });
@@ -55,12 +55,13 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
 
   try {
     await waitFor(() => flash.getSessionState() && !context.profileLoading);
-    assert.deepEqual(queue(), ['first-due', 'first-new']);
-    assert.equal(practiceBadge(), '2');
-    const sessionId = flash.getSessionState().sessionId;
-    await passCard();
+    assert.deepEqual(queue(), ['first-new']);
     assert.equal(practiceBadge(), '1');
-    await passCard();
+    const sessionId = flash.getSessionState().sessionId;
+    await passCard(3);
+    assert.deepEqual(queue(), ['first-due']);
+    assert.equal(practiceBadge(), '1');
+    await passCard(2);
     assert.deepEqual(queue(), []);
     assert.equal(practiceBadge(), '0');
     assert.equal(context.sessionCompleted, true);
@@ -76,9 +77,9 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
     ]);
     assert.equal(context.wordsData.some(record => record.id === 'second-due'), false);
     await readMore();
-    await waitFor(() => queue().length === 2);
-    assert.deepEqual(queue(), ['second-due', 'second-new']);
-    assert.equal(practiceBadge(), '2');
+    await waitFor(() => queue().length === 1);
+    assert.deepEqual(queue(), ['second-new']);
+    assert.equal(practiceBadge(), '1');
     assert.equal(flash.getSessionState().sessionId, sessionId);
     assert.equal(flash.getSessionState().completedAttempts, 2);
 

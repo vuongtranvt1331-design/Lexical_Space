@@ -120,6 +120,11 @@ function validateWordMutations(changes, metadataRecords) {
   }
   for (const record of metadataRecords) {
     const attempt = record.recallAttempt;
+    if ((attempt?.extraReview !== undefined && typeof attempt.extraReview !== 'boolean') ||
+        (attempt?.repeat !== undefined && typeof attempt.repeat !== 'boolean') ||
+        ((attempt?.extraReview || attempt?.repeat) && (attempt.kind !== 'review' || attempt.retry))) {
+      throw new Error('Invalid daily practice attempt.');
+    }
     if (attempt?.kind == null) continue;
     if (!['new', 'review'].includes(attempt.kind) || !owned(attempt.wordId) ||
         (attempt.limit != null && (!Number.isSafeInteger(attempt.limit) || attempt.limit < 0))) {
@@ -134,20 +139,25 @@ function validateWordMutations(changes, metadataRecords) {
   }
 }
 function updateRecallLedger(ledger, attempt) {
-  const { wordId, kind, retry, limit, success } = attempt;
+  const { wordId, kind, retry, limit, success, extraReview, repeat } = attempt;
   if (kind != null) {
     if (!Array.isArray(ledger.dailyNewIds)) ledger.dailyNewIds = [];
     if (!Array.isArray(ledger.dailyReviewIds)) ledger.dailyReviewIds = [];
-    const alreadyCounted = ledger.dailyNewIds.includes(wordId) || ledger.dailyReviewIds.includes(wordId);
-    if (!retry && !alreadyCounted) {
-      const ids = kind === 'new' ? ledger.dailyNewIds : ledger.dailyReviewIds;
-      if (limit != null && ids.length >= limit) {
-        const error = new Error(`Today's ${kind === 'new' ? 'new word' : 'review'} limit has been reached.`);
-        error.code = 'daily-limit';
-        throw error;
-      }
-      ids.push(wordId);
+    const reviewedToday = ledger.dailyReviewIds.includes(wordId);
+    if (extraReview && !repeat && reviewedToday) {
+      const error = new Error('This word has already been reviewed today.');
+      error.code = 'daily-review-complete';
+      throw error;
     }
+    const alreadyCounted = reviewedToday || (!extraReview && !repeat && ledger.dailyNewIds.includes(wordId));
+    const needsSlot = !retry && !alreadyCounted;
+    const ids = kind === 'new' ? ledger.dailyNewIds : ledger.dailyReviewIds;
+    if ((repeat && limit === 0) || (needsSlot && limit != null && ids.length >= limit)) {
+      const error = new Error(`Today's ${kind === 'new' ? 'new word' : 'review'} limit has been reached.`);
+      error.code = 'daily-limit';
+      throw error;
+    }
+    if (needsSlot) ids.push(wordId);
   }
   ledger.completedAttempts = (Number(ledger.completedAttempts) || 0) + 1;
   if (!Array.isArray(ledger.successfulIds)) ledger.successfulIds = [];

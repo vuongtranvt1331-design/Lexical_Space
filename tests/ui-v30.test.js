@@ -36,7 +36,7 @@ test('practice, library, and entry workflows', async t => {
       const labels = ['Again', 'Hard', 'Good', 'Easy'];
       assert.ok([...document.querySelectorAll('[data-recall-grade]')].every(button => button.disabled));
       assert.deepEqual([...document.querySelectorAll('.recall-card-tools button')].map(button => button.dataset.action),
-        ['flip', 'previous', 'favorite', 'audio', 'edit', 'delete']);
+        ['flip', 'previous', 'favorite', 'audio', 'example-audio', 'edit', 'delete']);
       assert.ok($('btn-fc-previous').closest('.recall-card-tools'));
       assert.ok($('btn-fc-previous').disabled);
       assert.equal($('session-progress'), null);
@@ -100,6 +100,10 @@ test('practice, library, and entry workflows', async t => {
       assert.equal($('fc-front-word').textContent, target.meaning); assert.match($('fc-front-context').textContent, /\[ _____ \]/);
       assert.ok(!$('fc-prompt-collocations').textContent.toLowerCase().includes(target.word.toLowerCase()));
       assert.equal(document.activeElement, $('recall-answer-input')); assert.equal(spoken.length, count);
+      const exampleAudio = $('btn-fc-example-audio');
+      assert.equal(exampleAudio.disabled, true);
+      exampleAudio.click();
+      assert.equal(spoken.length, count);
       $('recall-answer-input').value = 'not the word'; $('reverse-recall-form').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
       await until(() => current().graded); const failed = flash.getSessionState();
       assert.equal(current().grade, 0); assert.equal(failed.queueIndex, before.queueIndex); assert.ok(failed.pendingMisses.includes(target.id));
@@ -107,6 +111,11 @@ test('practice, library, and entry workflows', async t => {
       assert.equal((await storage.readUserWord('UIFixture', target.id)).lastGrade, 0);
       assert.equal((await storage.idbGet('metadata', failed.key)).queueIndex, before.queueIndex);
       assert.equal(document.activeElement, $('btn-fc-next'));
+      assert.equal(exampleAudio.disabled, false);
+      assert.equal(spoken.length, count);
+      exampleAudio.click();
+      assert.deepEqual(spoken.slice(count), [target.exampleSentence]);
+      assert.equal($('fc-answer').hidden, false);
       await flash.revealCard(); assert.equal(flash.getSessionState().queueIndex, before.queueIndex);
       assert.equal($('fc-answer').hidden, true);
       assert.equal($('btn-fc-next').hidden, false);
@@ -338,22 +347,46 @@ test('practice, library, and entry workflows', async t => {
       assert.equal((await storage.readUserWord('UIFixture', id)).exampleSourceId, undefined);
       context.switchView('view-entry');
     });
-    await t.test('AI tab copies a dynamic prompt, rejects the whole invalid batch and imports a valid batch once', async () => {
+    await t.test('AI tab validates and previews all words before an explicit, atomic import', async () => {
       const candidate = { ...fixtureWord, word: 'adapt', pos: 'v', meaning: 'thích nghi', phonetic: '/əˈdæpt/',
         collocations: ['adapt quickly', 'adapt to change'], synonyms: ['adjust'], exampleSentence: 'We adapt to change.', clozeSentence: 'We [ _____ ] to change.' };
       $('btn-toggle-ai-library').click(); $('ai-raw-words').value = 'adapt'; $('btn-copy-ai-prompt').click(); await until(() => copied.length === 1);
       assert.ok(copied[0].includes('["adapt"]')); assert.ok(copied[0].includes('"clozeSentence"'));
       const before = (await storage.readUserWords('UIFixture')).length;
-      $('import-raw-input').value = JSON.stringify([candidate, { ...candidate, pos: 'invalid' }]); $('btn-execute-import').click();
+      $('import-raw-input').value = JSON.stringify([candidate, { ...candidate, pos: 'invalid' }]); $('btn-preview-import').click();
       await until(() => $('batch-import-status').dataset.error === 'true'); assert.equal((await storage.readUserWords('UIFixture')).length, before);
+      assert.ok($('ai-import-preview').hidden);
       const second = { ...candidate, word: 'stable', meaning: 'ổn định', pos: 'adj', collocations: ['stable growth', 'remain stable'],
         exampleSentence: 'Prices remain stable.', clozeSentence: 'Prices remain [ _____ ].' };
-      $('ai-raw-words').value = 'adapt\nstable'; $('import-raw-input').value = JSON.stringify([candidate, second]);
+      const json = JSON.stringify([candidate, second]);
+      $('ai-raw-words').value = 'adapt\nstable'; $('import-raw-input').value = json; $('btn-preview-import').click();
+      assert.equal($('ai-import-preview').hidden, false);
+      assert.equal(document.activeElement, $('ai-import-preview-heading'));
+      assert.deepEqual([...$('ai-import-preview-list').querySelectorAll('h4')].map(title => title.textContent), ['adapt', 'stable']);
+      assert.deepEqual([...$('ai-import-preview-list').querySelectorAll('[lang="vi"]')].map(meaning => meaning.textContent), ['thích nghi', 'ổn định']);
+      assert.ok($('ai-import-preview-list').textContent.includes(candidate.clozeSentence));
+      assert.ok($('ai-import-preview-list').textContent.includes('<b>Literal text</b>'));
+      assert.equal($('ai-import-preview-list').querySelector('b'), null);
+      assert.equal((await storage.readUserWords('UIFixture')).length, before);
+      $('btn-edit-import').click();
+      assert.ok($('ai-import-preview').hidden);
+      assert.equal($('import-raw-input').value, json);
+      $('btn-preview-import').click(); $('import-opt-overwrite').checked = true; $('btn-execute-import').click();
+      assert.ok($('ai-import-preview').hidden);
+      assert.match($('batch-import-status').textContent, /batch changed/);
+      assert.equal((await storage.readUserWords('UIFixture')).length, before);
+      $('import-opt-overwrite').checked = false;
       const commit = context.commitVocabularyChanges; let commits = 0;
       context.commitVocabularyChanges = (...args) => { commits++; assert.equal(args[0].length, 2); return commit(...args); };
-      try { $('btn-execute-import').click(); await until(() => $('batch-import-status').textContent.includes('2 added')); }
+      try {
+        $('btn-preview-import').click(); $('btn-execute-import').click();
+        assert.ok($('btn-execute-import').disabled);
+        $('btn-execute-import').click();
+        await until(() => $('batch-import-status').textContent.includes('2 added'));
+      }
       finally { context.commitVocabularyChanges = commit; }
       assert.equal(commits, 1);
+      assert.ok($('ai-import-preview').hidden);
       const imported = (await storage.readUserWords('UIFixture')).find(word => word.word === 'adapt');
       assert.equal(imported.interval, 0); assert.equal(imported.repetition, 0); assert.equal(imported.easeFactor, 2.5); assert.equal(imported.clozeSentence, candidate.clozeSentence);
       assert.ok((await storage.pendingOperations('UIFixture')).some(op => op.wordId === imported.id));

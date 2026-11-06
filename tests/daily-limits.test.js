@@ -46,7 +46,7 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
   try {
     await waitFor(() => flash.getSessionState() && !context.profileLoading);
     const initial = flash.getSessionState();
-    assert.deepEqual(queue(initial), ['due_a', 'new_a']);
+    assert.deepEqual(queue(initial), ['new_a']);
     await flash.revealCard();
     $('setting-daily-new-limit').value = '2';
     $('setting-sound-effects').checked = false;
@@ -55,13 +55,18 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
     assert.equal(loadSettings(user).soundEffects, false);
     assert.equal(context.SoundManager.enabled, false);
     change('setting-daily-new-limit', '2');
-    await waitFor(() => queue(flash.getSessionState()).length === 3);
+    await waitFor(() => queue(flash.getSessionState()).length === 2);
     assert.equal(flash.getSessionState().cardQueue[0].entryId, initial.cardQueue[0].entryId);
     assert.equal(flash.getSessionState().cardQueue[0].revealed, true);
     change('setting-daily-new-limit', '1');
-    await waitFor(() => queue(flash.getSessionState()).length === 2);
-    await flash.gradeRecall(2);
+    await waitFor(() => queue(flash.getSessionState()).length === 1);
+    context.reviewMode = 'review';
+    await flash.startNewSession();
+    assert.deepEqual(queue(flash.getSessionState()), ['due_a']);
+    await flash.revealCard();
+    await flash.gradeRecall(3);
 
+    context.reviewMode = 'learning';
     context.activeTopic = 'B';
     await flash.startNewSession();
     assert.deepEqual(queue(flash.getSessionState()), ['new_b']);
@@ -117,6 +122,60 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
     assert.equal(loadSettings(otherUser).dailyReviewLimit, null);
     assert.deepEqual(queue(flash.getSessionState()), ['new_b']);
     assert.equal(await storage.idbGet('metadata', flash.getSessionState().ledgerKey), null);
+
+    const roundUser = 'Round learner';
+    const future = new Date(Date.now() + 2 * 86400000).toISOString();
+    saveSettings(roundUser, { dailyNewLimit: 1, dailyReviewLimit: 3, autoPronounce: false });
+    await storage.mutateWords([
+      { username: roundUser, id: 'a-new', patch: { word: 'new', meaning: 'mới' } },
+      { username: roundUser, id: 'b-new', patch: { word: 'fresh', meaning: 'tươi' } },
+      { username: roundUser, id: 'y-hard', patch: { word: 'hard', meaning: 'khó', reviewCount: 1, lastGrade: 1, dueDate: future } },
+      { username: roundUser, id: 'x-good', patch: { word: 'good', meaning: 'tốt', reviewCount: 1, lastGrade: 2, dueDate: future } },
+      { username: roundUser, id: 'due', patch: { word: 'due', meaning: 'đến hạn', reviewCount: 1 } },
+    ]);
+    await context.activateUser(roundUser);
+    const pass = async grade => { await flash.revealCard(); await flash.gradeRecall(grade); };
+    assert.deepEqual(queue(flash.getSessionState()), ['a-new']);
+    await pass(1);
+    assert.deepEqual(queue(flash.getSessionState()), ['a-new', 'y-hard', 'x-good']);
+    const dueBeforeExtra = (await storage.readUserWord(roundUser, 'a-new')).dueDate;
+    await pass(3);
+    assert.equal((await storage.readUserWord(roundUser, 'a-new')).dueDate, dueBeforeExtra);
+    await pass(1);
+    await pass(2);
+    assert.deepEqual(queue(flash.getSessionState()), []);
+    const roundLedgerKey = flash.getSessionState().ledgerKey;
+    assert.deepEqual((await storage.idbGet('metadata', roundLedgerKey)).dailyReviewIds, ['a-new', 'y-hard', 'x-good']);
+    assert.equal($('empty-state-title').textContent, 'Daily limit reached');
+    assert.equal($('btn-adjust-daily-limits').hidden, false);
+    $('btn-adjust-daily-limits').click();
+    assert.equal($('practice-panel').hidden, false);
+    assert.equal(document.activeElement, $('practice-daily-limits'));
+    change('setting-daily-review-limit', '');
+    await waitFor(() => queue(flash.getSessionState())[0] === 'due');
+    assert.equal($('btn-adjust-daily-limits').hidden, true);
+    $('btn-close-drawer').click();
+    await pass(3);
+    assert.equal($('btn-session-continue').hidden, false);
+    $('btn-session-continue').click();
+    await waitFor(() => queue(flash.getSessionState()).length === 4);
+    assert.deepEqual(queue(flash.getSessionState()).slice(0, 2), ['y-hard', 'x-good']);
+    await pass(2);
+    const partway = flash.getSessionState();
+    flash.resetForUser();
+    await flash.startNewSession({ restore: true });
+    assert.deepEqual(flash.getSessionState(), partway);
+    for (let i = 0; i < 3; i++) await pass(2);
+    assert.deepEqual(queue(flash.getSessionState()), []);
+    assert.equal($('btn-session-continue').hidden, false);
+    $('btn-session-continue').click();
+    await waitFor(() => queue(flash.getSessionState()).length === 4);
+    assert.equal(flash.getSessionState().queueIndex, 0);
+    assert.equal(flash.getSessionState().cardQueue.length, 4);
+    assert.equal(flash.getSessionState().completedAttempts, 9);
+    const ledgerAfterRepeat = await storage.idbGet('metadata', roundLedgerKey);
+    assert.deepEqual(ledgerAfterRepeat.dailyNewIds, ['a-new']);
+    assert.deepEqual(ledgerAfterRepeat.dailyReviewIds, ['a-new', 'y-hard', 'x-good', 'due']);
   } finally {
     flash.resetForUser();
     context.clearActivityTimers();
