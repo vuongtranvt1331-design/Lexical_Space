@@ -92,6 +92,29 @@ test('concurrent imports do not duplicate words or import history', async () => 
   assert.equal((await storage.pendingOperations('Race')).length, 2);
 });
 
+test('shared example attribution follows the matching sentence and is exported again', async () => {
+  await storage.mutateWords([{
+    username: 'Source recipient', id: 'existing', patch: {
+      word: 'resilient', meaning: 'kiên cường', exampleSentence: 'The town proved resilient.'
+    }
+  }]);
+  const payload = deck('attributed-example', 'Sourced deck', [
+    { ...resilient, exampleSourceId: 13247655 },
+    { word: 'adapt', vietnamese: 'thích nghi', example: 'We adapt.', exampleSourceId: 98765 }
+  ]);
+  await assert.rejects(previewDeckImport('Source recipient', {
+    ...payload, words: [{ ...payload.words[0], exampleSourceId: 'https://example.com/' }, payload.words[1]]
+  }), /Invalid example source/);
+  await importSharedDeck('Source recipient', payload);
+  const exported = await prepareShareDeck('Source recipient', payload.title);
+  const existing = exported.words.find(word => word.word === 'resilient');
+  const added = exported.words.find(word => word.word === 'adapt');
+  assert.equal(existing.example, 'The town proved resilient.');
+  assert.equal(existing.exampleSourceId, undefined);
+  assert.equal(added.example, 'We adapt.');
+  assert.equal(added.exampleSourceId, 98765);
+});
+
 test('a failed outbox write rolls back the word and import marker', async () => {
   const payload = deck('failed-import', 'Deck', [resilient]);
   const sequence = await storage.idbGet('metadata', '_outbox_sequence');

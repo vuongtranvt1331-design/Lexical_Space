@@ -6,7 +6,7 @@ export function calendarDay(value = Date.now()) {
 export function addCalendarDays(now, days) { const d = new Date(now); d.setDate(d.getDate() + days); return d.toISOString(); }
 export const isNewWord = word => !(Number(word.reviewCount) > 0 || timestamp(word.lastReviewedAt) > 0);
 export const isDue = (word, now = Date.now()) => !word.deleted && timestamp(word.dueDate ?? word.due) <= now;
-// SM-2-inspired intervals. Only scheduled successes on distinct calendar days graduate.
+// SM-2-inspired intervals advance after scheduled successes on distinct calendar days.
 export function scheduleReview(record, grade, now = Date.now()) {
   if (![0, 1, 2, 3].includes(grade)) throw new Error('Invalid recall grade.');
   const word = normalizeRemoteVocabulary(record), today = calendarDay(now);
@@ -22,9 +22,13 @@ export function scheduleReview(record, grade, now = Date.now()) {
     } else interval = Math.max(1, interval);
     dueDate = addCalendarDays(now, interval);
   }
+  const goodReviewCount = grade === 0 ? 0 : word.goodReviewCount + Number(grade === 2);
+  const promoted = grade === 3 || (grade === 2 && goodReviewCount >= 3);
+  const autoMastered = grade !== 0 && (word.autoMastered || promoted);
+  const masteryOverride = grade === 0 || promoted ? null : word.masteryOverride;
   return { ...word, repetition, interval, easeFactor, successfulDays, dueDate, lastReviewedAt: now, lastGrade: grade,
     reviewCount: word.reviewCount + 1, lapses: word.lapses + (grade === 0 ? 1 : 0),
-    memoryStatus: memoryStatusFor({ masteryOverride: word.masteryOverride, repetition, successfulDays }) };
+    goodReviewCount, autoMastered, masteryOverride, memoryStatus: memoryStatusFor({ masteryOverride, autoMastered }) };
 }
 function withinDailyLimit(words, limit, used, counted, preferred) {
   if (limit == null) return words;

@@ -1,6 +1,6 @@
 import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
-import { newId } from '../core/vocabulary.js';
+import { exampleSourceUrl, newId } from '../core/vocabulary.js';
 import { scheduleReview, selectPracticeWords, calendarDay, isDue, isNewWord } from '../core/srs.js';
 import { loadSettings, saveSettings } from '../core/settings.js';
 import { pronunciation } from '../core/pronunciation.js';
@@ -267,6 +267,12 @@ export function renderActiveCard() {
   setText('fc-back-synonyms-list', (word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · '));
   setText('fc-collocations', word.collocations.join(' · '));
   renderSentence($('fc-answer-context'), word.exampleSentence, word.word);
+  const source = $('fc-answer-source'), sourceUrl = exampleSourceUrl(word.exampleSourceId);
+  if (source) {
+    if (sourceUrl) source.href = sourceUrl;
+    else source.removeAttribute('href');
+    show('fc-answer-source', !!sourceUrl && item.revealed);
+  }
   const feedback = !reverse || !item.revealed ? '' : item.graded && item.answerCorrect === false ?
     `Not quite. The answer is “${word.word}”. It is queued for another try.` : item.assisted ?
     'Answer hinted. Choose Again for a fresh recall attempt.' : item.answerCorrect ? 'Correct. Choose your recall grade.' : 'Answer shown. Choose Again to practise it.';

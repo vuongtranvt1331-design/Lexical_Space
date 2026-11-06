@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { context } from '../js/core/context.js';
 import { mutateWords, readUserWords } from '../js/core/idb-manager.js';
-import { getAlphabeticalTopics, install_deleteTopicDirectly, renderLibraryTopicUpwardMenu, resetLibraryForUser, renderLibrary, setupLibraryModule, setupMergeTopicsModal } from '../js/features/library.js';
+import { getAlphabeticalTopics, install_deleteTopicDirectly, renderLibraryTopicUpwardMenu, resetLibraryForUser, renderLibrary, renderVocabularyCardHtml, setupLibraryModule, setupMergeTopicsModal } from '../js/features/library.js';
 import { escapeHtml } from '../js/utils/helpers.js';
 import { wordTopics } from '../js/core/vocabulary.js';
 
@@ -22,7 +22,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
   const pronunciations = [];
   const records = await mutateWords([{ id: 'shared', username: user, patch: {
     word: 'adapt', meaning: 'thích nghi', topic: 'One profile', exampleSentence: 'They adapted quickly.',
-    audioUrl: 'https://recording.test/adapt.mp3', reviewCount: 2, repetition: 2, interval: 6,
+    audioUrl: 'https://recording.test/adapt.mp3', reviewCount: 2, lastGrade: 2, repetition: 2, interval: 6,
     easeFactor: 2.4, successfulDays: ['2026-10-27', '2026-10-28'],
     lastReviewedAt: Date.parse('2026-10-28T12:00:00Z'), dueDate: '2026-11-03T12:00:00Z'
   } }]);
@@ -38,6 +38,12 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     renderLibrary();
     assert.deepEqual([...card().querySelectorAll('.library-toolbar button')].map(button => button.dataset.action),
       ['flip', 'mastery', 'favorite', 'audio', 'edit', 'delete']);
+    const sample = document.createElement('div');
+    for (const grade of [undefined, 0, 1, 2, 3]) {
+      sample.innerHTML = renderVocabularyCardHtml({ ...records[0], lastGrade: grade });
+      const gradeClasses = [...sample.firstElementChild.classList].filter(name => name.startsWith('grade-'));
+      assert.deepEqual(gradeClasses, grade === undefined ? [] : [`grade-${grade}`]);
+    }
 
     const heading = card().querySelector('.library-card-front h3');
     const selection = window.getSelection();
@@ -87,9 +93,11 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     assert.equal(await toggleMastery(false, 'Mark as Mastered'), 'mastered');
     $('btn-lib-tab-known').click();
     assert.match(card().querySelector('footer').textContent, /Mastered$/);
+    assert.ok(card().classList.contains('grade-2'));
     assert.equal(await toggleMastery(true, 'Mark as Unknown'), 'not_remembered');
     $('btn-lib-tab-unknown').click();
     assert.match(card().querySelector('footer').textContent, /Unknown$/);
+    assert.ok(card().classList.contains('grade-2'));
     assert.equal(card().classList.contains('is-flipped'), true);
 
     $('lib-search-input').value = 'ad';

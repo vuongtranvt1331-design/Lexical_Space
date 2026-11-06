@@ -285,6 +285,57 @@ test('practice, library, and entry workflows', async t => {
         assert.equal($('input-word').value, 'new target');
       } finally { globalThis.fetch = originalFetch; }
     });
+    await t.test('a pending context fallback preserves a manually edited example or cloze pair', async () => {
+      entry.resetEntryForUser();
+      $('input-word').value = 'absorb';
+      $('input-example').value = 'The paper absorbs ink.';
+      const originalFetch = globalThis.fetch;
+      let resolveSentence;
+      globalThis.fetch = async url => {
+        if (url.includes('tatoeba.org')) return new Promise(resolve => { resolveSentence = resolve; });
+        if (url.includes('dictionaryapi.dev')) return lookupResponse([{ meanings: [{ partOfSpeech: 'verb' }] }]);
+        return { ok: false, status: 503 };
+      };
+      try {
+        const pending = entry.quickFillEntry(); await until(() => !!resolveSentence);
+        $('input-cloze').value = 'The paper [ _____ ] ink.';
+        resolveSentence(lookupResponse({ data: [{ id: 12345, text: 'Plants absorb water.' }] }));
+        await pending;
+        assert.equal($('input-example').value, 'The paper absorbs ink.');
+        assert.equal($('input-cloze').value, 'The paper [ _____ ] ink.');
+      } finally { globalThis.fetch = originalFetch; }
+    });
+    await t.test('Quick Fill saves fallback attribution and keeps it only while the example remains unchanged', async () => {
+      entry.resetEntryForUser();
+      $('input-word').value = 'absorb';
+      const originalFetch = globalThis.fetch;
+      globalThis.fetch = async url => {
+        if (url.includes('dictionaryapi.dev')) return lookupResponse([{ meanings: [{ partOfSpeech: 'verb' }] }]);
+        if (url.includes('tatoeba.org')) return lookupResponse({ data: [{ id: 12345, text: 'Plants absorb water.' }] });
+        return { ok: false, status: 503 };
+      };
+      try { await entry.quickFillEntry(); } finally { globalThis.fetch = originalFetch; }
+      assert.equal($('input-example').value, 'Plants absorb water.');
+      assert.equal($('input-cloze').value, 'Plants [ _____ ] water.');
+      assert.equal($('entry-details').open, true);
+      const submit = () => $('single-entry-form').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+      const find = () => context.wordsData.find(word => word.word === 'absorb');
+      $('confirm-input-meaning').value = 'hấp thụ'; submit();
+      await until(() => !!find() && !$('btn-confirm-save').disabled);
+      const id = find().id;
+      assert.equal((await storage.readUserWord('UIFixture', id)).exampleSourceId, 12345);
+
+      context.switchView('view-library'); entry.openWordEditor(find());
+      $('input-usage-notes').value = 'Common with liquids.'; submit();
+      await until(() => find().usageNotes === 'Common with liquids.' && !$('btn-confirm-save').disabled);
+      assert.equal((await storage.readUserWord('UIFixture', id)).exampleSourceId, 12345);
+
+      entry.openWordEditor(find());
+      $('input-example').value = 'Sponges absorb water.'; $('input-cloze').value = 'Sponges [ _____ ] water.'; submit();
+      await until(() => find().exampleSentence === 'Sponges absorb water.' && !$('btn-confirm-save').disabled);
+      assert.equal((await storage.readUserWord('UIFixture', id)).exampleSourceId, undefined);
+      context.switchView('view-entry');
+    });
     await t.test('AI tab copies a dynamic prompt, rejects the whole invalid batch and imports a valid batch once', async () => {
       const candidate = { ...fixtureWord, word: 'adapt', pos: 'v', meaning: 'thích nghi', phonetic: '/əˈdæpt/',
         collocations: ['adapt quickly', 'adapt to change'], synonyms: ['adjust'], exampleSentence: 'We adapt to change.', clozeSentence: 'We [ _____ ] to change.' };

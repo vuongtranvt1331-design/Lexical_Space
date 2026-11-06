@@ -1,7 +1,7 @@
 import { context } from '../core/context.js';
-import { validateVocabulary, senseKey, newId, wordTopics } from '../core/vocabulary.js';
+import { exampleSourceUrl, validateVocabulary, senseKey, newId, wordTopics } from '../core/vocabulary.js';
 import { buildAIPrompt, parseAIBatch } from '../core/ai-vocabulary.js';
-import { DICTIONARY_NOT_FOUND, dictionaryDetails, quickFillCollocations, translateQuickFillWord } from '../core/quick-fill.js';
+import { DICTIONARY_NOT_FOUND, dictionaryDetails, quickFillCollocations, quickFillSentence, translateQuickFillWord } from '../core/quick-fill.js';
 const $ = id => document.getElementById(id);
 const fields = { word: 'input-word', phonetic: 'input-phonetic', pos: 'input-pos', meaning: 'confirm-input-meaning',
   collocations: 'input-collocations', synonyms: 'input-synonyms', exampleSentence: 'input-example', clozeSentence: 'input-cloze',
@@ -10,8 +10,13 @@ const listFields = new Set(['collocations', 'synonyms']);
 const contentFields = [...Object.keys(fields), 'topic', 'synonym1', 'synonym2'];
 const newReviewState = () => ({ createdAt: Date.now(), dueDate: new Date().toISOString(), interval: 0, repetition: 0, easeFactor: 2.5,
   reviewCount: 0, successfulDays: [], memoryStatus: 'not_remembered', isFavorite: false });
-const contentPatch = word => Object.fromEntries(contentFields.map(key => [key, word[key]]));
-let editor = null, saving = false, importing = false, quickFillRequest;
+function contentPatch(word, previous) {
+  const patch = Object.fromEntries(contentFields.map(key => [key, word[key]]));
+  if (word.exampleSourceId) patch.exampleSourceId = word.exampleSourceId;
+  else if (previous?.exampleSourceId && word.exampleSentence !== previous.exampleSentence) patch.exampleSourceId = null;
+  return patch;
+}
+let editor = null, exampleSource = null, saving = false, importing = false, quickFillRequest;
 function status(id, message = '', error = false) { const element = $(id); if (element) { element.textContent = message; element.dataset.error = String(error); } }
 function asFieldValue(key, value) { return listFields.has(key) ? (Array.isArray(value) ? value.join(', ') : '') : String(value ?? ''); }
 function formData() {
@@ -20,6 +25,7 @@ function formData() {
     const value = $(id).value.trim(); values[key] = listFields.has(key) ? value.split(/[,;]+/).map(part => part.trim()).filter(Boolean) : value;
   }
   values.topic = $('select-entry-topic').value || context.DEFAULT_TOPIC;
+  if (values.exampleSentence === exampleSource?.sentence) values.exampleSourceId = exampleSource.id;
   return values;
 }
 const viewIsVisible = id => $(id)?.classList.contains('hidden') === false;
@@ -35,6 +41,7 @@ export function cancelQuickFill() {
 }
 function clearForm() {
   cancelQuickFill(); editor = null;
+  exampleSource = null;
   for (const id of Object.values(fields)) $(id).value = '';
   context.draftWord = { topic: context.DEFAULT_TOPIC };
   $('entry-details').open = false; $('inline-create-topic-box').hidden = true;
@@ -54,6 +61,7 @@ export function openWordEditor(word) {
   cancelQuickFill();
   const returnView = ['view-library', 'view-review'].find(viewIsVisible);
   editor = { word, returnView };
+  exampleSource = exampleSourceUrl(word.exampleSourceId) ? { id: word.exampleSourceId, sentence: word.exampleSentence } : null;
   context.draftWord = { ...word };
   context.switchView('view-entry');
   for (const [key, id] of Object.entries(fields)) $(id).value = asFieldValue(key, word[key]);
@@ -66,7 +74,7 @@ export async function saveWord(input, id = editor?.word.id) {
   const previous = id && context.wordsData.find(word => word.id === id);
   if (id && !previous) throw new Error('This word was removed. Refresh the library.');
   if (context.wordsData.some(word => word.id !== id && senseKey(word) === senseKey(validation.word))) throw new Error('This word and sense already exist. Edit that item or choose another sense.');
-  const patch = contentPatch(validation.word);
+  const patch = contentPatch(validation.word, previous);
   if (!previous) Object.assign(patch, newReviewState());
   else if (patch.topic !== previous.topic) {
     const secondary = wordTopics(previous).filter(topic => topic !== previous.topic && topic !== patch.topic);
@@ -87,7 +95,7 @@ export async function importVocabulary(entries, { overwrite = false } = {}) {
   for (const word of unique.values()) {
     const previous = existing.get(senseKey(word));
     if (previous && !overwrite) { skipped++; continue; }
-    const patch = contentPatch(word);
+    const patch = contentPatch(word, previous);
     if (previous) updated++; else { Object.assign(patch, newReviewState()); added++; }
     changes.push({ id: previous?.id || `word_${newId()}`, patch, ...(previous ? { expectedVersion: previous } : {}) });
   }
@@ -112,16 +120,25 @@ export async function quickFillEntry() {
   const button = $('btn-entry-quickfill'), original = new Map(Object.values(fields).map(id => [id, $(id).value]));
   const current = () => quickFillRequest === controller && !controller.signal.aborted &&
     ticket === context.accountGeneration && activeEditor === editor && word === $('input-word').value.trim();
+  const unchanged = key => $(fields[key]).value === original.get(fields[key]);
   let filled = false;
   const fill = (key, value) => {
-    const id = fields[key], element = $(id), suggestion = asFieldValue(key, value);
-    if (!current() || !suggestion || element.value !== original.get(id)) return;
-    element.value = suggestion;
+    const suggestion = asFieldValue(key, value);
+    if (!current() || !suggestion || !unchanged(key)) return false;
+    $(fields[key]).value = suggestion;
     filled = true;
+    return true;
+  };
+  const fillExample = ({ exampleSentence, clozeSentence, exampleSourceId } = {}) => {
+    if (!unchanged('exampleSentence') || !unchanged('clozeSentence') || (!clozeSentence && $('input-cloze').value.trim())) return;
+    if (!fill('exampleSentence', exampleSentence)) return;
+    if (exampleSourceId) exampleSource = { id: exampleSourceId, sentence: exampleSentence };
+    else if (exampleSource?.sentence !== exampleSentence) exampleSource = null;
+    fill('clozeSentence', clozeSentence);
   };
   button.disabled = true;
   button.setAttribute('aria-busy', 'true');
-  status('quickfill-status', 'Looking up dictionary, translation and collocation suggestions...');
+  status('quickfill-status', 'Looking up word details and context...');
   try {
     const translation = translateQuickFillWord(word, options).then(meaning => fill('meaning', meaning)).catch(() => {});
     const dictionary = await dictionaryDetails(word, options).catch(() => undefined);
@@ -130,21 +147,20 @@ export async function quickFillEntry() {
       wordNotFound();
       return;
     }
-    if (dictionary === null) wordNotFound();
     if (dictionary) {
       fill('phonetic', dictionary.phonetic);
       fill('pos', dictionary.pos);
       fill('synonyms', dictionary.synonyms);
-      fill('exampleSentence', dictionary.exampleSentence);
-      if ($('input-example').value.trim() === dictionary.exampleSentence) fill('clozeSentence', dictionary.clozeSentence);
       $('entry-details').open = true;
     }
     const collocations = quickFillCollocations(word, $('input-pos').value, options)
       .then(pairs => fill('collocations', pairs)).catch(() => {});
-    await Promise.all([translation, collocations]);
+    const example = (dictionary?.clozeSentence ? Promise.resolve(dictionary) : quickFillSentence(word, options).catch(() => null))
+      .then(sentence => { fillExample(sentence || dictionary || undefined); return sentence; });
+    const [sentence] = await Promise.all([example, translation, collocations]);
     if (!current()) return;
     if (filled) $('entry-details').open = true;
-    if (dictionary === null) return;
+    if (dictionary === null && !sentence) { wordNotFound(); return; }
     if (!dictionary && !filled) { wordNotFound(); return; }
     status('quickfill-status', filled ? 'Filled available details. Review before saving.' : 'No suggestions available. You can enter the details manually.', !filled);
   } finally {

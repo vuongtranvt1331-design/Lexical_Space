@@ -5,6 +5,9 @@ export const text = value => String(value ?? '').trim();
 export const newId = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}_${Math.random().toString(36).slice(2)}`;
 export const normalizeTerm = value => text(value).normalize('NFKC').replace(/\s+/g, ' ').toLocaleLowerCase('en');
 export const senseKey = word => [normalizeTerm(word.word), normalizeTerm(word.pos), normalizeTerm(word.sense || word.meaning)].join('\0');
+export function exampleSourceUrl(id) {
+  return Number.isSafeInteger(id) && id > 0 ? `https://tatoeba.org/en/sentences/show/${id}` : '';
+}
 export function wordTopics(word) {
   const secondary = Array.isArray(word.topics) ? word.topics : [];
   const topics = [word.topic, ...secondary].filter(value => typeof value === 'string').map(value => value.trim()).filter(Boolean);
@@ -21,12 +24,13 @@ export function withoutLegacyLevel(record) {
   const { cefr: _legacyLevel, ...fields } = record;
   return fields;
 }
-export function memoryStatusFor({ masteryOverride, repetition, successfulDays }) {
-  return masteryOverride ?? (repetition >= 3 && successfulDays.length >= 3 ? 'mastered' : 'not_remembered');
+export function memoryStatusFor({ masteryOverride, autoMastered }) {
+  return masteryOverride ?? (autoMastered ? 'mastered' : 'not_remembered');
 }
 export function normalizeRemoteVocabulary(record, id = record.id) {
   const word = { ...withoutLegacyLevel(record), id: text(id), username: text(record.username), word: text(record.word), meaning: text(record.meaning) };
   for (const field of ['pos', 'sense', 'exampleSentence', 'synonym1', 'synonym2', 'phonetic', 'usageNotes', 'clozeSentence']) word[field] = text(record[field]);
+  if (!word.exampleSentence || !exampleSourceUrl(word.exampleSourceId)) delete word.exampleSourceId;
   word.synonyms = [...new Set((Array.isArray(record.synonyms) ? record.synonyms : [word.synonym1, word.synonym2]).map(text).filter(Boolean))];
   word.synonym1 = word.synonyms[0] || ''; word.synonym2 = word.synonyms[1] || '';
   if (!word.clozeSentence && targetSegments(word.exampleSentence, word.word, { inflections: true }).some(part => part.target)) word.clozeSentence = clozeText(word.exampleSentence, word.word, { inflections: true });
@@ -41,6 +45,11 @@ export function normalizeRemoteVocabulary(record, id = record.id) {
   word.easeFactor = Math.max(1.3, Number(record.easeFactor) || 2.5);
   word.reviewCount = integer(record.reviewCount); word.lapses = integer(record.lapses);
   word.successfulDays = [...new Set(Array.isArray(record.successfulDays) ? record.successfulDays.filter(x => /^\d{4}-\d{2}-\d{2}$/.test(x)) : [])].sort();
+  const lastGrade = Number(record.lastGrade);
+  // Legacy records retained the last grade but no per-grade history.
+  word.goodReviewCount = integer(record.goodReviewCount ?? Number(lastGrade === 2));
+  const legacyMastered = lastGrade === 3 || (word.repetition >= 3 && word.successfulDays.length >= 3);
+  word.autoMastered = word.goodReviewCount >= 3 || (typeof record.autoMastered === 'boolean' ? record.autoMastered : legacyMastered);
   word.dueDate = record.dueDate === null && record.due == null ? null : new Date(timestamp(record.dueDate ?? record.due, 0)).toISOString();
   if (record.createdAt != null) word.createdAt = timestamp(record.createdAt);
   if (record.lastReviewedAt != null) word.lastReviewedAt = timestamp(record.lastReviewedAt);

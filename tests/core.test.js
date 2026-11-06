@@ -117,10 +117,10 @@ test('legacy levels are omitted from local reads, edits and queued cloud writes 
   assert.equal(Object.hasOwn((await storage.pendingOperations('User'))[0].record, 'cefr'), false);
   for (const key of ['lastReviewedAt', 'interval', 'repetition', 'easeFactor', 'dueDate', 'reviewCount']) assert.equal(edited[key], old[key]);
 });
-test('SRS requires scheduled successes on three distinct days and Again resets graduation', () => {
+test('SRS intervals still graduate on scheduled calendar days and Again resets graduation', () => {
   const firstDay = new Date(2026, 10, 6, 10).getTime(); let word = normalize({ id: 'x', word: 'word', meaning: 'meaning' });
   word = scheduleReview(word, 2, firstDay); assert.equal(word.repetition, 1); assert.equal(word.interval, 1);
-  word = scheduleReview(word, 3, firstDay + 1000); assert.equal(word.repetition, 1); assert.equal(word.successfulDays.length, 1);
+  word = scheduleReview(word, 1, firstDay + 1000); assert.equal(word.repetition, 1); assert.equal(word.successfulDays.length, 1);
   word = scheduleReview(word, 2, Date.parse(addCalendarDays(firstDay, 1))); assert.equal(word.repetition, 2); assert.equal(word.memoryStatus, 'not_remembered');
   word = scheduleReview(word, 2, Date.parse(word.dueDate)); assert.equal(word.repetition, 3); assert.equal(word.memoryStatus, 'mastered');
   const failed = scheduleReview(word, 0, Date.parse(word.dueDate)); assert.equal(failed.repetition, 0); assert.equal(failed.memoryStatus, 'not_remembered');
@@ -143,7 +143,7 @@ test('manual mastery persists through reviews and sync without changing schedule
     assert.deepEqual(Object.fromEntries(Object.keys(history).map(key => [key, stored[key]])), history);
     await flushMutationOutbox({ db: server.db, username: 'User' });
     assert.equal(server.records.get('words/manual').masteryOverride, status);
-    const review = scheduleReview(stored, status === 'mastered' ? 0 : 2, Date.parse(history.dueDate));
+    const review = scheduleReview(stored, status === 'mastered' ? 1 : 2, Date.parse(history.dueDate));
     assert.equal(review.memoryStatus, status);
     assert.notEqual(review.repetition, stored.repetition);
   }
@@ -154,6 +154,53 @@ test('manual mastery persists through reviews and sync without changing schedule
   const marked = normalize({ ...patch, id: 'new', masteryOverride: 'mastered' });
   assert.equal(normalize(marked).selfReportedKnown, false);
   assert.equal(normalize(marked).memoryStatus, 'mastered');
+});
+test('Easy or three Good grades promote a card and Again clears both mastery and the Good count', async () => {
+  await clear();
+  const now = new Date(2026, 10, 6, 10).getTime();
+  const username = 'User', id = 'good';
+  let [word] = await storage.mutateWords([{ id, username, patch: {
+    word: 'resilient', meaning: 'kiên cường', reviewCount: 8, lastGrade: 2, repetition: 1, interval: 1,
+    lastReviewedAt: now, dueDate: addCalendarDays(now, 1), successfulDays: [calendarDay(now)], masteryOverride: 'not_remembered'
+  } }]);
+  assert.equal(word.goodReviewCount, 1);
+  assert.equal(word.memoryStatus, 'not_remembered');
+  const saveReview = async grade => {
+    await storage.mutateWords([{ id, username, expectedVersion: word, patch: scheduleReview(word, grade, now) }]);
+    word = await storage.readUserWord(username, id);
+  };
+  await saveReview(2);
+  assert.equal(word.goodReviewCount, 2);
+  assert.equal(word.memoryStatus, 'not_remembered');
+  await saveReview(1);
+  assert.equal(word.goodReviewCount, 2);
+  assert.equal(word.masteryOverride, 'not_remembered');
+  await saveReview(2);
+  assert.equal(word.goodReviewCount, 3);
+  assert.equal(word.memoryStatus, 'mastered');
+  assert.equal(word.repetition, 1);
+  assert.equal(Object.hasOwn(word, 'masteryOverride'), false);
+  const server = cloud();
+  await flushMutationOutbox({ db: server.db, username });
+  assert.equal(server.records.get('words/good').goodReviewCount, 3);
+  assert.equal(server.records.get('words/good').autoMastered, true);
+
+  [word] = await storage.mutateWords([{ id, username, expectedVersion: word, patch: { masteryOverride: 'mastered' } }]);
+  await saveReview(0);
+  assert.equal(word.memoryStatus, 'not_remembered');
+  assert.equal(word.goodReviewCount, 0);
+  assert.equal(word.autoMastered, false);
+  assert.equal(Object.hasOwn(word, 'masteryOverride'), false);
+  await flushMutationOutbox({ db: server.db, username });
+  assert.equal(server.records.get('words/good').goodReviewCount, 0);
+  assert.equal(server.records.get('words/good').autoMastered, false);
+  assert.equal(Object.hasOwn(server.records.get('words/good'), 'masteryOverride'), false);
+
+  const easy = scheduleReview({ ...word, masteryOverride: 'not_remembered' }, 3, now);
+  assert.equal(easy.memoryStatus, 'mastered');
+  assert.equal(easy.masteryOverride, null);
+  assert.equal(easy.goodReviewCount, 0);
+  assert.equal(normalize({ ...patch, id: 'legacy-easy', lastGrade: 3 }).memoryStatus, 'mastered');
 });
 test('practice queues the full eligible backlog and prioritizes oldest due reviews', () => {
   const now = 5000;

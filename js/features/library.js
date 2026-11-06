@@ -1,6 +1,6 @@
 import { canSyncProfile, context } from '../core/context.js';
 import { mutateWords, readUserWords, idbPut } from '../core/idb-manager.js';
-import { validateVocabulary, wordTopics } from '../core/vocabulary.js';
+import { exampleSourceUrl, validateVocabulary, wordTopics } from '../core/vocabulary.js';
 import { icon } from '../core/icons.js';
 import { targetSegments } from '../core/recall-utils.js';
 import { trackIntentionalClicks } from '../utils/intentional-click.js';
@@ -185,9 +185,11 @@ export function updateLibraryTabsUI() {
 }
 export function renderVocabularyCardHtml(word) {
   const flipped = flippedCards.has(word.id), id = esc(word.id);
+  const gradeClass = [0, 1, 2, 3].includes(word.lastGrade) ? ` grade-${word.lastGrade}` : '';
   const mastered = word.memoryStatus === 'mastered';
   const status = mastered ? 'Mastered' : word.masteryOverride === 'not_remembered' ? 'Unknown' : word.reviewCount ? 'Learning' : 'New';
   const highlighted = targetSegments(word.exampleSentence, word.word, { inflections: true }).map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');
+  const sourceUrl = exampleSourceUrl(word.exampleSourceId);
   const actions = [
     { action: 'flip', label: 'Flip library card', pressed: flipped, controls: `library-flip-${id}` },
     { action: 'mastery', symbol: mastered ? 'again' : 'check', label: 'Mastered',
@@ -202,7 +204,7 @@ export function renderVocabularyCardHtml(word) {
     const controlsAttribute = controls ? ` aria-controls="${controls}"` : '';
     return `<button type="button" class="library-rail-button" data-action="${action}" data-id="${id}" aria-label="${label}" title="${title}"${toggle}${controlsAttribute}>${icon(symbol || action)}</button>`;
   }).join('');
-  return `<article class="library-flip-card${flipped ? ' is-flipped' : ''}" data-word-id="${id}" aria-label="${esc(word.word)} vocabulary card">
+  return `<article class="library-flip-card${gradeClass}${flipped ? ' is-flipped' : ''}" data-word-id="${id}" aria-label="${esc(word.word)} vocabulary card">
     <div class="library-toolbar" role="toolbar" aria-label="Word actions" aria-orientation="vertical">${rail}</div>
     <div class="library-flip-inner" id="library-flip-${id}">
       <section class="library-card-face library-card-front" aria-hidden="${flipped}"${flipped ? ' inert' : ''}>
@@ -221,6 +223,7 @@ export function renderVocabularyCardHtml(word) {
       <section class="library-card-face library-card-back" aria-hidden="${!flipped}"${!flipped ? ' inert' : ''}>
         <div class="library-face-content"><p class="library-meta">In context</p><h3>${esc(word.word)}</h3>
           <blockquote class="library-example">${highlighted || 'Add an example sentence using Edit.'}</blockquote>
+          ${sourceUrl ? `<a class="example-source" href="${sourceUrl}" target="_blank" rel="noopener noreferrer">Example from Tatoeba</a>` : ''}
           <h4>Usage notes</h4><p class="library-usage">${esc(word.usageNotes) || 'No usage notes yet.'}</p>
           ${word.sense ? `<h4>Target sense</h4><p>${esc(word.sense)}</p>` : ''}
         </div>

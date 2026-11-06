@@ -1,9 +1,9 @@
 import { idbGet, mergeUserVocabulary, readUserWords } from './idb-manager.js';
-import { newId, normalizeRemoteVocabulary, text, withoutLegacyLevel, wordTopics } from './vocabulary.js';
+import { exampleSourceUrl, newId, normalizeRemoteVocabulary, text, withoutLegacyLevel, wordTopics } from './vocabulary.js';
 
 const DECK_COLLECTION = 'shared_decks';
 const DECK_FIELDS = ['deckId', 'title', 'createdAt', 'wordCount', 'words'];
-const CARD_FIELDS = ['word', 'ipa', 'pos', 'vietnamese', 'example', 'cloze', 'synonyms', 'collocations', 'topics'];
+const CARD_FIELDS = ['word', 'ipa', 'pos', 'vietnamese', 'example', 'exampleSourceId', 'cloze', 'synonyms', 'collocations', 'topics'];
 const DOCUMENT_BUDGET = 950_000;
 const RESERVED_TOPICS = new Set(['ALL', 'FAVORITES']);
 const trimmedTerm = value => value.trim().toLowerCase();
@@ -49,12 +49,17 @@ function validateTopic(topic) {
 function validateCard(input) {
   const card = input && typeof input === 'object' && !Array.isArray(input) ? withoutLegacyLevel(input) : input;
   requireShape(card, CARD_FIELDS, 'The shared deck contains an invalid card.');
+  const example = readString(card.example, 2000, 'example');
+  if (card.exampleSourceId !== undefined && (!example || !exampleSourceUrl(card.exampleSourceId))) {
+    throw new Error('Invalid example source in the shared deck.');
+  }
   return {
     word: readString(card.word, 200, 'target word', true),
     ipa: readString(card.ipa, 200, 'IPA'),
     pos: readString(card.pos, 40, 'part of speech'),
     vietnamese: readString(card.vietnamese, 2000, 'Vietnamese meaning', true),
-    example: readString(card.example, 2000, 'example'),
+    example,
+    ...(card.exampleSourceId !== undefined && { exampleSourceId: card.exampleSourceId }),
     cloze: readString(card.cloze, 2000, 'cloze'),
     synonyms: readList(card.synonyms, 'synonyms'),
     collocations: readList(card.collocations, 'collocations'),
@@ -89,6 +94,7 @@ export async function prepareShareDeck(username, topic) {
       pos: word.pos,
       vietnamese: word.meaning,
       example: word.exampleSentence,
+      ...(word.exampleSourceId && { exampleSourceId: word.exampleSourceId }),
       cloze: word.clozeSentence,
       synonyms: word.synonyms,
       collocations: word.collocations,
@@ -135,6 +141,7 @@ function importedCards(words) {
     byTerm.set(key, {
       ...previous,
       example: previous.example || card.example,
+      exampleSourceId: previous.exampleSourceId ?? (sameExample ? card.exampleSourceId : undefined),
       cloze: previous.cloze || (sameExample ? card.cloze : ''),
       collocations: previous.collocations.length ? previous.collocations : card.collocations,
       topics: [...new Set([...previous.topics, ...card.topics])]
@@ -149,6 +156,9 @@ function mergeCard(word, card, title) {
   const patch = {};
   if (topics.length !== existingTopics.length) patch.topics = topics;
   if (!word.exampleSentence && card.example) patch.exampleSentence = card.example;
+  if (!word.exampleSourceId && card.exampleSourceId && (!word.exampleSentence || word.exampleSentence === card.example)) {
+    patch.exampleSourceId = card.exampleSourceId;
+  }
   if (!word.clozeSentence && card.cloze && (!word.exampleSentence || word.exampleSentence === card.example)) patch.clozeSentence = card.cloze;
   if (!word.collocations.length && card.collocations.length) patch.collocations = card.collocations;
   return patch;
@@ -161,6 +171,7 @@ function newCard(card, title) {
     pos: card.pos,
     meaning: card.vietnamese,
     exampleSentence: card.example,
+    ...(card.exampleSourceId && { exampleSourceId: card.exampleSourceId }),
     clozeSentence: card.cloze,
     synonyms: card.synonyms,
     collocations: card.collocations,

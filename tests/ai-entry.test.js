@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildAIPrompt, parseAIBatch, validateAIWord } from '../js/core/ai-vocabulary.js';
-import { dictionaryDetails, quickFillCollocations, translateQuickFillWord } from '../js/core/quick-fill.js';
+import { dictionaryDetails, quickFillCollocations, quickFillSentence, translateQuickFillWord } from '../js/core/quick-fill.js';
 const word = { word: 'resilient', phonetic: '/rɪˈzɪliənt/', pos: 'adj', meaning: 'kiên cường',
   collocations: ['highly resilient', 'resilient community'], synonyms: ['hardy', 'adaptable'],
   exampleSentence: 'A resilient community can recover.', clozeSentence: 'A [ _____ ] community can recover.' };
@@ -31,7 +31,7 @@ test('Free Dictionary prefers British IPA, uses the first part of speech and mas
     assert.equal(options.credentials, 'omit');
     return response([{ phonetic: '/top-level/', phonetics: [{ text: '/us/', locale: 'en-US' },
       { text: '/uk/', audio: '//example.com/adapt-uk.mp3' }], meanings: [
-      { partOfSpeech: 'verb', synonyms: ['adjust', 'ADJUST', 'adapt'], definitions: [{ synonyms: ['acclimate', 'modify'] },
+      { partOfSpeech: 'verb', synonyms: ['adjust', 'ADJUST', 'adapt'], definitions: [{ example: 'An unusable sentence.', synonyms: ['acclimate', 'modify'] },
         { example: 'They adapted quickly and continue to adapt.', synonyms: ['tailor', 'change'] }] },
       { partOfSpeech: 'noun', definitions: [{ example: 'Do not pick this later example.' }] }
     ] }]);
@@ -51,6 +51,25 @@ test('dictionary lookups encode phrases, report missing entries, and never creat
   assert.equal(info.clozeSentence, '');
   assert.equal(await dictionaryDetails('missing', { fetcher: async () => ({ ok: false, status: 404 }) }), null);
   assert.equal(await dictionaryDetails('missing', { fetcher: async () => response([]) }), null);
+});
+
+test('Tatoeba returns an attributable English example only when the word and its inflections can be masked', async () => {
+  const info = await quickFillSentence('give up', { fetcher: async (url, options) => {
+    assert.equal(url, 'https://api.tatoeba.org/v1/sentences?lang=eng&q=give%20up&sort=relevance&is_unapproved=no&limit=10');
+    assert.equal(options.credentials, 'omit');
+    return response({ data: [
+      { id: '2', text: 'We never give up.' },
+      { id: 3, lang: 'fra', text: 'I give up.' },
+      { id: 4, text: 'We never [ _____ ].' },
+      { id: 5, text: 'They asked me to give updates.' },
+      { id: 6, text: 'Give up.' },
+      { id: 12345, lang: 'eng', text: '  They gave up but we will never give up.  ' }
+    ] });
+  } });
+  assert.deepEqual(info, { exampleSentence: 'They gave up but we will never give up.',
+    clozeSentence: 'They [ _____ ] but we will never [ _____ ].', exampleSourceId: 12345 });
+  assert.equal(await quickFillSentence('missing', { fetcher: async () => response({ data: [] }) }), null);
+  assert.equal(await quickFillSentence('missing', { fetcher: async () => ({ ok: false, status: 503 }) }), null);
 });
 
 test('MyMemory and Datamuse request no credentials and ignore quota or malformed results', async () => {
