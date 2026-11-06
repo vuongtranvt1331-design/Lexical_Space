@@ -249,6 +249,51 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       assert.equal(flash.getSessionState().recallDirection, 'en-vi');
       assert.equal($('fc-front-word').textContent, 'new');
     });
+    await t.test('a sole missed word can be retried in English to Vietnamese without losing progress', async () => {
+      const { saveSettings } = await import('../js/core/settings.js');
+      for (const miss of ['typed', 'continued', 'again']) {
+        const user = `Single missed word fixture ${miss}`;
+        saveSettings(user, { recallDirection: 'vi-en', autoPronounce: false });
+        await storage.mutateWords([{ id: 'only', username: user, patch: { word: 'auditorium', meaning: 'hội trường' } }]);
+        await context.activateUser(user);
+        await flash.setRecallDirection('en-vi');
+        assert.equal(flash.getSessionState().recallDirection, 'vi-en');
+
+        if (miss === 'again') {
+          await flash.revealCard();
+          await flash.gradeRecall(0);
+        } else {
+          $('recall-answer-input').value = 'incorrect';
+          await flash.submitReverseAnswer();
+          assert.match($('recall-feedback').textContent, /switch to English/);
+        }
+        const failed = flash.getSessionState();
+        assert.equal(failed.cardQueue[0].grade, 0);
+        const retry = failed.cardQueue[1];
+        const ledger = await storage.idbGet('metadata', failed.ledgerKey);
+        if (miss === 'continued') {
+          $('btn-fc-next').click();
+          await until(() => flash.getSessionState().queueIndex === 1);
+        }
+        $('recall-en-vi').click();
+        await until(() => flash.getSessionState().recallDirection === 'en-vi');
+        const switched = flash.getSessionState();
+        assert.equal(switched.sessionId, failed.sessionId);
+        assert.equal(switched.completedAttempts, failed.completedAttempts);
+        assert.deepEqual(switched.pendingMisses, ['only']);
+        assert.deepEqual(switched.cardQueue[switched.queueIndex], retry);
+        assert.equal($('fc-front-word').textContent, 'auditorium');
+        assert.equal($('fc-answer').hidden, true);
+        assert.deepEqual(await storage.idbGet('metadata', failed.ledgerKey), ledger);
+
+        flash.resetForUser();
+        await flash.startNewSession({ restore: true });
+        assert.deepEqual(flash.getSessionState(), switched);
+        await flash.revealCard();
+        await flash.gradeRecall(2);
+        assert.deepEqual(flash.getSessionState().pendingMisses, []);
+      }
+    });
     await t.test('Mastered words leave saved Daily queues and open in Due Reviews when eligible', async () => {
       const user = 'Mastered queue fixture';
       const future = new Date(Date.now() + 86400000).toISOString();

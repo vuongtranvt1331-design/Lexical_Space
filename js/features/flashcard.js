@@ -86,8 +86,14 @@ function adjustDirection(next, direction, activeWordId, wordsById) {
     else if (repeatsAnswer(item.wordId)) deferred.push(item);
     else remaining.push(item);
   }
-  // Switching to the opposite prompt must never expose the current word's answer.
-  if (!remaining.length && deferred.length) return next;
+  if (!remaining.length && deferred.length) {
+    const retryIndex = deferred.findIndex(item => item.wordId === activeWordId);
+    // A recorded miss already showed the English target. Let the learner retry it in the other direction.
+    const canSwitchRetry = direction === 'en-vi' && retryIndex >= 0 && next.pendingMisses.includes(activeWordId) &&
+      history.some(item => item.wordId === activeWordId && item.graded && item.grade === 0);
+    if (!canSwitchRetry) return next;
+    remaining.push(deferred.splice(retryIndex, 1)[0]);
+  }
   const pending = [...remaining, ...deferred].map(item =>
     item.revealed || item.answerCorrect || item.answerAttempt || item.assisted
       ? { ...item, revealed: false, answerCorrect: false, answerAttempt: '', assisted: false }
@@ -326,7 +332,7 @@ export function renderActiveCard() {
     show('fc-answer-source', !!sourceUrl && item.revealed);
   }
   const feedback = !reverse || !item.revealed ? '' : item.graded && item.answerCorrect === false ?
-    `Not quite. The answer is “${word.word}”. It is queued for another try.` : item.assisted ?
+    `Not quite. The answer is “${word.word}”. Try again or switch to English → Vietnamese.` : item.assisted ?
     'Answer hinted. Choose Again for a fresh recall attempt.' : item.answerCorrect ? 'Correct. Choose your recall grade.' : 'Answer shown. Choose Again to practise it.';
   show('recall-feedback', !!feedback); setText('recall-feedback', feedback);
   $('recall-feedback').dataset.correct = String(item.answerCorrect === true && !item.assisted);
