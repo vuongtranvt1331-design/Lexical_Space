@@ -8,29 +8,37 @@ const require = createRequire(process.env.LEXICALSPACE_TEST_MODULES || import.me
 const { JSDOM } = require('jsdom');
 const { indexedDB, IDBKeyRange } = require('fake-indexeddb');
 
-test('the check uses the full 72-hour pool, or randomly samples at most 15 previously reviewed words', () => {
+test('the check uses only green and blue cards, preferring the full 72-hour pool', () => {
   const now = Date.parse('2026-11-06T15:00:00.000Z'), windowMs = 72 * 60 * 60 * 1000;
   const words = [
-    { id: 'boundary', lastReviewedAt: now - windowMs },
-    { id: 'iso', lastReviewedAt: new Date(now - 1000).toISOString() },
-    { id: 'firestore', lastReviewedAt: { seconds: now / 1000 - 5 } },
-    { id: 'old', lastReviewedAt: now - windowMs - 1, reviewCount: 4 },
-    { id: 'no-date', reviewCount: 1 },
-    { id: 'future', lastReviewedAt: now + 1 },
-    { id: 'deleted', lastReviewedAt: now - 1, deleted: true },
-    { id: 'edited-new', updatedAt: now }
+    { id: 'boundary', recallLevel: 3, lastReviewedAt: now - windowMs },
+    { id: 'iso', memoryStatus: 'mastered', lastReviewedAt: new Date(now - 1000).toISOString() },
+    { id: 'firestore', lastGrade: 2, lastReviewedAt: { seconds: now / 1000 - 5 } },
+    { id: 'old', recallLevel: 3, lastReviewedAt: now - windowMs - 1, reviewCount: 4 },
+    { id: 'no-date', lastGrade: 2, reviewCount: 1 },
+    { id: 'manual-green', masteryOverride: 'not_remembered' },
+    { id: 'manual-blue', masteryOverride: 'mastered', memoryStatus: 'mastered' },
+    { id: 'future', recallLevel: 3, lastReviewedAt: now + 1 },
+    { id: 'deleted', recallLevel: 3, lastReviewedAt: now - 1, deleted: true },
+    { id: 'recent-red', recallLevel: 1, lastReviewedAt: now - 1, reviewCount: 1 },
+    { id: 'recent-yellow', lastGrade: 1, lastReviewedAt: now - 1, reviewCount: 1 },
+    { id: 'edited-new', updatedAt: now, reviewCount: 1 }
   ];
-  assert.deepEqual(selectInClassPool(words, now).words.map(word => word.id), ['boundary', 'iso', 'firestore']);
-  assert.equal(selectInClassPool(Array.from({ length: 24 }, (_, id) => ({ id, lastReviewedAt: now - 1 })), now).words.length, 24);
+  const recent = selectInClassPool(words, now);
+  assert.equal(recent.kind, 'recent');
+  assert.deepEqual(recent.words.map(word => word.id), ['boundary', 'iso', 'firestore']);
+  assert.equal(selectInClassPool(Array.from({ length: 24 }, (_, id) => ({ id, recallLevel: 3, lastReviewedAt: now - 1 })), now).words.length, 24);
 
-  const reviewed = Array.from({ length: 24 }, (_, id) => ({ id, reviewCount: 1 }));
+  const reviewed = Array.from({ length: 24 }, (_, id) => ({ id, recallLevel: 3, reviewCount: 1 }));
   const pool = selectInClassPool(reviewed, now, () => 0.9);
   assert.equal(pool.kind, 'previous');
   assert.equal(pool.words.length, 15);
   assert.equal(new Set(pool.words.map(word => word.id)).size, 15);
   assert.notDeepEqual(pool.words, reviewed.slice(0, 15));
-  assert.deepEqual(selectInClassPool(words.slice(3), now, () => 0).words.map(word => word.id), ['old', 'no-date']);
-  assert.deepEqual(selectInClassPool([words.at(-1)], now), { kind: 'empty', words: [] });
+  const fallback = selectInClassPool(words.slice(3), now, () => 0);
+  assert.equal(fallback.kind, 'previous');
+  assert.deepEqual(fallback.words.map(word => word.id), ['old', 'no-date', 'manual-green', 'manual-blue', 'future']);
+  assert.deepEqual(selectInClassPool(words.slice(8), now), { kind: 'empty', words: [] });
 });
 
 test('a local check hides answers, reports results immediately, and queues only misses for this profile', async () => {
@@ -49,9 +57,10 @@ test('a local check hides answers, reports results immediately, and queues only 
   saveSettings(user, { autoPronounce: false, soundEffects: false, dailyReviewLimit: 0 });
   saveSettings(other, { autoPronounce: false, soundEffects: false });
   await storage.mutateWords([
-    { username: user, id: 'first', patch: { ...reviewed, word: 'resilient', meaning: 'kiên cường', synonyms: ['tough'], clozeSentence: 'Stay [ _____ ] and resilient.' } },
+    { username: user, id: 'first', patch: { ...reviewed, masteryOverride: 'mastered', word: 'resilient', meaning: 'kiên cường', synonyms: ['tough'], clozeSentence: 'Stay [ _____ ] and resilient.' } },
     { username: user, id: 'second', patch: { ...reviewed, word: 'adapt', meaning: 'thích nghi', exampleSentence: 'They adapted quickly.' } },
     { username: user, id: 'old', patch: { ...reviewed, lastReviewedAt: 1, word: 'old', meaning: 'cũ' } },
+    { username: user, id: 'yellow', patch: { ...reviewed, lastGrade: 1, word: 'cautious', meaning: 'thận trọng' } },
     { username: other, id: 'second', patch: { word: 'elsewhere', meaning: 'nơi khác' } }
   ]);
   localStorage.setItem('vocab_user', user);
@@ -75,6 +84,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     context.switchView('view-in-class-check');
     assert.equal($('check-intro').hidden, false);
     assert.equal($('check-available-count').textContent, '2');
+    assert.equal($('check-pool-description').textContent, 'Green and blue words reviewed in the last 72 hours.');
     $('btn-check-start').click();
     assert.equal($('check-progress').textContent, 'Word 1 of 2');
     assert.equal($('check-meaning').textContent, 'kiên cường');
@@ -133,6 +143,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     assert.equal(await context.activateUser(other), true);
     context.switchView('view-in-class-check');
     assert.equal($('check-empty').hidden, false);
+    assert.equal($('check-empty-heading').textContent, 'No green or blue words to check yet');
     assert.equal($('check-question').hidden, true);
     assert.equal($('check-meaning').textContent, '');
     assert.equal($('check-missed-list').textContent, '');

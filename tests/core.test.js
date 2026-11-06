@@ -180,6 +180,7 @@ test('Easy or three Good grades promote a card and Again clears both mastery and
   assert.equal(word.memoryStatus, 'mastered');
   assert.equal(word.recallLevel, 4);
   assert.equal(word.lastGrade, 2);
+  assert.equal(word.masteredReviewPending, true);
   assert.equal(word.repetition, 1);
   assert.equal(Object.hasOwn(word, 'masteryOverride'), false);
   const server = cloud();
@@ -187,12 +188,14 @@ test('Easy or three Good grades promote a card and Again clears both mastery and
   assert.equal(server.records.get('words/good').goodReviewCount, 3);
   assert.equal(server.records.get('words/good').autoMastered, true);
   assert.equal(server.records.get('words/good').recallLevel, 4);
+  assert.equal(server.records.get('words/good').masteredReviewPending, true);
 
   [word] = await storage.mutateWords([{ id, username, expectedVersion: word, patch: { masteryOverride: 'mastered' } }]);
   await saveReview(0);
   assert.equal(word.memoryStatus, 'not_remembered');
   assert.equal(word.recallLevel, 3);
   assert.equal(word.lastGrade, 0);
+  assert.equal(word.masteredReviewPending, false);
   assert.equal(word.goodReviewCount, 0);
   assert.equal(word.autoMastered, false);
   assert.equal(Object.hasOwn(word, 'masteryOverride'), false);
@@ -200,6 +203,7 @@ test('Easy or three Good grades promote a card and Again clears both mastery and
   assert.equal(server.records.get('words/good').goodReviewCount, 0);
   assert.equal(server.records.get('words/good').autoMastered, false);
   assert.equal(server.records.get('words/good').recallLevel, 3);
+  assert.equal(server.records.get('words/good').masteredReviewPending, false);
   assert.equal(Object.hasOwn(server.records.get('words/good'), 'masteryOverride'), false);
 
   const easy = scheduleReview({ ...word, masteryOverride: 'not_remembered' }, 3, now);
@@ -211,22 +215,65 @@ test('Easy or three Good grades promote a card and Again clears both mastery and
 });
 test('recall levels group every mastered word with Easy and return demoted words to level three', () => {
   const now = new Date(2026, 10, 6, 9).getTime();
-  const manual = normalize({ id: 'manual', word: 'known', meaning: 'đã thuộc', masteryOverride: 'mastered' });
+  const manual = normalize({ id: 'manual', word: 'known', meaning: 'đã thuộc', masteryOverride: 'mastered', dueDate: null });
   const learned = normalize({ ...patch, id: 'earned', lastGrade: 2, goodReviewCount: 3, dueDate: addCalendarDays(now, 1) });
   assert.deepEqual([manual.recallLevel, learned.recallLevel], [4, 4]);
   assert.equal(isNewWord(manual), false);
-  assert.equal(isDue(manual, now), false);
-  assert.deepEqual(selectPracticeWords([manual, learned], { now }), { review: [], fresh: [], limited: false });
-  assert.equal(selectPracticeWords([manual, learned], { now, repeat: true }).review.length, 2);
-  const firstRealReview = scheduleReview(manual, 2, now, { earlyReview: true });
+  assert.equal(manual.masteredReviewPending, true);
+  assert.equal(isDue(manual, now), true);
+  const mastered = [manual, learned];
+  const empty = { review: [], fresh: [], limited: false };
+  assert.deepEqual(selectPracticeWords(mastered, { now }), empty);
+  assert.deepEqual(selectPracticeWords(mastered, { now, repeat: true, settings: { dailyReviewLimit: 0 } }), empty);
+  assert.deepEqual(selectPracticeWords(mastered, { now, mode: 'review' }).review, mastered);
+  const firstRealReview = scheduleReview(manual, 2, now);
   assert.equal(firstRealReview.lastGrade, 2);
   assert.equal(firstRealReview.recallLevel, 4);
+  assert.equal(firstRealReview.masteredReviewPending, false);
   assert.equal(firstRealReview.dueDate, addCalendarDays(now, 1));
   const demoted = normalize({ ...manual, masteryOverride: 'not_remembered' });
   assert.equal(demoted.recallLevel, 3);
   assert.deepEqual(selectPracticeWords([demoted], { now }).review, [demoted]);
   const secondMiss = scheduleReview(scheduleReview(learned, 0, now), 0, now);
   assert.equal(secondMiss.recallLevel, 1);
+});
+test('a pending Mastered review is immediately available once and preserves the future schedule when recalled', () => {
+  const now = new Date(2026, 10, 6, 9).getTime(), future = addCalendarDays(now, 2);
+  const legacy = normalize({ ...patch, id: 'legacy-blue', lastGrade: 3, reviewCount: 2, dueDate: future });
+  assert.equal(legacy.masteredReviewPending, true);
+  assert.equal(isDue(legacy, now), true);
+  assert.deepEqual(selectPracticeWords([legacy], { now, mode: 'review' }).review, [legacy]);
+  assert.deepEqual(selectPracticeWords([{ ...legacy, isFavorite: true }], { now, mode: 'favorites', favorites: true }).review, []);
+  const checked = normalize(scheduleReview(legacy, 2, now, { inDueReview: true }));
+  assert.equal(checked.recallLevel, 4);
+  assert.equal(checked.masteredReviewPending, false);
+  assert.equal(checked.dueDate, future);
+  assert.equal(checked.repetition, legacy.repetition);
+  assert.equal(checked.interval, legacy.interval);
+  assert.equal(checked.reviewCount, legacy.reviewCount + 1);
+  assert.equal(checked.lastGrade, 2);
+  assert.equal(isDue(checked, now), false);
+  assert.equal(isDue(checked, Date.parse(future)), true);
+  assert.deepEqual(selectPracticeWords([checked], { now, mode: 'review' }).review, []);
+
+  const failed = scheduleReview(legacy, 0, now, { inDueReview: true });
+  assert.equal(failed.recallLevel, 3);
+  assert.equal(failed.masteredReviewPending, false);
+  assert.equal(failed.dueDate, new Date(now + 10 * 60_000).toISOString());
+});
+test('a card promoted in Due Reviews satisfies its immediate review in the same attempt', () => {
+  const now = new Date(2026, 10, 6, 9).getTime();
+  const due = normalize({ ...patch, id: 'due', lastGrade: 1, dueDate: addCalendarDays(now, -1) });
+  const promotion = scheduleReview(due, 3, now, { inDueReview: true });
+  assert.equal(promotion.recallLevel, 4);
+  assert.equal(promotion.masteredReviewPending, false);
+  assert.deepEqual(selectPracticeWords([promotion], { now, mode: 'review' }).review, []);
+
+  const dailyPromotion = scheduleReview(due, 3, now);
+  assert.equal(dailyPromotion.masteredReviewPending, true);
+  assert.equal(dailyPromotion.dueDate, promotion.dueDate);
+  assert.deepEqual(selectPracticeWords([dailyPromotion], { now, mode: 'review' }).review, [dailyPromotion]);
+  assert.deepEqual(selectPracticeWords([dailyPromotion], { now, repeat: true }).review, []);
 });
 test('practice queues the full eligible backlog and prioritizes oldest due reviews', () => {
   const now = 5000;
@@ -243,7 +290,8 @@ test('Daily practice gives Hard and Good review priority and budgets early revie
     ...patch, id, lastGrade, reviewCount: 1, lastReviewedAt: now - 60_000, dueDate: addCalendarDays(now, days), ...extra
   });
   const words = [
-    card('easy-due', 3, -10), card('easy-future', 3, 3), card('good-due', 2, -8), card('good-future', 2, 1),
+    card('easy-due', 3, -10), card('easy-future', 3, 3, { masteredReviewPending: false }),
+    card('again-due', 0, -9), card('good-due', 2, -8), card('good-future', 2, 1),
     card('hard-due', 1, -2), card('hard-new-today', 1, 2), card('hard-future', '1', 4), card('already-reviewed', 2, 3),
     card('retry', 1, 5), card('fresh', null, 0, { reviewCount: 0, lastReviewedAt: null })
   ];
@@ -251,7 +299,7 @@ test('Daily practice gives Hard and Good review priority and budgets early revie
   const ids = words => words.map(word => word.id);
   const daily = selectPracticeWords(words, { now, ledger, retryIds: ['retry'] });
   assert.deepEqual(ids(daily.fresh), ['fresh']);
-  assert.deepEqual(ids(daily.review), ['hard-due', 'hard-new-today', 'hard-future', 'good-due', 'good-future', 'easy-due']);
+  assert.deepEqual(ids(daily.review), ['hard-due', 'hard-new-today', 'hard-future', 'good-due', 'good-future', 'again-due']);
   assert.equal(daily.limited, false);
   const limited = selectPracticeWords(words, { now, ledger, settings: { dailyReviewLimit: 2 }, preferredIds: ['good-due', 'hard-new-today'] });
   assert.deepEqual(ids(limited.review), ['hard-new-today']);
@@ -259,27 +307,29 @@ test('Daily practice gives Hard and Good review priority and budgets early revie
   const exhausted = selectPracticeWords(words, { now, ledger, settings: { dailyReviewLimit: 1 } });
   assert.deepEqual(ids(exhausted.review), []);
   const dueOnly = selectPracticeWords(words, { now, ledger, mode: 'review' });
-  assert.deepEqual(ids(dueOnly.review), ['easy-due', 'good-due', 'hard-due']);
+  assert.deepEqual(ids(dueOnly.review), ['easy-due', 'again-due', 'good-due', 'hard-due']);
   assert.deepEqual(dueOnly.fresh, []);
-  const favorites = selectPracticeWords(words.map(word => ({ ...word, isFavorite: true })), { now, ledger, mode: 'favorites', favorites: true });
+  const favoriteWords = words.map(word => ({ ...word, isFavorite: true }));
+  const favorites = selectPracticeWords(favoriteWords, { now, ledger, mode: 'favorites', favorites: true });
   assert.deepEqual(ids(favorites.review), ids(dueOnly.review));
   assert.deepEqual(ids(favorites.fresh), ['fresh']);
+  assert.deepEqual(ids(selectPracticeWords(favoriteWords, { now, ledger, favorites: true }).review), ['again-due', 'good-due', 'hard-due']);
 });
 test('manual Daily practice rounds can repeat counted cards without adding new cards or bypassing a zero review cap', () => {
   const now = new Date(2026, 10, 6, 9).getTime();
   const card = (id, lastGrade, reviewCount = 1) => normalize({
     ...patch, id, lastGrade, reviewCount, lastReviewedAt: reviewCount ? now - 60_000 : null, dueDate: addCalendarDays(now, 1)
   });
-  const words = [card('easy-counted', 3), card('easy-new-review', 3), card('hard', 1), card('good', 2), card('fresh', null, 0)];
-  const options = { now, repeat: true, ledger: { dailyNewIds: ['hard'], dailyReviewIds: ['easy-counted'] } };
+  const words = [card('again-counted', 0), card('easy', 3), card('hard', 1), card('good', 2), card('fresh', null, 0)];
+  const options = { now, repeat: true, ledger: { dailyNewIds: ['hard'], dailyReviewIds: ['again-counted'] } };
   const reviewIds = settings => selectPracticeWords(words, { ...options, settings }).review.map(word => word.id);
   assert.deepEqual(selectPracticeWords(words, options).fresh, []);
-  assert.deepEqual(reviewIds({}), ['hard', 'good', 'easy-counted', 'easy-new-review']);
-  assert.deepEqual(reviewIds({ dailyReviewLimit: 2 }), ['hard', 'easy-counted']);
-  assert.deepEqual(reviewIds({ dailyReviewLimit: 1 }), ['easy-counted']);
+  assert.deepEqual(reviewIds({}), ['hard', 'good', 'again-counted']);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 2 }), ['hard', 'again-counted']);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 1 }), ['again-counted']);
   assert.deepEqual(reviewIds({ dailyReviewLimit: 0 }), []);
   assert.equal(selectPracticeWords(words, { ...options, settings: { dailyReviewLimit: 0 } }).limited, true);
-  assert.deepEqual(selectPracticeWords(words, { ...options, mode: 'review' }).review, []);
+  assert.deepEqual(selectPracticeWords(words, { ...options, mode: 'review' }).review.map(word => word.id), ['easy']);
 });
 test('successful early reviews record a grade without moving scheduled repetition or due date', () => {
   const now = new Date(2026, 10, 6, 9).getTime();

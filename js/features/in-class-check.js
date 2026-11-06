@@ -1,6 +1,6 @@
 import { context } from '../core/context.js';
 import { clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
-import { timestamp } from '../core/vocabulary.js';
+import { recallLevelFor, timestamp } from '../core/vocabulary.js';
 
 const WINDOW_MS = 72 * 60 * 60 * 1000;
 const FALLBACK_SIZE = 15;
@@ -13,9 +13,11 @@ export function selectInClassPool(words, now = Date.now(), random = Math.random)
   const recent = [], previous = [];
   for (const word of words) {
     if (word.deleted) continue;
+    const level = recallLevelFor(word);
+    if (level !== 3 && level !== 4) continue;
     const reviewedAt = timestamp(word.lastReviewedAt);
     if (reviewedAt > 0 && reviewedAt <= now && now - reviewedAt <= WINDOW_MS) recent.push(word);
-    else if (Number(word.reviewCount) > 0) previous.push(word);
+    else previous.push(word);
   }
   if (recent.length) return { kind: 'recent', words: recent };
 
@@ -42,7 +44,7 @@ function renderIntro(focus) {
   showStage(empty ? 'empty' : 'intro');
   $('check-available-count').textContent = pool.words.length;
   $('check-pool-description').textContent = pool.kind === 'recent'
-    ? 'Words reviewed in the last 72 hours.' : 'A random sample of previously reviewed words.';
+    ? 'Green and blue words reviewed in the last 72 hours.' : 'A random sample of up to 15 green and blue words.';
   if (focus) $(empty ? 'check-empty-heading' : 'check-heading').focus();
 }
 

@@ -249,6 +249,50 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       assert.equal(flash.getSessionState().recallDirection, 'en-vi');
       assert.equal($('fc-front-word').textContent, 'new');
     });
+    await t.test('Mastered words leave saved Daily queues and open in Due Reviews when eligible', async () => {
+      const user = 'Mastered queue fixture';
+      const future = new Date(Date.now() + 86400000).toISOString();
+      await storage.mutateWords([
+        { id: 'manual', username: user, patch: { word: 'manual', meaning: 'bằng tay', masteryOverride: 'mastered', dueDate: null } },
+        { id: 'due', username: user, patch: { word: 'due', meaning: 'đến hạn', reviewCount: 1, lastGrade: 3 } },
+        { id: 'future', username: user, patch: { word: 'future', meaning: 'tương lai', reviewCount: 1, lastGrade: 3, dueDate: future } },
+        { id: 'scheduled', username: user, patch: { word: 'scheduled', meaning: 'có lịch', reviewCount: 1, lastGrade: 3, dueDate: future, masteredReviewPending: false } },
+        { id: 'fresh', username: user, patch: { word: 'fresh', meaning: 'mới' } },
+        { id: 'yellow', username: user, patch: { word: 'yellow', meaning: 'vàng', reviewCount: 1, lastGrade: 1 } }
+      ]);
+      await context.activateUser(user);
+      const queue = () => {
+        const state = flash.getSessionState();
+        return state.cardQueue.slice(state.queueIndex).map(item => item.wordId);
+      };
+      assert.deepEqual(queue(), ['fresh']);
+      await flash.revealCard();
+      await flash.gradeRecall(3);
+      assert.deepEqual(queue(), ['yellow']);
+      assert.equal($('btn-fc-previous').disabled, true);
+      await flash.revealCard();
+      await flash.gradeRecall(0);
+      assert.deepEqual(flash.getSessionState().pendingMisses, ['yellow']);
+      const { updateWordMemory } = await import('../js/features/library.js');
+      await updateWordMemory('yellow', 'mastered');
+      await until(() => flash.getSessionState().pendingMisses.length === 0);
+      assert.deepEqual(queue(), []);
+      assert.equal($('btn-session-continue').hidden, true);
+      assert.match($('empty-state-subtitle').textContent, /Due Reviews/);
+      flash.resetForUser();
+      await flash.startNewSession({ restore: true });
+      assert.deepEqual(queue(), []);
+      context.reviewMode = 'review';
+      await flash.startNewSession();
+      assert.deepEqual(queue().sort(), ['due', 'fresh', 'future', 'manual', 'yellow']);
+      for (let i = 0; i < 5; i++) {
+        await flash.revealCard();
+        await flash.gradeRecall(2);
+      }
+      assert.deepEqual(queue(), []);
+      assert.equal((await storage.readUserWord(user, 'future')).dueDate, future);
+      assert.equal((await storage.readUserWord(user, 'future')).masteredReviewPending, false);
+    });
     await t.test('reverse recall auto-pronounces only after a correct typed answer in the active view', async () => {
       const user = 'Reverse audio fixture';
       const { saveSettings } = await import('../js/core/settings.js');

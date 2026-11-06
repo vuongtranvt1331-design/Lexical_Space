@@ -89,6 +89,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
       assert.equal(document.activeElement, $('lib-search-input'));
       const [updated] = await readUserWords(user);
       assert.equal(updated.recallLevel, expectedLevel);
+      assert.equal(updated.masteredReviewPending, expectedLevel === 4);
       for (const field of ['reviewCount', 'lastGrade', 'goodReviewCount', 'autoMastered', 'repetition', 'interval', 'easeFactor', 'successfulDays', 'lastReviewedAt', 'dueDate']) {
         assert.deepEqual(updated[field], records[0][field], field);
       }

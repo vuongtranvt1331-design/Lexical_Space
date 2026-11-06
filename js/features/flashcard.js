@@ -1,7 +1,7 @@
 import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
 import { exampleSourceUrl, newId, normalizeTerm } from '../core/vocabulary.js';
-import { scheduleReview, selectPracticeWords, calendarDay, isDue, isNewWord } from '../core/srs.js';
+import { scheduleReview, selectPracticeWords, calendarDay, isDailyPracticeWord, isDue, isNewWord } from '../core/srs.js';
 import { loadSettings, saveSettings } from '../core/settings.js';
 import { pronunciation } from '../core/pronunciation.js';
 import { targetSegments, clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
@@ -94,17 +94,23 @@ function adjustDirection(next, direction, activeWordId, wordsById) {
       : item);
   return { ...next, recallDirection: direction, queueIndex: history.length, cardQueue: [...history, ...pending] };
 }
-function reconcileQueue(saved, words, candidates, repeat, day, direction, inClassMisses, priorityIds) {
+function reconcileQueue(saved, words, candidates, { mode, repeat, day, direction, inClassMisses, priorityIds }) {
   const byId = new Map(words.map(word => [word.id, word]));
   const eligibleIds = new Set(candidates.map(word => word.id));
-  const pendingMisses = [...new Set([...saved.pendingMisses.filter(id => byId.has(id) && !(byId.get(id).lastGrade > 0)), ...inClassMisses])];
+  const canQueue = word => word && (mode !== 'learning' || isDailyPracticeWord(word));
+  const pendingMisses = [...new Set([...saved.pendingMisses.filter(id => {
+    const word = byId.get(id);
+    return canQueue(word) && !(word.lastGrade > 0);
+  }), ...inClassMisses])];
   const missing = new Set(pendingMisses);
   const cardQueue = [];
   let queueIndex = 0;
   saved.cardQueue.forEach((item, index) => {
-    if (!byId.has(item.wordId)) return;
+    const word = byId.get(item.wordId);
+    if (!word) return;
     if (index < saved.queueIndex) queueIndex++;
-    else if (!item.graded && !missing.has(item.wordId) && (!eligibleIds.has(item.wordId) || (item.repeat && !repeat))) return;
+    else if (!canQueue(word) ||
+      (!item.graded && !missing.has(item.wordId) && (!eligibleIds.has(item.wordId) || (item.repeat && !repeat)))) return;
     cardQueue.push(item);
   });
   const queued = new Set(cardQueue.slice(queueIndex).filter(item => !item.graded).map(item => item.wordId));
@@ -186,7 +192,7 @@ export async function startNewSession(options = {}) {
       const startingRound = repeat && options.continueLearning && saved &&
         saved.queueIndex >= saved.cardQueue.length && !saved.pendingMisses.length;
       const previous = startingRound ? { ...saved, queueIndex: 0, cardQueue: [] } : saved;
-      const result = previous ? reconcileQueue(previous, words, candidates, repeat, day, direction, inClassMisses, priorityIds) : {
+      const result = previous ? reconcileQueue(previous, words, candidates, { mode, repeat, day, direction, inClassMisses, priorityIds }) : {
         key, scopeId, schemaVersion: 2, sessionId: `${encodeURIComponent(user)}:${newId()}`, username: user, day, ledgerKey: dayLedgerKey,
         cardQueue: [...inClassMisses.map(id => entry(id)), ...candidates.map(word => entry(word.id, repeat))],
         queueIndex: 0, sessionVersion: 0, pendingMisses: inClassMisses, inClassMisses,
@@ -281,6 +287,7 @@ export function renderActiveCard() {
     setText('empty-state-subtitle', dailyLimitReached ? 'Raise the limit for new words or reviews, or clear it for unlimited practice. Your daily limit resets each day.' :
       canContinue ? 'Start another round with words you have already studied.' :
       context.reviewMode === 'review' ? 'No reviews are due in this selection. You can switch to Daily practice for new words.' :
+      context.reviewMode === 'learning' ? 'Choose another topic, add words, or open Due Reviews to check for scheduled reviews.' :
       'Check for newly due cards, choose another topic, or add new words.');
     show('empty-state-subtitle', true); show('session-stats-box', !!session?.cardQueue.length);
     setText('stat-known-count', session?.successfulIds.length || 0); setText('stat-unknown-count', session?.pendingMisses.length || 0);
@@ -339,7 +346,7 @@ export function renderActiveCard() {
     button.hidden = Boolean(item.graded);
     button.disabled = !canGradeRecall(Number(button.dataset.recallGrade));
   }
-  $('btn-fc-previous').disabled = actionsBlocked() || session.queueIndex === 0;
+  $('btn-fc-previous').disabled = actionsBlocked() || adjacentCardIndex(-1) < 0;
   $('btn-fc-next').hidden = !item.graded;
   $('btn-fc-next').disabled = actionsBlocked();
   updateCardFavoriteVisual(word.isFavorite);
@@ -445,7 +452,7 @@ export async function gradeRecall(grade, { submission = null, holdCard = false }
     const retry = next.pendingMisses.includes(word.id);
     const repeat = kind === 'review' && !retry && graded.repeat === true;
     const earlyReview = kind === 'review' && !retry && context.reviewMode === 'learning' && !isDue(word, now);
-    const scheduled = scheduleReview(word, grade, now, { earlyReview });
+    const scheduled = scheduleReview(word, grade, now, { earlyReview, inDueReview: context.reviewMode === 'review' });
     graded.graded = true; graded.grade = grade; graded.revealed = true; next.completedAttempts++;
     if (submission !== null) Object.assign(graded, { answerAttempt: submission, answerCorrect: false });
     if (grade === 0) {
@@ -476,9 +483,22 @@ export async function gradeRecall(grade, { submission = null, holdCard = false }
   }
   finally { await finishAction(ticket); }
 }
+function adjacentCardIndex(offset) {
+  let index = session.queueIndex + offset;
+  if (context.reviewMode !== 'learning' || index < 0 || index >= session.cardQueue.length) return index;
+  const byId = new Map(context.wordsData.map(word => [word.id, word]));
+  while (index >= 0 && index < session.cardQueue.length) {
+    const word = byId.get(session.cardQueue[index].wordId);
+    if (word && isDailyPracticeWord(word)) break;
+    index += offset;
+  }
+  return index;
+}
 async function stepCard(offset) {
   if (actionsBlocked() || !session) return;
-  busy = true; const ticket = generation, next = clone(session); next.queueIndex += offset;
+  const index = adjacentCardIndex(offset);
+  if (index < 0) return;
+  busy = true; const ticket = generation, next = clone(session); next.queueIndex = index;
   try {
     await persist(next);
     if (ticket === generation) {

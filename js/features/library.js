@@ -178,8 +178,9 @@ export async function editWord(id, patch) {
 export async function updateWordMemory(id, status) {
   if (status !== 'mastered' && status !== 'not_remembered') throw new Error('Invalid mastery status.');
   const word = context.wordsData.find(w => w.id === id); if (!word) return;
-  const recallLevel = status === 'mastered' ? 4 : 3;
-  await commitVocabularyChanges([{ id, expectedVersion: word, patch: { masteryOverride: status, recallLevel } }]);
+  const mastered = status === 'mastered';
+  const patch = { masteryOverride: status, recallLevel: mastered ? 4 : 3, masteredReviewPending: mastered };
+  await commitVocabularyChanges([{ id, expectedVersion: word, patch }]);
 }
 export function updateLibraryTabsUI() {
   for (const [id, tab] of [['btn-lib-tab-known', 'known'], ['btn-lib-tab-unknown', 'unknown'], ['btn-lib-tab-favorites', 'favorites']]) $(id)?.setAttribute('aria-pressed', String(context.libraryTab === tab));

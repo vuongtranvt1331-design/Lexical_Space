@@ -85,16 +85,19 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
 
     context.activeTopic = 'A';
     $('btn-mode-review').click();
-    await waitFor(() => modePressed('review') && queue().length === 0);
+    await waitFor(() => modePressed('review') && queue()[0] === 'first-new');
     context.reviewMode = 'learning';
     context.activeTopic = 'ALL';
     context.updateTopicDropdowns();
     await flash.startNewSession({ restore: true });
-    assert.deepEqual(queue(), []);
-    assert.equal(practiceBadge(), '0');
+    assert.deepEqual(queue(), ['first-new']);
+    assert.equal(practiceBadge(), '1');
     assert.equal(modePressed('review'), true);
     assert.equal(modePressed('learning'), false);
     assert.equal($('review-selected-topic-label').textContent, 'Topic: A');
+    await passCard(2);
+    assert.deepEqual(queue(), []);
+    assert.equal(practiceBadge(), '0');
     assert.match($('empty-state-subtitle').textContent, /switch to Daily practice for new words/);
 
     $('btn-mode-learning').click();

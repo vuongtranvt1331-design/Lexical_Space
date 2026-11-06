@@ -65,6 +65,7 @@ export function normalizeRemoteVocabulary(record, id = record.id) {
     (!word.masteryOverride && record.memoryStatus === 'mastered');
   word.memoryStatus = memoryStatusFor(word);
   word.recallLevel = recallLevelFor(word);
+  word.masteredReviewPending = word.memoryStatus === 'mastered' && record.masteredReviewPending !== false;
   return word;
 }
 export function compareVersions(a = {}, b = {}) {
