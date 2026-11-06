@@ -27,6 +27,13 @@ export function withoutLegacyLevel(record) {
 export function memoryStatusFor({ masteryOverride, autoMastered }) {
   return masteryOverride ?? (autoMastered ? 'mastered' : 'not_remembered');
 }
+export function recallLevelFor(word) {
+  if (word.memoryStatus === 'mastered') return 4;
+  if ([1, 2, 3].includes(word.recallLevel)) return word.recallLevel;
+  if (word.masteryOverride === 'not_remembered') return 3;
+  const grade = Number(word.lastGrade ?? NaN);
+  return [0, 1, 2, 3].includes(grade) ? Math.min(grade + 1, 3) : null;
+}
 export function normalizeRemoteVocabulary(record, id = record.id) {
   const word = { ...withoutLegacyLevel(record), id: text(id), username: text(record.username), word: text(record.word), meaning: text(record.meaning) };
   for (const field of ['pos', 'sense', 'exampleSentence', 'synonym1', 'synonym2', 'phonetic', 'usageNotes', 'clozeSentence']) word[field] = text(record[field]);
@@ -57,6 +64,7 @@ export function normalizeRemoteVocabulary(record, id = record.id) {
   word.selfReportedKnown = record.selfReportedKnown === true || record.memoryStatus === 'known' ||
     (!word.masteryOverride && record.memoryStatus === 'mastered');
   word.memoryStatus = memoryStatusFor(word);
+  word.recallLevel = recallLevelFor(word);
   return word;
 }
 export function compareVersions(a = {}, b = {}) {

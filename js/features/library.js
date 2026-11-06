@@ -1,6 +1,6 @@
 import { canSyncProfile, context } from '../core/context.js';
 import { mutateWords, readUserWords, idbPut } from '../core/idb-manager.js';
-import { exampleSourceUrl, validateVocabulary, wordTopics } from '../core/vocabulary.js';
+import { exampleSourceUrl, recallLevelFor, validateVocabulary, wordTopics } from '../core/vocabulary.js';
 import { icon } from '../core/icons.js';
 import { targetSegments } from '../core/recall-utils.js';
 import { trackIntentionalClicks } from '../utils/intentional-click.js';
@@ -178,14 +178,16 @@ export async function editWord(id, patch) {
 export async function updateWordMemory(id, status) {
   if (status !== 'mastered' && status !== 'not_remembered') throw new Error('Invalid mastery status.');
   const word = context.wordsData.find(w => w.id === id); if (!word) return;
-  await commitVocabularyChanges([{ id, expectedVersion: word, patch: { masteryOverride: status } }]);
+  const recallLevel = status === 'mastered' ? 4 : 3;
+  await commitVocabularyChanges([{ id, expectedVersion: word, patch: { masteryOverride: status, recallLevel } }]);
 }
 export function updateLibraryTabsUI() {
   for (const [id, tab] of [['btn-lib-tab-known', 'known'], ['btn-lib-tab-unknown', 'unknown'], ['btn-lib-tab-favorites', 'favorites']]) $(id)?.setAttribute('aria-pressed', String(context.libraryTab === tab));
 }
 export function renderVocabularyCardHtml(word) {
   const flipped = flippedCards.has(word.id), id = esc(word.id);
-  const gradeClass = [0, 1, 2, 3].includes(word.lastGrade) ? ` grade-${word.lastGrade}` : '';
+  const level = recallLevelFor(word);
+  const gradeClass = level === null ? '' : ` grade-${level - 1}`;
   const mastered = word.memoryStatus === 'mastered';
   const status = mastered ? 'Mastered' : word.masteryOverride === 'not_remembered' ? 'Unknown' : word.reviewCount ? 'Learning' : 'New';
   const highlighted = targetSegments(word.exampleSentence, word.word, { inflections: true }).map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');

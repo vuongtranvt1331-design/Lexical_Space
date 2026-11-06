@@ -1,21 +1,23 @@
-import { memoryStatusFor, normalizeRemoteVocabulary, timestamp, wordTopics } from './vocabulary.js';
+import { memoryStatusFor, normalizeRemoteVocabulary, recallLevelFor, timestamp, wordTopics } from './vocabulary.js';
 export const DAY_MS = 86400000;
 export function calendarDay(value = Date.now()) {
   const d = new Date(value); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 export function addCalendarDays(now, days) { const d = new Date(now); d.setDate(d.getDate() + days); return d.toISOString(); }
-export const isNewWord = word => !(Number(word.reviewCount) > 0 || timestamp(word.lastReviewedAt) > 0);
-export const isDue = (word, now = Date.now()) => !word.deleted && timestamp(word.dueDate ?? word.due) <= now;
+const hasReviewHistory = word => Number(word.reviewCount) > 0 || timestamp(word.lastReviewedAt) > 0;
+export const isNewWord = word => !hasReviewHistory(word) && recallLevelFor(word) === null;
+export const isDue = (word, now = Date.now()) => !word.deleted && (hasReviewHistory(word) || isNewWord(word)) &&
+  timestamp(word.dueDate ?? word.due) <= now;
 // SM-2-inspired intervals advance after scheduled successes on distinct calendar days.
 export function scheduleReview(record, grade, now = Date.now(), { earlyReview = false } = {}) {
   if (![0, 1, 2, 3].includes(grade)) throw new Error('Invalid recall grade.');
   const word = normalizeRemoteVocabulary(record), today = calendarDay(now);
-  const canGraduate = !word.successfulDays.includes(today) && (isNewWord(word) || calendarDay(timestamp(word.dueDate)) <= today);
+  const canGraduate = !word.successfulDays.includes(today) && (!hasReviewHistory(word) || calendarDay(timestamp(word.dueDate)) <= today);
   const quality = [0, 3, 4, 5][grade];
   const easeFactor = Math.max(1.3, word.easeFactor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
   let repetition = word.repetition, interval = word.interval, successfulDays = [...word.successfulDays], dueDate = word.dueDate;
   if (grade === 0) { repetition = 0; interval = 0; dueDate = new Date(now + 10 * 60000).toISOString(); }
-  else if (!earlyReview) {
+  else if (!earlyReview || !hasReviewHistory(word)) {
     if (canGraduate) {
       repetition++; successfulDays.push(today);
       interval = repetition === 1 ? 1 : repetition === 2 ? (grade === 1 ? 3 : 6) : Math.max(1, Math.round(Math.max(1, interval) * (grade === 1 ? 1.2 : easeFactor) * (grade === 3 ? 1.3 : 1)));
@@ -26,9 +28,11 @@ export function scheduleReview(record, grade, now = Date.now(), { earlyReview = 
   const promoted = grade === 3 || (grade === 2 && goodReviewCount >= 3);
   const autoMastered = grade !== 0 && (word.autoMastered || promoted);
   const masteryOverride = grade === 0 || promoted ? null : word.masteryOverride;
+  const memoryStatus = memoryStatusFor({ masteryOverride, autoMastered });
+  const recallLevel = memoryStatus === 'mastered' ? 4 : word.memoryStatus === 'mastered' ? 3 : grade + 1;
   return { ...word, repetition, interval, easeFactor, successfulDays, dueDate, lastReviewedAt: now, lastGrade: grade,
     reviewCount: word.reviewCount + 1, lapses: word.lapses + (grade === 0 ? 1 : 0),
-    goodReviewCount, autoMastered, masteryOverride, memoryStatus: memoryStatusFor({ masteryOverride, autoMastered }) };
+    goodReviewCount, autoMastered, masteryOverride, memoryStatus, recallLevel };
 }
 function withinDailyLimit(words, limit, used, isCounted, preferred, comparePriority) {
   if (limit == null) return words;
@@ -46,8 +50,8 @@ function withinDailyLimit(words, limit, used, isCounted, preferred, comparePrior
 }
 
 function reviewTier(word) {
-  const grade = Number(word.lastGrade);
-  return grade === 1 || grade === 2 ? grade : 3;
+  const level = recallLevelFor(word);
+  return level === 2 || level === 3 ? level : 4;
 }
 
 export function selectPracticeWords(words, { mode = 'learning', topic = 'ALL', favorites = false, repeat = false, now = Date.now(),
@@ -61,7 +65,7 @@ export function selectPracticeWords(words, { mode = 'learning', topic = 'ALL', f
   const repeatPractice = dailyPractice && repeat;
   const comparePriority = dailyPractice ? (a, b) => reviewTier(a) - reviewTier(b) : null;
   const reviews = eligible.filter(word => !isNewWord(word) &&
-    (repeatPractice || isDue(word, now) || (dailyPractice && reviewTier(word) < 3 && !reviewed.has(word.id))))
+    (repeatPractice || isDue(word, now) || (dailyPractice && reviewTier(word) < 4 && !reviewed.has(word.id))))
     .sort((a, b) => (comparePriority?.(a, b) ?? 0) ||
       timestamp(a.dueDate ?? a.due) - timestamp(b.dueDate ?? b.due) || a.id.localeCompare(b.id));
   const fresh = mode === 'review' || repeatPractice ? [] : eligible.filter(isNewWord).sort((a, b) => a.id.localeCompare(b.id));

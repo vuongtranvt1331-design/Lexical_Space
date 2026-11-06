@@ -6,7 +6,7 @@ const { indexedDB, IDBKeyRange } = require('fake-indexeddb'); Object.assign(glob
 Object.defineProperty(globalThis, 'navigator', { value: { onLine: true }, configurable: true });
 const storage = await import('../js/core/idb-manager.js');
 const { normalizeRemoteVocabulary: normalize, compareVersions, validateVocabulary, parseVocabularyImport } = await import('../js/core/vocabulary.js');
-const { scheduleReview, selectPracticeWords, addCalendarDays, calendarDay } = await import('../js/core/srs.js');
+const { scheduleReview, selectPracticeWords, addCalendarDays, calendarDay, isNewWord, isDue } = await import('../js/core/srs.js');
 const { flushMutationOutbox } = await import('../js/core/firebase-sync.js');
 const { createPronunciationController } = await import('../js/core/pronunciation.js');
 async function clear() {
@@ -178,29 +178,55 @@ test('Easy or three Good grades promote a card and Again clears both mastery and
   await saveReview(2);
   assert.equal(word.goodReviewCount, 3);
   assert.equal(word.memoryStatus, 'mastered');
+  assert.equal(word.recallLevel, 4);
+  assert.equal(word.lastGrade, 2);
   assert.equal(word.repetition, 1);
   assert.equal(Object.hasOwn(word, 'masteryOverride'), false);
   const server = cloud();
   await flushMutationOutbox({ db: server.db, username });
   assert.equal(server.records.get('words/good').goodReviewCount, 3);
   assert.equal(server.records.get('words/good').autoMastered, true);
+  assert.equal(server.records.get('words/good').recallLevel, 4);
 
   [word] = await storage.mutateWords([{ id, username, expectedVersion: word, patch: { masteryOverride: 'mastered' } }]);
   await saveReview(0);
   assert.equal(word.memoryStatus, 'not_remembered');
+  assert.equal(word.recallLevel, 3);
+  assert.equal(word.lastGrade, 0);
   assert.equal(word.goodReviewCount, 0);
   assert.equal(word.autoMastered, false);
   assert.equal(Object.hasOwn(word, 'masteryOverride'), false);
   await flushMutationOutbox({ db: server.db, username });
   assert.equal(server.records.get('words/good').goodReviewCount, 0);
   assert.equal(server.records.get('words/good').autoMastered, false);
+  assert.equal(server.records.get('words/good').recallLevel, 3);
   assert.equal(Object.hasOwn(server.records.get('words/good'), 'masteryOverride'), false);
 
   const easy = scheduleReview({ ...word, masteryOverride: 'not_remembered' }, 3, now);
   assert.equal(easy.memoryStatus, 'mastered');
+  assert.equal(easy.recallLevel, 4);
   assert.equal(easy.masteryOverride, null);
   assert.equal(easy.goodReviewCount, 0);
   assert.equal(normalize({ ...patch, id: 'legacy-easy', lastGrade: 3 }).memoryStatus, 'mastered');
+});
+test('recall levels group every mastered word with Easy and return demoted words to level three', () => {
+  const now = new Date(2026, 10, 6, 9).getTime();
+  const manual = normalize({ id: 'manual', word: 'known', meaning: 'đã thuộc', masteryOverride: 'mastered' });
+  const learned = normalize({ ...patch, id: 'earned', lastGrade: 2, goodReviewCount: 3, dueDate: addCalendarDays(now, 1) });
+  assert.deepEqual([manual.recallLevel, learned.recallLevel], [4, 4]);
+  assert.equal(isNewWord(manual), false);
+  assert.equal(isDue(manual, now), false);
+  assert.deepEqual(selectPracticeWords([manual, learned], { now }), { review: [], fresh: [], limited: false });
+  assert.equal(selectPracticeWords([manual, learned], { now, repeat: true }).review.length, 2);
+  const firstRealReview = scheduleReview(manual, 2, now, { earlyReview: true });
+  assert.equal(firstRealReview.lastGrade, 2);
+  assert.equal(firstRealReview.recallLevel, 4);
+  assert.equal(firstRealReview.dueDate, addCalendarDays(now, 1));
+  const demoted = normalize({ ...manual, masteryOverride: 'not_remembered' });
+  assert.equal(demoted.recallLevel, 3);
+  assert.deepEqual(selectPracticeWords([demoted], { now }).review, [demoted]);
+  const secondMiss = scheduleReview(scheduleReview(learned, 0, now), 0, now);
+  assert.equal(secondMiss.recallLevel, 1);
 });
 test('practice queues the full eligible backlog and prioritizes oldest due reviews', () => {
   const now = 5000;

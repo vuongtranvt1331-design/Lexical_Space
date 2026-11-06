@@ -22,7 +22,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
   const pronunciations = [];
   const records = await mutateWords([{ id: 'shared', username: user, patch: {
     word: 'adapt', meaning: 'thích nghi', topic: 'One profile', exampleSentence: 'They adapted quickly.',
-    audioUrl: 'https://recording.test/adapt.mp3', reviewCount: 2, lastGrade: 2, repetition: 2, interval: 6,
+    audioUrl: 'https://recording.test/adapt.mp3', reviewCount: 2, lastGrade: 1, repetition: 2, interval: 6,
     easeFactor: 2.4, successfulDays: ['2026-10-27', '2026-10-28'],
     lastReviewedAt: Date.parse('2026-10-28T12:00:00Z'), dueDate: '2026-11-03T12:00:00Z'
   } }]);
@@ -38,12 +38,16 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     renderLibrary();
     assert.deepEqual([...card().querySelectorAll('.library-toolbar button')].map(button => button.dataset.action),
       ['flip', 'mastery', 'favorite', 'audio', 'edit', 'delete']);
+    assert.ok(card().classList.contains('grade-1'));
     const sample = document.createElement('div');
     for (const grade of [undefined, 0, 1, 2, 3]) {
-      sample.innerHTML = renderVocabularyCardHtml({ ...records[0], lastGrade: grade });
+      const memoryStatus = grade === 3 ? 'mastered' : 'not_remembered';
+      sample.innerHTML = renderVocabularyCardHtml({ ...records[0], recallLevel: undefined, lastGrade: grade, memoryStatus });
       const gradeClasses = [...sample.firstElementChild.classList].filter(name => name.startsWith('grade-'));
       assert.deepEqual(gradeClasses, grade === undefined ? [] : [`grade-${grade}`]);
     }
+    sample.innerHTML = renderVocabularyCardHtml({ ...records[0], memoryStatus: 'mastered', lastGrade: 2, recallLevel: undefined });
+    assert.ok(sample.firstElementChild.classList.contains('grade-3'));
 
     const heading = card().querySelector('.library-card-front h3');
     const selection = window.getSelection();
@@ -72,7 +76,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     assert.equal(document.activeElement, card().querySelector('[data-action="favorite"]'));
     assert.equal((await readUserWords(user))[0].isFavorite, true);
 
-    async function toggleMastery(pressed, title) {
+    async function toggleMastery(pressed, title, expectedLevel) {
       const button = card().querySelector('[data-action="mastery"]');
       assert.equal(button.getAttribute('aria-label'), 'Mastered');
       assert.equal(button.getAttribute('aria-pressed'), String(pressed));
@@ -84,21 +88,22 @@ test('library flips from either face, preserves rail focus, and clears profile-l
       assert.equal(card(), null);
       assert.equal(document.activeElement, $('lib-search-input'));
       const [updated] = await readUserWords(user);
-      for (const field of ['reviewCount', 'repetition', 'interval', 'easeFactor', 'successfulDays', 'lastReviewedAt', 'dueDate']) {
+      assert.equal(updated.recallLevel, expectedLevel);
+      for (const field of ['reviewCount', 'lastGrade', 'goodReviewCount', 'autoMastered', 'repetition', 'interval', 'easeFactor', 'successfulDays', 'lastReviewedAt', 'dueDate']) {
         assert.deepEqual(updated[field], records[0][field], field);
       }
       return updated.memoryStatus;
     }
 
-    assert.equal(await toggleMastery(false, 'Mark as Mastered'), 'mastered');
+    assert.equal(await toggleMastery(false, 'Mark as Mastered', 4), 'mastered');
     const tabs = ['unknown', 'favorites', 'known'].map(tab => $(`btn-lib-tab-${tab}`));
     assert.ok(tabs.every(tab => tab.classList.contains('practice-mode-button') && !tab.classList.contains('bg-indigo-600')));
     const selectedTabs = () => tabs.filter(tab => tab.getAttribute('aria-pressed') === 'true');
     $('btn-lib-tab-known').click();
     assert.deepEqual(selectedTabs(), [tabs[2]]);
     assert.match(card().querySelector('footer').textContent, /Mastered$/);
-    assert.ok(card().classList.contains('grade-2'));
-    assert.equal(await toggleMastery(true, 'Mark as Unknown'), 'not_remembered');
+    assert.ok(card().classList.contains('grade-3'));
+    assert.equal(await toggleMastery(true, 'Mark as Unknown', 3), 'not_remembered');
     $('btn-lib-tab-unknown').click();
     assert.deepEqual(selectedTabs(), [tabs[0]]);
     assert.match(card().querySelector('footer').textContent, /Unknown$/);
