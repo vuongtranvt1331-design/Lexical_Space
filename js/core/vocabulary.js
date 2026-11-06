@@ -1,6 +1,13 @@
 // Content and wire schema. Learning history and unknown fields are retained.
 import { clozeText, targetSegments } from './recall-utils.js';
 export const PARTS_OF_SPEECH = ['n', 'v', 'adj', 'adv', 'pron', 'prep', 'conj', 'det', 'interj', 'phrase'];
+const POS_ALIASES = { noun: 'n', verb: 'v', adjective: 'adj', adverb: 'adv', pronoun: 'pron', preposition: 'prep',
+  conjunction: 'conj', determiner: 'det', article: 'det', interjection: 'interj', exclamation: 'interj',
+  'noun phrase': 'n', 'verb phrase': 'v', 'phrasal verb': 'v', 'adjective phrase': 'adj', 'adverb phrase': 'adv', idiom: 'phrase' };
+export function normalizePartOfSpeech(value) {
+  const key = typeof value === 'string' ? value.trim().toLowerCase().replace(/\.$/, '') : '';
+  return PARTS_OF_SPEECH.includes(key) ? key : Object.hasOwn(POS_ALIASES, key) ? POS_ALIASES[key] : '';
+}
 export const text = value => String(value ?? '').trim();
 export const newId = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}_${Math.random().toString(36).slice(2)}`;
 export const normalizeTerm = value => text(value).normalize('NFKC').replace(/\s+/g, ' ').toLocaleLowerCase('en');

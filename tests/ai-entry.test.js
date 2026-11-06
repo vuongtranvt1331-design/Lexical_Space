@@ -9,15 +9,22 @@ const response = data => ({ ok: true, status: 200, json: async () => data });
 test('batch prompt contains the user list and exact JSON schema; copied generation never needs an API key', () => {
   const prompt = buildAIPrompt('1. resilient\n- give up'); assert.ok(prompt.includes('["resilient","give up"]'));
   assert.ok(prompt.includes('"additionalProperties": false')); assert.ok(prompt.includes('"clozeSentence"')); assert.ok(prompt.includes('[ _____ ]'));
+  assert.match(prompt, /\bvocabulary\.json\b/i);
+  const sample = prompt.split('FORMAT EXAMPLE (do not add this term unless it appears in WORD LIST):\n')[1]
+    ?.split('\nWORD LIST (JSON data):')[0];
+  assert.ok(sample);
+  assert.ok(Array.isArray(JSON.parse(sample)));
+  assert.equal(parseAIBatch(sample).length, 1);
   assert.doesNotMatch(prompt, /cefr/i);
   assert.throws(() => buildAIPrompt(''), /Enter your word list/);
 });
-test('strict JSON rejects wrong shapes, cloze leaks, unwanted SRS fields and incomplete batches', () => {
+test('strict JSON rejects wrong shapes, unwanted SRS fields and incomplete batches', () => {
   assert.equal(validateAIWord(word).valid, true);
   assert.throws(() => parseAIBatch(JSON.stringify({ ...word })), /array/);
   assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, collocations: 'not an array' }])), /array of nonempty strings/);
   assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, interval: 100 }])), /Unknown field interval/);
-  assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, clozeSentence: 'A resilient [ _____ ].' }])), /Cloze/);
+  assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, clozeSentence: ['[ _____ ]'] }])), /clozeSentence.*string/i);
+  assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, exampleSentence: 'The community can recover.' }])), /example.*target/i);
   assert.throws(() => parseAIBatch(JSON.stringify([word]), 'resilient\nrecall'), /Missing requested word: recall/);
   assert.throws(() => parseAIBatch(JSON.stringify([word, word])), /Duplicate word and sense/);
   const [valid] = parseAIBatch('```json\n' + JSON.stringify([word]) + '\n```', 'resilient');
@@ -25,6 +32,83 @@ test('strict JSON rejects wrong shapes, cloze leaks, unwanted SRS fields and inc
   const [legacy] = parseAIBatch(JSON.stringify([{ ...word, cefr: 'B2' }]), 'resilient');
   assert.equal(Object.hasOwn(legacy, 'cefr'), false);
 });
+
+test('one words wrapper and common AI aliases produce canonical vocabulary fields', () => {
+  const portable = { word: word.word, ipa: word.phonetic, partOfSpeech: 'Adjective', vietnamese: word.meaning,
+    collocations: word.collocations, example: word.exampleSentence, cloze: word.clozeSentence };
+  const [record] = parseAIBatch(JSON.stringify({ words: [portable] }), word.word);
+  for (const key of ['word', 'phonetic', 'pos', 'meaning', 'collocations', 'exampleSentence', 'clozeSentence']) {
+    assert.deepEqual(record[key], word[key]);
+  }
+  assert.deepEqual(record.synonyms, []);
+  for (const key of ['ipa', 'partOfSpeech', 'vietnamese', 'example', 'cloze']) assert.equal(Object.hasOwn(record, key), false);
+  assert.throws(() => parseAIBatch(JSON.stringify({ words: { words: [portable] } })), /array|words/i);
+  assert.throws(() => parseAIBatch(JSON.stringify({ words: [portable] }), 'resilient\nadapt'), /Missing requested word: adapt/);
+});
+
+test('optional fields default and cloze is derived from the example without leaking the target', () => {
+  const { phonetic, synonyms, clozeSentence, ...minimum } = word;
+  const [withoutOptional, withBadCloze] = [minimum, { ...word, clozeSentence: 'A resilient [ _____ ].' }]
+    .map(input => parseAIBatch(JSON.stringify([input]), word.word)[0]);
+  assert.equal(withoutOptional.phonetic, '');
+  assert.deepEqual(withoutOptional.synonyms, []);
+  assert.equal(withoutOptional.clozeSentence, clozeSentence);
+  assert.equal(withBadCloze.clozeSentence, clozeSentence);
+  assert.throws(() => parseAIBatch(JSON.stringify([{ ...minimum, phonetic: false }])), /phonetic.*string/i);
+  assert.throws(() => parseAIBatch(JSON.stringify([{ ...minimum, synonyms: null }])), /synonyms.*array/i);
+});
+
+test('conflicting aliases are rejected instead of silently choosing one value', () => {
+  assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, partOfSpeech: 'noun' }])), /conflict.*(?:pos|partOfSpeech)|(?:pos|partOfSpeech).*conflict/i);
+  assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, vietnamese: 'một nghĩa khác' }])), /conflict.*(?:meaning|vietnamese)|(?:meaning|vietnamese).*conflict/i);
+});
+
+const withStrayWordSlash = records => JSON.stringify(records, null, 2)
+  .replace('"word": "resilient",', String.raw`"word": "resilient\",`);
+
+test('a CRLF paste repairs the stray word slash without modifying valid JSON escapes', () => {
+  const usageNotes = String.raw`The entry contains a literal backslash \ and the word "example".`;
+  const literal = { ...word, word: 'path\\', exampleSentence: 'We typed path\\ in the note.',
+    clozeSentence: 'We typed [ _____ ] in the note.' };
+  const paste = withStrayWordSlash([{ ...word, usageNotes }, literal]).replaceAll('\n', '\r\n');
+  const repairs = [];
+  assert.throws(() => JSON.parse(paste), SyntaxError);
+
+  const [repaired, unchanged] = parseAIBatch(paste, 'resilient\npath\\', { onRepair: count => repairs.push(count) });
+  assert.equal(repaired.word, 'resilient');
+  assert.equal(repaired.usageNotes, usageNotes);
+  assert.equal(unchanged.word, literal.word);
+  assert.equal(unchanged.exampleSentence, literal.exampleSentence);
+  assert.deepEqual(repairs, [1]);
+});
+
+test('a possible repair still needs valid rows and the complete requested word list', () => {
+  const repairs = [], options = { onRepair: count => repairs.push(count) };
+  assert.throws(() => parseAIBatch(withStrayWordSlash([{ ...word, pos: 'invalid' }]), 'resilient', options), /Row 1:.*part of speech/i);
+  assert.throws(() => parseAIBatch(withStrayWordSlash([word]), 'resilient\nadapt', options), /Missing requested word: adapt/);
+  assert.deepEqual(repairs, []);
+});
+
+test('unrecoverable syntax preserves the native JSON diagnostic', () => {
+  const malformed = JSON.stringify([word], null, 2).replace('"pos": "adj",', String.raw`"pos": "adj\",`);
+  const repairs = [];
+  let nativeMessage;
+  assert.throws(() => JSON.parse(malformed), error => {
+    nativeMessage = error.message;
+    return error instanceof SyntaxError;
+  });
+  assert.throws(() => parseAIBatch(malformed, '', { onRepair: count => repairs.push(count) }),
+    error => /Invalid JSON/i.test(error.message) && error.message.includes(nativeMessage));
+  assert.deepEqual(repairs, []);
+});
+
+test('one explicit JSON fence can be pasted with surrounding prose', () => {
+  const fenced = '```json\n' + JSON.stringify([word], null, 2) + '\n```';
+  const [record] = parseAIBatch('Here is [your vocabulary].\n' + fenced + '\nI hope this helps.', 'resilient');
+  assert.equal(record.word, word.word);
+  assert.throws(() => parseAIBatch('First draft:\n' + fenced + '\nSecond draft:\n' + fenced), /Invalid JSON/i);
+});
+
 test('Free Dictionary prefers British IPA, uses the first part of speech and masks inflections in the first example', async () => {
   const info = await dictionaryDetails('adapt', { fetcher: async (url, options) => {
     assert.equal(url, 'https://api.dictionaryapi.dev/api/v2/entries/en/adapt');

@@ -1,18 +1,11 @@
-import { exampleSourceUrl, normalizeTerm, PARTS_OF_SPEECH } from './vocabulary.js';
+import { exampleSourceUrl, normalizePartOfSpeech, normalizeTerm } from './vocabulary.js';
 import { clozeText } from './recall-utils.js';
 import { isBritishPronunciation } from './pronunciation.js';
 
 export const DICTIONARY_NOT_FOUND = 'Word not found in free dictionary.';
 const LOOKUP_TIMEOUT = 4000;
-const POS_ALIASES = { noun: 'n', verb: 'v', adjective: 'adj', adverb: 'adv', pronoun: 'pron', preposition: 'prep',
-  conjunction: 'conj', determiner: 'det', article: 'det', interjection: 'interj', exclamation: 'interj', 'phrasal verb': 'v', idiom: 'phrase' };
 const list = value => Array.isArray(value) ? value : [];
 const clean = value => typeof value === 'string' ? value.trim() : '';
-
-function partOfSpeech(value) {
-  const key = clean(value).toLowerCase().replace(/\.$/, '');
-  return PARTS_OF_SPEECH.includes(key) ? key : Object.hasOwn(POS_ALIASES, key) ? POS_ALIASES[key] : '';
-}
 
 function uniqueTerms(items, target, limit) {
   const seen = new Set([normalizeTerm(target)]), result = [];
@@ -71,7 +64,7 @@ export async function dictionaryDetails(word, options) {
     .filter(example => example && example.length <= 2000);
   const pair = examples.map(exampleSentence => ({ exampleSentence, clozeSentence: exampleCloze(exampleSentence, word) }))
     .find(example => example.clozeSentence);
-  return { phonetic: clean(ipa).slice(0, 200), pos: partOfSpeech(meaning?.partOfSpeech), synonyms,
+  return { phonetic: clean(ipa).slice(0, 200), pos: normalizePartOfSpeech(meaning?.partOfSpeech), synonyms,
     ...(pair || { exampleSentence: examples[0] || '', clozeSentence: '' }) };
 }
 

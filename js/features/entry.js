@@ -16,7 +16,7 @@ function contentPatch(word, previous) {
   else if (previous?.exampleSourceId && word.exampleSentence !== previous.exampleSentence) patch.exampleSourceId = null;
   return patch;
 }
-let editor = null, exampleSource = null, saving = false, importing = false, importPreview = null, quickFillRequest;
+let editor = null, exampleSource = null, saving = false, importing = false, importPreview = null, importFileRead, quickFillRequest;
 function status(id, message = '', error = false) { const element = $(id); if (element) { element.textContent = message; element.dataset.error = String(error); } }
 function asFieldValue(key, value) { return listFields.has(key) ? (Array.isArray(value) ? value.join(', ') : '') : String(value ?? ''); }
 function formData() {
@@ -211,6 +211,7 @@ export function setupEntryModule() {
   });
 }
 function selectTab(ai) {
+  if (!ai) cancelImportFileRead();
   $('entry-phase-1').hidden = ai; $('section-ai-library').hidden = !ai;
   $('btn-entry-single').setAttribute('aria-selected', String(!ai)); $('btn-toggle-ai-library').setAttribute('aria-selected', String(ai));
   if (ai) $(importPreview ? 'ai-import-preview-heading' : 'ai-raw-words').focus({ preventScroll: true }); else focusEntryWord();
@@ -218,6 +219,14 @@ function selectTab(ai) {
 function batchInput() {
   return { raw: $('import-raw-input').value, words: $('ai-raw-words').value, overwrite: $('import-opt-overwrite').checked,
     ticket: context.accountGeneration, user: context.currentUser };
+}
+function batchInputMatches(input) {
+  return Object.entries(batchInput()).every(([key, value]) => value === input[key]);
+}
+function cancelImportFileRead() {
+  if (!importFileRead) return;
+  importFileRead = undefined;
+  status('batch-import-status');
 }
 function clearImportPreview() {
   importPreview = null;
@@ -269,30 +278,67 @@ export function setupQuickImport() {
     }
   });
   const previewInvalidated = 'Your batch changed. Review the updated words before saving.';
-  const invalidatePreview = () => { if (importPreview && !importing) editImportInput(previewInvalidated, true); };
+  const invalidatePreview = () => {
+    cancelImportFileRead();
+    if (importPreview && !importing) editImportInput(previewInvalidated, true);
+  };
   for (const id of ['import-raw-input', 'ai-raw-words']) $(id)?.addEventListener('input', invalidatePreview);
   $('import-opt-overwrite')?.addEventListener('change', invalidatePreview);
   $('btn-edit-import')?.addEventListener('click', () => { if (!importing) editImportInput(); });
-  $('btn-preview-import')?.addEventListener('click', event => {
-    if (importing || !context.currentUser || event.currentTarget.closest('[hidden], .hidden, [inert]')) return;
-    const input = batchInput();
+  function reviewBatch(input) {
     try {
-      const entries = parseAIBatch(input.raw, input.words);
+      let repairs = 0;
+      const entries = parseAIBatch(input.raw, input.words, { onRepair: count => { repairs = count; } });
       $('ai-import-preview-list').replaceChildren(...entries.map(previewImportWord));
       importPreview = { input, entries };
       $('ai-import-preview-heading').textContent = `Review ${entries.length} ${entries.length === 1 ? 'word' : 'words'}`;
-      $('ai-import-preview-summary').textContent = input.overwrite ? 'Matching words will be updated and keep their review history.' : 'Matching words already in your library will be skipped.';
+      const repairNotice = repairs ? `Fixed ${repairs} malformed word ${repairs === 1 ? 'field' : 'fields'}. ` : '';
+      const matchingNotice = input.overwrite ? 'Matching words will be updated and keep their review history.' : 'Matching words already in your library will be skipped.';
+      $('ai-import-preview-summary').textContent = repairNotice + matchingNotice;
       $('ai-import-editor').hidden = true;
       $('ai-import-preview').hidden = false;
       $('ai-import-preview-list').scrollTop = 0;
       status('batch-import-status');
       $('ai-import-preview-heading').focus();
     } catch (error) { status('batch-import-status', error.message, true); }
+  }
+  $('btn-preview-import')?.addEventListener('click', event => {
+    if (importing || !context.currentUser || event.currentTarget.closest('[hidden], .hidden, [inert]')) return;
+    cancelImportFileRead();
+    reviewBatch(batchInput());
+  });
+  $('import-file-input')?.addEventListener('change', async event => {
+    const picker = event.currentTarget, file = picker.files?.[0];
+    picker.value = '';
+    if (!file || importing || !context.currentUser || picker.closest('[hidden], .hidden, [inert]')) return;
+    cancelImportFileRead();
+    if (!/\.(?:json|txt)$/i.test(file.name) || file.size > 2_000_000) {
+      status('batch-import-status', 'Choose a JSON or TXT file of 2 MB or less.', true);
+      return;
+    }
+    const input = batchInput(), navigation = context.navigationGeneration, request = Symbol();
+    importFileRead = request;
+    const isCurrent = () => importFileRead === request && navigation === context.navigationGeneration &&
+      !picker.closest('[hidden], .hidden, [inert]') && batchInputMatches(input);
+    status('batch-import-status', 'Reading file…');
+    try {
+      const raw = await file.text();
+      if (!isCurrent()) return;
+      importFileRead = undefined;
+      $('import-raw-input').value = raw;
+      reviewBatch(batchInput());
+    } catch {
+      if (!isCurrent()) return;
+      importFileRead = undefined;
+      status('batch-import-status', 'Could not read this file. Try another file or paste the JSON response.', true);
+    } finally {
+      if (importFileRead === request) cancelImportFileRead();
+    }
   });
   $('btn-execute-import')?.addEventListener('click', async event => {
     if (importing || !importPreview || !context.currentUser || event.currentTarget.closest('[hidden], .hidden, [inert]')) return;
     const { entries, input } = importPreview;
-    if (Object.entries(batchInput()).some(([key, value]) => value !== input[key])) {
+    if (!batchInputMatches(input)) {
       editImportInput(previewInvalidated, true);
       return;
     }

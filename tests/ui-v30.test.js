@@ -358,10 +358,24 @@ test('practice, library, and entry workflows', async t => {
       assert.ok($('ai-import-preview').hidden);
       const second = { ...candidate, word: 'stable', meaning: 'ổn định', pos: 'adj', collocations: ['stable growth', 'remain stable'],
         exampleSentence: 'Prices remain stable.', clozeSentence: 'Prices remain [ _____ ].' };
-      const json = JSON.stringify([candidate, second]);
-      $('ai-raw-words').value = 'adapt\nstable'; $('import-raw-input').value = json; $('btn-preview-import').click();
-      assert.equal($('ai-import-preview').hidden, false);
+      const json = JSON.stringify([candidate, second], null, 2).replace('"word": "adapt",', '"word": "adapt\\",');
+      const picker = $('import-file-input');
+      function chooseFile(file) {
+        Object.defineProperty(picker, 'files', { value: [file], configurable: true });
+        picker.dispatchEvent(new window.Event('change', { bubbles: true }));
+      }
+      $('ai-raw-words').value = 'adapt\nstable';
+      const pending = Promise.withResolvers();
+      chooseFile({ name: 'older.json', size: json.length, text: () => pending.promise });
+      $('import-raw-input').value = 'Edited while reading';
+      $('import-raw-input').dispatchEvent(new window.Event('input', { bubbles: true }));
+      pending.resolve(json); await pending.promise;
+      assert.equal($('import-raw-input').value, 'Edited while reading');
+      assert.ok($('ai-import-preview').hidden);
+      chooseFile(new File([json], 'ai-response.txt', { type: 'text/plain' }));
+      await until(() => !$('ai-import-preview').hidden);
       assert.equal(document.activeElement, $('ai-import-preview-heading'));
+      assert.match($('ai-import-preview-summary').textContent, /Fixed 1 malformed word field\./);
       assert.deepEqual([...$('ai-import-preview-list').querySelectorAll('h4')].map(title => title.textContent), ['adapt', 'stable']);
       assert.deepEqual([...$('ai-import-preview-list').querySelectorAll('[lang="vi"]')].map(meaning => meaning.textContent), ['thích nghi', 'ổn định']);
       assert.ok($('ai-import-preview-list').textContent.includes(candidate.clozeSentence));

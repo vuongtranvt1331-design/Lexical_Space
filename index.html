@@ -393,6 +393,8 @@
           <label id="ai-prompt-preview-label" for="ai-prompt-preview" hidden>Prompt to copy</label><textarea id="ai-prompt-preview" class="entry-input" rows="5" readonly hidden></textarea>
           <label for="import-raw-input">JSON response</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder='[{"word":"resilient", …}]'></textarea>
           <label class="overwrite-label"><input id="import-opt-overwrite" type="checkbox"> Update matching words and keep their review history</label>
+          <label for="import-file-input">Or load a JSON or TXT file</label>
+          <input id="import-file-input" class="entry-input" type="file" accept=".json,.txt,application/json,text/plain">
           <button id="btn-preview-import" class="entry-primary" type="button">Review words</button>
         </div>
         <section id="ai-import-preview" class="ai-import-stage" aria-labelledby="ai-import-preview-heading" hidden>
