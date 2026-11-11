@@ -1,5 +1,5 @@
 import { idbGet, mergeUserVocabulary, readUserWords } from './idb-manager.js';
-import { exampleSourceUrl, newId, normalizeRemoteVocabulary, text, withoutLegacyLevel, wordTopics } from './vocabulary.js';
+import { exampleSourceUrl, newId, normalizeRemoteVocabulary, text, validateImportTopic, withoutLegacyLevel, wordTopics } from './vocabulary.js';
 
 const DECK_COLLECTION = 'shared_decks';
 const DECK_FIELDS = ['deckId', 'title', 'createdAt', 'wordCount', 'words'];
@@ -150,9 +150,9 @@ function importedCards(words) {
   return byTerm;
 }
 
-function mergeCard(word, card, title) {
+function mergeCard(word, card, destinationTopics) {
   const existingTopics = wordTopics(word);
-  const topics = [...new Set([...existingTopics, title, ...card.topics])];
+  const topics = [...new Set([...existingTopics, ...destinationTopics])];
   const patch = {};
   if (topics.length !== existingTopics.length) patch.topics = topics;
   if (!word.exampleSentence && card.example) patch.exampleSentence = card.example;
@@ -164,7 +164,7 @@ function mergeCard(word, card, title) {
   return patch;
 }
 
-function newCard(card, title) {
+function newCard(card, topics) {
   return {
     word: card.word,
     phonetic: card.ipa,
@@ -175,8 +175,8 @@ function newCard(card, title) {
     clozeSentence: card.cloze,
     synonyms: card.synonyms,
     collocations: card.collocations,
-    topic: title,
-    topics: [...new Set([title, ...card.topics])],
+    topic: topics[0],
+    topics,
     status: 'new',
     repetition: 0,
     interval: 0,
@@ -186,7 +186,7 @@ function newCard(card, title) {
   };
 }
 
-function planImport(existingWords, marker, deck) {
+function planImport(existingWords, marker, deck, targetTopic = '') {
   const incoming = importedCards(deck.words);
   const result = { added: 0, merged: 0, unchanged: 0, alreadyImported: !!marker };
   const byTerm = new Map();
@@ -203,14 +203,15 @@ function planImport(existingWords, marker, deck) {
   }
   const changes = [];
   for (const [key, card] of incoming) {
+    const topics = targetTopic ? [targetTopic] : [...new Set([deck.title, ...card.topics])];
     const matches = byTerm.get(key);
     const existing = matches?.find(word => trimmedTerm(word.meaning) === trimmedTerm(card.vietnamese)) || matches?.[0];
     if (!existing) {
       result.added++;
-      changes.push({ id: `word_${newId()}`, patch: newCard(card, deck.title) });
+      changes.push({ id: `word_${newId()}`, patch: newCard(card, topics) });
       continue;
     }
-    const patch = mergeCard(existing, card, deck.title);
+    const patch = mergeCard(existing, card, topics);
     if (!Object.keys(patch).length) {
       result.unchanged++;
       continue;
@@ -231,8 +232,9 @@ export async function previewDeckImport(username, input) {
   return planImport(words, marker, deck).result;
 }
 
-export function importSharedDeck(username, input) {
+export function importSharedDeck(username, input, { targetTopic = '' } = {}) {
   requireProfile(username);
   const deck = validateDeck(input);
-  return mergeUserVocabulary(username, importKey(username, deck.deckId), (words, marker) => planImport(words, marker, deck));
+  const destination = validateImportTopic(targetTopic);
+  return mergeUserVocabulary(username, importKey(username, deck.deckId), (words, marker) => planImport(words, marker, deck, destination));
 }

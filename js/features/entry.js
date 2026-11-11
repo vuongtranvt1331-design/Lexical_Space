@@ -1,7 +1,8 @@
 import { context } from '../core/context.js';
-import { exampleSourceUrl, validateVocabulary, senseKey, newId, wordTopics } from '../core/vocabulary.js';
+import { exampleSourceUrl, validateVocabulary, validateImportTopic, senseKey, newId, wordTopics } from '../core/vocabulary.js';
 import { buildAIPrompt, parseAIBatch } from '../core/ai-vocabulary.js';
 import { DICTIONARY_NOT_FOUND, dictionaryDetails, quickFillCollocations, quickFillSentence, translateQuickFillWord } from '../core/quick-fill.js';
+import { renderImportTopicOptions } from './library.js';
 const $ = id => document.getElementById(id);
 const fields = { word: 'input-word', phonetic: 'input-phonetic', pos: 'input-pos', meaning: 'confirm-input-meaning',
   collocations: 'input-collocations', synonyms: 'input-synonyms', exampleSentence: 'input-example', clozeSentence: 'input-cloze',
@@ -85,8 +86,9 @@ export async function saveWord(input, id = editor?.word.id) {
   if (ticket === context.accountGeneration) context.addUserTopic(record.topic);
   return record;
 }
-export async function importVocabulary(entries, { overwrite = false } = {}) {
+export async function importVocabulary(entries, { overwrite = false, targetTopic = '' } = {}) {
   const ticket = context.accountGeneration, unique = new Map(), changes = []; let skipped = 0, added = 0, updated = 0;
+  const destination = validateImportTopic(targetTopic);
   for (const input of entries) {
     const result = validateVocabulary(input); if (!result.valid) throw new Error(result.errors.join(' '));
     unique.set(senseKey(result.word), result.word);
@@ -94,14 +96,25 @@ export async function importVocabulary(entries, { overwrite = false } = {}) {
   const existing = new Map(context.wordsData.map(word => [senseKey(word), word]));
   for (const word of unique.values()) {
     const previous = existing.get(senseKey(word));
-    if (previous && !overwrite) { skipped++; continue; }
-    const patch = contentPatch(word, previous);
+    const topics = previous && destination ? wordTopics(previous) : [];
+    const addDestination = destination && previous && !topics.includes(destination);
+    if (previous && !overwrite && !addDestination) { skipped++; continue; }
+    const patch = previous && !overwrite ? {} : contentPatch(word, previous);
+    if (destination) {
+      if (!previous) patch.topic = destination;
+      else {
+        if (overwrite) patch.topic = previous.topic;
+        if (addDestination) patch.topics = [...topics, destination];
+      }
+    }
     if (previous) updated++; else { Object.assign(patch, newReviewState()); added++; }
     changes.push({ id: previous?.id || `word_${newId()}`, patch, ...(previous ? { expectedVersion: previous } : {}) });
   }
   // One commit for the complete validated batch and its outbox records.
   const records = changes.length ? await context.commitVocabularyChanges(changes) : [];
-  if (ticket === context.accountGeneration) for (const topic of new Set(records.map(word => word.topic))) context.addUserTopic(topic);
+  if (ticket === context.accountGeneration && records.length) {
+    for (const topic of new Set(destination ? [destination] : records.map(word => word.topic))) context.addUserTopic(topic);
+  }
   return { added, updated, skipped };
 }
 export async function quickFillEntry() {
@@ -249,7 +262,7 @@ function previewImportWord(word) {
   details.className = 'entry-details'; summary.textContent = 'Word details';
   for (const [label, value] of Object.entries({ IPA: word.phonetic, POS: word.pos, Sense: word.sense,
     Synonyms: word.synonyms.join(', '), Collocations: word.collocations.join(', '), Example: word.exampleSentence,
-    Cloze: word.clozeSentence, 'Usage notes': word.usageNotes, Topic: word.topic })) {
+    Cloze: word.clozeSentence, 'Usage notes': word.usageNotes, 'Source topic': word.topic })) {
     if (!value) continue;
     const term = document.createElement('dt'), description = document.createElement('dd');
     term.textContent = label; description.textContent = value; list.append(term, description);
@@ -258,6 +271,7 @@ function previewImportWord(word) {
   return item;
 }
 export function setupQuickImport() {
+  const topicSelect = $('ai-import-topic'), newTopic = $('ai-import-new-topic');
   window.toggleAiLibrarySection = ai => selectTab(Boolean(ai));
   $('btn-entry-single')?.addEventListener('click', () => selectTab(false));
   $('btn-toggle-ai-library')?.addEventListener('click', () => selectTab(true));
@@ -287,14 +301,31 @@ export function setupQuickImport() {
   $('btn-edit-import')?.addEventListener('click', () => { if (!importing) editImportInput(); });
   function reviewBatch(input) {
     try {
-      let repairs = 0;
-      const entries = parseAIBatch(input.raw, input.words, { onRepair: count => { repairs = count; } });
+      let repairs = 0, cleaned = false, issues = [];
+      const entries = parseAIBatch(input.raw, input.words, {
+        onRepair: count => { repairs = count; },
+        onCleanup: () => { cleaned = true; },
+        onIssues: errors => { issues = errors; }
+      });
       $('ai-import-preview-list').replaceChildren(...entries.map(previewImportWord));
-      importPreview = { input, entries };
+      importPreview = { input, entries, hasIssues: Boolean(issues.length) };
       $('ai-import-preview-heading').textContent = `Review ${entries.length} ${entries.length === 1 ? 'word' : 'words'}`;
       const repairNotice = repairs ? `Fixed ${repairs} malformed word ${repairs === 1 ? 'field' : 'fields'}. ` : '';
-      const matchingNotice = input.overwrite ? 'Matching words will be updated and keep their review history.' : 'Matching words already in your library will be skipped.';
-      $('ai-import-preview-summary').textContent = repairNotice + matchingNotice;
+      const matchingNotice = input.overwrite ? 'Matching words will be updated and keep their review history.' :
+        'Existing word details are kept. Choosing a target topic also adds matching words to that topic.';
+      $('ai-import-preview-summary').textContent = (cleaned ? 'Cleaned up copied JSON formatting. ' : '') + repairNotice + matchingNotice;
+      const issuesPanel = $('ai-import-issues');
+      issuesPanel.hidden = !issues.length;
+      issuesPanel.open = Boolean(issues.length);
+      $('ai-import-issues-heading').textContent = `${issues.length} items to check. Only valid words are shown below.`;
+      $('ai-import-issues-list').replaceChildren(...issues.map(message => {
+        const item = document.createElement('li');
+        item.textContent = message;
+        return item;
+      }));
+      $('btn-execute-import').textContent = issues.length ? 'Import valid words only' : 'Approve & save to Library';
+      renderImportTopicOptions(topicSelect, 'Use source topic or New Words');
+      newTopic.value = '';
       $('ai-import-editor').hidden = true;
       $('ai-import-preview').hidden = false;
       $('ai-import-preview-list').scrollTop = 0;
@@ -337,24 +368,32 @@ export function setupQuickImport() {
   });
   $('btn-execute-import')?.addEventListener('click', async event => {
     if (importing || !importPreview || !context.currentUser || event.currentTarget.closest('[hidden], .hidden, [inert]')) return;
-    const { entries, input } = importPreview;
+    const { entries, input, hasIssues } = importPreview;
     if (!batchInputMatches(input)) {
       editImportInput(previewInvalidated, true);
       return;
     }
+    let targetTopic;
+    try { targetTopic = validateImportTopic(newTopic.value.trim() || topicSelect.value); }
+    catch (error) { status('batch-import-status', error.message, true); return; }
     importing = true;
     const button = event.currentTarget, back = $('btn-edit-import');
     button.disabled = true; back.disabled = true;
+    topicSelect.disabled = true; newTopic.disabled = true;
     status('batch-import-status', 'Saving to your library…');
     try {
-      const result = await importVocabulary(entries, { overwrite: input.overwrite });
+      const result = await importVocabulary(entries, { overwrite: input.overwrite, targetTopic });
       if (input.ticket !== context.accountGeneration) return;
-      $('import-raw-input').value = '';
-      editImportInput(`${result.added} added · ${result.updated} updated · ${result.skipped} already in your library.`);
+      if (!hasIssues) $('import-raw-input').value = '';
+      const remaining = hasIssues ? ' The original response is still here so you can fix the remaining items.' : '';
+      editImportInput(`${result.added} added · ${result.updated} updated · ${result.skipped} already in your library.${remaining}`);
     } catch (error) {
       if (input.ticket === context.accountGeneration) status('batch-import-status', error.message, true);
     } finally {
-      if (input.ticket === context.accountGeneration) { importing = false; button.disabled = false; back.disabled = false; }
+      if (input.ticket === context.accountGeneration) {
+        importing = false; button.disabled = false; back.disabled = false;
+        topicSelect.disabled = false; newTopic.disabled = false;
+      }
     }
   });
 }
@@ -362,7 +401,7 @@ export function resetEntryForUser() {
   clearForm();
   clearImportPreview();
   saving = false; importing = false; quickFillRequest = null;
-  for (const id of ['btn-confirm-save', 'btn-entry-quickfill', 'btn-execute-import']) $(id).disabled = false;
+  for (const id of ['btn-confirm-save', 'btn-entry-quickfill', 'btn-execute-import', 'ai-import-topic', 'ai-import-new-topic']) $(id).disabled = false;
   if ($('btn-edit-import')) $('btn-edit-import').disabled = false;
   for (const id of ['ai-raw-words', 'import-raw-input', 'ai-prompt-preview', 'input-inline-topic-name']) $(id).value = '';
   $('ai-prompt-preview').hidden = true; $('ai-prompt-preview-label').hidden = true; $('import-opt-overwrite').checked = false;

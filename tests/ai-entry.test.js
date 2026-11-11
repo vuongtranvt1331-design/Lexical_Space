@@ -6,9 +6,10 @@ const word = { word: 'resilient', phonetic: '/rɪˈzɪliənt/', pos: 'adj', mean
   collocations: ['highly resilient', 'resilient community'], synonyms: ['hardy', 'adaptable'],
   exampleSentence: 'A resilient community can recover.', clozeSentence: 'A [ _____ ] community can recover.' };
 const response = data => ({ ok: true, status: 200, json: async () => data });
-test('batch prompt contains the user list and exact JSON schema; copied generation never needs an API key', () => {
+test('batch prompt contains the user list and a short JSON example; generation needs no API key', () => {
   const prompt = buildAIPrompt('1. resilient\n- give up'); assert.ok(prompt.includes('["resilient","give up"]'));
-  assert.ok(prompt.includes('"additionalProperties": false')); assert.ok(prompt.includes('"clozeSentence"')); assert.ok(prompt.includes('[ _____ ]'));
+  assert.match(prompt, /Only word and meaning are required/);
+  assert.ok(prompt.includes('"clozeSentence"')); assert.ok(prompt.includes('[ _____ ]'));
   assert.match(prompt, /\bvocabulary\.json\b/i);
   const sample = prompt.split('FORMAT EXAMPLE (do not add this term unless it appears in WORD LIST):\n')[1]
     ?.split('\nWORD LIST (JSON data):')[0];
@@ -20,7 +21,7 @@ test('batch prompt contains the user list and exact JSON schema; copied generati
 });
 test('strict JSON rejects wrong shapes, unwanted SRS fields and incomplete batches', () => {
   assert.equal(validateAIWord(word).valid, true);
-  assert.throws(() => parseAIBatch(JSON.stringify({ ...word })), /array/);
+  assert.throws(() => parseAIBatch(JSON.stringify({ metadata: true })), /array/);
   assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, collocations: 'not an array' }])), /array of nonempty strings/);
   assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, interval: 100 }])), /Unknown field interval/);
   assert.throws(() => parseAIBatch(JSON.stringify([{ ...word, clozeSentence: ['[ _____ ]'] }])), /clozeSentence.*string/i);
@@ -107,6 +108,45 @@ test('one explicit JSON fence can be pasted with surrounding prose', () => {
   const [record] = parseAIBatch('Here is [your vocabulary].\n' + fenced + '\nI hope this helps.', 'resilient');
   assert.equal(record.word, word.word);
   assert.throws(() => parseAIBatch('First draft:\n' + fenced + '\nSecond draft:\n' + fenced), /Invalid JSON/i);
+});
+
+test('the seven-word clipboard paste is repaired without changing data in JSON strings', () => {
+  const terms = ['see', 'chair', 'fox', 'rice', 'we', 'have', 'some'];
+  const meanings = ['nhìn thấy', 'cái ghế', 'con cáo', 'gạo', 'chúng tôi', 'có', 'một vài'];
+  const words = terms.map((word, i) => ({ word, meaning: meanings[i] }));
+  words[0].exampleSentence = 'I can see the mountains from my bedroom window.';
+  words[0].usageNotes = 'Keep "quotes", a slash \\, and literal &#x20; text.';
+  const lines = JSON.stringify(words, null, 2).split('\n');
+  const raw = lines.map((line, i) => (i && i < lines.length - 1 ? '&#x20; ' : '') +
+    line + (i < lines.length - 1 ? '\\' : '')).join('\r\n');
+  let cleaned = false;
+  const cards = parseAIBatch(raw, terms.join('\n'), { onCleanup: () => { cleaned = true; } });
+  assert.equal(cleaned, true);
+  assert.deepEqual(cards.map(card => [card.word, card.meaning]), terms.map((term, i) => [term, meanings[i]]));
+  assert.equal(cards[0].clozeSentence, 'I can [ _____ ] the mountains from my bedroom window.');
+  assert.equal(cards[0].usageNotes, words[0].usageNotes);
+});
+
+test('accepts common wrappers, aliases, comma lists and trailing commas without modifying strings', () => {
+  const raw = '{"vocabulary":[{"word":"fox","translation":"con cáo,}",' +
+    '"part_of_speech":"noun","collocations":"red fox; wild fox",},],}';
+  const [fox] = parseAIBatch('Here is the result.\n~~~\n' + raw + '\n~~~');
+  assert.equal(fox.meaning, 'con cáo,}');
+  assert.equal(fox.pos, 'n');
+  assert.deepEqual(fox.collocations, ['red fox', 'wild fox']);
+  assert.equal(parseAIBatch(JSON.stringify(JSON.stringify({ word: 'fox', meaning: 'con cáo' })))[0].word, 'fox');
+  assert.throws(() => parseAIBatch('{"words":[{}],"cards":[{}]}'), /array/);
+});
+
+test('partial preview reports invalid and missing entries and excludes unexpected entries', () => {
+  const raw = JSON.stringify([word, { word: 'fox', meaning: 'con cáo' }, { word: 'chair' }]);
+  const issues = [];
+  const cards = parseAIBatch(raw, 'resilient\nchair', { onIssues: errors => issues.push(...errors) });
+  assert.deepEqual(cards.map(card => card.word), ['resilient']);
+  assert.match(issues.join('\n'), /Row 2: Unexpected word: fox/);
+  assert.match(issues.join('\n'), /Row 3: Missing meaning/);
+  assert.match(issues.join('\n'), /Missing requested word: chair/);
+  assert.throws(() => parseAIBatch('[{"word":"chair"}]', 'chair', { onIssues: () => assert.fail() }), /Missing meaning/);
 });
 
 test('Free Dictionary prefers British IPA, uses the first part of speech and masks inflections in the first example', async () => {

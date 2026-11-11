@@ -85,14 +85,34 @@ test('deck import preserves progress and sharing works without Firebase Auth, wi
     assert.equal($('import-deck-new').textContent, '1');
     assert.equal($('import-deck-existing').textContent, '1');
     assert.equal((await storage.readUserWords('Learner')).length, 1);
+    const topicSelect = $('shared-import-topic'), newTopic = $('shared-import-new-topic');
+    const changeTopic = value => {
+      topicSelect.value = value;
+      topicSelect.dispatchEvent(new window.Event('change', { bubbles: true }));
+    };
+    const createTopic = topicSelect.querySelector('[data-create-topic]').value;
+    assert.deepEqual([...topicSelect.options].map(option => option.value), ['', 'Existing topic', 'New Words', createTopic]);
+    assert.match(topicSelect.selectedOptions[0].textContent, /Keep sender’s topics \(Field Notes\)/);
+    assert.ok(newTopic.hidden);
+    changeTopic(createTopic);
+    assert.equal(newTopic.hidden, false);
+    $('btn-confirm-deck-import').click();
+    assert.match($('import-deck-status').textContent, /Enter a name/);
+    newTopic.value = 'Discarded topic';
+    changeTopic('Existing topic');
+    assert.ok(newTopic.hidden);
+    assert.equal(newTopic.value, '');
+    changeTopic(createTopic);
+    newTopic.value = 'My Field Notes';
     $('btn-confirm-deck-import').click();
     await until(() => $('modal-import-deck').hidden && context.wordsData.length === 2);
     const existing = await storage.readUserWord('Learner', 'local-glade');
     assert.deepEqual([existing.repetition, existing.interval, existing.easeFactor, existing.dueDate, existing.reviewCount],
       [4, 17, 2.8, '2031-09-10T00:00:00.000Z', 8]);
-    assert.deepEqual(existing.topics, ['Existing topic', 'Field Notes', 'Nature']);
+    assert.deepEqual(existing.topics, ['Existing topic', 'My Field Notes']);
     assert.equal(existing.exampleSentence, 'We rested in a glade.');
     assert.equal(context.wordsData.find(word => word.word === 'thicket').dueDate, null);
+    assert.deepEqual(context.wordsData.find(word => word.word === 'thicket').topics, ['My Field Notes']);
     assert.equal((await storage.readUserWords('Another profile')).length, 0);
 
     window.history.replaceState({}, '', '/notebook/?deck=fixture-deck');
@@ -103,7 +123,7 @@ test('deck import preserves progress and sharing works without Firebase Auth, wi
     $('btn-open-drawer').click();
     document.querySelector('#drawer-navigation [data-target="view-library"]').click();
     $('btn-lib-topic-selector').click();
-    const share = () => [...$('lib-topic-options-list').children].find(el => el.firstElementChild.textContent === 'Field Notes')
+    const share = () => [...$('lib-topic-options-list').children].find(el => el.firstElementChild.textContent === 'My Field Notes')
       .querySelector('[data-deck-action="share"]');
     let finishCommit;
     commitDelay = new Promise(resolve => { finishCommit = resolve; });
@@ -124,7 +144,7 @@ test('deck import preserves progress and sharing works without Firebase Auth, wi
     const link = new URL(copied[0]);
     assert.equal(link.origin + link.pathname, 'https://lexical.example/notebook/');
     const exported = docs.get(`shared_decks/${link.searchParams.get('deck')}`);
-    assert.equal(exported.title, 'Field Notes');
+    assert.equal(exported.title, 'My Field Notes');
     assert.equal(exported.wordCount, 2);
     assert.ok(exported.words.every(word => !('dueDate' in word) && !('username' in word) && !('interval' in word)));
 
@@ -142,6 +162,19 @@ test('deck import preserves progress and sharing works without Firebase Auth, wi
     assert.match($('toast-msg').textContent, /clipboard access failed/);
     const manualLink = new URL($('shared-deck-url').value);
     assert.ok(docs.has(`shared_decks/${manualLink.searchParams.get('deck')}`));
+    $('btn-close-share-link').click();
+
+    assert.ok(await context.activateUser('Another profile'));
+    window.history.replaceState({}, '', '/notebook/?deck=fixture-deck');
+    await context.loadDeckFromLocation();
+    assert.equal(topicSelect.value, '');
+    assert.ok(newTopic.hidden);
+    $('btn-confirm-deck-import').click();
+    await until(() => $('modal-import-deck').hidden && context.wordsData.length === 2);
+    const received = await storage.readUserWords('Another profile');
+    assert.ok(received.every(word => word.topic === 'Field Notes' && word.topics.includes('Nature')));
+    assert.ok(context.getAlphabeticalTopics().includes('Field Notes'));
+    assert.match($('toast-msg').textContent, /imported to “Field Notes”/);
   } finally {
     flash.resetForUser();
     context.clearActivityTimers();

@@ -391,7 +391,7 @@
           <label for="ai-raw-words">Word list</label><textarea id="ai-raw-words" class="entry-input" rows="4" placeholder="resilient&#10;give up&#10;curriculum"></textarea>
           <button id="btn-copy-ai-prompt" class="entry-secondary" type="button">Copy AI Prompt</button>
           <label id="ai-prompt-preview-label" for="ai-prompt-preview" hidden>Prompt to copy</label><textarea id="ai-prompt-preview" class="entry-input" rows="5" readonly hidden></textarea>
-          <label for="import-raw-input">JSON response</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder='[{"word":"resilient", …}]'></textarea>
+          <label for="import-raw-input">AI response (JSON)</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder='[{"word":"resilient", …}]'></textarea>
           <label class="overwrite-label"><input id="import-opt-overwrite" type="checkbox"> Update matching words and keep their review history</label>
           <label for="import-file-input">Or load a JSON or TXT file</label>
           <input id="import-file-input" class="entry-input" type="file" accept=".json,.txt,application/json,text/plain">
@@ -400,6 +400,14 @@
         <section id="ai-import-preview" class="ai-import-stage" aria-labelledby="ai-import-preview-heading" hidden>
           <h3 id="ai-import-preview-heading" tabindex="-1">Review words</h3>
           <p id="ai-import-preview-summary"></p>
+          <details id="ai-import-issues" class="entry-details" hidden>
+            <summary id="ai-import-issues-heading">Items to check</summary>
+            <ul id="ai-import-issues-list" class="ai-review-list"></ul>
+          </details>
+          <label for="ai-import-topic">Target Topic</label>
+          <select id="ai-import-topic" class="entry-input"></select>
+          <label for="ai-import-new-topic">Or enter a new topic name</label>
+          <input id="ai-import-new-topic" class="entry-input" type="text" maxlength="200" autocomplete="off">
           <ol id="ai-import-preview-list" class="ai-review-list" aria-label="Words ready for review" tabindex="0"></ol>
           <div class="ai-review-actions">
             <button id="btn-edit-import" class="entry-secondary" type="button">Back to edit</button>
@@ -609,6 +617,11 @@
       <p class="deck-dialog-kicker">Import shared deck</p>
       <h2 id="import-deck-title"></h2>
       <p class="deck-import-profile">Import to <strong id="import-deck-profile"></strong></p>
+      <label for="shared-import-topic">Target Topic</label>
+      <select id="shared-import-topic" class="entry-input" aria-describedby="shared-import-topic-help"></select>
+      <p id="shared-import-topic-help" class="deck-import-profile"></p>
+      <label id="shared-import-new-topic-label" for="shared-import-new-topic" hidden>New topic name</label>
+      <input id="shared-import-new-topic" class="entry-input" type="text" maxlength="200" autocomplete="off" hidden>
       <dl class="deck-import-counts">
         <div><dt>Total cards</dt><dd id="import-deck-total">0</dd></div>
         <div><dt>Brand-new cards</dt><dd id="import-deck-new">–</dd></div>

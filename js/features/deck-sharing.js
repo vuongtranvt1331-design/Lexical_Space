@@ -1,5 +1,7 @@
 import { context } from '../core/context.js';
 import { fetchSharedDeck, importSharedDeck, prepareShareDeck, previewDeckImport, publishSharedDeck } from '../core/shared-decks.js';
+import { validateImportTopic } from '../core/vocabulary.js';
+import { renderImportTopicOptions } from './library.js';
 
 const $ = id => document.getElementById(id);
 const COPY_SUCCESS = 'Link đã được lưu vào clipboard!';
@@ -16,6 +18,18 @@ function toggleDialog(id, open) {
 
 function setImportStatus(text) {
   $('import-deck-status').textContent = text;
+}
+
+function updateImportTopicChoice() {
+  const option = $('shared-import-topic').selectedOptions[0];
+  const create = option?.hasAttribute('data-create-topic');
+  const input = $('shared-import-new-topic');
+  input.hidden = !create;
+  $('shared-import-new-topic-label').hidden = !create;
+  if (!create) input.value = '';
+  $('shared-import-topic-help').textContent = create
+    ? 'Create a new topic for this deck.'
+    : option?.value ? 'Use this topic in your library.' : 'Keep the sender’s topic name and any additional topic tags.';
 }
 
 function closeImport({ discard = true, restoreFocus = true } = {}) {
@@ -124,6 +138,14 @@ export async function showPendingDeck() {
   $('import-deck-existing').textContent = '–';
   $('btn-confirm-deck-import').disabled = true;
   $('btn-cancel-deck-import').disabled = false;
+  const topicSelect = $('shared-import-topic'), newTopic = $('shared-import-new-topic');
+  renderImportTopicOptions(topicSelect, `Keep sender’s topics (${deck.title})`);
+  const createOption = document.createElement('option');
+  createOption.dataset.createTopic = '';
+  createOption.textContent = 'Create a new topic…';
+  topicSelect.append(createOption);
+  topicSelect.disabled = true; newTopic.disabled = true;
+  updateImportTopicChoice();
   setImportStatus('Checking your library…');
   toggleDialog('modal-import-deck', true);
   $('btn-cancel-deck-import').focus();
@@ -134,6 +156,8 @@ export async function showPendingDeck() {
     $('import-deck-new').textContent = counts.added;
     $('import-deck-existing').textContent = counts.merged + counts.unchanged;
     $('btn-confirm-deck-import').disabled = counts.alreadyImported;
+    topicSelect.disabled = counts.alreadyImported;
+    newTopic.disabled = counts.alreadyImported;
     const duplicateSpellings = !counts.alreadyImported && counts.added + counts.merged + counts.unchanged < deck.wordCount;
     setImportStatus(counts.alreadyImported ? 'You already imported this deck.' :
       duplicateSpellings ? 'Duplicate spellings count once. Existing cards keep their review schedule.' : 'Existing cards keep their review schedule.');
@@ -144,21 +168,34 @@ export async function showPendingDeck() {
 
 async function confirmImport() {
   if (!preview || importing || preview.ticket !== context.accountGeneration) return;
+  const topicSelect = $('shared-import-topic'), newTopic = $('shared-import-new-topic');
+  if ($('btn-confirm-deck-import').disabled) return;
+  const create = topicSelect.selectedOptions[0]?.hasAttribute('data-create-topic');
+  if (create && !newTopic.value.trim()) {
+    setImportStatus('Enter a name for the new topic.');
+    newTopic.focus();
+    return;
+  }
+  let targetTopic;
+  try { targetTopic = validateImportTopic(create ? newTopic.value : topicSelect.value); }
+  catch (error) { setImportStatus(error.message); if (create) newTopic.focus(); return; }
   const { user, deck, ticket } = preview;
   const version = requestVersion;
   const isCurrent = () => version === requestVersion && ticket === context.accountGeneration && pendingDeck === deck;
   importing = true;
   $('btn-confirm-deck-import').disabled = true;
   $('btn-cancel-deck-import').disabled = true;
+  topicSelect.disabled = true; newTopic.disabled = true;
   setImportStatus('Importing deck…');
   let result;
   try {
-    result = await importSharedDeck(user, deck);
+    result = await importSharedDeck(user, deck, { targetTopic });
   } catch (error) {
     if (isCurrent()) {
       importing = false;
       $('btn-confirm-deck-import').disabled = false;
       $('btn-cancel-deck-import').disabled = false;
+      topicSelect.disabled = false; newTopic.disabled = false;
       setImportStatus(error.message || 'The deck could not be imported. Try again.');
     }
     return;
@@ -166,13 +203,15 @@ async function confirmImport() {
   if (!isCurrent()) return;
   importing = false;
   closeImport();
-  context.showToast(result.alreadyImported ? 'You already imported this deck.' : `Deck imported. ${result.added} added, ${result.merged} updated.`, 'success');
+  context.showToast(result.alreadyImported ? 'You already imported this deck.' :
+    `Deck imported to “${targetTopic || deck.title}”. ${result.added} added, ${result.merged} updated.`, 'success');
   try { await context.refreshVocabulary(user); }
   catch { if (ticket === context.accountGeneration) context.showToast('Deck saved. Reopen the library to refresh it.', 'error'); }
   finally { if (ticket === context.accountGeneration) void context.syncPendingOperations(); }
 }
 
 export function setupDeckSharing() {
+  $('shared-import-topic').addEventListener('change', updateImportTopicChoice);
   $('btn-confirm-deck-import').addEventListener('click', () => void confirmImport());
   $('btn-cancel-deck-import').addEventListener('click', () => { if (!importing) closeImport(); });
   $('btn-close-share-link').addEventListener('click', () => closeShareLink());

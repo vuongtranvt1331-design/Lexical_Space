@@ -9,6 +9,13 @@ export function normalizePartOfSpeech(value) {
   return PARTS_OF_SPEECH.includes(key) ? key : Object.hasOwn(POS_ALIASES, key) ? POS_ALIASES[key] : '';
 }
 export const text = value => String(value ?? '').trim();
+export function validateImportTopic(value = '') {
+  const topic = text(value);
+  if (topic.length > 200 || ['ALL', 'FAVORITES'].includes(topic.toUpperCase())) {
+    throw new Error('Choose a topic name of up to 200 characters. All and Favorites are reserved.');
+  }
+  return topic;
+}
 export const newId = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}_${Math.random().toString(36).slice(2)}`;
 export const normalizeTerm = value => text(value).normalize('NFKC').replace(/\s+/g, ' ').toLocaleLowerCase('en');
 export const senseKey = word => [normalizeTerm(word.word), normalizeTerm(word.pos), normalizeTerm(word.sense || word.meaning)].join('\0');

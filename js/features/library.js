@@ -56,6 +56,13 @@ export function checkAndCleanupEmptyTopics() {
 }
 export const sortTopicsNumericFirst = topics => [...topics].sort((a, b) => a.localeCompare(b, 'vi', { numeric: true, sensitivity: 'base' }));
 export function getAlphabeticalTopics() { checkAndCleanupEmptyTopics(); return sortTopicsNumericFirst(context.userTopics); }
+export function renderImportTopicOptions(select, defaultLabel) {
+  select.replaceChildren();
+  for (const [value, label] of [['', defaultLabel], ...getAlphabeticalTopics().map(topic => [topic, topic])]) {
+    const option = document.createElement('option');
+    option.value = value; option.textContent = label; select.append(option);
+  }
+}
 export async function updateStudentMetadataCount() {
   if (context.currentUser) await idbPut('metadata', { key: `studentWordCount_${encodeURIComponent(context.currentUser)}`, count: context.wordsData.length });
   // Remote wordCount is updated in the same Firestore transaction as the word mutation.
@@ -138,10 +145,9 @@ export function renderLibraryTopicUpwardMenu(topics) {
       actions.setAttribute('role', 'group');
       actions.setAttribute('aria-label', `${topic} deck actions`);
       const controls = [];
-      if (topic !== context.DEFAULT_TOPIC) {
-        controls.push(['merge', 'Merge Decks', () => window.openMergeModalForTopic(topic)]);
-        controls.push(['delete', 'Delete Deck', () => window.deleteTopicDirectly(topic)]);
-      }
+      if (topic !== context.DEFAULT_TOPIC) controls.push(['merge', 'Merge Decks', () => window.openMergeModalForTopic(topic)]);
+      controls.push(['clear', 'Clear Topic Words', control => void clearTopicWords(topic, control)]);
+      if (topic !== context.DEFAULT_TOPIC) controls.push(['delete', 'Delete Deck', () => window.deleteTopicDirectly(topic)]);
       controls.push(['share', 'Share Deck', control => context.shareTopic(topic, control)]);
       for (const [symbol, label, action] of controls) {
         const control = document.createElement('button');
@@ -150,7 +156,7 @@ export function renderLibraryTopicUpwardMenu(topics) {
         control.dataset.deckAction = symbol;
         control.title = label;
         control.setAttribute('aria-label', label);
-        control.innerHTML = icon(symbol);
+        control.innerHTML = icon(symbol === 'clear' ? 'again' : symbol);
         if (symbol === 'share') context.renderShareButton?.(topic, control);
         control.addEventListener('click', () => action(control));
         actions.append(control);
@@ -307,7 +313,8 @@ export function install_deleteWordDirectly() {
 }
 export function install_deleteTopicDirectly() {
   window.deleteTopicDirectly = async topic => {
-    if (!context.currentUser || ['ALL', 'FAVORITES', context.DEFAULT_TOPIC].includes(topic) ||
+    if (topic === context.DEFAULT_TOPIC) return clearTopicWords(topic);
+    if (!context.currentUser || ['ALL', 'FAVORITES'].includes(topic) ||
       !confirm(`Delete "${topic}"? Words in other decks will stay in those decks. Words only in this deck will be deleted.`)) return;
     const user = context.currentUser, generation = context.accountGeneration;
     try {
@@ -327,6 +334,23 @@ export function install_deleteTopicDirectly() {
       updateTopicDropdowns(); renderLibrary();
     } catch (error) { if (isActiveUser(user, generation)) report(error); }
   };
+}
+export async function clearTopicWords(topic, control) {
+  const user = context.currentUser, generation = context.accountGeneration;
+  if (!user || !topic || ['ALL', 'FAVORITES'].includes(topic) || control?.disabled) return;
+  if (control) control.disabled = true;
+  try {
+    const words = (await readUserWords(user)).filter(word => wordTopics(word).includes(topic));
+    if (!isActiveUser(user, generation)) return;
+    if (!words.length) { context.showToast('This topic is already empty.'); return; }
+    if (!confirm(`Delete all ${words.length} vocabulary items in "${topic}"? This also removes these items from any other topics. The topic itself will stay.`)) return;
+    await commitVocabularyChanges(words.map(word => ({ id: word.id, type: 'DELETE', expectedVersion: word })), [], user);
+    if (!isActiveUser(user, generation)) return;
+    addUserTopic(topic);
+    context.refreshInClassCheckPool?.();
+    context.showToast(`Cleared ${words.length} vocabulary items.`, 'success');
+  } catch (error) { if (isActiveUser(user, generation)) report(error); }
+  finally { if (control?.isConnected) control.disabled = false; }
 }
 export function setupMergeTopicsModal() {
   window.openMergeModalForTopic = topic => {

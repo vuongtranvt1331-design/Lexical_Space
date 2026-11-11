@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { context } from '../js/core/context.js';
-import { mutateWords, readUserWords } from '../js/core/idb-manager.js';
+import { mutateWords, pendingOperations, readUserWords } from '../js/core/idb-manager.js';
 import { getAlphabeticalTopics, install_deleteTopicDirectly, renderLibraryTopicUpwardMenu, resetLibraryForUser, renderLibrary, renderVocabularyCardHtml, setupLibraryModule, setupMergeTopicsModal } from '../js/features/library.js';
 import { escapeHtml } from '../js/utils/helpers.js';
 import { wordTopics } from '../js/core/vocabulary.js';
@@ -134,18 +134,24 @@ test('deck actions are icon controls and deleting or merging a deck preserves ot
     confirm: () => true });
   const $ = id => document.getElementById(id);
   const user = 'DeckFixture';
-  const shared = [];
+  const shared = [], toasts = [];
   const records = await mutateWords([
     { id: 'primary', topic: 'Research', topics: ['Practice'], interval: 7 },
     { id: 'only', topic: 'Research' },
     { id: 'secondary', topic: 'Other', topics: ['Research', 'Weekly'] },
-    { id: 'additional', topic: 'Archive', topics: ['Practice'] }
+    { id: 'additional', topic: 'Archive', topics: ['Practice'] },
+    { id: 'inbox', topic: 'New Words' },
+    { id: 'shared-inbox', topic: 'Independent', topics: ['New Words'] },
+    { id: 'keep', topic: 'Independent' }
   ].map(({ id, ...patch }) => ({ id, username: user, patch: { word: id, meaning: id, ...patch } })));
   Object.assign(context, { currentUser: user, accountGeneration: 2, DEFAULT_TOPIC: 'New Words',
     wordsData: records, userTopics: [], libraryTab: 'unknown', librarySelectedTopic: 'ALL', activeTopic: 'ALL',
     escapeHtml, syncPendingOperations: async () => {}, reconcileSession: async () => {}, updateStatusBadge() {},
     renderReviewTopicUpwardMenu() {}, renderEntryTopicCards() {},
-    shareTopic: (topic, button) => shared.push({ topic, button }), showToast: message => assert.fail(message)
+    shareTopic: (topic, button) => shared.push({ topic, button }), showToast: (message, type) => {
+      if (type === 'error') assert.fail(message);
+      toasts.push(message);
+    }
   });
   try {
     resetLibraryForUser();
@@ -158,13 +164,13 @@ test('deck actions are icon controls and deleting or merging a deck preserves ot
     renderLibraryTopicUpwardMenu(topics);
     const group = [...document.querySelectorAll('.topic-option-actions')].find(element => element.getAttribute('aria-label') === 'Research deck actions');
     const buttons = [...group.querySelectorAll('button')];
-    assert.deepEqual(buttons.map(button => button.title), ['Merge Decks', 'Delete Deck', 'Share Deck']);
+    assert.deepEqual(buttons.map(button => button.title), ['Merge Decks', 'Clear Topic Words', 'Delete Deck', 'Share Deck']);
     assert.ok(buttons.every(button => button.title === button.getAttribute('aria-label') && button.querySelector('svg') && !button.textContent.trim()));
-    buttons[2].click();
-    assert.deepEqual(shared, [{ topic: 'Research', button: buttons[2] }]);
+    buttons[3].click();
+    assert.deepEqual(shared, [{ topic: 'Research', button: buttons[3] }]);
     assert.equal(context.librarySelectedTopic, 'ALL');
     const defaultActions = [...document.querySelectorAll('.topic-option-actions')].find(element => element.getAttribute('aria-label') === 'New Words deck actions');
-    assert.deepEqual([...defaultActions.querySelectorAll('button')].map(button => button.title), ['Share Deck']);
+    assert.deepEqual([...defaultActions.querySelectorAll('button')].map(button => button.title), ['Clear Topic Words', 'Share Deck']);
 
     context.librarySelectedTopic = 'Practice';
     renderLibrary();
@@ -188,6 +194,24 @@ test('deck actions are icon controls and deleting or merging a deck preserves ot
     assert.deepEqual(wordTopics(byId.get('secondary')), ['Other', 'Consolidated']);
     assert.deepEqual(wordTopics(byId.get('additional')), ['Archive', 'Consolidated']);
     assert.equal(context.librarySelectedTopic, 'Consolidated');
+
+    globalThis.confirm = message => { assert.match(message, /other topics/); return false; };
+    await window.deleteTopicDirectly('New Words');
+    assert.equal((await readUserWords(user)).filter(word => wordTopics(word).includes('New Words')).length, 2);
+    globalThis.confirm = () => true;
+    await window.deleteTopicDirectly('New Words');
+    assert.deepEqual(context.wordsData.map(word => word.id).sort(), ['additional', 'keep', 'primary', 'secondary']);
+    assert.ok(getAlphabeticalTopics().includes('New Words'));
+    const clear = document.querySelector('[aria-label="Consolidated deck actions"] [data-deck-action="clear"]');
+    clear.click();
+    for (let i = 0; i < 100 && !toasts.includes('Cleared 3 vocabulary items.'); i++) {
+      await new Promise(resolve => setTimeout(resolve, 5));
+    }
+    assert.ok(toasts.includes('Cleared 3 vocabulary items.'));
+    assert.deepEqual((await readUserWords(user)).map(word => word.id), ['keep']);
+    assert.ok(getAlphabeticalTopics().includes('Consolidated'));
+    assert.equal(document.querySelectorAll('.library-flip-card').length, 0);
+    assert.ok((await pendingOperations(user)).some(op => op.wordId === 'shared-inbox' && op.type === 'DELETE'));
   } finally {
     globalThis.confirm = originalConfirm;
     window.close();
