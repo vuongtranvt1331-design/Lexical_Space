@@ -177,6 +177,19 @@ test('dictionary lookups encode phrases, report missing entries, and never creat
   assert.equal(await dictionaryDetails('missing', { fetcher: async () => response([]) }), null);
 });
 
+test('dictionary synonyms include later matching POS entries and omit unrelated parts of speech', async () => {
+  const details = await dictionaryDetails('record', { pos: 'n', fetcher: async () => response([
+    { meanings: [
+      { partOfSpeech: 'verb', synonyms: ['register'], definitions: [{ example: 'We record the sound.' }] },
+      { partOfSpeech: 'noun', synonyms: [], definitions: [] },
+      { partOfSpeech: 'noun', synonyms: ['account'], definitions: [{ synonyms: ['report'], example: 'Keep a record of the visit.' }] }
+    ] }
+  ]) });
+  assert.equal(details.pos, 'n');
+  assert.deepEqual(details.synonyms, ['account', 'report']);
+  assert.equal(details.exampleSentence, 'Keep a record of the visit.');
+});
+
 test('Tatoeba returns an attributable English example only when the word and its inflections can be masked', async () => {
   const info = await quickFillSentence('give up', { fetcher: async (url, options) => {
     assert.equal(url, 'https://api.tatoeba.org/v1/sentences?lang=eng&q=give%20up&sort=relevance&is_unapproved=no&limit=10');

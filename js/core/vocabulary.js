@@ -55,7 +55,7 @@ export function normalizeRemoteVocabulary(record, id = record.id) {
   word.synonyms = [...new Set((Array.isArray(record.synonyms) ? record.synonyms : [word.synonym1, word.synonym2]).map(text).filter(Boolean))];
   word.synonym1 = word.synonyms[0] || ''; word.synonym2 = word.synonyms[1] || '';
   if (!word.clozeSentence && targetSegments(word.exampleSentence, word.word, { inflections: true }).some(part => part.target)) word.clozeSentence = clozeText(word.exampleSentence, word.word, { inflections: true });
-  word.pos = word.pos.toLowerCase().replace(/\.$/, '');
+  word.pos = normalizePartOfSpeech(word.pos) || word.pos.toLowerCase().replace(/\.$/, '');
   word.collocations = Array.isArray(record.collocations) ? record.collocations.map(text).filter(Boolean) : [];
   const topics = wordTopics(record);
   word.topic = topics[0] || 'New Words';

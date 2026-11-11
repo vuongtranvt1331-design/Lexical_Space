@@ -169,6 +169,7 @@ export function applyUser(name, { forceReset = false } = {}) {
   if (previousUser !== user || forceReset) {
     if (canSyncProfile(previousUser) && previousUser !== user) void context.flushActivityLogSync({ force: true, reason: 'account_switch', targetUsername: previousUser });
     context.accountGeneration++;
+    context.cancelVocabularyUpdate?.();
     context.vocabularySync.stop();
     context.resetActivityForUser();
     context.resetForUser();
@@ -310,6 +311,7 @@ function setupUserGuide() {
     updateProfileLock();
     if (trigger.closest('[inert]')) return;
     if (context.currentUser && !$('view-review').classList.contains('hidden')) context.renderActiveCard();
+    if (context.currentUser && !$('view-library').classList.contains('hidden')) context.renderLibrary();
     trigger.focus();
   };
   trigger.addEventListener('click', () => {
@@ -323,10 +325,15 @@ function setupUserGuide() {
   close.addEventListener('click', dismiss);
   guide.addEventListener('click', event => { if (event.target === guide) dismiss(); });
   guide.addEventListener('keydown', event => {
-    if (event.key !== 'Escape' && event.key !== 'Tab') return;
-    event.preventDefault();
-    if (event.key === 'Escape') dismiss();
-    else close.focus();
+    if (event.key === 'Escape') { event.preventDefault(); dismiss(); return; }
+    if (event.key !== 'Tab') return;
+    const controls = [...guide.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),[tabindex="0"]')]
+      .filter(control => !control.closest('[hidden]'));
+    const target = event.shiftKey ? controls.at(-1) : controls[0];
+    if ((event.shiftKey && document.activeElement === controls[0]) ||
+        (!event.shiftKey && document.activeElement === controls.at(-1))) {
+      event.preventDefault(); target?.focus();
+    }
   });
 }
 

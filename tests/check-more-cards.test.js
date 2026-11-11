@@ -1,4 +1,5 @@
 import test from 'node:test';
+Math.random = () => 0.999999;
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -55,8 +56,8 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
 
   try {
     await waitFor(() => flash.getSessionState() && !context.profileLoading);
-    assert.deepEqual(queue(), ['first-new']);
-    assert.equal(practiceBadge(), '1');
+    assert.deepEqual(queue(), ['first-new', 'first-due']);
+    assert.equal(practiceBadge(), '2');
     const sessionId = flash.getSessionState().sessionId;
     await passCard(3);
     assert.deepEqual(queue(), ['first-due']);
@@ -77,9 +78,9 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
     ]);
     assert.equal(context.wordsData.some(record => record.id === 'second-due'), false);
     await readMore();
-    await waitFor(() => queue().length === 1);
-    assert.deepEqual(queue(), ['second-new']);
-    assert.equal(practiceBadge(), '1');
+    await waitFor(() => queue().length === 2);
+    assert.deepEqual(queue(), ['second-new', 'second-due']);
+    assert.equal(practiceBadge(), '2');
     assert.equal(flash.getSessionState().sessionId, sessionId);
     assert.equal(flash.getSessionState().completedAttempts, 2);
 
@@ -98,7 +99,7 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
     await passCard(2);
     assert.deepEqual(queue(), []);
     assert.equal(practiceBadge(), '0');
-    assert.match($('empty-state-subtitle').textContent, /switch to Daily practice for new words/);
+    assert.match($('empty-state-subtitle').textContent, /Start another round/);
 
     $('btn-mode-learning').click();
     await waitFor(() => modePressed('learning') && queue().length === 1);
@@ -127,10 +128,10 @@ test('Check for more cards reads newly eligible words from IndexedDB in the acti
     await waitFor(() => queue().length === 1);
     await flash.revealCard();
     await flash.gradeRecall(0);
-    assert.equal(practiceBadge(), '1');
+    assert.equal(practiceBadge(), '0');
     await flash.previousCard();
-    assert.deepEqual(queue(), ['topic-a-due', 'topic-a-due']);
-    assert.equal(practiceBadge(), '1');
+    assert.deepEqual(queue(), ['topic-a-due']);
+    assert.equal(practiceBadge(), '0');
 
     const refreshVocabulary = context.refreshVocabulary;
     let finishRead;

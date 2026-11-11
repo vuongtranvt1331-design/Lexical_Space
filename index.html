@@ -217,7 +217,7 @@
                 <span id="stat-known-count" class="text-sm font-black">0</span>
               </div>
               <div class="flex items-center justify-between text-rose-400 border-t border-slate-800/80 pt-1">
-                <span class="flex items-center gap-1"><i class="ph-bold ph-x text-sm"></i> Still awaiting recall:</span>
+                <span class="flex items-center gap-1"><i class="ph-bold ph-x text-sm"></i> Needs more practice:</span>
                 <span id="stat-unknown-count" class="text-sm font-black">0</span>
               </div>
             </div>
@@ -225,7 +225,7 @@
             <div class="w-full max-w-xs space-y-1.5 mt-1">
               <button id="btn-session-continue" type="button" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
                 <i class="ph-bold ph-play text-sm" aria-hidden="true"></i>
-                <span>Continue studying</span>
+                <span id="session-continue-label">Study again</span>
               </button>
               <button id="btn-adjust-daily-limits" type="button" aria-haspopup="dialog" aria-controls="drawer" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-extrabold text-xs rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-1.5">
                 <i class="ph-bold ph-sliders-horizontal text-sm" aria-hidden="true"></i>
@@ -603,6 +603,12 @@
         </button>
       </div>
       <p class="user-guide-notice"><strong>Học sinh bắt buộc phải học đều đặn từng ngày. Thầy sẽ kiểm tra bài trực tiếp vào đầu mỗi buổi học trên lớp (In-Class Check)!</strong></p>
+      <div class="ai-import-stage">
+        <button id="btn-update-old-vocabulary" type="button" class="entry-secondary">Cập nhật bộ từ cũ</button>
+        <p class="deck-import-profile">Bổ sung nghĩa, IPA, loại từ, từ đồng nghĩa, cụm từ, ví dụ và cloze còn trống khi có dữ liệu tra cứu.</p>
+        <p id="vocabulary-update-status" class="deck-dialog-status" role="status" aria-live="polite"></p>
+        <button id="btn-cancel-vocabulary-update" type="button" class="entry-secondary" hidden>Dừng cập nhật</button>
+      </div>
       <dl class="user-guide-tools">
         <div><dt>Quick Fill / Điền nhanh</dt><dd>Trong Add New Words, bấm Điền nhanh để tra nghĩa tiếng Việt, IPA, cụm từ đi kèm, câu ví dụ và câu điền từ khi có dữ liệu. Một số ví dụ lấy từ <a class="example-source" href="https://tatoeba.org/" target="_blank" rel="noopener noreferrer">Tatoeba</a> (CC BY 2.0 FR hoặc CC0 1.0).</dd></div>
         <div><dt>Chia sẻ bộ từ (Deck Sharing)</dt><dd>Trong Library, chọn một bộ từ rồi bấm Share Deck để tạo link mà không cần tài khoản. Link được tự động sao chép vào clipboard.</dd></div>

@@ -1,4 +1,5 @@
 import test from 'node:test';
+Math.random = () => 0.999999;
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -46,7 +47,7 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
   try {
     await waitFor(() => flash.getSessionState() && !context.profileLoading);
     const initial = flash.getSessionState();
-    assert.deepEqual(queue(initial), ['new_a']);
+    assert.deepEqual(queue(initial), ['new_a', 'due_a']);
     await flash.revealCard();
     $('setting-daily-new-limit').value = '2';
     $('setting-sound-effects').checked = false;
@@ -55,11 +56,11 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
     assert.equal(loadSettings(user).soundEffects, false);
     assert.equal(context.SoundManager.enabled, false);
     change('setting-daily-new-limit', '2');
-    await waitFor(() => queue(flash.getSessionState()).length === 2);
+    await waitFor(() => queue(flash.getSessionState()).length === 3);
     assert.equal(flash.getSessionState().cardQueue[0].entryId, initial.cardQueue[0].entryId);
     assert.equal(flash.getSessionState().cardQueue[0].revealed, true);
     change('setting-daily-new-limit', '1');
-    await waitFor(() => queue(flash.getSessionState()).length === 1);
+    await waitFor(() => queue(flash.getSessionState()).length === 2);
     context.reviewMode = 'review';
     await flash.startNewSession();
     assert.deepEqual(queue(flash.getSessionState()), ['due_a']);
@@ -99,14 +100,9 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
     await flash.startNewSession({ restore: true });
     const rollover = flash.getSessionState();
     assert.notEqual(rollover.ledgerKey, pending.ledgerKey);
-    assert.equal(rollover.sessionId, pending.sessionId);
-    assert.deepEqual(queue(rollover), ['new_b']);
-    await flash.revealCard();
-    await flash.gradeRecall(2);
-    const nextLedger = await storage.idbGet('metadata', rollover.ledgerKey);
-    assert.deepEqual(nextLedger.dailyReviewIds, []);
-    assert.deepEqual(nextLedger.dailyNewIds, []);
-    assert.equal(nextLedger.completedAttempts, 1);
+    assert.notEqual(rollover.sessionId, pending.sessionId);
+    assert.deepEqual(queue(rollover), []);
+    assert.equal(await storage.idbGet('metadata', rollover.ledgerKey), null);
 
     context.activeTopic = 'ALL';
     await flash.startNewSession();
@@ -135,31 +131,26 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
     ]);
     await context.activateUser(roundUser);
     const pass = async grade => { await flash.revealCard(); await flash.gradeRecall(grade); };
-    assert.deepEqual(queue(flash.getSessionState()), ['a-new']);
+    assert.deepEqual(queue(flash.getSessionState()), ['a-new', 'due', 'x-good', 'y-hard']);
     await pass(1);
-    assert.deepEqual(queue(flash.getSessionState()), ['a-new', 'y-hard', 'x-good']);
-    const dueBeforeExtra = (await storage.readUserWord(roundUser, 'a-new')).dueDate;
     await pass(3);
-    assert.equal((await storage.readUserWord(roundUser, 'a-new')).dueDate, dueBeforeExtra);
-    await pass(1);
     await pass(2);
+    await pass(1);
     assert.deepEqual(queue(flash.getSessionState()), []);
     const roundLedgerKey = flash.getSessionState().ledgerKey;
-    assert.deepEqual((await storage.idbGet('metadata', roundLedgerKey)).dailyReviewIds, ['a-new', 'y-hard', 'x-good']);
+    assert.deepEqual((await storage.idbGet('metadata', roundLedgerKey)).dailyReviewIds, ['due', 'x-good', 'y-hard']);
     assert.equal($('empty-state-title').textContent, 'Daily limit reached');
     assert.equal($('btn-adjust-daily-limits').hidden, false);
     $('btn-adjust-daily-limits').click();
     assert.equal($('practice-panel').hidden, false);
     assert.equal(document.activeElement, $('practice-daily-limits'));
     change('setting-daily-review-limit', '');
-    await waitFor(() => queue(flash.getSessionState())[0] === 'due');
-    assert.equal($('btn-adjust-daily-limits').hidden, true);
+    await waitFor(() => !$('btn-session-continue').hidden);
+    assert.deepEqual(queue(flash.getSessionState()), []);
     $('btn-close-drawer').click();
-    await pass(3);
-    assert.equal($('btn-session-continue').hidden, false);
     $('btn-session-continue').click();
     await waitFor(() => queue(flash.getSessionState()).length === 2);
-    assert.deepEqual(queue(flash.getSessionState()), ['y-hard', 'x-good']);
+    assert.deepEqual(queue(flash.getSessionState()), ['x-good', 'y-hard']);
     await pass(2);
     const partway = flash.getSessionState();
     flash.resetForUser();
@@ -174,10 +165,10 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
     assert.deepEqual(queue(flash.getSessionState()), ['y-hard']);
     assert.equal(flash.getSessionState().queueIndex, 0);
     assert.equal(flash.getSessionState().cardQueue.length, 1);
-    assert.equal(flash.getSessionState().completedAttempts, 7);
+    assert.equal(flash.getSessionState().completedAttempts, 0);
     const ledgerAfterRepeat = await storage.idbGet('metadata', roundLedgerKey);
     assert.deepEqual(ledgerAfterRepeat.dailyNewIds, ['a-new']);
-    assert.deepEqual(ledgerAfterRepeat.dailyReviewIds, ['a-new', 'y-hard', 'x-good', 'due']);
+    assert.deepEqual(ledgerAfterRepeat.dailyReviewIds, ['due', 'x-good', 'y-hard']);
   } finally {
     flash.resetForUser();
     context.clearActivityTimers();

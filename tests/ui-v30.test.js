@@ -4,6 +4,7 @@ import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
 const require = createRequire(process.env.LEXICALSPACE_TEST_MODULES || import.meta.url);
 const { JSDOM } = require('jsdom'), { indexedDB, IDBKeyRange } = require('fake-indexeddb');
+Math.random = () => 0.999999;
 const html = await fs.readFile(new URL('../index.html', import.meta.url), 'utf8');
 const dom = new JSDOM(html, { url: 'http://localhost:8767/', pretendToBeVisual: true });
 const { window } = dom, spoken = [], copied = [];
@@ -20,7 +21,7 @@ const lookupResponse = data => ({ ok: true, status: 200, json: async () => data 
 const dictionaryResponse = lookupResponse([{ phonetic: fixtureWord.phonetic, meanings: [{ partOfSpeech: 'adjective',
   synonyms: fixtureWord.synonyms, definitions: [{ example: fixtureWord.exampleSentence }] }] }]);
 const translationResponse = lookupResponse({ responseStatus: 200, responseData: { translatedText: fixtureWord.meaning } });
-await storage.mutateWords(Array.from({ length: 6 }, (_, i) => ({ id: `fixture_${i}`, username: 'UIFixture', patch: i === 0 ? fixtureWord :
+await storage.mutateWords(Array.from({ length: 8 }, (_, i) => ({ id: `fixture_${i}`, username: 'UIFixture', patch: i === 0 ? fixtureWord :
   { word: `term${i}`, meaning: `nghĩa ${i}`, exampleSentence: `Use term${i} in context.`, synonyms: [`alias ${i}`], collocations: [`term${i} first`, `term${i} second`] } })));
 localStorage.setItem('vocab_user', 'UIFixture');
 await import('../js/features/application.js');
@@ -105,25 +106,22 @@ test('practice, library, and entry workflows', async t => {
       exampleAudio.click();
       assert.equal(spoken.length, count);
       $('recall-answer-input').value = 'not the word'; $('reverse-recall-form').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-      await until(() => current().graded); const failed = flash.getSessionState();
-      assert.equal(current().grade, 0); assert.equal(failed.queueIndex, before.queueIndex); assert.ok(failed.pendingMisses.includes(target.id));
-      assert.match($('recall-feedback').textContent, /Not quite/); assert.equal($('fc-answer-target').textContent, target.word);
+      await until(() => flash.getSessionState().queueIndex === before.queueIndex + 1);
+      const failed = flash.getSessionState();
+      assert.equal(failed.cardQueue[before.queueIndex].grade, 0);
+      assert.ok(failed.pendingMisses.includes(target.id));
+      assert.equal(failed.cardQueue.filter(item => item.wordId === target.id).length, 1);
       assert.equal((await storage.readUserWord('UIFixture', target.id)).lastGrade, 0);
-      assert.equal((await storage.idbGet('metadata', failed.key)).queueIndex, before.queueIndex);
-      assert.equal(document.activeElement, $('btn-fc-next'));
-      assert.equal(exampleAudio.disabled, false);
+      assert.equal((await storage.idbGet('metadata', failed.key)).queueIndex, before.queueIndex + 1);
       assert.equal(spoken.length, count);
+      await flash.previousCard();
+      assert.equal($('fc-answer-target').textContent, target.word);
+      assert.equal(exampleAudio.disabled, false);
       exampleAudio.click();
       assert.deepEqual(spoken.slice(count), [target.exampleSentence]);
-      assert.equal($('fc-answer').hidden, false);
-      await flash.revealCard(); assert.equal(flash.getSessionState().queueIndex, before.queueIndex);
-      assert.equal($('fc-answer').hidden, true);
-      assert.equal($('btn-fc-next').hidden, false);
-      assert.ok([...document.querySelectorAll('[data-recall-grade]')].every(button => button.hidden));
       $('btn-fc-next').click();
       await until(() => flash.getSessionState().queueIndex === before.queueIndex + 1);
       assert.ok($('btn-fc-next').hidden);
-      assert.ok([...document.querySelectorAll('[data-recall-grade]')].every(button => !button.hidden));
     });
     await t.test('correct reverse answers unlock grades; reload retains direction and the exact card', async () => {
       const target = context.wordsData.find(word => word.id === current().wordId), before = flash.getSessionState();

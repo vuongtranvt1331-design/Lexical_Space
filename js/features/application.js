@@ -12,7 +12,8 @@ import * as entry from './entry.js';
 import * as flashcard from './flashcard.js';
 import * as classCheck from './in-class-check.js';
 import * as decks from './deck-sharing.js';
-Object.assign(context, storage, helpers, activity, auth, library, entry, flashcard, classCheck, decks, {
+import * as vocabularyUpdate from './vocabulary-update.js';
+Object.assign(context, storage, helpers, activity, auth, library, entry, flashcard, classCheck, decks, vocabularyUpdate, {
   db: null, firebasePersistenceReady: Promise.resolve(), SoundManager, DEFAULT_TOPIC: 'New Words', currentUser: '', wordsData: [], userTopics: [],
   reviewMode: 'learning', libraryTab: 'unknown', activeTopic: 'ALL', librarySelectedTopic: 'ALL', activeSpecialCollection: null,
   dbSyncError: null, activeSessionWords: [], sessionCurrentIndex: 0, sessionCompleted: false, userLoadGeneration: 0,
@@ -124,6 +125,7 @@ async function initialize() {
     classCheck.setupInClassCheck();
     entry.setupEntryModule(); entry.setupQuickImport(); library.setupLibraryModule(); library.setupMergeTopicsModal();
     decks.setupDeckSharing();
+    vocabularyUpdate.setupVocabularyUpdate();
     library.install_deleteWordDirectly(); library.install_deleteTopicDirectly(); activity.setupActivityLifecycleListeners();
     window.addEventListener('online', () => {
       if (context.db) void auth.handleOnlineReconnection();

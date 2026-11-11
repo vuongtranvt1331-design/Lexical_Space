@@ -325,11 +325,11 @@ test('manual Daily practice rounds can repeat counted cards without adding new c
   const reviewIds = settings => selectPracticeWords(words, { ...options, settings }).review.map(word => word.id);
   assert.deepEqual(selectPracticeWords(words, options).fresh, []);
   assert.deepEqual(reviewIds({}), ['hard', 'good', 'again-counted']);
-  assert.deepEqual(reviewIds({ dailyReviewLimit: 2 }), ['hard', 'again-counted']);
-  assert.deepEqual(reviewIds({ dailyReviewLimit: 1 }), ['again-counted']);
-  assert.deepEqual(reviewIds({ dailyReviewLimit: 0 }), []);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 2 }), ['hard', 'good', 'again-counted']);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 1 }), ['hard']);
+  assert.deepEqual(reviewIds({ dailyReviewLimit: 0 }), ['hard']);
   assert.equal(selectPracticeWords(words, { ...options, settings: { dailyReviewLimit: 0 } }).limited, true);
-  assert.deepEqual(selectPracticeWords(words, { ...options, mode: 'review' }).review.map(word => word.id), ['easy']);
+  assert.deepEqual(selectPracticeWords(words, { ...options, mode: 'review' }).review.map(word => word.id).sort(), ['again-counted', 'easy', 'hard']);
 });
 test('successful early reviews record a grade without moving scheduled repetition or due date', () => {
   const now = new Date(2026, 10, 6, 9).getTime();

@@ -149,10 +149,10 @@ function updateRecallLedger(ledger, attempt) {
       error.code = 'daily-review-complete';
       throw error;
     }
-    const alreadyCounted = reviewedToday || (!extraReview && !repeat && ledger.dailyNewIds.includes(wordId));
+    const alreadyCounted = reviewedToday || ((repeat || !extraReview) && ledger.dailyNewIds.includes(wordId));
     const needsSlot = !retry && !alreadyCounted;
     const ids = kind === 'new' ? ledger.dailyNewIds : ledger.dailyReviewIds;
-    if ((repeat && limit === 0) || (needsSlot && limit != null && ids.length >= limit)) {
+    if (needsSlot && limit != null && ids.length >= limit) {
       const error = new Error(`Today's ${kind === 'new' ? 'new word' : 'review'} limit has been reached.`);
       error.code = 'daily-limit';
       throw error;

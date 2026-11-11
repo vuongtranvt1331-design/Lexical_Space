@@ -58,9 +58,17 @@ function reviewTier(word) {
   const level = recallLevelFor(word);
   return level === 2 || level === 3 ? level : 4;
 }
+export function shufflePracticeWords(words) {
+  const shuffled = [...words];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 
 export function selectPracticeWords(words, { mode = 'learning', topic = 'ALL', favorites = false, repeat = false, now = Date.now(),
-  ledger, settings = {}, preferredIds = [], retryIds = [] } = {}) {
+  ledger, settings = {}, preferredIds = [], retryIds = [], randomize = false } = {}) {
   const retries = new Set(retryIds);
   const eligible = words.filter(word => !word.deleted && !retries.has(word.id) &&
     (mode !== 'learning' || isDailyPracticeWord(word)) && (topic === 'ALL' || wordTopics(word).includes(topic)) &&
@@ -69,17 +77,26 @@ export function selectPracticeWords(words, { mode = 'learning', topic = 'ALL', f
   const learned = new Set(Array.isArray(ledger?.dailyNewIds) ? ledger.dailyNewIds : []);
   const counted = new Set([...reviewed, ...learned]), preferred = new Set(preferredIds);
   const dailyPractice = mode === 'learning' && !favorites;
-  const repeatPractice = dailyPractice && repeat;
+  const repeatPractice = repeat;
   const dueInMode = word => mode === 'review' ? isDue(word, now) : isScheduledDue(word, now);
-  const comparePriority = dailyPractice ? (a, b) => reviewTier(a) - reviewTier(b) : null;
+  const comparePriority = dailyPractice && !randomize ? (a, b) => reviewTier(a) - reviewTier(b) : null;
   const reviews = eligible.filter(word => !isNewWord(word) &&
-    (repeatPractice || dueInMode(word) || (dailyPractice && reviewTier(word) < 4 && !reviewed.has(word.id))))
+    ((repeatPractice && (mode !== 'review' || counted.has(word.id))) || dueInMode(word) ||
+      (dailyPractice && reviewTier(word) < 4 && !reviewed.has(word.id))))
     .sort((a, b) => (comparePriority?.(a, b) ?? 0) ||
       timestamp(a.dueDate ?? a.due) - timestamp(b.dueDate ?? b.due) || a.id.localeCompare(b.id));
   const fresh = mode === 'review' || repeatPractice ? [] : eligible.filter(isNewWord).sort((a, b) => a.id.localeCompare(b.id));
-  const selectedReview = repeatPractice && settings.dailyReviewLimit === 0 ? [] :
-    withinDailyLimit(reviews, settings.dailyReviewLimit, reviewed,
-      word => (repeatPractice || !dueInMode(word) ? reviewed : counted).has(word.id), preferred, comparePriority);
-  const selectedNew = withinDailyLimit(fresh, settings.dailyNewLimit, learned, word => counted.has(word.id), preferred);
+  const repeatWithinCap = word => {
+    if (mode === 'review' && counted.has(word.id)) return true;
+    const used = learned.has(word.id) ? learned : reviewed;
+    const limit = learned.has(word.id) ? settings.dailyNewLimit : settings.dailyReviewLimit;
+    return limit == null || used.size < limit;
+  };
+  const allowedReviews = repeatPractice ? reviews.filter(repeatWithinCap) : reviews;
+  const selectedReview = withinDailyLimit(randomize ? shufflePracticeWords(allowedReviews) : allowedReviews,
+    settings.dailyReviewLimit, reviewed,
+    word => (repeatPractice || dueInMode(word) ? counted : reviewed).has(word.id), preferred, comparePriority);
+  const selectedNew = withinDailyLimit(randomize ? shufflePracticeWords(fresh) : fresh,
+    settings.dailyNewLimit, learned, word => counted.has(word.id), preferred);
   return { review: selectedReview, fresh: selectedNew, limited: selectedReview.length < reviews.length || selectedNew.length < fresh.length };
 }

@@ -4,6 +4,8 @@ import fs from 'node:fs/promises';
 import { createRequire } from 'node:module';
 const require = createRequire(process.env.LEXICALSPACE_TEST_MODULES || import.meta.url);
 const { JSDOM } = require('jsdom'); const { indexedDB, IDBKeyRange } = require('fake-indexeddb');
+// Keep this workflow fixture deterministic. Randomness is verified separately.
+Math.random = () => 0.999999;
 const html = await fs.readFile(new URL('../index.html', import.meta.url), 'utf8');
 const dom = new JSDOM(html, { url: 'http://localhost:8765/', pretendToBeVisual: true });
 const { window } = dom; const spoken = [];
@@ -25,12 +27,12 @@ await until(() => flash.getSessionState()?.cardQueue.length > 0);
 test('integrated recall flow, keyboard, exact resume, import and missed-card completion', async t => {
   try {
     await t.test('first card auto-pronounces once and answer/grades start hidden/disabled', () => {
-      assert.equal(flash.getSessionState().cardQueue.length, 10); assert.deepEqual(spoken, ['word30']);
+      assert.equal(flash.getSessionState().cardQueue.length, 40); assert.deepEqual(spoken, ['word30']);
       assert.equal($('fc-answer').classList.contains('hidden'), true);
       assert.ok([...document.querySelectorAll('[data-recall-grade]')].every(b => b.disabled));
       flash.renderActiveCard(); assert.equal(spoken.length, 1);
     });
-    await t.test('instant grading is rejected; Space reveals, number keys grade and Again queues a later retry', async () => {
+    await t.test('instant grading is rejected; Again advances without adding a duplicate', async () => {
       const first = flash.getSessionState().cardQueue[0].wordId;
       await flash.gradeRecall(2); assert.equal(flash.getSessionState().queueIndex, 0);
       document.body.dispatchEvent(new window.KeyboardEvent('keydown', { key: ' ', code: 'Space', bubbles: true }));
@@ -38,8 +40,9 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       assert.equal(spoken.length, 1);
       document.body.dispatchEvent(new window.KeyboardEvent('keydown', { key: '1', bubbles: true }));
       await until(() => flash.getSessionState().queueIndex === 1);
-      const state = flash.getSessionState(); assert.equal(state.pendingMisses[0], first); assert.equal(state.cardQueue[4].wordId, first);
-      assert.equal(state.cardQueue.length, 11); assert.equal(spoken.length, 2);
+      const state = flash.getSessionState(); assert.equal(state.pendingMisses[0], first);
+      assert.equal(state.cardQueue.filter(item => item.wordId === first).length, 1);
+      assert.equal(state.cardQueue.length, 40); assert.equal(spoken.length, 2);
       const stored = await storage.idbGet('metadata', state.key); assert.equal(stored.queueIndex, 1); assert.equal(stored.pendingMisses[0], first);
     });
     await t.test('navigation and reload restore the exact card and reveal state', async () => {
@@ -66,12 +69,12 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       $('setting-auto-pronounce').checked = false; $('setting-auto-pronounce').dispatchEvent(new window.Event('change', { bubbles: true }));
       await flash.gradeRecall(2); assert.equal(spoken.length, count + 1);
     });
-    await t.test('every missed item requires successful retrieval before completion and the completed session survives reload', async () => {
+    await t.test('a round finishes even with misses and stays complete after reload', async () => {
       let guard = 0;
       while (flash.getSessionState().queueIndex < flash.getSessionState().cardQueue.length && guard++ < 100) {
         await flash.revealCard(); await flash.gradeRecall(2);
       }
-      const done = flash.getSessionState(); assert.equal(done.pendingMisses.length, 0); assert.equal(done.queueIndex, done.cardQueue.length);
+      const done = flash.getSessionState(); assert.equal(done.pendingMisses.length, 1); assert.equal(done.queueIndex, done.cardQueue.length);
       assert.equal(context.sessionCompleted, true); assert.equal($('empty-state-title').textContent, 'Practice complete');
       flash.resetForUser(); await flash.startNewSession({ restore: true }); assert.equal(context.sessionCompleted, true);
       await flash.startNewSession({ fresh: true }); assert.equal(flash.getSessionState().sessionId, done.sessionId);
@@ -190,7 +193,7 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       await until(() => flash.getSessionState().recallDirection === 'vi-en');
       const reverse = flash.getSessionState();
       assert.equal(reverse.sessionId, before.sessionId);
-      assert.deepEqual(reverse.cardQueue.map(item => item.wordId), ['alpha', 'bravo', 'charlie', 'alpha']);
+      assert.deepEqual(reverse.cardQueue.map(item => item.wordId), ['alpha', 'bravo', 'charlie']);
       assert.deepEqual(reverse.cardQueue[0], before.cardQueue[0]);
       assert.equal(reverse.queueIndex, 1);
       assert.equal(reverse.cardQueue[1].revealed, false);
@@ -205,7 +208,7 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       assert.equal($('fc-front-word').textContent, 'charlie');
       assert.equal($('recall-answer-input').value, '');
       assert.equal($('fc-answer').hidden, true);
-      assert.deepEqual(switchedBack.cardQueue.map(item => item.wordId), ['alpha', 'charlie', 'alpha', 'bravo']);
+      assert.deepEqual(switchedBack.cardQueue.map(item => item.wordId), ['alpha', 'charlie', 'bravo']);
       assert.deepEqual(await storage.idbGet('metadata', switchedBack.key), switchedBack);
       flash.resetForUser();
       await flash.startNewSession({ restore: true });
@@ -265,11 +268,11 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
         } else {
           $('recall-answer-input').value = 'incorrect';
           await flash.submitReverseAnswer();
-          assert.match($('recall-feedback').textContent, /switch to English/);
         }
         const failed = flash.getSessionState();
         assert.equal(failed.cardQueue[0].grade, 0);
-        const retry = failed.cardQueue[1];
+        assert.equal(failed.cardQueue.length, 1);
+        assert.equal(context.sessionCompleted, true);
         const ledger = await storage.idbGet('metadata', failed.ledgerKey);
         if (miss === 'continued') {
           $('btn-fc-next').click();
@@ -281,14 +284,15 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
         assert.equal(switched.sessionId, failed.sessionId);
         assert.equal(switched.completedAttempts, failed.completedAttempts);
         assert.deepEqual(switched.pendingMisses, ['only']);
-        assert.deepEqual(switched.cardQueue[switched.queueIndex], retry);
-        assert.equal($('fc-front-word').textContent, 'auditorium');
-        assert.equal($('fc-answer').hidden, true);
+        assert.equal(switched.queueIndex, 1);
         assert.deepEqual(await storage.idbGet('metadata', failed.ledgerKey), ledger);
 
         flash.resetForUser();
         await flash.startNewSession({ restore: true });
         assert.deepEqual(flash.getSessionState(), switched);
+        $('btn-session-continue').click();
+        await until(() => flash.getSessionState().queueIndex === 0);
+        assert.equal($('fc-front-word').textContent, 'auditorium');
         await flash.revealCard();
         await flash.gradeRecall(2);
         assert.deepEqual(flash.getSessionState().pendingMisses, []);
@@ -310,7 +314,7 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
         const state = flash.getSessionState();
         return state.cardQueue.slice(state.queueIndex).map(item => item.wordId);
       };
-      assert.deepEqual(queue(), ['fresh']);
+      assert.deepEqual(queue(), ['fresh', 'yellow']);
       await flash.revealCard();
       await flash.gradeRecall(3);
       assert.deepEqual(queue(), ['yellow']);

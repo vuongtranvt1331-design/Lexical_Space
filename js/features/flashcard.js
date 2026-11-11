@@ -1,7 +1,7 @@
 import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
 import { exampleSourceUrl, newId, normalizeTerm } from '../core/vocabulary.js';
-import { scheduleReview, selectPracticeWords, calendarDay, isDailyPracticeWord, isDue, isNewWord } from '../core/srs.js';
+import { scheduleReview, selectPracticeWords, shufflePracticeWords, calendarDay, isDailyPracticeWord, isDue, isNewWord } from '../core/srs.js';
 import { loadSettings, saveSettings } from '../core/settings.js';
 import { pronunciation } from '../core/pronunciation.js';
 import { targetSegments, clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
@@ -24,7 +24,7 @@ function syncLegacyState() {
   const byId = new Map(context.wordsData.map(word => [word.id, word]));
   context.activeSessionWords = session ? session.cardQueue.map(item => byId.get(item.wordId)).filter(Boolean) : [];
   context.sessionCurrentIndex = session?.queueIndex || 0;
-  context.sessionCompleted = !!session && session.queueIndex >= session.cardQueue.length && session.pendingMisses.length === 0;
+  context.sessionCompleted = !!session && session.queueIndex >= session.cardQueue.length;
   const remaining = new Set();
   for (const item of session?.cardQueue.slice(session.queueIndex) ?? []) {
     if (!item.graded && byId.has(item.wordId)) remaining.add(item.wordId);
@@ -86,14 +86,7 @@ function adjustDirection(next, direction, activeWordId, wordsById) {
     else if (repeatsAnswer(item.wordId)) deferred.push(item);
     else remaining.push(item);
   }
-  if (!remaining.length && deferred.length) {
-    const retryIndex = deferred.findIndex(item => item.wordId === activeWordId);
-    // A recorded miss already showed the English target. Let the learner retry it in the other direction.
-    const canSwitchRetry = direction === 'en-vi' && retryIndex >= 0 && next.pendingMisses.includes(activeWordId) &&
-      history.some(item => item.wordId === activeWordId && item.graded && item.grade === 0);
-    if (!canSwitchRetry) return next;
-    remaining.push(deferred.splice(retryIndex, 1)[0]);
-  }
+  if (!remaining.length && deferred.length) return next;
   const pending = [...remaining, ...deferred].map(item =>
     item.revealed || item.answerCorrect || item.answerAttempt || item.assisted
       ? { ...item, revealed: false, answerCorrect: false, answerAttempt: '', assisted: false }
@@ -108,20 +101,22 @@ function reconcileQueue(saved, words, candidates, { mode, repeat, day, direction
     const word = byId.get(id);
     return canQueue(word) && !(word.lastGrade > 0);
   }), ...inClassMisses])];
-  const missing = new Set(pendingMisses);
+  const seen = new Set(saved.cardQueue.filter(item => item.graded).map(item => item.wordId));
+  const retained = new Set();
   const cardQueue = [];
   let queueIndex = 0;
   saved.cardQueue.forEach((item, index) => {
     const word = byId.get(item.wordId);
-    if (!word) return;
+    if (!word || retained.has(item.wordId) || (!item.graded && seen.has(item.wordId))) return;
     if (index < saved.queueIndex) queueIndex++;
     else if (!canQueue(word) ||
-      (!item.graded && !missing.has(item.wordId) && (!eligibleIds.has(item.wordId) || (item.repeat && !repeat)))) return;
+      (!item.graded && (!eligibleIds.has(item.wordId) || (item.repeat && !repeat)))) return;
     cardQueue.push(item);
+    retained.add(item.wordId);
   });
   const queued = new Set(cardQueue.slice(queueIndex).filter(item => !item.graded).map(item => item.wordId));
-  for (const id of [...pendingMisses, ...eligibleIds]) {
-    if (!queued.has(id)) { cardQueue.push(entry(id, repeat && !missing.has(id))); queued.add(id); }
+  for (const id of eligibleIds) {
+    if (!queued.has(id) && !seen.has(id)) { cardQueue.push(entry(id, repeat)); queued.add(id); }
   }
   if (priorityIds.length) {
     const priority = new Set(priorityIds);
@@ -170,39 +165,49 @@ export async function startNewSession(options = {}) {
       if (!isCurrent()) return { records: [], result: null };
       const words = context.wordsData.filter(word => word.username === user && !word.deleted);
       const saved = [values[savedKey], values[key]].find(record => record?.username === user && record.schemaVersion === 2 &&
-        (record.day === day || record.queueIndex < record.cardQueue.length || record.pendingMisses.length));
+        (record.day === day || record.queueIndex < record.cardQueue.length));
       const availableIds = new Set(words.map(word => word.id));
       const priorityIds = requestedMisses.filter(id => availableIds.has(id));
       if (requestedMisses.length && !priorityIds.length) return { records: [], result: null };
-      const inClassMisses = [...new Set([...(saved?.inClassMisses || []), ...priorityIds])].filter(id => availableIds.has(id));
-      const pending = saved?.cardQueue.slice(saved.queueIndex).filter(item => !item.graded) || [];
+      let inClassMisses = [...new Set([...(saved?.inClassMisses || []), ...priorityIds])].filter(id => availableIds.has(id));
+      const seen = new Set(saved?.cardQueue.filter(item => item.graded).map(item => item.wordId));
+      const studied = new Set([...(saved?.studiedIds || []), ...seen]);
+      const pending = saved?.cardQueue.slice(saved.queueIndex).filter(item => !item.graded && !seen.has(item.wordId)) || [];
       const preferredIds = pending.map(item => item.wordId);
       const settings = loadSettings(user), ledger = values[dayLedgerKey];
       const selectionOptions = { mode, topic, favorites: mode === 'favorites' || special === 'FAVORITES', now,
-        ledger: !ledger?.username || ledger.username === user ? ledger : null, settings, preferredIds,
-        retryIds: [...(saved?.pendingMisses || []), ...inClassMisses] };
-      const selection = selectPracticeWords(words, selectionOptions);
-      let candidates = mode === 'learning' && selection.fresh.length ? selection.fresh : [...selection.review, ...selection.fresh];
-      let repeat = false, repeatLimited = false, moreRounds = false;
-      if (mode === 'learning' && !selectionOptions.favorites) {
-        const repeatIds = new Set(pending.filter(item => item.repeat).map(item => item.wordId));
-        const repeatOptions = { ...selectionOptions, repeat: true };
-        const nextRound = !candidates.length ? selectPracticeWords(words, repeatOptions) : null;
-        const chosen = repeatIds.size ? selectPracticeWords(words.filter(word => repeatIds.has(word.id)), repeatOptions) :
-          options.continueLearning ? nextRound : null;
-        if (chosen?.review.length) { candidates = chosen.review; repeat = true; }
-        repeatLimited = !!(nextRound?.limited || chosen?.limited);
-        moreRounds = !!nextRound?.review.length;
+        ledger: !ledger?.username || ledger.username === user ? ledger : null, settings, preferredIds, randomize: true };
+      const unseen = words.filter(word => !studied.has(word.id));
+      const selection = selectPracticeWords(unseen, selectionOptions);
+      let candidates = [...selection.fresh, ...selection.review];
+      const repeatIds = new Set(pending.filter(item => item.repeat).map(item => item.wordId));
+      const repeatOptions = { ...selectionOptions, repeat: true };
+      const nextRound = selectPracticeWords(words, repeatOptions);
+      let repeat = repeatIds.size > 0;
+      if (repeat) {
+        const resumed = selectPracticeWords(words.filter(word => repeatIds.has(word.id)), repeatOptions);
+        candidates = resumed.review;
       }
+      const finished = saved && !pending.length && saved.cardQueue.every(item => item.graded || !availableIds.has(item.wordId));
+      const startingRound = finished && options.continueLearning;
+      if (startingRound) inClassMisses = priorityIds;
+      if (startingRound && !candidates.length) { candidates = nextRound.review; repeat = true; }
+      const moreRounds = candidates.length > 0 || nextRound.review.length > 0;
+      const repeatLimited = !moreRounds && nextRound.limited;
       const direction = settings.recallDirection;
-      const startingRound = repeat && options.continueLearning && saved &&
-        saved.queueIndex >= saved.cardQueue.length && !saved.pendingMisses.length;
-      const previous = startingRound ? { ...saved, queueIndex: 0, cardQueue: [] } : saved;
+      const previous = startingRound ? { ...saved, queueIndex: 0, cardQueue: [], pendingMisses: [], inClassMisses: [],
+        studiedIds: [...studied], successfulIds: [], completedAttempts: 0, sessionId: `${encodeURIComponent(user)}:${newId()}` } : saved;
+      candidates = shufflePracticeWords(candidates);
+      const candidateIds = new Set(candidates.map(word => word.id));
+      for (const id of inClassMisses) if (!seen.has(id) && !candidateIds.has(id)) {
+        const word = words.find(word => word.id === id);
+        candidates.push(word); candidateIds.add(id);
+      }
       const result = previous ? reconcileQueue(previous, words, candidates, { mode, repeat, day, direction, inClassMisses, priorityIds }) : {
         key, scopeId, schemaVersion: 2, sessionId: `${encodeURIComponent(user)}:${newId()}`, username: user, day, ledgerKey: dayLedgerKey,
-        cardQueue: [...inClassMisses.map(id => entry(id)), ...candidates.map(word => entry(word.id, repeat))],
+        cardQueue: candidates.map(word => entry(word.id, repeat)),
         queueIndex: 0, sessionVersion: 0, pendingMisses: inClassMisses, inClassMisses,
-        completedAttempts: 0, successfulIds: [], createdAt: now, recallDirection: direction
+        completedAttempts: 0, successfulIds: [], studiedIds: [], createdAt: now, recallDirection: direction
       };
       const records = result === saved ? [] : [result];
       if (!options.refresh || result.key !== session?.key) records.push({ ...active, sessionKey: result.key }, { key: scopeId, username: user, sessionKey: result.key });
@@ -286,12 +291,15 @@ export function renderActiveCard() {
   show('practice-card', !!word); show('retrieval-controls', !!word); show('card-empty-state', !word);
   show('btn-adjust-daily-limits', !word && dailyLimitReached);
   show('btn-session-continue', !word && canContinue);
+  setText('session-continue-label', context.reviewMode === 'review' ? 'Review again' : 'Study again');
   renderRecallSelector(reverse ? 'vi-en' : 'en-vi');
   if (!word) {
     pronunciation.cancel();
-    setText('empty-state-title', dailyLimitReached ? 'Daily limit reached' : session?.cardQueue.length ? 'Practice complete' : 'No cards ready in this view');
-    setText('empty-state-subtitle', dailyLimitReached ? 'Raise the limit for new words or reviews, or clear it for unlimited practice. Your daily limit resets each day.' :
-      canContinue ? 'Start another round with words you have already studied.' :
+    setText('empty-state-title', dailyLimitReached && !canContinue ? 'Daily limit reached' : session?.cardQueue.length ? 'Practice complete' : 'No cards ready in this view');
+    setText('empty-state-subtitle', canContinue ?
+      context.reviewMode === 'review' ? 'Start another round with these words. Repeated reviews do not use additional daily slots.' :
+        'Start another round with words you have already studied.' :
+      dailyLimitReached ? 'Raise the limit for new words or reviews, or clear it for unlimited practice. Your daily limit resets each day.' :
       context.reviewMode === 'review' ? 'No reviews are due in this selection. You can switch to Daily practice for new words.' :
       context.reviewMode === 'learning' ? 'Choose another topic, add words, or open Due Reviews to check for scheduled reviews.' :
       'Check for newly due cards, choose another topic, or add new words.');
@@ -333,7 +341,7 @@ export function renderActiveCard() {
   }
   const feedback = !reverse || !item.revealed ? '' : item.graded && item.answerCorrect === false ?
     `Not quite. The answer is “${word.word}”. Try again or switch to English → Vietnamese.` : item.assisted ?
-    'Answer hinted. Choose Again for a fresh recall attempt.' : item.answerCorrect ? 'Correct. Choose your recall grade.' : 'Answer shown. Choose Again to practise it.';
+    'Answer hinted. Choose Again to practise in a later round.' : item.answerCorrect ? 'Correct. Choose your recall grade.' : 'Answer shown. Choose Again to practise in a later round.';
   show('recall-feedback', !!feedback); setText('recall-feedback', feedback);
   $('recall-feedback').dataset.correct = String(item.answerCorrect === true && !item.assisted);
   setText('recall-instruction', item.graded ? 'Continue when you have reviewed the answer.' : reverse ?
@@ -397,8 +405,8 @@ export async function submitReverseAnswer() {
   if (!answer.trim()) { $('recall-answer-input').focus(); return; }
   if (!matchesRecallAnswer(answer, word)) {
     const ticket = generation;
-    await gradeRecall(0, { submission: answer, holdCard: true });
-    if (ticket === generation && current()?.graded) $('btn-fc-next').focus({ preventScroll: true });
+    await gradeRecall(0, { submission: answer });
+    if (ticket === generation) context.showToast('Not quite. This word will be available in the next round.');
     return;
   }
   busy = true;
@@ -439,7 +447,7 @@ export async function revealCard() {
   catch (error) { if (ticket === generation) notifyFailure(error); }
   finally { finishAction(ticket); }
 }
-export async function gradeRecall(grade, { submission = null, holdCard = false } = {}) {
+export async function gradeRecall(grade, { submission = null } = {}) {
   const item = current();
   if (actionsBlocked() || !item || item.graded || ![0, 1, 2, 3].includes(grade)) return;
   if (!canGradeRecall(grade) && !(reverseMode() && grade === 0 && submission !== null && !item.revealed)) return;
@@ -455,7 +463,7 @@ export async function gradeRecall(grade, { submission = null, holdCard = false }
     const kind = isNewWord(word) ? 'new' : 'review';
     const settings = loadSettings(user);
     const limit = (kind === 'new' ? settings.dailyNewLimit : settings.dailyReviewLimit) ?? null;
-    const retry = next.pendingMisses.includes(word.id);
+    const retry = next.inClassMisses?.includes(word.id) === true;
     const repeat = kind === 'review' && !retry && graded.repeat === true;
     const earlyReview = kind === 'review' && !retry && context.reviewMode === 'learning' && !isDue(word, now);
     const scheduled = scheduleReview(word, grade, now, { earlyReview, inDueReview: context.reviewMode === 'review' });
@@ -463,13 +471,12 @@ export async function gradeRecall(grade, { submission = null, holdCard = false }
     if (submission !== null) Object.assign(graded, { answerAttempt: submission, answerCorrect: false });
     if (grade === 0) {
       if (!next.pendingMisses.includes(word.id)) next.pendingMisses.push(word.id);
-      next.cardQueue.splice(Math.min(next.cardQueue.length, next.queueIndex + 4), 0, entry(word.id));
     } else {
       next.pendingMisses = next.pendingMisses.filter(id => id !== word.id);
       if (next.inClassMisses) next.inClassMisses = next.inClassMisses.filter(id => id !== word.id);
       if (!next.successfulIds.includes(word.id)) next.successfulIds.push(word.id);
     }
-    if (!holdCard) next.queueIndex++;
+    next.queueIndex++;
     const ledger = { key: next.ledgerKey, username: user, recallAttempt: {
       wordId: word.id, success: grade > 0, kind, limit, retry, extraReview: earlyReview || repeat, repeat
     } };

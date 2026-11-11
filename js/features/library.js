@@ -104,7 +104,7 @@ export async function loadIndexedDBWordsData() {
 export function checkStudentVocabularyMetadata() {
   if (context.db && canSyncProfile(context.currentUser)) context.vocabularySync.start(context.currentUser);
 }
-export async function commitVocabularyChanges(changes, metadata = [], user = context.currentUser) {
+export async function commitVocabularyChanges(changes, metadata = [], user = context.currentUser, { render = true } = {}) {
   if (!user || user !== context.currentUser) throw new Error('The active profile changed before this edit could be saved.');
   const generation = context.accountGeneration;
   const prepared = changes.map(change => ({ ...change, username: user }));
@@ -113,7 +113,7 @@ export async function commitVocabularyChanges(changes, metadata = [], user = con
     const byId = new Map(context.wordsData.map(w => [w.id, w]));
     records.forEach(w => w.deleted ? byId.delete(w.id) : byId.set(w.id, w));
     context.wordsData = [...byId.values()]; updateBadges();
-    if (!$('view-library')?.classList.contains('hidden')) renderLibrary();
+    if (render && !$('view-library')?.classList.contains('hidden')) renderLibrary();
     context.updateStatusBadge(false, canSyncProfile(user) ? 'Saved locally · sync pending' : 'Guest library · saved on this device');
     void context.syncPendingOperations();
     if (!metadata.length) void context.reconcileSession().catch(error => { if (isActiveUser(user, generation)) report(error); });

@@ -112,15 +112,15 @@ test('manual rounds reuse review slots until disabled and reserve slots for newl
   await storage.mutateWords([patch('a', 2)], [repeat('a', { extraReview: true })]);
   await storage.mutateWords([patch('a', 3)], [repeat('a')]);
   await storage.mutateWords([patch('a', 4)], [repeat('a', { extraReview: true })]);
-  await assert.rejects(storage.mutateWords([patch('a', 5)], [repeat('a', { limit: 0 })]), { code: 'daily-limit' });
-  await assert.rejects(storage.mutateWords([patch('b', 2)], [repeat('b')]), { code: 'daily-limit' });
+  await storage.mutateWords([patch('a', 5)], [repeat('a', { limit: 0 })]);
+  await storage.mutateWords([patch('b', 2)], [repeat('b')]);
   await assert.rejects(storage.mutateWords([patch('a', 5)], [repeat('a', { retry: true })]), /Invalid daily practice attempt/);
   const ledger = await storage.idbGet('metadata', ledgerKey(username));
   assert.deepEqual(ledger.dailyNewIds, ['a', 'b']);
-  assert.deepEqual(ledger.dailyReviewIds, ['a']);
-  assert.equal(ledger.completedAttempts, 5);
-  assert.equal((await storage.readUserWord(username, 'a')).reviewCount, 4);
-  assert.equal((await storage.readUserWord(username, 'b')).reviewCount, 1);
+  assert.deepEqual(ledger.dailyReviewIds, []);
+  assert.equal(ledger.completedAttempts, 7);
+  assert.equal((await storage.readUserWord(username, 'a')).reviewCount, 5);
+  assert.equal((await storage.readUserWord(username, 'b')).reviewCount, 2);
 });
 
 test('categorized attempts cannot use a foreign key and a rejected batch reserves no slots', async () => {

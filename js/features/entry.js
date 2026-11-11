@@ -1,7 +1,7 @@
 import { context } from '../core/context.js';
 import { exampleSourceUrl, validateVocabulary, validateImportTopic, senseKey, newId, wordTopics } from '../core/vocabulary.js';
 import { buildAIPrompt, parseAIBatch } from '../core/ai-vocabulary.js';
-import { DICTIONARY_NOT_FOUND, dictionaryDetails, quickFillCollocations, quickFillSentence, translateQuickFillWord } from '../core/quick-fill.js';
+import { DICTIONARY_NOT_FOUND, dictionaryDetails, quickFillCollocations, quickFillSentence, quickFillSynonyms, translateQuickFillWord } from '../core/quick-fill.js';
 import { renderImportTopicOptions } from './library.js';
 const $ = id => document.getElementById(id);
 const fields = { word: 'input-word', phonetic: 'input-phonetic', pos: 'input-pos', meaning: 'confirm-input-meaning',
@@ -154,7 +154,7 @@ export async function quickFillEntry() {
   status('quickfill-status', 'Looking up word details and context...');
   try {
     const translation = translateQuickFillWord(word, options).then(meaning => fill('meaning', meaning)).catch(() => {});
-    const dictionary = await dictionaryDetails(word, options).catch(() => undefined);
+    const dictionary = await dictionaryDetails(word, { ...options, pos: $('input-pos').value }).catch(() => undefined);
     if (!current()) return;
     if (navigator.onLine === false) {
       wordNotFound();
@@ -168,9 +168,11 @@ export async function quickFillEntry() {
     }
     const collocations = quickFillCollocations(word, $('input-pos').value, options)
       .then(pairs => fill('collocations', pairs)).catch(() => {});
+    const synonyms = dictionary?.synonyms.length ? null : quickFillSynonyms(word, $('input-pos').value, options)
+      .then(terms => fill('synonyms', terms)).catch(() => {});
     const example = (dictionary?.clozeSentence ? Promise.resolve(dictionary) : quickFillSentence(word, options).catch(() => null))
       .then(sentence => { fillExample(sentence || dictionary || undefined); return sentence; });
-    const [sentence] = await Promise.all([example, translation, collocations]);
+    const [sentence] = await Promise.all([example, translation, collocations, synonyms]);
     if (!current()) return;
     if (filled) $('entry-details').open = true;
     if (dictionary === null && !sentence) { wordNotFound(); return; }
