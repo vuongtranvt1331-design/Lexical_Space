@@ -194,7 +194,7 @@ export function updateLibraryTabsUI() {
 export function renderVocabularyCardHtml(word) {
   const flipped = flippedCards.has(word.id), id = esc(word.id);
   const level = recallLevelFor(word);
-  const gradeClass = level === null ? '' : ` grade-${level - 1}`;
+  const gradeClass = ` grade-${(level ?? 1) - 1}`;
   const mastered = word.memoryStatus === 'mastered';
   const status = mastered ? 'Mastered' : word.masteryOverride === 'not_remembered' ? 'Unknown' : word.reviewCount ? 'Learning' : 'New';
   const highlighted = targetSegments(word.exampleSentence, word.word, { inflections: true }).map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');

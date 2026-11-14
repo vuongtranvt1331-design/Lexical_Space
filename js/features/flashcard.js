@@ -1,6 +1,6 @@
 import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
-import { exampleSourceUrl, newId, normalizeTerm } from '../core/vocabulary.js';
+import { exampleSourceUrl, newId, normalizeTerm, recallLevelFor } from '../core/vocabulary.js';
 import { scheduleReview, selectPracticeWords, shufflePracticeWords, calendarDay, isDailyPracticeWord, isDue, isNewWord } from '../core/srs.js';
 import { loadSettings, saveSettings } from '../core/settings.js';
 import { pronunciation } from '../core/pronunciation.js';
@@ -109,8 +109,7 @@ function reconcileQueue(saved, words, candidates, { mode, repeat, day, direction
     const word = byId.get(item.wordId);
     if (!word || retained.has(item.wordId) || (!item.graded && seen.has(item.wordId))) return;
     if (index < saved.queueIndex) queueIndex++;
-    else if (!canQueue(word) ||
-      (!item.graded && (!eligibleIds.has(item.wordId) || (item.repeat && !repeat)))) return;
+    else if (!item.graded && (!canQueue(word) || !eligibleIds.has(item.wordId) || (item.repeat && !repeat))) return;
     cardQueue.push(item);
     retained.add(item.wordId);
   });
@@ -279,6 +278,9 @@ export function renderActiveCard() {
   const card = $('practice-card');
   if (!card) return;
   const item = current(), word = item && context.wordsData.find(w => w.id === item.wordId);
+  const level = word ? recallLevelFor(word) : null;
+  for (let grade = 0; grade < 4; grade++) card.classList.toggle(`grade-${grade}`, (level ?? 1) === grade + 1);
+  card.dataset.recallLevel = level == null ? 'new' : String(level);
   const visibleView = practiceIsVisible(card);
   const reverse = session ? reverseMode() : loadSettings(context.currentUser).recallDirection === 'vi-en';
   const renderedKey = word ? `${session.sessionId}:${item.entryId}:${reverse}` : '';
@@ -497,15 +499,7 @@ export async function gradeRecall(grade, { submission = null } = {}) {
   finally { await finishAction(ticket); }
 }
 function adjacentCardIndex(offset) {
-  let index = session.queueIndex + offset;
-  if (context.reviewMode !== 'learning' || index < 0 || index >= session.cardQueue.length) return index;
-  const byId = new Map(context.wordsData.map(word => [word.id, word]));
-  while (index >= 0 && index < session.cardQueue.length) {
-    const word = byId.get(session.cardQueue[index].wordId);
-    if (word && isDailyPracticeWord(word)) break;
-    index += offset;
-  }
-  return index;
+  return session.queueIndex + offset;
 }
 async function stepCard(offset) {
   if (actionsBlocked() || !session) return;

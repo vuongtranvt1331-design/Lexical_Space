@@ -44,7 +44,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
       const memoryStatus = grade === 3 ? 'mastered' : 'not_remembered';
       sample.innerHTML = renderVocabularyCardHtml({ ...records[0], recallLevel: undefined, lastGrade: grade, memoryStatus });
       const gradeClasses = [...sample.firstElementChild.classList].filter(name => name.startsWith('grade-'));
-      assert.deepEqual(gradeClasses, grade === undefined ? [] : [`grade-${grade}`]);
+      assert.deepEqual(gradeClasses, [`grade-${grade ?? 0}`]);
     }
     sample.innerHTML = renderVocabularyCardHtml({ ...records[0], memoryStatus: 'mastered', lastGrade: 2, recallLevel: undefined });
     assert.ok(sample.firstElementChild.classList.contains('grade-3'));

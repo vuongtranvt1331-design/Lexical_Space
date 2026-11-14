@@ -318,7 +318,7 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       await flash.revealCard();
       await flash.gradeRecall(3);
       assert.deepEqual(queue(), ['yellow']);
-      assert.equal($('btn-fc-previous').disabled, true);
+      assert.equal($('btn-fc-previous').disabled, false);
       await flash.revealCard();
       await flash.gradeRecall(0);
       assert.deepEqual(flash.getSessionState().pendingMisses, ['yellow']);

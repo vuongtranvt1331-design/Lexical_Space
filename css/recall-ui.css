@@ -9,6 +9,8 @@
   margin-right: 22px;
   overflow: visible;
   touch-action: pan-y pinch-zoom;
+  border-color: var(--grade-border, #475569);
+  box-shadow: inset 0 0 0 1px var(--grade-border, #475569);
 }
 #review-flashcard-stage { min-height: 304px; }
 #card-empty-state { justify-content: safe center; overflow-y: auto; }
