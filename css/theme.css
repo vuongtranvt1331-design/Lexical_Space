@@ -1,0 +1,95 @@
+/* Shared light palette utilities work with or without the optional Tailwind CDN. */
+.theme-surface { background-color: var(--surface); }
+.theme-text { color: var(--ink); }
+.theme-muted { color: var(--muted); }
+.theme-primary { background-color: var(--primary); }
+.theme-primary-text { color: var(--primary); }
+.theme-on-primary { color: var(--on-primary); }
+.theme-line { border-color: var(--line); }
+.theme-shadow { box-shadow: var(--shadow); }
+.theme-accent-soft { background-color: var(--accent-soft); }
+.theme-backdrop { background-color: var(--overlay); }
+.theme-danger-surface { background-color: var(--danger-soft); }
+.theme-danger-text { color: var(--danger); }
+.theme-success-text { color: var(--success); }
+.theme-warning-text { color: var(--warning); }
+.hover\:theme-surface:hover { background-color: var(--page-bg); }
+.hover\:theme-primary:hover { background-color: var(--primary); filter: brightness(.97); }
+.hover\:theme-text:hover { color: var(--ink); }
+.hover\:theme-primary-text:hover { color: var(--primary); }
+.hover\:theme-on-primary:hover { color: var(--on-primary); }
+.focus\:theme-line:focus { border-color: var(--primary); }
+.placeholder\:theme-muted::placeholder { color: var(--muted); }
+::selection { color: var(--on-primary); background: var(--primary); }
+
+body { background: var(--page-bg); color: var(--ink); }
+main { background: var(--surface); border-radius: 18px; }
+h1, h2, h3, h4, h5, h6, input, textarea, select { color: var(--ink); }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
+input, textarea, select { accent-color: var(--primary); }
+.app-topbar, #drawer, .profile-dropdown, .deck-dialog,
+.entry-sheet, .retrieval-card, .library-card-face, .check-panel, .profile-section {
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.app-topbar, #drawer { border-color: var(--line); }
+.word-meta, .recall-card-header, .library-meta, .library-phonetic, .library-word-details h4,
+.library-card-back h4, .recall-answer h3, .deck-dialog-kicker, .entry-heading p,
+.recall-instruction, .entry-sheet p, .deck-import-profile, .deck-dialog-status {
+  color: var(--muted);
+}
+.library-card-face h3, .entry-heading h2, .check-panel h3, .check-meaning,
+.recall-answer p, .answer-target, .library-meaning, #fc-front-word {
+  color: var(--ink);
+}
+.recall-card-tools::before { background: var(--line); }
+.library-rail-button, .topic-option .topic-option-actions button,
+.topbar-menu-button, .drawer-icon-button, .entry-secondary {
+  color: var(--primary);
+  background: var(--surface);
+  border-color: var(--line);
+}
+.library-rail-button:hover, .topbar-menu-button:hover, .drawer-icon-button:hover,
+.entry-secondary:hover, .topic-option-actions button:hover {
+  color: var(--primary);
+  background: var(--accent-soft);
+}
+.library-rail-button[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--primary); }
+.library-rail-button[data-action="delete"], .topic-option-actions button[data-deck-action="delete"] { color: var(--danger); }
+.library-rail-button[data-action="mastery"] { color: var(--success); }
+.library-rail-button[data-action="mastery"][aria-pressed="true"] { color: var(--danger); }
+.library-rail-button[data-action="favorite"][aria-pressed="true"],
+.library-rail-button[data-action="favorite"][aria-pressed="true"] svg { color: var(--danger); fill: var(--danger); }
+.entry-primary, #btn-login-submit, #btn-fc-reveal, #btn-fc-previous,
+.reverse-recall-form button, .profile-avatar-button {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+.entry-primary:hover, .profile-avatar-button:hover { background: var(--primary); filter: brightness(.97); }
+.drawer-nav .nav-item[aria-current="page"] :is(svg, i) { color: var(--on-primary); }
+.entry-tabs button[aria-selected="true"],
+.recall-direction-segments input:checked + span { color: var(--on-primary); background: var(--primary); }
+.entry-tabs button:not([aria-selected="true"]), .recall-direction-segments span { color: var(--muted); }
+.topbar-guide-button, .topbar-guide-button:hover { color: var(--warning); background: var(--warning-soft); }
+.profile-connection-dot { border-color: var(--surface); }
+mark { background: var(--accent-soft); color: var(--ink); }
+.entry-input, .reverse-recall-form input, .context-field { color: var(--ink); background: var(--surface); border-color: var(--line); }
+.startup-loader, .space-loader { background: var(--page-bg); color: var(--ink); }
+.space-brand--ls, .space-brand--gs, .space-brand--as { color: var(--primary); background: var(--surface); border-color: var(--line); box-shadow: var(--shadow); }
+.space-brand--ls .space-brand__mark, .space-loader--ls [data-loader-lead],
+.space-loader--ls [data-loader-text], .space-loader--ls [data-loader-cursor] {
+  color: var(--primary);
+  background: none;
+  -webkit-text-fill-color: var(--primary);
+  text-shadow: none;
+}
+button:disabled, .recall-action-bar button:disabled, .topic-option-actions button:disabled,
+#modal-login #btn-login-submit:disabled, .ai-review-actions button:disabled,
+#btn-fc-previous:disabled, #btn-fc-reveal:disabled {
+  background: var(--line);
+  border-color: var(--line);
+  color: var(--muted);
+  opacity: 1;
+}
+.library-rail-button:disabled, .recall-card-tools button:disabled { opacity: 1; }

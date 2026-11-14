@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>LexicalSpace - Smart Vocabulary Notebook</title>
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23818cf8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='%230a1020' stroke='%23818cf8'/%3E%3Ctext x='8' y='39' font-family='sans-serif' font-weight='900' font-size='22' fill='url(%23g)'%3E%3E/_%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop stop-color='%234255ff'/%3E%3Cstop offset='1' stop-color='%234255ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='%23ffffff' stroke='%234255ff'/%3E%3Ctext x='8' y='39' font-family='sans-serif' font-weight='900' font-size='22' fill='url(%23g)'%3E%3E/_%3C/text%3E%3C/svg%3E">
 
 
   <!-- Tailwind CSS CDN -->
@@ -18,14 +18,15 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 
   <script src="./js/features/loading-failsafe.js"></script>
-  <link rel="stylesheet" href="./css/main.css?v=42">
-  <link rel="stylesheet" href="./css/animations.css">
-  <link rel="stylesheet" href="./css/recall-ui.css?v=43.0.1-r4">
-  <link rel="stylesheet" href="./css/entry-ui.css?v=43.0.1-r4">
+  <link rel="stylesheet" href="./css/main.css?v=43.0.1-light1">
+  <link rel="stylesheet" href="./css/animations.css?v=43.0.1-light1">
+  <link rel="stylesheet" href="./css/recall-ui.css?v=43.0.1-light1">
+  <link rel="stylesheet" href="./css/entry-ui.css?v=43.0.1-light1">
+  <link rel="stylesheet" href="./css/theme.css?v=43.0.1-light1">
   <script defer src="./js/features/loading.js"></script>
   <script defer src="./js/core/offline.js"></script>
 </head>
-<body class="flex flex-col antialiased selection:bg-indigo-500 selection:text-white overflow-hidden">
+<body class="flex flex-col antialiased selection:theme-primary selection:theme-on-primary overflow-hidden">
   <section id="space-loader" class="startup-loader" role="status" aria-label="Opening LexicalSpace">
     <div class="startup-panel"><div class="startup-mark" aria-hidden="true">&gt;/_</div>
       <p class="startup-type" aria-hidden="true"><span data-loader-text></span><span class="startup-caret">_</span></p>
@@ -33,23 +34,23 @@
     </div>
   </section>
 
-<noscript><link rel="stylesheet" href="./css/no-script.css"></noscript>
+<noscript><link rel="stylesheet" href="./css/no-script.css?v=43.0.1-light1"></noscript>
 
   <!-- Regular Alert Toast Notification -->
-  <div id="toast" class="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-2xl shadow-2xl transition-all duration-300 opacity-0 pointer-events-none translate-y-[-20px] font-bold text-xs max-w-[92vw] text-center bg-slate-800 text-white border border-slate-700">
+  <div id="toast" class="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-2xl theme-shadow transition-all duration-300 opacity-0 pointer-events-none translate-y-[-20px] font-bold text-xs max-w-[92vw] text-center theme-surface theme-text border theme-line">
     <i id="toast-icon" class="ph-bold text-lg flex-shrink-0"></i>
     <span id="toast-msg">Notification</span>
   </div>
 
   <!-- Top bar -->
-  <header class="app-topbar flex-shrink-0 bg-[#0c1322]/95 backdrop-blur-md border-b border-slate-800/80 shadow-sm z-30">
+  <header class="app-topbar flex-shrink-0 theme-surface backdrop-blur-md border-b theme-line theme-shadow z-30">
     <div class="topbar-brand">
       <button id="btn-open-drawer" type="button" aria-label="Menu" title="Menu" aria-controls="drawer" aria-expanded="false" aria-haspopup="dialog" class="drawer-control topbar-menu-button">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="13" height="14" rx="2"/><path d="M4 17V5a2 2 0 0 1 2-2h11"/></svg>
       </button>
       <div class="topbar-wordmark">
         <div class="space-brand space-brand--ls" style="--space-brand-size:2rem" aria-hidden="true"><span class="space-brand__mark">&gt;/_</span></div>
-        <h1 class="font-black tracking-tight text-white">Lexical<span class="text-indigo-400">Space</span></h1>
+        <h1 class="font-black tracking-tight theme-text">Lexical<span class="theme-primary-text">Space</span></h1>
       </div>
     </div>
 
@@ -73,8 +74,8 @@
 
 
   <!-- Navigation Drawer -->
-  <div id="drawer-backdrop" aria-hidden="true" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
-  <div id="drawer" role="dialog" aria-modal="true" aria-label="Navigation" inert class="fixed top-0 bottom-0 left-0 z-50 w-72 max-w-[85vw] bg-slate-900 border-r border-slate-800 shadow-2xl transition-transform duration-300 ease-out -translate-x-full flex flex-col">
+  <div id="drawer-backdrop" aria-hidden="true" class="fixed inset-0 z-40 theme-backdrop backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  <div id="drawer" role="dialog" aria-modal="true" aria-label="Navigation" inert class="fixed top-0 bottom-0 left-0 z-50 w-72 max-w-[85vw] theme-surface border-r theme-line theme-shadow transition-transform duration-300 ease-out -translate-x-full flex flex-col">
     <nav id="drawer-navigation" class="drawer-nav p-2.5 space-y-1.5 flex-1 overflow-y-auto" aria-label="Main navigation">
       <button type="button" data-target="view-review" aria-current="page" class="nav-item">
         <i class="ph-bold ph-cards" aria-hidden="true"></i>
@@ -203,40 +204,40 @@
           
           <!-- Session Complete / No Eligible Review Words Screen -->
           <div id="card-empty-state" class="hidden absolute inset-0 playing-card-frame rounded-2xl p-4 flex flex-col items-center justify-center text-center z-10">
-            <div class="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 text-indigo-400 flex items-center justify-center text-lg mb-1.5">
+            <div class="w-10 h-10 rounded-xl theme-surface border theme-line theme-primary-text flex items-center justify-center text-lg mb-1.5">
               <i id="empty-state-icon" class="ph-bold ph-sparkle"></i>
             </div>
-            <h3 class="text-base font-black text-white tracking-tight" id="empty-state-title">Session Complete</h3>
-            <p id="empty-state-subtitle" class="hidden text-[11px] font-semibold text-slate-300 mt-1 max-w-xs leading-relaxed">
+            <h3 class="text-base font-black theme-text tracking-tight" id="empty-state-title">Session Complete</h3>
+            <p id="empty-state-subtitle" class="hidden text-[11px] font-semibold theme-text mt-1 max-w-xs leading-relaxed">
               No studied words available for review yet. Study some vocabulary first.
             </p>
             
-            <div id="session-stats-box" class="w-full max-w-xs my-2.5 bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 space-y-1 text-left font-bold text-xs">
-              <div class="flex items-center justify-between text-emerald-400">
+            <div id="session-stats-box" class="w-full max-w-xs my-2.5 theme-surface border theme-line rounded-xl p-2.5 space-y-1 text-left font-bold text-xs">
+              <div class="flex items-center justify-between theme-success-text">
                 <span class="flex items-center gap-1"><i class="ph-bold ph-check text-sm"></i> Successfully recalled:</span>
                 <span id="stat-known-count" class="text-sm font-black">0</span>
               </div>
-              <div class="flex items-center justify-between text-rose-400 border-t border-slate-800/80 pt-1">
+              <div class="flex items-center justify-between theme-danger-text border-t theme-line pt-1">
                 <span class="flex items-center gap-1"><i class="ph-bold ph-x text-sm"></i> Needs more practice:</span>
                 <span id="stat-unknown-count" class="text-sm font-black">0</span>
               </div>
             </div>
 
             <div class="w-full max-w-xs space-y-1.5 mt-1">
-              <button id="btn-session-continue" type="button" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
+              <button id="btn-session-continue" type="button" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 theme-primary hover:theme-primary active:scale-95 theme-on-primary font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
                 <i class="ph-bold ph-play text-sm" aria-hidden="true"></i>
                 <span id="session-continue-label">Study again</span>
               </button>
-              <button id="btn-adjust-daily-limits" type="button" aria-haspopup="dialog" aria-controls="drawer" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-extrabold text-xs rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-1.5">
+              <button id="btn-adjust-daily-limits" type="button" aria-haspopup="dialog" aria-controls="drawer" hidden class="hidden min-h-[40px] w-full py-1.5 px-3 theme-surface hover:theme-surface active:scale-95 theme-text font-extrabold text-xs rounded-xl border theme-line transition-all flex items-center justify-center gap-1.5">
                 <i class="ph-bold ph-sliders-horizontal text-sm" aria-hidden="true"></i>
                 <span>Manage daily limits</span>
               </button>
-              <button id="btn-session-add-words" class="min-h-[40px] w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
+              <button id="btn-session-add-words" class="min-h-[40px] w-full py-1.5 px-3 theme-primary hover:theme-primary active:scale-95 theme-on-primary font-extrabold text-xs rounded-xl transition-all flex items-center justify-center gap-1.5">
                 <i class="ph-bold ph-plus-circle text-sm"></i>
                 <span>Add New Words</span>
               </button>
-              <button id="btn-session-restart" class="min-h-[40px] w-full py-1.5 px-3 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 font-extrabold text-xs rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-1.5">
-                <i class="ph-bold ph-arrows-clockwise text-sm text-slate-300"></i>
+              <button id="btn-session-restart" class="min-h-[40px] w-full py-1.5 px-3 theme-surface hover:theme-surface active:scale-95 theme-text font-extrabold text-xs rounded-xl border theme-line transition-all flex items-center justify-center gap-1.5">
+                <i class="ph-bold ph-arrows-clockwise text-sm theme-text"></i>
                 <span>Check for more cards</span>
               </button>
             </div>
@@ -312,20 +313,20 @@
 
         <!-- Topic selector appears above mode buttons, matching Library -->
         <div class="relative w-full" id="review-topic-popover-container">
-          <div id="review-topic-upward-menu" class="hidden absolute bottom-full mb-1.5 left-0 right-0 z-40 bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-xl">
-            <div class="px-3.5 py-2 border-b border-slate-800 flex items-center justify-between text-[11px] font-black text-slate-400 uppercase tracking-wider bg-slate-950/60">
+          <div id="review-topic-upward-menu" class="hidden absolute bottom-full mb-1.5 left-0 right-0 z-40 theme-surface border theme-line rounded-2xl theme-shadow overflow-hidden backdrop-blur-xl">
+            <div class="px-3.5 py-2 border-b theme-line flex items-center justify-between text-[11px] font-black theme-muted uppercase tracking-wider theme-surface">
               <span>Select Topic (A-Z)</span>
-              <span id="review-topic-menu-count" class="text-slate-300">0 Topics</span>
+              <span id="review-topic-menu-count" class="theme-text">0 Topics</span>
             </div>
             <div id="review-topic-options-list" class="max-h-48 overflow-y-auto p-1.5 space-y-1"></div>
           </div>
 
-          <button type="button" id="btn-review-topic-selector" class="min-h-[46px] w-full px-3.5 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm font-bold text-slate-200 flex items-center justify-between active:scale-[0.99] transition-all shadow-xs">
+          <button type="button" id="btn-review-topic-selector" class="min-h-[46px] w-full px-3.5 py-2 theme-surface border theme-line rounded-xl text-sm font-bold theme-text flex items-center justify-between active:scale-[0.99] transition-all theme-shadow">
             <div class="flex items-center gap-2 truncate">
-              <i class="ph-bold ph-folder-notch text-[#D4AF37] text-base"></i>
+              <i class="ph-bold ph-folder-notch theme-primary-text text-base"></i>
               <span id="review-selected-topic-label" class="truncate">Topic: All Topics</span>
             </div>
-            <i id="review-topic-chevron" class="ph-bold ph-caret-up text-slate-400 transition-transform"></i>
+            <i id="review-topic-chevron" class="ph-bold ph-caret-up theme-muted transition-transform"></i>
           </button>
         </div>
 
@@ -420,28 +421,28 @@
 
     <section id="view-library" class="view-panel hidden h-full flex flex-col justify-between">
       <div class="flex-shrink-0 flex items-center justify-between px-1 py-1 text-xs">
-        <span class="font-black text-indigo-300 uppercase text-[10px] tracking-wide flex items-center gap-1">
-          <i class="ph-fill ph-diamond text-[#D4AF37]"></i> Vocabulary Library
+        <span class="font-black theme-primary-text uppercase text-[10px] tracking-wide flex items-center gap-1">
+          <i class="ph-fill ph-diamond theme-primary-text"></i> Vocabulary Library
         </span>
         <div class="flex items-center gap-2">
-          <span id="lib-count-status" class="text-slate-400 font-extrabold text-[11px]">
+          <span id="lib-count-status" class="theme-muted font-extrabold text-[11px]">
             Showing: 0 words
           </span>
-          <button id="btn-lib-create-topic" class="text-[#D4AF37] hover:text-[#F3D060] text-xs font-black flex items-center gap-1" title="New Topic">
+          <button id="btn-lib-create-topic" class="theme-primary-text hover:theme-primary-text text-xs font-black flex items-center gap-1" title="New Topic">
             <i class="ph-bold ph-plus-circle text-sm"></i> Topic
           </button>
         </div>
       </div>
 
-      <div id="lib-topic-create-box" class="hidden flex-shrink-0 bg-slate-900 p-2.5 rounded-xl border border-slate-800 space-y-1.5 my-1">
+      <div id="lib-topic-create-box" class="hidden flex-shrink-0 theme-surface p-2.5 rounded-xl border theme-line space-y-1.5 my-1">
         <div class="flex items-center justify-between">
-          <span class="text-xs font-black text-indigo-400 uppercase">Create New Topic</span>
-          <button id="btn-close-lib-topic-box" class="min-w-[32px] min-h-[32px] flex items-center justify-center text-slate-400 hover:text-white"><i class="ph-bold ph-x text-base"></i></button>
+          <span class="text-xs font-black theme-primary-text uppercase">Create New Topic</span>
+          <button id="btn-close-lib-topic-box" class="min-w-[32px] min-h-[32px] flex items-center justify-center theme-muted hover:theme-text"><i class="ph-bold ph-x text-base"></i></button>
         </div>
         <div class="flex gap-2">
           <input type="text" id="input-lib-topic-name" placeholder="Topic name..."
-            class="min-h-[40px] flex-1 text-xs font-semibold px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg outline-none text-white" />
-          <button id="btn-save-lib-topic" class="min-h-[40px] px-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-extrabold active:scale-95 transition-all">
+            class="min-h-[40px] flex-1 text-xs font-semibold px-3 py-1.5 theme-surface border theme-line rounded-lg outline-none theme-text" />
+          <button id="btn-save-lib-topic" class="min-h-[40px] px-3.5 theme-primary hover:theme-primary theme-on-primary rounded-lg text-xs font-extrabold active:scale-95 transition-all">
             Save
           </button>
         </div>
@@ -451,40 +452,40 @@
 
       <div class="flex-shrink-0 space-y-2 pt-1 pb-1">
         <div class="relative w-full">
-          <i class="ph-bold ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-base"></i>
+          <i class="ph-bold ph-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 theme-muted text-base"></i>
           <input type="text" id="lib-search-input" placeholder="Search words or meanings..."
-            class="min-h-[46px] h-[46px] w-full pl-10 pr-9 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm font-semibold outline-none text-white placeholder:text-slate-500 focus:border-indigo-500 transition-all shadow-xs" />
-          <button id="btn-lib-clear-search" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1" title="Clear Search" aria-label="Clear Search">
+            class="min-h-[46px] h-[46px] w-full pl-10 pr-9 py-2 theme-surface border theme-line rounded-xl text-sm font-semibold outline-none theme-text placeholder:theme-muted focus:theme-line transition-all theme-shadow" />
+          <button id="btn-lib-clear-search" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 theme-muted hover:theme-text p-1" title="Clear Search" aria-label="Clear Search">
             <i class="ph-bold ph-x-circle text-base"></i>
           </button>
         </div>
 
         <div class="relative w-full" id="lib-topic-popover-container">
-          <div id="lib-topic-upward-menu" class="hidden absolute bottom-full mb-1.5 left-0 right-0 z-40 bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden backdrop-blur-xl">
-            <div class="px-3.5 py-2 border-b border-slate-800 flex items-center justify-between text-[11px] font-black text-slate-400 uppercase tracking-wider bg-slate-950/60">
+          <div id="lib-topic-upward-menu" class="hidden absolute bottom-full mb-1.5 left-0 right-0 z-40 theme-surface border theme-line rounded-2xl theme-shadow overflow-hidden backdrop-blur-xl">
+            <div class="px-3.5 py-2 border-b theme-line flex items-center justify-between text-[11px] font-black theme-muted uppercase tracking-wider theme-surface">
               <span>Select / Manage Topics (A-Z)</span>
-              <span id="lib-topic-menu-count" class="text-[#D4AF37]">0 Topics</span>
+              <span id="lib-topic-menu-count" class="theme-primary-text">0 Topics</span>
             </div>
             <div id="lib-topic-options-list" class="max-h-48 overflow-y-auto p-1.5 space-y-1"></div>
           </div>
 
-          <button type="button" id="btn-lib-topic-selector" class="min-h-[46px] w-full px-3.5 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm font-bold text-slate-200 flex items-center justify-between active:scale-[0.99] transition-all shadow-xs">
+          <button type="button" id="btn-lib-topic-selector" class="min-h-[46px] w-full px-3.5 py-2 theme-surface border theme-line rounded-xl text-sm font-bold theme-text flex items-center justify-between active:scale-[0.99] transition-all theme-shadow">
             <div class="flex items-center gap-2 truncate">
-              <i class="ph-bold ph-folder-notch text-[#D4AF37] text-base"></i>
+              <i class="ph-bold ph-folder-notch theme-primary-text text-base"></i>
               <span id="lib-selected-topic-label" class="truncate">Topic: All Topics</span>
             </div>
-            <i id="lib-topic-chevron" class="ph-bold ph-caret-up text-slate-400 transition-transform"></i>
+            <i id="lib-topic-chevron" class="ph-bold ph-caret-up theme-muted transition-transform"></i>
           </button>
         </div>
 
         <!-- Bottom Controls: [Unknown] [♡ Favorites Collection] [Known] -->
         <div class="flex items-center gap-2 w-full">
-          <button id="btn-lib-tab-unknown" type="button" aria-pressed="true" class="practice-mode-button flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 shadow-sm active:scale-95 truncate" title="Unknown Vocabulary">
-            <i class="ph-bold ph-warning-circle text-base flex-shrink-0 text-amber-400"></i>
+          <button id="btn-lib-tab-unknown" type="button" aria-pressed="true" class="practice-mode-button flex-1 min-h-[46px] py-2 px-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all border flex items-center justify-center gap-1.5 theme-shadow active:scale-95 truncate" title="Unknown Vocabulary">
+            <i class="ph-bold ph-warning-circle text-base flex-shrink-0 theme-warning-text"></i>
             <span class="truncate">Unknown</span>
           </button>
 
-          <button type="button" id="btn-lib-tab-favorites" aria-label="Favorites Collection" aria-pressed="false" title="Favorites Collection" class="practice-mode-button w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center shadow-md transition-all active:scale-90 border relative">
+          <button type="button" id="btn-lib-tab-favorites" aria-label="Favorites Collection" aria-pressed="false" title="Favorites Collection" class="practice-mode-button w-[46px] h-[46px] min-w-[46px] min-h-[46px] aspect-square rounded-full flex-shrink-0 flex items-center justify-center theme-shadow transition-all active:scale-90 border relative">
             <i id="lib-bottom-fav-icon" class="ph-bold ph-heart text-xl"></i>
           </button>
 
@@ -559,35 +560,35 @@
   <!-- Note: Quick Import modal redesigned and moved inline into view-entry as #section-ai-library directly below Switch to Enter Topic -->
   <div id="modal-quick-import" class="hidden" aria-hidden="true"></div>
 
-  <div id="modal-merge-topics" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700 w-full max-w-sm rounded-3xl shadow-2xl p-4 space-y-3.5 text-slate-100">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+  <div id="modal-merge-topics" class="hidden fixed inset-0 z-50 theme-backdrop backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-surface border theme-line w-full max-w-sm rounded-3xl theme-shadow p-4 space-y-3.5 theme-text">
+      <div class="flex items-center justify-between border-b theme-line pb-2.5">
         <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-xl bg-indigo-950 text-indigo-400 border border-indigo-800 flex items-center justify-center">
+          <div class="w-8 h-8 rounded-xl theme-accent-soft theme-primary-text border theme-line flex items-center justify-center">
             <i class="ph-bold ph-git-merge text-lg"></i>
           </div>
           <div>
-            <h3 class="font-black text-sm text-white">Merge Topics</h3>
-            <p class="text-[10px] text-slate-400">Combine multiple topics into one</p>
+            <h3 class="font-black text-sm theme-text">Merge Topics</h3>
+            <p class="text-[10px] theme-muted">Combine multiple topics into one</p>
           </div>
         </div>
-        <button id="btn-close-merge-modal" type="button" class="text-slate-400 hover:text-white"><i class="ph-bold ph-x text-lg"></i></button>
+        <button id="btn-close-merge-modal" type="button" class="theme-muted hover:theme-text"><i class="ph-bold ph-x text-lg"></i></button>
       </div>
 
       <div class="space-y-2">
-        <label class="block text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">1. Select topics to merge (2+ required):</label>
-        <div id="merge-topic-checkboxes" class="max-h-36 overflow-y-auto p-2 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5 text-xs"></div>
+        <label class="block text-[11px] font-extrabold uppercase theme-muted tracking-wider">1. Select topics to merge (2+ required):</label>
+        <div id="merge-topic-checkboxes" class="max-h-36 overflow-y-auto p-2 theme-surface rounded-xl border theme-line space-y-1.5 text-xs"></div>
       </div>
 
       <div class="space-y-1">
-        <label class="block text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">2. New topic name:</label>
+        <label class="block text-[11px] font-extrabold uppercase theme-muted tracking-wider">2. New topic name:</label>
         <input type="text" id="input-merge-new-name" placeholder="Enter combined topic name..."
-          class="min-h-[44px] w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-white outline-none focus:border-indigo-500" />
+          class="min-h-[44px] w-full px-3 py-2 theme-surface border theme-line rounded-xl text-xs font-bold theme-text outline-none focus:theme-line" />
       </div>
 
       <div class="grid grid-cols-2 gap-2 pt-2">
-        <button id="btn-cancel-merge" type="button" class="min-h-[44px] py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-extrabold text-xs rounded-xl border border-slate-700">Cancel</button>
-        <button id="btn-confirm-merge" type="button" class="min-h-[44px] py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs rounded-xl shadow-md flex items-center justify-center gap-1.5">
+        <button id="btn-cancel-merge" type="button" class="min-h-[44px] py-2 theme-surface hover:theme-surface theme-text font-extrabold text-xs rounded-xl border theme-line">Cancel</button>
+        <button id="btn-confirm-merge" type="button" class="min-h-[44px] py-2 theme-primary hover:theme-primary theme-on-primary font-extrabold text-xs rounded-xl theme-shadow flex items-center justify-center gap-1.5">
           <i class="ph-bold ph-git-merge text-base"></i> Merge Topics
         </button>
       </div>
@@ -654,25 +655,25 @@
     </section>
   </div>
 
-  <div id="modal-login" role="dialog" aria-modal="true" aria-labelledby="login-heading" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="playing-card-frame w-full max-w-sm rounded-3xl p-5 shadow-2xl text-center space-y-3.5 relative">
+  <div id="modal-login" role="dialog" aria-modal="true" aria-labelledby="login-heading" class="fixed inset-0 z-50 theme-backdrop backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="playing-card-frame w-full max-w-sm rounded-3xl p-5 theme-shadow text-center space-y-3.5 relative">
       <div class="space-brand space-brand--ls" style="--space-brand-size:4rem">
         <span class="space-brand__mark">&gt;/_</span>
       </div>
       <div>
-        <h3 id="login-heading" class="text-xl font-black text-white">Welcome to LexicalSpace</h3>
-        <p class="text-xs text-slate-400 mt-1 font-medium">Enter a username to open your profile, or use this browser’s guest library.</p>
+        <h3 id="login-heading" class="text-xl font-black theme-text">Welcome to LexicalSpace</h3>
+        <p class="text-xs theme-muted mt-1 font-medium">Enter a username to open your profile, or use this browser’s guest library.</p>
       </div>
       <input type="text" id="input-username" aria-label="Username" maxlength="100" placeholder="e.g. Alex, Linh..."
-        class="min-h-[48px] w-full text-center text-base font-bold px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl outline-none focus:border-indigo-500 text-white" />
-      <button id="btn-login-submit" type="button" disabled class="min-h-[48px] w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 active:scale-95 text-white font-extrabold text-sm rounded-xl shadow-lg transition-all disabled:opacity-50">
+        class="min-h-[48px] w-full text-center text-base font-bold px-4 py-2.5 theme-surface border theme-line rounded-xl outline-none focus:theme-line theme-text" />
+      <button id="btn-login-submit" type="button" disabled class="min-h-[48px] w-full py-2.5 theme-primary hover:theme-primary active:scale-95 theme-on-primary font-extrabold text-sm rounded-xl theme-shadow transition-all disabled:opacity-50">
         Continue
       </button>
       <button id="btn-continue-guest" type="button" class="entry-secondary" disabled>Continue as guest</button>
-      <p id="login-status" class="text-sm text-slate-300" role="status" aria-live="polite">Opening your library…</p>
+      <p id="login-status" class="text-sm theme-text" role="status" aria-live="polite">Opening your library…</p>
       <button id="btn-startup-retry" type="button" class="entry-secondary" hidden>Try again</button>
       <a id="link-startup-reload" class="entry-secondary" href="" hidden>Reload LexicalSpace</a>
-      <button id="btn-login-cancel" type="button" class="hidden text-xs font-bold text-slate-300">Cancel</button>
+      <button id="btn-login-cancel" type="button" class="hidden text-xs font-bold theme-text">Cancel</button>
     </div>
   </div>
 
