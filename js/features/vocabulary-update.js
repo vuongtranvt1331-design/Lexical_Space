@@ -70,7 +70,7 @@ export async function updateOldVocabulary() {
             try {
               if (!current() || controller.signal.aborted) return;
               await context.commitVocabularyChanges([{ id: live.id, patch, expectedVersion: live }], [], user,
-                { render: $('modal-user-guide').hidden });
+                { render: $('modal-settings').hidden });
               updated++;
               return;
             } catch (error) {

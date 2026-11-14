@@ -355,7 +355,7 @@ button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,summary:focus
   white-space: nowrap;
 }
 
-.topbar-menu-button, .topbar-guide-button, .profile-avatar-button {
+.topbar-menu-button, .topbar-settings-button, .profile-avatar-button {
   flex: none;
   display: grid;
   place-items: center;
@@ -372,9 +372,9 @@ button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,summary:focus
 
 .profile-menu-anchor { position: relative; display: flex; align-items: center; gap: 8px; flex: none; }
 
-.topbar-guide-button { color: var(--warning); background: var(--warning-soft); }
-.topbar-guide-button:hover, .topbar-guide-button[aria-expanded="true"] { background: var(--warning-soft); }
-.topbar-guide-button svg { width: 20px; height: 20px; }
+.topbar-settings-button { color: var(--primary); background: var(--surface); }
+.topbar-settings-button:hover, .topbar-settings-button[aria-expanded="true"] { background: var(--accent-soft); }
+.topbar-settings-button svg { width: 20px; height: 20px; }
 
 .profile-avatar-button {
   position: relative;
@@ -519,9 +519,6 @@ button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,summary:focus
   border-top: 1px solid var(--line);
 }
 
-#drawer.drawer-practice-open { width: 27rem; max-width: 95vw; }
-.practice-panel-title { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.practice-panel-title h2 { color: var(--ink); font-size: 16px; font-weight: 800; }
 .drawer-icon-button {
   flex: none;
   display: grid;
@@ -532,18 +529,6 @@ button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,summary:focus
   color: var(--ink);
 }
 .drawer-icon-button:hover { background: var(--page-bg); color: var(--ink); }
-.practice-panel {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 14px;
-}
-.practice-panel-group + .practice-panel-group {
-  padding-top: 12px;
-  border-top: 1px solid var(--line);
-}
-.practice-panel-group > h3 { margin-bottom: 10px; color: var(--ink); font-size: 14px; font-weight: 800; }
 
 .drawer-footer {
   display: flex;

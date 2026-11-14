@@ -71,7 +71,8 @@ input, textarea, select { accent-color: var(--primary); }
 .entry-tabs button[aria-selected="true"],
 .recall-direction-segments input:checked + span { color: var(--on-primary); background: var(--primary); }
 .entry-tabs button:not([aria-selected="true"]), .recall-direction-segments span { color: var(--muted); }
-.topbar-guide-button, .topbar-guide-button:hover { color: var(--warning); background: var(--warning-soft); }
+.topbar-settings-button { color: var(--primary); background: var(--surface); }
+.topbar-settings-button:hover { background: var(--accent-soft); }
 .profile-connection-dot { border-color: var(--surface); }
 mark { background: var(--accent-soft); color: var(--ink); }
 .entry-input, .reverse-recall-form input, .context-field { color: var(--ink); background: var(--surface); border-color: var(--line); }

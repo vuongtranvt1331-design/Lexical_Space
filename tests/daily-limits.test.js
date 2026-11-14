@@ -142,12 +142,12 @@ test('daily limits follow the profile across scopes, keep retries at midnight, a
     assert.equal($('empty-state-title').textContent, 'Daily limit reached');
     assert.equal($('btn-adjust-daily-limits').hidden, false);
     $('btn-adjust-daily-limits').click();
-    assert.equal($('practice-panel').hidden, false);
+    assert.equal($('modal-settings').hidden, false);
     assert.equal(document.activeElement, $('practice-daily-limits'));
     change('setting-daily-review-limit', '');
     await waitFor(() => !$('btn-session-continue').hidden);
     assert.deepEqual(queue(flash.getSessionState()), []);
-    $('btn-close-drawer').click();
+    $('btn-close-settings').click();
     $('btn-session-continue').click();
     await waitFor(() => queue(flash.getSessionState()).length === 2);
     assert.deepEqual(queue(flash.getSessionState()), ['x-good', 'y-hard']);

@@ -234,6 +234,11 @@
 .check-status { color: var(--danger); font-size: 13px; }
 .check-status:not(:empty) { margin-top: 10px; }
 .check-pool-description:empty, .check-cloze:empty { display: none; }
+.check-progress-panel { margin-top: 14px; }
+.check-progress-panel > summary { color: var(--ink); font-size: 14px; font-weight: 800; cursor: pointer; }
+.check-progress-panel > summary::marker { color: var(--primary); }
+.learning-analytics { padding-top: 12px; }
+.learning-analytics > h3 { margin-bottom: 10px; color: var(--muted); font-size: 12px; font-weight: 750; }
 
 @media (max-width: 360px) {
   .settings-limit-grid { grid-template-columns: 1fr; }

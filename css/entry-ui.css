@@ -82,3 +82,8 @@
 .user-guide-tools dt { font-weight: 800; color: var(--ink); }
 .user-guide-tools dd { margin: 2px 0 0; }
 #toast { z-index: 70; }
+.settings-content { display: grid; gap: 14px; }
+.settings-section { display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; }
+.settings-section > h3, .settings-content > h3 { color: var(--ink); font-size: 14px; font-weight: 800; }
+.settings-section .profile-section { margin-bottom: 0; }
+.settings-guide-button { width: fit-content; min-height: 32px; padding: 6px 10px; font-size: 12px; }

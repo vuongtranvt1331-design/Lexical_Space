@@ -47,7 +47,7 @@ context.refreshVocabulary = async username => {
   context.wordsData = words; library.updateTopicDropdowns(); library.updateBadges();
   if (!document.getElementById('view-library')?.classList.contains('hidden')) library.renderLibrary();
   classCheck.refreshInClassCheckPool();
-  if (document.getElementById('practice-panel')?.hidden === false) void context.renderStats();
+  if (!document.getElementById('view-in-class-check')?.classList.contains('hidden')) void context.renderStats();
   await flashcard.reconcileSession();
 };
 const vocabularySync = db => createVocabularySync({ db, onStatus: auth.updateStatusBadge, onChange: context.refreshVocabulary });

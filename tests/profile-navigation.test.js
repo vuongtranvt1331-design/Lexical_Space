@@ -62,7 +62,7 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     assert.equal($('fc-front-word').textContent, 'apricot');
     await flash.revealCard();
     const resumed = flash.getSessionState().sessionId;
-    const guideTrigger = $('btn-user-guide'), guide = $('modal-user-guide'), closeGuide = $('btn-close-user-guide');
+    const guideTrigger = $('btn-settings'), guide = $('modal-settings'), closeGuide = $('btn-close-settings');
     const main = document.querySelector('main'), header = guideTrigger.closest('header');
     const beforeGuide = flash.getSessionState();
     assert.equal(guideTrigger.nextElementSibling, $('user-display'));
@@ -73,6 +73,18 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     assert.equal(guide.getAttribute('aria-modal'), 'true');
     assert.equal(document.activeElement, closeGuide);
     assert.ok([main, header, $('drawer')].every(element => element.inert));
+    assert.equal(guideTrigger.getAttribute('aria-label'), 'Cài đặt');
+    assert.equal($('settings-main').querySelector('button').id, 'btn-update-old-vocabulary');
+    assert.ok($('practice-settings').contains($('setting-auto-pronounce')));
+    assert.equal($('btn-practice-panel'), null);
+    assert.ok(nav('view-review'));
+    $('btn-settings-guide').click();
+    assert.equal($('settings-main').hidden, true);
+    assert.equal($('settings-guide').hidden, false);
+    assert.equal(document.activeElement, $('btn-back-settings'));
+    $('btn-back-settings').click();
+    assert.equal($('settings-main').hidden, false);
+    assert.equal(document.activeElement, $('btn-settings-guide'));
     const guideText = guide.textContent.replace(/\s+/g, ' ');
     assert.ok(guideText.includes('Học sinh bắt buộc phải học đều đặn từng ngày. Thầy sẽ kiểm tra bài trực tiếp vào đầu mỗi buổi học trên lớp (In-Class Check)!'));
     for (const label of ['Quick Fill', 'Chia sẻ bộ từ', 'In-Class Check', 'ArcadeSpace', 'GrammarSpace']) {
@@ -145,28 +157,26 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     assert.equal(document.activeElement, $('btn-open-drawer'));
     assert.equal($('drawer').inert, true);
     assert.equal(document.querySelector('main').inert, false);
-    $('btn-open-drawer').click();
-    $('btn-practice-panel').click();
-    assert.equal($('drawer-navigation').hidden, true);
-    assert.equal($('practice-panel').hidden, false);
-    assert.equal(document.activeElement, $('practice-panel-heading'));
-    assert.deepEqual([...$('practice-panel').querySelectorAll('h3')].map(h => h.textContent),
-      ['Learning Analytics & Stats', 'Practice Settings & Preferences']);
+    context.switchView('view-in-class-check');
+    $('check-progress-panel').open = true;
     await waitFor(() => $('stats-attempts').textContent === '3');
+    assert.ok($('view-in-class-check').contains($('stats-total')));
     assert.equal($('stats-total').textContent, '1');
     assert.equal($('stats-recalled').textContent, '1');
+    guideTrigger.click();
+    assert.equal(guide.hidden, false);
+    assert.ok(!$('modal-settings').contains($('stats-total')));
     assert.equal($('setting-daily-new-limit').value, '5');
     assert.equal($('setting-daily-review-limit').value, '12');
     assert.equal($('setting-auto-pronounce').checked, false);
     assert.equal($('setting-sound-effects').checked, false);
-    $('btn-practice-panel-back').focus();
-    $('btn-practice-panel-back').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
-    assert.equal(document.activeElement, $('btn-close-drawer'));
-    $('btn-practice-panel-back').click();
-    assert.equal($('drawer-navigation').hidden, false);
-    assert.equal($('practice-panel').hidden, true);
-    assert.equal(document.activeElement, $('btn-practice-panel'));
-    $('btn-close-drawer').click();
+    closeGuide.focus();
+    closeGuide.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true }));
+    assert.equal(document.activeElement, $('btn-settings-guide'));
+    $('btn-settings-guide').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    assert.equal(document.activeElement, closeGuide);
+    closeGuide.click();
+    assert.equal(document.activeElement, guideTrigger);
 
     openProfileMenu();
     assert.equal($('current-user-name').textContent, alpha);
@@ -191,9 +201,8 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     assert.equal(recallDirection(), 'vi-en');
     $('recall-en-vi').click();
     await waitFor(() => loadSettings(beta).recallDirection === 'en-vi' && $('fc-front-word').textContent === 'blueberry');
-    $('btn-open-drawer').click();
-    $('btn-practice-panel').click();
-    assert.equal($('practice-panel').hidden, false);
+    guideTrigger.click();
+    assert.equal(guide.hidden, false);
     assert.equal($('setting-daily-new-limit').value, '');
     assert.equal($('setting-sound-effects').checked, true);
     assert.equal(recallDirection(), 'en-vi');
@@ -201,10 +210,12 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     $('setting-auto-pronounce').dispatchEvent(new window.Event('change'));
     assert.equal(loadSettings(beta).autoPronounce, true);
     assert.equal(loadSettings(alpha).autoPronounce, false);
+    guide.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    assert.equal(guide.hidden, true);
+    assert.equal(document.activeElement, guideTrigger);
+    context.switchView('view-in-class-check');
     await waitFor(() => $('stats-attempts').textContent === '0');
-    $('drawer').dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-    assert.equal($('practice-panel').hidden, true);
-    assert.equal(document.activeElement, $('btn-open-drawer'));
+    context.switchView('view-review');
 
     openProfileMenu();
     $('btn-logout').click();

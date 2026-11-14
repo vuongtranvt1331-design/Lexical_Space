@@ -55,8 +55,8 @@
     </div>
 
     <div class="profile-menu-anchor">
-      <button id="btn-user-guide" type="button" class="topbar-guide-button" lang="vi" aria-label="Hướng dẫn nhanh" title="Hướng dẫn nhanh" aria-controls="modal-user-guide" aria-expanded="false" aria-haspopup="dialog">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.3 4.7 2.6 18a1.9 1.9 0 0 0 1.7 2.8h15.4a1.9 1.9 0 0 0 1.7-2.8L13.7 4.7a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4m0 3.5v.1"/></svg>
+      <button id="btn-settings" type="button" class="topbar-settings-button" lang="vi" aria-label="Cài đặt" title="Cài đặt" aria-controls="modal-settings" aria-expanded="false" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.5 3h5l.5 2.2 1.8 1 2.2-.6 2.5 4.3-1.7 1.5v2l1.7 1.5-2.5 4.3-2.2-.6-1.8 1-.5 2.2h-5L9 19.6l-1.8-1-2.2.6-2.5-4.3 1.7-1.5v-2L2.5 9.9 5 5.6l2.2.6L9 5.2Z"/><circle cx="12" cy="12.3" r="3.1"/></svg>
       </button>
       <button id="user-display" type="button" class="profile-avatar-button" aria-label="Profile menu" aria-controls="profile-dropdown" aria-expanded="false">
         <span id="header-user-avatar" aria-hidden="true">–</span>
@@ -99,10 +99,6 @@
         <span class="drawer-nav-label">In-Class Check</span>
       </button>
 
-      <button id="btn-practice-panel" type="button" class="nav-item" aria-controls="practice-panel">
-        <i class="ph-bold ph-chart-bar" aria-hidden="true"></i>
-        <span class="drawer-nav-label">Practice &amp; Progress</span>
-      </button>
 
       <div class="drawer-app-links">
         <a id="btn-drawer-grammarspace" class="nav-item" href="https://vuongtranvt1331-design.github.io/Grammar_Space/">
@@ -118,56 +114,6 @@
       <p id="sync-status" class="sync-status" role="status" aria-live="polite">Opening local library…</p>
     </nav>
 
-    <section id="practice-panel" class="practice-panel" aria-labelledby="practice-panel-heading" hidden>
-      <header class="practice-panel-title">
-        <button id="btn-practice-panel-back" type="button" aria-label="Back to navigation" class="drawer-control drawer-icon-button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7m-7 7h14"/></svg>
-        </button>
-        <h2 id="practice-panel-heading" tabindex="-1">Practice &amp; Progress</h2>
-      </header>
-      <section class="practice-panel-group" aria-labelledby="stats-heading">
-        <h3 id="stats-heading">Learning Analytics &amp; Stats</h3>
-        <div class="profile-section">
-          <h4>Today</h4>
-          <dl class="stats-grid">
-            <div><dt>Recall attempts</dt><dd id="stats-attempts">0</dd></div>
-            <div><dt>Words recalled</dt><dd id="stats-recalled">0</dd></div>
-          </dl>
-        </div>
-        <div class="profile-section">
-          <h4>Library</h4>
-          <dl class="stats-grid">
-            <div><dt>Total words</dt><dd id="stats-total">0</dd></div>
-            <div><dt>New words</dt><dd id="stats-new">0</dd></div>
-            <div><dt>Reviews due</dt><dd id="stats-due">0</dd></div>
-            <div><dt>Mastered</dt><dd id="stats-mastered">0</dd></div>
-          </dl>
-        </div>
-      </section>
-      <section class="practice-panel-group" aria-labelledby="practice-preferences-heading">
-        <h3 id="practice-preferences-heading">Practice Settings &amp; Preferences</h3>
-        <section id="practice-daily-limits" class="profile-section settings-fields" tabindex="-1" aria-labelledby="daily-limits-heading">
-          <h4 id="daily-limits-heading">Daily limits</h4>
-          <p id="settings-limit-help">Leave a limit blank for unlimited. Use 0 to skip that category. Repeating a reviewed card does not use another review slot.</p>
-          <div class="settings-limit-grid">
-            <label>Maximum new words per day
-              <input id="setting-daily-new-limit" class="entry-input" type="number" min="0" step="1" max="9007199254740991"
-                inputmode="numeric" placeholder="Unlimited" aria-describedby="settings-limit-help">
-            </label>
-            <label>Maximum review cards per day
-              <input id="setting-daily-review-limit" class="entry-input" type="number" min="0" step="1" max="9007199254740991"
-                inputmode="numeric" placeholder="Unlimited" aria-describedby="settings-limit-help">
-            </label>
-          </div>
-        </section>
-        <div class="profile-section settings-fields">
-          <h4>Audio and sound</h4>
-          <label class="entry-check"><input id="setting-auto-pronounce" type="checkbox" checked> Auto-pronounce words</label>
-          <label class="entry-check"><input id="setting-sound-effects" type="checkbox" checked> Sound effects</label>
-          <p>In Vietnamese to English recall, pronunciation waits until you check or reveal the answer.</p>
-        </div>
-      </section>
-    </section>
     <footer class="drawer-footer">
       <div class="drawer-build">
         <p>LexicalSpace v43.0.1 <span class="drawer-build-ref">LexicalSpace-v43.0.1</span></p>
@@ -551,6 +497,28 @@
           <button type="button" data-check-done class="entry-secondary">Done / Back to Practice</button>
         </div>
       </section>
+      <details id="check-progress-panel" class="check-panel check-progress-panel">
+        <summary>Learning Progress</summary>
+        <section class="learning-analytics" aria-labelledby="stats-heading">
+          <h3 id="stats-heading">Learning Analytics &amp; Stats</h3>
+          <div class="profile-section">
+            <h4>Today</h4>
+            <dl class="stats-grid">
+              <div><dt>Recall attempts</dt><dd id="stats-attempts">0</dd></div>
+              <div><dt>Words recalled</dt><dd id="stats-recalled">0</dd></div>
+            </dl>
+          </div>
+          <div class="profile-section">
+            <h4>Library</h4>
+            <dl class="stats-grid">
+              <div><dt>Total words</dt><dd id="stats-total">0</dd></div>
+              <div><dt>New words</dt><dd id="stats-new">0</dd></div>
+              <div><dt>Reviews due</dt><dd id="stats-due">0</dd></div>
+              <div><dt>Mastered</dt><dd id="stats-mastered">0</dd></div>
+            </dl>
+          </div>
+        </section>
+      </details>
       <p id="check-status" class="check-status" role="status"></p>
     </section>
 
@@ -595,27 +563,57 @@
     </div>
   </div>
 
-  <div id="modal-user-guide" class="deck-modal" role="dialog" lang="vi" aria-modal="true" aria-labelledby="user-guide-heading" hidden>
-    <section class="deck-dialog user-guide-dialog">
+  <div id="modal-settings" class="deck-modal" role="dialog" lang="vi" aria-modal="true" aria-labelledby="settings-heading" hidden>
+    <section class="deck-dialog settings-dialog">
       <div class="user-guide-header">
-        <h2 id="user-guide-heading">Hướng dẫn nhanh</h2>
-        <button id="btn-close-user-guide" type="button" class="drawer-control drawer-icon-button" aria-label="Đóng hướng dẫn">
+        <h2 id="settings-heading" tabindex="-1">Cài đặt</h2>
+        <button id="btn-close-settings" type="button" class="drawer-control drawer-icon-button" aria-label="Đóng cài đặt">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
       </div>
-      <p class="user-guide-notice"><strong>Học sinh bắt buộc phải học đều đặn từng ngày. Thầy sẽ kiểm tra bài trực tiếp vào đầu mỗi buổi học trên lớp (In-Class Check)!</strong></p>
-      <div class="ai-import-stage">
-        <button id="btn-update-old-vocabulary" type="button" class="entry-secondary">Cập nhật bộ từ cũ</button>
-        <p class="deck-import-profile">Bổ sung nghĩa, IPA, loại từ, từ đồng nghĩa, cụm từ, ví dụ và cloze còn trống khi có dữ liệu tra cứu.</p>
-        <p id="vocabulary-update-status" class="deck-dialog-status" role="status" aria-live="polite"></p>
-        <button id="btn-cancel-vocabulary-update" type="button" class="entry-secondary" hidden>Dừng cập nhật</button>
+      <div id="settings-main" class="settings-content">
+        <div class="ai-import-stage">
+          <button id="btn-update-old-vocabulary" type="button" class="entry-secondary">Cập nhật bộ từ cũ</button>
+          <p class="deck-import-profile">Bổ sung nghĩa, IPA, loại từ, từ đồng nghĩa, cụm từ, ví dụ và cloze còn trống khi có dữ liệu tra cứu.</p>
+          <p id="vocabulary-update-status" class="deck-dialog-status" role="status" aria-live="polite"></p>
+          <button id="btn-cancel-vocabulary-update" type="button" class="entry-secondary" hidden>Dừng cập nhật</button>
+        </div>
+        <section id="practice-settings" class="settings-section" aria-labelledby="practice-preferences-heading">
+          <h3 id="practice-preferences-heading">Practice Settings &amp; Preferences</h3>
+          <section id="practice-daily-limits" class="profile-section settings-fields" tabindex="-1" aria-labelledby="daily-limits-heading">
+            <h4 id="daily-limits-heading">Daily limits</h4>
+            <p id="settings-limit-help">Leave a limit blank for unlimited. Use 0 to skip that category. Repeating a reviewed card does not use another review slot.</p>
+            <div class="settings-limit-grid">
+              <label>Maximum new words per day
+                <input id="setting-daily-new-limit" class="entry-input" type="number" min="0" step="1" max="9007199254740991"
+                  inputmode="numeric" placeholder="Unlimited" aria-describedby="settings-limit-help">
+              </label>
+              <label>Maximum review cards per day
+                <input id="setting-daily-review-limit" class="entry-input" type="number" min="0" step="1" max="9007199254740991"
+                  inputmode="numeric" placeholder="Unlimited" aria-describedby="settings-limit-help">
+              </label>
+            </div>
+          </section>
+          <div class="profile-section settings-fields">
+            <h4>Audio and sound</h4>
+            <label class="entry-check"><input id="setting-auto-pronounce" type="checkbox" checked> Auto-pronounce words</label>
+            <label class="entry-check"><input id="setting-sound-effects" type="checkbox" checked> Sound effects</label>
+            <p>In Vietnamese to English recall, pronunciation waits until you check or reveal the answer.</p>
+          </div>
+        </section>
+        <button id="btn-settings-guide" type="button" class="entry-secondary settings-guide-button" aria-controls="settings-guide" aria-expanded="false">Hướng dẫn nhanh</button>
       </div>
-      <dl class="user-guide-tools">
-        <div><dt>Quick Fill / Điền nhanh</dt><dd>Trong Add New Words, bấm Điền nhanh để tra nghĩa tiếng Việt, IPA, cụm từ đi kèm, câu ví dụ và câu điền từ khi có dữ liệu. Một số ví dụ lấy từ <a class="example-source" href="https://tatoeba.org/" target="_blank" rel="noopener noreferrer">Tatoeba</a> (CC BY 2.0 FR hoặc CC0 1.0).</dd></div>
-        <div><dt>Chia sẻ bộ từ (Deck Sharing)</dt><dd>Trong Library, chọn một bộ từ rồi bấm Share Deck để tạo link mà không cần tài khoản. Link được tự động sao chép vào clipboard.</dd></div>
-        <div><dt>Chế độ kiểm tra trên lớp (In-Class Check)</dt><dd>Mở In-Class Check từ menu chính rồi gõ từ tiếng Anh. Chế độ này chỉ kiểm tra thẻ xanh lá hoặc xanh dương, ưu tiên các từ đã ôn trong 72 giờ qua. Nếu không có, hệ thống chọn ngẫu nhiên tối đa 15 thẻ đủ điều kiện.</dd></div>
-        <div><dt>ArcadeSpace &amp; GrammarSpace</dt><dd>Chuyển nhanh giữa các không gian học tập từ menu chính.</dd></div>
-      </dl>
+      <section id="settings-guide" class="settings-content user-guide-dialog" aria-labelledby="settings-guide-heading" hidden>
+        <button id="btn-back-settings" type="button" class="entry-secondary settings-guide-button">← Quay lại cài đặt</button>
+        <h3 id="settings-guide-heading">Hướng dẫn nhanh</h3>
+        <p class="user-guide-notice"><strong>Học sinh bắt buộc phải học đều đặn từng ngày. Thầy sẽ kiểm tra bài trực tiếp vào đầu mỗi buổi học trên lớp (In-Class Check)!</strong></p>
+        <dl class="user-guide-tools">
+          <div><dt>Quick Fill / Điền nhanh</dt><dd>Trong Add New Words, bấm Điền nhanh để tra nghĩa tiếng Việt, IPA, cụm từ đi kèm, câu ví dụ và câu điền từ khi có dữ liệu. Một số ví dụ lấy từ <a class="example-source" href="https://tatoeba.org/" target="_blank" rel="noopener noreferrer">Tatoeba</a> (CC BY 2.0 FR hoặc CC0 1.0).</dd></div>
+          <div><dt>Chia sẻ bộ từ (Deck Sharing)</dt><dd>Trong Library, chọn một bộ từ rồi bấm Share Deck để tạo link mà không cần tài khoản. Link được tự động sao chép vào clipboard.</dd></div>
+          <div><dt>Chế độ kiểm tra trên lớp (In-Class Check)</dt><dd>Mở In-Class Check từ menu chính rồi gõ từ tiếng Anh. Chế độ này chỉ kiểm tra thẻ xanh lá hoặc xanh dương, ưu tiên các từ đã ôn trong 72 giờ qua. Nếu không có, hệ thống chọn ngẫu nhiên tối đa 15 thẻ đủ điều kiện.</dd></div>
+          <div><dt>ArcadeSpace &amp; GrammarSpace</dt><dd>Chuyển nhanh giữa các không gian học tập từ menu chính.</dd></div>
+        </dl>
+      </section>
     </section>
   </div>
 

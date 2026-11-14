@@ -112,6 +112,9 @@ function canUseCheck() {
 }
 
 export function setupInClassCheck() {
+  $('check-progress-panel').addEventListener('toggle', event => {
+    if (event.currentTarget.open && canUseCheck()) void context.renderStats();
+  });
   $('btn-check-start').addEventListener('click', () => {
     if (!canUseCheck() || attempt) return;
     const { words } = currentPool();

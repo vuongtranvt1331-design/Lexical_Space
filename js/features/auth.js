@@ -59,12 +59,12 @@ function renderProfileMenu(user) {
 export function updateProfileLock() {
   const modalOpen = $('modal-login') && !$('modal-login').hidden;
   const primaryDialogOpen = modalOpen || context.deckDialogOpen;
-  const guide = $('modal-user-guide');
-  if (primaryDialogOpen && guide?.hidden === false) {
-    guide.hidden = true;
-    $('btn-user-guide').setAttribute('aria-expanded', 'false');
+  const settings = $('modal-settings');
+  if (primaryDialogOpen && settings?.hidden === false) {
+    settings.hidden = true;
+    $('btn-settings').setAttribute('aria-expanded', 'false');
   }
-  const dialogOpen = primaryDialogOpen || guide?.hidden === false;
+  const dialogOpen = primaryDialogOpen || settings?.hidden === false;
   const drawer = $('drawer'), drawerOpen = drawer && !drawer.classList.contains('-translate-x-full');
   const main = document.querySelector('main'), header = document.querySelector('body > header');
   main?.classList.toggle('hidden', !context.currentUser && !dialogOpen);
@@ -83,7 +83,7 @@ export function updateProfileLock() {
 export function focusNavigation() {
   const drawer = $('drawer');
   if (drawer && !drawer.inert) {
-    const target = $('practice-panel').hidden ? drawer.querySelector('[aria-current="page"]') : $('practice-panel-heading');
+    const target = drawer.querySelector('[aria-current="page"]');
     (target || $('btn-close-drawer'))?.focus();
   } else {
     const trigger = $('btn-open-drawer');
@@ -303,31 +303,44 @@ export function updateStatusBadge(ok, text) {
   if (dot) dot.dataset.ok = String(ok);
 }
 
-function setupUserGuide() {
-  const trigger = $('btn-user-guide'), guide = $('modal-user-guide'), close = $('btn-close-user-guide');
-  const dismiss = () => {
-    guide.hidden = true;
+function setupSettings() {
+  const trigger = $('btn-settings'), dialog = $('modal-settings'), close = $('btn-close-settings');
+  const main = $('settings-main'), guide = $('settings-guide'), guideButton = $('btn-settings-guide');
+  function showGuide(open, { focus = true } = {}) {
+    main.hidden = open;
+    guide.hidden = !open;
+    guideButton.setAttribute('aria-expanded', String(open));
+    dialog.querySelector('.deck-dialog').scrollTop = 0;
+    if (focus) (open ? $('btn-back-settings') : guideButton).focus();
+  }
+  function dismiss() {
+    dialog.hidden = true;
     trigger.setAttribute('aria-expanded', 'false');
     updateProfileLock();
     if (trigger.closest('[inert]')) return;
     if (context.currentUser && !$('view-review').classList.contains('hidden')) context.renderActiveCard();
     if (context.currentUser && !$('view-library').classList.contains('hidden')) context.renderLibrary();
     trigger.focus();
-  };
-  trigger.addEventListener('click', () => {
-    if (trigger.closest('[inert]')) return;
+  }
+  function open(focusTarget = close) {
+    if (trigger.closest('[inert]') || !context.currentUser || context.profileLoading) return;
     context.pausePracticeAudio();
-    guide.hidden = false;
+    showGuide(false, { focus: false });
+    context.renderSettings();
+    dialog.hidden = false;
     trigger.setAttribute('aria-expanded', 'true');
     updateProfileLock();
-    close.focus();
-  });
+    focusTarget.focus();
+  }
+  trigger.addEventListener('click', () => open());
   close.addEventListener('click', dismiss);
-  guide.addEventListener('click', event => { if (event.target === guide) dismiss(); });
-  guide.addEventListener('keydown', event => {
+  guideButton.addEventListener('click', () => showGuide(true));
+  $('btn-back-settings').addEventListener('click', () => showGuide(false));
+  dialog.addEventListener('click', event => { if (event.target === dialog) dismiss(); });
+  dialog.addEventListener('keydown', event => {
     if (event.key === 'Escape') { event.preventDefault(); dismiss(); return; }
     if (event.key !== 'Tab') return;
-    const controls = [...guide.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),[tabindex="0"]')]
+    const controls = [...dialog.querySelectorAll('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),[tabindex="0"]')]
       .filter(control => !control.closest('[hidden]'));
     const target = event.shiftKey ? controls.at(-1) : controls[0];
     if ((event.shiftKey && document.activeElement === controls[0]) ||
@@ -335,22 +348,14 @@ function setupUserGuide() {
       event.preventDefault(); target?.focus();
     }
   });
+  return { open };
 }
 
 export function setupNavigation({ retryStartup } = {}) {
-  setupUserGuide();
+  const settings = setupSettings();
   const drawer = $('drawer'), backdrop = $('drawer-backdrop'), trigger = $('btn-open-drawer');
-  const navigation = $('drawer-navigation'), practicePanel = $('practice-panel'), heading = $('practice-panel-heading');
-  const openPractice = $('btn-practice-panel'), backToMenu = $('btn-practice-panel-back');
-  function setPracticePanel(open) {
-    navigation.hidden = open;
-    practicePanel.hidden = !open;
-    drawer.classList.toggle('drawer-practice-open', open);
-    if (open) drawer.setAttribute('aria-labelledby', heading.id);
-    else drawer.removeAttribute('aria-labelledby');
-  }
+  const navigation = $('drawer-navigation');
   function setDrawer(open, { restoreFocus = true } = {}) {
-    if (!open) setPracticePanel(false);
     drawer.classList.toggle('-translate-x-full', !open);
     backdrop.classList.toggle('opacity-0', !open);
     backdrop.classList.toggle('pointer-events-none', !open);
@@ -371,26 +376,8 @@ export function setupNavigation({ retryStartup } = {}) {
   const closeDrawer = () => setDrawer(false);
   $('btn-close-drawer').addEventListener('click', closeDrawer);
   backdrop.addEventListener('click', closeDrawer);
-  function openPracticeSettings(focusTarget = heading) {
-    if (!context.currentUser || context.profileLoading) return;
-    context.SoundManager.playSelect();
-    context.pausePracticeAudio();
-    setPracticePanel(true);
-    if (drawer.inert) setDrawer(true);
-    practicePanel.scrollTop = 0;
-    context.renderSettings();
-    void context.renderStats();
-    focusTarget.focus();
-  }
-  openPractice.addEventListener('click', () => {
-    if (!drawer.inert) openPracticeSettings();
-  });
   $('btn-adjust-daily-limits')?.addEventListener('click', event => {
-    if (!event.currentTarget.closest('[hidden], [inert]')) openPracticeSettings($('practice-daily-limits'));
-  });
-  backToMenu.addEventListener('click', () => {
-    setPracticePanel(false);
-    openPractice.focus();
+    if (!event.currentTarget.closest('[hidden], [inert]')) settings.open($('practice-daily-limits'));
   });
   drawer.addEventListener('keydown', event => {
     if (drawer.inert) return;
@@ -512,7 +499,7 @@ export function switchView(viewId, { render = true } = {}) {
   switch (viewId) {
     case 'view-review': void context.startNewSession(); break;
     case 'view-library': context.updateLibraryTabsUI(); context.renderLibrary(); break;
-    case 'view-in-class-check': context.renderInClassCheck(); break;
+    case 'view-in-class-check': context.renderInClassCheck(); void context.renderStats(); break;
     case 'view-entry':
       updateVisualViewportHeight();
       context.renderEntryTopicCards();

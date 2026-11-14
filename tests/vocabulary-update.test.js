@@ -59,8 +59,8 @@ test('the guide updates blank legacy fields, preserves review history, and cance
     await until(() => context.currentUser === user && !context.profileLoading);
     const before = await storage.readUserWord(user, 'legacy');
     const full = await storage.readUserWord(user, 'complete');
-    $('btn-user-guide').click();
-    assert.equal($('modal-user-guide').hidden, false);
+    $('btn-settings').click();
+    assert.equal($('modal-settings').hidden, false);
     $('btn-update-old-vocabulary').click();
     assert.equal($('btn-update-old-vocabulary').disabled, true);
     await until(() => !$('btn-update-old-vocabulary').disabled);
