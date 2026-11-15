@@ -6,8 +6,8 @@ $checkout = Join-Path $cacheRoot 'Lexical_Space'
 
 function Run-Git {
     param([string[]]$GitArgs)
-    & git -c credential.https://github.com.helper= -c credential.https://github.com.helper=manager @GitArgs
-    if ($LASTEXITCODE -ne 0) { throw 'Git could not finish. Check your connection or GitHub access; no force push was attempted.' }
+    & git --no-pager -c credential.https://github.com.helper= -c credential.https://github.com.helper=manager @GitArgs
+    if ($LASTEXITCODE -ne 0) { throw 'Git could not finish. See the specific error above; no force push was attempted.' }
 }
 
 
