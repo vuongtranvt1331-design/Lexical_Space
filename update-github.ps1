@@ -10,6 +10,25 @@ function Run-Git {
     if ($LASTEXITCODE -ne 0) { throw 'Git could not finish. Check your connection or GitHub access; no force push was attempted.' }
 }
 
+
+function Save-PendingUpdate {
+    param([string]$Repository)
+    $pending = & git -C $Repository status --porcelain
+    if ($LASTEXITCODE -ne 0) { throw 'Could not inspect the publisher cache. The app files have not been changed.' }
+    if (-not $pending) { return }
+    foreach ($marker in @('MERGE_HEAD', 'rebase-merge', 'rebase-apply')) {
+        $statePath = & git -C $Repository rev-parse --git-path $marker
+        if ($LASTEXITCODE -ne 0) { throw 'Could not inspect an unfinished Git operation.' }
+        if (-not [IO.Path]::IsPathRooted($statePath)) { $statePath = Join-Path $Repository $statePath }
+        if (Test-Path -LiteralPath $statePath) { throw 'The publisher cache has an unfinished merge/rebase. Its data was kept; finish that operation before publishing.' }
+    }
+    Write-Host 'Saving unfinished update locally before retrying...'
+    Run-Git -GitArgs @('-C', $Repository, 'stash', 'push', '--include-untracked', '-m', ('LexicalSpace publisher recovery ' + (Get-Date -Format 'yyyy-MM-dd HH:mm:ss')))
+    $remaining = & git -C $Repository status --porcelain
+    if ($LASTEXITCODE -ne 0 -or $remaining) { throw 'Could not safely save the unfinished update. No app files were deleted.' }
+    Write-Host 'Previous changes are preserved in the publisher Git stash. Publishing the current app files.'
+}
+
 try {
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'Install Git for Windows first: https://git-scm.com/download/win' }
     New-Item -ItemType Directory -Force -Path $cacheRoot | Out-Null
@@ -21,8 +40,10 @@ try {
     if ($LASTEXITCODE -ne 0 -or $actualRemote -ne $remoteUrl) { throw 'Unexpected repository in publisher cache. Update stopped.' }
     $branch = & git -C $checkout branch --show-current
     if ($branch -ne 'main') { throw 'Publisher cache must be on main.' }
-    $pending = & git -C $checkout status --porcelain
-    if ($pending) { throw "An unfinished update exists in $checkout. Keep these files and resolve it before retrying." }
+    # Repository-local identity avoids changing other projects on this computer.
+    Run-Git -GitArgs @('-C', $checkout, 'config', 'user.name', 'vuongtranvt1331-design')
+    Run-Git -GitArgs @('-C', $checkout, 'config', 'user.email', 'vuongtranvt1331-design@users.noreply.github.com')
+    Save-PendingUpdate -Repository $checkout
     Run-Git -GitArgs @('-C', $checkout, 'pull', '--ff-only', 'origin', 'main')
     if (-not (Test-Path -LiteralPath (Join-Path $sourceRoot 'index.html'))) { throw 'Keep both update files inside the app folder next to index.html.' }
     $excluded = '(^|/)(\.git|node_modules|\.codex|\.agents)(/|$)|(^|/)(\.env[^/]*|groq-local-config\.js|[^/]*\.(log|pem|key))$'
@@ -55,9 +76,6 @@ try {
     Run-Git -GitArgs @('-C', $checkout, 'diff', '--cached', '--stat')
     $message = Read-Host 'Update description (Enter for automatic message)'
     if ([string]::IsNullOrWhiteSpace($message)) { $message = 'update: LexicalSpace ' + (Get-Date -Format 'yyyy-MM-dd HH:mm') }
-    # Repository-local identity avoids changing other projects on this computer.
-    Run-Git -GitArgs @('-C', $checkout, 'config', 'user.name', 'vuongtranvt1331-design')
-    Run-Git -GitArgs @('-C', $checkout, 'config', 'user.email', 'vuongtranvt1331-design@users.noreply.github.com')
     Run-Git -GitArgs @('-C', $checkout, 'commit', '-m', $message)
     Run-Git -GitArgs @('-C', $checkout, 'push', 'origin', 'main')
     Write-Host 'GitHub updated successfully.' -ForegroundColor Green
