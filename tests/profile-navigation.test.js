@@ -233,8 +233,9 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     $('btn-profile-sign-in').click();
     assert.equal($('modal-login').hidden, false);
     await selectProfile(alpha);
-    assert.equal(flash.getSessionState().sessionId, resumed);
-    assert.equal(flash.getSessionState().cardQueue[0].revealed, true);
+    assert.notEqual(flash.getSessionState().sessionId, resumed);
+    assert.equal(flash.getSessionState().queueIndex, 0);
+    assert.equal(flash.getSessionState().cardQueue[0].revealed, false);
     assert.equal($('fc-front-word').textContent, 'apricot');
 
     openProfileMenu();

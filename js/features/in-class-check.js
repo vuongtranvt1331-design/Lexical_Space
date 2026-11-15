@@ -3,7 +3,7 @@ import { clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
 import { recallLevelFor, timestamp } from '../core/vocabulary.js';
 
 const WINDOW_MS = 72 * 60 * 60 * 1000;
-const FALLBACK_SIZE = 15;
+const CHECK_SIZE = 20;
 const BLANK = '[ _____ ]';
 const $ = id => document.getElementById(id);
 const stages = ['intro', 'empty', 'question', 'results'];
@@ -19,15 +19,14 @@ export function selectInClassPool(words, now = Date.now(), random = Math.random)
     if (reviewedAt > 0 && reviewedAt <= now && now - reviewedAt <= WINDOW_MS) recent.push(word);
     else previous.push(word);
   }
-  if (recent.length) return { kind: 'recent', words: recent };
-
+  const pool = recent.length ? recent : previous;
   // A partial Fisher–Yates shuffle samples without replacement.
-  const size = Math.min(FALLBACK_SIZE, previous.length);
+  const size = Math.min(CHECK_SIZE, pool.length);
   for (let i = 0; i < size; i++) {
-    const j = i + Math.floor(random() * (previous.length - i));
-    [previous[i], previous[j]] = [previous[j], previous[i]];
+    const j = i + Math.floor(random() * (pool.length - i));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  return { kind: size ? 'previous' : 'empty', words: previous.slice(0, size) };
+  return { kind: size ? (recent.length ? 'recent' : 'previous') : 'empty', words: pool.slice(0, size) };
 }
 
 function currentPool() {
@@ -44,7 +43,7 @@ function renderIntro(focus) {
   showStage(empty ? 'empty' : 'intro');
   $('check-available-count').textContent = pool.words.length;
   $('check-pool-description').textContent = pool.kind === 'recent'
-    ? 'Green and blue words reviewed in the last 72 hours.' : 'A random sample of up to 15 green and blue words.';
+    ? 'Up to 20 random green and blue words reviewed in the last 72 hours.' : 'A random sample of up to 20 green and blue words.';
   if (focus) $(empty ? 'check-empty-heading' : 'check-heading').focus();
 }
 

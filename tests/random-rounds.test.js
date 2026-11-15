@@ -121,6 +121,31 @@ test('rounds shuffle once, preserve resume, finish with misses and restart only 
     const reviewLedger = await storage.idbGet('metadata', state().ledgerKey);
     assert.deepEqual(reviewLedger.dailyReviewIds, ['blue']);
     assert.equal(reviewLedger.completedAttempts, 4);
+
+    const reloadUser = 'Fresh round after app entry';
+    saveSettings(reloadUser, { dailyNewLimit: null, dailyReviewLimit: null, autoPronounce: false });
+    await storage.mutateWords(['r1', 'r2', 'r3', 'r4', 'r5', 'r6'].map(id => ({
+      id, username: reloadUser, patch: { word: id, meaning: id }
+    })));
+    await context.activateUser(reloadUser);
+    await failCard();
+    await flash.revealCard();
+    const unfinished = state();
+    const beforeWords = await storage.readUserWords(reloadUser);
+    const beforeLedger = await storage.idbGet('metadata', unfinished.ledgerKey);
+    flash.resetForUser();
+    await context.loadIndexedDBWordsData();
+    assert.notEqual(state().sessionId, unfinished.sessionId);
+    assert.equal(state().queueIndex, 0);
+    assert.equal(new Set(ids()).size, ids().length);
+    assert.ok(state().cardQueue.every(item => !item.graded && !item.revealed));
+    assert.deepEqual(await storage.readUserWords(reloadUser), beforeWords);
+    assert.deepEqual(await storage.idbGet('metadata', unfinished.ledgerKey), beforeLedger);
+    const newRound = state();
+    await context.refreshVocabulary(reloadUser);
+    assert.deepEqual(state(), newRound, 'background refresh must not restart the round');
+    await failCard();
+    assert.equal(state().queueIndex, 1, 'the restarted session must remain writable');
   } finally {
     flash.resetForUser();
     context.clearActivityTimers();

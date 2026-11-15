@@ -163,7 +163,7 @@ export async function startNewSession(options = {}) {
     const next = await updateMetadata([...new Set([key, savedKey, dayLedgerKey])], values => {
       if (!isCurrent()) return { records: [], result: null };
       const words = context.wordsData.filter(word => word.username === user && !word.deleted);
-      const saved = [values[savedKey], values[key]].find(record => record?.username === user && record.schemaVersion === 2 &&
+      const saved = options.restartRound ? null : [values[savedKey], values[key]].find(record => record?.username === user && record.schemaVersion === 2 &&
         (record.day === day || record.queueIndex < record.cardQueue.length));
       const availableIds = new Set(words.map(word => word.id));
       const priorityIds = requestedMisses.filter(id => availableIds.has(id));
@@ -205,7 +205,7 @@ export async function startNewSession(options = {}) {
       const result = previous ? reconcileQueue(previous, words, candidates, { mode, repeat, day, direction, inClassMisses, priorityIds }) : {
         key, scopeId, schemaVersion: 2, sessionId: `${encodeURIComponent(user)}:${newId()}`, username: user, day, ledgerKey: dayLedgerKey,
         cardQueue: candidates.map(word => entry(word.id, repeat)),
-        queueIndex: 0, sessionVersion: 0, pendingMisses: inClassMisses, inClassMisses,
+        queueIndex: 0, sessionVersion: (values[key]?.sessionVersion || 0) + 1, pendingMisses: inClassMisses, inClassMisses,
         completedAttempts: 0, successfulIds: [], studiedIds: [], createdAt: now, recallDirection: direction
       };
       const records = result === saved ? [] : [result];

@@ -8,7 +8,7 @@ const require = createRequire(process.env.LEXICALSPACE_TEST_MODULES || import.me
 const { JSDOM } = require('jsdom');
 const { indexedDB, IDBKeyRange } = require('fake-indexeddb');
 
-test('the check uses only green and blue cards, preferring the full 72-hour pool', () => {
+test('the check samples at most 20 green and blue cards from either the recent or previous pool', () => {
   const now = Date.parse('2026-11-06T15:00:00.000Z'), windowMs = 72 * 60 * 60 * 1000;
   const words = [
     { id: 'boundary', recallLevel: 3, lastReviewedAt: now - windowMs },
@@ -24,17 +24,22 @@ test('the check uses only green and blue cards, preferring the full 72-hour pool
     { id: 'recent-yellow', lastGrade: 1, lastReviewedAt: now - 1, reviewCount: 1 },
     { id: 'edited-new', updatedAt: now, reviewCount: 1 }
   ];
-  const recent = selectInClassPool(words, now);
+  const recent = selectInClassPool(words, now, () => 0);
   assert.equal(recent.kind, 'recent');
   assert.deepEqual(recent.words.map(word => word.id), ['boundary', 'iso', 'firestore']);
-  assert.equal(selectInClassPool(Array.from({ length: 24 }, (_, id) => ({ id, recallLevel: 3, lastReviewedAt: now - 1 })), now).words.length, 24);
+  const recentWords = Array.from({ length: 24 }, (_, id) => ({ id, recallLevel: 3, lastReviewedAt: now - 1 }));
+  const recentSample = selectInClassPool(recentWords, now, () => 0.9);
+  assert.equal(recentSample.words.length, 20);
+  assert.equal(new Set(recentSample.words.map(word => word.id)).size, 20);
+  assert.notDeepEqual(recentSample.words, recentWords.slice(0, 20));
+  assert.deepEqual(recentWords.map(word => word.id), Array.from({ length: 24 }, (_, id) => id));
 
   const reviewed = Array.from({ length: 24 }, (_, id) => ({ id, recallLevel: 3, reviewCount: 1 }));
   const pool = selectInClassPool(reviewed, now, () => 0.9);
   assert.equal(pool.kind, 'previous');
-  assert.equal(pool.words.length, 15);
-  assert.equal(new Set(pool.words.map(word => word.id)).size, 15);
-  assert.notDeepEqual(pool.words, reviewed.slice(0, 15));
+  assert.equal(pool.words.length, 20);
+  assert.equal(new Set(pool.words.map(word => word.id)).size, 20);
+  assert.notDeepEqual(pool.words, reviewed.slice(0, 20));
   const fallback = selectInClassPool(words.slice(3), now, () => 0);
   assert.equal(fallback.kind, 'previous');
   assert.deepEqual(fallback.words.map(word => word.id), ['old', 'no-date', 'manual-green', 'manual-blue', 'future']);
@@ -42,6 +47,8 @@ test('the check uses only green and blue cards, preferring the full 72-hour pool
 });
 
 test('a local check hides answers, reports results immediately, and queues only misses for this profile', async () => {
+  const originalRandom = Math.random;
+  Math.random = () => 0;
   const markup = await fs.readFile(new URL('../index.html', import.meta.url), 'utf8');
   const { window } = new JSDOM(markup, { url: 'http://localhost:8789/', pretendToBeVisual: true });
   Object.assign(globalThis, { window, document: window.document, indexedDB, IDBKeyRange, localStorage: window.localStorage, sessionStorage: window.sessionStorage });
@@ -84,7 +91,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     context.switchView('view-in-class-check');
     assert.equal($('check-intro').hidden, false);
     assert.equal($('check-available-count').textContent, '2');
-    assert.equal($('check-pool-description').textContent, 'Green and blue words reviewed in the last 72 hours.');
+    assert.equal($('check-pool-description').textContent, 'Up to 20 random green and blue words reviewed in the last 72 hours.');
     $('btn-check-start').click();
     assert.equal($('check-progress').textContent, 'Word 1 of 2');
     assert.equal($('check-meaning').textContent, 'kiên cường');
@@ -151,6 +158,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     $('check-empty').querySelector('[data-check-done]').click();
     assert.equal($('view-review').classList.contains('hidden'), false);
   } finally {
+    Math.random = originalRandom;
     flash.resetForUser();
     window.close();
   }

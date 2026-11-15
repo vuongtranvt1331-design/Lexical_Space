@@ -84,7 +84,8 @@ export async function loadIndexedDBWordsData() {
     updateTopicDropdowns();
     updateBadges();
     if (!$('view-library')?.classList.contains('hidden')) renderLibrary();
-    await context.startNewSession({ restore: true });
+    // Profile entry starts a shuffled round; daily ledgers and word mastery stay intact.
+    await context.startNewSession({ restore: true, restartRound: true });
   } catch (error) {
     if (!isCurrent()) return;
     context.dbSyncError = error;
