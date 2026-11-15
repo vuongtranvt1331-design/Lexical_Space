@@ -1,0 +1,29 @@
+// Insert inside match /databases/{database}/documents in the full ruleset.
+match /shared_decks/{deckId} {
+  function validDeckId(value) {
+    return value.matches('[A-Za-z0-9][A-Za-z0-9_-]{0,127}');
+  }
+
+  function validSharedDeck(data) {
+    let fields = ['deckId', 'title', 'createdAt', 'wordCount', 'words'];
+    return data.keys().hasAll(fields)
+      && data.keys().hasOnly(fields)
+      && data.deckId == deckId
+      && data.title is string
+      && data.title.size() > 0
+      && data.title.size() <= 200
+      && !data.title.matches('\\s*')
+      && !data.title.matches('(?i)(all|favorites)')
+      && data.createdAt is int
+      && data.createdAt >= 0
+      && data.createdAt <= 9007199254740991
+      && data.wordCount is int
+      && data.wordCount > 0
+      && data.words is list
+      && data.words.size() == data.wordCount;
+  }
+
+  allow get: if validDeckId(deckId);
+  allow create: if validDeckId(deckId) && validSharedDeck(request.resource.data);
+  allow list, update, delete: if false;
+}

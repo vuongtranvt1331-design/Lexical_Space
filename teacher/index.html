@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LexicalSpace · Teacher Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<style>
+:root{color-scheme:light;--bg:#f6f7fb;--surface:#fff;--ink:#2e3856;--muted:#586380;--line:#edeff4;--blue:#4255ff;--bluebg:#eef2ff;--green:#198754;--greenbg:#eaf7ef;--red:#c93636;--redbg:#fff0f0}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px 'DM Sans',sans-serif}.wrap{max-width:1100px;margin:auto;padding:28px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;display:grid;place-items:center;background:#4255ff;color:#fff;border-radius:13px;font-weight:800;font-size:20px}.brand h1{font:800 21px Manrope;margin:0}.muted{color:var(--muted);font-size:12px;margin-top:4px}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.btn{border:1px solid var(--line);background:#fff;color:#2e3856;padding:10px 13px;border-radius:9px;font:600 12px 'DM Sans';cursor:pointer}.btn.primary{background:var(--blue);border-color:var(--blue);color:white}.btn:disabled{background:var(--line);color:var(--muted);opacity:1;cursor:wait}.status{padding:9px 12px;background:#fff;border:1px solid var(--line);border-radius:9px;font-size:12px;color:var(--muted)}.notice{display:none;padding:12px 14px;border-radius:10px;margin-bottom:16px;font-size:12px;line-height:1.55;white-space:pre-wrap}.notice.show{display:block}.notice.error{background:var(--redbg);color:#982a2a;border:1px solid #f2caca}.notice.ok{background:var(--greenbg);color:#17683e;border:1px solid #c9e9d5}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:18px}.stat,.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px}.stat{padding:18px}.statlabel{font-size:12px;color:var(--muted);font-weight:600}.statnum{font:800 29px Manrope;margin-top:10px}.panel{padding:18px}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.head h2{font:800 16px Manrope;margin:0}.search,input,textarea,select{border:1px solid var(--line);background:#fff;border-radius:9px;padding:10px 11px;font:13px 'DM Sans';outline:none;color:var(--ink)}.search{width:250px;max-width:100%}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:540px}th{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#586380}td{padding:13px 10px;border-bottom:1px solid #edeff4;font-size:12px}.count{font-weight:700;font-variant-numeric:tabular-nums}.smallbtn{border:1px solid var(--line);background:white;border-radius:8px;padding:7px 9px;cursor:pointer;font:600 11px 'DM Sans'}.smallbtn.danger{color:var(--red);border-color:#f0caca;background:#fffafa}.warning{background:var(--redbg);border:1px solid #f2caca;color:#982a2a;padding:12px;border-radius:9px;font-size:12px;line-height:1.55}.modalback{display:none;position:fixed;inset:0;background:rgba(46,56,86,.18);z-index:20;align-items:center;justify-content:center;padding:16px}.modalback.show{display:flex}.modal{background:white;border-radius:16px;padding:22px;width:min(760px,100%);box-shadow:0 4px 12px rgba(0,0,0,.08)}.modal h2{font:800 18px Manrope;margin:0 0 7px}.modal p{font-size:12px;line-height:1.6;color:var(--muted);margin:0 0 16px}.field{display:grid;gap:6px;margin:12px 0}.field label{font-size:12px;font-weight:700}.field input,.field textarea,.field select{width:100%}.modalfoot{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.foot{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6}@media(max-width:700px){.wrap{padding:16px}.top{align-items:flex-start;flex-direction:column}.stats{gap:8px}.stat{padding:13px}.statnum{font-size:24px}.head{align-items:flex-start;flex-direction:column}.search{width:100%}}
+</style></head><body><main class="wrap">
+<header class="top"><div class="brand"><div class="logo">L</div><div><h1>LexicalSpace</h1><div class="muted">Teacher dashboard · Smart sync</div></div></div><div class="actions"><span id="connection" class="status">Đang kết nối Firestore…</span><button id="refresh" class="btn">↻ Tải lại metadata</button><button id="reconcileAll" class="btn">Đối soát tất cả số từ</button><button id="bulkTop" class="btn primary">＋ Bulk Fetch học sinh</button></div></header>
+<div id="notice" class="notice"></div>
+<section class="stats"><div class="stat"><div class="statlabel">Số học sinh (metadata)</div><div class="statnum" id="totalStudents">—</div></div><div class="stat"><div class="statlabel">Tổng số từ theo metadata</div><div class="statnum" id="totalWords">—</div></div></section>
+<section class="panel"><div class="head"><div><h2>Danh sách học sinh</h2><div class="muted">Tải metadata khi mở. Khi Bulk Fetch, chỉ đồng bộ thư viện của học sinh được chọn và tiếp nhận các thay đổi tiếp theo.</div></div><input id="search" class="search" placeholder="Tìm username…"></div><div class="tablewrap"><table><thead><tr><th>Học sinh / username</th><th>Số từ trong metadata</th><th>Hoạt động cuối</th><th>Thao tác</th></tr></thead><tbody id="rows"><tr><td colspan="4">Đang tải metadata…</td></tr></tbody></table></div><div class="foot">Khi nhập từ, dashboard kiểm tra trùng theo username và từ đã chuẩn hóa; từ cũ và tài khoản cũ được giữ nguyên. Lần đầu xem một học sinh có thể đọc toàn bộ thư viện của học sinh đó.</div></section></main>
+<div id="bulkModal" class="modalback"><section class="modal"><h2>Bulk Fetch từ vựng cho một học sinh</h2><p>Từ đã có của học sinh sẽ được bỏ qua. Từ mới dùng ID ổn định để tránh ghi trùng khi nhập lại; app học sinh nhận thay đổi trực tiếp thay vì phụ thuộc vào metadata.wordCount.</p><form id="bulkForm"><div class="field"><label for="bulkStudent">Học sinh (username)</label><select id="bulkStudent" required></select></div><div class="field"><label for="bulkText">Danh sách từ vựng</label><textarea id="bulkText" required rows="14" style="font-family:ui-monospace,monospace;white-space:pre;overflow:auto" placeholder="Topic: Environment&#10;sustainable | bền vững | eco-friendly, renewable&#10;pollution | ô nhiễm | contamination, environmental damage&#10;&#10;Topic: Education&#10;curriculum | chương trình học | syllabus, course content"></textarea></div><div id="bulkPreview" class="muted">Chưa có dữ liệu để xem trước.</div><div class="modalfoot"><button type="button" class="btn" id="cancelBulk">Hủy</button><button type="submit" class="btn primary" id="bulkSave">Bulk Fetch</button></div></form></section></div>
+<div id="deleteModal" class="modalback"><section class="modal" style="max-width:520px"><h2 style="color:var(--red)">Xóa toàn bộ dữ liệu học sinh?</h2><p>Thao tác này sẽ xóa vĩnh viễn từ vựng đang hoạt động, nhật ký và thống kê của username được chọn, bao gồm tài liệu thống kê từ vựng. Không thể hoàn tác.</p><div class="warning">Dashboard sẽ truy vấn dữ liệu theo username để tìm tài liệu cần xóa; các truy vấn này có thể phát sinh lượt đọc Firestore. Hãy kiểm tra đúng username trước khi xác nhận.</div><div class="field"><label>Username cần xóa</label><input id="deleteExpected" readonly></div><div class="field"><label for="deleteConfirm">Nhập lại chính xác username để xác nhận</label><input id="deleteConfirm" autocomplete="off" placeholder="Nhập username"></div><div id="deleteStatus" class="muted"></div><div class="modalfoot"><button type="button" class="btn" id="cancelDelete">Hủy</button><button type="button" class="btn" id="confirmDelete" style="background:#c93636;color:white;border-color:#c93636" disabled>Xóa toàn bộ dữ liệu</button></div></section></div>
+<script type="module">
+import { parseVocabularyImport, senseKey, normalizeRemoteVocabulary } from '../js/core/vocabulary.js';
+import { mutateWords, applyRemoteWord, readUserWords, idbGetAll, migrateLegacyOutbox } from '../js/core/idb-manager.js';
+import { flushMutationOutbox, readStudentStats, studentStatsId } from '../js/core/firebase-sync.js';
+const teacherRetries=new Map();
+async function syncTeacher(username){
+  clearTimeout(teacherRetries.get(username));
+  try{await flushMutationOutbox({db,username});teacherRetries.delete(username);}
+  catch(error){teacherRetries.set(username,setTimeout(()=>{syncTeacher(username).catch(error=>console.warn('Teacher sync retry pending:',error));},15000));throw error;}
+}
+async function resumeTeacherOutboxes(){
+  await migrateLegacyOutbox();
+  const users=new Set((await idbGetAll('pendingOps')).map(op=>op.username).filter(Boolean));
+  for(const username of users)syncTeacher(username).catch(error=>console.warn('Teacher changes saved locally; retry pending:',error));
+}
+window.addEventListener('online',()=>{if(db)void resumeTeacherOutboxes();});
+const firebaseConfig={apiKey:"AIzaSyCAejXQfHKQ0ZKTpR7kphaDFCGqCcuoRfI",authDomain:"home-page-d6c39.firebaseapp.com",projectId:"home-page-d6c39",storageBucket:"home-page-d6c39.firebasestorage.app",messagingSenderId:"916831594708",appId:"1:916831594708:web:64d97a5a3b8872f7173341"};
+let db=null, studentList=[];
+let persistenceReady=null;
+const vocabularyViews = new Map();
+const $=id=>document.getElementById(id);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function parseTime(v){if(!v)return null;try{if(v.toDate)return v.toDate();if(typeof v==='number')return new Date(v<1e12?v*1000:v);if(v.seconds)return new Date(v.seconds*1000);const d=new Date(v);return Number.isNaN(d.getTime())?null:d}catch(_){return null}}
+function activityText(v){const d=parseTime(v);return d?d.toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'Chưa có dữ liệu'}
+function setNotice(msg,type='ok'){$('notice').textContent=msg;$('notice').className='notice show '+type}
+function normalizeWord(word){return String(word||'').normalize('NFKC').trim().replace(/\s+/g,' ').toLocaleLowerCase('en');}
+function parseBulkText(text){
+  const parsed=parseVocabularyImport(text);
+  return {items:parsed.entries,duplicates:parsed.duplicates,errors:parsed.errors.map(e=>'Dòng '+e.line+': '+e.message)};
+}
+function updatePreview(){const p=parseBulkText($('bulkText').value);$('bulkPreview').textContent=`Sẽ ghi ${p.items.length} từ duy nhất · loại ${p.duplicates} dòng trùng trong nội dung dán${p.errors.length?' · '+p.errors.length+' dòng lỗi':''}`;return p}
+function render(){const q=$('search').value.trim().toLowerCase(),filtered=studentList.filter(s=>s.username.toLowerCase().includes(q));$('totalStudents').textContent=studentList.length.toLocaleString();$('totalWords').textContent=studentList.reduce((n,s)=>n+(Number(s.wordCount)||0),0).toLocaleString();$('rows').innerHTML=filtered.length?filtered.map(s=>`<tr><td><b>${esc(s.username)}</b></td><td class="count">${(Number(s.wordCount)||0).toLocaleString()}</td><td>${esc(activityText(s.activityLogTimestamp))}</td><td style="white-space:nowrap"><button class="smallbtn" data-bulk="${esc(s.username)}">Bulk Fetch riêng</button> <button class="smallbtn" data-recount="${esc(s.username)}">Đối soát số từ</button> <button class="smallbtn danger" data-delete="${esc(s.username)}">Xóa học sinh</button></td></tr>`).join(''):'<tr><td colspan="4">Không tìm thấy học sinh trong metadata.</td></tr>';document.querySelectorAll('[data-bulk]').forEach(b=>b.onclick=()=>openBulk(b.dataset.bulk));document.querySelectorAll('[data-delete]').forEach(b=>b.onclick=()=>openDelete(b.dataset.delete));document.querySelectorAll('[data-recount]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{const r=await reconcileCount(b.dataset.recount);render();setNotice(r.updated?`Đã đối soát ${b.dataset.recount}: ${r.count} từ trên server.`:'Metadata vừa đổi; chưa ghi đè.','ok')}catch(e){setNotice('Không thể đối soát: '+(e.code||e.message),'error');b.disabled=false}})}
+let deleteTarget='';
+function openDelete(username){deleteTarget=String(username||'');$('deleteExpected').value=deleteTarget;$('deleteConfirm').value='';$('deleteStatus').textContent='';$('confirmDelete').disabled=true;$('cancelDelete').disabled=false;$('deleteModal').classList.add('show')}
+$('deleteConfirm').addEventListener('input',()=>{$('confirmDelete').disabled=$('deleteConfirm').value!==deleteTarget});
+$('cancelDelete').onclick=()=>{if(!$('confirmDelete').dataset.running)$('deleteModal').classList.remove('show')};
+$('confirmDelete').onclick=async()=>{if(!deleteTarget||$('deleteConfirm').value!==deleteTarget)return;const username=deleteTarget;const btn=$('confirmDelete');btn.disabled=true;btn.dataset.running='1';btn.textContent='Đang xóa…';$('cancelDelete').disabled=true;$('deleteStatus').textContent='Đang tìm tài liệu của học sinh…';
+ try{
+   // Collect all matching documents before deleting, so query errors do not start a partial deletion.
+   const [wordsSnap,logsSnap,metaByUsername]=await Promise.all([
+     db.collection('words').where('username','==',username).get(),
+     db.collection('activity_logs').where('username','==',username).get(),
+     db.collection('metadata').where('username','==',username).get()
+   ]);
+   const refs=new Map();
+    // Import server revisions into the local cache, then delete through the shared outbox.
+    for(const doc of wordsSnap.docs)await applyRemoteWord(normalizeRemoteVocabulary(doc.data(),doc.id),username);
+    const localWords=await readUserWords(username);
+    await mutateWords(localWords.map(word=>({id:word.id,username,type:'DELETE'})));
+    await syncTeacher(username);
+    for(const snap of [logsSnap,metaByUsername])snap.docs.forEach(d=>refs.set(d.ref.path,d.ref));
+   const stats=await db.collection('metadata').doc(studentStatsId(username)).get();
+   if(stats.exists&&stats.data().username===username)refs.set(stats.ref.path,stats.ref);
+   const all=[...refs.values()];let deleted=0;
+   for(let i=0;i<all.length;i+=400){const batch=db.batch();all.slice(i,i+400).forEach(ref=>batch.delete(ref));await batch.commit();deleted+=Math.min(400,all.length-i);$('deleteStatus').textContent=`Đã xóa ${deleted}/${all.length} tài liệu…`}
+   studentList=studentList.filter(s=>s.username!==username);$('deleteModal').classList.remove('show');render();setNotice(`Đã xóa dữ liệu của ${username}: ${wordsSnap.size} tài liệu words, ${logsSnap.size} activity_logs, ${refs.size-logsSnap.size} tài liệu metadata/khác. Tổng ${deleted} tài liệu thống kê/nhật ký đã xóa; từ vựng đã được ẩn.`,'ok');
+ }catch(err){$('deleteStatus').textContent=`Xóa chưa hoàn tất: ${err.code||err.message||err}. Một phần dữ liệu có thể đã bị xóa; tải lại metadata và kiểm tra Firestore trước khi thử lại.`;setNotice(`Không thể hoàn tất xóa ${username}: ${err.code||err.message||err}`,'error')}
+ finally{delete btn.dataset.running;btn.textContent='Xóa toàn bộ dữ liệu';$('cancelDelete').disabled=false;btn.disabled=$('deleteConfirm').value!==deleteTarget}
+};
+async function refresh() {
+  $('connection').textContent = 'Đang đọc metadata…';
+  $('rows').innerHTML = '<tr><td colspan="4">Đang tải…</td></tr>';
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    if (!persistenceReady) persistenceReady = db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
+    await persistenceReady;
+    void resumeTeacherOutboxes();
+    const snapshot = await db.collection('metadata').get();
+    const students = new Map();
+    for (const doc of snapshot.docs) {
+      if (!doc.id.startsWith('userWordStats_')) continue;
+      const data = doc.data(), username = String(data.username || '').trim();
+      if (!username || (students.has(username) && doc.id !== studentStatsId(username))) continue;
+      students.set(username, { username, wordCount: Number(data.wordCount) || 0, activityLogTimestamp: data.activityLogTimestamp });
+    }
+    studentList = [...students.values()].sort((a, b) => a.username.localeCompare(b.username));
+    $('connection').textContent = 'Đã kết nối · chỉ metadata';
+    render();
+    setNotice(`Đã đọc ${snapshot.size} tài liệu metadata; không đọc words/activity_logs.`);
+  } catch (error) {
+    $('connection').textContent = 'Kết nối thất bại';
+    $('rows').innerHTML = '<tr><td colspan="4">Không thể đọc metadata.</td></tr>';
+    setNotice(`Lỗi Firestore: ${error.code || error.message || error}`, 'error');
+  }
+}
+function openBulk(username=''){if(!db){setNotice('Chưa kết nối Firestore.','error');return}const sel=$('bulkStudent');sel.innerHTML=studentList.map(s=>`<option value="${esc(s.username)}">${esc(s.username)}</option>`).join('');if(username)sel.value=username;$('bulkText').value='';updatePreview();$('bulkModal').classList.add('show')}
+$('refresh').onclick=refresh;$('bulkTop').onclick=()=>openBulk();$('cancelBulk').onclick=()=>$('bulkModal').classList.remove('show');$('search').addEventListener('input',render);$('bulkText').addEventListener('input',updatePreview);
+async function vocabularyView(username){
+  if(vocabularyViews.has(username)) return vocabularyViews.get(username).ready;
+  for(const view of vocabularyViews.values())view.stop?.();
+  vocabularyViews.clear();
+  const view={words:new Set(),ids:new Map(),size:0,ready:null};
+  view.ready=new Promise((resolve,reject)=>{
+    let finished=false;
+    const timeout=setTimeout(()=>{if(!finished){finished=true;view.stop?.();vocabularyViews.delete(username);reject(new Error('Không thể xác nhận thư viện từ server.'));}},15000);
+    view.stop=db.collection('words').where('username','==',username).onSnapshot({includeMetadataChanges:true},snapshot=>{
+      view.ids=new Map(snapshot.docs.filter(doc=>!doc.data().deleted).map(doc=>[doc.id,senseKey(doc.data())]));
+      view.words=new Set(view.ids.values());view.size=view.ids.size;
+      if(!snapshot.metadata.fromCache&&!finished){finished=true;clearTimeout(timeout);resolve(view)}
+    },error=>{if(!finished){finished=true;clearTimeout(timeout);vocabularyViews.delete(username);reject(error)}else setNotice('Không thể theo dõi thư viện: '+(error.code||error.message),'error')});
+  });
+  vocabularyViews.set(username,view);
+  return view.ready;
+}
+async function stableWordId(username,word){
+  if(!globalThis.crypto?.subtle)throw new Error('Cần HTTPS hoặc localhost để tạo ID an toàn.');
+  const bytes=new TextEncoder().encode(username.trim()+'\0'+senseKey(typeof word==='string'?{word}:word));
+  const hash=await crypto.subtle.digest('SHA-256',bytes);
+  return 'teacher_'+Array.from(new Uint8Array(hash),x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function countFromServer(username){
+  const [apps,store]=await Promise.all([import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js'),import('https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js')]);
+  const app=apps.getApps().find(x=>x.name==='teacher-count')||apps.initializeApp(firebaseConfig,'teacher-count');
+  const query=store.query(store.collection(store.getFirestore(app),'words'),store.where('username','==',username));
+  const deleted=store.query(store.collection(store.getFirestore(app),'words'),store.where('username','==',username),store.where('deleted','==',true));
+  const [allCount,deletedCount]=await Promise.all([store.getCountFromServer(query),store.getCountFromServer(deleted)]);
+  return allCount.data().count-deletedCount.data().count;
+}
+async function reconcileCount(username){
+  const {data:before}=await readStudentStats(db,username);
+  const count=await countFromServer(username);
+  const result=await db.runTransaction(async tx=>{
+    const {ref,data:current}=await readStudentStats(db,username,doc=>tx.get(doc));
+    if(current.wordCount!==before.wordCount)return false;
+    const update={username,wordCount:count};
+    if(current.activityLogTimestamp!=null)update.activityLogTimestamp=current.activityLogTimestamp;
+    tx.set(ref,update,{merge:true});return true;
+  });
+  if(result){const student=studentList.find(x=>x.username===username);if(student)student.wordCount=count;}
+  return {updated:result,count};
+}
+$('bulkForm').addEventListener('submit',async e=>{
+  e.preventDefault();const username=$('bulkStudent').value,p=updatePreview(),items=p.items;
+  if(p.errors.length){setNotice(p.errors.join('\n'),'error');return;}
+  if(!username||!items.length){setNotice('Chọn học sinh và nhập ít nhất một dòng đúng định dạng.','error');return}
+  const btn=$('bulkSave');btn.disabled=true;btn.textContent='Đang kiểm tra…';let added=0, skipped=0;const errors=[];
+  try{
+    const view=await vocabularyView(username);
+    const candidates=[];
+    for(const item of items){const key=senseKey(item);if(view.words.has(key)){skipped++;continue;}candidates.push({...item,key,id:await stableWordId(username,item)});}
+    for(let start=0;start<candidates.length;start+=50){
+       const chunk=candidates.slice(start,start+50);
+       try{
+         const prior=await Promise.all(chunk.map(item=>db.collection('words').doc(item.id).get()));
+         const fresh=chunk.filter((item,i)=>!prior[i].exists);
+         await mutateWords(fresh.map(item=>{
+           const {key,id,...content}=item;
+           return {id,username,patch:{...content,createdAt:Date.now()}};
+         }));
+         added+=fresh.length;skipped+=chunk.length-fresh.length;fresh.forEach(item=>view.words.add(item.key));
+         await syncTeacher(username);
+      }catch(error){errors.push(error.code||error.message||String(error));break;}
+    }
+    let reconciliation='';
+    try{const result=await reconcileCount(username);reconciliation=result.updated?` Số từ server: ${result.count}.`:' Metadata vừa thay đổi; chưa ghi đè số đếm.';}
+    catch(error){reconciliation=' Chưa thể đối soát metadata; nội dung đã ghi vẫn được giữ.';}
+    $('bulkModal').classList.remove('show');render();
+    setNotice(`Bulk Fetch ${username}: thêm ${added}, bỏ qua ${skipped} từ đã tồn tại; ${p.duplicates} dòng trùng trong nội dung dán.${reconciliation}${errors.length?' Lỗi ghi: '+errors.join(' | '):''}`,errors.length||p.errors.length?'error':'ok');
+  }catch(error){setNotice('Bulk Fetch lỗi: '+(error.code||error.message||error),'error');}
+  finally{btn.disabled=false;btn.textContent='Bulk Fetch';}
+});
+$('reconcileAll').onclick=async()=>{
+  const button=$('reconcileAll');button.disabled=true;let updated=0,skipped=0;
+  try{for(const student of studentList){try{const result=await reconcileCount(student.username);result.updated?updated++:skipped++;}catch{skipped++;}button.textContent=`Đối soát ${updated+skipped}/${studentList.length}…`;}
+    render();setNotice(`Đã đối soát ${updated} học sinh; bỏ qua ${skipped} do lỗi hoặc thay đổi đồng thời.`,skipped?'error':'ok');
+  }finally{button.disabled=false;button.textContent='Đối soát tất cả số từ';}
+};
+refresh();
+</script></body></html>
