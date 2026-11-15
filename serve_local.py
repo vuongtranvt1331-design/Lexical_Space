@@ -16,6 +16,7 @@ class LexicalSpaceHandler(SimpleHTTPRequestHandler):
         '.js': 'text/javascript',
         '.mjs': 'text/javascript',
         '.css': 'text/css',
+        '.webmanifest': 'application/manifest+json',
     }
 
     def __init__(self, *args, **kwargs):
