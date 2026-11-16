@@ -260,3 +260,21 @@
   .library-flip-inner, .startup-loader { transition: none !important; }
   .topic-option-actions button.is-sharing::after { animation: none; }
 }
+
+/* In-Class Check answer comparison: pastel status colors in the existing light theme. */
+.check-answer-list { display: grid; gap: 16px; margin-top: 10px; padding: 0; list-style: none; }
+.check-answer-item { min-width: 0; }
+.check-answer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.check-answer-cell { min-width: 0; padding: 10px; border: 1px solid; border-radius: 10px; overflow-wrap: anywhere; }
+.check-answer-cell h5 { margin-bottom: 6px; font-size: 11px; font-weight: 800; }
+.check-answer-cell p { font-size: 13px; line-height: 1.6; }
+.check-typed-answer { white-space: pre-wrap; }
+.check-answer-yours { background: #fff1f2; border-color: #fda4af; color: #9f1239; }
+.check-answer-target, .check-answer-yours.is-correct { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
+.check-answer-badge { display: inline-block; margin-bottom: 6px; padding: 2px 7px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+.check-answer-badge.is-correct { background: #d1fae5; color: #065f46; }
+.check-answer-badge.is-incorrect { background: #ffe4e6; color: #9f1239; }
+.check-target-word { font-weight: 800; }
+.check-answer-audio { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-top: 8px; border: 1px solid currentColor; border-radius: 50%; color: inherit; background: transparent; }
+.check-answer-audio:hover { background: #d1fae5; }
+.check-answer-audio:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }

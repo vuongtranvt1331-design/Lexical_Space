@@ -1,18 +1,32 @@
 import { context } from '../core/context.js';
+import { idbGet, updateMetadata } from '../core/idb-manager.js';
+import { escapeHtml, getStudentKey } from '../utils/helpers.js';
 import { clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
 import { recallLevelFor, timestamp } from '../core/vocabulary.js';
 
 const WINDOW_MS = 72 * 60 * 60 * 1000;
-const CHECK_SIZE = 20;
+const CHECK_SIZE = 15;
 const BLANK = '[ _____ ]';
 const $ = id => document.getElementById(id);
 const stages = ['intro', 'empty', 'question', 'results'];
-let attempt = null;
+let attempt = null, opening = false, generation = 0;
+const historyKey = user => `inclassCheckedIds_${getStudentKey(user)}`;
+const uniqueIds = value => [...new Set((Array.isArray(value) ? value : []).filter(id => typeof id === 'string'))];
+function shuffled(words, random) {
+  const pool = [...words];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool;
+}
 
-export function selectInClassPool(words, now = Date.now(), random = Math.random) {
+export function selectInClassPool(words, now = Date.now(), random = Math.random, checkedIds = []) {
   const recent = [], previous = [];
+  const ids = new Set();
   for (const word of words) {
-    if (word.deleted) continue;
+    if (word.deleted || typeof word.id !== 'string' || ids.has(word.id)) continue;
+    ids.add(word.id);
     const level = recallLevelFor(word);
     if (level !== 3 && level !== 4) continue;
     const reviewedAt = timestamp(word.lastReviewedAt);
@@ -20,17 +34,16 @@ export function selectInClassPool(words, now = Date.now(), random = Math.random)
     else previous.push(word);
   }
   const pool = recent.length ? recent : previous;
-  // A partial Fisher–Yates shuffle samples without replacement.
-  const size = Math.min(CHECK_SIZE, pool.length);
-  for (let i = 0; i < size; i++) {
-    const j = i + Math.floor(random() * (pool.length - i));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  return { kind: size ? (recent.length ? 'recent' : 'previous') : 'empty', words: pool.slice(0, size) };
+  const history = new Set(uniqueIds(checkedIds));
+  const unseen = shuffled(pool.filter(word => !history.has(word.id)), random);
+  const resetHistory = unseen.length < CHECK_SIZE;
+  const selected = unseen.slice(0, CHECK_SIZE);
+  if (resetHistory) selected.push(...shuffled(pool.filter(word => history.has(word.id)), random).slice(0, CHECK_SIZE - selected.length));
+  return { kind: selected.length ? (recent.length ? 'recent' : 'previous') : 'empty', words: selected, resetHistory };
 }
 
-function currentPool() {
-  return selectInClassPool(context.wordsData.filter(word => word.username === context.currentUser));
+function currentPool(history = []) {
+  return selectInClassPool(context.wordsData.filter(word => word.username === context.currentUser), Date.now(), Math.random, history);
 }
 
 function showStage(stage) {
@@ -43,7 +56,7 @@ function renderIntro(focus) {
   showStage(empty ? 'empty' : 'intro');
   $('check-available-count').textContent = pool.words.length;
   $('check-pool-description').textContent = pool.kind === 'recent'
-    ? 'Up to 20 random green and blue words reviewed in the last 72 hours.' : 'A random sample of up to 20 green and blue words.';
+    ? 'Up to 15 green and blue words from the last 72 hours; unchecked words first.' : 'Up to 15 green and blue words; unchecked words first.';
   if (focus) $(empty ? 'check-empty-heading' : 'check-heading').focus();
 }
 
@@ -75,12 +88,23 @@ function renderResults() {
   const total = attempt.words.length, score = total - attempt.missed.length;
   $('check-score').textContent = `${score} / ${total} (${Math.round(score / total * 100)}%)`;
   $('check-time').textContent = elapsedText(attempt.elapsed);
-  const list = $('check-missed-list');
-  list.replaceChildren();
+  $('check-answer-list').innerHTML = attempt.answers.map(({ word, answer, correct }, index) => `
+    <li class="check-answer-item">
+      <p class="check-answer-badge ${correct ? 'is-correct' : 'is-incorrect'}">${correct ? 'Correct' : 'Incorrect'}</p>
+      <div class="check-answer-grid grid-cols-2 gap-2">
+        <div class="check-answer-cell check-answer-yours ${correct ? 'is-correct' : ''}">
+          <h5>Your Answer</h5><p class="check-typed-answer" dir="auto">${escapeHtml(answer || '(Empty)')}</p>
+        </div>
+        <div class="check-answer-cell check-answer-target">
+          <h5>Correct Answer</h5><p class="check-target-word" lang="en">${escapeHtml(word.word)}</p>
+          <p lang="vi" dir="auto">${escapeHtml(word.meaning)}</p>
+          ${typeof context.playAudio === 'function' ? `<button type="button" class="check-answer-audio" data-answer-index="${index}" aria-label="Pronounce ${escapeHtml(word.word)}">&#128266;</button>` : ''}
+        </div>
+      </div>
+    </li>`).join('');
+  $('check-missed-list').replaceChildren();
   for (const word of attempt.missed) {
-    const item = document.createElement('li');
-    item.textContent = word.word;
-    list.append(item);
+    const item = document.createElement('li'); item.textContent = word.word; $('check-missed-list').append(item);
   }
   $('check-missed').hidden = attempt.missed.length === 0;
   $('btn-check-review-misses').hidden = attempt.missed.length === 0;
@@ -88,9 +112,61 @@ function renderResults() {
   $('check-results-heading').focus();
 }
 
+async function saveCompletedHistory(finished) {
+  if (finished.historySaving || finished.historySaved) return;
+  finished.historySaving = true;
+  const active = () => attempt === finished && context.currentUser === finished.user;
+  const status = $('check-history-status'), retry = $('btn-check-save-history');
+  if (active()) { status.textContent = 'Saving check history…'; retry.hidden = true; }
+  try {
+    const selected = finished.words.map(word => word.id);
+    // One local metadata transaction; merge the latest history if another tab completed meanwhile.
+    await updateMetadata([finished.historyKey], values => {
+      const latest = uniqueIds(values[finished.historyKey]?.value);
+      const previous = new Set(finished.historyBefore);
+      const unchanged = latest.length === previous.size && latest.every(id => previous.has(id));
+      const ids = uniqueIds([...(finished.resetHistory && unchanged ? [] : latest), ...selected]);
+      return { records: [{ key: finished.historyKey, value: ids }], result: ids };
+    });
+    finished.historySaved = true;
+    if (active()) status.textContent = '';
+  } catch (error) {
+    if (active()) {
+      status.textContent = 'Your results are ready, but check history could not be saved. Retry to avoid repeated words.';
+      retry.hidden = false;
+    }
+  } finally { finished.historySaving = false; }
+}
+
+async function startCheck() {
+  if (!canUseCheck() || attempt || opening) return;
+  opening = true;
+  const user = context.currentUser, ticket = generation;
+  $('btn-check-start').disabled = true;
+  $('check-status').hidden = true;
+  try {
+    const history = uniqueIds(await idbGet('metadata', historyKey(user)));
+    if (ticket !== generation || user !== context.currentUser || !canUseCheck()) return;
+    const { words, resetHistory } = currentPool(history);
+    if (!words.length) { renderIntro(true); return; }
+    attempt = { user, words, index: 0, missed: [], answers: [], historyKey: historyKey(user), historyBefore: history,
+      resetHistory, historySaved: false, historySaving: false, startedAt: performance.now(), elapsed: null };
+    renderQuestion({ clearAnswer: true });
+  } catch (error) {
+    if (ticket === generation && user === context.currentUser) {
+      $('check-status').textContent = 'Could not load check history. Try starting the check again.';
+      $('check-status').hidden = false;
+    }
+  } finally {
+    if (ticket === generation) { opening = false; $('btn-check-start').disabled = false; }
+  }
+}
+
 export function resetInClassCheck() {
-  attempt = null;
-  for (const id of ['check-progress', 'check-meaning', 'check-cloze', 'check-score', 'check-time', 'check-missed-list', 'check-status']) {
+  generation++; opening = false; attempt = null;
+  $('btn-check-start').disabled = false;
+  $('btn-check-save-history').hidden = true;
+  for (const id of ['check-progress', 'check-meaning', 'check-cloze', 'check-score', 'check-time', 'check-missed-list', 'check-answer-list', 'check-history-status', 'check-status']) {
     $(id).textContent = '';
   }
   $('check-status').hidden = true;
@@ -114,26 +190,31 @@ export function setupInClassCheck() {
   $('check-progress-panel').addEventListener('toggle', event => {
     if (event.currentTarget.open && canUseCheck()) void context.renderStats();
   });
-  $('btn-check-start').addEventListener('click', () => {
-    if (!canUseCheck() || attempt) return;
-    const { words } = currentPool();
-    if (!words.length) { renderIntro(true); return; }
-    attempt = { user: context.currentUser, words, index: 0, missed: [], startedAt: performance.now(), elapsed: null };
-    renderQuestion({ clearAnswer: true });
+  $('btn-check-start').addEventListener('click', () => { void startCheck(); });
+  $('btn-check-save-history').addEventListener('click', () => {
+    if (canUseCheck() && attempt?.elapsed != null && attempt?.words) void saveCompletedHistory(attempt);
+  });
+  $('check-answer-list').addEventListener('click', event => {
+    const button = event.target.closest('button[data-answer-index]');
+    if (!button || !canUseCheck() || attempt?.elapsed == null || attempt.user !== context.currentUser) return;
+    const answer = attempt.answers[Number(button.dataset.answerIndex)];
+    if (answer && typeof context.playAudio === 'function') context.playAudio(answer.word);
   });
   $('check-form').addEventListener('submit', event => {
     event.preventDefault();
     if (!canUseCheck() || !attempt || attempt.user !== context.currentUser || attempt.elapsed !== null) return;
-    const input = $('check-answer'), answer = input.value.trim();
-    if (!answer) { input.focus(); return; }
+    const input = $('check-answer'), answer = input.value;
     const word = attempt.words[attempt.index++];
-    if (!matchesRecallAnswer(answer, word)) attempt.missed.push(word);
+    const correct = matchesRecallAnswer(answer, word);
+    attempt.answers.push({ word, answer, correct });
+    if (!correct) attempt.missed.push(word);
     input.value = '';
     if (attempt.index < attempt.words.length) { renderQuestion(); return; }
     attempt.elapsed = Math.floor((performance.now() - attempt.startedAt) / 1000);
     $('check-meaning').textContent = '';
     $('check-cloze').textContent = '';
     renderResults();
+    void saveCompletedHistory(attempt);
   });
   for (const button of $('view-in-class-check').querySelectorAll('[data-check-done]')) {
     button.addEventListener('click', () => {
