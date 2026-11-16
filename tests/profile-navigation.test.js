@@ -136,8 +136,8 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     assert.equal(nav('view-stats'), null);
     assert.equal(nav('view-settings'), null);
     const grammar = $('btn-drawer-grammarspace'), arcade = $('btn-drawer-arcadespace');
-    assert.equal(grammar.href, 'https://vuongtranvt1331-design.github.io/Grammar_Space/');
-    assert.equal(arcade.href, 'https://vuongtranvt1331-design.github.io/Arcadehub/');
+    assert.equal(grammar.href, 'http://localhost:8769/apps/grammar/');
+    assert.equal(arcade.href, 'http://localhost:8769/apps/arcade/');
     assert.deepEqual([grammar, arcade].map(link => link.textContent.trim()), ['GrammarSpace', 'ArcadeSpace']);
     const footer = $('drawer').lastElementChild;
     assert.equal(footer.tagName, 'FOOTER');

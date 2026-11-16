@@ -1,0 +1,1418 @@
+:root {
+  --notebook-font: 'Pangolin', 'Segoe Print', cursive, sans-serif;
+}
+
+/* ==========================================================================
+   Standard Clean Native Scrolling
+   ========================================================================== */
+html, body {
+  touch-action: pan-y !important;
+  overscroll-behavior-x: none !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+#notebook-view,
+.notebook-container,
+.notebook,
+.book,
+.page,
+.page-face,
+.page-footer,
+.page-nav-bar {
+  max-width: 100vw !important;
+  box-sizing: border-box !important;
+}
+
+/* Constrain the Notebook Bottom with finite hard stop */
+#notebook-view,
+.notebook-container {
+  padding-bottom: 80px !important;
+  box-sizing: border-box !important;
+}
+
+/* Book geometry and 3D page turns. */
+    .book { position: relative; display: block; width: 100%; perspective: 2500px; perspective-origin: center center; isolation: isolate; scroll-margin-top: 24px; overflow-x: clip !important; }
+    .page { position: absolute; top: 0; left: 0; min-width: 0; width: 100%; height: 100%; visibility: hidden; pointer-events: none; transform: rotateY(0deg); transform-origin: left center; transform-style: preserve-3d; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1); }
+    .book:not(.is-measuring) .page:not(.is-visible) { height: 100% !important; max-height: 100% !important; overflow: hidden !important; }
+    .page-face { width: 100%; height: 100%; min-height: 650px; display: flex; flex-direction: column; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .page-body { flex: 0 0 auto; min-width: 0; }
+    .page-face > .page-footer { flex-shrink: 0; }
+    .book.is-measuring .page-face { height: auto; }
+    .book-page.is-visible { visibility: visible; }
+    .book-page.is-active { pointer-events: auto; }
+    .page.flipped { transform: rotateY(-180deg); pointer-events: none; }
+    .book.is-turning .book-page { pointer-events: none; }
+    .book.is-resetting .book-page { transition: none !important; }
+
+/* Navigation Bar Layout on EVERY Page */
+.page-footer {
+  margin-top: auto;
+  padding-top: 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.page-number-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.page-number {
+  color: #708363;
+  font-size: 15px;
+  font-family: inherit;
+  letter-spacing: 0.5px;
+}
+
+.page-nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+  padding: 0 4px;
+}
+
+.page-footer .final-check-button.is-hidden {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.page-nav-bar button,
+.page-nav-bar .nav-btn,
+.page-footer .page-button,
+.page-footer .final-check-button,
+.page-footer .clear-page-button,
+.page-footer .previous-page,
+.page-footer .next-page,
+.page-footer .restart-page,
+.nav-btn {
+  min-height: 44px;
+  width: auto;
+  padding: 7px 16px;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  font-family: var(--notebook-font, inherit) !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  line-height: 30px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity .15s ease, transform .15s ease, color .15s ease;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Ensure inner spans and text wrappers inherit unified typography */
+.page-nav-bar button *,
+.page-nav-bar .nav-btn *,
+.nav-btn *,
+.nav-btn .btn-text,
+.nav-btn .icon {
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  font-size: inherit !important;
+  font-style: inherit !important;
+  line-height: inherit !important;
+}
+
+.nav-btn .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -1px;
+}
+
+.page-footer .previous-page {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #b78103 !important;
+  cursor: pointer;
+  padding: 6px 14px;
+  white-space: nowrap;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.page-footer .previous-page:hover:not(:disabled) {
+  color: #875d00 !important;
+  transform: translateX(-3px);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.page-footer .previous-page:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.page-footer .previous-page:disabled,
+.page-footer .previous-page.is-hidden {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.page-footer .clear-page-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #c0392b !important;
+  cursor: pointer;
+  padding: 6px 14px;
+  white-space: nowrap;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.page-footer .clear-page-button:hover:not(:disabled) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #922b21 !important;
+  transform: scale(1.04);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.page-footer .clear-page-button:active:not(:disabled) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: scale(0.97);
+}
+
+.page-footer .clear-page-button.is-hidden {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.page-footer .clear-page-button:disabled {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.page-footer .final-check-button {
+  color: #3b7c3d !important;
+  padding: 7px 16px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.page-footer .final-check-button:hover:not(:disabled) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #276729 !important;
+  transform: scale(1.04);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.page-footer .final-check-button:active:not(:disabled) {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: scale(0.98);
+}
+
+.page-footer .final-check-button:disabled {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.page-footer .next-page {
+  color: #477fa4 !important;
+}
+
+.page-footer .restart-page {
+  color: #7b4eb2 !important;
+}
+
+.page-footer .page-button:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* ==========================================================================
+   Mobile Icon-Only Navigation Bar Layout
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* 1. Hide text inside navigation buttons on small screens */
+  .page-footer .btn-text,
+  .nav-btn .btn-text {
+    display: none !important;
+  }
+
+  /* 2. Container: Evenly distribute buttons without horizontal overflow */
+  .page-nav-bar {
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 3. Circular icon buttons with standard 44px touch targets */
+  .page-footer .page-button,
+  .page-footer .final-check-button,
+  .page-footer .clear-page-button,
+  .nav-btn {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    max-width: 44px !important;
+    max-height: 44px !important;
+    padding: 10px !important;
+    border-radius: 50% !important;
+    flex: 0 0 44px !important;
+    box-sizing: border-box !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    border: 1.5px solid rgba(80, 106, 69, 0.22) !important;
+    box-shadow: 0 2px 5px rgba(60, 80, 50, 0.08) !important;
+    text-decoration: none !important;
+    transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
+  /* 4. Center icon inside button */
+  .nav-btn .icon {
+    font-size: 20px !important;
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    letter-spacing: -1px !important;
+    line-height: 1 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* 5. Mobile active tap feedback */
+  .page-footer .page-button:active:not(:disabled),
+  .page-footer .final-check-button:active:not(:disabled),
+  .page-footer .clear-page-button:active:not(:disabled),
+  .nav-btn:active:not(:disabled) {
+    transform: scale(0.92) !important;
+    background: rgba(235, 243, 232, 0.95) !important;
+  }
+
+  /* 6. Disabled state */
+  .page-footer .page-button:disabled,
+  .page-footer .final-check-button:disabled,
+  .page-footer .clear-page-button:disabled,
+  .nav-btn:disabled {
+    opacity: 0.35 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+  }
+
+  /* 7. Hidden buttons stay completely removed from layout */
+  .page-footer .final-check-button.is-hidden,
+  .page-footer .clear-page-button.is-hidden,
+  .nav-btn.is-hidden:not(.previous-page) {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* 8. Previous button on first page remains invisible while reserving slot */
+  .page-footer .previous-page.is-hidden,
+  .page-footer .previous-page:disabled {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+    background: transparent !important;
+  }
+}
+
+
+/* ==========================================================================
+   Unscramble: Ultra-Compact Torn Paper Scrap Aesthetic
+   ========================================================================== */
+
+/* 1. Header Row with Inline Feedback */
+.unscramble-header-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 30px;
+}
+
+.unscramble-header-row .question-title {
+  color: var(--ink, #22364a);
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 30px;
+}
+
+.unscramble-header-row .inline-feedback {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 30px;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.unscramble-header-row .inline-feedback.feedback-correct {
+  color: #27ae60 !important;
+}
+
+.unscramble-header-row .inline-feedback.feedback-incorrect {
+  color: #c0392b !important;
+}
+
+.unscramble-header-row .inline-feedback.feedback-unanswered {
+  color: #d35400 !important;
+}
+
+/* 2. Unscramble Containers: Dashed Auto-Expanding Dropzone & Flex Word Bank */
+.drop-zone {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  align-content: flex-start !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  min-height: 60px !important;
+  height: auto !important;
+  padding: 12px !important;
+  margin: 8px 0 !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 2px dashed rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.word-bank {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  align-content: flex-start !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  min-height: 36px !important;
+  height: auto !important;
+  padding: 4px 0 !important;
+  margin: 4px 0 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.drop-zone .unscramble-chip,
+.word-bank .unscramble-chip {
+  margin: 0 !important;
+}
+
+.scramble-label {
+  display: none !important;
+}
+
+.drop-zone:empty::before,
+.word-bank:empty::before {
+  display: none !important;
+  content: none !important;
+}
+
+.drop-zone.drag-hover {
+  border-color: rgba(46, 204, 113, 0.7) !important;
+  background: rgba(46, 204, 113, 0.12) !important;
+}
+
+.word-bank.drag-hover {
+  background: rgba(46, 204, 113, 0.05) !important;
+}
+
+.exercise.is-correct .drop-zone {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 2px dashed rgba(39, 174, 96, 0.4) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.exercise.is-incorrect .drop-zone {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 2px dashed rgba(192, 57, 43, 0.4) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.exercise.is-unanswered .drop-zone {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 2px dashed rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+/* 3. Compact Torn Paper Scrap Word Tiles */
+.unscramble-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px !important;
+  margin: 2px 4px !important;
+  padding: 2px 12px !important;
+  background-color: #fdfaf6 !important;
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(246, 241, 230, 0.75) 100%) !important;
+  border: 1px solid rgba(215, 204, 186, 0.65) !important;
+  border-radius: 3px 6px 3px 5px / 5px 3px 6px 4px;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.08) !important;
+  color: var(--ink, #22364a) !important;
+  font-family: 'Pangolin', 'Segoe Print', 'Caveat', cursive, sans-serif !important;
+  font-size: 18.5px !important;
+  font-weight: 500;
+  line-height: 26px !important;
+  vertical-align: middle;
+  cursor: grab;
+  user-select: none;
+  transform: rotate(var(--chip-rot, var(--default-rot, 0deg)));
+  transform-origin: center center;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.18s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.unscramble-chip:nth-child(6n+1) {
+  --default-rot: -1.3deg;
+  border-radius: 2px 6px 3px 5px / 5px 3px 6px 2px;
+}
+.unscramble-chip:nth-child(6n+2) {
+  --default-rot: 1.5deg;
+  border-radius: 5px 2px 6px 4px / 3px 6px 2px 5px;
+}
+.unscramble-chip:nth-child(6n+3) {
+  --default-rot: -0.9deg;
+  border-radius: 3px 5px 2px 6px / 6px 2px 5px 3px;
+}
+.unscramble-chip:nth-child(6n+4) {
+  --default-rot: 1.8deg;
+  border-radius: 6px 3px 5px 2px / 2px 5px 4px 6px;
+}
+.unscramble-chip:nth-child(6n+5) {
+  --default-rot: -1.6deg;
+  border-radius: 3px 6px 4px 3px / 4px 3px 6px 5px;
+}
+.unscramble-chip:nth-child(6n+6) {
+  --default-rot: 1.1deg;
+  border-radius: 4px 3px 5px 6px / 3px 5px 4px 2px;
+}
+
+.unscramble-chip:hover {
+  background-color: #fffdf9 !important;
+  border-color: rgba(185, 172, 150, 0.85) !important;
+  transform: rotate(var(--chip-rot, var(--default-rot, 0deg))) translateY(-2px) scale(1.04);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.18), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  cursor: grab;
+}
+
+.unscramble-chip:active {
+  transform: rotate(var(--chip-rot, var(--default-rot, 0deg))) translateY(0) scale(0.98);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) !important;
+  cursor: grabbing;
+}
+
+.unscramble-chip.is-dragging {
+  opacity: 0.5;
+  transform: rotate(3deg) scale(1.06);
+  box-shadow: 4px 8px 14px rgba(0, 0, 0, 0.22) !important;
+}
+
+.unscramble-chip.drag-over-chip {
+  border-left: 3px solid #2ecc71 !important;
+  transform: rotate(var(--chip-rot, var(--default-rot, 0deg))) translateX(4px);
+}
+
+.drop-zone .unscramble-chip {
+  background-color: #fcf9f3;
+}
+
+/* 3. Feedback States (Graded Evaluation) */
+.unscramble-chip.chip-correct {
+  background-color: #eafaf1 !important;
+  background-image: none !important;
+  border: 1.5px solid #27ae60 !important;
+  color: #196f3d !important;
+  box-shadow: 1px 2px 5px rgba(46, 204, 113, 0.35) !important;
+  font-weight: 700;
+}
+
+.unscramble-chip.chip-incorrect {
+  background-color: #fdf2f2 !important;
+  background-image: none !important;
+  border: 1.5px solid #e74c3c !important;
+  color: #922b21 !important;
+  box-shadow: 1px 2px 5px rgba(231, 76, 60, 0.3) !important;
+  animation: chip-shake 0.35s ease;
+}
+
+@keyframes chip-shake {
+  0%, 100% { transform: rotate(var(--chip-rot, var(--default-rot, 0deg))) translateX(0); }
+  25% { transform: rotate(var(--chip-rot, var(--default-rot, 0deg))) translateX(-4px); }
+  75% { transform: rotate(var(--chip-rot, var(--default-rot, 0deg))) translateX(4px); }
+}
+
+.unscramble-feedback-note {
+  margin: 8px 0 12px;
+  padding: 6px 12px;
+  border-radius: 4px 6px 3px 5px;
+  background: #fffdf5;
+  border: 1px solid #ebd99f;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.08);
+  color: #7d5e16;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   MCQ Adaptive Content-Aware Options Layout
+   ========================================================================== */
+.mc-options,
+.mcq-options-container {
+  display: grid !important;
+  gap: 12px !important;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+  margin-top: 30px !important;
+  margin-bottom: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: 30px !important;
+}
+
+/* Content-Aware Layout Variants */
+.mc-options.layout-inline,
+.mcq-options-container.layout-inline {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+}
+
+.mc-options.layout-2col,
+.mcq-options-container.layout-2col {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
+}
+
+.mc-options.layout-stacked,
+.mcq-options-container.layout-stacked {
+  grid-template-columns: 1fr !important;
+}
+
+.option-label,
+.mcq-label {
+  position: relative !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: baseline !important;
+  text-align: left !important;
+  gap: 0 !important;
+  padding: 0 6px !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  line-height: 30px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  height: auto !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  transition: color 0.15s ease !important;
+}
+
+.option-label:hover,
+.mcq-label:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.option-label:focus-within,
+.mcq-label:focus-within {
+  outline: none !important;
+}
+
+.option-label.is-selected,
+.option-label.selected,
+.mcq-label.is-selected,
+.mcq-label.selected {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.exercise.is-correct .option-label.is-selected,
+.exercise.is-correct .mcq-label.is-selected,
+.exercise.is-incorrect .option-label.is-selected,
+.exercise.is-incorrect .mcq-label.is-selected {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: inherit !important;
+}
+
+/* Base styles for option letter - transparent border prevents layout shift */
+.option-letter,
+.mcq-letter {
+  display: inline-block !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  border: 2px solid transparent !important;
+  padding: 2px 5px !important;
+  margin-right: 6px !important;
+  min-width: 26px !important;
+  line-height: 22px !important;
+  font-weight: 700 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  flex: none !important;
+  border-radius: 45% 55% 40% 60% !important;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease !important;
+}
+
+.option-letter.color-0 { color: #b95a52 !important; }
+.option-letter.color-1 { color: #477fa4 !important; }
+.option-letter.color-2 { color: #58864d !important; }
+.option-letter.color-3 { color: #c28a44 !important; }
+
+/* Hand-drawn Circle Effect: circles purely around the option letter */
+.option-label.is-selected .mcq-letter,
+.option-label.selected .mcq-letter,
+.mcq-label.is-selected .mcq-letter,
+.mcq-label.selected .mcq-letter,
+.option-label.is-selected .option-letter,
+.option-label.selected .option-letter,
+.mcq-label.is-selected .option-letter,
+.radio-input:checked ~ .mcq-letter,
+.radio-input:checked ~ .option-letter,
+input[type="radio"]:checked ~ .mcq-letter,
+input[type="radio"]:checked ~ .option-letter {
+  border: 2px solid #e74c3c !important;
+  border-radius: 45% 55% 40% 60% !important;
+  color: #e74c3c !important;
+  background: transparent !important;
+}
+
+/* Checked exercise feedback on circled letter */
+.exercise.is-correct .mcq-label.is-selected .mcq-letter,
+.exercise.is-correct .option-label.is-selected .mcq-letter,
+.exercise.is-correct .option-label.is-selected .option-letter,
+.exercise.is-correct .radio-input:checked ~ .mcq-letter,
+.exercise.is-correct .radio-input:checked ~ .option-letter {
+  border: 2px solid var(--correct, #27ae60) !important;
+  color: var(--correct, #27ae60) !important;
+}
+
+.exercise.is-incorrect .mcq-label.is-selected .mcq-letter,
+.exercise.is-incorrect .option-label.is-selected .mcq-letter,
+.exercise.is-incorrect .option-label.is-selected .option-letter,
+.exercise.is-incorrect .radio-input:checked ~ .mcq-letter,
+.exercise.is-incorrect .radio-input:checked ~ .option-letter {
+  border: 2px solid var(--incorrect, #c0392b) !important;
+  color: var(--incorrect, #c0392b) !important;
+}
+
+.mcq-dot {
+  display: none !important;
+}
+
+.option-caption,
+.mcq-text {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  line-height: 30px !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+  color: inherit !important;
+}
+
+/* Lexical Space Sub-brand Portal Link (Landing Page Only) */
+.sub-brand-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px auto 14px;
+}
+.lexical-space-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #4a6f3b;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.15s ease;
+  padding: 2px 4px;
+}
+.lexical-space-link .portal-icon {
+  color: #e67e22;
+  font-size: 12px;
+  transition: transform 0.25s ease;
+}
+.lexical-space-link .portal-arrow {
+  color: #728c68;
+  font-size: 13px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.lexical-space-link:hover {
+  color: #274c19;
+  transform: translateY(-1px);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.lexical-space-link:hover .portal-icon {
+  transform: rotate(45deg) scale(1.2);
+}
+.lexical-space-link:hover .portal-arrow {
+  transform: translate(2px, -2px);
+  color: #274c19;
+}
+
+/* Inside-Notebook Top Header: "Thư viện" & Lesson Progress Percentage */
+.notebook-page-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.notebook-page-top.compact {
+  margin-bottom: 12px;
+}
+
+.notebook-lib-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: #c0392b !important;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 4px 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+.notebook-lib-btn.compact {
+  font-size: 14px;
+  padding: 2px 4px;
+}
+.notebook-lib-btn:hover {
+  color: #962d22 !important;
+  transform: translateX(-3px);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.notebook-lib-btn:active {
+  transform: scale(0.97);
+}
+
+.notebook-progress-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #3b5731;
+  font-family: inherit;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.notebook-progress-badge .progress-badge-label {
+  color: #617753;
+  font-weight: 600;
+}
+.notebook-progress-badge .completion-percent-number {
+  color: #27ae60;
+  font-size: 18px;
+  font-weight: 800;
+}
+.notebook-progress-badge .progress-badge-sub {
+  color: #4a6341;
+}
+.notebook-progress-badge.compact {
+  font-size: 13.5px;
+}
+.notebook-progress-badge.compact .completion-percent-number {
+  font-size: 16px;
+}
+
+/* Borderless & Background-Free Typography Buttons */
+button,
+.page-footer .page-button,
+.page-footer .previous-page,
+.page-footer .next-page,
+.page-footer .restart-page,
+.page-footer .final-check-button,
+.notebook-lib-btn,
+.clear-button,
+.loader-actions button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ==========================================================================
+   Inside-Notebook Top Header Long Progress Bar
+   ========================================================================== */
+.notebook-header-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  max-width: 440px;
+  justify-content: flex-end;
+}
+.notebook-header-progress.compact {
+  max-width: 320px;
+  gap: 10px;
+}
+.notebook-progress-info {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.notebook-progress-label {
+  font-size: 13.5px;
+  color: #617753;
+  font-weight: 600;
+}
+.notebook-header-progress .completion-percent-number {
+  font-size: 17px;
+  font-weight: 800;
+  transition: color 0.3s ease;
+}
+.notebook-header-progress.compact .completion-percent-number {
+  font-size: 15px;
+}
+.notebook-progress-track {
+  flex: 1;
+  min-width: 120px;
+  max-width: 260px;
+  height: 8px;
+  background-color: #e6ede0;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.notebook-header-progress.compact .notebook-progress-track {
+  height: 6px;
+  min-width: 90px;
+  max-width: 180px;
+}
+.notebook-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+@media (max-width: 520px) {
+  .notebook-page-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .notebook-header-progress {
+    max-width: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Restrict progress bar to the first page only */
+.page:not(:first-child) .notebook-header-progress {
+  display: none !important;
+}
+.notebook-page-top.compact {
+  justify-content: flex-start;
+}
+
+/* ==========================================================================
+   Hand-Drawn Highlighter Aesthetic: Dual Progress & Section Headers
+   ========================================================================== */
+
+/* Progress bar container: completely flat, borderless, background-free */
+.notebook-header-progress.dual-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 220px;
+  max-width: 320px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.notebook-tier-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.notebook-tier-row .notebook-progress-info {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  min-width: 82px;
+  white-space: nowrap;
+}
+
+.notebook-tier-row .notebook-progress-label {
+  font-size: 12.5px;
+  color: #556c4d;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.notebook-tier-row .notebook-progress-label.tier-apply-label {
+  color: #2471a3;
+}
+
+.notebook-tier-row .completion-percent-number {
+  font-size: 13.5px;
+  font-weight: 800;
+}
+
+/* Track: faint hand-drawn marker baseline on paper */
+.notebook-tier-row .notebook-progress-track {
+  flex: 1;
+  min-width: 85px;
+  max-width: 175px;
+  height: 9px;
+  background-color: rgba(200, 215, 195, 0.3) !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle hand-drawn marker stroke tilt */
+.notebook-tier-row.practice-tier-row .notebook-progress-track {
+  transform: rotate(-0.5deg) skewX(-1deg);
+}
+
+.notebook-tier-row.apply-tier-row .notebook-progress-track {
+  transform: rotate(0.4deg) skewX(1deg);
+}
+
+/* Fill: Thick hand-drawn pastel highlighter stroke */
+.notebook-tier-row .notebook-progress-fill {
+  height: 100%;
+  border-radius: 255px 25px 225px 25px / 25px 225px 25px 255px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+}
+
+/* Soft pastel highlighter tones */
+.notebook-progress-fill.progress-red {
+  background-color: #f28b82 !important;
+}
+
+.notebook-progress-fill.progress-yellow {
+  background-color: #f7dc6f !important;
+}
+
+.notebook-progress-fill.practice-fill.progress-green {
+  background-color: #82e0aa !important;
+}
+
+.notebook-progress-fill.apply-fill.progress-blue {
+  background-color: #85c1e9 !important;
+}
+
+/* ==========================================================================
+   Section Headers: Hand-drawn Pastel Highlighter Effect
+   ========================================================================== */
+.exercise-tier-divider {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 30px !important;
+  line-height: 30px !important;
+  margin: 0 0 30px 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-left: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  list-style: none;
+}
+
+.exercise-tier-divider.tier-practice,
+.exercise-tier-divider.tier-apply {
+  background: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  box-shadow: none !important;
+}
+
+/* Minimalist hand-drawn badge */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border: none !important;
+  box-shadow: none !important;
+  position: relative;
+  z-index: 1;
+}
+
+.badge-practice {
+  color: #27ae60 !important;
+  background-color: rgba(46, 204, 113, 0.15) !important;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-0.5deg);
+}
+
+.badge-apply {
+  color: #2980b9 !important;
+  background-color: rgba(52, 152, 219, 0.15) !important;
+  border-radius: 15px 225px 15px 255px / 225px 15px 255px 15px;
+  transform: rotate(0.4deg);
+}
+
+/* Section Title */
+.tier-title {
+  margin: 0;
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #243424;
+  letter-spacing: -0.2px;
+  position: relative;
+  display: inline-block;
+  line-height: 1.4;
+}
+
+.tier-highlight {
+  position: relative;
+  display: inline-block;
+  padding: 0 4px;
+  z-index: 1;
+}
+
+/* Pastel Green highlighter stroke for Practice heading */
+.tier-practice .tier-highlight::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -7px;
+  bottom: 2px;
+  height: 52%;
+  background-color: rgba(46, 204, 113, 0.25);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-0.6deg) skewX(-2deg);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Fallback if span.tier-highlight is absent */
+.tier-practice .tier-title:not(:has(.tier-highlight))::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -7px;
+  bottom: 2px;
+  height: 52%;
+  background-color: rgba(46, 204, 113, 0.25);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-0.6deg) skewX(-2deg);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Pastel Blue highlighter stroke for Apply heading */
+.tier-apply .tier-highlight::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -7px;
+  bottom: 2px;
+  height: 52%;
+  background-color: rgba(52, 152, 219, 0.25);
+  border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px;
+  transform: rotate(-0.4deg) skewX(-1.5deg);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Fallback if span.tier-highlight is absent */
+.tier-apply .tier-title:not(:has(.tier-highlight))::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -7px;
+  bottom: 2px;
+  height: 52%;
+  background-color: rgba(52, 152, 219, 0.25);
+  border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px;
+  transform: rotate(-0.4deg) skewX(-1.5deg);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+
+/* ==========================================================================
+   Task 1: Notebook Paper Dotted Grid & Line-Height Baseline Alignment
+   - Exact vertical distance between background dots = 30px
+   - Background dots position aligned so horizontal dots sit on text baseline
+   - Force line-height: 30px !important across .question-text and all body text
+   - Perfect baseline alignment on line 1 and all wrapped lines
+   ========================================================================== */
+.notebook,
+.page-face {
+  background-image: radial-gradient(#bfd1b7 1.5px, transparent 1.5px) !important;
+  background-size: 30px 30px !important;
+  background-position: 0 -7px !important;
+}
+
+/* Force exact 30px line-height across question text, prompts, and all body text */
+.question-text,
+.question,
+.question p,
+.exercise,
+.question-number,
+.question-kind,
+.practice-intro,
+.lesson-content,
+.lesson-content p,
+.lesson-content li,
+.lesson-content th,
+.lesson-content td,
+.option-label,
+.mcq-label,
+.mcq-text,
+.option-caption {
+  font-family: 'Pangolin', 'Segoe Print', cursive, sans-serif !important;
+  line-height: 30px !important;
+}
+
+.question-text {
+  font-size: 20px !important;
+  line-height: 30px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.question-kind,
+.paper-meta {
+  display: none !important;
+}
+
+.exercise {
+  margin-bottom: 30px !important;
+  line-height: 30px !important;
+}
+
+/* ==========================================================================
+   Task 2: Restyle Gap-Fill Inputs
+   - Remove solid bottom border from <input type="text"> inside gap-fill
+   - Apply hand-drawn dashed border: 2px dashed rgba(0, 0, 0, 0.4) !important
+   - Breathing room margin and width to prevent colliding with bracket text [word]
+   ========================================================================== */
+.gap-input,
+.exercise-gap-fill input[type="text"],
+.exercise-paragraph-gap-fill input[type="text"],
+.question input[type="text"],
+.question-text input[type="text"] {
+  border: none !important;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.4) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--ink, #252e22) !important;
+  font: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: 26px !important;
+  height: 28px !important;
+  vertical-align: baseline !important;
+  box-shadow: none !important;
+  outline: none !important;
+  margin-left: 8px !important;
+  margin-right: 8px !important;
+  min-width: 100px !important;
+  width: max(120px, var(--gap-width, 120px)) !important;
+  max-width: calc(100% - 16px) !important;
+  padding: 0 4px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.15s ease, color 0.15s ease !important;
+}
+
+.gap-input::placeholder,
+.exercise-gap-fill input[type="text"]::placeholder,
+.question input[type="text"]::placeholder,
+.question-text input[type="text"]::placeholder {
+  color: transparent !important;
+  opacity: 0 !important;
+}
+
+.gap-input:focus,
+.exercise-gap-fill input[type="text"]:focus,
+.question input[type="text"]:focus,
+.question-text input[type="text"]:focus {
+  border-bottom-color: rgba(0, 0, 0, 0.75) !important;
+  outline: none !important;
+}
+
+.gap-input.correct {
+  border-bottom: 2px dashed var(--correct, #287446) !important;
+  color: var(--correct, #287446) !important;
+  background: rgba(234, 246, 236, 0.3) !important;
+}
+
+.gap-input.incorrect {
+  border-bottom: 2px dashed var(--incorrect, #af3d3d) !important;
+  color: var(--incorrect, #af3d3d) !important;
+  background: rgba(255, 240, 236, 0.3) !important;
+}
+
+/* MCQ Options Exact 30px Rhythm Alignment */
+.exercise-multiple-choice .mc-options,
+.exercise .mc-options,
+.exercise .mcq-options-container,
+.mc-options,
+.mcq-options-container {
+  display: grid !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  row-gap: 0 !important;
+  column-gap: 16px !important;
+  padding: 0 !important;
+  border: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: 30px !important;
+}
+
+.exercise-multiple-choice .option-label,
+.exercise-multiple-choice .mcq-label,
+.exercise .option-label,
+.exercise .mcq-label,
+.option-label,
+.mcq-label {
+  padding: 0 6px !important;
+  margin: 0 !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  line-height: 30px !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  align-items: baseline !important;
+}
+
+/* Extend touch targets vertically without shifting or resizing the visible controls. */
+.page-nav-bar > button {
+  position: relative;
+}
+
+.page-nav-bar > button::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  bottom: -11px;
+  left: 0;
+  right: 0;
+}

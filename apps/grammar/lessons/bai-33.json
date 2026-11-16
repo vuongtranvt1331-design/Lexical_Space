@@ -1,0 +1,224 @@
+{
+  "id": "39",
+  "title": "39. Mệnh đề quan hệ Who, Which, That",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Mệnh đề xác định và không xác định",
+      "contentHTML": "<p>Mệnh đề xác định giới hạn đối tượng: The analyst who prepared the report is absent. Mệnh đề không xác định bổ sung thông tin và được ngăn bằng dấu phẩy: The analyst, who prepared the report, is absent. Không dùng that trong mệnh đề không xác định.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Đại từ quan hệ và sở hữu",
+      "contentHTML": "<p>Who thường chỉ người; which chỉ vật; that có thể dùng trong nhiều mệnh đề xác định. Whose chỉ sở hữu cho người hoặc vật. Khi đại từ quan hệ làm tân ngữ trong mệnh đề xác định, đôi khi có thể lược bỏ, nhưng không lược bỏ khi làm chủ ngữ.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Giới từ, địa điểm và thời gian",
+      "contentHTML": "<p>Sau giới từ đứng trước đại từ quan hệ, dùng whom cho người hoặc which cho vật: the adviser to whom I spoke; the framework within which the team operates. Where có thể tương đương in which trong ngữ cảnh địa điểm thích hợp; when có thể tương đương giới từ + which trong ngữ cảnh thời gian thích hợp.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The analyst {{who | that::Trong mệnh đề xác định, who và that đều có thể làm chủ ngữ chỉ người.}} prepared the forecast will brief the board."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The protocol {{which | that::Trong mệnh đề xác định, which và that đều có thể làm chủ ngữ chỉ vật.}} governs data access was revised last month."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The lead researcher, {{who::Mệnh đề không xác định chỉ người dùng who làm chủ ngữ, không dùng that sau dấu phẩy.}} has extensive field experience, will chair the meeting."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The figures, {{which::Mệnh đề không xác định chỉ vật dùng which, không dùng that sau dấu phẩy.}} were independently verified, are available online."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The consultant {{whose::Whose chỉ quan hệ sở hữu giữa consultant và recommendations.}} recommendations were adopted will join the panel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The archive {{where | in which::Where và in which đều có thể chỉ nơi lưu trữ trong ngữ cảnh này.}} the records were stored has been renovated."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The adviser {{to whom::Sau giới từ to đứng trước đại từ quan hệ chỉ người, dùng whom.}} the committee addressed its concerns responded promptly."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The framework {{within which::Within which chỉ phạm vi mà nhóm hoạt động; giới từ đứng trước which.}} the team operates is subject to annual review."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The date {{when | on which | that::When, on which và that đều có thể chỉ ngày diễn ra cuộc họp trong ngữ cảnh này.}} the hearing took place was published in advance."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The expert ___ advised the panel has published a response. (( **who** | whose has | whom did :: Who làm chủ ngữ chỉ người trong mệnh đề xác định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The report, ___ was published in June, is available online. (( **which** | that | whose is :: Trong mệnh đề không xác định sau dấu phẩy dùng which cho vật, không dùng that. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The researcher ___ findings prompted the inquiry will testify. (( **whose** | who his | which has :: Whose nối researcher với danh từ findings để chỉ sở hữu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The colleague to ___ the letter was addressed has retired. (( **whom** | who is | that did :: Sau giới từ to đứng trước đại từ quan hệ chỉ người, dùng whom. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The institution in ___ the records were held has closed. (( **which** | where is | that did :: Sau giới từ in đứng trước đại từ quan hệ chỉ vật hoặc nơi, dùng which. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analyst | who | prepared | the | forecast | will | brief | the | board. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | protocol | that | governs | access | was | revised. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | lead | researcher, | who | has | extensive | experience, | will | chair | the | meeting. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | figures, | which | were | verified, | are | available | online. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The scientist {{who | that::Who hoặc that có thể làm chủ ngữ chỉ người trong mệnh đề xác định.}} led the review has retired."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The briefing, {{which::Mệnh đề không xác định chỉ vật dùng which, không dùng that.}} began at noon, has concluded."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witnesses {{who | that::Who hoặc that đều có thể làm chủ ngữ chỉ người trong mệnh đề xác định.}} provided written statements were later interviewed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The proposal, {{which::Mệnh đề không xác định chỉ vật dùng which, không dùng that.}} was submitted in June, requires further revision."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The organisation {{whose::Whose chỉ quan hệ sở hữu giữa organisation và funding.}} funding was withdrawn has appealed the decision."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The colleague {{with whom::Sau giới từ with đứng trước đại từ chỉ người, dùng whom.}} the chair discussed the findings requested anonymity."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The laboratory {{where | in which::Where hoặc in which đều có thể chỉ địa điểm tiến hành các phép kiểm tra.}} the tests were conducted has closed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The agreement {{which | that::Trong mệnh đề xác định, which hoặc that đều có thể làm chủ ngữ chỉ vật.}} regulates data sharing expires next year."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The adviser, {{who::Mệnh đề không xác định chỉ người dùng who làm chủ ngữ, không dùng that.}} has since retired, drafted the original terms."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The period {{when | during which | in which::When, during which và in which đều có thể chỉ khoảng thời gian cuộc điều tra diễn ra.}} the inquiry took place was unusually short."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The standard {{under which::Under which chỉ tiêu chuẩn làm căn cứ; giới từ đứng trước which.}} the application was assessed has changed."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The analyst, ___ has since resigned, prepared the forecast. (( **who** | that | whom has :: Mệnh đề không xác định chỉ người dùng who làm chủ ngữ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The standard under ___ the application was assessed has changed. (( **which** | that | where is :: Sau giới từ under đứng trước đại từ quan hệ, dùng which. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The applicant ___ qualifications impressed the panel was shortlisted. (( **whose** | who their | which has :: Whose chỉ quan hệ sở hữu với qualifications. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The building ___ houses the archive will be renovated. (( **that** | whom is | whose has :: That có thể làm chủ ngữ chỉ vật trong mệnh đề xác định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The adviser with ___ the chair consulted requested anonymity. (( **whom** | that | who is :: Sau giới từ with đứng trước đại từ chỉ người, dùng whom. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | consultant | whose | recommendations | were | adopted | joined | the | panel. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | archive | where | the | records | were | stored | has | been | renovated. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | adviser | to | whom | the | committee | wrote | responded | promptly. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | agreement | that | regulates | data | sharing | expires | next | year. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The analyst {{who | that::Who hoặc that đều làm chủ ngữ chỉ người trong mệnh đề xác định.}} prepared the forecast has joined the review. Her report, {{which::Mệnh đề không xác định chỉ vật dùng which, không dùng that.}} was published in June, contains revised estimates. The organisation {{whose::Whose chỉ quan hệ sở hữu với funding.}} funding was withdrawn has requested a meeting."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The archive {{where | in which::Where và in which đều có thể chỉ nơi lưu trữ.}} the records were held has closed. The adviser {{to whom::Sau giới từ to đứng trước đại từ chỉ người dùng whom.}} the committee wrote has responded. The records, {{which::Mệnh đề không xác định chỉ vật dùng which.}} were independently verified, remain available."
+    }
+  ],
+  "lessonNumber": 3
+}

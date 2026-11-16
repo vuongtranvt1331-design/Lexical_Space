@@ -1,0 +1,58 @@
+/* New progress UI is scoped; aircraft artwork and combat layout are unchanged. */
+.progress-summary{display:grid;justify-items:center;gap:5px;margin:0 auto 10px;width:100%;max-width:440px;text-align:center}
+#pilotRank{display:flex;align-items:center;justify-content:center;gap:8px;max-width:100%;color:#fff1b8;font:700 15px Orbitron,monospace}
+#pilotRank>span{min-width:0;overflow-wrap:anywhere}
+#pilotRank .progress-rank-icon{width:192px;height:192px}
+.progress-rank-icon{object-fit:contain;image-rendering:pixelated;width:96px;height:96px;max-width:100%;flex:none}
+#pilotCoins{color:#facc15;font:700 14px Orbitron,monospace}
+#pilotProgress,.progress-status{font:12px/1.45 Arial,sans-serif;color:#94a3b8;overflow-wrap:anywhere}
+.progress-status{max-width:440px;text-align:center;margin:4px auto 8px}
+.progress-links{font:12px Arial,sans-serif;color:#cbd5e1;text-align:center;width:100%;max-width:440px;margin:5px auto 10px}
+.progress-links summary{cursor:pointer;min-height:28px}
+#profileDetails{display:grid;justify-items:center;gap:5px;padding:10px}#profileDetails p{margin:0}
+.progress-retry{color:#7dd3fc;background:transparent;border:0;text-decoration:underline;padding:10px;min-height:40px;cursor:pointer}
+.progress-board-title{font:800 12px Orbitron,monospace;color:#f8d877;letter-spacing:.1em;text-align:left;padding:10px 6px 7px;margin:0;border-bottom:1px solid #334155}
+.progress-table{table-layout:fixed;border-collapse:collapse;width:100%;font:12px/1.3 Arial,sans-serif;color:#e2e8f0}
+.progress-table th{color:#94a3b8;text-align:left;font-size:10px;font-weight:normal;padding:6px 4px}
+.progress-table th:nth-child(1){width:32%}.progress-table th:nth-child(2){width:20%}.progress-table th:nth-child(3){width:25%}.progress-table th:nth-child(4){width:23%}
+.progress-table td{padding:6px 4px;vertical-align:middle;border-bottom:1px solid #1e293b;overflow-wrap:anywhere}
+.progress-player{font-weight:bold}.progress-score{font-variant-numeric:tabular-nums;white-space:nowrap;color:#fef08a}
+.progress-rank-cell,.progress-aircraft-cell{text-align:center}.progress-rank-cell img,.progress-aircraft-cell img{display:block;margin:auto;width:40px;height:40px;object-fit:contain;image-rendering:pixelated}.progress-rank-cell span,.progress-aircraft-cell span{font-size:10px;display:block}
+.progress-empty{font:12px/1.4 Arial,sans-serif;padding:10px 6px;color:#94a3b8}
+#flightRank{display:flex;align-items:center;justify-content:center;gap:10px}#flightRank img{width:70px;height:70px}
+#flightCoins{color:#facc15;font:700 15px Orbitron,monospace;margin:6px}
+#flightSaveStatus{font:12px/1.4 Arial,sans-serif;color:#a5f3fc;overflow-wrap:anywhere}
+#gameOverRewardsBox{display:block!important;text-align:center!important}
+#postFlightPromotion{position:absolute;inset:0;z-index:75;background:rgba(2,6,23,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;text-align:center;color:#fef3c7;font-family:Orbitron,monospace;pointer-events:auto}
+#postFlightPromotion[hidden]{display:none}.promotion-art{width:min(180px,45vw);height:min(180px,45vw);position:relative;margin:15px auto}
+.promotion-art img{width:100%;height:100%;position:absolute;inset:0;object-fit:contain;image-rendering:pixelated;animation:progress-spin 2.4s ease-in-out}
+.promotion-old{animation:progress-old 2.4s ease-in-out!important}.promotion-new{animation:progress-new 2.4s ease-in-out!important}
+@keyframes progress-old{0%{opacity:1;transform:rotateY(0)}50%{opacity:1}65%,100%{opacity:0;transform:rotateY(1080deg)}}
+@keyframes progress-new{0%,45%{opacity:0;transform:rotateY(0)}70%{opacity:1;transform:rotateY(1080deg) scale(1.08)}100%{opacity:1;transform:rotateY(1080deg) scale(1)}}
+#inGameHangarModal .hangar-collections{grid-template-columns:minmax(0,1fr)}#inGameHangarModal .hangar-modal-box{max-width:760px}
+#inGameHangarModal #hangarConfirmBtn{white-space:normal;min-height:48px;overflow-wrap:anywhere}
+#gameOverOverlay{overflow-y:auto;justify-content:flex-start;padding-top:22px;box-sizing:border-box}
+@media(max-width:380px){.progress-table{font-size:11px}.progress-table td{padding:5px 3px}.progress-rank-cell img,.progress-aircraft-cell img{width:34px;height:34px}#pilotRank .progress-rank-icon{width:160px;height:160px}}
+@media(max-height:600px){#mainMenuLogoImg{max-height:110px!important}.progress-summary{gap:2px;margin-bottom:6px}#pilotRank .progress-rank-icon{width:128px;height:128px}#startOverlay{padding-top:6px!important}#pilotRank{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.promotion-art img{animation:none!important}.promotion-old{display:none}.promotion-new{opacity:1}}
+
+.progress-summary p{margin:0}
+@media(max-height:600px){#mainMenuLogoImg{max-height:80px!important}#pilotRank .progress-rank-icon{width:112px;height:112px}}
+
+/* Collection layout is restricted to the Hangar. */
+#inGameHangarModal .hangar-modal-box{overflow-y:auto;max-height:calc(100dvh - 20px)}
+#inGameHangarModal .hangar-collections{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(0,1.4fr);align-items:start;gap:12px}
+#inGameHangarModal .skin-help,#skinStatus{font:12px/1.4 Arial,sans-serif;color:#b9cadd;margin:6px 0;overflow-wrap:anywhere}
+#inGameHangarModal .skin-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;max-height:320px;overflow-y:auto;padding:3px}
+#inGameHangarModal .skin-card{min-width:0;min-height:130px;background:#0b1524;border:1px solid #334155;border-radius:5px;color:#dce8f7;cursor:pointer;display:flex;flex-direction:column;align-items:center;padding:6px;gap:4px;font:10px/1.3 Arial,sans-serif;overflow-wrap:anywhere}
+#inGameHangarModal .skin-card img{width:100%;height:64px;object-fit:contain;image-rendering:pixelated;filter:none}
+#inGameHangarModal .skin-card.is-inspected{border-color:#7dd3fc;outline:1px solid #7dd3fc}
+#inGameHangarModal .skin-card.is-locked>span:last-child{color:#fbbf24}
+#inGameHangarModal .skin-card.is-legend{border-color:#c4b5fd;background:linear-gradient(140deg,#14273b,#182138)}
+#inGameHangarModal .skin-rarity{color:#a5d9f8;letter-spacing:.05em}
+#skinAction{width:100%;min-height:44px;margin-top:8px;white-space:normal;font:700 12px Arial,sans-serif}
+#inGameHangarModal .skin-glacier{animation:skin-glint 3s ease-in-out infinite}
+@keyframes skin-glint{50%{opacity:.82}}
+@media(max-width:560px){#inGameHangarModal .hangar-collections{grid-template-columns:minmax(0,1fr)}#inGameHangarModal .hangar-thumbnail-row{max-height:160px}#inGameHangarModal .skin-cards{max-height:290px}#inGameHangarModal .skin-card{min-height:128px}}
+@media(prefers-reduced-motion:reduce){#inGameHangarModal .skin-glacier{animation:none}}
+#inGameHangarModal #skinStatus:not(:empty){display:block;padding:9px;border:1px solid #38bdf8;border-radius:4px;background:#102333;color:#e0f2fe;font-weight:bold}#inGameHangarModal #skinStatus[data-error="true"]{border-color:#f87171;background:#3b1018;color:#fecaca}

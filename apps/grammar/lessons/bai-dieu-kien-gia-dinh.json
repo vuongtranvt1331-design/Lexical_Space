@@ -1,0 +1,223 @@
+{
+  "id": "61",
+  "title": "61. Unless / Provided that / It is time / As if",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Unless: nếu không",
+      "contentHTML": "<p><strong>Unless + mệnh đề</strong> thường có nghĩa “nếu … không”, diễn tả một điều kiện: <em>We will leave unless it rains.</em> Chúng tôi sẽ đi trừ khi trời mưa (= nếu trời không mưa).</p><div class=\"rule-box\"><p><em>Unless you study, you may fail.</em> → <em>If you do not study, you may fail.</em></p><p>Đối với điều kiện có thật trong tương lai, thường dùng hiện tại đơn sau unless: <em>Unless she calls, I will leave.</em> Không dùng <s>unless she will call</s> trong nghĩa điều kiện thông thường.</p></div><p>Không máy móc chuyển mọi câu <em>if … not</em> thành unless: unless nhấn mạnh điều kiện ngoại lệ và có thể không phù hợp khi người nói đang nêu một kết quả bất ngờ hoặc giả định khác.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "As long as / Provided that: miễn là",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>As long as / provided (that) / providing (that) + mệnh đề</strong> diễn tả một điều kiện phải được đáp ứng: <em>You can borrow the book as long as you return it tomorrow.</em></p><p><em>We will approve the plan provided that the budget is sufficient.</em> Chúng tôi sẽ duyệt kế hoạch với điều kiện ngân sách đủ.</p></div><p>Với điều kiện có thật trong tương lai, thường dùng hiện tại đơn sau liên từ: <em>provided that it meets the rules</em>, không dùng will trong mệnh đề điều kiện thông thường.</p><p>As long as đôi khi còn chỉ độ dài thời gian hoặc mức độ tùy ngữ cảnh; ở chuyên đề này ta tập trung vào nghĩa điều kiện “miễn là”.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "It is time / As if: giả định theo ngữ cảnh",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>It is time + to V:</strong> <em>It is time to leave.</em> Đã đến lúc đi.</p><p><strong>It is (high) time + S + quá khứ đơn:</strong> <em>It is high time we left.</em> Đã đến lúc chúng ta nên đi. Quá khứ đơn ở đây thường nêu việc hiện tại đã muộn, không nhất thiết nói về quá khứ.</p><p><strong>As if / as though:</strong> <em>He talks as if he knew everything.</em> Cấu trúc quá khứ có thể diễn tả sự so sánh không thật hoặc người nói nghi ngờ. <em>It looks as if it is going to rain</em> diễn tả khả năng người nói cho là thực tế.</p></div><p>Với điều không có thật trong quá khứ, có thể dùng quá khứ hoàn thành: <em>She spoke as if she had witnessed the event</em>, dù người nói biết rằng cô ấy không chứng kiến.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We will go out unless it {{rains::Điều kiện có thật trong tương lai thường dùng hiện tại đơn sau unless.}} (rain)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You can play as long as you {{finish::Sau as long as trong điều kiện tương lai thông thường dùng hiện tại đơn.}} (finish) your homework."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I will leave unless she {{calls::Sau unless dùng hiện tại đơn calls với she.}} (call)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You may borrow it provided {{that::Provided that là cụm liên từ mang nghĩa với điều kiện là; that có thể lược.}} [rằng] you return it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It is time {{to go::It is time + to V: đã đến lúc đi.}} (go) home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It is high time we {{left::It is high time + S + quá khứ đơn diễn tả việc nên làm ngay.}} (leave)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She talks as if she {{knew::Quá khứ đơn sau as if có thể diễn tả điều người nói cho là không thật.}} (know) everything, but she does not."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We will wait unless the bus {{arrives::Unless + hiện tại đơn cho điều kiện có thật trong tương lai.}} (arrive)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You can stay as long as you {{are::As long as + hiện tại đơn; chủ ngữ you đi với are.}} (be) quiet."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It is time {{to eat::It is time + to V.}} (eat) dinner."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We will walk ___ it rains. (( because | **unless** | despite :: Unless it rains nghĩa là trừ khi trời mưa. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "You can go out as long as you ___ your work. (( will finish | **finish** | finishing :: Mệnh đề điều kiện tương lai thông thường dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It is time ___ home. (( going | **to go** | went to :: It is time + to V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It is high time we ___. (( leave | **left** | will leave :: It is high time + S + quá khứ đơn diễn tả việc nên làm ngay. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He talks as if he ___ everything, but he does not. (( knows | **knew** | knowing :: Knew sau as if biểu đạt điều không thật theo ngữ cảnh. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Unless you hurry, you will be late means ___. (( If you hurry, you will be late. | **If you do not hurry, you will be late.** | If you were late, you would hurry. :: Unless you hurry ở đây tương đương if you do not hurry. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | will | leave | unless | it | rains. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ You | can | stay | as | long | as | you | are | quiet. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ It | is | time | to | go | home. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ It | is | high | time | we | left. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The project will proceed unless the regulator {{objects::Sau unless dùng hiện tại đơn trong điều kiện tương lai thông thường.}} (object)."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The application may be approved provided that the applicant {{meets::Sau provided that dùng hiện tại đơn meets với applicant số ít.}} (meet) all requirements."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee will reconsider the proposal unless new evidence {{emerges::Unless + hiện tại đơn trong điều kiện tương lai.}} (emerge)."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The contractor may continue as long as the work {{complies::Sau as long as dùng hiện tại đơn complies với work số ít.}} (comply) with safety rules."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It is high time the board {{addressed::It is high time + S + quá khứ đơn nói việc hiện tại nên được thực hiện.}} (address) the outstanding risks."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The consultant speaks as if she {{knew::Knew sau as if diễn tả sự so sánh không thật; câu xác định cô ấy không biết.}} (know) every detail, although she does not."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witness spoke as if he {{had seen::Had seen sau as if diễn tả một sự việc quá khứ không có thật theo ngữ cảnh.}} (see) the accident, but he had not."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It is time {{to review::It is time + to V dùng khi không cần nêu chủ thể riêng.}} (review) the results."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The plan can proceed only if the cost stays within the limit. It will go ahead ___ the cost exceeds the limit. (( **unless** | as long as | because of :: Unless the cost exceeds the limit nghĩa là trừ khi chi phí vượt giới hạn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The licence may be renewed provided that the firm ___ the conditions. (( will satisfy | **satisfies** | satisfying :: Sau provided that trong điều kiện tương lai thường dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "It is high time the agency ___ its procedures. (( updates | **updated** | will update :: It is high time + S + quá khứ đơn chỉ việc hiện tại đã nên làm. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "She describes the event as if she ___ there, but she was elsewhere. (( is | **had been** | will be :: Had been chỉ giả định trái với sự thật ở quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence describes a likely event? (( He acts as if he knew everything, though he does not. | **It looks as if it is going to rain.** | She spoke as if she had been there, though she had not. :: Is going to rain thể hiện khả năng người nói cho là có thực. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "You may use the data ___ you cite the source. (( unless | **as long as** | because of :: As long as nêu điều kiện phải được đáp ứng: trích nguồn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | project | will | proceed | unless | the | regulator | objects. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ It | is | high | time | the | board | addressed | the | risks. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ She | spoke | as | if | she | had | witnessed | the | event. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A council reviewed a safety plan. The work will proceed unless the inspector {{objects::Unless + hiện tại đơn chỉ điều kiện tương lai.}} (object). Funding is available provided that the plan {{meets::Provided that + hiện tại đơn; plan là số ít.}} (meet) safety standards. It is high time the council {{updated::It is high time + S + quá khứ đơn chỉ việc đã nên làm.}} (update) its procedures."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A company is considering a contract. The supplier may continue as long as it {{follows::Sau as long as dùng hiện tại đơn follows với it.}} (follow) the agreed rules. The agreement will be cancelled unless both sides {{sign::Sau unless dùng hiện tại đơn sign với both sides số nhiều.}} (sign). It is time {{to discuss::It is time + to V.}} (discuss) the remaining terms."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team examined a report. One speaker talked as if she {{knew::Knew sau as if diễn tả điều không thật trong ngữ cảnh cô ấy không biết.}} (know) all the facts, but she did not. Another spoke as if he {{had seen::Had seen chỉ điều trái thực tế trong quá khứ.}} (see) the event, although he had not. The team will publish unless a reviewer {{finds::Unless + hiện tại đơn trong điều kiện tương lai.}} (find) a serious error."
+    }
+  ]
+}

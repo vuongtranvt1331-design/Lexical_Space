@@ -1,0 +1,764 @@
+{
+  "id": "27",
+  "lessonNumber": 6,
+  "title": "27. Ôn tập: Động từ khuyết thiếu",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Ôn tập B2",
+      "contentHTML": "<p>Ôn khả năng, nghĩa vụ, suy đoán và cách đưa ra yêu cầu qua các câu hỏi từ năm bài trong nhóm.</p><div class=\"rule-box\">100 câu cơ bản và 50 câu vận dụng.</div><p><strong>Phạm vi bổ sung:</strong> Ôn thêm had better và phân biệt với would rather.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The new software {{can::Can diễn tả khả năng hiện tại; động từ sau can ở dạng nguyên mẫu.}} handle large files without slowing down."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Under the safety rules, staff {{must | have to::Must và have to đều có thể diễn tả nghĩa vụ áp dụng cho staff.}} wear protective glasses."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The only key is in her hand, so she {{must have::Must have + danh từ diễn tả suy đoán mạnh về việc sở hữu hiện tại.}} [rất có thể] the key."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The empty car park suggests they {{must have left::Must have + V3 nêu suy đoán mạnh về việc đã xảy ra.}} (leave) [rất có thể] already."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Check | Review | Verify::Các động từ nguyên mẫu này đều có thể yêu cầu kiểm tra các con số.}} [kiểm tra] the figures before the report is submitted."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "As a child, Maya {{could | was able to::Could hoặc was able to diễn tả khả năng chung trong quá khứ.}} speak three languages."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The sign says entry is forbidden, so visitors {{must not | mustn't | mustn’t::Must not / mustn’t chỉ hành động bị cấm.}} enter the room."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The director is standing next to us in Hanoi, so she {{cannot be | can't be | can’t be::Cannot / can’t be nêu kết luận rằng việc có mặt ở London cùng lúc là không thể.}} [không thể] in London right now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps Nina {{may have forgotten | might have forgotten | could have forgotten::Ba dạng này đều nêu một khả năng trong quá khứ chưa xác nhận.}} (forget) the appointment; we do not know."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Do not | Don't | Don’t::Do not và Don’t + nguyên mẫu tạo mệnh lệnh phủ định.}} [không] disclose the password to anyone."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{May | Can | Could::Cả May, Can và Could I đều có thể dùng để xin phép; sắc thái trang trọng khác nhau.}} I ask a question before we move on?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The meeting is optional, so we {{do not have to | don't have to | don’t have to | need not::Các dạng này chỉ rằng tham dự không bắt buộc.}} attend."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You had better {{take::Had better + động từ nguyên mẫu không to: đây là lời khuyên trong tình huống cụ thể.}} (take) an umbrella."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She was beside us all morning, so she {{cannot have been | can't have been | can’t have been::Cannot / can’t have + V3 loại trừ khả năng trong quá khứ dựa trên bằng chứng.}} (be) [không thể] at the airport then."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Could | Can | Would::Cả ba cách đều có thể dùng để nhờ người nghe, với mức độ trang trọng khác nhau.}} you clarify the final point, please?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The weather forecast is uncertain, so the concert {{may | might | could::May, might và could đều nêu một khả năng chưa chắc chắn.}} take place indoors."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You seem exhausted; you {{should | ought to::Should và ought to đều có thể đưa ra lời khuyên.}} get some rest."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the team {{might know | may know | could know::Các modal này đều diễn tả khả năng chưa chắc chắn, theo sau là động từ nguyên mẫu.}} (know) the reason, but nobody has asked."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the driver {{may have missed | might have missed | could have missed::Các modal này đều có thể nêu khả năng chưa chắc chắn trong quá khứ.}} (miss) the turning; no one knows."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Let's | Let’s | Let us::Các dạng này đều mở đầu lời đề nghị cùng thực hiện.}} compare the two proposals before voting."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Can | Could | Would::Cả ba cách hỏi đều có thể dùng để nhờ người nghe; Could và Would thường lịch sự hơn.}} you check the final version, please?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The school policy says every student {{has to | must::Has to và must đều diễn đạt nghĩa vụ; has to phù hợp với chủ ngữ số ít.}} carry an identity card."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Her coat is here and I just heard her voice; she {{must be::Must be diễn tả suy đoán mạnh dựa trên hai dấu hiệu hiện tại.}} (be) [rất có thể] nearby."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The signed receipt shows the customer {{must have received::Must have received nêu suy đoán mạnh về hành động đã xảy ra.}} (receive) [rất có thể] the parcel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Why don't we | Why don’t we::Why don’t we + nguyên mẫu là một cách đề nghị cùng thực hiện.}} take a short break before the next session?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Despite the storm, the rescue team {{was able to | managed to::Was able to hoặc managed to phù hợp với một thành công cụ thể trong quá khứ.}} reach the village before dark."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Yesterday, we {{had to::Had to là dạng quá khứ của have to, nói về nghĩa vụ đã xảy ra.}} leave early because the building was closing."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The lights are on, so the staff {{might be working | may be working | could be working::Modal + be + V-ing có thể diễn tả hoạt động đang diễn ra nhưng chưa chắc chắn.}} (work) [có thể] late; we cannot tell from outside."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The file was locked in our safe all night, so it {{cannot have been | can't have been | can’t have been::Bằng chứng vật ở trong két loại trừ việc nó ở nơi khác cùng lúc.}} (be) [không thể] in the other office then."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Contact | Call | Notify::Các động từ này đều có thể yêu cầu liên hệ hoặc báo cho quản lý.}} [liên hệ] the manager if the equipment stops working."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Students {{can | may::Can và may đều có thể diễn tả sự cho phép theo quy định; may trang trọng hơn.}} use the library until ten under the new rules."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The notice prohibits photography; guests {{must not | mustn't | mustn’t::Must not / mustn’t diễn tả việc bị cấm chụp ảnh.}} take photographs."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The document is in my hands, so it {{cannot be | can't be | can’t be::Vật đang ở đây không thể đồng thời ở nơi khác trong cùng thời điểm.}} [không thể] on the office shelf right now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the visitor {{may have taken | might have taken | could have taken::Ba dạng đều nêu khả năng chưa xác nhận trong quá khứ.}} (take) the wrong coat; the mistake has not been explained."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Do not | Don't | Don’t::Các dạng này tạo mệnh lệnh phủ định trước động từ nguyên mẫu.}} [không] enter the laboratory without permission."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The delay {{may | might | could::May, might và could đều nêu khả năng khi nguyên nhân chưa được xác nhận.}} be due to heavy traffic, but we do not know yet."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You {{should | ought to::Should và ought to dùng để khuyên kiểm tra kỹ trước khi gửi.}} review your application before submitting it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We had better {{hurry::Had better + nguyên mẫu; cần nhanh lên để tránh trễ.}} (hurry) or we will be late."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The project is complete and the team sent confirmation, so they {{must have finished::Must have + V3 nêu kết luận mạnh dựa trên bằng chứng.}} (finish) [rất có thể] the work."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Could | Can | Would::Các dạng này đều dùng được để nhờ người nghe gửi tài liệu.}} you send me the revised schedule, please?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The old printer {{could | was able to::Could hoặc was able to diễn tả khả năng chung của chiếc máy trong quá khứ.}} print only ten pages a minute."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Attendance is voluntary, so participants {{do not have to | don't have to | don’t have to | need not::Các dạng này có nghĩa là không cần phải tham dự.}} stay until the end."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We have not tested the proposal, so it {{might be | may be | could be::Might, may và could be nêu khả năng nhưng không khẳng định kết quả.}} (be) [có thể] effective."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the speaker {{may have misunderstood | might have misunderstood | could have misunderstood::Các dạng này nêu khả năng trong quá khứ chứ không xác nhận nguyên nhân.}} (misunderstand) the question; we are not certain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Let's | Let’s | Let us::Các dạng này đều đề xuất hành động chung.}} discuss the risks before making a decision."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The committee ___ review the figures before publishing its decision; a review is possible but not certain. (( **might** | must to | mights :: Might + động từ nguyên mẫu diễn tả khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Employees ___ show their passes; the written policy makes this compulsory. (( **have to** | might to | have yesterday :: Have to diễn đạt nghĩa vụ theo quy định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The kitchen smells of coffee, and the machine is running. Someone ___ coffee. (( **must be making** | must makes | cannot making :: Must be + V-ing diễn tả suy đoán mạnh về hoạt động đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The door is locked and her coat is gone; she ___ already. (( **must have gone** | must has gone | must have go :: Must have + V3 diễn tả suy đoán mạnh về quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the cable before using the device. (( **Inspect** | Inspects | Inspecting :: Mệnh lệnh khẳng định bắt đầu bằng động từ nguyên mẫu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "When our grandmother was young, she ___ run long distances. (( **could** | could to | cans :: Could diễn tả khả năng chung trong quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "You ___ enter the site; the notice expressly forbids it. (( **must not** | do not have to | may :: Must not chỉ sự cấm đoán; do not have to chỉ sự không bắt buộc. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The guide is with us in Rome, so she ___ in Madrid at this moment. (( **cannot be** | must is | cannot are :: Cannot be diễn tả kết luận gần như không thể đúng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He was beside us all day, so he ___ the in-person meeting abroad. (( **cannot have attended** | cannot has attended | must have attend :: Cannot have + V3 loại trừ việc đó dựa trên bằng chứng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ leave the door unlocked; the room contains confidential files. (( **Do not** | Does not | Not to :: Mệnh lệnh phủ định dùng Do not + nguyên mẫu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Despite the noise, the speaker ___ finish the presentation. (( **was able to** | coulds | is able yesterday :: Was able to phù hợp với thành công cụ thể trong quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "You ___ back up your files; it would be sensible. (( **should** | must not | should to :: Should + nguyên mẫu đưa ra lời khuyên. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Perhaps the report ___ accurate, but the evidence is incomplete. (( **might be** | might is | must being :: Might be nêu khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Perhaps she ___ the email; nobody knows. (( **might have deleted** | might has deleted | might have delete :: Might have + V3 nêu khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ you pass the documents to the chair, please? (( **Could** | Coulds | Could to :: Could you + nguyên mẫu là cách nhờ vả lịch sự. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ I speak to the manager, please? (( **May** | Must to | Mights :: May I ...? là một cách xin phép lịch sự. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Registration is optional, so guests ___ sign up in advance. (( **do not have to** | must not | does not have to :: Do not have to chỉ rằng đăng ký không bắt buộc. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It is raining. You had better ___ a coat. (( to wear | **wear** | wearing :: Had better + nguyên mẫu không to. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The project team sent the signed form, so they ___ it. (( **must have approved** | must has approved | must have approve :: Must have + V3 nêu suy đoán mạnh về việc đã xảy ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ meet after lunch to discuss the budget. (( **Let's** | Lets to | Let to :: Let’s + nguyên mẫu đề xuất hành động chung. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The new scanner ___ identify damaged labels automatically. (( **can** | cans | can to :: Can + động từ nguyên mẫu diễn tả khả năng hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Last week we ___ change our plans because the road was closed. (( **had to** | musts | have to yesterday :: Had to diễn đạt sự cần thiết trong quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The office door is closed; the staff ___ a meeting, but we are not sure. (( **could be holding** | could holds | could to hold :: Could be + V-ing nêu khả năng về việc đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The machine stayed switched off, so it ___ the data that night. (( **cannot have recorded** | cannot has recorded | must have record :: Cannot have + V3 loại trừ hành động theo bằng chứng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ ask the supplier for an update? (( **Why don't we** | Why we don't | Why not we :: Why don’t we + nguyên mẫu là một cách đề nghị. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | flight | may | be | delayed | by | the | weather. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Employees | have | to | follow | the | safety | rules. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | must | be | nearby. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | must | have | left | already. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Check | the | figures | before | submitting | the | report. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Could | you | explain | the | final | point? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Visitors | must | not | enter | the | room. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ He | cannot | be | in | London | right | now. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | might | have | forgotten | the | appointment. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Do | not | disclose | the | password. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | could | speak | three | languages | as | a | child. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ You | should | review | your | application. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | might | be | working | late. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ He | cannot | have | been | at | the | airport. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Could | you | clarify | the | final | point? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ May | I | ask | a | question? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | do | not | have | to | attend | the | meeting. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ You | had | better | take | an | umbrella. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | visitor | could | have | taken | the | wrong | coat. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Let's | compare | the | two | proposals. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The device {{can::Can + nguyên mẫu diễn tả khả năng hiện tại của thiết bị.}} record sound without an internet connection."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The notice says bicycles are prohibited; cyclists {{must not | mustn't | mustn’t::Must not diễn tả điều bị cấm.}} ride in the park."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the adviser {{might be | may be | could be::Các modal này nêu khả năng hiện tại chưa chắc chắn.}} (be) [có thể] available later; we have not asked."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the assistant {{might have lost | may have lost | could have lost::Các modal này đều nêu khả năng quá khứ chưa xác nhận.}} (lose) the key; we do not know."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Please check | Check::Please check và Check đều là lời yêu cầu kiểm tra phù hợp.}} [kiểm tra] the details before submitting."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The students {{could | were able to::Could hoặc were able to diễn tả khả năng chung của học sinh trong quá khứ.}} use the old system independently."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The form is optional; I {{do not have to | don't have to | don’t have to | need not::Các dạng này diễn tả việc không bắt buộc.}} fill it in."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The speaker is standing with us, so she {{cannot be | can't be | can’t be::Sự có mặt hiện tại ở đây loại trừ việc đồng thời ở nơi khác.}} [không thể] in the next building now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The guard was with us throughout the meeting, so he {{cannot have entered | can't have entered | can’t have entered::Bằng chứng về vị trí loại trừ việc đi vào phòng khác cùng lúc.}} (enter) [không thể] the other room during it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Do not | Don't | Don’t::Các dạng này tạo mệnh lệnh phủ định trước nguyên mẫu.}} [không] touch the equipment without permission."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "I {{cannot | can't | can’t::Cannot và hai cách viết của can’t diễn tả việc hiện tại không thể đăng nhập.}} sign in because I have forgotten my password."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The doctor says I {{have to | must::Have to và must đều có thể diễn tả sự cần thiết theo lời bác sĩ.}} take this medicine every day."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The presenter is speaking beside me, so she {{cannot be | can't be | can’t be::Người đang đứng cạnh người nói không thể đồng thời ở phòng khác.}} [không thể] in the other room at this moment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The technician was with me all afternoon, so he {{cannot have repaired | can't have repaired | can’t have repaired::Sự có mặt liên tục ở nơi khác loại trừ việc sửa máy trong khoảng thời gian đó.}} (repair) [không thể] the machine across town in person during that time."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Why don't we | Why don’t we::Cấu trúc này dùng để đề nghị hành động chung.}} invite a colleague to review the plan?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The results {{may | might | could::Cả ba modal đều có thể chỉ khả năng chưa chắc chắn, không khẳng định kết quả.}} change after further testing."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Under the contract, the supplier {{has to | must::Cả has to và must có thể diễn đạt nghĩa vụ theo hợp đồng.}} deliver the goods by Friday."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The queue has barely moved; the system {{might be processing | may be processing | could be processing::Modal + be + V-ing diễn tả khả năng về quá trình hiện tại.}} (process) [có thể] requests slowly, although we do not know."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The auditors had better {{review::Had better + V nguyên mẫu chỉ lời khuyên cụ thể.}} (review) the documents before the deadline."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Save | Store | Keep::Các động từ này đều có thể dùng khi yêu cầu giữ bản sao.}} [lưu] a copy of the document before editing it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Could | Can | Would::Could, Can và Would đều dùng được để nhờ người nghe; Could và Would thường lịch sự hơn.}} you clarify what you mean by the final point?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There is no charge; you {{do not have to | don't have to | don’t have to | need not::Không mất phí nên thanh toán là không bắt buộc.}} pay for entry."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researcher has the only copy open in front of her, so she {{must have::Must have + danh từ chỉ kết luận mạnh về sự sở hữu hiện tại.}} [rất có thể] the copy."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps she {{may have overlooked | might have overlooked | could have overlooked::Các dạng này nêu khả năng chưa được xác nhận.}} (overlook) the detail; we have not asked her."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Do not | Don't | Don’t::Do not / Don’t trước nguyên mẫu tạo mệnh lệnh phủ định.}} [không] publish the draft until everyone has approved it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Even without a map, the guide {{was able to | managed to::Was able to và managed to nhấn mạnh thành công cụ thể trong tình huống quá khứ.}} find the path back to camp."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The manager recommends that we {{should | ought to::Should hoặc ought to diễn tả lời khuyên trong câu này.}} ask for feedback."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the organiser {{might understand | may understand | could understand::Các modal này đều nêu khả năng chưa xác nhận.}} (understand) the problem, but we have not spoken to her."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The painting remained in our sight all day, so it {{cannot have disappeared | can't have disappeared | can’t have disappeared::Bằng chứng quan sát loại trừ sự biến mất trong thời gian đó.}} (disappear) [không thể] during that time."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Could | Can | Would::Các dạng này đều có thể dùng trong lời nhờ vả lịch sự.}} you explain the change to the clients, please?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "During the trial, participants {{could | were able to::Could và were able to đều mô tả khả năng chung của các nhóm tham gia thử nghiệm.}} complete the task without assistance."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Visitors {{must not | mustn't | mustn’t::Biển cấm chỉ sự cấm đoán, nên dùng must not / mustn’t.}} feed the animals; the signs explicitly prohibit it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witness is online with us from Paris, so he {{cannot be | can't be | can’t be::Không thể ở Paris và Tokyo cùng lúc trong ngữ cảnh này.}} [không thể] in Tokyo now."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The wet footprints suggest someone {{must have entered::Must have entered diễn tả suy đoán mạnh từ dấu hiệu để lại.}} (enter) [rất có thể] the room."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Let's | Let’s | Let us::Các dạng này đều có thể dùng để đề xuất hành động chung.}} examine the evidence together."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The deadline is imminent; the team ___ the application now. (( would rather to send | **had better send** | had better sending :: Had better + V nguyên mẫu diễn tả lời khuyên cụ thể để tránh hệ quả xấu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "We {{had to::Had to diễn đạt nghĩa vụ trong quá khứ do chuyến bay bị hủy.}} find a hotel after our flight was cancelled."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The oven is warm and I can smell bread; someone {{must be baking::Must be + V-ing đưa ra suy đoán mạnh về hoạt động hiện tại dựa trên dấu hiệu.}} (bake) [rất có thể] bread."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the courier {{may have chosen | might have chosen | could have chosen::Các dạng này đều nêu một khả năng trong quá khứ.}} (choose) a different route; we lack confirmation."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Why don't we | Why don’t we::Why don’t we + nguyên mẫu dùng để đưa ra đề xuất.}} consider a different approach?"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The delivery ___ arrive later today; the company has not confirmed a time. (( **may** | musts | may to :: May diễn tả một khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Each passenger ___ present a valid ticket under the rules. (( **has to** | have to | musts :: Each passenger là số ít, nên dùng has to. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Our neighbour is waving from the garden, so he ___ away on holiday now. (( **cannot be** | can is | must being :: Cannot be thể hiện điều bị loại trừ bởi bằng chứng trực tiếp. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Perhaps the guest ___ the invitation; we cannot be sure. (( **may have overlooked** | may has overlooked | may have overlook :: May have + V3 nêu khả năng chưa xác nhận. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the form before handing it in. (( **Sign** | Signs | Signing :: Mệnh lệnh khẳng định dùng động từ nguyên mẫu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ you explain the schedule once more, please? (( **Would** | Woulds | Would to :: Would you + nguyên mẫu là một cách nhờ vả lịch sự. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "You ___ touch that switch; it is clearly marked as forbidden. (( **must not** | do not have to | must not to :: Must not diễn tả sự cấm đoán và đi với động từ nguyên mẫu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The child is carrying the only red umbrella, so she ___ it. (( **must have** | must has | must having :: Must have + danh từ nêu suy đoán mạnh về sở hữu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The empty desk suggests he ___ the office. (( **must have vacated** | must has vacated | must have vacate :: Must have + V3 nêu suy đoán mạnh về quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ remove the label; it contains important information. (( **Do not** | Does not | Not do :: Do not + nguyên mẫu diễn đạt mệnh lệnh phủ định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | was | able | to | reach | the | village. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ You | had | better | check | the | figures | before | publication. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | explanation | could | be | incomplete. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ They | must | have | finished | the | work. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Why | don't | we | take | a | break? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | results | might | change | after | further | testing. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ You | must | not | feed | the | animals. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Someone | must | be | baking | bread. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | assistant | may | have | confused | the | dates. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Do | not | publish | the | draft | yet. ~~"
+    }
+  ]
+}

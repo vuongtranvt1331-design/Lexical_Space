@@ -1,0 +1,224 @@
+{
+  "id": "8",
+  "title": "08. Từ chỉ số lượng",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Danh từ đếm được",
+      "contentHTML": "<p>Dùng many hoặc a few với danh từ số nhiều: many books, a few friends.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Trước tiên xác định danh từ có đếm được không; sau đó xem câu khẳng định, phủ định hay câu hỏi. Some thường gặp trong khẳng định; any thường gặp trong phủ định và câu hỏi, nhưng some cũng có thể dùng trong lời mời hoặc đề nghị.</p><p>I have some apples. → Tôi có vài quả táo.<br>Do you have any milk? → Bạn có sữa không?<br>Would you like some tea? → Lời mời có thể dùng some.</p></div><h3>Mở rộng: Phần 1: Some vs. Any</h3><p><strong>Some</strong> và <strong>Any</strong> đều mang nghĩa là \"một vài / một chút\", đi được với cả <strong>danh từ đếm được số nhiều</strong> và <strong>danh từ không đếm được</strong>.</p><div class=\"rule-box\" style=\"background: rgba(52, 152, 219, 0.1); border-left: 4px solid #3498db; padding: 10px; margin: 10px 0;\"><strong style=\"color: #3498db;\">Quy tắc phân biệt cốt lõi:</strong><br>• <strong>Dùng SOME:</strong> Trong câu <strong>khẳng định</strong> (<code>I bought some apples</code>) HOẶC trong câu hỏi mang tính <strong>mời mọc / đề nghị lịch sự</strong> (<code>Would you like some tea? / Can I have some water?</code>).<br>• <strong>Dùng ANY:</strong> Trong câu <strong>phủ định</strong> (<code>I don't have any money</code>) và câu <strong>nghi vấn thông thường</strong> (<code>Do you have any questions?</code>).</div>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Danh từ không đếm được",
+      "contentHTML": "<p>Dùng much hoặc a little với danh từ không đếm được: much water, a little milk.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Many đi với danh từ đếm được số nhiều; much đi với danh từ không đếm được. A lot of dùng được với cả hai; ngữ cảnh cũng ảnh hưởng cách lựa chọn tự nhiên.</p><p>How many books are there? → Có bao nhiêu quyển sách?<br>How much water do you need? → Bạn cần bao nhiêu nước?<br>She has a lot of friends and a lot of work. → Hai loại danh từ đều dùng được.</p></div><h3>Mở rộng: Phần 2: Much, Many & A lot of / Lots of</h3><p>Nhóm từ chỉ số lượng lớn (\"nhiều\") được chia rõ theo loại danh từ đi kèm:</p><div class=\"rule-box\" style=\"background: rgba(46, 204, 113, 0.1); border-left: 4px solid #2ecc71; padding: 10px; margin: 10px 0;\"><strong style=\"color: #2ecc71;\">Bảng phân chia:</strong><br>• <strong>MANY + Danh từ đếm được số nhiều:</strong> <code>many students, many cars</code>.<br>• <strong>MUCH + Danh từ KHÔNG đếm được:</strong> <code>much time, much water, much traffic</code>.<br>• <strong>A LOT OF / LOTS OF + Cả hai loại danh từ:</strong> Thường dùng trong câu khẳng định thân mật.<br><em>Mẹo làm bài:</em> <code>Much</code> và <code>Many</code> đặc biệt phổ biến trong câu phủ định, câu hỏi và đi sau <em>too, so, as</em> (<code>too much noise, so many people</code>).</div>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Some và any",
+      "contentHTML": "<p>Some thường dùng trong câu khẳng định; any thường dùng trong câu hỏi và phủ định: some apples, any milk.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>A few và a little nhấn mạnh có một lượng nhỏ; few và little thường nhấn mạnh thiếu hoặc không đủ. Chọn theo cả loại danh từ lẫn ý người nói.</p><p>A few students came. → Có một vài học sinh đến.<br>Few students came, so the room was nearly empty. → Rất ít người đến.<br>We have a little time. → Chúng ta còn một ít thời gian.</p></div><h3>Mở rộng: Phần 3: A few / Few vs. A little / Little</h3><p>Cặp từ chỉ số lượng nhỏ rất hay làm bẫy trong đề thi vì khác nhau ở chữ <strong>\"A\"</strong>:</p><div class=\"rule-box\" style=\"background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 10px; margin: 10px 0;\"><strong style=\"color: #e74c3c;\">1. Theo loại danh từ:</strong><br>• <strong>A few / Few</strong> + Danh từ <strong>đếm được số nhiều</strong> (<code>a few friends</code>).<br>• <strong>A little / Little</strong> + Danh từ <strong>KHÔNG đếm được</strong> (<code>a little milk</code>).<br><br><strong style=\"color: #e74c3c;\">2. Theo sắc thái nghĩa (Có 'A' vs. Không 'A'):</strong><br>• <strong>Có chữ A (A few / A little):</strong> Một vài, một chút — <strong>Đủ dùng, mang nghĩa TÍCH CỰC</strong>.<br>• <strong>Không có A (Few / Little):</strong> Rất ít, hầu như không có — <strong>Không đủ, mang nghĩa TIÊU CỰC</strong>.<br><em>Ví dụ:</em> I have <strong>a little</strong> money, enough to buy lunch. ≠ I have <strong>little</strong> money, so I can't buy anything.</div>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} apples are there?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} books do you have?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} students are in the room?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} chairs do we need?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} water do you drink?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} milk is in the glass?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} rice do we need?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} time do you have?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I have {{a few::A few dùng với danh từ đếm được số nhiều và nghĩa là có một vài.}} friends here. [một vài]"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There are {{a few::A few dùng với danh từ đếm được số nhiều và nghĩa là có một vài.}} eggs in the fridge. [một vài]"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "How ___ bananas do we need? (( much | **many** | little :: Many đi với bananas, danh từ đếm được số nhiều. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "How ___ juice is left? (( many | **much** | few :: Much đi với juice, danh từ không đếm được. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "There are ___ people in the room. [một vài] (( a little | **a few** | much :: A few nghĩa là một vài, đi với people. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Add ___ salt to the soup. [một ít] (( a few | **a little** | many :: A little nghĩa là một ít, đi với salt. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Are there ___ tomatoes? (( a | **any** | an :: Any thường dùng trong câu hỏi với danh từ số nhiều. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ How | many | apples | are | there? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ How | much | water | do | you | need? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | have | a | few | friends. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ There | is | a | little | milk. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Do | you | have | any | bread? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There are {{many | a lot of::Many và a lot of đều đi với opportunities số nhiều; hundreds cho biết số lượng lớn.}} [nhiều] opportunities for independent study: the programme offers hundreds of optional projects."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Only {{a little::Information không đếm được; a little chỉ một lượng nhỏ thông tin đã có.}} [một ít] information was available before the investigation began."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Each | Every::Each và every đều đứng trước danh từ đếm được số ít applicant; mỗi người phải nộp riêng.}} [mỗi] applicant must submit an individual statement before the committee reaches its decision."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Neither proposal received {{much::Support ở đây không đếm được; much phù hợp trong câu mang nghĩa phủ định.}} [nhiều] support from the review panel."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The committee had ___ evidence, so it could not reach a conclusion. (( few | **little** | many :: Evidence không đếm được; little nhấn mạnh bằng chứng không đủ để kết luận. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ of the two options is suitable; both exceed the budget. (( Either | **Neither** | Every :: Neither of the two chỉ không phương án nào trong hai phương án; cả hai đều vượt ngân sách. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report contains ___ recommendations for reducing waste. (( much | **several** | a little :: Several đi với danh từ đếm được số nhiều recommendations. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The archive is preparing an exhibition. It has received {{many | several::Many và several đều đi với letters là danh từ đếm được số nhiều.}} [nhiều] letters from former residents. However, {{little::Little đi với information không đếm được và nhấn mạnh thông tin không đủ.}} [rất ít] information survives about the earliest building. {{Each | Every::Each và every đều bổ nghĩa cho volunteer số ít, nhấn mạnh từng người.}} [mỗi] volunteer will examine one part of the collection."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Several | independent | researchers | examined | the | evidence | before | presenting | their | recommendations | to | the | panel. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | had | little | reliable | information | when | it | considered | the | original | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team found {{no::No evidence nghĩa là không có bằng chứng; bối cảnh nói các phép đo không phát hiện gì.}} [không có] evidence of contamination; its measurements showed none."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee has {{several::Several đi với options số nhiều; bối cảnh đã có ba lựa chọn.}} [một số] options to consider: three have already been proposed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The first report contained {{little::Little detail nhấn mạnh thông tin chi tiết không đủ.}} [rất ít] detail, so a second investigation was necessary."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Only {{one::One of the two phù hợp khi ngân sách chỉ cho phép một phương án.}} [một] of the two proposals can be funded; the budget allows one."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The panel needs ___ evidence before reaching a conclusion. (( many | **more** | several :: Evidence không đếm được; more evidence diễn tả cần thêm bằng chứng. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ proposal must be assessed independently. (( Many | **Each** | Several :: Each đi trước danh từ đếm được số ít proposal. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A city is evaluating a housing programme. It has received {{many | several::Many và several đều bổ nghĩa cho applications số nhiều.}} [nhiều] applications from residents. However, {{little::Little bổ nghĩa cho information không đếm được và nhấn mạnh thiếu thông tin.}} [rất ít] information is available about long-term outcomes. {{Each | Every::Each và every đều đi với applicant số ít.}} [mỗi] applicant will receive a response."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team reviewed two transport proposals. {{Neither::Neither of the two nghĩa là không phương án nào trong hai.}} [không cái nào trong hai] of them met every requirement. The panel requested {{more::More bổ nghĩa cho evidence không đếm được để chỉ cần thêm.}} [thêm] evidence and invited {{a few::A few đi với experts số nhiều, chỉ một số nhỏ có tồn tại.}} [một vài] experts to help. A revised decision will follow."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Each | applicant | submitted | an | individual | statement, | although | only | a | few | received | additional | funding. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | review | identified | several | significant | limitations | but | found | no | evidence | of | deliberate | misconduct. ~~"
+    }
+  ],
+  "lessonNumber": 2
+}

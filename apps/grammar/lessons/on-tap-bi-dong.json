@@ -1,0 +1,764 @@
+{
+  "id": "32",
+  "lessonNumber": 5,
+  "title": "32. Ôn tập: Bị động",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Ôn tập Bị động C1",
+      "contentHTML": "<p>Ôn bị động theo thì, cấu trúc hai tân ngữ, động từ khuyết thiếu, bị động tường thuật và thể nhờ vả.</p><div class=\"rule-box\">100 câu cơ bản và 50 câu vận dụng.</div>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The annual accounts {{are audited::Accounts là số nhiều; thói quen hiện tại dùng are + V3.}} (audit) independently every year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The successful applicants {{were offered::Applicants số nhiều là người nhận; quá khứ bị động dùng were offered.}} (offer) a place on the programme last week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The manuscript {{is believed to be::Is believed to be tường thuật niềm tin hiện tại về trạng thái hiện tại.}} (believe) (be) an early copy, according to several specialists."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The company {{had the accounts audited | got the accounts audited::Had/got + tân ngữ + V3 diễn tả việc công ty sắp xếp kiểm toán trong quá khứ.}} [sổ sách] (audit) by an independent firm last year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The draft policy {{was revised::Last month là mốc quá khứ kết thúc; policy số ít dùng was + V3.}} (revise) after public consultation last month."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "A substantial grant {{was awarded::Grant số ít là vật được trao; quá khứ bị động dùng was awarded.}} (award) to the research team in 2022."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The company {{is reported to have reduced::Is reported to have + V3 diễn tả việc giảm xảy ra trước thời điểm tường thuật hiện tại.}} (report) (reduce) its workforce last year, according to the press."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The editor {{had the article revised | got the article revised::Had/got + tân ngữ + V3 có thể diễn tả việc sắp xếp chỉnh sửa trong quá khứ.}} [bài viết] (revise) by a specialist yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The applications {{are being assessed::At present chỉ quá trình đang diễn ra; applications số nhiều dùng are being + V3.}} (assess) by an external panel at present."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The panel {{was sent::Panel được xem là một đơn vị số ít và là người nhận trong cấu trúc was sent the evidence.}} (send) the evidence before the hearing last month."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The committee {{is said to be considering::Is said to be + V-ing diễn tả hoạt động được cho là đang diễn ra.}} (say) (consider) a revised proposal at present, according to several members."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We {{will have the equipment inspected | will get the equipment inspected::Will have/get + tân ngữ + V3 diễn tả việc sẽ sắp xếp kiểm tra.}} [thiết bị] (inspect) by an engineer next week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The final report {{has been published::Kết quả còn liên quan đến hiện tại; report số ít dùng has been + V3.}} (publish), and it is now available online."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The advisory notes {{were given::Notes là số nhiều; quá khứ bị động dùng were given to.}} (give) to the participants yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{It is reported that::It is reported that mở đầu cấu trúc tường thuật khách quan.}} (report) the talks will resume next week, according to the press."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{has had the contract reviewed | has got the contract reviewed | has gotten the contract reviewed::Hiện tại hoàn thành của have/get something done là has had/got/gotten + tân ngữ + V3.}} [hợp đồng] (review) by a lawyer and can now sign it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "All personal data {{must be protected::Sau must dùng be + V3 trong cấu trúc bị động.}} (protect) under the current policy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "All candidates {{must be informed::Must be + V3 diễn tả nghĩa vụ ở bị động.}} (inform) of the decision under the published policy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The original document {{is thought to have disappeared::To have + V3 chỉ việc biến mất trước thời điểm suy đoán hiện tại.}} (think) (disappear) during the move, according to investigators."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The director {{had the technician examine | got the technician to examine::Had + người + nguyên mẫu hoặc got + người + to-infinitive đều đúng.}} [kỹ thuật viên] (examine) the device yesterday; the technician did the examination."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The funding proposal {{will be considered::Tương lai đơn bị động có dạng will be + V3.}} (consider) at the next board meeting."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The equipment {{should be inspected::Should be + V3 diễn đạt khuyến nghị ở bị động.}} (inspect) before each use."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The building {{is believed to be::Is believed to be tường thuật niềm tin hiện tại về trạng thái.}} (believe) (be) structurally unsafe, according to the survey."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The team {{got the consultant to analyse | got the consultant to analyze | had the consultant analyse | had the consultant analyze::Got + người + to-infinitive hoặc had + người + nguyên mẫu đều đúng; analyse/analyze là hai cách viết.}} [chuyên gia] (analyse) the data last month; the consultant did the analysis."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The evidence {{had been collected::Had been + V3 chỉ việc thu thập hoàn tất trước một thời điểm quá khứ khác.}} (collect) before the inquiry began."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The original records {{may have been destroyed | might have been destroyed | could have been destroyed::Các dạng modal + have been + V3 nêu khả năng trong quá khứ chưa xác nhận.}} (destroy) during the flood; the cause remains uncertain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The researchers {{are reported to be examining::Are reported to be + V-ing chỉ hoạt động được cho là đang diễn ra; researchers số nhiều.}} (report) (examine) the samples now, according to the news report."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The visitor {{had her bag stolen::Had + tân ngữ + V3 có thể diễn tả sự cố ngoài ý muốn.}} [túi của cô ấy] (steal) on the train yesterday; it was not a service she arranged."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The proposed changes {{are being discussed::Are being + V3 chỉ quá trình bị động đang diễn ra.}} (discuss) by the committee at the moment."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The researchers {{were provided::Were provided with là cấu trúc bị động với người nhận số nhiều.}} (provide) with detailed guidance at the briefing yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The witness {{was said to have left::Was said to have + V3 đặt hành động rời đi trước thời điểm tường thuật trong quá khứ.}} (say) (leave) before the interview, according to an earlier account."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The museum {{had the painting restored | got the painting restored::Had/got + tân ngữ + V3 diễn tả việc sắp xếp phục hồi trong quá khứ.}} [bức tranh] (restore) by a conservator last year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The damaged manuscripts {{were restored::Manuscripts là số nhiều; quá khứ bị động dùng were + V3.}} (restore) by specialists last year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The relevant information {{was supplied::Information không đếm được nên dùng was supplied; to đánh dấu người nhận.}} (supply) to the committee last night."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{It is believed that::It is believed that mở đầu mệnh đề tường thuật về niềm tin hiện tại.}} (believe) the findings are reliable, according to several reviewers."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{are having the documents translated | are getting the documents translated::Are having/getting + tân ngữ + V3 có thể nói việc đang sắp xếp thực hiện.}} [tài liệu] (translate) by a professional at present."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The committee’s recommendations ___ by the board every spring. (( **are reviewed** | are reviewing | reviews :: Recommendations số nhiều chịu tác động; hiện tại đơn bị động dùng are reviewed. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "A scholarship ___ to the successful candidate last month. (( **was granted** | were granting | was grant :: Scholarship số ít dùng was + V3; to chỉ người nhận. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The artefact ___ an imitation, according to confirmed laboratory records. (( **is known to be** | is know be | known is to :: Is known to be tường thuật thông tin đã được xác định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The company ___ by an external expert last week. (( **had the figures checked** | had checked the figures by | had the figures check by :: Had + tân ngữ + V3 diễn tả việc sắp xếp kiểm tra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The laboratory equipment ___ last Friday. (( **was calibrated** | is calibrating | were calibrate :: Equipment là danh từ không đếm được; quá khứ bị động dùng was calibrated. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The participants ___ the instructions at the briefing yesterday. (( **were handed** | was hand | were handing by :: Participants là người nhận số nhiều, dùng were handed. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The team ___ the issue now, according to the report. (( **is said to be investigating** | is said to investigated | said is investigating :: To be + V-ing diễn tả hoạt động được tường thuật là đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She ___ the complaint yesterday; the adviser did the drafting. (( **had the adviser draft** | had the adviser to draft | had the adviser drafted :: Have + người + nguyên mẫu không to. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The grant applications ___ at the moment. (( **are being screened** | are screened yesterday | have being screen :: Are being + V3 chỉ quá trình bị động đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Every proposal ___ before the deadline under the rules. (( **must be submitted** | must submitted | must being submit :: Must be + V3 diễn đạt nghĩa vụ ở bị động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The company ___ the premises last year, according to the newspaper. (( **is reported to have sold** | is reported to sold | is reported have sell :: To have + V3 diễn tả hành động trước thời điểm tường thuật hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The museum ___ the artwork last year; the conservator did the restoration. (( **got the conservator to restore** | got the conservator restore | got the conservator restoring to :: Get + người + to-infinitive. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The findings ___ and are now available to the public. (( **have been released** | have release | is releasing :: Have been released chỉ kết quả bị động đã hoàn tất và còn liên quan hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The assistant ___ with the relevant documents at the meeting. (( **was furnished** | was furnishing by | were furnish :: Was furnished with là bị động với người nhận số ít. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the agreement will be revised, according to the press. (( **It is expected that** | It expected is to | Is it expected to that :: It is expected that mở đầu một mệnh đề tường thuật. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "A passenger ___ on the bus yesterday; the loss was not arranged. (( **had his wallet stolen** | had his wallet steal | had stolen his wallet by :: Had + tân ngữ + V3 có thể chỉ sự cố ngoài ý muốn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The records ___ securely under the policy. (( **must be stored** | must stored | must being store :: Sau must dùng be + V3. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The letter ___ during transit, but this remains unconfirmed. (( **might have been damaged** | might has damage | might have be damage :: Might have been + V3 nêu một khả năng quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The documents ___ before the inspection, according to investigators. (( **are believed to have been altered** | are believe to altered | are believed have alter :: To have been + V3 tường thuật một hành động bị động xảy ra trước hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "They ___ by a professional right now. (( **are having the proposal assessed** | are having assess the proposal | are have the proposal assess :: Are having + tân ngữ + V3 diễn tả công việc đang được sắp xếp. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | annual | accounts | are | audited | independently. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | were | offered | a | substantial | grant. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | manuscript | is | believed | to | be | an | early | copy. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | company | had | the | accounts | audited. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | draft | policy | was | revised | after | consultation. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ A | grant | was | offered | to | the | research | team. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | company | is | reported | to | have | reduced | its | workforce. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | had | the | contract | reviewed | by | a | lawyer. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | applications | are | being | assessed | by | a | panel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | candidates | must | be | informed | of | the | decision. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | is | said | to | be | considering | a | proposal. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | will | have | the | equipment | inspected. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | final | report | has | been | published. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | panel | was | sent | the | evidence. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ It | is | reported | that | the | talks | will | resume. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | got | the | consultant | to | analyse | the | data. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The application {{is processed::Application số ít dùng is + V3 cho quy trình hiện tại.}} (process) within five working days under the policy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The editor {{was shown::Editor là người nhận số ít, dùng was shown the draft.}} (show) the draft yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The exhibition {{is expected to open::Is expected to + nguyên mẫu diễn tả kỳ vọng tương lai.}} (expect) (open) in June, according to the organisers."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The committee {{had the minutes typed | got the minutes typed::Had/got + tân ngữ + V3 diễn tả việc sắp xếp đánh máy.}} [biên bản] (type) by an assistant yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The files {{were archived::Files số nhiều dùng were + V3 trong quá khứ đơn.}} (archive) after the project ended last year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "A detailed explanation {{was given::Explanation số ít dùng was given to.}} (give) to the audience last night."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The author {{is said to have revised::To have + V3 diễn tả sự việc được tường thuật đã xảy ra trước hiện tại.}} (say) (revise) the text last year, according to the publisher."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{got the adviser to explain::Got + người thực hiện + to-infinitive.}} [cố vấn] (explain) the procedure last week; the adviser explained it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The results {{have been verified::Results số nhiều dùng have been + V3; kết quả đã kiểm tra còn liên quan hiện tại.}} (verify), so the figures can now be released."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "A refund {{will be offered::Will be offered là tương lai đơn bị động với vật được đề nghị làm chủ ngữ.}} (offer) to affected customers next week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The proposal {{is expected to be::Is expected to be tường thuật kỳ vọng về tương lai.}} (expect) (be) ready next month, according to the team."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The organisation {{had its website redesigned | got its website redesigned::Had/got + tân ngữ + V3 diễn tả việc nhờ thiết kế lại trong quá khứ.}} [trang web] (redesign) by an agency in 2023."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The contract {{was signed::Quá khứ đơn bị động với contract số ít dùng was + V3.}} (sign) by both parties yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The lead investigator {{has been given::Has been given là hiện tại hoàn thành bị động với người nhận số ít.}} (give) access and can now consult the archive."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The ship {{is thought to have sunk::To have sunk nói sự việc được cho là xảy ra trước thời điểm suy đoán hiện tại.}} (think) (sink) near the coast, according to historians."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We {{will have the results verified | will get the results verified::Will have/get + tân ngữ + V3 diễn tả kế hoạch sắp xếp kiểm chứng.}} [kết quả] (verify) by an external reviewer next week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The new guidelines {{will be circulated::Will be + V3 diễn tả hành động bị động trong tương lai.}} (circulate) to all departments next week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The recommendations {{have been sent::Recommendations số nhiều dùng have been sent; hành động đã hoàn tất và có liên hệ với hiện tại.}} (send) to the board, which is reviewing them now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The participants {{are said to be awaiting::Are said to be + V-ing tường thuật hoạt động đang diễn ra của chủ ngữ số nhiều.}} (say) (await) a decision now, according to the organisers."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The researcher {{had her laptop repaired | got her laptop repaired::Had/got + tân ngữ + V3 diễn tả việc sắp xếp sửa chữa trong quá khứ.}} [máy tính của cô ấy] (repair) by a technician yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The documents {{should be retained::Should be + V3 thể hiện lời khuyên ở dạng bị động.}} (retain) for at least five years."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The confidential evidence {{cannot be disclosed | can't be disclosed | can’t be disclosed::Cannot / can’t be + V3 diễn tả điều không thể được tiết lộ.}} (disclose) under the current agreement."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The policy {{was reported to have changed::Was reported to have + V3 chỉ thay đổi trước một thời điểm tường thuật quá khứ.}} (report) (change) before the meeting, according to an earlier report."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The firm {{had the assistant prepare | got the assistant to prepare::Had + người + nguyên mẫu hoặc got + người + to-infinitive đều đúng.}} [trợ lý] (prepare) the briefing yesterday; the assistant prepared it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The survey responses {{are being analysed | are being analyzed::Are being + V3 diễn tả quá trình đang tiếp diễn; analysed và analyzed đều đúng chính tả.}} (analyse) at present."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The proposed measures {{could be implemented | might be implemented | may be implemented::Các modal + be + V3 này đều có thể nêu khả năng trong tương lai chưa được quyết định.}} (implement) next year, but no decision has been made."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{It is said that::It is said that tường thuật một thông tin được truyền đạt mà không khẳng định nguồn cụ thể.}} (say) the site is privately owned, according to local accounts."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The manager {{got the team to update | had the team update::Got + người + to-infinitive hoặc had + người + nguyên mẫu đều đúng.}} [nhóm] (update) the schedule last week; the team updated it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The bridge {{had been inspected::Had been inspected nói việc kiểm tra hoàn tất trước khi giao thông được nối lại.}} (inspect) before traffic resumed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The prize {{was presented::Prize số ít là vật được trao; quá khứ bị động dùng was presented to.}} (present) to the author at the ceremony yesterday."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The population {{is expected to increase::Is expected to + nguyên mẫu có thể chỉ kỳ vọng về tương lai.}} (expect) (increase) over the next decade, according to the projection."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The author {{has had the manuscript edited | has got the manuscript edited | has gotten the manuscript edited::Has had/got/gotten + tân ngữ + V3 diễn tả việc đã sắp xếp chỉnh sửa.}} [bản thảo] (edit) by a professional and can now submit it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The conference venue {{is selected::Lịch trình lặp lại ở hiện tại với venue số ít dùng is + V3.}} (select) by a different committee each year."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The applicant {{was promised::Applicant số ít là người nhận trong cấu trúc was promised an interview.}} (promise) an interview at the briefing last week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The missing files {{are believed to have been removed::Are believed to have been + V3 tường thuật hành động bị động xảy ra trước hiện tại.}} (believe) (remove) before the audit, according to investigators."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The traveller {{had his passport stolen::Had + tân ngữ + V3 có thể diễn tả một sự cố không mong muốn.}} [hộ chiếu của anh ấy] (steal) during the journey yesterday; it was not arranged."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The new procedures {{have been introduced::Procedures số nhiều dùng have been + V3; thay đổi đã áp dụng và vẫn có hiệu lực.}} (introduce) and remain in effect."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The participants {{must be notified::Must be + V3 diễn tả nghĩa vụ thông báo ở dạng bị động.}} (notify) before any change takes effect."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The minister {{is reported to be meeting::Is reported to be + V-ing có thể tường thuật một hoạt động đang diễn ra.}} (report) (meet) advisers now, according to the press."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "They {{had the survey translated | got the survey translated::Had/got + tân ngữ + V3 diễn tả việc sắp xếp dịch trong quá khứ.}} [bản khảo sát] (translate) by a specialist last month."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The confidential records {{cannot be accessed | can't be accessed | can’t be accessed::Cannot / can’t be + V3 diễn tả không thể truy cập ở bị động.}} (access) without authorisation."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The lost documents {{may have been misplaced | might have been misplaced | could have been misplaced::Các dạng này nêu một khả năng quá khứ chưa được xác nhận.}} (misplace) during the move; nobody knows."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The contract {{is said to have been signed::To have been + V3 tường thuật một hành động bị động trước thời điểm hiện tại.}} (say) (sign) last week, according to the newspaper."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "We {{are having the files digitised | are having the files digitized | are getting the files digitised | are getting the files digitized::Are having/getting + tân ngữ + V3 nói về công việc đang được sắp xếp; cả hai cách viết đều đúng.}} [tệp] (digitise) by an outside firm at present."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The witnesses ___ before the hearing began. (( **had been interviewed** | had interviewing | have interview yesterday :: Had been + V3 chỉ việc hoàn tất trước một thời điểm quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The award ___ on the winning team at the ceremony. (( **was conferred** | were confer | was conferring by :: Award số ít dùng was conferred on. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The council ___ a decision next week, according to officials. (( **is expected to announce** | is expect announce | expected is announcing :: Is expected to + nguyên mẫu tường thuật kỳ vọng tương lai. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The library ___ by a contractor next month. (( **will have the roof repaired** | will have repair the roof | will has the roof repairing :: Will have + tân ngữ + V3 diễn đạt kế hoạch nhờ sửa. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The findings ___ by an independent team next month. (( **will be replicated** | will replicating | will been replicate :: Will be + V3 tạo tương lai đơn bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Applicants ___ of any changes under the agreement. (( **must be advised** | must advised | must being advise :: Must be + V3 diễn đạt nghĩa vụ thông báo. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The artwork ___ in the nineteenth century, according to specialists. (( **is thought to have been created** | is thought to creating | is think have create :: To have been + V3 tường thuật hành động bị động trước hiện tại. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The director ___ the figures yesterday; the analyst did the checking. (( **had the analyst check** | had the analyst to check | had the analyst checked by :: Had + người thực hiện + nguyên mẫu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The complaints ___ at present. (( **are being investigated** | are investigate | were investigate tomorrow :: Are being + V3 chỉ quá trình đang diễn ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "A copy of the contract ___ to each partner next week. (( **will be forwarded** | will forwarded | will being forward :: Will be + V3 diễn tả tương lai bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The delegates ___ a compromise now, according to the press. (( **are reported to be negotiating** | are report negotiate | reported are negotiated :: Are reported to be + V-ing tường thuật hoạt động đang diễn ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The firm ___ the policy last week; the lawyer did the rewriting. (( **got the lawyer to rewrite** | got the lawyer rewrite | got the lawyer rewriting to :: Got + người thực hiện + to-infinitive. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The old theatre ___ in 2019. (( **was renovated** | were renovate | has renovate yesterday :: Was renovated là quá khứ đơn bị động với chủ ngữ số ít. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The audience ___ sufficient time for questions at the end of the event. (( **was allotted** | were allotting by | was allot :: Audience là một nhóm số ít, được phân bổ thời gian. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the road was closed earlier, according to the broadcaster. (( **It was reported that** | It was report to | It reported was to :: It was reported that mở đầu mệnh đề tường thuật trong quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "He ___ on the trip yesterday; it was an unwanted incident. (( **had his camera damaged** | had his camera damage | had damaged his camera by :: Had + tân ngữ + V3 có thể diễn tả sự cố ngoài ý muốn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ All | personal | data | must | be | protected. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | records | may | have | been | destroyed. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | ship | is | thought | to | have | sunk | near | the | coast. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | visitor | had | her | bag | stolen. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | evidence | had | been | collected | before | the | inquiry. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | participants | were | provided | with | guidance. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | participants | are | said | to | be | awaiting | a | decision. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | museum | had | the | painting | restored. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | results | have | been | verified. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | recommendations | have | been | sent | to | the | board. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | missing | files | are | believed | to | have | been | removed. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | director | had | the | technician | examine | the | device. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | contract | was | signed | by | both | parties. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | prize | was | presented | to | the | author. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | contract | is | said | to | have | been | signed. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ They | are | having | the | documents | translated. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The evidence ___ before any conclusion is drawn. (( **should be examined** | should examined | should to examined :: Should be + V3 diễn tả khuyến nghị ở dạng bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The results ___ before release, as the editor recommends. (( **should be checked** | should checked | should to be check :: Should be + V3 diễn đạt khuyến nghị ở bị động. ))"
+    }
+  ]
+}

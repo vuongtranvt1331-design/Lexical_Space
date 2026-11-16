@@ -1,0 +1,224 @@
+{
+  "id": "42",
+  "title": "42. Câu điều kiện loại 0 & 1",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Điều kiện loại 0",
+      "contentHTML": "<p>Điều kiện loại 0 thường dùng hiện tại đơn ở cả hai mệnh đề để diễn đạt quy luật hoặc thói quen: If demand rises, prices often increase. Khi ngữ cảnh cho phép, những thì khác cũng có thể phù hợp; không coi mọi câu có if là cùng một công thức.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Điều kiện loại 1",
+      "contentHTML": "<p>Điều kiện loại 1 thường dùng hiện tại đơn trong mệnh đề if và will + nguyên mẫu trong mệnh đề chính để nói về khả năng tương lai: If the figures change, the board will reconsider. Có thể dùng modal khác tùy ý nghĩa.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Biến thể và mệnh đề điều kiện",
+      "contentHTML": "<p>Unless thường tương đương if ... not khi nói điều kiện, nhưng cần xét nghĩa. Provided that, as long as và only if có thể nêu điều kiện. Trong mệnh đề điều kiện hướng tới tương lai, hiện tại đơn thường được dùng thay vì will.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If the temperature {{exceeds::Trong quy luật chung này, mệnh đề if dùng hiện tại đơn; temperature số ít dùng exceeds.}} (exceed) the limit, the alarm sounds automatically every time."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If the committee {{approves::Mệnh đề if chỉ điều kiện tương lai thường dùng hiện tại đơn; committee số ít dùng approves.}} (approve) the proposal tomorrow, the team will begin implementation."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If customers {{encounter::Trong quy trình thường lệ này, mệnh đề if dùng hiện tại đơn; customers số nhiều dùng encounter.}} (encounter) a problem, the support team usually responds within an hour."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If the supplier misses the deadline next week, the client {{will reconsider | may reconsider | might reconsider | could reconsider::Will nêu kết quả dự kiến; may, might và could cũng có thể diễn tả kết quả có khả năng xảy ra.}} (reconsider) the agreement."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The licence will lapse {{unless::Unless nêu điều kiện phủ định: nếu không được gia hạn, giấy phép sẽ hết hiệu lực.}} [trừ khi] the holder renews it before Friday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The grant will remain available {{provided that | providing that | as long as::Các cụm này có thể nêu điều kiện để khoản tài trợ còn hiệu lực.}} [miễn là] the organisation complies with the terms."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "When the system {{detects::Trong mô tả quy trình thường lệ, when-clause dùng hiện tại đơn và system số ít dùng detects.}} (detect) an anomaly, it automatically records the event."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If the figures {{change::Mệnh đề if chỉ tương lai dùng hiện tại đơn; figures số nhiều dùng change.}} (change) before the meeting, the analysts will update the forecast."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If a document {{contains::Quy luật xử lý thông thường dùng hiện tại đơn; document số ít dùng contains.}} (contain) confidential information, the system automatically restricts access."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "If the temperature ___ above the limit, the device automatically switches off every time. (( **rises** | will rises | rising yesterday :: Quy luật chung dùng hiện tại đơn rises với chủ ngữ số ít. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "If the board ___ the plan tomorrow, implementation will begin in June. (( **endorses** | will endorses | endorsing yesterday :: Mệnh đề if chỉ điều kiện tương lai thường dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The agreement will expire ___ both parties approve an extension. (( **unless** | because of | despite :: Unless nêu điều kiện phủ định: nếu không phê duyệt, thỏa thuận hết hạn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "If an account ___ inactive for a year, the system sends a warning automatically. (( **becomes** | will becomes | becoming yesterday :: Quy trình thường lệ dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The study may proceed ___ participants give informed consent. (( **provided that** | despite of | because of the :: Provided that nêu điều kiện cần. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ If | the | temperature | exceeds | the | limit, | the | alarm | sounds. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ If | the | committee | approves | the | proposal, | the | team | will | begin. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | licence | will | lapse | unless | it | is | renewed. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | grant | remains | available | provided | that | the | terms | are | met. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If the database {{fails::Mệnh đề if chỉ tương lai dùng hiện tại đơn; database số ít dùng fails.}} (fail) tomorrow, the team will activate the backup."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The board will proceed {{only if::Only if đặt ra điều kiện cần.}} [chỉ khi] the independent review is complete."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "If the board {{accepts::Trong điều kiện tương lai, mệnh đề if thường dùng hiện tại đơn.}} (accept) the terms next month, negotiations will conclude."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The proposal will proceed {{only if::Only if đặt ra điều kiện cần; [chỉ khi] xác định ý nghĩa.}} [chỉ khi] both parties sign the agreement."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "If the device {{overheats::Mệnh đề if mô tả quy luật kỹ thuật dùng hiện tại đơn; device số ít dùng overheats.}} (overheat), it shuts down automatically."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "If the auditors {{identify::Mệnh đề if chỉ khả năng tương lai dùng hiện tại đơn với chủ ngữ số nhiều.}} (identify) an error during tomorrow’s review, the report will be corrected."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board will postpone the vote {{unless::Unless diễn tả việc hoãn trừ khi điều kiện được đáp ứng.}} [trừ khi] the missing evidence arrives today."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "If the author {{submits::Mệnh đề if chỉ tương lai dùng hiện tại đơn; author số ít dùng submits.}} (submit) the revisions by Monday, the editor will review them promptly."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "When an invoice {{remains::Trong quy trình thường lệ, hiện tại đơn dùng cho điều kiện lặp lại.}} (remain) unpaid for thirty days, the system issues a reminder."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "If the firm {{fails::Mệnh đề if chỉ khả năng tương lai dùng hiện tại đơn.}} (fail) to meet the conditions, the contract may be terminated."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The data will be shared {{provided that | providing that | as long as::Các cụm này đều có thể nêu điều kiện cần trong ngữ cảnh.}} [miễn là] participants give informed consent."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "If the regulator ___ the licence next week, the company will appeal. (( **withdraws** | will withdraws | withdrawing yesterday :: Mệnh đề if chỉ tương lai thường dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "When the system ___ an error, it records the event automatically. (( **registers** | will registers | registering yesterday :: Quy luật thường lệ dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The panel will meet ___ the missing documents arrive by noon. (( **only if** | despite of | because of the :: Only if chỉ điều kiện cần. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "If the supplier ___ payment tomorrow, the order will be released. (( **confirms** | will confirms | confirming yesterday :: Mệnh đề if chỉ tương lai thường dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The contract will remain in force ___ both parties comply with its terms. (( **as long as** | although of | despite of :: As long as có thể nêu điều kiện. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ If | the | figures | change, | the | analysts | will | update | the | forecast. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | vote | will | be | postponed | unless | the | evidence | arrives. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ If | the | device | overheats, | it | shuts | down. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | data | will | be | shared | only | if | participants | consent. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "If the system {{detects::Quy trình thường lệ dùng hiện tại đơn; system số ít dùng detects.}} (detect) an error, it automatically records the event. The analysts will review the log if the alert {{appears::Mệnh đề if chỉ tương lai dùng hiện tại đơn.}} (appear) tomorrow. The report will not be published {{unless::Unless nêu điều kiện phủ định.}} [trừ khi] the figures are verified."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The application will proceed {{provided that | providing that | as long as::Các cụm này nêu điều kiện cần.}} [miễn là] the documentation is complete. If the panel {{requests::Mệnh đề if chỉ tương lai dùng hiện tại đơn.}} (request) clarification, the applicant will respond promptly. The application will lapse {{unless::Unless diễn đạt điều kiện phủ định.}} [trừ khi] the missing form arrives by Friday."
+    }
+  ],
+  "lessonNumber": 1
+}

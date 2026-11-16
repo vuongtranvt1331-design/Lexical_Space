@@ -1,0 +1,224 @@
+{
+  "id": "28",
+  "title": "28. Bị động cơ bản",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Cấu trúc bị động",
+      "contentHTML": "<p>Bị động dùng dạng phù hợp của be + phân từ quá khứ; thì thể hiện ở be: is reviewed, was reviewed, has been reviewed, will be reviewed. Chọn chủ ngữ là đối tượng chịu tác động.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Thì và tác nhân",
+      "contentHTML": "<p>Trong tiếp diễn, dùng be being + V3: is being assessed. Trong hoàn thành, dùng have/has/had been + V3: has been assessed. Dùng by + tác nhân khi thông tin về người thực hiện quan trọng; có thể bỏ nếu không cần thiết.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Cách dùng học thuật và sắc thái",
+      "contentHTML": "<p>Bị động hữu ích khi đối tượng, quy trình hoặc kết quả quan trọng hơn người thực hiện: The evidence was independently evaluated. Không phải động từ nào cũng có tân ngữ để chuyển bị động; hãy kiểm tra ý nghĩa và ngữ cảnh.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The annual accounts {{are audited::Accounts là số nhiều; thói quen hiện tại dùng are + V3.}} (audit) independently every year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The draft policy {{was revised::Last month là mốc quá khứ kết thúc; policy số ít dùng was + V3.}} (revise) after public consultation last month."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The applications {{are being assessed::At present chỉ quá trình đang diễn ra; applications số nhiều dùng are being + V3.}} (assess) by an external panel at present."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The final report {{has been published::Kết quả còn liên quan đến hiện tại; report số ít dùng has been + V3.}} (publish), and it is now available online."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "All personal data {{must be protected::Sau must dùng be + V3 trong cấu trúc bị động.}} (protect) under the current policy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The funding proposal {{will be considered::Tương lai đơn bị động có dạng will be + V3.}} (consider) at the next board meeting."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The evidence {{had been collected::Had been + V3 chỉ việc thu thập hoàn tất trước một thời điểm quá khứ khác.}} (collect) before the inquiry began."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The proposed changes {{are being discussed::Are being + V3 chỉ quá trình bị động đang diễn ra.}} (discuss) by the committee at the moment."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The damaged manuscripts {{were restored::Manuscripts là số nhiều; quá khứ bị động dùng were + V3.}} (restore) by specialists last year."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The committee’s recommendations ___ by the board every spring. (( **are reviewed** | are reviewing | reviews :: Recommendations số nhiều chịu tác động; hiện tại đơn bị động dùng are reviewed. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The laboratory equipment ___ last Friday. (( **was calibrated** | is calibrating | were calibrate :: Equipment là danh từ không đếm được; quá khứ bị động dùng was calibrated. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The grant applications ___ at the moment. (( **are being screened** | are screened yesterday | have being screen :: Are being + V3 chỉ quá trình bị động đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The findings ___ and are now available to the public. (( **have been released** | have release | is releasing :: Have been released chỉ kết quả bị động đã hoàn tất và còn liên quan hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The records ___ securely under the policy. (( **must be stored** | must stored | must being store :: Sau must dùng be + V3. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | annual | accounts | are | audited | independently. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | draft | policy | was | revised | after | consultation. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | applications | are | being | assessed | by | a | panel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | final | report | has | been | published. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The application {{is processed::Application số ít dùng is + V3 cho quy trình hiện tại.}} (process) within five working days under the policy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The files {{were archived::Files số nhiều dùng were + V3 trong quá khứ đơn.}} (archive) after the project ended last year."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The results {{have been verified::Results số nhiều dùng have been + V3; kết quả đã kiểm tra còn liên quan hiện tại.}} (verify), so the figures can now be released."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The contract {{was signed::Quá khứ đơn bị động với contract số ít dùng was + V3.}} (sign) by both parties yesterday."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The new guidelines {{will be circulated::Will be + V3 diễn tả hành động bị động trong tương lai.}} (circulate) to all departments next week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The documents {{should be retained::Should be + V3 thể hiện lời khuyên ở dạng bị động.}} (retain) for at least five years."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The survey responses {{are being analysed | are being analyzed::Are being + V3 diễn tả quá trình đang tiếp diễn; analysed và analyzed đều đúng chính tả.}} (analyse) at present."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The bridge {{had been inspected::Had been inspected nói việc kiểm tra hoàn tất trước khi giao thông được nối lại.}} (inspect) before traffic resumed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The conference venue {{is selected::Lịch trình lặp lại ở hiện tại với venue số ít dùng is + V3.}} (select) by a different committee each year."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The new procedures {{have been introduced::Procedures số nhiều dùng have been + V3; thay đổi đã áp dụng và vẫn có hiệu lực.}} (introduce) and remain in effect."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The confidential records {{cannot be accessed | can't be accessed | can’t be accessed::Cannot / can’t be + V3 diễn tả không thể truy cập ở bị động.}} (access) without authorisation."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The witnesses ___ before the hearing began. (( **had been interviewed** | had interviewing | have interview yesterday :: Had been + V3 chỉ việc hoàn tất trước một thời điểm quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The findings ___ by an independent team next month. (( **will be replicated** | will replicating | will been replicate :: Will be + V3 tạo tương lai đơn bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The complaints ___ at present. (( **are being investigated** | are investigate | were investigate tomorrow :: Are being + V3 chỉ quá trình đang diễn ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The old theatre ___ in 2019. (( **was renovated** | were renovate | has renovate yesterday :: Was renovated là quá khứ đơn bị động với chủ ngữ số ít. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The evidence ___ before any conclusion is drawn. (( **should be examined** | should examined | should to examined :: Should be + V3 diễn tả khuyến nghị ở dạng bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ All | personal | data | must | be | protected. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | evidence | had | been | collected | before | the | inquiry. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | results | have | been | verified. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | contract | was | signed | by | both | parties. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The institution is preparing its annual report. The accounts {{are audited::Accounts số nhiều dùng are + V3 cho quy trình thường lệ.}} (audit) each year. The current figures {{are being checked::Are being + V3 chỉ hoạt động đang diễn ra.}} (check) at present. Once approved, the report {{will be published::Will be + V3 diễn tả việc sẽ được công bố trong tương lai.}} (publish)."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "An inquiry examined the incident. The evidence {{had been gathered::Had been + V3 chỉ việc hoàn tất trước khi cuộc họp bắt đầu.}} (gather) before the hearing began. The witnesses {{were questioned::Quá khứ đơn bị động với witnesses số nhiều dùng were + V3.}} (question) during the hearing. The findings {{have been released::Have been + V3 chỉ kết quả đã hoàn tất và có liên hệ với hiện tại.}} (release), and are now public."
+    }
+  ],
+  "lessonNumber": 1
+}

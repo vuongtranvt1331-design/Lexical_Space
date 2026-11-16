@@ -1,0 +1,224 @@
+{
+  "id": "33",
+  "title": "33. To-V và V-ing",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Các mẫu động từ",
+      "contentHTML": "<p>Một số động từ thường đi với V-ing, chẳng hạn consider, avoid, postpone và deny. Một số khác thường đi với to-infinitive, chẳng hạn decide, agree, refuse và aim. Học động từ cùng cấu trúc thay vì suy luận từ bản dịch.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Giới từ và động từ khuyết thiếu",
+      "contentHTML": "<p>Sau giới từ dùng V-ing: committed to improving, object to disclosing. Ở đây to là giới từ, khác với to trong to-infinitive. Sau modal như can và must dùng nguyên mẫu không to: must comply.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Chủ ngữ, bị động và hoàn thành",
+      "contentHTML": "<p>V-ing có thể làm chủ ngữ: Reviewing the evidence takes time. Có thể dùng dạng bị động hoặc hoàn thành khi ý nghĩa yêu cầu: being consulted, having disclosed. Một số động từ cho phép nhiều cấu trúc với sắc thái khác nhau.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The board deferred {{disclosing::Defer thường đi với V-ing; disclosing là bổ ngữ của deferred.}} (disclose) the findings until the independent audit had concluded."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The committee agreed {{to reconsider::Agree đi với to-infinitive khi diễn tả sự đồng ý thực hiện hành động.}} (reconsider) its decision in light of new evidence."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The consultant avoided {{making::Avoid thường đi với V-ing; making bổ nghĩa cho avoided.}} (make) an unequivocal claim before verifying the figures."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The foundation aims {{to expand::Aim đi với to-infinitive để diễn tả mục tiêu.}} (expand) access to specialist training in rural areas."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Several witnesses denied {{having disclosed | disclosing::Deny đi với V-ing; having disclosed nhấn mạnh hành động xảy ra trước lời phủ nhận, còn disclosing cũng có thể dùng.}} (disclose) confidential details to the press."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The regulator refused {{to authorise | to authorize::Refuse đi với to-infinitive; authorise và authorize là hai cách viết hợp lệ.}} (authorise) the transaction without further safeguards."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The director is committed to {{improving::Trong committed to, to là giới từ nên theo sau bằng V-ing.}} (improve) transparency across the organisation."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The applicant was accused of {{misrepresenting | having misrepresented::Sau giới từ of dùng V-ing; having misrepresented nhấn mạnh hành động trước lời buộc tội.}} (misrepresent) her qualifications."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The agency decided {{to suspend::Decide đi với to-infinitive để diễn tả quyết định thực hiện.}} (suspend) the programme pending a review."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The firm opted ___ the acquisition until market conditions improved. (( **to delay** | delaying to | delay yesterday :: Opt đi với to-infinitive. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The witness denied ___ the documents before the inquiry. (( **having altered** | to altered | having alter :: Deny đi với V-ing; having altered nhấn mạnh hành động trước lời phủ nhận. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The board is accustomed to ___ under pressure. (( **operating** | operate to | operated to :: To trong accustomed to là giới từ, theo sau bằng V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The organisation undertook ___ the allegations promptly. (( **to investigate** | investigating to | investigate yesterday :: Undertake đi với to-infinitive khi cam kết thực hiện. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The director insisted on ___ before a decision was made. (( **being consulted** | be consulted to | being consult :: Sau on dùng V-ing; being consulted là dạng bị động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | board | deferred | disclosing | the | findings. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | agreed | to | reconsider | its | decision. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | consultant | avoided | making | an | unequivocal | claim. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | foundation | aims | to | expand | access. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The firm intends {{to consult::Intend đi với to-infinitive.}} (consult) affected communities before proceeding."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The adviser recommended {{seeking::Recommend thường đi với V-ing khi khuyên thực hiện một hành động.}} (seek) independent legal advice."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The panel considered {{appointing::Consider thường đi với V-ing khi nghĩa là cân nhắc thực hiện hành động.}} (appoint) an external adviser."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The company postponed {{launching::Postpone thường đi với V-ing.}} (launch) the product until the outstanding defects had been addressed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The speaker declined {{to elaborate::Decline thường đi với to-infinitive khi từ chối thực hiện.}} (elaborate) on the confidential settlement."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The organisation is intent on {{reducing::Sau giới từ on dùng V-ing; intent on diễn tả quyết tâm.}} (reduce) its environmental impact."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The chair objected to {{being excluded::Object to có to là giới từ; being excluded là dạng V-ing bị động.}} (exclude) from the negotiations."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board agreed {{to commission::Agree đi với to-infinitive để diễn tả thỏa thuận thực hiện.}} (commission) an independent assessment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The study involves {{analysing | analyzing::Involve thường đi với V-ing; analysing và analyzing đều đúng chính tả.}} (analyse) data from several separate sources."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The spokesperson admitted {{having overlooked | overlooking::Admit đi với V-ing; having overlooked nhấn mạnh việc bỏ sót xảy ra trước lời thừa nhận.}} (overlook) a significant qualification."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The department expects {{to receive::Expect đi với to-infinitive khi nói điều dự kiến sẽ xảy ra.}} (receive) the final report by Friday."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The panel resolved ___ the matter at its next meeting. (( **to address** | addressing to | addressed to :: Resolve đi với to-infinitive khi diễn tả quyết định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The spokesperson acknowledged ___ a material error. (( **having made** | to made | having make :: Acknowledge đi với V-ing; having made nhấn mạnh việc xảy ra trước lời thừa nhận. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The adviser is responsible for ___ compliance across the group. (( **ensuring** | ensure to | ensured to :: Sau giới từ for dùng V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The company pledged ___ the affected customers. (( **to compensate** | compensating to | compensate yesterday :: Pledge đi với to-infinitive khi cam kết. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The proposal warrants ___ in greater detail. (( **examining** | to examined | examine to :: Warrant thường đi với V-ing khi nghĩa là đáng được xem xét. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | regulator | refused | to | authorise | the | transaction. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | chair | objected | to | being | excluded. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | study | involves | analysing | separate | sources. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | department | expects | to | receive | the | final | report. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The board postponed {{disclosing::Postpone đi với V-ing.}} (disclose) the findings until the audit concluded. It then agreed {{to commission::Agree đi với to-infinitive.}} (commission) an independent review. The chair objected to {{being excluded::Sau giới từ to trong object to dùng V-ing; being excluded là bị động.}} (exclude) from the discussion."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The agency aims {{to reduce::Aim đi với to-infinitive.}} (reduce) unnecessary delays. Its staff are committed to {{improving::To trong committed to là giới từ nên theo sau bằng V-ing.}} (improve) access. The director admitted {{having overlooked | overlooking::Admit đi với V-ing; dạng hoàn thành nhấn mạnh sự việc xảy ra trước lời thừa nhận.}} (overlook) an earlier warning."
+    }
+  ],
+  "lessonNumber": 1
+}

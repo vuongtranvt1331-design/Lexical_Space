@@ -1,0 +1,224 @@
+{
+  "id": "5",
+  "title": "05. Trật tự từ trong câu",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Chủ ngữ và động từ",
+      "contentHTML": "<p>Câu đơn thường có chủ ngữ trước động từ: The cat sleeps.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Bắt đầu bằng chủ ngữ rồi đặt động từ; nếu hành động có đối tượng, đặt tân ngữ sau động từ. Xác định ai làm gì trước khi thêm nơi chốn hoặc thời gian.</p><p>I read a book. → Tôi đọc một quyển sách.<br>The cat sleeps. → Con mèo ngủ.<br>She reads a book at home. → Cô ấy đọc sách ở nhà.</p></div><h3>Mở rộng: Phần 1: Khung xương sống câu tiếng Anh (S - V - O)</h3><p>Khác với tiếng Việt có thể đảo vị trí linh hoạt, câu tiếng Anh chuẩn luôn tuân theo một <strong>trật tự khung xương sống cố định</strong>:</p><div class=\"rule-box\" style=\"background: rgba(52, 152, 219, 0.1); border-left: 4px solid #3498db; padding: 10px; margin: 10px 0;\"><strong style=\"color: #3498db;\">5 Mô hình câu cốt lõi:</strong><br>• <strong>S + V (Nội động từ):</strong> <code>The baby slept.</code> <em>(Không cần tân ngữ).</em><br>• <strong>S + V + O (Ngoại động từ):</strong> <code>She reads books.</code> <em>(Tân ngữ đứng ngay sau động từ).</em><br>• <strong>S + V + C (Động từ nối + Bổ ngữ):</strong> <code>He is a teacher. / The weather became cold.</code><br>• <strong>S + V + Oi + Od (2 Tân ngữ):</strong> <code>My dad bought me (Oi) a new bike (Od).</code><br>• <strong>S + V + O + C:</strong> <code>This song makes me (O) happy (C).</code></div>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Tân ngữ và tính từ",
+      "contentHTML": "<p>Tân ngữ thường theo sau động từ: I read a book. Tính từ thường đứng trước danh từ: a red book.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Trạng từ tần suất như usually, often và never thường đứng trước động từ thường nhưng sau be. Với trợ động từ, chúng thường đứng sau trợ động từ đầu tiên.</p><p>I usually walk to school. → Tôi thường đi bộ đến trường.<br>She is often busy. → Cô ấy thường bận.<br>They have already left. → Họ đã rời đi rồi.</p></div><h3>Mở rộng: Phần 2: Vị trí Vàng của Trạng từ chỉ Tần suất</h3><p>Các trạng từ chỉ mức độ thường xuyên (<code>always, usually, often, sometimes, rarely, seldom, never</code>) tuân theo quy tắc vị trí bất di bất dịch:</p><div class=\"rule-box\" style=\"background: rgba(46, 204, 113, 0.1); border-left: 4px solid #2ecc71; padding: 10px; margin: 10px 0;\"><strong style=\"color: #2ecc71;\">Quy tắc: \"Sau BE – Trước THƯỜNG – Giữa TRỢ & THƯỜNG\"</strong><br>• <strong>Đứng SAU động từ To Be:</strong> <code>He <strong>is always</strong> on time.</code><br>• <strong>Đứng TRƯỚC động từ thường:</strong> <code>She <strong>often drinks</strong> tea in the morning.</code><br>• <strong>Đứng GIỮA trợ động từ và động từ chính:</strong> <code>I <strong>have never seen</strong> snow before. / They <strong>don't usually go</strong> out late.</code></div>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Thời gian và trạng từ",
+      "contentHTML": "<p>Trạng từ tần suất thường đứng trước động từ thường: I often read. Cụm thời gian có thể ở cuối câu: I read at night.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Nếu cùng nêu nơi chốn và thời gian, cách sắp xếp thông dụng là nơi chốn trước, thời gian sau. Đặt tính từ trước danh từ; đặt trạng từ cách thức ở vị trí phù hợp với động từ và tân ngữ.</p><p>She studies at home every evening. → Cô ấy học ở nhà mỗi tối.<br>He has a red bag. → Anh ấy có một chiếc túi đỏ.<br>She explained the result clearly. → Cô ấy giải thích kết quả rõ ràng.</p></div><h3>Mở rộng: Phần 3: Quy tắc Nơi chốn - Thời gian & Bẫy chèn từ</h3><p>Khi cuối câu có cả trạng ngữ chỉ Cách thức (Manner), Nơi chốn (Place) và Thời gian (Time):</p><div class=\"rule-box\" style=\"background: rgba(231, 76, 60, 0.1); border-left: 4px solid #e74c3c; padding: 10px; margin: 10px 0;\"><strong style=\"color: #e74c3c;\">2 Quy tắc sống còn khi ghép câu:</strong><br>1. <strong>Thứ tự M - P - T (Manner → Place → Time):</strong><br>• Cách thức đứng trước, Nơi chốn ở giữa, Thời gian luôn đẩy về cuối cùng (hoặc đảo lên đầu câu).<br>• <em>Ví dụ:</em> She sang <strong>beautifully (M)</strong> <strong>at the concert (P)</strong> <strong>last night (T)</strong>.<br>2. <strong>Cấm chèn Trạng từ vào giữa Động từ và Tân ngữ (V - O):</strong><br>❌ <em>Sai:</em> I like very much English. / He speaks fluently French.<br>✔ <em>Đúng:</em> I <strong>like English</strong> very much. / He <strong>speaks French</strong> fluently.</div>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{read::Read đứng sau chủ ngữ I.}} [đọc] every day."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{reads::She đi với reads ở hiện tại đơn.}} [đọc] a book."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I see a {{black::Black đứng trước cat.}} [đen] cat."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We {{eat::Eat đứng sau we và trước apples.}} [ăn] apples."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He {{often::Often thường đứng trước động từ thường runs.}} [thường] runs."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The cat {{likes::Chủ ngữ số ít the cat đi với likes.}} [thích] milk."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{play::Play đứng sau they.}} [chơi] at home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She has a {{red::Red đứng trước bag.}} [đỏ] bag."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{drink::Drink đứng sau I; at night ở cuối câu.}} [uống] tea at night."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He {{has::He đi với has ở hiện tại đơn.}} [có] a dog."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My dad ___ every day. (( walk | **walks** | walking :: My dad là số ít nên dùng walks. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The girl ___ in the garden. (( sit | **sits** | sitting :: The girl là số ít nên dùng sits. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I see a ___ bird. (( yellowly | **yellow** | yellows :: Yellow đứng trước bird. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We ___ songs. (( sings | **sing** | singing :: We đi với sing ở hiện tại đơn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She ___ jumps. (( am | **sometimes** | are :: Sometimes thường đứng trước động từ thường. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | read | a | book. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | has | a | red | bag. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | eat | apples. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | dog | runs | fast. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | play | at | home. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The campaign team {{rarely releases::Rarely thường đứng trước động từ thường releases; team được xem là một đơn vị số ít.}} (release) [hiếm khi] incomplete figures, because premature disclosure could undermine public confidence."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The study group {{has already submitted::Already có thể đứng giữa trợ động từ has và phân từ submitted trong hiện tại hoàn thành.}} (submit) [đã] its ethics application."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The lecturer presented {{the results clearly::The results là tân ngữ trực tiếp theo sau presented; clearly có thể đứng sau cụm tân ngữ.}} [rõ ràng / kết quả] during the conference."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board considers {{the proposal essential | the proposal to be essential::Consider có thể đi với tân ngữ + tính từ hoặc tân ngữ + to be + tính từ để mô tả proposal.}} [thiết yếu / đề xuất] for the next phase."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence uses the given adverb in the usual position? (( The project is completed often late. | **The project is often completed late.** | The project often completed is late. :: Often thường đứng sau trợ động từ is và trước phân từ completed trong câu bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence follows the pattern subject + verb + object + complement? (( The committee elected chairperson the researcher. | **The committee elected the researcher chairperson.** | The committee the researcher elected chairperson. :: The committee là chủ ngữ, elected là động từ, the researcher là tân ngữ và chairperson là bổ ngữ của tân ngữ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which order places the object immediately after the verb? (( The researchers analysed thoroughly the survey responses. | **The researchers analysed the survey responses thoroughly.** | The researchers the survey responses analysed thoroughly. :: The survey responses là tân ngữ trực tiếp của analysed; thoroughly đặt sau tân ngữ là cách diễn đạt tự nhiên. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "An environmental organisation conducts annual surveys. Its staff {{usually collect::Usually thường đứng trước động từ thường collect; staff ở đây chỉ nhiều nhân viên.}} (collect) [thường] data from coastal communities. The latest report {{was carefully prepared::Carefully có thể đứng giữa trợ động từ was và phân từ prepared trong câu bị động.}} (prepare) [cẩn thận] by a small team. The director explained {{the main findings clearly::Tân ngữ the main findings theo sau explained; clearly có thể đứng sau tân ngữ.}} [rõ ràng / kết quả chính] at the meeting, and the board considered {{the recommendations useful::Consider + tân ngữ + bổ ngữ: useful mô tả the recommendations.}} [hữu ích / các khuyến nghị]."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | research | team | has | already | submitted | its | findings | to | the | review | panel | for | consideration. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | usually | examines | the | supporting | evidence | carefully | before | announcing | its | decision. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee {{usually reviews::Usually thường đứng trước động từ thường reviews.}} (review) [thường] the final report before publication."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The laboratory {{is often::Often thường đứng sau động từ be: is often.}} (be) [thường] open to visitors on Fridays."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The director {{has never seen::Never thường đứng giữa trợ động từ has và phân từ seen.}} (see) [không bao giờ] such a detailed proposal before."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The lecturer explained {{the findings clearly::Tân ngữ the findings đứng ngay sau explained; clearly có thể theo sau tân ngữ.}} [rõ ràng / các kết quả] to the audience."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Choose the standard position for the frequency adverb: the institute ___ online. (( publishes usually its findings | **usually publishes its findings** | usually its findings publishes :: Usually thường đứng trước động từ thường; tránh chen vào giữa publishes và tân ngữ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The director offered ___ at the ceremony. (( a grant the students | **the students a grant** | the students grant a :: Offer có thể theo cấu trúc người nhận + vật: the students a grant. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "An ethics panel is evaluating a project. The members {{have already reviewed::Already có thể đứng giữa have và reviewed.}} (review) [đã] the initial proposal. The panel {{is often::Often thường đứng sau be: is often.}} (be) [thường] cautious about privacy risks. The director considers {{the safeguards essential | the safeguards to be essential::Sau considers có thể dùng tân ngữ + tính từ hoặc tân ngữ + to be + tính từ.}} [thiết yếu / các biện pháp bảo vệ] for approval."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research team is finalising a public report. The panel {{usually reviews::Usually thường đứng trước động từ thường reviews.}} (review) [thường] the draft before publication. The director {{has already approved::Already có thể đứng giữa has và approved.}} (approve) [đã] the summary. The analysts presented {{the findings clearly::Tân ngữ đứng ngay sau presented; clearly có thể theo sau.}} [các kết quả / rõ ràng] at the briefing."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analysts | presented | the | preliminary | results | clearly | at | the | international | research | conference. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | board | considers | independent | oversight | essential | when | an | organisation | handles | sensitive | information. ~~"
+    }
+  ],
+  "lessonNumber": 5
+}

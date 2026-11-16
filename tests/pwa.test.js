@@ -45,7 +45,7 @@ test('worker precaches PWA resources and activation only retires its own previou
   const deleted = [], added = [], handlers = {};
   let claimed = 0;
   vm.runInNewContext(script, {
-    URL,
+    URL, Request,
     self: { registration: { scope: 'https://example.test/Lexical_Space/' },
       addEventListener: (type, handler) => { handlers[type] = handler; },
       skipWaiting: async () => {}, clients: { claim: async () => { claimed++; } } },
@@ -57,7 +57,8 @@ test('worker precaches PWA resources and activation only retires its own previou
   });
   let pending;
   handlers.install({ waitUntil: promise => { pending = promise; } }); await pending;
-  assert.deepEqual(added, core);
+  assert.deepEqual(added.map(request => request.url), core.map(path => new URL(path, 'https://example.test/Lexical_Space/').href));
+  assert.ok(added.every(request => request.cache === 'reload'), 'a new shell must bypass stale HTTP cache');
   handlers.activate({ waitUntil: promise => { pending = promise; } }); await pending;
   assert.deepEqual(deleted, [prefix + 'old']);
   assert.equal(claimed, 1);

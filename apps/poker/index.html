@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" data-suite-module="poker">
+<head>
+  <script src="../../suite/js/core.js?v=43.3.0-4ba1a9ac80"></script>
+  <link rel="stylesheet" href="../../suite/css/components.css?v=43.3.0-69a13ed7c3">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Wild West Vocabulary Poker</title>
+  <!-- Google Fonts for Western Serif & Vietnamese Diacritic Support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Playfair+Display:wght@700;800;900&family=Rye&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="./css/poker-1.css">
+<link rel="manifest" href="../../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icons/icon-192.png"><script defer src="../../js/core/offline.js?v=43.3.0-39c886b7ac"></script></head>
+<body class="flex items-center justify-center">
+
+  <main id="gameFrame" class="game-frame select-none">
+
+    <!-- TOP COMPACT HEADER: ROUND STATUS & NAVIGATION -->
+    <header class="flex items-center justify-between px-2.5 py-1.5 bg-[#1B0E08] border border-[#D4AF37]/50 rounded-xl shadow-md shrink-0">
+      <!-- Round & Deck Progress Indicator -->
+      <div class="flex items-center gap-1.5 min-w-0">
+        <div class="px-2.5 py-1 rounded-lg bg-[#9E2A2B] border border-[#D4AF37] shadow-inner flex items-center">
+          <span id="roundCounterText" class="font-western text-[11px] sm:text-xs tracking-wider text-[#F6EBD8] whitespace-nowrap">ROUND 1</span>
+        </div>
+        <div class="px-2.5 py-1 rounded-lg bg-[#2C180E] border border-[#D4AF37]/40 text-[10px] sm:text-[11px] font-semibold text-[#E8D5B5] whitespace-nowrap flex items-center" title="Deck vocabulary progress">
+          <span id="deckProgressText">DECK 4/20</span>
+        </div>
+      </div>
+
+      <!-- Header Controls: Sound Toggle, Exit -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="soundToggleBtn" type="button" class="western-btn western-btn-secondary western-btn-icon" aria-label="Toggle Sound" title="Toggle Sound">
+          <svg id="soundOnIcon" class="w-4 h-4 text-[#D4AF37]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+          <svg id="soundOffIcon" class="w-4 h-4 text-[#C83E3B] hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+        </button>
+
+        <a id="exitArcadeBtn" href="arcade.html" class="western-btn western-btn-secondary" aria-label="Exit to Arcade Space" title="Return to Arcade Space">
+          <svg class="w-3.5 h-3.5 text-[#D4AF37] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          <span>Exit</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- COWBOY OPPONENT & SPEECH BUBBLE AREA (Decorative Character) -->
+    <section class="relative flex items-center justify-center gap-2 px-2 py-1 shrink-0 pointer-events-none" aria-label="Cowboy Opponent">
+      <!-- Illustrated Saloon Cowboy SVG -->
+      <div class="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 flex items-center justify-center">
+        <svg viewBox="0 0 140 130" class="w-full h-full drop-shadow-[0_4px_6px_rgba(0,0,0,0.85)]">
+          <!-- Warm Saloon Halo -->
+          <circle cx="70" cy="68" r="52" fill="#3B1F10" stroke="#D4AF37" stroke-width="2" stroke-dasharray="4 2" opacity="0.85"/>
+          <!-- Shoulders / Western Duster Coat -->
+          <path d="M22 124 C25 93, 45 86, 70 86 C95 86, 115 93, 118 124 Z" fill="#3D2012" stroke="#1A0C06" stroke-width="2.5"/>
+          <!-- Leather Vest Lapels -->
+          <path d="M46 90 L62 124 L78 124 L94 90" fill="#231108" stroke="#D4AF37" stroke-width="1.2"/>
+          <!-- Sheriff Star Badge -->
+          <polygon points="92,102 94,106 98,106 95,109 96,113 92,110 88,113 89,109 86,106 90,106" fill="#D4AF37"/>
+          <!-- Red Bandana -->
+          <path d="M48 83 Q70 96 92 83 L83 106 Q70 112 57 106 Z" fill="#9E2A2B" stroke="#1E110A" stroke-width="2"/>
+          <path d="M62 92 Q70 97 78 92" stroke="#D4AF37" stroke-width="1.2" fill="none"/>
+          <!-- Face & Jaw -->
+          <path d="M50 48 L50 72 Q50 88 70 88 Q90 88 90 72 L90 48 Z" fill="#D9A173" stroke="#231108" stroke-width="2"/>
+          <!-- Stubble / Shadow -->
+          <path d="M51 66 Q51 87 70 87 Q89 87 89 66 L89 72 Q89 88 70 88 Q51 88 51 72 Z" fill="#8C5B3C" opacity="0.45"/>
+          <!-- Eyes Narrowed under Hat Brim -->
+          <path d="M55 57 L65 59" stroke="#1E110A" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M85 57 L75 59" stroke="#1E110A" stroke-width="2.8" stroke-linecap="round"/>
+          <circle cx="60" cy="61" r="2.2" fill="#1E110A"/>
+          <circle cx="80" cy="61" r="2.2" fill="#1E110A"/>
+          <!-- Handlebar Mustache -->
+          <path d="M70 72 C62 70, 54 74, 49 79 C55 80, 63 78, 70 75 C77 78, 85 80, 91 79 C86 74, 78 70, 70 72 Z" fill="#2A160D" stroke="#120904" stroke-width="1.5"/>
+          <!-- Wide-Brimmed Cowboy Hat Crown -->
+          <path d="M44 42 C46 18, 56 14, 63 18 C67 20, 73 20, 77 18 C84 14, 94 18, 96 42 Z" fill="#4E2B18" stroke="#1A0C06" stroke-width="2.5"/>
+          <!-- Hat Band with Gold Buckle -->
+          <path d="M44 38 Q70 44 96 38 L97 43 Q70 49 43 43 Z" fill="#9E2A2B" stroke="#1A0C06" stroke-width="1.5"/>
+          <rect x="66" y="39" width="8" height="6" rx="1" fill="none" stroke="#D4AF37" stroke-width="1.8"/>
+          <!-- Wide Hat Brim -->
+          <path d="M12 42 Q40 53 70 53 Q100 53 128 42 Q105 33 70 36 Q35 33 12 42 Z" fill="#5E341E" stroke="#1A0C06" stroke-width="2.5"/>
+        </svg>
+      </div>
+
+      <!-- Speech Bubble with Exact Required Text -->
+      <div class="relative bg-[#F6EBD8] text-[#1E110A] border-2 border-[#2A160B] rounded-2xl px-3.5 py-2 shadow-[0_4px_10px_rgba(0,0,0,0.6),inset_0_0_0_2px_#D4AF37] max-w-[230px]">
+        <!-- Speech bubble pointer -->
+        <div class="absolute -left-2.5 top-1/2 -translate-y-1/2 w-0 h-0 border-t-[7px] border-t-transparent border-r-[10px] border-r-[#2A160B] border-b-[7px] border-b-transparent"></div>
+        <div class="absolute -left-[7px] top-1/2 -translate-y-1/2 w-0 h-0 border-t-[5px] border-t-transparent border-r-[8px] border-r-[#F6EBD8] border-b-[5px] border-b-transparent"></div>
+
+        <p id="cowboySpeech" class="font-card-word font-extrabold text-xs sm:text-sm tracking-tight leading-snug text-[#1E110A]">
+          “Make your move.”
+        </p>
+        <div id="turnStatusSubtext" class="text-[10px] font-bold text-[#9E2A2B] uppercase tracking-wider mt-0.5">
+          Match the highlighted card
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN GREEN FELT POKER TABLE -->
+    <section id="pokerTable" class="poker-table">
+
+      <!-- 1. OPPONENT'S FOUR CARDS (2x2 GRID) -->
+      <div class="flex flex-col flex-1 min-h-0">
+        <div class="flex items-center justify-between px-1 mb-0.5 shrink-0">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-[#E8D5B5]/85 flex items-center gap-1">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
+            Outlaw's Hand (Original Word)
+          </span>
+          <span id="turnCounterBadge" class="text-[10px] font-bold text-[#F3D060] tracking-wider">
+            CARD 1 OF 4
+          </span>
+        </div>
+        <div id="opponentGrid" class="cards-grid" aria-label="Opponent's four vocabulary cards">
+          <!-- Opponent cards dynamically rendered by JS -->
+        </div>
+      </div>
+
+      <!-- 2. DECORATIVE WESTERN SEPARATOR & ROUND FEEDBACK BANNER -->
+      <div class="relative flex items-center justify-center my-1.5 shrink-0 z-10">
+        <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-[#D4AF37]/70 to-[#D4AF37]"></div>
+        <div id="tableCenterBadge" class="mx-2 px-3 py-0.5 rounded-full bg-[#1B0E07]/95 border border-[#D4AF37] shadow-md flex items-center gap-1.5">
+          <span class="text-[#D4AF37] text-[10px]">✦</span>
+          <span id="tableStatusText" class="font-western text-[10px] sm:text-[11px] tracking-wider text-[#F6EBD8] uppercase">
+            SELECT MATCHING SYNONYM
+          </span>
+          <span class="text-[#D4AF37] text-[10px]">✦</span>
+        </div>
+        <div class="h-[1px] flex-1 bg-gradient-to-l from-transparent via-[#D4AF37]/70 to-[#D4AF37]"></div>
+      </div>
+
+      <!-- 3. STUDENT'S FOUR CARDS (2x2 GRID) -->
+      <div class="flex flex-col flex-1 min-h-0">
+        <div class="flex items-center justify-between px-1 mb-0.5 shrink-0">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-[#E8D5B5]/85 flex items-center gap-1">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#C83E3B]"></span>
+            Your Hand (Tap Synonym)
+          </span>
+          <span id="roundMatchTracker" class="text-[10px] font-bold text-[#E8D5B5]/90">
+            0 / 4 MATCHED
+          </span>
+        </div>
+        <div id="studentGrid" class="cards-grid" aria-label="Your four synonym cards">
+          <!-- Student cards dynamically rendered by JS -->
+        </div>
+      </div>
+
+      <!-- FLOATING ROUND RESULT TOAST OVERLAY (E.g. ROUND BONUS: +1 CHIP) -->
+      <div id="roundResultToast" class="pointer-events-none absolute inset-x-3 top-1/2 -translate-y-1/2 z-30 flex items-center justify-center opacity-0 scale-90 transition-all duration-300">
+        <div id="roundResultBox" class="px-4 py-2.5 rounded-xl border-2 border-[#D4AF37] bg-[#1E110A]/95 shadow-[0_10px_30px_rgba(0,0,0,0.9)] text-center">
+          <p id="roundResultTitle" class="font-western text-sm sm:text-base tracking-wider text-[#F3D060]">ROUND BONUS: +1 CHIP</p>
+          <p id="roundResultSub" class="text-[11px] font-semibold text-[#F6EBD8] mt-0.5">All 4 synonyms matched!</p>
+        </div>
+      </div>
+
+      <!-- LOCAL BULLET IMPACT FLASH OVERLAY FOR WRONG ANSWERS -->
+      <div id="wrongShotOverlay" class="pointer-events-none absolute inset-0 z-25 hidden items-center justify-center">
+        <!-- Dynamically populated with temporary bullet hole impact during wrong match -->
+      </div>
+    </section>
+
+    <!-- BOTTOM FOOTER: CHIP ECONOMY & RESHUFFLE ACTION -->
+    <footer class="px-2.5 py-1.5 bg-[#190D07] border border-[#D4AF37]/60 rounded-xl shadow-inner shrink-0 flex items-center justify-between gap-2">
+      <!-- Chip Count & Economy Info -->
+      <div class="flex items-center gap-2 min-w-0">
+        <!-- Illustrated Master Poker Chip Icon -->
+        <div class="relative w-7 h-7 sm:w-8 sm:h-8 shrink-0 flex items-center justify-center">
+          <svg viewBox="0 0 48 48" class="w-full h-full drop-shadow">
+            <circle cx="24" cy="24" r="21" fill="#9E2A2B" stroke="#D4AF37" stroke-width="2.5"/>
+            <circle cx="24" cy="24" r="17" fill="none" stroke="#F6EBD8" stroke-width="2.5" stroke-dasharray="5 4"/>
+            <circle cx="24" cy="24" r="12" fill="#1E110A" stroke="#D4AF37" stroke-width="1.5"/>
+            <text x="24" y="28" text-anchor="middle" fill="#F3D060" font-family="Rye, serif" font-size="12">★</text>
+          </svg>
+        </div>
+        <div class="flex flex-col justify-center">
+          <div class="flex items-baseline gap-1">
+            <span class="font-western text-[11px] sm:text-xs text-[#F3D060] tracking-wide">CHIPS:</span>
+            <span id="chipCountValue" class="font-western text-sm sm:text-base text-[#F6EBD8]">5</span>
+            <span class="text-[10px] sm:text-[11px] font-bold text-[#E8D5B5]/70">/ 10</span>
+          </div>
+        </div>
+        <!-- Visual 10-Chip Stack Meter -->
+        <div id="chipStackContainer" class="hidden xs:flex items-center gap-0.5 px-1 py-0.5 rounded-md bg-[#110804] border border-[#D4AF37]/30" aria-label="Poker chip stack progress">
+          <!-- 10 Poker Chip Slots rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Action Control: Reshuffle (Costs 2 chips) -->
+      <div class="shrink-0">
+        <button id="reshuffleBtn" type="button" class="western-btn western-btn-primary" aria-label="Reshuffle Remaining Cards (Costs 2 Chips)" title="Reshuffle Remaining Cards (Costs 2 Chips)">
+          <svg class="w-3.5 h-3.5 text-[#F3D060] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="16 3 21 3 21 8"></polyline>
+            <line x1="4" y1="20" x2="21" y2="3"></line>
+            <polyline points="21 16 21 21 16 21"></polyline>
+            <line x1="15" y1="15" x2="21" y2="21"></line>
+            <line x1="4" y1="4" x2="9" y2="9"></line>
+          </svg>
+          <span class="tracking-wide">Reshuffle · 2 chips</span>
+        </button>
+      </div>
+    </footer>
+
+    <!-- TERMINAL SHOWDOWN OVERLAY (VICTORY / DEFEAT) -->
+    <div id="endingOverlay" class="hidden absolute inset-0 z-50 flex-col items-center justify-between p-5 bg-[#0B0503]/92 backdrop-blur-[2px] overflow-hidden">
+      <!-- Stylized Bullet Holes Layer (No graphic injury or blood) -->
+      <div id="endingBulletHoles" class="absolute inset-0 pointer-events-none z-10"></div>
+
+      <!-- Top Dramatic Header -->
+      <div class="relative z-20 mt-4 text-center">
+        <div id="endingBadge" class="inline-block px-3.5 py-1 rounded-full border border-[#D4AF37] bg-[#2B150C] font-western text-xs tracking-widest text-[#F3D060] uppercase shadow-lg">
+          SHOWDOWN OVER
+        </div>
+      </div>
+
+      <!-- Center Reveal Card -->
+      <div id="endingCardBox" class="relative z-20 w-full max-w-xs bg-gradient-to-b from-[#2A160D] to-[#160B06] border-2 border-[#D4AF37] rounded-2xl p-5 text-center shadow-[0_0_40px_rgba(0,0,0,0.95),inset_0_0_0_2px_#9E2A2B] opacity-0 translate-y-4 transition-all duration-500">
+        <!-- Western Skull / Crossed Revolvers Emblem -->
+        <div class="w-16 h-16 mx-auto mb-3 flex items-center justify-center rounded-full bg-[#120804] border border-[#D4AF37]/60 shadow-inner">
+          <svg viewBox="0 0 64 64" class="w-11 h-11">
+            <!-- Stylized Bison Skull -->
+            <path d="M10 18 C6 10, 14 4, 20 12 C23 16, 22 22, 22 22 L42 22 C42 22, 41 16, 44 12 C50 4, 58 10, 54 18 C50 25, 44 26, 44 26 L40 42 L35 54 L29 54 L24 42 L20 26 C20 26, 14 25, 10 18 Z" fill="#F6EBD8" stroke="#D4AF37" stroke-width="2"/>
+            <circle cx="26" cy="32" r="3.5" fill="#1E110A"/>
+            <circle cx="38" cy="32" r="3.5" fill="#1E110A"/>
+            <polygon points="32,40 29,47 35,47" fill="#1E110A"/>
+          </svg>
+        </div>
+
+        <!-- Exact Required Ending Message -->
+        <h2 id="endingExactMessage" class="font-card-word font-extrabold text-lg sm:text-xl text-[#F6EBD8] leading-snug mb-2 px-1">
+          “Reckon you need a bit more practice, partner.”
+        </h2>
+
+        <p id="endingStatsSummary" class="text-xs text-[#E8D5B5]/80 font-medium mb-5">
+          Final Chips: 0 · Rounds Played: 1
+        </p>
+
+        <div class="mt-3 flex gap-2 w-full">
+          <button id="playAgainBtn" type="button" class="flex-1 py-3 px-3 rounded-xl font-western text-sm tracking-wider text-[#1E110A] bg-gradient-to-b from-[#F3D060] to-[#C89D28] border-2 border-[#FFF3B0] shadow-[0_4px_15px_rgba(212,175,55,0.5)] active:scale-95 transition-transform">
+            Play Again
+          </button>
+          <a href="arcade.html" class="flex-1 py-3 px-3 rounded-xl font-western text-sm tracking-wider text-[#F6EBD8] bg-gradient-to-b from-[#4A2816] to-[#2B160B] border-2 border-[#D4AF37] flex items-center justify-center text-center shadow-[0_4px_15px_rgba(0,0,0,0.5)] active:scale-95 transition-transform" style="text-decoration:none;">
+            ◀ Exit
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Atmosphere Footer -->
+      <div class="relative z-20 mb-2 text-center text-[11px] text-[#E8D5B5]/60 font-medium">
+        Wild West Vocabulary Poker Showdown
+      </div>
+    </div>
+
+  </main>
+
+  <script src="./js/poker-1.js?v=43.3.0-d78eb09f59"></script>
+</body>
+</html>

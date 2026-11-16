@@ -1,0 +1,224 @@
+{
+  "id": "38",
+  "title": "38. Mệnh đề trạng ngữ",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Mệnh đề chỉ nguyên nhân và nhượng bộ",
+      "contentHTML": "<p>Because, since và as có thể mở đầu mệnh đề chỉ nguyên nhân; although, even though và while có thể mở đầu mệnh đề nhượng bộ hoặc tương phản tùy ngữ cảnh. Liên từ phải phù hợp với quan hệ ý nghĩa và cấu trúc câu.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Điều kiện, mục đích và hệ quả",
+      "contentHTML": "<p>Unless thường có nghĩa là if ... not; provided that / as long as có thể nêu điều kiện. So that có thể nêu mục đích. Không thay unless bằng if một cách máy móc vì điều đó có thể đảo nghĩa.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Thời gian và quan hệ giữa các mệnh đề",
+      "contentHTML": "<p>Before, after, once, until và by the time liên hệ các sự kiện theo thời gian. Trong mệnh đề thời gian nói về tương lai, thường dùng hiện tại đơn thay vì will: Once the review is complete, the board will decide.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though | Even though::Các liên từ này có thể mở đầu mệnh đề nhượng bộ.}} [mặc dù] the evidence was limited, the board authorised a preliminary review."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The hearing was postponed {{because | since | as::Các liên từ này có thể mở đầu mệnh đề chỉ nguyên nhân.}} [bởi vì] a key witness was unavailable."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The permit will expire {{unless::Unless nêu điều kiện phủ định: nếu không được gia hạn thì giấy phép hết hiệu lực.}} [trừ khi] it is renewed before Friday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The team may proceed {{provided that | providing that | as long as::Các cụm này đều có thể nêu điều kiện cần trong ngữ cảnh.}} [miễn là] the safety checks are completed."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The analyst documented each assumption {{so that | in order that::Các cụm này có thể mở đầu mệnh đề chỉ mục đích.}} [để] other researchers could reproduce the results."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The chair will release the statement once the board {{has approved | approves::Cả hiện tại hoàn thành và hiện tại đơn đều có thể dùng trong mệnh đề thời gian chỉ tương lai.}} (approve) it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The review will continue {{until | till::Until và till có thể đánh dấu thời điểm kết thúc.}} [cho đến khi] all objections have been considered."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The auditors arrived {{after::After chỉ trình tự: kiểm toán viên đến sau khi tài liệu được lưu.}} [sau khi] the documents had been archived."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{While | Whereas::While và whereas có thể mở đầu mệnh đề tương phản giữa hai quy trình.}} [trong khi] the first procedure is voluntary, the second is mandatory."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The funding will lapse ___ the conditions are met before June. (( **unless** | because of | despite :: Unless nêu điều kiện phủ định: nếu không đáp ứng điều kiện, khoản tài trợ sẽ hết hiệu lực. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The chair will begin once everyone ___ ready. (( **is** | will is | being yesterday :: Mệnh đề thời gian nói về tương lai thường dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The team recorded the procedure ___ others could repeat it. (( **so that** | despite | because of :: So that có thể nêu mục đích. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the figures were preliminary, the board requested an independent assessment. (( **Because** | Despite of | Because of the :: Because mở đầu mệnh đề nêu nguyên nhân. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The application may proceed ___ the documentation is complete. (( **provided that** | despite of | due to the :: Provided that nêu điều kiện. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Although | the | evidence | was | limited, | the | board | authorised | a | review. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | permit | will | expire | unless | it | is | renewed. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | may | proceed | provided | that | the | checks | are | completed. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analyst | documented | each | assumption | so | that | others | could | reproduce | the | results. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The chair will contact members when the decision {{is::Sau when chỉ thời gian tương lai, dùng hiện tại đơn.}} (be) final."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though | Even though::Các liên từ này có thể dẫn mệnh đề nhượng bộ.}} [mặc dù] the evidence was incomplete, the review continued."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The contract will remain valid {{provided that | providing that | as long as::Các cụm này đều có thể nêu điều kiện trong ngữ cảnh.}} [miễn là] both parties comply with its terms."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The agency cannot publish the figures {{until | till::Until hoặc till đánh dấu giới hạn thời gian trước khi có thể công bố.}} [cho đến khi] the verification is complete."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though | Even though::Các liên từ này có thể mở đầu mệnh đề nhượng bộ.}} [mặc dù] the costs increased, the project remained viable."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The firm installed additional safeguards {{so that | in order that::Các cụm này nêu mục đích của hành động.}} [để] the data would remain secure."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The request will be rejected {{unless::Unless nêu điều kiện phủ định: nếu không có chữ ký, yêu cầu sẽ bị từ chối.}} [trừ khi] the applicant provides a signature."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee will convene as soon as the report {{is::Sau as soon as chỉ thời gian tương lai, dùng hiện tại đơn.}} (be) available."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researcher repeated the experiment {{because | since | as::Các liên từ này có thể nêu nguyên nhân.}} [bởi vì] the initial results were inconsistent."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{While | Whereas::Hai liên từ này có thể nêu sự tương phản giữa hai chính sách.}} [trong khi] the current policy is temporary, the proposed replacement is permanent."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The supervisor checked the figures {{before::Before xác định việc kiểm tra xảy ra trước khi báo cáo được gửi.}} [trước khi] the report was submitted."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the previous system was centralised, the revised process delegates authority locally. (( **Whereas** | Because of | Unless the :: Whereas có thể chỉ tương phản giữa hai mệnh đề. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The firm will not publish the results ___ they have been verified. (( **until** | because of | despite the :: Until đánh dấu thời điểm trước đó việc công bố chưa xảy ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The board will respond after it ___ the recommendations. (( **receives** | will receives | receiving yesterday :: Sau after chỉ thời gian tương lai, dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the deadline was tight, the team completed the audit. (( **Although** | Because of | Despite of the :: Although mở đầu mệnh đề nhượng bộ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The chair circulated the agenda ___ members could prepare in advance. (( **so that** | despite of | because of the :: So that mở đầu mệnh đề chỉ mục đích. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | agency | cannot | publish | the | figures | until | verification | is | complete. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | firm | installed | safeguards | so | that | the | data | would | remain | secure. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | will | convene | as | soon | as | the | report | is | available. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | supervisor | checked | the | figures | before | the | report | was | submitted. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "{{Although | Though | Even though::Các liên từ này mở đầu mệnh đề nhượng bộ.}} [mặc dù] the timetable was tight, the team completed the audit. The chair will release the report once the board {{has approved | approves::Cả hiện tại hoàn thành và hiện tại đơn đều có thể dùng trong mệnh đề thời gian tương lai.}} (approve) it. The document will remain confidential {{until | till::Until / till đánh dấu giới hạn thời gian.}} [cho đến khi] the announcement is made."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The permit will lapse {{unless::Unless nêu điều kiện phủ định.}} [trừ khi] the applicant supplies the missing documents. The regulator has explained the requirements {{so that | in order that::Các cụm này nêu mục đích.}} [để] applicants can respond promptly. The application may proceed {{provided that | providing that | as long as::Các cụm này nêu điều kiện cần.}} [miễn là] the evidence is complete."
+    }
+  ],
+  "lessonNumber": 2
+}

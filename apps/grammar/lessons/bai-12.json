@@ -1,0 +1,225 @@
+{
+  "id": "14",
+  "group": "Group 1: Nền tảng Thời gian",
+  "title": "14. Hiện tại đơn & Tiếp diễn",
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My brother usually {{cycles::Usually chỉ thói quen; chủ ngữ số ít brother dùng cycles.}} (cycle) to work."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Look! The children {{are playing::Look cho thấy hành động đang diễn ra; children là số nhiều nên dùng are playing.}} (play) in the garden."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The library {{opens::Theo lịch hằng tuần, dùng hiện tại đơn opens với chủ ngữ số ít.}} (open) at nine every weekday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{am staying::This week chỉ chỗ ở tạm thời trong ngữ cảnh này; dùng am staying.}} (stay) with my cousin this week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Our teacher often {{gives::Often chỉ việc thường xuyên; teacher số ít đi với gives.}} (give) us useful advice."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Please be quiet. The baby {{is sleeping::Lời yêu cầu giữ yên lặng cho thấy em bé đang ngủ; dùng is sleeping.}} (sleep)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My parents {{do not eat | don’t eat::Thói quen phủ định với parents dùng do not eat.}} (eat) meat very often."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "What {{are you doing::At the moment hỏi việc đang diễn ra; dùng are you doing.}} (do) at the moment?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This bus {{does not stop | doesn’t stop::Theo lịch, bus số ít phủ định dùng does not stop.}} (stop) here on Sundays."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Anna ___ the train to work every morning. (( take | **takes** | is taking :: Every morning chỉ thói quen; Anna số ít dùng takes. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Listen! Someone ___ at the door. (( knocks | **is knocking** | knock :: Listen cho thấy tiếng gõ đang diễn ra; dùng is knocking. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My phone ___ properly today, so I cannot call you. (( does not work | **is not working** | do not work :: Today và sự cố tạm thời hiện tại phù hợp với is not working. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "How often ___ your grandparents? (( are you visiting | **do you visit** | you visit :: How often hỏi tần suất; dùng do you visit. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The shops in this street ___ at six on weekdays. (( **close** | are closing | closes :: Đây là lịch thường lệ; shops số nhiều dùng close. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | usually | walks | to | school. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | are | waiting | for | the | bus. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | know | the | answer. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | shop | opens | at | nine. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The lesson {{starts::Starts dùng cho thời khóa biểu cố định; lesson là số ít.}} (start) at ten on Mondays."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It {{is raining::At the moment chỉ việc đang xảy ra; dùng is raining.}} (rain) at the moment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The price of renewable energy {{is falling::This year và báo cáo hằng tháng nêu xu hướng đang diễn ra; dùng is falling.}} (fall) this year, according to the latest monthly reports."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee {{believes::Believe chỉ trạng thái ý kiến ở đây; committee là đơn vị số ít nên dùng believes.}} (believe) the revised proposal is feasible."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The field team normally {{travels::Normally chỉ thói quen; team số ít dùng travels, đối lập với chuyến đi hôm nay.}} (travel) by train, but today it is using a shared car."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Although the process looks simple, it {{involves::Mô tả đặc điểm chung của process số ít nên dùng hiện tại đơn involves.}} (involve) several technical steps."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Currently, the research team ___ the data collected last week. (( analyses every year | **is analysing** | analysed yesterday :: Currently chỉ hoạt động đang diễn ra; is analysing phù hợp với team số ít. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "At standard atmospheric pressure, water ___ at 100°C, a property used to calibrate laboratory instruments. (( is boiling every year | **boils** | boiled tomorrow :: Chân lý khoa học chung dùng hiện tại đơn boils với water không đếm được. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The analyst ___ the first draft is incomplete. (( is thinking that always | **thinks** | think :: Think diễn tả quan điểm ở đây, nên dùng hiện tại đơn thinks với chủ ngữ số ít. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A university examines commuting patterns. Most students usually {{travel::Usually chỉ thói quen; students số nhiều dùng travel nguyên mẫu.}} [đi lại] by public transport. This semester, the university {{is testing::This semester nêu thử nghiệm tạm thời; university số ít dùng is testing.}} (test) a bicycle-sharing scheme. The transport office {{believes::Believe chỉ quan điểm hiện tại; office số ít dùng believes.}} (believe) that the scheme can reduce congestion."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | research | team | usually | publishes | its | findings | online, | but | it | is | testing | a | new | platform | this | year. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | director | believes | the | revised | proposal | is | feasible, | although | the | committee | is | still | reviewing | it. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The annual report usually {{contains::Usually chỉ điều thường lệ; report số ít dùng contains.}} (contain) a summary of the findings."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The analysts {{are analysing | are analyzing::At the moment dùng hiện tại tiếp diễn; analysing và analyzing là hai cách viết hợp lệ.}} (analyse) the survey responses at the moment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Reliable data {{play::Data được dùng như danh từ số nhiều ở đây; nhận định chung dùng play.}} [đóng] an important role in public policy."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "This semester, the university {{is testing::This semester nói về thử nghiệm tạm thời; university số ít dùng is testing.}} (test) a new assessment method."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The research group ___ evidence from several institutions every year. (( **compiles** | is compiling every year | compile yesterday :: Every year nêu hoạt động thường lệ; group số ít dùng compiles. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "At present, the committee ___ the responses. (( **is examining** | examined tomorrow | examines yesterday :: At present nêu quá trình đang diễn ra; committee số ít dùng is examining. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research institute studies air quality. Its monitoring stations normally {{collect::Normally chỉ hoạt động thường lệ; stations số nhiều dùng collect.}} [thu thập] hourly data. This month, engineers {{are installing::Are installing diễn tả hoạt động tạm thời đang diễn ra với engineers số nhiều.}} (install) additional sensors. The director {{knows::Know là động từ trạng thái ở đây; director số ít dùng knows.}} (know) that further testing is necessary."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research institute {{monitors::Hiện tại đơn mô tả chức năng thường lệ của institute số ít.}} (monitor) water quality across the region. This month, the team {{is testing::Hiện tại tiếp diễn nói về thử nghiệm tạm thời trong tháng này.}} (test) additional equipment. The director {{believes::Believe chỉ quan điểm ở đây, nên dùng hiện tại đơn.}} (believe) the results will improve public policy."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | institute | normally | collects | monthly | data, | while | the | field | team | is | examining | an | unexpected | result. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | university | is | testing | a | temporary | transport | scheme | as | it | evaluates | the | long-term | alternatives. ~~"
+    }
+  ],
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Hiện tại đơn",
+      "contentHTML": "<p>Dùng hiện tại đơn cho thói quen và sự thật: My sister works in a café. Water boils at 100°C. Với he, she, it, động từ thường thêm -s hoặc -es.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Dùng hiện tại đơn cho thói quen, sự thật hoặc lịch trình. Với động từ thường, he/she/it thêm -s/-es ở khẳng định; sau does/does not dùng nguyên mẫu.</p><p>She works here. → Cô ấy làm việc ở đây.<br>Does she work here? → Cô ấy làm ở đây phải không?<br>The train leaves at nine. → Tàu khởi hành lúc chín giờ theo lịch.</p></div><h3>Mở rộng: Hiện tại Đơn: Nhịp sống quen thuộc</h3><p>Hãy tưởng tượng hai chế độ của chiếc máy ảnh: <span class='highlight'>Hiện tại Đơn</span> chụp cách cuộc sống thường vận hành; <span class='highlight'>Hiện tại Tiếp diễn</span> quay một hoạt động hoặc sự thay đổi đang diễn ra.</p><h3><span style='color:#2ecc71'>1. Sự thật, thói quen và lịch trình</span></h3><p>Dùng Hiện tại Đơn khi nói về sự thật, thói quen hoặc lịch trình cố định:<br>The Earth goes round the Sun.<br>Lan walks to school every day.<br>The library opens at nine.</p><p>Câu hỏi giúp chọn thì: <span class='highlight'>Đây có phải điều thường xảy ra hoặc nhìn chung là đúng không?</span></p><h3><span style='color:#2ecc71'>2. Công thức với động từ thường</span></h3><p><strong>Khẳng định:</strong><br>I / You / We / They + V nguyên mẫu.<br>He / She / It + V-s/es.</p><p><strong>Phủ định:</strong><br>I / You / We / They + do not + V nguyên mẫu.<br>He / She / It + does not + V nguyên mẫu.</p><p><strong>Câu hỏi:</strong><br>Do + I / you / we / they + V nguyên mẫu?<br>Does + he / she / it + V nguyên mẫu?</p><p>She works here.<br>She does not work here.<br>Does she work here?</p><p><span style='color:#e74c3c'>Sau does hoặc does not, động từ chính trở về nguyên mẫu!</span><br>Đúng: Does she work?<br>Sai: Does she works?</p><h3><span style='color:#3498db'>3. Thêm s/es thế nào?</span></h3><p>Thông thường thêm s: read → reads.<br>Với các trường hợp như watch, go, do: watches, goes, does.<br>Phụ âm + y: study → studies.<br>Nguyên âm + y: play → plays.<br>Dạng đặc biệt: have → has.</p><p>Với động từ be, dùng am / is / are:<br>She is a student.<br>She is not tired.<br>Is she ready?<br><span class='highlight'>Không dùng do/does để tạo câu hỏi hoặc phủ định với be trong các câu này.</span></p><h3><span style='color:#3498db'>4. Những dấu hiệu thường gặp</span></h3><p>Usually, often, sometimes, every day, on Mondays và twice a week thường đi với thói quen.<br>She usually takes the bus.<br>They visit their grandparents twice a month.</p><p>Đừng chỉ tìm “từ khóa”. Hãy đọc xem câu đang nói về <span class='highlight'>thói quen, sự thật hay hoạt động đang diễn ra</span>.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Hiện tại tiếp diễn",
+      "contentHTML": "<p>Dùng am/is/are + V-ing cho việc đang diễn ra hoặc tình huống tạm thời: I am staying with a friend this week. Từ như now và at the moment thường gợi ý ngữ cảnh.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Dùng am/is/are + V-ing cho hoạt động đang diễn ra hoặc tình huống tạm thời; ngữ cảnh như now hoặc this week giúp xác định ý nghĩa.</p><p>I am reading now. → Tôi đang đọc.<br>They are staying with friends this week. → Tuần này họ ở tạm với bạn.<br>She is not working today. → Hôm nay cô ấy không làm việc.</p></div><h3>Mở rộng: Hiện tại Tiếp diễn: Điều đang diễn ra hoặc thay đổi</h3><h3><span style='color:#2ecc71'>1. Công thức</span></h3><p>Khẳng định: S + am / is / are + V-ing.<br>Phủ định: S + am / is / are + not + V-ing.<br>Câu hỏi: Am / Is / Are + S + V-ing?</p><p>I → am.<br>He / She / It → is.<br>You / We / They → are.</p><p>I am studying.<br>She is not sleeping.<br>Are they waiting?</p><p><span style='color:#e74c3c'>V-ing không thể đứng một mình để tạo thì tiếp diễn!</span><br>Đúng: She is studying.<br>Sai: She studying.<br>Sai: She is study.</p><h3><span style='color:#3498db'>2. Hoạt động đang xảy ra ngay lúc nói</span></h3><p>Please be quiet. I am recording a video.<br>→ Tôi đang quay video ngay lúc này.</p><p>Look! The children are playing outside.<br>→ Việc chơi đang diễn ra trước mắt.</p><h3><span style='color:#3498db'>3. Hoạt động tạm thời trong giai đoạn hiện tại</span></h3><p>I usually work in the office, but I am working from home this week.<br>→ Làm ở văn phòng là thói quen; làm ở nhà là tình huống tạm thời.</p><p>She is staying with her aunt while her flat is being repaired.<br>→ Cô ấy ở nhờ trong thời gian sửa nhà, không phải nơi ở thường lệ.</p><p><span class='highlight'>Một hoạt động có thể đang diễn ra trong giai đoạn này dù không xảy ra đúng giây phút nói.</span> I am reading a long novel this month không có nghĩa là lúc nói tôi nhất thiết đang cầm sách.</p><h3><span style='color:#3498db'>4. Xu hướng đang thay đổi</span></h3><p>More people are choosing public transport these days.<br>→ Việc chuyển sang phương tiện công cộng đang diễn ra.</p><p>Rents are rising rapidly at the moment.<br>→ Giá thuê đang tăng, nhấn mạnh một xu hướng hiện tại.</p><p>So sánh:<br>Prices rise when demand increases. → Một nhận xét chung.<br>Prices are rising this month. → Một sự thay đổi đang diễn ra trong giai đoạn hiện tại.</p><h3><span style='color:#2ecc71'>5. Viết V-ing</span></h3><p>Thông thường thêm ing: read → reading.<br>Bỏ e cuối trong các trường hợp như write → writing, make → making.<br>Một số động từ ngắn gấp đôi phụ âm cuối: run → running, sit → sitting.</p><p><span style='color:#e74c3c'>Now và this week là gợi ý, không phải nút bấm chọn thì tự động.</span> Trước khi dùng tiếp diễn, hãy kiểm tra xem động từ có đang diễn tả một trạng thái không.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Động từ chỉ trạng thái",
+      "contentHTML": "<p>Các động từ như know, believe, need và belong thường không dùng ở dạng tiếp diễn: I know the answer. Một số động từ có thể đổi nghĩa: I think you are right (quan điểm); I am thinking about your idea (đang suy nghĩ).</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Các động từ trạng thái như know, believe và belong thường dùng hiện tại đơn. Một số động từ đổi nghĩa theo ngữ cảnh: think có thể chỉ quan điểm hoặc quá trình suy nghĩ.</p><p>I know the answer. → Tôi biết đáp án.<br>I think the plan is useful. → Tôi cho rằng kế hoạch hữu ích.<br>I am thinking about the plan. → Tôi đang suy nghĩ về kế hoạch.</p></div><h3>Mở rộng: Stative Verbs: Khi ngay bây giờ vẫn dùng Hiện tại Đơn</h3><h3><span style='color:#2ecc71'>1. Stative verbs diễn tả điều gì?</span></h3><p>Đó là những động từ thường diễn tả trạng thái thay vì một hoạt động đang được thực hiện:</p><ul><li>Nhận thức: know, understand, believe.</li><li>Mong muốn, nhu cầu, cảm xúc: want, need, like, love.</li><li>Sở hữu: own, belong, have khi mang nghĩa có, sở hữu.</li><li>Đặc tính cảm nhận: taste khi mang nghĩa có vị.</li></ul><p><span style='color:#e74c3c'>Khi mang nghĩa trạng thái, những động từ này thường không dùng ở dạng tiếp diễn.</span></p><p>Đúng: I need help right now.<br>Sai trong nghĩa này: I am needing help right now.</p><p>Đúng: She knows the answer.<br>Sai trong nghĩa này: She is knowing the answer.</p><p>Đúng: This bag belongs to Mai.<br>Sai trong nghĩa này: This bag is belonging to Mai.</p><p><span class='highlight'>Ngay bây giờ không nhất thiết có nghĩa là đang thực hiện một hành động.</span> Một nhu cầu, sự hiểu biết hoặc quyền sở hữu vẫn có thể là trạng thái ở hiện tại.</p><h3><span style='color:#3498db'>2. Cùng một động từ, đổi nghĩa thì đổi cách dùng</span></h3><p><strong>THINK:</strong><br>I think this plan is useful. → Think là có ý kiến, nên dùng Hiện tại Đơn.<br>I am thinking about a possible solution. → Think about là đang cân nhắc, một hoạt động suy nghĩ đang diễn ra.</p><p><strong>HAVE:</strong><br>She has two brothers. → Have nói về quan hệ gia đình, không phải hoạt động.<br>She is having lunch. → Have lunch là ăn trưa, một hoạt động đang diễn ra.</p><p><strong>TASTE:</strong><br>The soup tastes delicious. → Taste mô tả vị của món ăn.<br>The chef is tasting the soup. → Taste là hành động chủ động nếm thử của đầu bếp.</p><p><span style='color:#e74c3c'>Không học máy móc rằng một từ luôn luôn bị cấm thêm ing. Hãy xét nghĩa của nó trong câu.</span></p><h3><span style='color:#2ecc71'>3. Chọn thì bằng ba câu hỏi</span></h3><p>Bước 1: Câu diễn tả thói quen hoặc sự thật chung? → Ưu tiên Hiện tại Đơn.<br>Bước 2: Câu diễn tả hoạt động đang xảy ra, tình huống tạm thời hoặc xu hướng đang thay đổi? → Ưu tiên Hiện tại Tiếp diễn.<br>Bước 3: Động từ có mang nghĩa trạng thái như biết, cần, sở hữu không? → Thường dùng Hiện tại Đơn, kể cả khi có now.</p><h3><span style='color:#3498db'>Hướng dẫn luyện tập</span></h3><p>Câu 1–15: Điền dạng phù hợp của động từ hoặc trợ động từ. Viết đầy đủ dạng phủ định, không dùng dạng rút gọn.<br>Câu 16–30: Chọn đáp án phù hợp nhất với ý nghĩa và bối cảnh.<br>Câu 31–40: Dùng tất cả các từ để tạo câu đúng; giữ nguyên chữ hoa và dấu câu.</p>"
+    }
+  ],
+  "lessonNumber": 1
+}

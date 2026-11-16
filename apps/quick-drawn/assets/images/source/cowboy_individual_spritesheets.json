@@ -1,0 +1,29 @@
+{
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "columns": 40,
+  "rows": 3,
+  "padding": 16,
+  "sourceDirection": "right",
+  "enemyMirroredInCSS": true,
+  "animations": {
+    "idle": {
+      "row": 0,
+      "frames": 40,
+      "durationMs": 2800,
+      "loop": true
+    },
+    "shoot": {
+      "row": 1,
+      "frames": 8,
+      "durationMs": 500,
+      "loop": false
+    },
+    "hit": {
+      "row": 2,
+      "frames": 8,
+      "durationMs": 500,
+      "loop": false
+    }
+  }
+}

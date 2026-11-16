@@ -1,0 +1,223 @@
+{
+  "id": "49",
+  "title": "49. Enough & Too: Đủ và quá mức",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Enough: đủ mức và đủ số lượng",
+      "contentHTML": "<p><strong>Enough</strong> nghĩa là “đủ”: mức độ hoặc số lượng đáp ứng điều cần thiết.</p><div class=\"rule-box\"><strong>1. Tính từ/trạng từ + enough</strong><p>Đặt enough <strong>sau</strong> tính từ hoặc trạng từ: <em>The room is big enough.</em> (Phòng đủ rộng.) <em>She speaks slowly enough.</em> (Cô ấy nói đủ chậm.) Không nói <s>enough big</s>.</p><strong>2. Enough + danh từ</strong><p>Đặt enough <strong>trước</strong> danh từ: <em>We have enough chairs.</em> (Chúng ta có đủ ghế.) <em>There is enough water.</em> (Có đủ nước.) Cấu trúc dùng được với danh từ đếm được số nhiều và không đếm được.</p></div><p>Với the, my hoặc đại từ, dùng <strong>enough of</strong>: <em>enough of the food</em>, <em>enough of them</em>.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Enough / Too + to V",
+      "contentHTML": "<div class=\"rule-box\"><strong>Tính từ/trạng từ + enough + to V</strong><p><em>He is old enough to travel alone.</em> Anh ấy đủ lớn để đi một mình.</p><strong>Too + tính từ/trạng từ + to V</strong><p><em>The bag is too heavy to carry.</em> Túi quá nặng nên không thể mang. <strong>Too</strong> thể hiện mức độ vượt quá mức có thể chấp nhận, không chỉ đơn giản là “rất”.</p></div><p>Nêu người thực hiện hành động bằng <strong>for + người + to V</strong>: <em>The question is easy enough for the children to answer.</em> / <em>The bag is too heavy for me to carry.</em></p><p>Khi chủ ngữ đã là đối tượng của động từ, thường không lặp đại từ: <em>The box is too heavy to carry</em>, không viết <s>to carry it</s>.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Chuyển đổi và những lỗi thường gặp",
+      "contentHTML": "<div class=\"rule-box\"><strong>Too … to ↔ not … enough to</strong><p>Dùng tính từ trái nghĩa khi chuyển: <em>The box is too heavy to lift</em> → <em>The box is not light enough to lift.</em> Cả hai đều cho biết không thể nâng vì trọng lượng. Giữ cùng người thực hiện và ngữ cảnh.</p><p><em>The road is too narrow for buses to use</em> → <em>The road is not wide enough for buses to use.</em></p></div><p>Đừng nhầm <strong>very</strong> với <strong>too</strong>: <em>very cold</em> chỉ mức độ rất lạnh; <em>too cold to swim</em> nêu rằng quá lạnh để bơi.</p><p><strong>Kiểm tra từng bước:</strong> (1) Tìm tính từ/trạng từ hay danh từ; (2) đặt enough đúng vị trí; (3) nếu có hành động, dùng to + động từ nguyên mẫu; (4) thêm for + người khi cần.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The soup is not hot {{enough::Enough đứng sau tính từ hot để diễn tả đủ nóng.}} [đủ] to eat."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We have {{enough::Enough đứng trước danh từ số nhiều chairs để chỉ đủ số lượng.}} [đủ] chairs for everyone."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The bag is {{too::Too đứng trước heavy và diễn tả túi quá nặng để mang.}} [quá] heavy for me to carry."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is tall {{enough::Sau tính từ tall dùng enough; sau đó dùng to reach.}} [đủ] to reach the shelf."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There is not {{enough::Enough đứng trước danh từ không đếm được water.}} [đủ] water in the bottle."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He walks slowly {{enough::Enough đứng sau trạng từ slowly.}} [đủ] for me to follow."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The water is too cold {{to swim::Too + tính từ + to V diễn tả mức độ khiến hành động không thể thực hiện.}} (swim) in."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The test is easy enough {{to finish::Enough + to V: bài kiểm tra đủ dễ để hoàn thành.}} (finish) in an hour."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The room is ___. (( enough big | **big enough** | too enough big :: Enough đứng sau tính từ big. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We need ___ for the trip. (( money enough | **enough money** | enough of money :: Enough đứng trước money; không dùng of khi không có từ hạn định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The child is ___ reach the top shelf. (( enough short to | **too short to** | too short for :: Too + tính từ + to V cho biết em bé quá thấp để với tới. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The teacher speaks ___ for us to understand. (( enough clearly | **clearly enough** | clear enough :: Trạng từ clearly bổ nghĩa cho speaks, và enough đứng sau trạng từ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The book is easy enough ___ read. (( for | **to** | that :: Enough + to V: đủ dễ để đọc. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We have eaten enough ___ the cake. (( for | **of** | to :: Trước the cake dùng enough of, vì the là từ hạn định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The box is too large ___ the car. (( to | **for** | of :: For giới thiệu đối tượng mà chiếc hộp quá lớn so với nó. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( She is enough old. | **She is old enough.** | She enough is old. :: Enough đứng ngay sau tính từ old. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | tea | is | cool | enough | to | drink. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | have | enough | time | to | play. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | box | is | too | heavy | to | lift. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | speaks | slowly | enough | for | me | to | understand. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The evidence was not {{strong enough::Enough đứng sau tính từ strong; không đủ mạnh để chứng minh kết luận.}} [đủ mạnh] to support the conclusion."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report contains {{enough::Enough đứng trước danh từ evidence, dù evidence là danh từ không đếm được.}} [đủ] evidence to justify further investigation."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The instructions were {{too::Too + vague + to V diễn tả chỉ dẫn quá mơ hồ để người đọc làm theo.}} [quá] vague for participants to follow."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The design is not {{flexible enough::Enough đứng sau flexible; thiết kế không đủ linh hoạt để thích ứng.}} [đủ linh hoạt] to adapt to changing needs."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The company acted quickly {{enough::Enough đứng sau trạng từ quickly, diễn tả hành động đủ nhanh.}} [đủ] to prevent further damage."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The proposal is too costly {{to implement::Too + tính từ + to V: đề xuất quá tốn kém để triển khai.}} (implement) immediately."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The budget was not large enough {{to cover::Enough + to V: ngân sách không đủ lớn để trang trải toàn bộ chi phí.}} (cover) all the costs."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team reviewed enough {{of::Dùng enough of trước cụm danh từ có the: enough of the applications.}} [trong số] the applications to identify common problems."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The deadline is ___ allow a thorough review. (( tight enough | **too tight to** | enough tight to :: Too tight to chỉ thời hạn quá gấp nên không thể rà soát kỹ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The changes were ___ for most users to notice. (( sufficiently minor enough | **minor enough** | enough minor :: Enough đứng sau tính từ minor; không cần kết hợp sufficiently với enough. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The document is too complicated ___. (( for me understanding | **for me to understand** | to me understand :: For + người + to V xác định người gặp khó khăn khi hiểu tài liệu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The evidence was too weak to support the claim. Which sentence preserves the meaning? (( The evidence was not weak enough to support it. | **The evidence was not strong enough to support it.** | The evidence was strong enough to support it. :: Đổi weak thành tính từ trái nghĩa strong và dùng not strong enough. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The researchers did not collect ___. (( data enough | **enough data** | enough of data :: Enough đứng trước danh từ data; không thêm of nếu không có từ hạn định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The explanation was ___ persuade the board. (( enough convincing to | **convincing enough to** | too convincing enough to :: Enough đứng sau convincing và trước to V. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | evidence | was | strong | enough | to | support | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | deadline | was | too | tight | for | the | team | to | meet. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | report | was | not | clear | enough | for | readers | to | follow. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The council examined a proposal to reopen the bridge. Its budget was not {{large enough::Enough đứng sau tính từ large để nói ngân sách chưa đủ lớn.}} [đủ lớn] to cover the repairs. The bridge was {{too::Too đứng trước dangerous, nhấn mạnh mức nguy hiểm khiến việc mở cửa không khả thi.}} [quá] dangerous to reopen immediately. Officials therefore sought {{enough::Enough đứng trước danh từ funding để diễn tả đủ nguồn vốn.}} [đủ] funding before work began."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team tested a new app with older users. The text was not {{large enough::Enough đứng sau tính từ large.}} [đủ lớn] for some participants to read. One menu was {{too::Too complex to use nghĩa là quá phức tạp để sử dụng.}} [quá] complex to use without help. The designers gathered {{enough::Enough đứng trước feedback, một danh từ không đếm được.}} [đủ] feedback to improve the interface."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The museum planned an evening event. The main hall was {{large enough::Enough đứng sau large để diễn tả đủ rộng.}} [đủ rộng] to hold the audience. However, the entrance was {{too::Too narrow for wheelchair users to enter: lối vào quá hẹp.}} [quá] narrow for wheelchair users to enter comfortably. Staff allowed {{enough::Enough đứng trước danh từ time để nói đủ thời gian.}} [đủ] time to arrange an accessible route."
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "id": "57",
+  "title": "57. Cấu trúc chỉ mục đích: To / So that",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Mục đích với to V",
+      "contentHTML": "<p><strong>To + động từ nguyên mẫu</strong> trả lời câu hỏi “để làm gì?”: <em>I study to learn English.</em> Tôi học để biết tiếng Anh.</p><div class=\"rule-box\"><p><strong>In order to / so as to + V:</strong> <em>She left early in order to catch the bus.</em> Cô ấy đi sớm để kịp xe buýt. Cả hai thường trang trọng hơn <em>to</em>.</p><p>Phủ định: <strong>in order not to / so as not to + V</strong>: <em>He spoke softly so as not to wake the baby.</em> Anh ấy nói nhỏ để không đánh thức em bé.</p></div><p>Động từ nguyên mẫu chỉ mục đích thường có cùng chủ thể với mệnh đề chính. Khi hai hành động có chủ thể khác nhau, cấu trúc mệnh đề với <em>so that</em> thường rõ ràng hơn.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Mục đích với so that / in order that",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>So that + chủ ngữ + động từ:</strong> <em>I spoke slowly so that the children could understand.</em> Tôi nói chậm để các em có thể hiểu.</p><p><strong>In order that + mệnh đề</strong> có nghĩa tương tự và trang trọng hơn. Mệnh đề mục đích thường dùng <em>can / could / will / would</em> theo ngữ cảnh; ví dụ <em>She saved money so that she could travel.</em></p></div><p>Ở đây chủ thể hai vế có thể khác: người nói là I, người hiểu là the children. Không viết <s>so that to understand</s>; sau so that cần một mệnh đề.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Chuyển đổi và phân biệt với kết quả",
+      "contentHTML": "<p>So sánh: <em>She took a taxi to arrive on time.</em> → <em>She took a taxi so that she could arrive on time.</em> Cả hai nêu mục đích và giữ cùng chủ thể.</p><div class=\"rule-box\"><p><strong>V-ing sau for:</strong> <em>A brush is used for cleaning shoes.</em> Cụm này nêu công dụng chung. Với mục đích cụ thể của người thực hiện, dùng <em>She took a brush to clean her shoes.</em></p><p><strong>So that</strong> chỉ mục đích khác với <strong>so + tính từ + that</strong> chỉ kết quả: <em>She spoke loudly so that everyone could hear.</em> / <em>She spoke so loudly that everyone heard.</em></p></div><p>Khi chuyển đổi, luôn kiểm tra chủ thể, thời gian, ý định và thực tế; hành động nhằm đạt mục tiêu không đảm bảo mục tiêu đã xảy ra.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I went to the shop {{to buy::To + nguyên mẫu nêu mục đích mua sữa.}} (buy) milk."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She left early in order {{to catch::In order to + nguyên mẫu chỉ mục đích.}} (catch) the bus."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He spoke quietly so as {{not to wake::Phủ định mục đích dùng so as not to + V.}} (wake) the baby."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We saved money so {{that::So that mở đầu mệnh đề chỉ mục đích.}} [để] we could travel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She studies hard {{to pass::To + nguyên mẫu nêu mục đích thi đỗ.}} (pass) the test."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I opened the window {{to get::To + nguyên mẫu get chỉ mục đích lấy không khí.}} (get) some fresh air."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They brought a map in order {{to find::In order to + nguyên mẫu find.}} (find) the hotel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He wrote it down so that he {{could::Could trong mệnh đề quá khứ diễn tả khả năng dự định đạt được.}} [có thể] remember it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She took a coat so as {{not to feel::So as not to + nguyên mẫu diễn tả mục đích tránh bị lạnh.}} (feel) cold."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I called her {{to ask::To + nguyên mẫu ask diễn tả mục đích của cuộc gọi.}} (ask) for help."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He went outside ___ fresh air. (( getting | **to get** | so that get :: To + nguyên mẫu chỉ mục đích của hành động ra ngoài. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She whispered so as ___ the baby. (( to not wake | **not to wake** | not waking :: Dạng phủ định là so as not to + V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I repeated the question so that everyone ___ understand. (( to | **could** | understanding :: Sau so that cần mệnh đề; everyone could understand là mệnh đề đầy đủ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We left early ___ the train. (( in order catching | **in order to catch** | so that catch :: In order to + nguyên mẫu catch. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "A brush is used ___ shoes. (( for clean | **for cleaning** | so that clean :: For + V-ing diễn tả công dụng chung. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which expresses purpose? (( It was so cold that we stayed inside. | **We stayed inside to keep warm.** | It rained, so we stayed inside. :: To keep warm cho biết mục đích của việc ở trong nhà. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | left | early | to | catch | the | bus. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | saved | money | so | that | we | could | travel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ He | spoke | quietly | so | as | not | to | wake | the | baby. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | opened | the | window | to | get | fresh | air. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The agency published the data {{to improve::To + V chỉ mục đích nâng cao tính minh bạch.}} (improve) transparency."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report was revised in order {{to address::In order to + V diễn tả mục đích giải quyết các quan ngại.}} (address) the reviewers’ concerns."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee extended the deadline so that applicants {{could::Could thể hiện khả năng dự định cho applicants trong bối cảnh quá khứ.}} [có thể] submit complete proposals."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers anonymised the records so as {{not to reveal::So as not to + V chỉ mục đích tránh tiết lộ danh tính.}} (reveal) identities."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The organisation introduced training {{to reduce::To + V nêu mục đích giảm lỗi.}} (reduce) errors."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The editor simplified the language so {{that::So that đứng trước mệnh đề readers could follow.}} [để] readers could follow the argument."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The data were checked in order {{to identify::In order to + V chỉ mục đích phát hiện sai lệch.}} (identify) discrepancies."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team designed a checklist for {{monitoring::For + V-ing ở đây nêu công dụng chung của checklist.}} (monitor) progress."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The team held a workshop ___ participants could ask questions. (( so as to | **so that** | in order to :: Sau chỗ trống là mệnh đề participants could ask nên dùng so that. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The documents were encrypted ___ unauthorised disclosure. (( so that prevent | **to prevent** | for prevent :: To + nguyên mẫu prevent diễn tả mục đích. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The director adjusted the schedule ___ the audit. (( in order completing | **in order to complete** | so that completing :: In order to đi với nguyên mẫu complete. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The reviewer checked the figures ___. (( so as to not overlook a mistake | **so as not to overlook a mistake** | so as not overlooking a mistake :: Dạng phủ định chuẩn là so as not to + V. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence explicitly states a result? (( The editor revised the text so that readers could understand it. | **The text was so clear that readers understood it.** | The editor revised the text to improve clarity. :: So + tính từ + that chỉ kết quả thực tế; các câu còn lại nêu mục đích. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence clearly gives different subjects? (( The director called to approve the plan. | **The director called so that the board could approve the plan.** | The director called in order to approve the plan. :: So that cho phép nêu rõ board là chủ thể của hành động approve. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | agency | published | the | data | to | improve | transparency. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | extended | the | deadline | so | that | applicants | could | respond. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | anonymised | the | records | so | as | not | to | reveal | identities. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A city reviewed its transport plan. It collected data {{to identify::To + V chỉ mục đích xác định các tuyến đông đúc.}} (identify) busy routes. It published a summary so {{that::So that đứng trước mệnh đề residents could respond.}} [để] residents could respond. Officials held meetings in order {{to hear::In order to + V chỉ mục đích lắng nghe.}} (hear) local concerns."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum prepared a new exhibition. Staff checked the displays {{to ensure::To + V nêu mục đích bảo đảm sự an toàn.}} (ensure) visitor safety. They reduced the lighting so as {{not to damage::So as not to + V nêu mục đích tránh làm hỏng hiện vật.}} (damage) fragile objects. Guides received training so that they {{could::Could đứng sau chủ ngữ trong mệnh đề mục đích ở ngữ cảnh quá khứ.}} [có thể] answer questions."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team improved its survey. It tested the wording {{to detect::To + V chỉ mục đích phát hiện câu hỏi khó hiểu.}} (detect) confusing questions. It added examples so {{that::So that mở đầu mệnh đề participants could respond.}} [để] participants could respond accurately. The revised form included a checklist for {{checking::For + V-ing diễn tả công dụng của checklist.}} (check) missing answers."
+    }
+  ]
+}

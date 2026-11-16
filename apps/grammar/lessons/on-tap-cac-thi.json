@@ -1,0 +1,774 @@
+{
+  "id": "21",
+  "lessonNumber": 8,
+  "title": "21. Ôn tập: Các thì",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Hiện tại và quá khứ",
+      "contentHTML": "<p><strong>Bước 1:</strong> Xác định thói quen hay hoạt động tạm thời. Hiện tại đơn nói về thói quen/sự thật; hiện tại tiếp diễn dùng am/is/are + V-ing cho hoạt động đang diễn ra hoặc tạm thời.</p><p>She usually works here. / She is working at home this week.<br>The train leaves at nine. / They are meeting tomorrow.</p><p><strong>Bước 2:</strong> Với quá khứ, xác định sự kiện hoàn tất hay bối cảnh đang diễn ra. Quá khứ đơn có thể xen vào hành động was/were + V-ing.</p><p>We visited the archive yesterday.<br>While the team was inspecting the site, the alarm sounded.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Các thì hoàn thành",
+      "contentHTML": "<p><strong>Bước 1:</strong> Hiện tại hoàn thành dùng have/has + V3 để liên hệ quá khứ với hiện tại; dạng tiếp diễn have/has been + V-ing nhấn mạnh quá trình. Since chỉ mốc, for chỉ khoảng thời gian.</p><p>She has lived here since 2020. / She has written three reports.<br>They have been working for hours and are still working.</p><p><strong>Bước 2:</strong> Quá khứ hoàn thành had + V3 đặt một việc trước một mốc quá khứ khác. Before/after có thể làm rõ thứ tự nên đôi khi quá khứ đơn cũng phù hợp.</p><p>The team had left before the meeting began.<br>After she finished / had finished, she left.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Các cách nói về tương lai",
+      "contentHTML": "<p><strong>Bước 1:</strong> Will có thể nêu quyết định tức thời hoặc dự đoán; going to thường nêu dự định có trước hoặc dự đoán dựa trên dấu hiệu. Hiện tại tiếp diễn có thể chỉ cuộc hẹn đã sắp xếp, hiện tại đơn có thể chỉ lịch trình.</p><p>I will answer the phone. / We are going to visit the museum.<br>I am meeting Anna tomorrow. / The train leaves at nine.</p><p><strong>Bước 2:</strong> Will have + V3 nhấn mạnh kết quả đã hoàn tất khi nhìn từ mốc tương lai; will + nguyên mẫu cũng có thể nói hoàn thành trước hạn. Trong mệnh đề thời gian/điều kiện tương lai, thường dùng hiện tại đơn.</p><p>By Friday, I will have finished. / I will finish by Friday.<br>I will call when I arrive. / If it rains, we will stay home.</p><p>Practice củng cố kiến thức mức nền; Apply vận dụng cùng quy tắc trong ngữ cảnh học thuật và nghề nghiệp phức tạp hơn.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My brother usually {{cycles::Usually chỉ thói quen; chủ ngữ số ít brother dùng cycles.}} (cycle) to work."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We {{visited::Yesterday chỉ thời điểm đã kết thúc nên dùng quá khứ đơn visited.}} (visit) our aunt yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{have lost::Chìa khóa bị mất và hiện tại không mở được cửa: dùng have lost.}} (lose) my keys, so I cannot open the door."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{have been studying::For two hours và still studying cho biết quá trình bắt đầu trong quá khứ vẫn tiếp tục.}} (study) for two hours and I am still studying."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "By the time I arrived, the film {{had started::Bộ phim bắt đầu trước thời điểm tôi đến, nên dùng had started.}} (start)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I think our team {{will win | is going to win::Will và be going to đều có thể dùng để dự đoán; will thường dùng khi nêu ý kiến.}} (win) the match."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "By Friday, I {{will have finished | will finish::Will have finished nhấn mạnh đã hoàn tất vào mốc Friday; will finish cũng có thể nói hoàn thành trước hạn.}} (finish) the report."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Look! The children {{are playing::Look cho thấy hành động đang diễn ra; children là số nhiều nên dùng are playing.}} (play) in the garden."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "At eight last night, I {{was cooking::Hành động đang diễn ra tại một thời điểm quá khứ dùng was cooking.}} (cook) dinner."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{has lived | has been living::Cả hai dạng có thể chỉ việc sống bắt đầu từ 2020 và còn tiếp tục; tiếp diễn nhấn mạnh quá trình.}} (live) here since 2020 and still lives here."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{has been working | has worked::Cả hai dạng có thể diễn tả công việc kéo dài từ tháng Ba đến nay; tiếp diễn nhấn mạnh quá trình.}} (work) here since March and still works here."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She was hungry because she {{had not eaten | hadn’t eaten | hadn't eaten::Việc không ăn sáng xảy ra trước trạng thái đói trong quá khứ.}} (eat) breakfast."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Look at those clouds! It {{is going to rain | will rain::Be going to nhấn mạnh dấu hiệu hiện tại; will cũng có thể diễn tả dự đoán.}} (rain) soon."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "By noon, she {{will have written | will write::Will have written nhấn mạnh kết quả đã xong tại mốc noon; will write cũng có thể nói việc hoàn thành trước hạn.}} (write) the email."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The library {{opens::Theo lịch hằng tuần, dùng hiện tại đơn opens với chủ ngữ số ít.}} (open) at nine every weekday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "While she was walking home, she {{found::Found chỉ sự kiện đã xảy ra trong lúc đang đi.}} (find) a wallet."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We {{have visited::Ever hỏi trải nghiệm đến nay; dùng have visited.}} (visit) that museum before."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{have been waiting::Still waiting cho thấy hoạt động đang tiếp tục; dùng have been waiting.}} (wait) for the bus for twenty minutes and are still waiting."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{had left::The house was empty because khẳng định họ rời đi trước khi chúng tôi đến.}} (leave) before we arrived; the house was empty."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The train {{leaves::Hiện tại đơn thường dùng cho lịch trình cố định, và train là số ít.}} (leave) at eight tomorrow according to the timetable."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "By tomorrow evening, we {{will have cleaned | will clean::Will have cleaned nhấn mạnh kết quả vào mốc tương lai; will clean cũng có thể dùng với hạn chót.}} (clean) the kitchen."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{am staying::This week chỉ chỗ ở tạm thời trong ngữ cảnh này; dùng am staying.}} (stay) with my cousin this week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The children {{were playing::At four yesterday chỉ bối cảnh đang diễn ra trong quá khứ; children dùng were playing.}} (play) outside at four yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My brother {{has finished::Bài tập đã hoàn thành và anh ấy hiện rảnh; dùng has finished.}} (finish) his homework and is free now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "His clothes are wet because he {{has been walking::Quần áo ướt là dấu hiệu hiện tại của quá trình vừa diễn ra.}} (walk) in the rain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{had never seen::Trước chuyến đi vào năm ngoái, tôi chưa từng nhìn thấy biển.}} (see) the sea before our trip last year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I have booked a table. I {{am meeting | am going to meet | will meet::Hiện tại tiếp diễn nhấn mạnh cuộc hẹn đã sắp xếp; going to và will cũng có thể diễn đạt kế hoạch.}} (meet) Anna at the café tomorrow."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "By next month, they {{will have moved | will move::Cả hai dạng có thể nói việc chuyển nhà hoàn thành trước mốc sau; tương lai hoàn thành nhấn mạnh trạng thái đã xong.}} (move) to their new home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Our teacher often {{gives::Often chỉ việc thường xuyên; teacher số ít đi với gives.}} (give) us useful advice."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{did not see | didn’t see | didn't see::Phủ định quá khứ đơn dùng did not + nguyên mẫu see.}} (see) Tom at the party last night."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{have known::Know là động từ trạng thái; dùng have known cho trạng thái kéo dài đến hiện tại.}} (know) each other for ten years."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We {{have been practising::Hoạt động luyện tập đã kéo dài cả buổi và vẫn tiếp tục.}} (practise) all morning and are still practising."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "When she opened her bag, she realised that she {{had forgotten::Việc quên xảy ra trước khi cô ấy nhận ra.}} (forget) her keys."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The phone is ringing. I {{will answer::Will diễn tả quyết định ngay lúc nói.}} (answer) it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "By the time you arrive, I {{will have made | will make::Will have made nhấn mạnh bữa tối sẵn sàng tại mốc bạn đến; will make cũng có thể diễn đạt việc hoàn thành trước hạn.}} (make) dinner."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Please be quiet. The baby {{is sleeping::Lời yêu cầu giữ yên lặng cho thấy em bé đang ngủ; dùng is sleeping.}} (sleep)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "When the teacher arrived, the students {{were talking::Were talking diễn tả cuộc trò chuyện đang diễn ra lúc giáo viên đến.}} (talk)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{have never tried::Never nói chưa từng thử tính đến hiện tại; dùng have never tried.}} (try) Korean food."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It {{has been raining::Mặt đường ướt là dấu hiệu hiện tại của việc trời mưa gần đây.}} (rain); the streets are wet."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The shop was closed because it {{had already shut::Cửa hàng đóng trước lúc chúng tôi đến; dùng had already shut.}} (shut) before we got there."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We have bought the tickets. We {{are going to visit | are visiting | will visit::Going to nhấn mạnh dự định; hiện tại tiếp diễn và will cũng có thể diễn đạt chuyến thăm đã lên kế hoạch.}} (visit) the museum on Saturday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "By next week, he {{will have paid | will pay::Will have paid nhấn mạnh khoản tiền đã được thanh toán tại mốc sau; will pay cũng diễn tả việc trả trước hạn.}} (pay) for the tickets."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My parents {{do not eat | don’t eat::Thói quen phủ định với parents dùng do not eat.}} (eat) meat very often."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{bought::Last week là thời gian quá khứ kết thúc; quá khứ của buy là bought.}} (buy) a new coat last week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The train {{has just left::Just nói chuyến tàu vừa rời đi và hiện không còn ở đây.}} (leave); it is no longer at the station."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My brother {{has been learning | has learned | has learnt::Cả dạng đơn và tiếp diễn có thể nói việc học kéo dài đến nay; learned và learnt đều đúng.}} (learn) Spanish for a year and is still learning."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "After he {{had finished | finished::After làm rõ thứ tự; cả had finished và finished đều có thể dùng.}} (finish) his work, he went home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I will call you when I {{arrive::Sau when chỉ thời gian tương lai, dùng hiện tại đơn chứ không dùng will.}} (arrive)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Will you have completed::Câu hỏi tương lai hoàn thành có dạng Will + chủ ngữ + have + V3.}} (complete) the work by Monday?"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Anna ___ the train to work every morning. (( take | **takes** | is taking :: Every morning chỉ thói quen; Anna số ít dùng takes. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "At six, Mum ___ dinner when the doorbell rang. (( is preparing | **was preparing** | prepares :: Was preparing tả việc đang diễn ra khi chuông cửa reo. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My family ___ in this town since 2018 and still lives here. (( lived | **has lived** | lives yesterday :: Since 2018 nối mốc quá khứ tới hiện tại; family là một đơn vị số ít. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Her eyes are tired because she ___ at a screen all day. (( stares | **has been staring** | stare yesterday :: Has been staring nhấn mạnh hoạt động kéo dài và dấu hiệu hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "By the time we reached the station, the train ___. (( **had departed** | departs | has departing :: Had departed cho biết tàu rời đi trước lúc chúng tôi đến. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I am thirsty. I ___ some water. (( **will get** | got yesterday | getting :: Will diễn tả quyết định ngay lúc nói. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "By six, she ___ the room. Which form emphasises completion by that time? (( **will have tidied** | will have tidy | will has tidied :: Will have + V3 nhấn mạnh việc đã xong tại mốc tương lai. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Listen! Someone ___ at the door. (( knocks | **is knocking** | knock :: Listen cho thấy tiếng gõ đang diễn ra; dùng is knocking. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We ___ a lovely beach during our trip last summer. (( **discovered** | discover | are discovering :: Last summer là thời gian quá khứ kết thúc nên dùng discovered. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I ___ my room, so it is tidy now. (( **have cleaned** | has cleaned | have clean :: Kết quả còn ở hiện tại phù hợp với have cleaned. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "How long ___ for the exam? You are still revising. (( did you revise tomorrow | **have you been revising** | are you revise :: Hỏi thời gian hoạt động kéo dài đến hiện tại dùng have you been revising. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She was upset because she ___ her glasses before the trip. (( **had broken** | has break | breaks yesterday :: Had broken chỉ việc làm vỡ trước trạng thái buồn trong quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "According to the timetable, the film ___ at seven tomorrow. (( **begins** | begin yesterday | began tomorrow :: Hiện tại đơn thường dùng với lịch cố định; film là số ít. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "By Monday, they ___ the letter. Which form emphasises a completed result? (( **will have delivered** | will have deliver | will has delivered :: Will have delivered là cấu trúc tương lai hoàn thành. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My phone ___ properly today, so I cannot call you. (( does not work | **is not working** | do not work :: Today và sự cố tạm thời hiện tại phù hợp với is not working. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "While I ___ to the station, I met an old friend. (( **was cycling** | am cycling | cycle :: While giới thiệu bối cảnh đang diễn ra; dùng was cycling. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ you ever ___ a horse? (( Did / ride yesterday | **Have / ridden** | Are / ride :: Ever hỏi trải nghiệm tính đến nay; dùng Have + ridden. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He is covered in flour because he ___ bread. (( **has been making** | makes yesterday | has been make :: Dấu hiệu hiện tại cho thấy hoạt động làm bánh vừa diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "After they ___ the tickets, they entered the cinema. (( **had bought** | buy yesterday | have buy :: Had bought nhấn mạnh mua vé trước khi vào rạp. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "If she ___ early, we will have lunch together. (( **comes** | will comes | coming :: Mệnh đề điều kiện sau if thường dùng hiện tại đơn comes. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ you have packed by eight? (( **Will** | Have yesterday | Did tomorrow :: Câu hỏi tương lai hoàn thành bắt đầu bằng Will. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "How often ___ your grandparents? (( are you visiting | **do you visit** | you visit :: How often hỏi tần suất; dùng do you visit. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The students ___ the answer yesterday. (( **wrote** | write | are writing :: Yesterday yêu cầu quá khứ đơn wrote. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Dad ___ to the bank and is still there. (( has been | **has gone** | has went :: Has gone to diễn tả người đã đi và chưa trở về. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My friends ___ the garden all morning and are still digging. (( **have been digging** | has been digging | are dig :: Chủ ngữ số nhiều dùng have been digging cho hoạt động còn tiếp tục. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ he ever flown before that holiday? (( **Had** | Has | Is :: Had + chủ ngữ + V3 hỏi trải nghiệm trước một thời điểm quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ you open the window, please? (( **Will** | Did tomorrow | Are yesterday :: Will you ...? dùng để nhờ ai làm việc gì. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "By noon, he will not have ___ the report. (( **checked** | check | checking :: Sau will not have dùng phân từ ba checked. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | usually | walks | to | school. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | visited | my | aunt | yesterday. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | have | lost | my | keys. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | has | been | studying | all | morning. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | film | had | started | before | we | arrived. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | think | our | team | will | win. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | will | have | finished | the | report | by | Friday. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | are | waiting | for | the | bus. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | was | cooking | when | I | arrived. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | has | lived | here | since | 2020. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | have | been | waiting | for | an | hour. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | had | not | eaten | breakfast. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | train | leaves | at | eight | tomorrow. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | will | have | written | the | email | by | noon. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | know | the | answer. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | were | waiting | for | the | bus. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | have | visited | that | museum. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ His | clothes | are | wet | because | he | has | been | walking. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | had | left | before | we | arrived. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | will | call | you | when | I | arrive. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | will | have | cleaned | the | kitchen | by | tomorrow. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "What {{are you doing::At the moment hỏi việc đang diễn ra; dùng are you doing.}} (do) at the moment?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This bus {{does not stop | doesn’t stop::Theo lịch, bus số ít phủ định dùng does not stop.}} (stop) here on Sundays."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The price of renewable energy {{is falling::This year và báo cáo hằng tháng nêu xu hướng đang diễn ra; dùng is falling.}} (fall) this year, according to the latest monthly reports."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "While the committee {{was discussing::Was discussing tạo bối cảnh đang diễn ra; arose là sự kiện xen ngang.}} (discuss) the recommendations, an unexpected objection arose."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The number of registered participants {{has increased | has grown::Has increased và has grown đều diễn tả số lượng tăng từ January đến hiện tại.}} (increase) since January."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The council {{has been working::Since April và long-term cho thấy quá trình còn tiếp tục; council số ít dùng has been working.}} (work) on a long-term transport plan since April."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The survey had to be repeated because the original data {{had been::Had been đặt trạng thái dữ liệu ở thời điểm trước quyết định lặp lại khảo sát.}} (be) incomplete."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The train {{leaves | will leave::Lịch tàu chính thức thường dùng hiện tại đơn leaves. Những cách diễn đạt tương lai được liệt kê cũng có thể phù hợp trong ngữ cảnh này.}} (leave) at 7:10 tomorrow morning, according to the timetable."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "By the time the programme ends, the students {{will have completed | will complete::Will have completed nhấn mạnh bốn dự án hoàn tất trước khi chương trình kết thúc. Tương lai đơn cũng có thể diễn tả việc trước hạn; tương lai hoàn thành nhấn mạnh kết quả tại mốc sau.}} (complete) four major projects."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee {{believes::Believe chỉ trạng thái ý kiến ở đây; committee là đơn vị số ít nên dùng believes.}} (believe) the revised proposal is feasible."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The university {{digitised | digitized::Mốc 2018 đã kết thúc nên dùng quá khứ đơn; cả hai cách viết Anh và Mỹ đều được chấp nhận.}} (digitise) its archive in 2018."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers {{have examined::Have examined cho biết việc kiểm tra đã hoàn tất và hiện có kết quả để so sánh.}} (examine) the original records, and they are ready to compare them."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The research assistants look exhausted because they {{have been sorting::Tình trạng mệt hiện tại là dấu hiệu của quá trình phân loại kéo dài; assistants số nhiều dùng have been sorting.}} (sort) samples all day."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "By the end of 2021, the organisation {{had established::By the end of 2021 là mốc quá khứ; had established chỉ việc hoàn tất trước hoặc vào mốc đó.}} (establish) two regional offices."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee {{is consulting | is going to consult | will consult::Hiện tại tiếp diễn is consulting phù hợp với lịch hẹn cụ thể đã sắp xếp. Những cách diễn đạt tương lai được liệt kê cũng có thể phù hợp trong ngữ cảnh này.}} (consult) a specialist on Tuesday; the appointment has been confirmed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The final report {{will have been approved | will be approved::Will have been approved là bị động tương lai hoàn thành: báo cáo được duyệt trước cuộc họp. Tương lai đơn cũng có thể diễn tả việc trước hạn; tương lai hoàn thành nhấn mạnh kết quả tại mốc sau.}} (approve) before the board meets next week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The field team normally {{travels::Normally chỉ thói quen; team số ít dùng travels, đối lập với chuyến đi hôm nay.}} (travel) by train, but today it is using a shared car."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The engineer {{was checking::Was checking diễn tả hành động đang diễn ra khi shut down xảy ra.}} (check) the warning signal when the system shut down."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The institute {{has conducted | has been conducting::Hiện tại hoàn thành đơn hoặc tiếp diễn đều có thể diễn đạt hoạt động kéo dài; tiếp diễn nhấn mạnh quá trình.}} (conduct) this annual survey for a decade and still conducts it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The river level {{has been rising::Still rising nhấn mạnh diễn biến đang tiếp tục; level số ít dùng has been rising.}} (rise) steadily in recent weeks and is still rising."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team could not enter because it {{had not obtained | hadn't obtained::Had not/hadn’t obtained diễn tả chưa có giấy phép trước lúc không vào được.}} [không] (obtain) the necessary permission."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The analyst predicts that demand {{will increase | is going to increase::Will increase và is going to increase đều có thể diễn tả dự đoán trong ngữ cảnh này.}} (increase) over the next decade."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "By 2035, the organisation {{will have operated | will have been operating::Tương lai hoàn thành đơn hoặc tiếp diễn đều có thể diễn tả khoảng thời gian hoạt động tính đến 2035.}} (operate) in the region for twenty years."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Currently, the research team ___ the data collected last week. (( analyses every year | **is analysing** | analysed yesterday :: Currently chỉ hoạt động đang diễn ra; is analysing phù hợp với team số ít. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The investigators ___ the site when they discovered a second entrance. (( examined every day now | **were examining** | are examining yesterday :: Were examining là hành động đang diễn ra khi discovered xảy ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The researchers ___ their conclusions yet. (( did not publish tomorrow | **have not published** | are not publish :: Yet và ý chưa hoàn thành đến hiện tại phù hợp have not published. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The team ___ the same issue for months and has not finished. (( has been study | **has been studying** | is studied since :: Has been studying diễn tả quá trình chưa hoàn tất kéo dài nhiều tháng. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "By the time the conference started, the speakers ___ their slides. (( have prepared tomorrow | **had prepared** | are preparing yesterday :: Had prepared chỉ việc chuẩn bị hoàn tất trước mốc started trong quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The seminar ___ at 2 p.m. tomorrow according to the published schedule. (( began tomorrow | **begins** | has beginning :: Lịch trình cố định trong tương lai thường dùng hiện tại đơn begins. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The annual audit is nearing completion. By next week, the auditors ___ the final accounts; which form emphasises the result by that deadline? (( will checking | **will have checked** | have check tomorrow :: Will have + V3 nhấn mạnh kết quả đã hoàn thành tại mốc tương lai. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "At standard atmospheric pressure, water ___ at 100°C, a property used to calibrate laboratory instruments. (( is boiling every year | **boils** | boiled tomorrow :: Chân lý khoa học chung dùng hiện tại đơn boils với water không đếm được. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The regional archive ___ its doors to the public in 2005, after years of negotiations over access. (( was opening every day now | **opened** | opens in 2005 :: In 2005 là mốc quá khứ đã kết thúc, nên dùng opened. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The university’s archival collection ___ considerably since 2020, following several substantial private donations. (( expanded since tomorrow | **has expanded** | is expand :: Since 2020 nối quá khứ với hiện tại; collection số ít dùng has expanded. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "After coordinating the community outreach programme since dawn, the volunteers are exhausted because they ___ all morning. (( have been worked | **have been working** | had working :: Have been working mô tả quá trình kéo dài gần đây dẫn tới tình trạng mệt hiện tại. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The records were unavailable because the building ___ damaged in the flood. (( has been yesterday | **had been** | is be :: Had been damaged là bị động quá khứ hoàn thành, xảy ra trước việc records unavailable. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The research team ___ the curator tomorrow to discuss the provenance of several contested manuscripts; the appointment is confirmed. (( met tomorrow | **is meeting** | has meet :: Hiện tại tiếp diễn diễn đạt cuộc hẹn tương lai đã được sắp xếp. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "By the time the event begins, the invitations ___. (( will have sending | **will have been sent** | are send :: Will have been sent là bị động tương lai hoàn thành, hoàn tất trước khi sự kiện bắt đầu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | research | team | usually | publishes | its | findings | online, | but | it | is | testing | a | new | platform | this | year. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | panel | was | reviewing | the | report | when | the | power | failed | during | the | final | discussion. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | have | published | several | reports | since | the | project | began | and | continue | to | analyse | the | data. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | research | team | has | been | monitoring | air | quality | since | January | and | is | still | collecting | evidence. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | technicians | had | tested | the | equipment | before | the | independent | inspection | began. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | regional | rail | service | leaves | at | seven | according | to | the | published | timetable, | despite | ongoing | disruption. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | panel | will | have | completed | its | review | by | Friday, | allowing | the | board | to | consider | the | findings. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | director | believes | the | revised | proposal | is | feasible, | although | the | committee | is | still | reviewing | it. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | returned | to | the | remote | site | after | the | storm | despite | continuing | safety | concerns. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | archive | has | remained | open | to | the | public | since | 2019 | despite | substantial | financial | constraints. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | volunteers | have | been | preparing | materials | throughout | the | morning | and | have | not | yet | finished. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | curator | recognised | the | manuscript | because | she | had | examined | it | during | an | earlier | investigation. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | organisers | are | meeting | the | speakers | tomorrow | to | finalise | arrangements | for | the | public | conference. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | equipment | will | have | been | installed | before | the | laboratory | opens | to | visiting | researchers. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Although the process looks simple, it {{involves::Mô tả đặc điểm chung của process số ít nên dùng hiện tại đơn involves.}} (involve) several technical steps."
+    }
+  ]
+}

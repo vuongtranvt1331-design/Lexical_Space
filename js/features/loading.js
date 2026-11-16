@@ -5,7 +5,7 @@
   const previousInert = new Map();
   function cleanup() {
     clearInterval(typing); clearTimeout(removal); clearTimeout(window.__spaceLoaderFailsafe);
-    document.removeEventListener('lexicalspace:ready', finish);
+    document.removeEventListener('lexicalspace:ready', finish); document.removeEventListener('spacesuite:ready', finish);
     window.removeEventListener('pagehide', remove);
   }
   function restore() {
@@ -34,19 +34,20 @@
     if (mounted) return; mounted = true;
     root = document.getElementById('space-loader'); if (!root) return;
     if (finished) { root.remove(); return; }
+    if (document.documentElement.dataset.suiteModule && document.documentElement.dataset.suiteModule !== 'lexical') window.__spaceLoaderFailsafe = setTimeout(finish, 8000);
     root.setAttribute('aria-busy', 'true'); document.body.setAttribute('aria-busy', 'true');
     for (const element of document.body.children) {
       if (element !== root && !['SCRIPT', 'STYLE', 'LINK'].includes(element.tagName)) { previousInert.set(element, element.inert); element.inert = true; }
     }
-    const typed = root.querySelector('[data-loader-text]'), text = 'LexicalSpace'; let index = 1;
+    const typed = root.querySelector('[data-loader-text]'), text = root.dataset.loaderName || 'LexicalSpace'; let index = 1;
     if (typed) typed.textContent = text.slice(0, index);
     typing = setInterval(() => {
       if (typed) typed.textContent = text.slice(0, ++index);
       if (index >= text.length) clearInterval(typing);
     }, 35);
-    document.addEventListener('lexicalspace:ready', finish, { once: true });
+    document.addEventListener('lexicalspace:ready', finish, { once: true }); document.addEventListener('spacesuite:ready', finish, { once: true });
     window.addEventListener('pagehide', remove, { once: true });
-    if (window.__lexicalSpaceReady) finish();
+    if (window.__lexicalSpaceReady || window.__spaceSuiteReady) finish();
   }
   window.SpaceLoader = Object.freeze({ mount, finish });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, { once: true });

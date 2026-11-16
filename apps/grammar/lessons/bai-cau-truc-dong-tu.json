@@ -1,0 +1,223 @@
+{
+  "id": "58",
+  "title": "58. Suggest / Prevent / Make / Let / Allow / Help",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Suggest: gợi ý làm gì",
+      "contentHTML": "<p><strong>Suggest</strong> dùng để đưa ra gợi ý. Có thể dùng danh từ, V-ing hoặc mệnh đề theo sau.</p><div class=\"rule-box\"><p><strong>Suggest + V-ing:</strong> <em>She suggested taking a taxi.</em> Cô ấy gợi ý đi taxi.</p><p><strong>Suggest that + S + (should) + V:</strong> <em>She suggested that we (should) take a taxi.</em> Chủ ngữ trong mệnh đề là we; sau should là nguyên mẫu. Dạng <em>that we take</em> là giả định thức và thường gặp trong văn trang trọng.</p><p>Cũng có thể dùng mệnh đề với động từ chia thì tùy ngữ cảnh: <em>She suggested that we could leave early.</em></p></div><p>Không dùng <s>suggest someone to do</s>. Để nêu người nhận gợi ý, dùng <em>suggest to someone that …</em> hoặc đổi sang mệnh đề.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Prevent / Stop: ngăn điều gì",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>Prevent + người/vật + from + V-ing:</strong> <em>The rain prevented us from playing.</em> Mưa ngăn chúng tôi chơi.</p><p><strong>Stop + người/vật + from + V-ing:</strong> <em>A fence stopped the dog from escaping.</em> Hàng rào ngăn chó chạy ra ngoài. Với <em>stop</em>, from đôi khi được lược, đặc biệt trong Anh-Mỹ; học dạng đầy đủ giúp rõ cấu trúc.</p></div><p>Đừng nhầm <em>stop doing</em> (ngừng hành động) với <em>stop to do</em> (dừng lại để làm việc khác): <em>She stopped talking</em> = cô ấy ngừng nói; <em>She stopped to talk</em> = cô ấy dừng lại để nói chuyện.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Make / Let / Allow / Help",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>Make / let + tân ngữ + V nguyên mẫu:</strong> <em>They made him apologise.</em> Họ buộc anh ấy xin lỗi. <em>They let him leave.</em> Họ cho anh ấy rời đi.</p><p><strong>Allow + tân ngữ + to V:</strong> <em>They allowed him to leave.</em> Nếu không nêu tân ngữ, có thể dùng <em>allow + V-ing</em>: <em>They allow smoking outside.</em></p><p><strong>Help + tân ngữ + (to) V:</strong> <em>She helped me (to) carry the bags.</em> Cả hai dạng đều đúng.</p></div><p>Ở thể bị động, <em>make</em> dùng <strong>to V</strong>: <em>He was made to apologise.</em> Không bỏ <em>to</em> trong cấu trúc bị động này.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She suggested {{taking::Suggest + V-ing: suggested taking a taxi.}} (take) a taxi."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The rain prevented us {{from::Prevent + tân ngữ + from + V-ing.}} [khỏi] playing."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My parents let me {{stay::Let + tân ngữ + động từ nguyên mẫu không to.}} (stay) home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The teacher made him {{apologise | apologize::Make + tân ngữ + nguyên mẫu không to; cả hai cách viết đều đúng.}} (apologise) to the class."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They allowed us {{to enter::Allow + tân ngữ + to V.}} (enter) the room."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She helped me {{carry | to carry::Help + tân ngữ + V hoặc to V đều đúng.}} (carry) the bags."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He suggested that we {{leave | should leave::Suggest that + S + nguyên mẫu giả định hoặc should + nguyên mẫu.}} (leave) early."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The fence stopped the dog from {{escaping::Sau giới từ from dùng V-ing.}} (escape)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They allow {{parking::Khi không nêu tân ngữ, allow có thể theo sau bởi V-ing.}} (park) outside."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She was made {{to wait::Ở thể bị động, be made to + V.}} (wait) outside."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She suggested ___ by bus. (( to go | **going** | go :: Suggest theo sau trực tiếp bằng V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The guard prevented him ___ entering. (( to | **from** | for :: Prevent + tân ngữ + from + V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "They let the children ___ outside. (( to play | **play** | playing :: Let + tân ngữ + nguyên mẫu không to. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The teacher allowed her ___ early. (( leave | **to leave** | leaving :: Allow + tân ngữ + to V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( She suggested me to call. | **She suggested calling.** | She suggested to call. :: Suggest đi trực tiếp với V-ing; không dùng suggest someone to V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He stopped ___ some water before continuing. (( drinking | **to drink** | drink :: Stopped to drink nghĩa là dừng việc đang làm để uống nước. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | suggested | taking | a | taxi. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | rain | prevented | us | from | playing. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | allowed | her | to | leave | early. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | helped | me | carry | the | bags. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The consultant suggested {{reviewing::Suggest + V-ing khi gợi ý một hành động.}} (review) the evidence before publication."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The chair suggested that the committee {{reconsider | should reconsider::Suggest that + S + nguyên mẫu giả định hoặc should + nguyên mẫu.}} (reconsider) the proposal."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The security policy prevents staff from {{sharing::Prevent + tân ngữ + from + V-ing.}} (share) confidential records."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The supervisor allowed the analysts {{to inspect::Allow + tân ngữ + to V.}} (inspect) the original documents."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The court made the company {{disclose::Make + tân ngữ + nguyên mẫu không to.}} (disclose) the figures."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The contractor was made {{to revise::Be made to + nguyên mẫu ở thể bị động.}} (revise) the design."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The grant helped the researchers {{complete | to complete::Help + tân ngữ + V hoặc to V đều có thể dùng.}} (complete) the analysis."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The regulator stopped the firm from {{selling::Sau from dùng V-ing.}} (sell) the product pending review."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The panel suggested ___ an independent audit. (( to commission | **commissioning** | commission :: Sau suggest trực tiếp dùng V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The policy prevents employees ___ personal data. (( to share | **from sharing** | share :: Prevent + tân ngữ + from + V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The board allowed the director ___ the contract. (( sign | **to sign** | signing :: Allow + tân ngữ + to V. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The defendant was made ___ the costs. (( pay | **to pay** | paying :: Be made ở bị động theo sau bằng to V. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The committee suggested that the report ___. (( is revised immediately | **be revised immediately** | to revise immediately :: Suggest that + chủ ngữ + nguyên mẫu giả định; be revised là bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which means “cô ấy ngừng đọc”? (( She stopped to read. | **She stopped reading.** | She stopped for read. :: Stop V-ing chỉ dừng hành động; stop to V chỉ dừng để làm việc khác. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | policy | prevents | staff | from | sharing | confidential | records. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | board | allowed | the | director | to | sign | the | contract. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | contractor | was | made | to | revise | the | design. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee reviewed a proposal. One member suggested {{checking::Suggest + V-ing khi nêu một hành động.}} (check) the estimates. A new policy prevents staff from {{disclosing::Prevent + tân ngữ + from + V-ing.}} (disclose) private information. The chair allowed the analysts {{to inspect::Allow + tân ngữ + to V.}} (inspect) the records."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A firm improved its safety procedures. Inspectors made the contractor {{replace::Make + tân ngữ + nguyên mẫu.}} (replace) faulty equipment. They suggested {{adding::Suggest + V-ing.}} (add) a second warning sign. The repairs stopped the machine from {{leaking::Stop + tân ngữ + from + V-ing.}} (leak)."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum updated its visitor guidance. Staff helped guests {{find | to find::Help + tân ngữ + nguyên mẫu có hoặc không có to.}} (find) accessible routes. The museum allowed visitors {{to enter::Allow + tân ngữ + to V.}} (enter) through a side door. The staff suggested {{using::Suggest + V-ing.}} (use) the lift when necessary."
+    }
+  ]
+}

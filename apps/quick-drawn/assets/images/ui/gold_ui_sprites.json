@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "rendering": "Named integer source rectangles, nine-slice border rendering; no fractional grid arithmetic at runtime.",
+  "atlases": {
+    "buttons": {
+      "file": "buttons_gold_spritesheet.png",
+      "width": 1254,
+      "height": 1254,
+      "frames": {
+        "red-normal": {
+          "x": 13,
+          "y": 104,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "red-hover": {
+          "x": 327,
+          "y": 104,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "red-pressed": {
+          "x": 640,
+          "y": 104,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "red-disabled": {
+          "x": 954,
+          "y": 104,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "navy-normal": {
+          "x": 13,
+          "y": 418,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "navy-hover": {
+          "x": 327,
+          "y": 418,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "navy-pressed": {
+          "x": 640,
+          "y": 418,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "navy-disabled": {
+          "x": 954,
+          "y": 418,
+          "width": 287,
+          "height": 138,
+          "slice": 44
+        },
+        "card-normal": {
+          "x": 14,
+          "y": 644,
+          "width": 285,
+          "height": 281,
+          "slice": 72
+        },
+        "card-hover": {
+          "x": 328,
+          "y": 644,
+          "width": 285,
+          "height": 281,
+          "slice": 72
+        },
+        "card-pressed": {
+          "x": 641,
+          "y": 644,
+          "width": 285,
+          "height": 281,
+          "slice": 72
+        },
+        "card-disabled": {
+          "x": 955,
+          "y": 644,
+          "width": 285,
+          "height": 281,
+          "slice": 72
+        },
+        "icon-normal": {
+          "x": 81,
+          "y": 1026,
+          "width": 151,
+          "height": 152,
+          "slice": 40
+        },
+        "icon-hover": {
+          "x": 396,
+          "y": 1026,
+          "width": 150,
+          "height": 152,
+          "slice": 40
+        },
+        "icon-pressed": {
+          "x": 708,
+          "y": 1026,
+          "width": 151,
+          "height": 152,
+          "slice": 40
+        },
+        "icon-disabled": {
+          "x": 1022,
+          "y": 1026,
+          "width": 151,
+          "height": 152,
+          "slice": 40
+        }
+      }
+    },
+    "leaderboard": {
+      "file": "leaderboard_gold_spritesheet.png",
+      "width": 1254,
+      "height": 1254,
+      "frames": {
+        "board-normal": {
+          "x": 44,
+          "y": 53,
+          "width": 539,
+          "height": 523,
+          "slice": 170
+        },
+        "board-hover": {
+          "x": 672,
+          "y": 53,
+          "width": 538,
+          "height": 523,
+          "slice": 170
+        },
+        "board-muted": {
+          "x": 44,
+          "y": 680,
+          "width": 539,
+          "height": 523,
+          "slice": 170
+        },
+        "board-victory": {
+          "x": 672,
+          "y": 680,
+          "width": 538,
+          "height": 523,
+          "slice": 170
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "id": "34",
+  "title": "34. Động từ đổi nghĩa theo To-V/V-ing",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Remember và forget",
+      "contentHTML": "<p>Remember/forget doing chỉ ký ức về hành động đã xảy ra. Remember/forget to do chỉ việc cần thực hiện: She remembered to notify the client; She remembered notifying the client.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Stop và regret",
+      "contentHTML": "<p>Stop doing nghĩa là ngừng một hoạt động; stop to do là dừng việc đang làm để thực hiện mục đích khác. Regret doing chỉ hối tiếc về việc đã làm; regret to inform thường dùng khi lấy làm tiếc về điều sắp thông báo.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Try, mean và go on",
+      "contentHTML": "<p>Try doing gợi ý thử một biện pháp; try to do nhấn mạnh nỗ lực. Mean doing có thể nói điều gì kéo theo hệ quả; mean to do có thể chỉ ý định. Go on doing tiếp tục cùng hoạt động, còn go on to do chuyển sang việc tiếp theo.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The adviser remembered {{to notify::Remember to do chỉ việc nhớ thực hiện nhiệm vụ; ngữ cảnh xác nhận việc đó đã được thực hiện.}} (notify) the client before the deadline, and did so."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The adviser remembered {{notifying::Remember doing chỉ ký ức về hành động đã xảy ra.}} (notify) the client; she could recall the conversation."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The firm stopped {{using::Stop doing nghĩa là ngừng hoạt động đang được thực hiện.}} (use) the outdated system permanently."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "During the journey, the team stopped {{to consult::Stop to do nghĩa là dừng chuyến đi để tham khảo bản đồ.}} (consult) the map before continuing."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The spokesperson regretted {{disclosing | having disclosed::Regret doing hoặc having done có thể diễn tả hối tiếc về hành động đã xảy ra.}} (disclose) the confidential details; the information had already been released."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We regret {{to inform::Regret to inform là cách trang trọng thông báo điều đáng tiếc sau đó.}} (inform) applicants that the position has been withdrawn."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "If the software freezes, try {{restarting::Try doing gợi ý thử một biện pháp xem có hiệu quả không.}} (restart) it as a possible solution."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The technician tried {{to restore::Try to do nhấn mạnh nỗ lực khôi phục; ngữ cảnh cho biết không thành công.}} (restore) the files, but could not recover them."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The chair forgot {{to circulate::Forget to do chỉ việc cần thực hiện đã bị quên; tài liệu chưa được gửi.}} (circulate) the agenda, so nobody received it."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The reviewer stopped ___ the article altogether after changing jobs. (( **editing** | to editing | edit to :: Stop doing nghĩa là ngừng hoạt động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "On the way to the conference, they stopped ___ some refreshments before continuing. (( **to buy** | buying to | buy yesterday :: Stop to do diễn tả dừng lại nhằm thực hiện một việc khác. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She remembered ___ the application, as she could still recall pressing the send button. (( **submitting** | to submitting | submit to :: Remember doing chỉ ký ức về hành động đã xảy ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Please remember ___ the door before you leave; it is still unlocked. (( **to lock** | locking to | lock yesterday :: Remember to do nói về nhiệm vụ cần thực hiện. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "If the device remains unresponsive, try ___ it for a minute as an experiment. (( **unplugging** | to unplugging | unplug yesterday :: Try doing gợi ý thử một biện pháp. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | remembered | to | notify | the | client. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | remembered | notifying | the | client. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | firm | stopped | using | the | outdated | system. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | stopped | to | consult | the | map. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "After the trial, the committee stopped {{collecting::Stop doing chỉ ngừng hoạt động thu thập.}} (collect) further responses."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The applicant remembered {{to include::Remember to do chỉ việc nhớ thực hiện nhiệm vụ; thông tin đã được thêm.}} (include) a reference, and the application contained it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The chair forgot {{circulating | having circulated::Forget doing/having done nói không còn nhớ hành động đã xảy ra.}} (circulate) the agenda, although the email record confirmed she had sent it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board went on {{discussing::Go on doing nghĩa là tiếp tục cùng hoạt động.}} (discuss) the proposal for another hour."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "After outlining the risks, the speaker went on {{to explain::Go on to do chỉ chuyển sang việc tiếp theo.}} (explain) the proposed safeguards."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The revised timetable means {{working::Mean doing diễn tả hệ quả: lịch mới kéo theo việc làm cuối tuần.}} (work) at weekends for the next month."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The director meant {{to contact::Mean to do nói về ý định; ngữ cảnh cho biết bà có dự định liên lạc.}} (contact) the supplier but was interrupted."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "She stopped {{checking::Stop doing chỉ ngừng hoạt động kiểm tra.}} (check) her inbox once the project had ended."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "While writing the report, he stopped {{to verify::Stop to do chỉ dừng việc đang làm để kiểm chứng.}} (verify) a quotation before continuing."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witness remembered {{seeing::Remember doing nói về ký ức của hành động trước đó.}} (see) the vehicle near the entrance; she described it in detail."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Please remember {{to attach::Remember to do nói về nhiệm vụ cần thực hiện; tài liệu chưa được đính kèm.}} (attach) the supporting documents before sending the application."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The firm regrets ___ that the conference has been cancelled; this is the formal announcement. (( **to announce** | to announcing | announce yesterday :: Regret to announce thường mở đầu thông báo đáng tiếc. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The analyst regretted ___ the deadline after it had already passed. (( **missing** | to missing | miss to :: Regret doing nói hối tiếc về một việc đã xảy ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "After describing the evidence, the witness went on ___ the events of the following day. (( **to recount** | recounting to | recount yesterday :: Go on to do chỉ chuyển sang hành động tiếp theo. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The proposed expansion means ___ additional staff; this is a consequence of the plan. (( **hiring** | to hiring | hire yesterday :: Mean doing diễn tả hệ quả. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "She meant ___ the message, but an emergency interrupted her before she could do so. (( **to reply to** | replying to | reply yesterday :: Mean to do có thể chỉ ý định thực hiện. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | spokesperson | regretted | disclosing | the | details. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | chair | forgot | to | circulate | the | agenda. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | board | went | on | discussing | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | speaker | went | on | to | explain | the | safeguards. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "Before leaving, the manager remembered {{to lock::Remember to do nói về nhiệm vụ đã nhớ thực hiện; cửa đã được khóa.}} (lock) the office, and checked that the door was secure. Later, she remembered {{locking::Remember doing nói về ký ức của hành động đã xảy ra.}} (lock) it. On the way home, she stopped {{to buy::Stop to do chỉ dừng chuyến đi để mua đồ.}} (buy) some bread before continuing."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The committee regretted {{overlooking | having overlooked::Regret doing/having done nói về hối tiếc đối với việc đã xảy ra.}} (overlook) the evidence. It went on {{to examine::Go on to do chỉ chuyển sang việc tiếp theo.}} (examine) a new proposal. The new timetable means {{working::Mean doing chỉ hệ quả của lịch mới.}} (work) on Saturday."
+    }
+  ],
+  "lessonNumber": 2
+}

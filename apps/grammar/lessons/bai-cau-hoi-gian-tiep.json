@@ -1,0 +1,223 @@
+{
+  "id": "60",
+  "title": "60. Câu hỏi gián tiếp & Mệnh đề danh từ",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Câu hỏi gián tiếp với từ để hỏi",
+      "contentHTML": "<p>Câu hỏi gián tiếp đưa câu hỏi vào một câu lớn hơn, thường để hỏi lịch sự: <em>Where is the station?</em> → <em>Could you tell me where the station is?</em></p><div class=\"rule-box\"><p><strong>Cụm mở đầu + từ để hỏi + chủ ngữ + động từ.</strong> Trong mệnh đề gián tiếp, dùng trật tự câu kể, không đảo trợ động từ lên trước chủ ngữ.</p><p><em>What time does the shop open?</em> → <em>Do you know what time the shop opens?</em> Bỏ <em>does</em> hỗ trợ đảo và chia động từ chính thành <em>opens</em>.</p><p><em>Where can I park?</em> → <em>Could you tell me where I can park?</em> Giữ can nhưng đặt sau chủ ngữ I.</p></div><p>Nếu từ để hỏi là chủ ngữ, trật tự có thể trông giống câu hỏi trực tiếp: <em>Who called?</em> → <em>Do you know who called?</em></p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Câu hỏi Yes/No với if / whether",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>if / whether + chủ ngữ + động từ</strong> chuyển câu hỏi có/không thành mệnh đề gián tiếp: <em>Is the library open?</em> → <em>Do you know if the library is open?</em></p><p><em>Did they arrive?</em> → <em>I wonder whether they arrived.</em> Bỏ did hỗ trợ đảo, chuyển arrive thành arrived.</p><p><em>Whether or not</em> nhấn mạnh hai khả năng: <em>We need to know whether or not the route is safe.</em></p></div><p>Câu hỏi trực tiếp mở đầu bằng <em>Could you tell me …?</em> vẫn kết thúc bằng dấu hỏi vì toàn bộ câu là một câu hỏi. Với câu kể <em>I wonder where she is.</em>, dùng dấu chấm.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Mệnh đề danh từ: vai trò trong câu",
+      "contentHTML": "<p>Mệnh đề danh từ có thể làm chủ ngữ, tân ngữ hoặc bổ ngữ: <em>What she said surprised us.</em>; <em>I know that she is ready.</em>; <em>The question is whether it will work.</em></p><div class=\"rule-box\"><p><strong>That + mệnh đề</strong> giới thiệu thông tin: <em>We believe that the plan is useful.</em> That thường có thể lược khi mệnh đề làm tân ngữ: <em>We believe the plan is useful.</em></p><p><strong>What + mệnh đề</strong> có thể mang nghĩa “điều mà”: <em>What they found was important.</em> What đảm nhiệm một vai trò trong mệnh đề, còn that thường chỉ là từ nối.</p><p>Sau giới từ, dùng <strong>whether</strong>: <em>We discussed the issue of whether it was safe.</em> Trước <em>to V</em> dùng whether: <em>She considered whether to leave.</em></p></div><p>Chú ý động từ của câu lớn: <em>What she said <strong>was</strong> surprising.</em> Toàn bộ mệnh đề chủ ngữ thường được xem là một ý số ít trong ví dụ này.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Do you know where she {{is::Trong câu hỏi gián tiếp, đặt chủ ngữ she trước động từ is.}} (be) ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Can you tell me what time the shop {{opens::Câu hỏi trực tiếp does the shop open chuyển thành chủ ngữ + opens trong mệnh đề gián tiếp.}} (open) ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I wonder {{if | whether::If hoặc whether có thể mở đầu câu hỏi gián tiếp có/không.}} [liệu] he is ready."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Could you tell me where I {{can::Trong mệnh đề gián tiếp, can đứng sau chủ ngữ I.}} [có thể] park?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Do you know why they {{left::Câu hỏi gián tiếp dùng trật tự chủ ngữ they + động từ quá khứ left.}} (leave) ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She asked whether the bus {{was::Mệnh đề gián tiếp dùng chủ ngữ the bus trước động từ was.}} (be) late."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I know {{that::That có thể nối động từ know với mệnh đề she is busy.}} [rằng] she is busy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{What::What she said nghĩa là điều cô ấy nói; mệnh đề làm chủ ngữ.}} [điều mà] she said surprised me."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Can you tell me when he {{arrives::Trong mệnh đề gián tiếp dùng chủ ngữ he + arrives, không đảo does.}} (arrive) ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She could not decide whether {{to go::Trước to V dùng whether: whether to go.}} (go) alone."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Do you know where ___? (( is the bank | **the bank is** | does the bank is :: Câu hỏi gián tiếp dùng chủ ngữ trước động từ be. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Could you tell me when ___? (( does the train leave | **the train leaves** | leaves the train :: Bỏ does hỗ trợ đảo và dùng the train leaves. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I wonder ___ the shop is open. (( what | **if** | where to :: If mở đầu câu hỏi gián tiếp có/không. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ he said was helpful. (( That | **What** | If :: What he said nghĩa là điều anh ấy nói và làm chủ ngữ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She is deciding ___ take the job. (( if to | **whether to** | that to :: Dùng whether trước to V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Who called? → Do you know ___? (( who did call | **who called** | who called did :: Who là chủ ngữ của called, nên không cần trợ động từ do. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Could | you | tell | me | where | the | station | is? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Do | you | know | when | the | shop | opens? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | wonder | whether | she | is | ready. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ What | he | said | was | helpful. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The review will examine whether the policy {{works::Trong mệnh đề whether dùng chủ ngữ the policy trước works; does không cần để đảo.}} (work) as intended."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report explains why the figures {{changed::Mệnh đề gián tiếp giữ trật tự chủ ngữ the figures + động từ changed.}} (change) last year."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The panel debated the question of {{whether::Sau giới từ of dùng whether, không dùng if trong cấu trúc này.}} [liệu] the results were reliable."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee considered whether {{to postpone::Trước to V dùng whether: whether to postpone.}} (postpone) the vote."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{What::What the researchers discovered nghĩa là điều các nhà nghiên cứu phát hiện.}} [điều mà] the researchers discovered changed the plan."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team concluded {{that::That nối concluded với mệnh đề hoàn chỉnh the evidence was insufficient.}} [rằng] the evidence was insufficient."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The director asked how the analysis {{had been completed::Mệnh đề gián tiếp giữ trật tự chủ ngữ + had been completed.}} (complete) so quickly."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The issue is whether the proposed changes {{are::Sau whether dùng trật tự chủ ngữ the proposed changes + are.}} (be) practical."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The board asked why ___. (( did costs rise | **costs had risen** | had costs risen :: Câu hỏi gián tiếp giữ trật tự chủ ngữ costs trước had risen. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The team is deciding ___ the trial. (( if to postpone | **whether to postpone** | that to postpone :: Dùng whether trước to V. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report discusses the question of ___ the system is reliable. (( if | **whether** | what to :: Sau giới từ of, dùng whether. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the panel recommended surprised the director. (( That | **What** | Whether to :: What the panel recommended nghĩa là điều hội đồng đề xuất. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Could you explain how ___? (( was the data collected | **the data were collected** | were collected the data :: Câu hỏi gián tiếp dùng trật tự chủ ngữ + động từ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which punctuation fits a direct polite question? (( I wonder where the archive is? | **Could you tell me where the archive is?** | The issue is where the archive is? :: Toàn bộ câu Could you tell me … là câu hỏi trực tiếp nên dùng dấu hỏi. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | board | asked | why | costs | had | risen. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | considered | whether | to | postpone | the | trial. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ What | the | researchers | discovered | changed | the | plan. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee reviewed a report. It asked why the costs {{had increased::Trong câu hỏi gián tiếp, chủ ngữ costs đứng trước had increased.}} (increase). It considered {{whether::Whether có thể đứng trước to V.}} [liệu] to delay the decision. {{What::What the analysts found nghĩa là điều họ phát hiện.}} [điều mà] the analysts found prompted a further review."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum is planning an event. Staff need to know {{whether | if::Whether hoặc if mở đầu câu hỏi có/không sau know.}} [liệu] the hall is available. They asked when the contractor {{would arrive::Trong câu hỏi gián tiếp, the contractor đứng trước would arrive.}} (arrive). The issue of {{whether::Sau giới từ of dùng whether.}} [liệu] the route is accessible remains unresolved."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A researcher prepared a survey. She asked how participants {{would respond::Trong mệnh đề gián tiếp, chủ ngữ participants đứng trước would respond.}} (respond). She considered {{whether::Whether dùng trước to V.}} [liệu] to add a question. {{What::What participants said nghĩa là điều người tham gia nói.}} [điều mà] participants said helped improve the form."
+    }
+  ]
+}

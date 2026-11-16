@@ -1,0 +1,224 @@
+{
+  "id": "40",
+  "title": "40. Rút gọn mệnh đề quan hệ",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Mệnh đề quan hệ chủ động",
+      "contentHTML": "<p>Mệnh đề quan hệ xác định chủ động có thể rút gọn thành V-ing trong ngữ cảnh phù hợp: Researchers who are examining the data → researchers examining the data. Việc rút gọn có thể thay đổi sắc thái thời gian nên cần kiểm tra ngữ cảnh.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Mệnh đề quan hệ bị động",
+      "contentHTML": "<p>Mệnh đề quan hệ bị động có thể rút thành V3: documents that were submitted → documents submitted. Dạng being + V3 nhấn mạnh việc đang diễn ra: proposals being considered. Không áp dụng tự động cho mọi mệnh đề.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Mệnh đề phân từ và chủ thể",
+      "contentHTML": "<p>Mệnh đề phân từ mở đầu phải có chủ thể hợp lý, thường trùng chủ ngữ mệnh đề chính: Having reviewed the evidence, the panel issued its decision. Having been notified of the risk, the panel postponed the vote. Tránh cấu trúc khiến hành động bị gán cho sai chủ thể.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The researchers {{examining::Examining là phân từ hiện tại bổ nghĩa chủ động cho researchers.}} (examine) the data have identified an inconsistency."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The evidence {{submitted::Submitted là V3 bổ nghĩa bị động cho evidence.}} (submit) to the panel remains confidential."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The applications {{being reviewed::Being reviewed chỉ các đơn đang được xem xét; ngữ cảnh xác nhận quá trình vẫn diễn ra.}} (review) at present will be discussed tomorrow."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The consultant {{advising::Advising bổ nghĩa chủ động cho consultant: người đang tư vấn cho hội đồng.}} (advise) the board has requested further information."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The documents {{prepared::Prepared là V3 bổ nghĩa bị động cho documents.}} (prepare) by the legal team were circulated yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having assessed::Having assessed chỉ việc đánh giá hoàn tất trước khi panel đưa ra quyết định; panel là chủ thể đánh giá.}} (assess) the risks, the panel issued its decision."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having been notified::Having been notified diễn tả việc panel được thông báo trước hành động ở mệnh đề chính.}} (notify) of the delay, the panel postponed the vote."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The staff {{working::Working bổ nghĩa chủ động cho staff trong ngữ cảnh đang làm việc tại địa điểm.}} (work) at the site must complete the training."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The proposal {{published::Published là V3 bổ nghĩa bị động cho proposal.}} (publish) last month has attracted criticism."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The experts ___ the investigation will publish their conclusions next month. (( **conducting** | conducted by | conduct yesterday :: Conducting bổ nghĩa chủ động cho experts. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The findings ___ in the briefing were later independently verified. (( **presented** | presenting by | present yesterday :: Presented bổ nghĩa bị động cho findings. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The contract ___ at present will be signed once both parties agree. (( **being negotiated** | negotiated yesterday by | being negotiate :: Being + V3 nhấn mạnh quá trình bị động đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the evidence, the committee issued a statement. (( **Having evaluated** | Having evaluate | Having been evaluate :: Committee là chủ thể đánh giá trước khi đưa ra tuyên bố. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ of the changes, the applicants revised their submissions. (( **Having been advised** | Having advised by | Having been advise :: Applicants được thông báo trước, nên dùng having been + V3. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | examining | the | data | identified | an | inconsistency. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | evidence | submitted | to | the | panel | remains | confidential. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | applications | being | reviewed | will | be | discussed | tomorrow. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Having | assessed | the | risks, | the | panel | issued | its | decision. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The staff {{preparing::Preparing bổ nghĩa chủ động cho staff.}} (prepare) the report requested a deadline extension."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The minutes {{approved::Approved là V3 bổ nghĩa bị động cho minutes.}} (approve) by the committee are now available."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The measures {{being considered::Being considered diễn tả các biện pháp đang được xem xét.}} (consider) now are intended to address the shortage."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The analyst {{leading::Leading bổ nghĩa chủ động cho analyst: người dẫn dắt cuộc điều tra.}} (lead) the inquiry will brief the board."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report {{commissioned::Commissioned là V3 bổ nghĩa bị động cho report.}} (commission) by the regulator is now available."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Having examined::Having examined nói panel đã xem xét trước khi kết luận; panel là chủ thể thực hiện.}} (examine) the records, the panel requested further clarification."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Having been informed::Having been informed diễn tả việc committee được thông báo trước quyết định.}} (inform) of the risk, the committee revised the plan."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witnesses {{awaiting::Awaiting bổ nghĩa chủ động cho witnesses đang chờ.}} (await) the hearing were offered assistance."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The conclusions {{outlined::Outlined là V3 bổ nghĩa bị động cho conclusions.}} (outline) in the report require further discussion."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The draft {{being revised::Being revised nhấn mạnh bản dự thảo đang được sửa.}} (revise) at present will be circulated next week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Not having received::Not having received nói board chưa nhận được bằng chứng trước khi hoãn quyết định.}} (receive) the evidence, the board deferred its decision."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The participants ___ the questionnaire will receive a summary. (( **completing** | completed by | complete yesterday :: Completing bổ nghĩa chủ động cho participants. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The data ___ by the laboratory have been independently checked. (( **analysed** | analysing by | analyse yesterday :: Analysed bổ nghĩa bị động cho data. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The policy ___ now will take effect next year. (( **being drafted** | being draft | drafted yesterday by :: Being drafted nhấn mạnh chính sách đang được soạn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the objections, the board amended the proposal. (( **Having considered** | Having consider | Having been consider :: Board là chủ thể xem xét trước khi sửa đề xuất. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the preliminary results, the chair deferred a conclusion. (( **Not having obtained** | Not having obtain | Not have obtaining :: Not having + V3 diễn tả việc chưa có được thông tin trước hành động chính. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Having | been | notified | of | the | delay, | the | panel | postponed | the | vote. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | report | commissioned | by | the | regulator | is | available. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analyst | leading | the | inquiry | will | brief | the | board. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Not | having | received | the | evidence, | the | board | deferred | its | decision. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The researchers {{examining::Examining bổ nghĩa chủ động cho researchers.}} (examine) the data found an inconsistency. The documents {{submitted::Submitted bổ nghĩa bị động cho documents.}} (submit) to the panel were incomplete. {{Having been informed::Having been informed diễn tả việc panel được thông báo trước quyết định.}} (inform) of the issue, the panel postponed the vote."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The applications {{being reviewed::Being reviewed chỉ quá trình xem xét đang diễn ra.}} (review) at present will be discussed tomorrow. The staff {{handling::Handling bổ nghĩa chủ động cho staff.}} (handle) the files requested additional guidance. {{Having assessed::Having assessed chỉ việc committee đánh giá trước khi hành động.}} (assess) the risks, the committee issued an interim statement."
+    }
+  ],
+  "lessonNumber": 4
+}

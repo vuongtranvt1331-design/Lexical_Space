@@ -1,0 +1,223 @@
+{
+  "id": "50",
+  "title": "50. So & Such: Nhấn mạnh và kết quả",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "So và Such: vị trí trong câu",
+      "contentHTML": "<p><strong>So</strong> và <strong>such</strong> đều nhấn mạnh mức độ, nhưng đứng trước những thành phần khác nhau.</p><div class=\"rule-box\"><strong>So + tính từ / trạng từ</strong><p><em>The room is so quiet.</em> Phòng yên tĩnh đến vậy. <em>She speaks so clearly.</em> Cô ấy nói rõ đến vậy. Quiet là tính từ; clearly là trạng từ.</p><strong>Such + cụm danh từ</strong><p><em>It is such a quiet room.</em> Đó là một căn phòng yên tĩnh đến vậy. Room là danh từ đếm được số ít nên dùng <strong>a</strong>. <em>They are such kind people.</em> People là số nhiều nên không dùng a/an.</p></div><p>Với danh từ không đếm được: <em>such useful information</em>, không thêm a/an. Chọn a hoặc an dựa trên âm đầu của từ kế tiếp: <em>such an interesting book</em>.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Diễn đạt kết quả với that",
+      "contentHTML": "<div class=\"rule-box\"><strong>So + tính từ/trạng từ + that + mệnh đề</strong><p><em>The bag was so heavy that I could not carry it.</em> Túi nặng đến mức tôi không thể mang.</p><strong>Such + (a/an) + tính từ + danh từ + that + mệnh đề</strong><p><em>It was such a heavy bag that I could not carry it.</em> Đó là một chiếc túi nặng đến mức tôi không thể mang.</p></div><p>Sau <strong>that</strong> cần một mệnh đề đầy đủ: chủ ngữ + động từ. Khi chuyển đổi, giữ nguyên chủ ngữ, thì và ý nghĩa kết quả; chú ý thêm a/an nếu danh từ đếm được số ít.</p><p>That đôi khi được lược trong giao tiếp, nhưng hãy giữ lại khi luyện cấu trúc để nhìn rõ quan hệ nguyên nhân – kết quả.</p><div class=\"rule-box\"><strong>As a result / As a result of</strong><p><em>The road flooded. As a result, the school closed.</em> Cụm <strong>as a result</strong> nối với câu nêu kết quả, thường có dấu phẩy.</p><p><em>As a result of the flood, the school closed.</em> <strong>As a result of</strong> là cụm giới từ, theo sau bởi danh từ hoặc V-ing chỉ nguyên nhân. Cách này gần nghĩa <em>because of</em>, nhưng thường nhấn mạnh quan hệ kết quả.</p><p>Phân biệt: <em>so … that</em> nối mức độ với kết quả trong một cấu trúc; <em>as a result</em> thường nối ý giữa các câu. Không thay máy móc nếu quan hệ hoặc mức độ bị đổi.</p></div>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Lượng từ, lỗi thường gặp và so sánh",
+      "contentHTML": "<div class=\"rule-box\"><strong>So + many / few + danh từ đếm được số nhiều</strong><p><em>There were so many people that we left.</em> Có quá nhiều người đến mức chúng tôi rời đi.</p><strong>So + much / little + danh từ không đếm được</strong><p><em>She had so little time that she took a taxi.</em> Cô ấy có quá ít thời gian nên đi taxi.</p></div><p><em>Such little children</em> có thể đúng khi <strong>little</strong> nghĩa là “nhỏ tuổi”: ở đây little là tính từ mô tả children. Ngược lại, <em>so little time</em> dùng little để chỉ lượng ít.</p><p>So/such … that nêu kết quả thực tế; too … to thường diễn tả mức quá cao khiến hành động không thể xảy ra. Không máy móc chuyển đổi nếu ý nghĩa hoặc chủ thể khác nhau.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The soup is {{so::So đứng trước tính từ hot để nhấn mạnh mức độ.}} [rất] hot."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It is {{such::Such đứng trước cụm danh từ a nice day.}} [thật là] a nice day."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The children are {{so::So đứng trước tính từ happy.}} [rất] happy today."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They have {{such::Such đứng trước cụm danh từ số nhiều kind friends, không dùng a.}} [những người rất] kind friends."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She runs {{so::So đứng trước trạng từ quickly.}} [rất] quickly."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "That is such {{an::Interesting bắt đầu bằng nguyên âm trong phát âm; danh từ book đếm được số ít cần an.}} [một] interesting book."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The test was so easy {{that::That nối mệnh đề chỉ kết quả: mọi người hoàn thành sớm.}} [đến mức] everyone finished early."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There are so {{many::Many đi với danh từ đếm được số nhiều apples.}} [nhiều] apples in the basket."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We have so {{much::Much đi với danh từ không đếm được homework.}} [nhiều] homework tonight."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It was {{such::Such đứng trước cụm danh từ a long film.}} [một bộ phim thật] a long film that I fell asleep."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Choose the correct sentence. (( It is so a cold day. | **It is such a cold day.** | It is such cold. :: Such đứng trước a + tính từ + danh từ số ít. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The baby slept ___. (( such quietly | **so quietly** | such a quietly :: Quietly là trạng từ nên dùng so. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We met ___ people. (( so kind | **such kind** | such a kind :: People là danh từ số nhiều; dùng such + tính từ + danh từ, không dùng a. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It is ___ useful idea. (( such an | **such a** | so a :: Useful bắt đầu bằng âm /j/, nên dùng a. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "There was ___ rain that the game stopped. (( such many | **so much** | so many :: Rain là danh từ không đếm được nên dùng so much. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The music was so loud ___ we could not talk. (( to | **that** | because of :: That mở đầu mệnh đề chỉ kết quả. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ It | is | such | a | lovely | day. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | speaks | so | clearly | that | everyone | understands. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | have | so | many | books. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | are | such | good | friends. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The survey produced {{such::Such đứng trước cụm danh từ số nhiều unexpected results.}} [những kết quả thật] unexpected results that the researchers repeated it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The instructions were {{so::So đứng trước tính từ ambiguous.}} [quá] ambiguous that several participants misunderstood them."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee received so {{few::Few chỉ số lượng ít với danh từ đếm được số nhiều applications.}} [ít] applications that it extended the deadline."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report contains so {{little::Little chỉ số lượng ít với danh từ không đếm được evidence.}} [ít] evidence that the claim remains uncertain."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It was such {{an::Trước âm nguyên âm của unprecedented dùng an với danh từ số ít increase.}} [một] unprecedented increase that officials revised their forecast."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The proposal was explained so {{clearly::So bổ nghĩa cho trạng từ clearly, là từ mô tả cách giải thích.}} [rõ ràng] that even non-specialists understood it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The revised policy had {{such::Such đứng trước cụm danh từ a significant impact.}} [một tác động thật] a significant impact that other cities adopted it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The experiment generated so much data {{that::That nối kết quả: phân tích mất hàng tuần.}} [đến mức] the analysis took weeks."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The roads flooded. ___, several bus routes were suspended. (( As a result of | **As a result** | Such a result of :: As a result nối câu nêu kết quả; as a result of cần một danh từ hoặc V-ing theo sau. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the shortage of staff, the clinic reduced its opening hours. (( As a result | **As a result of** | So that :: As a result of đứng trước cụm danh từ the shortage of staff để nêu nguyên nhân. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which preserves the meaning of “The lecture was so engaging that nobody left”? (( It was so an engaging lecture that nobody left. | **It was such an engaging lecture that nobody left.** | It was such engaging lecture that nobody left. :: Lecture đếm được số ít, engaging bắt đầu bằng nguyên âm: such an engaging lecture. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The team had ___ to prepare that it requested more time. (( such little time | **so little time** | so few time :: Little chỉ lượng ít với danh từ không đếm được time, nên dùng so little. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ were absent that the session had to be rescheduled. (( Such many members | **So many members** | So much members :: Members đếm được số nhiều nên dùng so many. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The archive contained ___. (( so valuable information | **such valuable information** | such a valuable information :: Information không đếm được; dùng such + tính từ + danh từ, không thêm a. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | response | was | so | rapid | that | further | damage | was | avoided. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ It | was | such | a | complex | issue | that | the | committee | sought | advice. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ There | were | so | few | volunteers | that | the | event | was | postponed. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A town introduced a bus service. It proved {{so::So đứng trước tính từ popular.}} [rất] popular that passenger numbers doubled. The change had {{such::Such đứng trước cụm danh từ a positive effect.}} [một tác động thật] a positive effect that nearby towns asked for details. Demand rose {{so::So đứng trước trạng từ quickly.}} [rất] quickly that the operator added buses."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The research team analysed a survey. There were {{so::So many đi trước danh từ đếm được số nhiều responses.}} [rất] many responses that analysis took several days. Some answers contained {{such::Such đứng trước tính từ và danh từ không đếm được useful information.}} [những thông tin rất] useful information that the team conducted interviews. The findings were {{so::So đứng trước tính từ surprising.}} [rất] surprising that the study was repeated."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A company reviewed its training programme. Staff had {{so::So little đi với danh từ không đếm được time.}} [rất] little time that attendance fell. The manual was {{so::So đứng trước tính từ complicated.}} [rất] complicated that new employees needed help. Managers developed {{such::Such a đi trước tính từ và danh từ đếm được số ít.}} [một hướng dẫn thật] a clear guide that questions became less frequent."
+    }
+  ]
+}

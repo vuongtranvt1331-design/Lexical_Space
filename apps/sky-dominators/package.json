@@ -1,0 +1,12 @@
+{
+  "name": "sky-dominators",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sky Dominators static arcade game and dependency-free local server",
+  "scripts": {
+    "start": "node tools/dev-server.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

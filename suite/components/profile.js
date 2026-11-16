@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{for(const el of document.querySelectorAll('[data-suite-profile]'))el.textContent=window.SpaceSuite?.profile()||'';});

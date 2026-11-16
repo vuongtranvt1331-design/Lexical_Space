@@ -1,0 +1,764 @@
+{
+  "id": "41",
+  "lessonNumber": 5,
+  "title": "41. Ôn tập: Mệnh đề",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Ôn tập Mệnh đề C1",
+      "contentHTML": "<p>Ôn liên từ, mệnh đề trạng ngữ, mệnh đề quan hệ và các cấu trúc phân từ qua bốn bài trong nhóm.</p><div class=\"rule-box\">100 câu cơ bản và 50 câu vận dụng.</div><p><strong>Phạm vi bổ sung:</strong> Ôn thêm nguyên nhân, nhượng bộ, mục đích, liên từ tương quan, câu hỏi đuôi, câu hỏi gián tiếp, mệnh đề danh từ và during / while.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The evidence was incomplete, {{but | yet::But và yet đều có thể nối hai mệnh đề đẳng lập với quan hệ tương phản.}} [nhưng] the panel considered the allegation credible."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We stayed home {{because::Because đứng trước mệnh đề đầy đủ it rained và giới thiệu nguyên nhân.}} [vì] it rained."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The analyst {{who | that::Trong mệnh đề xác định, who và that đều có thể làm chủ ngữ chỉ người.}} prepared the forecast will brief the board."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The match stopped {{because of::Because of đứng trước cụm danh từ the rain.}} [vì] the rain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The review was delayed {{because | since | as::Các liên từ này có thể mở đầu mệnh đề nêu nguyên nhân trong ngữ cảnh này.}} [bởi vì] several witnesses were unavailable."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though::Although hoặc Though đứng trước mệnh đề she was tired để chỉ tương phản.}} [mặc dù] she was tired, she kept working."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The protocol {{which | that::Trong mệnh đề xác định, which và that đều có thể làm chủ ngữ chỉ vật.}} governs data access was revised last month."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Despite::Despite đứng trước cụm danh từ the cold weather và không đi kèm of.}} [mặc dù] the cold weather, we walked."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though | While::Các liên từ này có thể mở đầu mệnh đề nhượng bộ, dù sắc thái có thể khác nhau.}} [mặc dù] the sample was small, the pattern was consistent."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "In spite {{of::In spite of là một cụm giới từ cố định.}} [mặc dù] the rain, they played."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The lead researcher, {{who::Mệnh đề không xác định chỉ người dùng who làm chủ ngữ, không dùng that sau dấu phẩy.}} has extensive field experience, will chair the meeting."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Despite {{feeling::Despite là giới từ nên theo sau bằng V-ing: feeling tired.}} (feel) tired, Mai studied."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The budget was reduced; {{therefore | consequently | hence::Các trạng từ liên kết này có thể chỉ kết quả; dấu chấm phẩy ngăn hai mệnh đề độc lập.}} [do đó], the project was scaled back."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We left early ___ it was late. (( because of | **because** | despite :: Because đứng trước mệnh đề it was late và nêu nguyên nhân. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The figures, {{which::Mệnh đề không xác định chỉ vật dùng which, không dùng that sau dấu phẩy.}} were independently verified, are available online."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | game | continued | despite | the | rain. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Despite | Notwithstanding::Despite và notwithstanding có thể đứng trước cụm danh từ để diễn đạt nhượng bộ.}} [mặc dù] the initial opposition, the proposal was approved."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Both Anna {{and::Both phải đi với and.}} [và] Ben are here."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The consultant {{whose::Whose chỉ quan hệ sở hữu giữa consultant và recommendations.}} recommendations were adopted will join the panel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You can take either the bus {{or::Either đi với or để nêu hai lựa chọn.}} [hoặc] the train."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The committee could postpone the vote, {{or::Or nối hai phương án lựa chọn.}} [hoặc] it could seek additional evidence."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Neither tea {{nor::Neither đi với nor: không trà cũng không cà phê.}} [cũng không] coffee is ready."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The archive {{where | in which::Where và in which đều có thể chỉ nơi lưu trữ trong ngữ cảnh này.}} the records were stored has been renovated."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is not only kind {{but also::Not only đi cùng but also để bổ sung đặc điểm thứ hai.}} [mà còn] patient."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The team verified the figures {{and::And nối hai hành động cùng chủ ngữ.}} [và] documented the assumptions behind them."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The review will continue {{until | till::Until và till có thể đánh dấu thời điểm kết thúc.}} [cho đến khi] all objections have been considered."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Either the children or their mother {{is::Với either … or, động từ thường hòa hợp với chủ ngữ gần nhất mother, số ít.}} (be) coming."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having been notified::Having been notified diễn tả việc panel được thông báo trước hành động ở mệnh đề chính.}} (notify) of the delay, the panel postponed the vote."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Neither the teacher nor the students {{are::Students số nhiều đứng gần động từ nên dùng are.}} (be) late."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The auditors arrived {{after::After chỉ trình tự: kiểm toán viên đến sau khi tài liệu được lưu.}} [sau khi] the documents had been archived."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Neither the book nor the pens ___ here. (( is | **are** | am :: Pens là chủ ngữ số nhiều gần động từ nên dùng are. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The staff {{working::Working bổ nghĩa chủ động cho staff trong ngữ cảnh đang làm việc tại địa điểm.}} (work) at the site must complete the training."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Both | my | brother | and | my | sister | are | here. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{While | Whereas::While và whereas có thể mở đầu mệnh đề tương phản giữa hai quy trình.}} [trong khi] the first procedure is voluntary, the second is mandatory."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I went to the shop {{to buy::To + nguyên mẫu nêu mục đích mua sữa.}} (buy) milk."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The proposal {{published::Published là V3 bổ nghĩa bị động cho proposal.}} (publish) last month has attracted criticism."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She left early in order {{to catch::In order to + nguyên mẫu chỉ mục đích.}} (catch) the bus."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The funding will lapse ___ the conditions are met before June. (( **unless** | because of | despite :: Unless nêu điều kiện phủ định: nếu không đáp ứng điều kiện, khoản tài trợ sẽ hết hiệu lực. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He spoke quietly so as {{not to wake::Phủ định mục đích dùng so as not to + V.}} (wake) the baby."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The experts ___ the investigation will publish their conclusions next month. (( **conducting** | conducted by | conduct yesterday :: Conducting bổ nghĩa chủ động cho experts. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We saved money so {{that::So that mở đầu mệnh đề chỉ mục đích.}} [để] we could travel."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The chair will begin once everyone ___ ready. (( **is** | will is | being yesterday :: Mệnh đề thời gian nói về tương lai thường dùng hiện tại đơn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He wrote it down so that he {{could::Could trong mệnh đề quá khứ diễn tả khả năng dự định đạt được.}} [có thể] remember it."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The findings ___ in the briefing were later independently verified. (( **presented** | presenting by | present yesterday :: Presented bổ nghĩa bị động cho findings. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She whispered so as ___ the baby. (( to not wake | **not to wake** | not waking :: Dạng phủ định là so as not to + V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The team recorded the procedure ___ others could repeat it. (( **so that** | despite | because of :: So that có thể nêu mục đích. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "A brush is used ___ shoes. (( for clean | **for cleaning** | so that clean :: For + V-ing diễn tả công dụng chung. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The contract ___ at present will be signed once both parties agree. (( **being negotiated** | negotiated yesterday by | being negotiate :: Being + V3 nhấn mạnh quá trình bị động đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | saved | money | so | that | we | could | travel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the figures were preliminary, the board requested an independent assessment. (( **Because** | Despite of | Because of the :: Because mở đầu mệnh đề nêu nguyên nhân. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The colleague to ___ the letter was addressed has retired. (( **whom** | who is | that did :: Sau giới từ to đứng trước đại từ quan hệ chỉ người, dùng whom. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You are ready, {{aren't you::Mệnh đề khẳng định với are dùng đuôi phủ định aren’t + you.}}?"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The report identifies risks ___ proposes practical safeguards. (( **and** | whereas of | because of the :: And nối hai động từ cùng chủ ngữ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He likes tea, {{doesn't he::Động từ thường hiện tại likes dùng trợ động từ does trong đuôi phủ định.}}?"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The institution in ___ the records were held has closed. (( **which** | where is | that did :: Sau giới từ in đứng trước đại từ quan hệ chỉ vật hoặc nơi, dùng which. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You don't drive, {{do you::Mệnh đề phủ định với don’t dùng đuôi khẳng định do you.}}?"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | evidence | was | incomplete, | but | the | panel | considered | it | credible. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They have arrived, {{haven't they::Dùng lại trợ động từ have trong đuôi phủ định.}}?"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analyst | who | prepared | the | forecast | will | brief | the | board. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I am early, {{aren't I::Với I am, câu hỏi đuôi thông dụng là aren’t I.}}?"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Although | the | sample | was | small, | the | pattern | was | consistent. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Let's begin, {{shall we::Sau lời đề nghị Let’s, dùng đuôi shall we.}}?"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | protocol | that | governs | access | was | revised. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He plays tennis, ___? (( isn’t he | **doesn’t he** | does he :: Plays là động từ thường hiện tại với he; dùng doesn’t he. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | budget | was | reduced; | therefore, | the | project | was | scaled | back. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | is | ready, | isn’t | she? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | lead | researcher, | who | has | extensive | experience, | will | chair | the | meeting. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Do you know where she {{is::Trong câu hỏi gián tiếp, đặt chủ ngữ she trước động từ is.}} (be) ?"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Despite | the | initial | opposition, | the | proposal | was | approved. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Can you tell me what time the shop {{opens::Câu hỏi trực tiếp does the shop open chuyển thành chủ ngữ + opens trong mệnh đề gián tiếp.}} (open) ?"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | figures, | which | were | verified, | are | available | online. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I wonder {{if | whether::If hoặc whether có thể mở đầu câu hỏi gián tiếp có/không.}} [liệu] he is ready."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The committee requested more time, {{so::So nối nguyên nhân với kết quả.}} [vì vậy] the vote was postponed."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I know {{that::That có thể nối động từ know với mệnh đề she is busy.}} [rằng] she is busy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The scientist {{who | that::Who hoặc that có thể làm chủ ngữ chỉ người trong mệnh đề xác định.}} led the review has retired."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The staff {{preparing::Preparing bổ nghĩa chủ động cho staff.}} (prepare) the report requested a deadline extension."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{What::What she said nghĩa là điều cô ấy nói; mệnh đề làm chủ ngữ.}} [điều mà] she said surprised me."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though | Even though::Các liên từ này có thể dẫn mệnh đề nhượng bộ.}} [mặc dù] the evidence was incomplete, the review continued."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She could not decide whether {{to go::Trước to V dùng whether: whether to go.}} (go) alone."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The minutes {{approved::Approved là V3 bổ nghĩa bị động cho minutes.}} (approve) by the committee are now available."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Could you tell me when ___? (( does the train leave | **the train leaves** | leaves the train :: Bỏ does hỗ trợ đảo và dùng the train leaves. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The contract will remain valid {{provided that | providing that | as long as::Các cụm này đều có thể nêu điều kiện trong ngữ cảnh.}} [miễn là] both parties comply with its terms."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ What | he | said | was | helpful. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The measures {{being considered::Being considered diễn tả các biện pháp đang được xem xét.}} (consider) now are intended to address the shortage."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I slept {{during::During là giới từ, đứng trước cụm danh từ the flight.}} [trong] the flight."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The agency cannot publish the figures {{until | till::Until hoặc till đánh dấu giới hạn thời gian trước khi có thể công bố.}} [cho đến khi] the verification is complete."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She called {{while::While là liên từ, đứng trước mệnh đề I was cooking.}} [trong khi] I was cooking."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The analyst {{leading::Leading bổ nghĩa chủ động cho analyst: người dẫn dắt cuộc điều tra.}} (lead) the inquiry will brief the board."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We waited {{for::For + khoảng thời gian chỉ thời lượng.}} [trong] two hours."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though | Even though::Các liên từ này có thể mở đầu mệnh đề nhượng bộ.}} [mặc dù] the costs increased, the project remained viable."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The game stopped {{because of::Because of đứng trước cụm danh từ the rain và chỉ nguyên nhân.}} [vì] the rain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The report {{commissioned::Commissioned là V3 bổ nghĩa bị động cho report.}} (commission) by the regulator is now available."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though::Although hoặc though đứng trước mệnh đề it was cold để chỉ tương phản.}} [mặc dù] it was cold, we walked."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The firm installed additional safeguards {{so that | in order that::Các cụm này nêu mục đích của hành động.}} [để] the data would remain secure."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I took notes ___ the meeting. (( while | **during** | because :: The meeting là cụm danh từ; dùng during. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having examined::Having examined nói panel đã xem xét trước khi kết luận; panel là chủ thể thực hiện.}} (examine) the records, the panel requested further clarification."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( During she slept, the phone rang. | **While she slept, the phone rang.** | For she slept, the phone rang. :: She slept là mệnh đề chỉ thời gian; dùng while. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The request will be rejected {{unless::Unless nêu điều kiện phủ định: nếu không có chữ ký, yêu cầu sẽ bị từ chối.}} [trừ khi] the applicant provides a signature."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | waited | for | two | hours. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having been informed::Having been informed diễn tả việc committee được thông báo trước quyết định.}} (inform) of the risk, the committee revised the plan."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The proposal was withdrawn {{because::Because đứng trước mệnh đề the costs exceeded the budget và nêu nguyên nhân.}} [vì] the costs exceeded the budget."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee will convene as soon as the report {{is::Sau as soon as chỉ thời gian tương lai, dùng hiện tại đơn.}} (be) available."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The flight was delayed {{because of::Because of đứng trước cụm danh từ a technical problem để nêu nguyên nhân.}} [vì] a technical problem."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witnesses {{awaiting::Awaiting bổ nghĩa chủ động cho witnesses đang chờ.}} (await) the hearing were offered assistance."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Despite::Despite đứng trước cụm danh từ strong opposition và chỉ tương phản.}} [mặc dù] strong opposition, the policy was adopted."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The trial continued ___ several equipment failures. (( because | although | **in spite of** :: Several equipment failures là cụm danh từ nêu trở ngại, dùng in spite of. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The adviser, {{who::Mệnh đề không xác định chỉ người dùng who làm chủ ngữ, không dùng that.}} has since retired, drafted the original terms."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The council reviewed a flood plan. The meeting was postponed {{because::Because đứng trước mệnh đề the roads were closed để nêu nguyên nhân.}} [vì] the roads were closed. {{Despite::Despite đứng trước cụm danh từ the delay để nêu tương phản.}} [mặc dù] the delay, staff completed the report. Further changes were needed {{because of::Because of đứng trước cụm danh từ new evidence.}} [vì] new evidence."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The panel may request an extension, {{or::Or nối các lựa chọn.}} [hoặc] it may issue an interim statement."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Neither the board members nor the chair {{has::Chair số ít đứng gần động từ nên dùng has.}} (have) signed the agreement."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Either the director or the researchers {{are::Researchers số nhiều đứng gần động từ nên dùng are.}} (be) responsible for the report."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The draft {{being revised::Being revised nhấn mạnh bản dự thảo đang được sửa.}} (revise) at present will be circulated next week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report is both detailed {{and::Both … and nối hai tính từ song song.}} [và] accessible."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The supervisor checked the figures {{before::Before xác định việc kiểm tra xảy ra trước khi báo cáo được gửi.}} [trước khi] the report was submitted."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Either the managers or the director ___ responsible. (( are | **is** | were :: Director số ít gần động từ nhất nên dùng is. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee reviewed two proposals. Both the chair {{and::Both đi với and.}} [và] the secretary supported the first. Neither the finance team nor the director {{was::Director số ít gần động từ; ngữ cảnh quá khứ dùng was.}} (be) ready to approve the second. The first proposal was not only practical {{but also::Not only đi với but also.}} [mà còn] affordable."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The deadline was extended ___ several submissions arrived late. (( **because** | despite of | because of the :: Because mở đầu mệnh đề chỉ nguyên nhân. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee extended the deadline so that applicants {{could::Could thể hiện khả năng dự định cho applicants trong bối cảnh quá khứ.}} [có thể] submit complete proposals."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The analyst, ___ has since resigned, prepared the forecast. (( **who** | that | whom has :: Mệnh đề không xác định chỉ người dùng who làm chủ ngữ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers anonymised the records so as {{not to reveal::So as not to + V chỉ mục đích tránh tiết lộ danh tính.}} (reveal) identities."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The team held a workshop ___ participants could ask questions. (( so as to | **so that** | in order to :: Sau chỗ trống là mệnh đề participants could ask nên dùng so that. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The firm will not publish the results ___ they have been verified. (( **until** | because of | despite the :: Until đánh dấu thời điểm trước đó việc công bố chưa xảy ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence explicitly states a result? (( The editor revised the text so that readers could understand it. | **The text was so clear that readers understood it.** | The editor revised the text to improve clarity. :: So + tính từ + that chỉ kết quả thực tế; các câu còn lại nêu mục đích. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The data ___ by the laboratory have been independently checked. (( **analysed** | analysing by | analyse yesterday :: Analysed bổ nghĩa bị động cho data. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A city reviewed its transport plan. It collected data {{to identify::To + V chỉ mục đích xác định các tuyến đông đúc.}} (identify) busy routes. It published a summary so {{that::So that đứng trước mệnh đề residents could respond.}} [để] residents could respond. Officials held meetings in order {{to hear::In order to + V chỉ mục đích lắng nghe.}} (hear) local concerns."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The findings were published, {{weren't they::Were khẳng định dùng đuôi phủ định weren’t; findings thay bằng they.}}?"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The applicant ___ qualifications impressed the panel was shortlisted. (( **whose** | who their | which has :: Whose chỉ quan hệ sở hữu với qualifications. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers rarely publish without review, {{do they::Rarely mang nghĩa gần phủ định, thường đi với đuôi khẳng định do they.}}?"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The proposal is ambitious, ___ it lacks a clear funding plan. (( **yet** | because of | despite of :: Yet nối hai mệnh đề có quan hệ tương phản. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Nobody objected to the proposal, {{did they::Nobody mang nghĩa phủ định; động từ quá khứ objected dùng did, đại từ đuôi thường là they.}}?"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Nobody raised an objection, ___? (( didn’t he | **did they** | do they :: Nobody là phủ định; raised ở quá khứ nên dùng did, đại từ thường là they. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the objections, the board amended the proposal. (( **Having considered** | Having consider | Having been consider :: Board là chủ thể xem xét trước khi sửa đề xuất. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A manager checks the meeting arrangements. The team has booked the room, {{hasn't it::Dùng hasn’t cho has; team được xem là một tập thể số ít trong câu này.}}? The documents are ready, {{aren't they::Are khẳng định đi với aren’t they.}}? Nobody cancelled, {{did they::Nobody mang nghĩa phủ định; cancelled ở quá khứ nên dùng did they.}}?"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | agency | cannot | publish | the | figures | until | verification | is | complete. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The panel debated the question of {{whether::Sau giới từ of dùng whether, không dùng if trong cấu trúc này.}} [liệu] the results were reliable."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee considered whether {{to postpone::Trước to V dùng whether: whether to postpone.}} (postpone) the vote."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | risks | were | substantial; | however, | the | board | proceeded. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{What::What the researchers discovered nghĩa là điều các nhà nghiên cứu phát hiện.}} [điều mà] the researchers discovered changed the plan."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | archive | where | the | records | were | stored | has | been | renovated. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report discusses the question of ___ the system is reliable. (( if | **whether** | what to :: Sau giới từ of, dùng whether. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee reviewed a report. It asked why the costs {{had increased::Trong câu hỏi gián tiếp, chủ ngữ costs đứng trước had increased.}} (increase). It considered {{whether::Whether có thể đứng trước to V.}} [liệu] to delay the decision. {{What::What the analysts found nghĩa là điều họ phát hiện.}} [điều mà] the analysts found prompted a further review."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | will | convene | as | soon | as | the | report | is | available. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee discussed the proposal {{during::During đứng trước cụm danh từ the hearing.}} [trong] the hearing."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analyst | leading | the | inquiry | will | brief | the | board. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The error appeared {{while::While đứng trước mệnh đề the system was being tested.}} [trong khi] the system was being tested."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers monitored the samples {{for::For + six weeks chỉ thời lượng.}} [trong] six weeks."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | agreement | that | regulates | data | sharing | expires | next | year. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence uses a reduced clause with the same subject? (( While walking to the meeting, the report was lost. | **While walking to the meeting, the analyst called her colleague.** | During the analyst walked, she called. :: Chủ thể walking là the analyst; mệnh đề rút gọn và câu chính có cùng chủ thể. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The board may approve the plan, ___ it may refer the matter back to the panel. (( **or** | despite | because of :: Or nối các lựa chọn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research team conducted a trial. It recorded observations {{during::During + cụm danh từ the trial.}} [trong] the trial. Staff monitored the equipment {{for::For + thời lượng two weeks.}} [trong] two weeks. One error appeared {{while::While + mệnh đề staff were reviewing.}} [trong khi] staff were reviewing the data."
+    }
+  ]
+}

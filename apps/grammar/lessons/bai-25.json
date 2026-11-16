@@ -1,0 +1,224 @@
+{
+  "id": "29",
+  "title": "29. Bị động 2 tân ngữ & Modal",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Bị động với hai tân ngữ",
+      "contentHTML": "<p>Với động từ như give, offer và send, người nhận hoặc vật được chuyển giao có thể làm chủ ngữ: The researcher was offered a grant; A grant was offered to the researcher. Chọn hình thức phù hợp với trọng tâm thông tin.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Giới từ và giới hạn",
+      "contentHTML": "<p>Trong cấu trúc lấy vật làm chủ ngữ, dùng giới từ phù hợp: offer / give / send something to someone; provide someone with something hoặc provide something for someone. Không phải mọi động từ đều cho phép mọi dạng chuyển đổi.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Động từ khuyết thiếu trong bị động",
+      "contentHTML": "<p>Dùng modal + be + V3: The application must be submitted. Dùng modal + have been + V3 để nói về quá khứ: The letter might have been sent. Cần phân biệt khả năng, nghĩa vụ và suy đoán dựa trên ngữ cảnh.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The successful applicants {{were offered::Applicants số nhiều là người nhận; quá khứ bị động dùng were offered.}} (offer) a place on the programme last week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "A substantial grant {{was awarded::Grant số ít là vật được trao; quá khứ bị động dùng was awarded.}} (award) to the research team in 2022."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The panel {{was sent::Panel được xem là một đơn vị số ít và là người nhận trong cấu trúc was sent the evidence.}} (send) the evidence before the hearing last month."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The advisory notes {{were given::Notes là số nhiều; quá khứ bị động dùng were given to.}} (give) to the participants yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "All candidates {{must be informed::Must be + V3 diễn tả nghĩa vụ ở bị động.}} (inform) of the decision under the published policy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The equipment {{should be inspected::Should be + V3 diễn đạt khuyến nghị ở bị động.}} (inspect) before each use."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The original records {{may have been destroyed | might have been destroyed | could have been destroyed::Các dạng modal + have been + V3 nêu khả năng trong quá khứ chưa xác nhận.}} (destroy) during the flood; the cause remains uncertain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The researchers {{were provided::Were provided with là cấu trúc bị động với người nhận số nhiều.}} (provide) with detailed guidance at the briefing yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The relevant information {{was supplied::Information không đếm được nên dùng was supplied; to đánh dấu người nhận.}} (supply) to the committee last night."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "A scholarship ___ to the successful candidate last month. (( **was granted** | were granting | was grant :: Scholarship số ít dùng was + V3; to chỉ người nhận. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The participants ___ the instructions at the briefing yesterday. (( **were handed** | was hand | were handing by :: Participants là người nhận số nhiều, dùng were handed. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Every proposal ___ before the deadline under the rules. (( **must be submitted** | must submitted | must being submit :: Must be + V3 diễn đạt nghĩa vụ ở bị động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The assistant ___ with the relevant documents at the meeting. (( **was furnished** | was furnishing by | were furnish :: Was furnished with là bị động với người nhận số ít. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The letter ___ during transit, but this remains unconfirmed. (( **might have been damaged** | might has damage | might have be damage :: Might have been + V3 nêu một khả năng quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | were | offered | a | substantial | grant. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ A | grant | was | offered | to | the | research | team. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | candidates | must | be | informed | of | the | decision. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | panel | was | sent | the | evidence. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The editor {{was shown::Editor là người nhận số ít, dùng was shown the draft.}} (show) the draft yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "A detailed explanation {{was given::Explanation số ít dùng was given to.}} (give) to the audience last night."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "A refund {{will be offered::Will be offered là tương lai đơn bị động với vật được đề nghị làm chủ ngữ.}} (offer) to affected customers next week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The lead investigator {{has been given::Has been given là hiện tại hoàn thành bị động với người nhận số ít.}} (give) access and can now consult the archive."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The recommendations {{have been sent::Recommendations số nhiều dùng have been sent; hành động đã hoàn tất và có liên hệ với hiện tại.}} (send) to the board, which is reviewing them now."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The confidential evidence {{cannot be disclosed | can't be disclosed | can’t be disclosed::Cannot / can’t be + V3 diễn tả điều không thể được tiết lộ.}} (disclose) under the current agreement."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The proposed measures {{could be implemented | might be implemented | may be implemented::Các modal + be + V3 này đều có thể nêu khả năng trong tương lai chưa được quyết định.}} (implement) next year, but no decision has been made."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The prize {{was presented::Prize số ít là vật được trao; quá khứ bị động dùng was presented to.}} (present) to the author at the ceremony yesterday."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The applicant {{was promised::Applicant số ít là người nhận trong cấu trúc was promised an interview.}} (promise) an interview at the briefing last week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The participants {{must be notified::Must be + V3 diễn tả nghĩa vụ thông báo ở dạng bị động.}} (notify) before any change takes effect."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The lost documents {{may have been misplaced | might have been misplaced | could have been misplaced::Các dạng này nêu một khả năng quá khứ chưa được xác nhận.}} (misplace) during the move; nobody knows."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The award ___ on the winning team at the ceremony. (( **was conferred** | were confer | was conferring by :: Award số ít dùng was conferred on. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Applicants ___ of any changes under the agreement. (( **must be advised** | must advised | must being advise :: Must be + V3 diễn đạt nghĩa vụ thông báo. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "A copy of the contract ___ to each partner next week. (( **will be forwarded** | will forwarded | will being forward :: Will be + V3 diễn tả tương lai bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The audience ___ sufficient time for questions at the end of the event. (( **was allotted** | were allotting by | was allot :: Audience là một nhóm số ít, được phân bổ thời gian. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The results ___ before release, as the editor recommends. (( **should be checked** | should checked | should to be check :: Should be + V3 diễn đạt khuyến nghị ở bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | records | may | have | been | destroyed. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | participants | were | provided | with | guidance. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | recommendations | have | been | sent | to | the | board. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | prize | was | presented | to | the | author. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The panel has completed its selection. Successful candidates {{were offered::Candidates số nhiều là người nhận, dùng were offered.}} (offer) a place last week. A written explanation {{was sent::Explanation số ít dùng was sent to.}} (send) to each applicant yesterday. All candidates {{must be informed::Must be + V3 diễn đạt nghĩa vụ thông báo ở bị động.}} (inform) before the results are made public."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research team is investigating missing files. The files {{may have been misplaced | might have been misplaced | could have been misplaced::Các modal + have been + V3 đều nêu khả năng chưa xác nhận trong quá khứ.}} (misplace) during the move; the cause is unknown. A replacement copy {{was supplied::Copy số ít dùng was supplied to.}} (supply) to the team yesterday. The new records {{should be protected::Should be + V3 diễn đạt khuyến nghị ở bị động.}} (protect) securely."
+    }
+  ],
+  "lessonNumber": 2
+}

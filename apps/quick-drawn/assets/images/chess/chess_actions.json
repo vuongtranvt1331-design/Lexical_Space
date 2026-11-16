@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "file": "chess_actions_spritesheet.png",
+  "width": 1254,
+  "height": 1254,
+  "padding": 16,
+  "frames": {
+    "resign": [
+      63,
+      85,
+      491,
+      487
+    ],
+    "draw": [
+      641,
+      179,
+      557,
+      310
+    ],
+    "rematch": [
+      98,
+      693,
+      432,
+      471
+    ],
+    "exit": [
+      643,
+      664,
+      554,
+      502
+    ]
+  }
+}

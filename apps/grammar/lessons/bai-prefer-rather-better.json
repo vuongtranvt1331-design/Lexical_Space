@@ -1,0 +1,223 @@
+{
+  "id": "55",
+  "title": "55. Prefer / Would rather / Had better",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Prefer: diễn tả sở thích",
+      "contentHTML": "<p><strong>Prefer</strong> diễn tả thích một lựa chọn hơn lựa chọn khác. <em>I prefer tea to coffee</em> nghĩa là tôi thích trà hơn cà phê.</p><div class=\"rule-box\"><p><strong>Prefer + danh từ + to + danh từ:</strong> <em>She prefers trains to buses.</em></p><p><strong>Prefer + V-ing + to + V-ing:</strong> <em>We prefer walking to driving.</em> Ở đây <em>to</em> là giới từ, nên sau nó dùng V-ing.</p><p><strong>Prefer + to V + rather than + V nguyên mẫu:</strong> <em>I prefer to stay rather than leave.</em></p></div><p><strong>Would prefer + to V</strong> thường nói lựa chọn cụ thể: <em>I would prefer to leave now.</em> Có thể dùng <em>would prefer A to B</em> với danh từ.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Would rather và had better",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>Would rather + V nguyên mẫu:</strong> <em>I'd rather stay.</em> Tôi thích ở lại hơn. Phủ định: <em>I'd rather not go.</em> So sánh: <em>I'd rather walk than drive.</em></p><p><strong>Had better + V nguyên mẫu:</strong> <em>You'd better leave now.</em> Bạn nên đi ngay; nếu không, có thể có hệ quả không tốt. Phủ định: <em>You'd better not be late.</em></p></div><p><em>I'd rather take a taxi</em> nói về sở thích. <em>I'd better take a taxi</em> là lời khuyên trong tình huống cụ thể. Sau rather và better không dùng <em>to</em>.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Would rather với chủ ngữ khác",
+      "contentHTML": "<p>Khi muốn <strong>người khác</strong> làm việc gì, sau would rather dùng mệnh đề có chủ ngữ riêng.</p><div class=\"rule-box\"><p><strong>Would rather + S + quá khứ đơn:</strong> mong muốn ở hiện tại/tương lai: <em>I'd rather you stayed here tonight.</em> Tôi muốn bạn ở lại tối nay. Dạng quá khứ ở đây không nhất thiết chỉ thời gian quá khứ.</p><p><strong>Would rather + S + had + V3:</strong> mong điều khác với thực tế trong quá khứ: <em>I'd rather she had told me earlier.</em> Tôi ước cô ấy đã báo sớm hơn.</p></div><p>So sánh: <em>I'd rather leave</em> = tôi muốn tự đi; <em>I'd rather you left</em> = tôi muốn bạn đi. Chú ý chủ thể của hành động trước khi chọn cấu trúc.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I prefer tea {{to::Prefer + danh từ + to + danh từ: thích trà hơn cà phê.}} [hơn] coffee."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She prefers {{walking::Prefer + V-ing + to + V-ing; cả hai động từ cùng dạng.}} (walk) to driving."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We would rather {{stay::Would rather theo sau bằng động từ nguyên mẫu không to.}} (stay) home tonight."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I would prefer {{to leave::Would prefer + to V diễn tả lựa chọn cụ thể.}} (leave) now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You had better {{take::Had better + động từ nguyên mẫu không to: đây là lời khuyên trong tình huống cụ thể.}} (take) an umbrella."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They would rather {{not go::Would rather not + động từ nguyên mẫu là dạng phủ định.}} (go) out in the rain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I prefer trains {{to::Prefer A to B khi so sánh hai danh từ.}} [hơn] buses."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He would rather walk {{than::Would rather + V + than + V khi so sánh hai hành động.}} [hơn là] drive."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She prefers tea {{to::Prefer A to B, không dùng than trong cấu trúc này.}} [hơn] juice."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We had better {{hurry::Had better + nguyên mẫu; cần nhanh lên để tránh trễ.}} (hurry) or we will be late."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I prefer swimming ___ running. (( than | **to** | rather :: Prefer V-ing to V-ing dùng to làm giới từ so sánh. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She would rather ___ at home. (( to stay | **stay** | staying :: Sau would rather dùng nguyên mẫu không to. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We would prefer ___ early. (( leave | leaving | **to leave** :: Would prefer + to V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It is raining. You had better ___ a coat. (( to wear | **wear** | wearing :: Had better + nguyên mẫu không to. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which expresses a preference? (( I had better call now or I will miss the deadline. | **I would rather call tomorrow.** | I must call now. :: Would rather diễn tả lựa chọn ưu tiên; had better trong ví dụ đầu là lời khuyên. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I would rather ___ to the party. (( not to go | **not go** | do not go :: Dạng phủ định là would rather not + V. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | prefer | tea | to | coffee. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | would | rather | walk | than | drive. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ You | had | better | take | an | umbrella. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | would | prefer | to | leave | early. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board would rather the director {{attended::Would rather + chủ ngữ khác + quá khứ đơn diễn tả mong muốn ở hiện tại hoặc tương lai.}} (attend) the next meeting."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "I would rather the team {{had checked::Mong điều khác với thực tế trong quá khứ dùng would rather + S + had + V3.}} (check) the figures before publication."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers prefer collecting fresh data {{to::Prefer V-ing to V-ing: to là giới từ.}} [hơn] relying on estimates."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The applicant would prefer {{to discuss::Would prefer + to V dùng cho lựa chọn cụ thể.}} (discuss) the offer privately."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The auditors had better {{review::Had better + V nguyên mẫu chỉ lời khuyên cụ thể.}} (review) the documents before the deadline."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The manager would rather {{not disclose::Would rather not + V là dạng phủ định của sở thích.}} (disclose) the details yet."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee would rather participants {{submitted::Với chủ ngữ khác, quá khứ đơn submitted biểu thị mong muốn về việc nộp trong tương lai.}} (submit) their comments by Friday."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The editor would rather the author {{had clarified::Had clarified diễn tả mong tác giả đã làm khác trong quá khứ.}} (clarify) the source before the report went to print."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The director would rather the contractor ___ the issue before tomorrow. (( resolves | **resolved** | had resolved :: Chủ ngữ khác sau would rather dùng quá khứ đơn để nói mong muốn hiện tại/tương lai. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "I regret that they did not notify us earlier. I would rather they ___. (( notify us earlier | notified us earlier | **had notified us earlier** :: Mong điều trái với quá khứ dùng had + V3 sau chủ ngữ khác. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The panel prefers examining evidence ___ relying on assumptions. (( than | **to** | rather than to :: Prefer V-ing to V-ing dùng giới từ to. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The deadline is imminent; the team ___ the application now. (( would rather to send | **had better send** | had better sending :: Had better + V nguyên mẫu diễn tả lời khuyên cụ thể để tránh hệ quả xấu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The consultant would prefer ___ the report in private. (( discuss | **to discuss** | discussed :: Would prefer + to V cho lựa chọn cụ thể. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence expresses a preference for someone else to leave now? (( I would rather leave. | **I would rather you left.** | I had better leave. :: Would rather + you + quá khứ đơn thể hiện mong muốn về hành động của người khác. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | would | rather | the | director | attended | the | meeting. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | prefers | collecting | data | to | relying | on | estimates. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ You | had | better | check | the | figures | before | publication. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team is choosing its working arrangements. Its members prefer meeting online {{to::Prefer V-ing to V-ing: to là giới từ.}} [hơn] travelling each week. For the next meeting, the manager would rather {{use::Would rather + V nguyên mẫu khi cùng chủ thể.}} (use) a video call. She would rather everyone {{joined::Would rather + chủ ngữ khác + quá khứ đơn nói mong muốn về tương lai.}} (join) on time."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A publisher is preparing a report. The editor would prefer {{to review::Would prefer + to V diễn tả lựa chọn cụ thể.}} (review) the final draft privately. The deadline is close, so the author had better {{send::Had better + V nguyên mẫu là lời khuyên cụ thể.}} (send) the text today. The editor would rather the author {{had checked::Had checked diễn tả điều mong đã xảy ra khác trong quá khứ.}} (check) the quotations before the first draft was submitted."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee is planning a public event. It prefers using existing facilities {{to::Prefer V-ing to V-ing dùng giới từ to.}} [hơn] building a new venue. The organisers would rather {{hold::Would rather + V nguyên mẫu khi chủ thể không đổi.}} (hold) the event indoors. They would rather volunteers {{arrived::Would rather + chủ ngữ khác + quá khứ đơn nói mong muốn về thời gian tới.}} (arrive) early."
+    }
+  ]
+}

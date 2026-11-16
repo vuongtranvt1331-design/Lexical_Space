@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" data-suite-module="grammar">
+<head>
+  <script src="../../suite/js/core.js?v=43.3.0-4ba1a9ac80"></script>
+  <link rel="stylesheet" href="../../suite/css/components.css?v=43.3.0-69a13ed7c3">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#506a45">
+  <meta name="description" content="Turn grammar lessons into an interactive 3D notebook.">
+  
+  <title>GrammarSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%2262%22%20height%3D%2262%22%20rx%3D%2214%22%20fill%3D%22%23fdfbf7%22%20stroke%3D%22%23cdd6c6%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%2217%22%20r%3D%223%22%20fill%3D%22%23506a45%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%2232%22%20r%3D%223%22%20fill%3D%22%23506a45%22%2F%3E%3Ccircle%20cx%3D%228%22%20cy%3D%2247%22%20r%3D%223%22%20fill%3D%22%23506a45%22%2F%3E%3Cpath%20d%3D%22M17%201v62%22%20stroke%3D%22%23df8278%22%2F%3E%3Cpath%20d%3D%22M1%2023h62M1%2046.72h62%22%20stroke%3D%22%23b9cbb2%22%2F%3E%3Ctext%20x%3D%2239%22%20y%3D%2246.72%22%20text-anchor%3D%22middle%22%20font-family%3D%22cursive%22%20font-size%3D%2225%22%20fill%3D%22%232d5a27%22%3E%26gt%3B9%3C%2Ftext%3E%3C%2Fsvg%3E">
+  <link rel="stylesheet" href="./css/notebook-3d.css?v=hide_filename1">
+  <link rel="stylesheet" href="./css/style.css?v=font_unify1">
+  <link rel="stylesheet" href="../../suite/css/brands.css?v=43.3.0-71a67e797c">
+  
+<link rel="manifest" href="../../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icons/icon-192.png"><script defer src="../../js/core/offline.js?v=43.3.0-39c886b7ac"></script><link rel="stylesheet" href="../../suite/css/loader.css?v=43.3.0-1112a32a51"><script defer src="../../js/features/loading.js?v=43.3.0-0ab2d880db"></script><script defer src="../../suite/components/profile.js?v=43.3.0-21e4c8c4e4"></script></head>
+<body>
+  <section id="space-loader" class="startup-loader" data-loader-name="GrammarSpace" role="status" aria-label="Opening GrammarSpace"><div class="startup-panel"><div class="startup-mark" aria-hidden="true">&gt;/_</div><p class="startup-type" aria-hidden="true"><span data-loader-text></span><span class="startup-caret">_</span></p><p>Opening your library…</p></div></section>
+  
+  <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=43.3.0-2a571df59e"></noscript>
+
+  <div class="app-shell" id="app-shell">
+    <header class="app-header" id="app-header">
+      <div class="app-brand-lockup">
+        <div class="space-brand space-brand--gs" style="--space-brand-size: 46px" role="img" aria-label="GrammarSpace Mini Notebook">
+          <i class="space-brand__holes" aria-hidden="true"></i>
+          <i class="space-brand__rule space-brand__rule--first" aria-hidden="true"></i>
+          <i class="space-brand__rule space-brand__rule--second" aria-hidden="true"></i>
+          <span class="space-brand__mark" aria-hidden="true"><svg viewBox="0 0 60 34" focusable="false" aria-hidden="true"><text x="30" y="34" text-anchor="middle" font-family="inherit" font-size="32" fill="currentColor">&gt;9</text></svg></span>
+        </div>
+        <h1 class="app-title">GrammarSpace</h1><span class="suite-profile" data-suite-profile></span>
+      </div>
+      <div class="sub-brand-container">
+        <a href="../../" 
+           target="_self" 
+           rel="noopener noreferrer" 
+           class="lexical-space-link" 
+           id="lexical-space-link"
+           title="Khám phá Lexical Space - Vũ trụ từ vựng">
+          <span class="portal-icon" aria-hidden="true">✦</span>
+          <span class="sub-brand-text">Lexical Space</span>
+          <span class="portal-arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <p class="app-subtitle">A space to learn, one lesson at a time.</p>
+    </header>
+
+    <p class="app-notice" id="app-notice" role="status" hidden></p>
+
+    <main>
+      <!-- Lesson Library (Direct Landing Page) -->
+      <section id="library-view" aria-label="Grammar Library">
+        <ul id="library-lessons" class="library-grid" aria-label="Grammar lessons"></ul>
+        <div id="library-empty" class="library-empty" hidden>
+          <span aria-hidden="true">✎</span>
+          <h2>A fresh page awaits</h2>
+          <p>Danh mục hiện chưa có bài học. Hãy quay lại sau.</p>
+        </div>
+        <p id="library-status" class="library-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <!-- 3D Notebook View -->
+      <section id="notebook-view" class="notebook-container" aria-label="Lesson notebook" hidden>
+        <div class="notebook notebook-loader" id="notebook-loader" hidden>
+          <h2 id="lesson-load-title" tabindex="-1"></h2>
+          <p id="lesson-load-message" class="source-message" role="status" aria-live="polite"></p>
+          <div class="loader-actions">
+            <button type="button" id="retry-lesson" hidden>Thử lại ↻</button>
+            <button type="button" id="cancel-lesson-load">← Về thư viện</button>
+          </div>
+        </div>
+        <div class="book" id="notebook-book"></div>
+        <p class="lesson-progress" id="lesson-progress" role="status" aria-live="polite"></p>
+      </section>
+
+      <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=43.3.0-2a571df59e"></noscript>
+    </main>
+  </div>
+
+  <script type="module" src="./js/storage-decay.js"></script>
+  <script type="module" src="./js/parser.js"></script>
+  <script type="module" src="./js/notebook-ui.js?v=hide_filename1"></script>
+  <script type="module" src="./js/app.js?v=43.3.0-1dee084e21"></script>
+  
+</body>
+</html>

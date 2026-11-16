@@ -1,0 +1,774 @@
+{
+  "id": "13",
+  "lessonNumber": 7,
+  "title": "13. Ôn tập: Mạo từ & Giới từ",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Mạo từ và số lượng",
+      "contentHTML": "<p><strong>Bước 1:</strong> Xác định danh từ đếm được số ít hay không; chọn a/an theo âm đầu, hoặc the khi đối tượng được xác định. Danh từ số nhiều và không đếm được khi nói chung thường không có mạo từ.</p><p>a book / an apple; a university / an hour.<br>I saw a dog. The dog was friendly. / Water is useful.</p><p><strong>Bước 2:</strong> Many/a few đi với danh từ đếm được số nhiều; much/a little đi với danh từ không đếm được. Some và any còn phụ thuộc loại câu và ý định.</p><p>many books / a few friends; much water / a little milk.<br>Do you have any bread? / Would you like some tea?</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Giới từ theo ngữ cảnh",
+      "contentHTML": "<p><strong>Bước 1:</strong> Với thời gian, đối chiếu in cho tháng/năm, on cho ngày, at cho giờ. Với nơi chốn, xét bên trong, bề mặt hoặc điểm cụ thể.</p><p>in May / on Monday / at eight.<br>in the box / on the table / at the station.</p><p><strong>Bước 2:</strong> Học động từ hoặc tính từ cùng giới từ, vì dịch từng từ có thể dẫn đến chọn sai. Sau giới từ có thể là danh từ hoặc V-ing.</p><p>interested in art / good at solving problems.<br>listen to music / wait for the bus.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "So sánh và so sánh tương quan",
+      "contentHTML": "<p><strong>Bước 1:</strong> Chọn as + tính từ nguyên dạng + as cho bằng nhau; dạng so sánh hơn + than khi so hai đối tượng; the + dạng so sánh nhất khi chọn một đối tượng nổi bật trong nhóm.</p><p>as big as / bigger than / the biggest.<br>more useful than / the most useful.</p><p><strong>Bước 2:</strong> Với hai thay đổi liên hệ, dùng the + so sánh hơn ở mỗi vế. Chú ý fewer cho danh từ đếm được số nhiều và less cho lượng không đếm được.</p><p>The more you practise, the better you become.<br>The fewer errors remain, the less time is needed for correction.</p><p>Practice củng cố cấu trúc cơ bản; Apply dùng các quy tắc đó trong bối cảnh học thuật và nghề nghiệp phức tạp hơn.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I need {{a | the::Pencil, dog, bike và bird bắt đầu bằng âm phụ âm; dùng a cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} pencil."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} apples are there?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We meet {{on::On dùng với ngày trong tuần và ngày cụ thể.}} Monday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is interested {{in::Interested in là cụm nói về sự quan tâm.}} music."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This bag is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than that one."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the day, the happier I feel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She has {{a | the::Pencil, dog, bike và bird bắt đầu bằng âm phụ âm; dùng a cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} dog."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} books do you have?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She works {{on::On dùng với ngày trong tuần và ngày cụ thể.}} Friday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I am interested {{in::Interested in là cụm nói về sự quan tâm.}} art."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My room is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than yours."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the weather, the more time we spend outside."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He bought {{a | the::Pencil, dog, bike và bird bắt đầu bằng âm phụ âm; dùng a cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} bike."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} students are in the room?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I arrived {{on::On dùng với ngày trong tuần và ngày cụ thể.}} 5 May."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He is interested {{in::Interested in là cụm nói về sự quan tâm.}} football."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The red box is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than the blue one."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the water, the happier the children are."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We saw {{a | the::Pencil, dog, bike và bird bắt đầu bằng âm phụ âm; dùng a cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} bird."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{many::Many dùng với danh từ đếm được số nhiều trong câu hỏi.}} chairs do we need?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They play football {{on::On dùng với ngày trong tuần và ngày cụ thể.}} Sunday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We are interested {{in::Interested in là cụm nói về sự quan tâm.}} animals."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Our garden is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than theirs."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the room, the more comfortable I feel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I ate {{an | the::Apple, umbrella, egg và hour bắt đầu bằng âm nguyên âm; dùng an cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} apple."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} water do you drink?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My birthday is {{in::In dùng với tháng, năm, mùa và buổi trong ngày.}} May."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He is good {{at::Good at dùng để nói giỏi một môn hoặc hoạt động.}} maths."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This road is {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than that road."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] you practise, the better you get."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She has {{an | the::Apple, umbrella, egg và hour bắt đầu bằng âm nguyên âm; dùng an cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} umbrella."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} milk is in the glass?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He was born {{in::In dùng với tháng, năm, mùa và buổi trong ngày.}} 2010."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is good {{at::Good at dùng để nói giỏi một môn hoặc hoạt động.}} tennis."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My hair is {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than yours."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] you read, the more words you learn."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He found {{an | the::Apple, umbrella, egg và hour bắt đầu bằng âm nguyên âm; dùng an cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} egg."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} rice do we need?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We travel {{in::In dùng với tháng, năm, mùa và buổi trong ngày.}} summer."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I am good {{at::Good at dùng để nói giỏi một môn hoặc hoạt động.}} English."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The blue line is {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than the red line."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] she walks, the stronger she feels."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We waited for {{an | the::Apple, umbrella, egg và hour bắt đầu bằng âm nguyên âm; dùng an cho vật chưa xác định; the cũng đúng nếu người nghe biết vật đó.}} hour."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "How {{much::Much dùng với danh từ không đếm được trong câu hỏi.}} time do you have?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I read {{in::In dùng với tháng, năm, mùa và buổi trong ngày.}} the morning."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They are good {{at::Good at dùng để nói giỏi một môn hoặc hoạt động.}} football."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Summer days are {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than winter days."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] he cooks, the better his food tastes."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I have a cat. {{The::The chỉ vật đã được nhắc đến ở câu trước.}} cat is black."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I have {{a few::A few dùng với danh từ đếm được số nhiều và nghĩa là có một vài.}} friends here. [một vài]"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The film starts {{at::At dùng với giờ cụ thể, noon và night.}} 8 p.m."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Please listen {{to::Listen to là cụm nghĩa là lắng nghe.}} the teacher."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Anna is the {{tallest::Dùng the tallest để chỉ đối tượng cao nhất trong một nhóm.}} [cao] girl in the class."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The more I sleep, the {{better::Better là dạng so sánh hơn bất quy tắc của good hoặc well.}} [tốt] I feel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We saw a bus. {{The::The chỉ vật đã được nhắc đến ở câu trước.}} bus was red."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There are {{a few::A few dùng với danh từ đếm được số nhiều và nghĩa là có một vài.}} eggs in the fridge. [một vài]"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We meet {{at::At dùng với giờ cụ thể, noon và night.}} noon."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We listen {{to::Listen to là cụm nghĩa là lắng nghe.}} music at home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This is the {{tallest::Dùng the tallest để chỉ đối tượng cao nhất trong một nhóm.}} [cao] tree in our garden."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The more she rests, the {{better::Better là dạng so sánh hơn bất quy tắc của good hoặc well.}} [tốt] she feels."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I have ___ new pen. (( an | **a** | some :: Pen bắt đầu bằng âm phụ âm; danh từ số ít dùng a. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "How ___ bananas do we need? (( much | **many** | little :: Many đi với bananas, danh từ đếm được số nhiều. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Our class starts ___ Tuesday. (( in | **on** | at :: On dùng trước ngày trong tuần. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Our plans depend ___ the weather. (( at | **on** | to :: Depend on nghĩa là phụ thuộc vào. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My sister is ___ than me. (( young | **younger** | youngest :: So sánh hai người dùng younger than. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The ___ you study, the more you learn. (( most | **more** | many :: The more ... the more ... chỉ hai mức độ cùng tăng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He found ___ old key. (( a | **an** | some :: Old bắt đầu bằng âm nguyên âm nên dùng an. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "How ___ juice is left? (( many | **much** | few :: Much đi với juice, danh từ không đếm được. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The shop opens ___ 9 a.m. (( in | **at** | on :: At dùng trước giờ cụ thể. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "They talked ___ their holiday. (( at | **about** | of :: Talk about nghĩa là nói về. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "This is the ___ room in the house. (( smaller | **smallest** | small :: So sánh trong một nhóm dùng the smallest. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The more she trains, the ___ she swims. (( fast | **faster** | fastest :: Phần thứ hai của so sánh kép dùng faster. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She bought ___ blue dress. (( an | **a** | some :: Blue bắt đầu bằng âm phụ âm nên dùng a. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "There are ___ people in the room. [một vài] (( a little | **a few** | much :: A few nghĩa là một vài, đi với people. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "They moved here ___ 2022. (( on | **in** | at :: In dùng trước năm. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She asked ___ a glass of water. (( on | **for** | at :: Ask for nghĩa là xin hoặc yêu cầu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "This test is as ___ as the last one. (( easier | **easy** | easiest :: As ... as đi với tính từ nguyên dạng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The ___ it gets, the more clothes I wear. (( cold | **colder** | coldest :: Dùng colder sau the trong so sánh kép. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We ate ___ orange. (( a | **an** | some :: Orange bắt đầu bằng âm nguyên âm nên dùng an. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Add ___ salt to the soup. [một ít] (( a few | **a little** | many :: A little nghĩa là một ít, đi với salt. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The cat is sitting ___ the sofa. (( in | **on** | at :: On chỉ vị trí trên bề mặt. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The little boy is afraid ___ dogs. (( at | **of** | to :: Afraid of nghĩa là sợ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "A train is usually ___ than a bus. (( fast | **faster** | fastest :: So sánh hai phương tiện dùng faster than. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The more he saves, the ___ money he has. (( most | **more** | many :: Dùng the more ... the more ... cho hai lượng cùng tăng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I saw a dog. ___ dog was brown. (( A | **The** | An :: The nhắc lại con chó đã nói tới. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Are there ___ tomatoes? (( a | **any** | an :: Any thường dùng trong câu hỏi với danh từ số nhiều. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Meet me ___ the school gate. (( in | **at** | on :: At chỉ vị trí cụ thể như cổng trường. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "This bag belongs ___ my sister. (( at | **to** | of :: Belong to chỉ sự sở hữu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "This is the ___ day of my holiday. (( better | **best** | good :: The best là dạng so sánh nhất bất quy tắc của good. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The ___ I leave, the sooner I arrive. (( early | **earlier** | earliest :: Dùng earlier và sooner trong so sánh kép. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | have | a | red | bag. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ How | many | apples | are | there? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | meet | on | Monday. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | is | interested | in | music. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ My | bag | is | bigger | than | yours. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | warmer | the | day, | the | happier | I | feel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | ate | an | apple. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ How | much | water | do | you | need? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ My | birthday | is | in | May. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ He | is | good | at | tennis. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The museum acquired {{a | the::Unique bắt đầu bằng âm /j/, nên dùng a dù chữ cái đầu là nguyên âm. The cũng có thể phù hợp nếu đối tượng đã xác định trong ngữ cảnh.}} unique manuscript from a private collector."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There are {{many | a lot of::Many và a lot of đều đi với opportunities số nhiều; hundreds cho biết số lượng lớn.}} [nhiều] opportunities for independent study: the programme offers hundreds of optional projects."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Representatives will gather {{at::At chỉ một điểm cụ thể: the entrance.}} the entrance before the tour begins."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The findings are consistent {{with::Consistent with nghĩa là phù hợp với dữ liệu hoặc quan sát khác.}} previous observations, despite substantial differences in the methods used."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The new model is {{more efficient::Efficient là tính từ dài; dùng more efficient than.}} [hiệu quả] than the old one because it uses less electricity."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The {{shorter::Shorter là so sánh hơn của short, đi sau the trong cấu trúc tương quan.}} [ngắn] the route, the less fuel the vehicles consume."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{The::Cụm cited in the final paragraph xác định evidence cụ thể, nên dùng the.}} evidence cited in the final paragraph comes from an independent study."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Only {{a little::Information không đếm được; a little chỉ một lượng nhỏ thông tin đã có.}} [một ít] information was available before the investigation began."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The independent survey of regional transport accessibility was conducted {{in::In đi với mùa, kể cả khi mùa được xác định bằng năm.}} the winter of 2023, after earlier requests had been rejected."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The new policy may contribute {{to::Contribute to + danh từ chỉ đóng góp vào một kết quả.}} a reduction in waste."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The earlier survey was {{smaller::So sánh hai quy mô; tính từ ngắn small chuyển thành smaller.}} [nhỏ] than the revised survey, with 80 rather than 200 participants."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The more complex the task, the {{more::More bổ nghĩa cho time không đếm được khi thời gian cần tăng.}} time participants usually need."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team has scheduled {{an | the::Interview bắt đầu bằng âm nguyên âm; một cuộc phỏng vấn dùng an. The cũng có thể phù hợp nếu đối tượng đã xác định trong ngữ cảnh.}} interview with each participant."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Each | Every::Each và every đều đứng trước danh từ đếm được số ít applicant; mỗi người phải nộp riêng.}} [mỗi] applicant must submit an individual statement before the committee reaches its decision."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The final debate on the proposed regulatory framework is scheduled {{on::On dùng trước ngày cụ thể như 15 June.}} 15 June, following a series of public consultations."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The application must comply {{with::Comply with là tuân thủ một quy định hoặc chính sách.}} the university’s privacy policy."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The last proposal was {{the most expensive::Trong nhóm ba phương án, dùng the most + tính từ dài expensive.}} [đắt] of the three."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The less frequently the equipment is maintained, the {{more::More likely nghĩa là có khả năng cao hơn; đặt sau the ở vế kết quả.}} likely it is to fail."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The survey was led by {{a | the::Historian thông thường phát âm h rõ; danh từ số ít chưa xác định dùng a. The cũng có thể phù hợp nếu đối tượng đã xác định trong ngữ cảnh.}} historian who specialises in migration."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Neither proposal received {{much::Support ở đây không đếm được; much phù hợp trong câu mang nghĩa phủ định.}} [nhiều] support from the review panel."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "During the final phase of the survey, researchers worked {{at::At night là cụm thông dụng chỉ thời gian.}} night to finish documenting interviews before the archive closed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The region is known {{for::Known for chỉ đặc điểm khiến một địa điểm nổi tiếng.}} its extensive wetlands."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The result was {{as high as::As + high + as diễn tả giá trị đúng bằng mức đã dự kiến.}} [cao] expected; both figures were identical."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::Evidence không đếm được; more evidence chỉ lượng bằng chứng tăng.}} evidence the team collects, the stronger its argument becomes."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "After an extensive peer review, the findings were presented at ___ annual conference attended by international specialists. (( a | **an** | the an :: Annual bắt đầu bằng âm nguyên âm /æ/, nên dùng an trước danh từ số ít chưa xác định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The committee had ___ evidence, so it could not reach a conclusion. (( few | **little** | many :: Evidence không đếm được; little nhấn mạnh bằng chứng không đủ để kết luận. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The committee met ___ the afternoon of 12 May. (( in | **on** | at :: Khi afternoon được xác định bằng một ngày cụ thể, dùng on the afternoon of 12 May. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The assessment is based ___ evidence from independent sources. (( in | **on** | at :: Based on diễn tả cơ sở hoặc nguồn bằng chứng của đánh giá. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The revised proposal is ___ than the original. (( practicaler | **more practical** | most practical :: Practical là tính từ dài; so sánh hai phương án dùng more practical than. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The ___ the procedure, the less time the team needs. (( **simpler** | simplest | simply :: The + simpler đi với vế the less trong cấu trúc so sánh tương quan. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Please compare the draft with ___ version that was approved yesterday. (( a | **the** | an :: Mệnh đề that was approved yesterday xác định rõ version cần so sánh, nên dùng the. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ of the two options is suitable; both exceed the budget. (( Either | **Neither** | Every :: Neither of the two chỉ không phương án nào trong hai phương án; cả hai đều vượt ngân sách. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The specimens were kept ___ a locked cabinet. (( on | **in** | at :: In diễn tả các mẫu ở bên trong tủ khóa. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The final decision will be made ___ accordance with the published rules. (( on | **in** | at :: In accordance with là cụm cố định nghĩa là theo đúng quy định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Of all the proposed evacuation routes, this one is ___ according to the latest safety assessment. (( safer | **the safest** | more safe than :: Trong nhóm các tuyến đường, the safest diễn đạt mức an toàn cao nhất. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The more efficient the process, the ___ energy it requires. (( fewer | **less** | least :: Energy không đếm được; less chỉ lượng năng lượng giảm. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | appointed | an | independent | expert | to | assess | the | risks | associated | with | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Several | independent | researchers | examined | the | evidence | before | presenting | their | recommendations | to | the | panel. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | representatives | gathered | at | the | entrance | before | the | independent | assessment | began. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | revised | strategy | is | consistent | with | previous | findings | but | differs | from | the | original | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | revised | method | is | considerably | more | efficient | than | the | approach | used | in | the | initial | study. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | more | carefully | researchers | examine | the | evidence, | the | fewer | errors | remain | in | the | final | report. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | museum | acquired | a | unique | manuscript | from | a | collector | and | placed | it | in | the | archive. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | had | little | reliable | information | when | it | considered | the | original | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | survey | was | conducted | in | the | winter | of | 2023, | despite | unusually | difficult | conditions. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | final | decision | was | made | in | accordance | with | the | published | rules | and | supporting | guidance. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Of | the | three | proposals, | the | final | option | is | the | most | effective | in | the | long | term. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | larger | the | sample, | the | more | reliable | the | estimate | becomes | under | comparable | conditions. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The organisation hired ___ university graduate for the project. (( an | **a** | the an :: University bắt đầu bằng /juː/, một âm phụ âm; dùng a trước university graduate. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report contains ___ recommendations for reducing waste. (( much | **several** | a little :: Several đi với danh từ đếm được số nhiều recommendations. ))"
+    }
+  ]
+}

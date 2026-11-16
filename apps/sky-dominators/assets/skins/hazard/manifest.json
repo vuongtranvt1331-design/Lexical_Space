@@ -1,0 +1,109 @@
+{
+  "id": "hazard",
+  "name": "Hazard",
+  "aircraft": "titan",
+  "rarity": "LEGEND",
+  "price": 2000,
+  "currency": "Coins",
+  "geometry": {
+    "body": "assets/skins/hazard/fuselage.png",
+    "size": [
+      256,
+      270
+    ],
+    "displayHeightRatio": 1.35,
+    "rotorFps": 60,
+    "rotorStepDegrees": 15,
+    "rotorFile": "assets/skins/hazard/rotor/frame_01.png",
+    "rotors": [
+      {
+        "x": 56.14402618657938,
+        "y": 65.45454545454545,
+        "diameter": 56.56301145662848,
+        "direction": 1
+      },
+      {
+        "x": 199.64648117839607,
+        "y": 65.45454545454545,
+        "diameter": 56.56301145662848,
+        "direction": -1
+      },
+      {
+        "x": 50.90671031096563,
+        "y": 161.74825174825176,
+        "diameter": 59.07692307692308,
+        "direction": -1
+      },
+      {
+        "x": 204.67430441898526,
+        "y": 161.74825174825176,
+        "diameter": 59.07692307692308,
+        "direction": 1
+      }
+    ],
+    "idleSway": {
+      "axis": "x",
+      "amplitudePx": 1,
+      "stepMs": 125,
+      "offsets": [
+        0,
+        1,
+        0,
+        -1
+      ],
+      "cosmeticOnly": true
+    }
+  },
+  "animations": {
+    "rotor": {
+      "frames": 4,
+      "frameMs": 16.666666666666664,
+      "note": "Runtime rotates frame_01 in 15 degree steps; opposite pairs counter-rotate. Other frames exported for authoring."
+    },
+    "projectile": {
+      "frames": 4,
+      "frameMs": 80,
+      "loop": true
+    },
+    "muzzle_flash": {
+      "frames": 4,
+      "frameMs": 40,
+      "loop": false
+    },
+    "explosion": {
+      "frames": 4,
+      "frameMs": 80,
+      "loop": false
+    },
+    "flight": {
+      "frames": 4,
+      "frameMs": 16.666666666666664,
+      "loop": true
+    }
+  },
+  "files": [
+    "fuselage.png",
+    "rotor/frame_01.png",
+    "rotor/frame_02.png",
+    "rotor/frame_03.png",
+    "rotor/frame_04.png",
+    "projectile/frame_01.png",
+    "muzzle_flash/frame_01.png",
+    "explosion/frame_01.png",
+    "projectile/frame_02.png",
+    "muzzle_flash/frame_02.png",
+    "explosion/frame_02.png",
+    "projectile/frame_03.png",
+    "muzzle_flash/frame_03.png",
+    "explosion/frame_03.png",
+    "projectile/frame_04.png",
+    "muzzle_flash/frame_04.png",
+    "explosion/frame_04.png",
+    "flight/frame_01.png",
+    "preview.png",
+    "flight/frame_02.png",
+    "flight/frame_03.png",
+    "flight/frame_04.png"
+  ],
+  "notes": "Cosmetic only. Titan health, two independent armor timers, weapon damage and collision are unchanged."
+}

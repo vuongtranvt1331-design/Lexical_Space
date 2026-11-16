@@ -1,0 +1,224 @@
+{
+  "id": "24",
+  "title": "24. Suy đoán ở hiện tại",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Suy đoán mạnh ở hiện tại",
+      "contentHTML": "<p>Must + nguyên mẫu có thể diễn tả suy đoán mạnh về hiện tại: Her car is outside; she must be nearby. Đây là kết luận dựa trên bằng chứng, không phải sự chắc chắn tuyệt đối.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Khả năng và điều gần như không thể",
+      "contentHTML": "<p>May, might và could nêu khả năng chưa chắc chắn. Can’t hoặc cannot nêu kết luận rằng điều gì đó gần như không thể đúng: He is here, so he can’t be in another city now.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Suy đoán về hành động đang diễn ra",
+      "contentHTML": "<p>Modal + be + V-ing có thể nói về một hoạt động có thể đang diễn ra: They might be working late. Must have + danh từ có thể nói về sự sở hữu hiện tại; đừng nhầm với must have + V3 cho quá khứ.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The only key is in her hand, so she {{must have::Must have + danh từ diễn tả suy đoán mạnh về việc sở hữu hiện tại.}} [rất có thể] the key."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The director is standing next to us in Hanoi, so she {{cannot be | can't be | can’t be::Cannot / can’t be nêu kết luận rằng việc có mặt ở London cùng lúc là không thể.}} [không thể] in London right now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I am unsure where the assistant is; he {{might be | may be | could be::Might, may và could be đều nêu khả năng hiện tại chưa chắc chắn.}} [có thể] in the meeting room."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the team {{might know | may know | could know::Các modal này đều diễn tả khả năng chưa chắc chắn, theo sau là động từ nguyên mẫu.}} (know) the reason, but nobody has asked."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Her coat is here and I just heard her voice; she {{must be::Must be diễn tả suy đoán mạnh dựa trên hai dấu hiệu hiện tại.}} (be) [rất có thể] nearby."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The lights are on, so the staff {{might be working | may be working | could be working::Modal + be + V-ing có thể diễn tả hoạt động đang diễn ra nhưng chưa chắc chắn.}} (work) [có thể] late; we cannot tell from outside."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The document is in my hands, so it {{cannot be | can't be | can’t be::Vật đang ở đây không thể đồng thời ở nơi khác trong cùng thời điểm.}} [không thể] on the office shelf right now."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The manager has the signed key card in her hand, so she {{must have::Must have + danh từ chỉ suy đoán mạnh về sự sở hữu hiện tại.}} [rất có thể] the card."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We have not tested the proposal, so it {{might be | may be | could be::Might, may và could be nêu khả năng nhưng không khẳng định kết quả.}} (be) [có thể] effective."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The kitchen smells of coffee, and the machine is running. Someone ___ coffee. (( **must be making** | must makes | cannot making :: Must be + V-ing diễn tả suy đoán mạnh về hoạt động đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The guide is with us in Rome, so she ___ in Madrid at this moment. (( **cannot be** | must is | cannot are :: Cannot be diễn tả kết luận gần như không thể đúng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Perhaps the report ___ accurate, but the evidence is incomplete. (( **might be** | might is | must being :: Might be nêu khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The students have the printed timetable in their hands, so they ___ a copy. (( **must have** | must has | must having :: Must have + danh từ chỉ suy đoán về sự sở hữu hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The office door is closed; the staff ___ a meeting, but we are not sure. (( **could be holding** | could holds | could to hold :: Could be + V-ing nêu khả năng về việc đang diễn ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | must | be | nearby. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ He | cannot | be | in | London | right | now. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | might | be | working | late. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | manager | must | have | the | card. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the adviser {{might be | may be | could be::Các modal này nêu khả năng hiện tại chưa chắc chắn.}} (be) [có thể] available later; we have not asked."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The speaker is standing with us, so she {{cannot be | can't be | can’t be::Sự có mặt hiện tại ở đây loại trừ việc đồng thời ở nơi khác.}} [không thể] in the next building now."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The presenter is speaking beside me, so she {{cannot be | can't be | can’t be::Người đang đứng cạnh người nói không thể đồng thời ở phòng khác.}} [không thể] in the other room at this moment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The queue has barely moved; the system {{might be processing | may be processing | could be processing::Modal + be + V-ing diễn tả khả năng về quá trình hiện tại.}} (process) [có thể] requests slowly, although we do not know."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researcher has the only copy open in front of her, so she {{must have::Must have + danh từ chỉ kết luận mạnh về sự sở hữu hiện tại.}} [rất có thể] the copy."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Perhaps the organiser {{might understand | may understand | could understand::Các modal này đều nêu khả năng chưa xác nhận.}} (understand) the problem, but we have not spoken to her."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witness is online with us from Paris, so he {{cannot be | can't be | can’t be::Không thể ở Paris và Tokyo cùng lúc trong ngữ cảnh này.}} [không thể] in Tokyo now."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The oven is warm and I can smell bread; someone {{must be baking::Must be + V-ing đưa ra suy đoán mạnh về hoạt động hiện tại dựa trên dấu hiệu.}} (bake) [rất có thể] bread."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "We cannot see the road clearly; an accident {{might be causing | may be causing | could be causing::Các dạng này nêu một nguyên nhân đang diễn ra có thể đúng, chưa được xác nhận.}} (cause) [có thể] the delay."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The consultant is answering questions in front of us, so she {{cannot be | can't be | can’t be::Sự có mặt trước người nói loại trừ việc cô ấy đang ở nơi khác.}} [không thể] abroad at this moment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The employee is showing us her valid ticket, so she {{must have::Must have + danh từ diễn tả kết luận mạnh về sự sở hữu.}} [rất có thể] a ticket."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Our neighbour is waving from the garden, so he ___ away on holiday now. (( **cannot be** | can is | must being :: Cannot be thể hiện điều bị loại trừ bởi bằng chứng trực tiếp. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The child is carrying the only red umbrella, so she ___ it. (( **must have** | must has | must having :: Must have + danh từ nêu suy đoán mạnh về sở hữu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Perhaps the delivery ___ delayed; the driver has not contacted us. (( **may be** | may is | may being :: May be nêu khả năng chưa được xác nhận. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The lights are on upstairs; someone ___, though we cannot be certain. (( **might be studying** | might studies | might to study :: Might be + V-ing chỉ hoạt động có thể đang diễn ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The speaker is visible on stage, so she ___ in the audience right now. (( **cannot be** | cannot is | must being :: Cannot be nêu kết luận gần như không thể đúng. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | explanation | could | be | incomplete. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Someone | must | be | baking | bread. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | report | may | be | accurate. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | presenter | cannot | be | abroad | now. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The team is looking for its adviser. Her voice is coming from the next room, so she {{must be::Must be nêu suy đoán mạnh dựa trên dấu hiệu trực tiếp.}} (be) [rất có thể] nearby. She {{might be speaking | may be speaking | could be speaking::Các dạng này nêu khả năng về một hoạt động đang diễn ra.}} (speak) [có thể] to a visitor, but we cannot see her. She {{cannot be | can't be | can’t be::Cô ấy không thể đang ở thành phố khác nếu tiếng nói phát ra từ phòng kế bên.}} [không thể] in another city now."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A group is discussing an unexpected result. The scientist {{might know | may know | could know::Các modal này nêu khả năng chưa chắc chắn.}} (know) the cause, but nobody has asked. The new explanation {{might be | may be | could be::Các modal này diễn tả khả năng chưa xác nhận.}} (be) [có thể] incomplete. The original notes are in the team’s hands, so they {{must have::Must have + danh từ suy đoán mạnh về sự sở hữu hiện tại.}} [rất có thể] the notes."
+    }
+  ],
+  "lessonNumber": 3
+}

@@ -1,0 +1,224 @@
+{
+  "id": "23",
+  "title": "23. Must, Have to, Should",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Nghĩa vụ: must và have to",
+      "contentHTML": "<p>Must và have to đều có thể diễn đạt nghĩa vụ. Have to thường được dùng khi quy định hoặc hoàn cảnh tạo ra nghĩa vụ; must cũng có thể dùng cho quy định hoặc điều người nói thấy cần thiết. Với chủ ngữ số ít dùng has to; quá khứ của have to là had to.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Cấm và không bắt buộc",
+      "contentHTML": "<p>Must not / mustn’t chỉ điều bị cấm. Do not have to / need not chỉ điều không bắt buộc, không có nghĩa là bị cấm. Ví dụ: You must not park here. You do not have to attend the optional meeting.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Lời khuyên và sự lựa chọn",
+      "contentHTML": "<p>Should và ought to đều có thể đưa ra lời khuyên; sau should dùng nguyên mẫu, sau ought dùng to + nguyên mẫu. Ngữ cảnh quyết định mức độ cần thiết, và đôi khi nhiều cách diễn đạt đều hợp lý.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Under the safety rules, staff {{must | have to::Must và have to đều có thể diễn tả nghĩa vụ áp dụng cho staff.}} wear protective glasses."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The sign says entry is forbidden, so visitors {{must not | mustn't | mustn’t::Must not / mustn’t chỉ hành động bị cấm.}} enter the room."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The meeting is optional, so we {{do not have to | don't have to | don’t have to | need not::Các dạng này chỉ rằng tham dự không bắt buộc.}} attend."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You seem exhausted; you {{should | ought to::Should và ought to đều có thể đưa ra lời khuyên.}} get some rest."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The school policy says every student {{has to | must::Has to và must đều diễn đạt nghĩa vụ; has to phù hợp với chủ ngữ số ít.}} carry an identity card."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Yesterday, we {{had to::Had to là dạng quá khứ của have to, nói về nghĩa vụ đã xảy ra.}} leave early because the building was closing."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The notice prohibits photography; guests {{must not | mustn't | mustn’t::Must not / mustn’t diễn tả việc bị cấm chụp ảnh.}} take photographs."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You {{should | ought to::Should và ought to dùng để khuyên kiểm tra kỹ trước khi gửi.}} review your application before submitting it."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Attendance is voluntary, so participants {{do not have to | don't have to | don’t have to | need not::Các dạng này có nghĩa là không cần phải tham dự.}} stay until the end."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Employees ___ show their passes; the written policy makes this compulsory. (( **have to** | might to | have yesterday :: Have to diễn đạt nghĩa vụ theo quy định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "You ___ enter the site; the notice expressly forbids it. (( **must not** | do not have to | may :: Must not chỉ sự cấm đoán; do not have to chỉ sự không bắt buộc. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "You ___ back up your files; it would be sensible. (( **should** | must not | should to :: Should + nguyên mẫu đưa ra lời khuyên. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Registration is optional, so guests ___ sign up in advance. (( **do not have to** | must not | does not have to :: Do not have to chỉ rằng đăng ký không bắt buộc. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Last week we ___ change our plans because the road was closed. (( **had to** | musts | have to yesterday :: Had to diễn đạt sự cần thiết trong quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Employees | have | to | follow | the | safety | rules. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Visitors | must | not | enter | the | room. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ You | should | review | your | application. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | do | not | have | to | attend | the | meeting. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The notice says bicycles are prohibited; cyclists {{must not | mustn't | mustn’t::Must not diễn tả điều bị cấm.}} ride in the park."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The form is optional; I {{do not have to | don't have to | don’t have to | need not::Các dạng này diễn tả việc không bắt buộc.}} fill it in."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The doctor says I {{have to | must::Have to và must đều có thể diễn tả sự cần thiết theo lời bác sĩ.}} take this medicine every day."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Under the contract, the supplier {{has to | must::Cả has to và must có thể diễn đạt nghĩa vụ theo hợp đồng.}} deliver the goods by Friday."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There is no charge; you {{do not have to | don't have to | don’t have to | need not::Không mất phí nên thanh toán là không bắt buộc.}} pay for entry."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The manager recommends that we {{should | ought to::Should hoặc ought to diễn tả lời khuyên trong câu này.}} ask for feedback."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Visitors {{must not | mustn't | mustn’t::Biển cấm chỉ sự cấm đoán, nên dùng must not / mustn’t.}} feed the animals; the signs explicitly prohibit it."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "We {{had to::Had to diễn đạt nghĩa vụ trong quá khứ do chuyến bay bị hủy.}} find a hotel after our flight was cancelled."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Your passport expires soon; you {{should | ought to::Should và ought to đưa ra lời khuyên xin hộ chiếu mới.}} apply for a new one."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The regulations state that the driver {{has to | must::Has to và must đều có thể diễn đạt yêu cầu bắt buộc.}} stop at the crossing."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The extra exercise is optional; learners {{do not have to | don't have to | don’t have to | need not::Việc làm bài là không bắt buộc, không phải bị cấm.}} complete it."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Each passenger ___ present a valid ticket under the rules. (( **has to** | have to | musts :: Each passenger là số ít, nên dùng has to. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "You ___ touch that switch; it is clearly marked as forbidden. (( **must not** | do not have to | must not to :: Must not diễn tả sự cấm đoán và đi với động từ nguyên mẫu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report is unclear; the writer ___ explain the conclusion. (( **ought to** | ought | must not :: Ought to + nguyên mẫu đưa ra lời khuyên. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The interview is voluntary; applicants ___ take part. (( **need not** | must not | needs not to :: Need not diễn đạt sự không bắt buộc. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The museum rules say that the guide ___ accompany every group. (( **must** | must to | musts :: Must + nguyên mẫu có thể diễn tả nghĩa vụ theo quy định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Every | student | has | to | carry | a | card. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ You | must | not | feed | the | animals. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ She | ought | to | apply | for | a | new | passport. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ We | had | to | find | a | hotel. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A company is arranging a training day. Under the rules, employees {{must | have to::Must và have to đều diễn đạt nghĩa vụ theo quy định.}} wear a badge. They {{must not | mustn't | mustn’t::Must not chỉ việc bị cấm.}} share private details. The final discussion is optional, so they {{do not have to | don't have to | don’t have to | need not::Các dạng này nói rằng tham dự là không bắt buộc.}} stay for it."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The library has new policies. Every visitor {{has to | must::Has to và must đều có thể diễn đạt nghĩa vụ cho chủ ngữ số ít.}} show a card. Visitors {{must not | mustn't | mustn’t::Must not diễn đạt sự cấm đoán theo biển báo.}} bring food inside, according to the signs. They {{should | ought to::Should và ought to đưa ra lời khuyên.}} ask the staff if they need help."
+    }
+  ],
+  "lessonNumber": 2
+}

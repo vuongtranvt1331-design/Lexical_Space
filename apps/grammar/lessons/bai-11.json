@@ -1,0 +1,224 @@
+{
+  "id": "12",
+  "title": "12. So sánh kép The more",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "So sánh kép",
+      "contentHTML": "<p>Cấu trúc the + so sánh hơn ..., the + so sánh hơn ... diễn tả hai thay đổi đi cùng nhau.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Mỗi vế của so sánh tương quan bắt đầu bằng the + dạng so sánh hơn. Ý nghĩa là hai mức thay đổi liên hệ với nhau; dấu phẩy ngăn hai vế.</p><p>The more you practise, the better you become. → Càng luyện tập, bạn càng tiến bộ.<br>The earlier we leave, the sooner we arrive. → Càng đi sớm, chúng ta càng đến sớm.<br>The more you read, the more you learn. → Càng đọc, bạn càng học được nhiều.</p></div><h3>Mở rộng: Cấu trúc The more, the more</h3><p>So sánh kép diễn tả hai thay đổi có liên hệ: một mức độ thay đổi kéo theo mức độ kia.</p><blockquote><p><strong><span style=\"color:#2e9c70\">KHUNG GHI NHỚ</span></strong><br>The + so sánh hơn + S + V, the + so sánh hơn + S + V.<br>The more thường đi trước tính từ dài, trạng từ dài hoặc một số lượng.</p></blockquote><h3><span style=\"color:#3498db\">Ví dụ trong ngữ cảnh</span></h3><p>The more carefully you read, the fewer mistakes you make. → Càng đọc cẩn thận, bạn càng ít lỗi.<br>The more books she reads, the more ideas she has. → Càng đọc nhiều sách, cô ấy càng có nhiều ý tưởng.</p><p><span class=\"highlight\">Lưu ý:</span> Mỗi vế bắt đầu bằng the và thường có dấu phẩy ngăn hai vế.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Tính từ ngắn",
+      "contentHTML": "<p>Ví dụ: The warmer the day, the happier I feel. Warm → warmer; happy → happier.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Tính từ hoặc trạng từ ngắn thường dùng dạng -er, nhưng cần kiểm tra dạng bất quy tắc và cấu trúc vế câu.</p><p>The shorter the route, the less fuel we use. → Đường càng ngắn, lượng nhiên liệu dùng càng ít.<br>The harder she works, the more she learns. → Càng làm việc chăm, cô ấy càng học được nhiều.<br>The better the evidence, the stronger the conclusion. → Bằng chứng càng tốt, kết luận càng vững.</p></div><h3>Mở rộng: Tính từ và trạng từ ngắn</h3><p>Một số từ dùng dạng -er hoặc dạng bất quy tắc thay cho more.</p><blockquote><p><strong><span style=\"color:#2e9c70\">KHUNG GHI NHỚ</span></strong><br>hard → harder; early → earlier; fast → faster.<br>good / well → better; bad / badly → worse.</p></blockquote><h3><span style=\"color:#3498db\">Ví dụ trong ngữ cảnh</span></h3><p>The harder you practise, the better you become. → Càng luyện tập chăm chỉ, bạn càng tiến bộ.<br>The earlier we leave, the sooner we arrive. → Càng đi sớm, chúng ta càng đến sớm.</p><p><span class=\"highlight\">Lưu ý:</span> Không dùng more harder hay more better: harder và better đã là dạng so sánh hơn.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "More và less",
+      "contentHTML": "<p>Ví dụ: The more you practise, the better you get. The less you sleep, the more tired you feel.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>More và less có thể bổ nghĩa cho lượng; fewer thường dùng với danh từ đếm được số nhiều. Đừng chọn theo chữ the more đơn lẻ mà hãy xác định danh từ theo sau.</p><p>The more time we have, the more carefully we can check. → Càng có nhiều thời gian, chúng ta càng kiểm tra kỹ.<br>The more questions they ask, the fewer mistakes remain. → Càng hỏi nhiều, lỗi còn lại càng ít.<br>The less energy the device uses, the lower the cost. → Thiết bị dùng càng ít năng lượng, chi phí càng thấp.</p></div><h3>Mở rộng: Số lượng và ý nghĩa</h3><p>The more có thể đi với danh từ; the fewer và the less diễn tả số lượng giảm.</p><blockquote><p><strong><span style=\"color:#2e9c70\">KHUNG GHI NHỚ</span></strong><br>the more + danh từ số nhiều hoặc không đếm được<br>the fewer + danh từ đếm được số nhiều; the less + danh từ không đếm được</p></blockquote><h3><span style=\"color:#3498db\">Ví dụ trong ngữ cảnh</span></h3><p>The more time you spend revising, the more confident you feel. → Càng dành thời gian ôn tập, bạn càng tự tin.<br>The less water we waste, the more water we save. → Càng lãng phí ít nước, ta càng tiết kiệm được nhiều.</p><p><span class=\"highlight\">Lưu ý:</span> Few đi với danh từ đếm được số nhiều; little / less thường đi với danh từ không đếm được khi nói về lượng.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the day, the happier I feel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the weather, the more time we spend outside."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the water, the happier the children are."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{warmer::Sau the trong phần đầu của so sánh kép dùng dạng so sánh hơn warmer.}} [ấm] the room, the more comfortable I feel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] you practise, the better you get."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] you read, the more words you learn."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] she walks, the stronger she feels."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::The more ... the better/more ... diễn tả mức độ cùng tăng.}} [nhiều] he cooks, the better his food tastes."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The more I sleep, the {{better::Better là dạng so sánh hơn bất quy tắc của good hoặc well.}} [tốt] I feel."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The more she rests, the {{better::Better là dạng so sánh hơn bất quy tắc của good hoặc well.}} [tốt] she feels."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The ___ you study, the more you learn. (( most | **more** | many :: The more ... the more ... chỉ hai mức độ cùng tăng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The more she trains, the ___ she swims. (( fast | **faster** | fastest :: Phần thứ hai của so sánh kép dùng faster. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The ___ it gets, the more clothes I wear. (( cold | **colder** | coldest :: Dùng colder sau the trong so sánh kép. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The more he saves, the ___ money he has. (( most | **more** | many :: Dùng the more ... the more ... cho hai lượng cùng tăng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The ___ I leave, the sooner I arrive. (( early | **earlier** | earliest :: Dùng earlier và sooner trong so sánh kép. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | warmer | the | day, | the | happier | I | feel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | more | you | practise, | the | better | you | get. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | more | I | sleep, | the | better | I | feel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | less | I | sleep, | the | more | tired | I | feel. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | heavier | the | bag, | the | harder | it | is | to | carry. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The {{shorter::Shorter là so sánh hơn của short, đi sau the trong cấu trúc tương quan.}} [ngắn] the route, the less fuel the vehicles consume."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The more complex the task, the {{more::More bổ nghĩa cho time không đếm được khi thời gian cần tăng.}} time participants usually need."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The less frequently the equipment is maintained, the {{more::More likely nghĩa là có khả năng cao hơn; đặt sau the ở vế kết quả.}} likely it is to fail."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The {{more::Evidence không đếm được; more evidence chỉ lượng bằng chứng tăng.}} evidence the team collects, the stronger its argument becomes."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The ___ the procedure, the less time the team needs. (( **simpler** | simplest | simply :: The + simpler đi với vế the less trong cấu trúc so sánh tương quan. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The more efficient the process, the ___ energy it requires. (( fewer | **less** | least :: Energy không đếm được; less chỉ lượng năng lượng giảm. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The more sources researchers consult, the ___ their conclusions may be. (( most reliable | **more reliable** | reliabler :: Reliable là tính từ dài; dùng more reliable trong cấu trúc so sánh kép. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team is improving a recycling process. The {{more::More bổ nghĩa cho danh từ số nhiều materials để chỉ lượng tăng.}} materials it recovers, the less waste reaches landfill. The {{shorter::Shorter là dạng so sánh hơn của short trong vế đầu.}} [ngắn] the transport route, the less fuel the collection vehicles use. The more residents participate, the {{better::Better là dạng so sánh hơn bất quy tắc của good.}} [tốt] the overall results become."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | more | carefully | researchers | examine | the | evidence, | the | fewer | errors | remain | in | the | final | report. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | larger | the | sample, | the | more | reliable | the | estimate | becomes | under | comparable | conditions. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The {{closer::The closer..., the more... diễn tả hai thay đổi tương ứng.}} [gần] the deadline, the more urgent the work becomes."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The more complex the case, the {{more::More time chỉ lượng thời gian tăng; time không đếm được.}} time the panel needs."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The less frequently equipment is maintained, the {{more::More likely chỉ khả năng cao hơn.}} likely it is to fail."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The more questions participants ask, the {{richer::Rich là tính từ ngắn; richer mô tả cuộc thảo luận phong phú hơn.}} [phong phú] the discussion becomes."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The ___ the evidence, the stronger the conclusion. (( clearest | **clearer** | clearly :: Cấu trúc so sánh kép cần dạng so sánh hơn clearer. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The more carefully the documents are checked, the ___ mistakes remain. (( less | **fewer** | least :: Mistakes đếm được số nhiều nên dùng fewer. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A recycling team is improving its process. The {{more::More bổ nghĩa cho materials số nhiều và chỉ lượng tăng.}} materials it recovers, the less waste reaches landfill. The {{shorter::Shorter là dạng so sánh hơn của short.}} [ngắn] the transport route, the less fuel the vehicles use. The more residents participate, the {{better::Better là dạng so sánh hơn bất quy tắc của good.}} [tốt] the overall results become."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research group is reviewing its methods. The {{larger::Larger là so sánh hơn của large.}} [lớn] the sample, the more precise the estimate tends to be. The more carefully the team checks the data, the {{fewer::Fewer đi với errors là danh từ đếm được số nhiều.}} errors remain. The {{clearer::Clearer là so sánh hơn của clear.}} [rõ ràng] the explanation, the easier it is to evaluate the findings."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | shorter | the | route, | the | less | fuel | the | vehicles | consume | during | each | journey. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | more | complex | the | case, | the | more | time | the | committee | needs | to | reach | a | decision. ~~"
+    }
+  ],
+  "lessonNumber": 6
+}

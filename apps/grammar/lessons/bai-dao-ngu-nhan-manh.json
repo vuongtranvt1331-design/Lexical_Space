@@ -1,0 +1,223 @@
+{
+  "id": "62",
+  "title": "62. Đảo ngữ thời gian & Do nhấn mạnh",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "No sooner / Hardly / Scarcely",
+      "contentHTML": "<p>Trong văn phong trang trọng, đảo trợ động từ lên trước chủ ngữ khi mở đầu bằng các cụm nhấn mạnh thời gian.</p><div class=\"rule-box\"><p><strong>No sooner + had + S + V3 + than + mệnh đề quá khứ đơn:</strong> <em>No sooner had she arrived than the meeting began.</em> Cô ấy vừa đến thì cuộc họp bắt đầu.</p><p><strong>Hardly / Scarcely + had + S + V3 + when + mệnh đề quá khứ đơn:</strong> <em>Hardly had I sat down when the phone rang.</em></p></div><p>Ghi nhớ cặp <strong>no sooner … than</strong>, <strong>hardly/scarcely … when</strong>. Dạng không đảo: <em>She had no sooner arrived than the meeting began.</em></p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Only after / Only when / Not until",
+      "contentHTML": "<div class=\"rule-box\"><p>Khi <strong>Only after / Only when / Not until</strong> đứng đầu, đảo trợ động từ ở <strong>mệnh đề chính</strong>, sau toàn bộ cụm hoặc mệnh đề mở đầu.</p><p><em>Only after the meeting <strong>did we decide</strong> to act.</em></p><p><em>Only when the results arrived <strong>did they understand</strong> the problem.</em></p><p><em>Not until she checked the data <strong>did she notice</strong> the error.</em> Không đảo trong mệnh đề phụ <em>she checked the data</em>.</p></div><p>Nếu mệnh đề chính không có trợ động từ, dùng do / does / did phù hợp và chuyển động từ chính về nguyên mẫu: <em>Only then did he realise …</em></p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Đảo ngữ và do nhấn mạnh",
+      "contentHTML": "<p>Khi trạng từ phủ định hoặc hạn định như <em>never, rarely, seldom, under no circumstances</em> đứng đầu để nhấn mạnh, mệnh đề chính thường đảo: <em>Rarely do we see such results.</em> <em>Never have I seen that before.</em></p><div class=\"rule-box\"><p><strong>Do / does / did + V nguyên mẫu</strong> trong câu khẳng định dùng để nhấn mạnh: <em>I do understand your concern.</em>; <em>She did call yesterday.</em> Đây không phải câu hỏi.</p><p>So sánh <em>She called.</em> với <em>She did call.</em>: câu thứ hai nhấn mạnh hành động thực sự xảy ra, thường để đối chiếu hoặc xác nhận.</p></div><p>Chọn trợ động từ theo thì và chủ ngữ; sau do/does/did dùng nguyên mẫu, không thêm -s hoặc -ed vào động từ chính.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "No sooner {{had::Sau No sooner đầu câu, đảo had trước chủ ngữ trong cấu trúc quá khứ hoàn thành.}} (have) she arrived than the meeting began."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Hardly had I sat down {{when::Hardly … when là cặp liên từ thời gian.}} [khi] the phone rang."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "No sooner had he left {{than::No sooner đi với than.}} [thì] it started to rain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Only after the meeting {{did::Mệnh đề chính ở quá khứ đơn cần đảo did trước we, sau đó dùng decide nguyên mẫu.}} (do) we decide to act."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Not until she checked the data {{did::Đảo did ở mệnh đề chính sau toàn bộ cụm Not until.}} (do) she notice the error."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Rarely {{do::Sau rarely đầu câu, dùng do đảo trước we trong hiện tại đơn.}} (do) we see snow here."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{do::Do + nguyên mẫu understand nhấn mạnh sự thật ở hiện tại.}} (do) understand your concern."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{did::Did + nguyên mẫu call nhấn mạnh hành động trong quá khứ.}} (do) call yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Only when the bus arrived did they {{leave::Sau did dùng động từ nguyên mẫu leave.}} (leave)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Scarcely had we started {{when::Scarcely thường đi với when.}} [khi] it rained."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "No sooner had he arrived ___ the show began. (( when | **than** | that :: No sooner đi với than. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Hardly had she opened the door ___ the phone rang. (( than | **when** | because :: Hardly đi với when. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Only after the call ___ the problem. (( she understood | **did she understand** | did she understood :: Đảo did ở mệnh đề chính và dùng understand nguyên mẫu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Not until the rain stopped ___ outside. (( we went | **did we go** | did we went :: Sau cụm Not until, mệnh đề chính đảo did và dùng go nguyên mẫu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence emphasises the affirmative action? (( She does called. | **She did call.** | Did she call? :: Did + nguyên mẫu call có thể nhấn mạnh câu khẳng định quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Rarely ___ such a quiet street. (( we see | **do we see** | do we sees :: Rarely đứng đầu mệnh đề chính đòi hỏi đảo do; sau do dùng see. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ No | sooner | had | she | arrived | than | the | meeting | began. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Hardly | had | I | sat | down | when | the | phone | rang. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Only | after | the | meeting | did | we | decide | to | act. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | did | call | yesterday. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "No sooner {{had::No sooner đầu câu đảo had trước chủ ngữ trong cấu trúc quá khứ hoàn thành.}} (have) the report been published than questions arose."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Hardly had the negotiations begun {{when::Hardly đi với when.}} [khi] a new issue emerged."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Not until the auditors examined the records {{did::Đảo did ở mệnh đề chính sau mệnh đề phụ.}} (do) they identify the discrepancy."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Only after the evidence was reviewed {{did::Mệnh đề chính quá khứ đơn cần trợ động từ did đảo trước the panel.}} (do) the panel reach a decision."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Rarely {{have::Đảo have của hiện tại hoàn thành trước chủ ngữ researchers.}} (have) researchers observed such a result."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The analysts {{do::Do + nguyên mẫu recognise nhấn mạnh sự thừa nhận ở hiện tại.}} (do) recognise the limitations."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Only when the data were verified did the board {{publish::Sau trợ động từ did dùng nguyên mẫu publish.}} (publish) the findings."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Scarcely had the session started {{when::Scarcely đi với when.}} [khi] the alarm sounded."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "No sooner had the results appeared ___ the team began a second analysis. (( when | **than** | that :: Cặp chuẩn là no sooner … than. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Not until the evidence was checked ___ the report. (( they released | **did they release** | did they released :: Đảo did trong mệnh đề chính và dùng release nguyên mẫu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Only when the records arrived ___ the discrepancy. (( the auditor noticed | **did the auditor notice** | did the auditor noticed :: Mệnh đề chính đảo did; sau did dùng notice. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence correctly emphasises the past action? (( The reviewer did checked the figures. | **The reviewer did check the figures.** | The reviewer does checked the figures. :: Did nhấn mạnh quá khứ và theo sau bằng nguyên mẫu check. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Hardly had the hearing begun ___ an objection was raised. (( than | **when** | so :: Hardly đi với when. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence places inversion correctly? (( Not until did the chair arrive the meeting began. | **Not until the chair arrived did the meeting begin.** | Not until arrived the chair the meeting began. :: Không đảo trong mệnh đề phụ; đảo did trong mệnh đề chính. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ No | sooner | had | the | report | appeared | than | questions | arose. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Only | after | the | review | did | the | panel | reach | a | decision. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Not | until | the | records | arrived | did | the | auditor | notice | the | error. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee reviewed a proposal. No sooner {{had::No sooner đầu câu đảo had trước the review.}} (have) the review begun than an objection was raised. Only after the evidence was checked {{did::Sau Only after đảo did ở mệnh đề chính.}} (do) the panel reach a decision. Members {{did::Did + nguyên mẫu acknowledge nhấn mạnh hành động trong quá khứ.}} (do) acknowledge the risks."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team examined a study. Hardly had the analysis begun {{when::Hardly đi với when.}} [khi] an error appeared. Not until the data were corrected {{did::Sau Not until đảo did ở mệnh đề chính.}} (do) the team publish its findings. The authors {{do::Do + nguyên mẫu recognise nhấn mạnh hiện tại.}} (do) recognise the study’s limitations."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum opened an exhibition. No sooner had visitors entered {{than::No sooner đi với than.}} [thì] the alarm sounded. Only after staff checked the building {{did::Only after đầu câu dẫn đến đảo did trong mệnh đề chính.}} (do) the museum reopen. The staff {{did::Did + nguyên mẫu respond nhấn mạnh hành động quá khứ.}} (do) respond promptly."
+    }
+  ]
+}

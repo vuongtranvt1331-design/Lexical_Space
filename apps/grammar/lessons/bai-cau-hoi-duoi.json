@@ -1,0 +1,223 @@
+{
+  "id": "59",
+  "title": "59. Câu hỏi đuôi (Question Tags)",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Câu hỏi đuôi cơ bản",
+      "contentHTML": "<p><strong>Câu hỏi đuôi</strong> là câu hỏi ngắn đặt cuối câu để xác nhận hoặc kiểm tra thông tin: <em>You are a student, aren't you?</em> Bạn là học sinh, đúng không?</p><div class=\"rule-box\"><p>Mệnh đề khẳng định → đuôi phủ định: <em>She is ready, isn't she?</em></p><p>Mệnh đề phủ định → đuôi khẳng định: <em>They aren't late, are they?</em></p><p>Lặp lại trợ động từ hoặc be ở mệnh đề chính; thay danh từ chủ ngữ bằng đại từ phù hợp.</p></div><p>Ngữ điệu đi xuống thường tìm sự đồng tình; ngữ điệu đi lên thường cho thấy người nói chưa chắc chắn. Bản thân hình thức không quyết định toàn bộ ý định.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Chọn trợ động từ đúng",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>Be:</strong> <em>Lan is happy, isn't she?</em>; <em>They were at home, weren't they?</em></p><p><strong>Trợ động từ / khuyết thiếu:</strong> <em>You have finished, haven't you?</em>; <em>She can swim, can't she?</em>; <em>He won't leave, will he?</em></p><p><strong>Động từ thường không có trợ động từ:</strong> dùng do / does / did theo thì và chủ ngữ: <em>He likes tea, doesn't he?</em>; <em>They arrived, didn't they?</em></p></div><p>Trong câu hiện tại hoàn thành, dùng have/has theo trợ động từ đã có: <em>They have arrived, haven't they?</em></p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Một số trường hợp đặc biệt",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>I am …, aren't I?</strong> <em>I'm early, aren't I?</em> là cách thông dụng.</p><p><strong>Let's …, shall we?</strong> <em>Let's begin, shall we?</em> Đuôi xác nhận lời đề nghị cùng làm.</p><p><strong>Everyone / nobody …, do they?</strong> Thường dùng <em>they</em> cho đại từ chỉ người: <em>Everyone enjoyed it, didn't they?</em>; <em>Nobody called, did they?</em></p></div><p>Các từ mang nghĩa phủ định như <em>never, hardly, nobody</em> thường đi với đuôi khẳng định: <em>She never drives, does she?</em></p><p>Trong yêu cầu lịch sự, câu mệnh lệnh thường dùng <em>will you?</em>: <em>Close the door, will you?</em> Cách dùng thực tế phụ thuộc ngữ điệu và ngữ cảnh.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You are ready, {{aren't you::Mệnh đề khẳng định với are dùng đuôi phủ định aren’t + you.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is a doctor, {{isn't she::Mệnh đề khẳng định với is dùng isn’t she.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They were late, {{weren't they::Were khẳng định đi với weren’t they.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He likes tea, {{doesn't he::Động từ thường hiện tại likes dùng trợ động từ does trong đuôi phủ định.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We can swim, {{can't we::Can khẳng định đi với đuôi phủ định can’t we.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You don't drive, {{do you::Mệnh đề phủ định với don’t dùng đuôi khẳng định do you.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Lan went home, {{didn't she::Went là động từ thường quá khứ; dùng did và đại từ she.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They have arrived, {{haven't they::Dùng lại trợ động từ have trong đuôi phủ định.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I am early, {{aren't I::Với I am, câu hỏi đuôi thông dụng là aren’t I.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Let's begin, {{shall we::Sau lời đề nghị Let’s, dùng đuôi shall we.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He plays tennis, ___? (( isn’t he | **doesn’t he** | does he :: Plays là động từ thường hiện tại với he; dùng doesn’t he. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She can’t come, ___? (( can’t she | **can she** | does she :: Mệnh đề phủ định can’t đi với đuôi khẳng định can she. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "They visited us, ___? (( don’t they | **didn’t they** | weren’t they :: Visited là động từ thường quá khứ, dùng didn’t they. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "You are not tired, ___? (( aren’t you | **are you** | do you :: Mệnh đề phủ định với are not đi với đuôi khẳng định are you. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Let’s eat, ___? (( will you | **shall we** | don’t we :: Let’s diễn tả đề nghị cùng làm, thường dùng shall we. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She never smokes, ___? (( doesn’t she | **does she** | is she :: Never mang nghĩa phủ định, nên dùng đuôi khẳng định does she. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | is | ready, | isn’t | she? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | have | finished, | haven’t | they? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ You | don’t | drive, | do | you? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Let’s | start, | shall | we? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The findings were published, {{weren't they::Were khẳng định dùng đuôi phủ định weren’t; findings thay bằng they.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Ms Green has approved the minutes, {{hasn't she::Has là trợ động từ hiện tại hoàn thành; trong ngữ cảnh chair là nữ, dùng she.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee did not reject the proposal, {{did it::Mệnh đề phủ định did not dùng đuôi khẳng định did it; committee được xem là số ít.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The auditors will review the records, {{won't they::Will khẳng định dùng đuôi phủ định won’t they.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers rarely publish without review, {{do they::Rarely mang nghĩa gần phủ định, thường đi với đuôi khẳng định do they.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Nobody objected to the proposal, {{did they::Nobody mang nghĩa phủ định; động từ quá khứ objected dùng did, đại từ đuôi thường là they.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The policy affects everyone, {{doesn't it::Affects là động từ thường hiện tại với chủ ngữ số ít policy, dùng doesn’t it.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The samples must be stored safely, {{mustn't they::Dùng lại must trong đuôi phủ định; samples thay bằng they.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report contains an appendix, ___? (( isn’t it | **doesn’t it** | didn’t it :: Contains là động từ thường hiện tại với chủ ngữ số ít; dùng doesn’t it. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The results have not been confirmed, ___? (( haven’t they | **have they** | are they :: Mệnh đề phủ định dùng đuôi khẳng định với trợ động từ have. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Nobody raised an objection, ___? (( didn’t he | **did they** | do they :: Nobody là phủ định; raised ở quá khứ nên dùng did, đại từ thường là they. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The proposal will require funding, ___? (( will it | **won’t it** | doesn’t it :: Will khẳng định đi với đuôi phủ định won’t it. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The analysts hardly ever disagree, ___? (( don’t they | **do they** | are they :: Hardly ever có nghĩa gần phủ định nên dùng đuôi khẳng định do they. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "I am responsible for the review, ___? (( amn’t I | **aren’t I** | don’t I :: Với I am, đuôi thông dụng là aren’t I. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | findings | were | published, | weren’t | they? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Nobody | raised | an | objection, | did | they? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | proposal | will | require | funding, | won’t | it? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A manager checks the meeting arrangements. The team has booked the room, {{hasn't it::Dùng hasn’t cho has; team được xem là một tập thể số ít trong câu này.}} [đuôi câu hỏi] ? The documents are ready, {{aren't they::Are khẳng định đi với aren’t they.}} [đuôi câu hỏi] ? Nobody cancelled, {{did they::Nobody mang nghĩa phủ định; cancelled ở quá khứ nên dùng did they.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A curator reviews an exhibition. The gallery opens at nine, {{doesn't it::Opens là động từ thường hiện tại với gallery số ít, dùng doesn’t it.}} [đuôi câu hỏi] ? The staff have checked the lighting, {{haven't they::Have khẳng định dùng haven’t they.}} [đuôi câu hỏi] ? Visitors cannot touch the objects, {{can they::Cannot phủ định đi với can they khẳng định.}} [đuôi câu hỏi] ?"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research team reviews a study. The data were anonymised, {{weren't they::Were khẳng định dùng weren’t they.}} [đuôi câu hỏi] ? The lead analyst checked the code, {{didn't they::Checked là quá khứ, dùng didn’t; they là đại từ trung tính cho lead analyst.}} [đuôi câu hỏi] ? The report will be published next week, {{won't it::Will khẳng định dùng won’t it.}} [đuôi câu hỏi] ?"
+    }
+  ]
+}

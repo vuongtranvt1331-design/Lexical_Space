@@ -1,0 +1,224 @@
+{
+  "id": "35",
+  "title": "35. Phân từ làm tính từ",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Tính từ tận cùng -ing và -ed",
+      "contentHTML": "<p>Tính từ -ing thường mô tả đặc điểm gây ra cảm xúc: an intriguing proposal. Tính từ -ed thường mô tả cảm xúc hoặc trạng thái của người hay đối tượng: an intrigued audience. Không áp dụng máy móc nếu từ không có cả hai dạng tính từ thông dụng.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Phân từ bổ nghĩa cho danh từ",
+      "contentHTML": "<p>V-ing có thể chỉ hành động chủ động: researchers examining the data. V3 có thể chỉ nghĩa bị động: evidence presented to the panel. Cần phân biệt hành động và trạng thái theo ngữ cảnh.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Mệnh đề phân từ và chủ ngữ",
+      "contentHTML": "<p>Mệnh đề phân từ cần có chủ thể hợp lý, thường trùng với chủ ngữ mệnh đề chính: Having reviewed the data, the committee issued its report. Having been informed of the risk, the committee revised the plan nhấn mạnh quan hệ bị động và trình tự.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The audience found the evidence {{compelling | convincing | persuasive::Các tính từ này đều có thể mô tả sức thuyết phục của bằng chứng.}} [thuyết phục], prompting a lengthy debate."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The reviewers were {{intrigued::Intrigued mô tả cảm xúc của người đánh giá.}} [tò mò] by the unexpected pattern in the data."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The proposal was {{concerning | worrying | alarming::Các tính từ này đều có thể mô tả đặc điểm gây lo ngại của đề xuất.}} [đáng lo ngại] to several members of the board."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The residents remained {{concerned | worried::Concerned và worried đều có thể mô tả cảm giác lo ngại của cư dân.}} [lo ngại] about the proposed development."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The documents {{submitted::Submitted bổ nghĩa bị động cho documents: những tài liệu đã được nộp.}} (submit) to the panel were incomplete."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The analysts {{examining::Examining bổ nghĩa chủ động cho analysts: những người đang xem xét dữ liệu.}} (examine) the figures identified a discrepancy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having reviewed::Having + V3 có thể chỉ hành động hoàn tất trước mệnh đề chính; committee là chủ thể xem xét.}} (review) the evidence, the committee issued its decision."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having been informed::Having been + V3 chỉ hành động bị động xảy ra trước; committee là bên được thông báo.}} (inform) of the risk, the committee revised its plan."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The findings were {{surprising | astonishing | unexpected::Các tính từ này đều có thể mô tả đặc điểm gây ngạc nhiên của kết quả.}} [đáng ngạc nhiên] even to experienced researchers."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The complexity of the case was ___ to the public, making the explanation hard to follow. (( **confusing** | confused | confusingly :: Confusing mô tả điều gây bối rối; confused thường mô tả người cảm thấy bối rối. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The visitors were ___ by the contradictory directions. (( **confused** | confusing | confusion :: Confused mô tả cảm xúc bối rối của visitors. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The evidence ___ during the inspection was later reviewed. (( **collected** | collecting by | collect yesterday :: Collected bổ nghĩa bị động cho evidence. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The specialists ___ the inquiry recommended a further review. (( **conducting** | conducted by | conduct yesterday :: Conducting bổ nghĩa chủ động cho specialists. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the results, the panel requested a second opinion. (( **Having analysed** | Having analyse | Having been analysing by :: Panel là chủ thể phân tích và hành động xảy ra trước yêu cầu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | audience | found | the | evidence | compelling. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | reviewers | were | intrigued | by | the | pattern. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | documents | submitted | to | the | panel | were | incomplete. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analysts | examining | the | figures | identified | a | discrepancy. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The researchers were {{surprised::Surprised mô tả cảm xúc của researchers.}} [ngạc nhiên] by the outcome."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The report {{prepared::Prepared là V3 bổ nghĩa bị động cho report.}} (prepare) by the team was published yesterday."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Several participants were {{disappointed::Disappointed mô tả cảm xúc thất vọng của người tham gia.}} [thất vọng] by the absence of feedback."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The policy {{introduced::Introduced là phân từ quá khứ bổ nghĩa bị động cho policy.}} (introduce) last year has attracted criticism."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The experts {{advising::Advising bổ nghĩa chủ động cho experts: những người tư vấn cho hội đồng.}} (advise) the board requested further evidence."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Having considered::Having considered chỉ việc xem xét đã hoàn tất trước quyết định; board là chủ thể thực hiện.}} (consider) the objections, the board amended the proposal."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Having been warned::Having been warned diễn tả việc được cảnh báo trước hành động của chủ ngữ.}} (warn) about the delay, the clients adjusted their plans."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The conclusion was {{convincing | compelling | persuasive::Các tính từ này đều có thể mô tả đặc điểm thuyết phục của kết luận.}} [thuyết phục] to most members of the panel."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee remained {{unconvinced | unpersuaded | not convinced | not persuaded::Các dạng này đều mô tả trạng thái chưa bị thuyết phục của ủy ban.}} [chưa bị thuyết phục] by the proposed explanation."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The recommendations {{outlined::Outlined là V3 bổ nghĩa bị động cho recommendations.}} (outline) in the report require further discussion."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The scientist {{leading::Leading bổ nghĩa chủ động cho scientist: người đang dẫn dắt nghiên cứu.}} (lead) the study presented the results."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The lengthy delay was ___ to the applicants. (( **frustrating** | frustrated | frustration :: Frustrating mô tả điều gây thất vọng hoặc bực bội. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The applicants were ___ by the repeated postponements. (( **frustrated** | frustrating | frustrate :: Frustrated mô tả cảm xúc của applicants. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The proposals ___ at the meeting will be circulated tomorrow. (( **discussed** | discussing by | discuss yesterday :: Discussed bổ nghĩa bị động cho proposals. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ of the change, the committee amended the timetable. (( **Having been notified** | Having notified by | Having been notify :: Committee được thông báo trước; dùng having been + V3. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The staff ___ the event must follow the revised guidelines. (( **organising** | organised by | organise yesterday :: Organising bổ nghĩa chủ động cho staff. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Having | reviewed | the | evidence, | the | committee | issued | its | decision. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Having | been | informed | of | the | risk, | the | committee | revised | its | plan. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | conclusion | was | convincing | to | the | panel. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | remained | unconvinced | by | the | explanation. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The evidence {{presented::Presented là V3 bổ nghĩa bị động cho evidence.}} (present) to the board was {{concerning | worrying | alarming::Các tính từ này đều có thể mô tả đặc điểm gây lo ngại của bằng chứng.}} [đáng lo ngại]. The members were {{concerned | worried::Concerned và worried mô tả cảm xúc lo ngại của các thành viên.}} [lo ngại] about its implications. They requested a further review."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The analysts {{examining::Examining bổ nghĩa chủ động cho analysts.}} (examine) the data identified an inconsistency. {{Having been informed::Having been informed chỉ việc được thông báo trước; board là bên nhận thông tin.}} (inform) of the issue, the board postponed its decision. It found the explanation {{unconvincing::Unconvincing mô tả đặc điểm chưa thuyết phục của lời giải thích.}} [không thuyết phục]."
+    }
+  ],
+  "lessonNumber": 3
+}

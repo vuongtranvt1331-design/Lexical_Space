@@ -1,0 +1,223 @@
+{
+  "id": "53",
+  "title": "53. Because / Because of & Although / Despite",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Because và Because of",
+      "contentHTML": "<p>Để giải thích <strong>nguyên nhân</strong>, ta dùng because hoặc because of. Sự khác biệt chính là thành phần theo sau.</p><div class=\"rule-box\"><p><strong>Because + mệnh đề</strong> (chủ ngữ + động từ): <em>We stayed inside because it rained.</em> Chúng tôi ở trong nhà vì trời mưa.</p><p><strong>Because of + danh từ / đại từ / V-ing:</strong> <em>We stayed inside because of the rain.</em> Nghĩa tương tự, nhưng <em>the rain</em> là cụm danh từ.</p></div><p>Khi chuyển đổi, chọn danh từ hoặc cụm V-ing giữ đúng ý nghĩa: <em>because she was ill</em> → <em>because of her illness</em>. Không viết <s>because of she was ill</s>.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Although, despite và in spite of",
+      "contentHTML": "<p>Các từ này giới thiệu một thực tế trái với kết quả dự kiến: <em>Although it rained, we went out.</em> Dù trời mưa, chúng tôi vẫn ra ngoài.</p><div class=\"rule-box\"><p><strong>Although / Though / Even though + mệnh đề:</strong> <em>Although he was tired, he finished.</em></p><p><strong>Despite / In spite of + danh từ / đại từ / V-ing:</strong> <em>Despite his tiredness, he finished.</em> <em>In spite of feeling tired, he finished.</em></p></div><p>Không thêm <em>of</em> sau despite; luôn có <em>of</em> trong in spite of. Không kết hợp although và but trong cùng cấu trúc: <em>Although it rained, we went out.</em> hoặc <em>It rained, but we went out.</em></p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Cách chọn và chuyển đổi",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>Bước 1: Xác định quan hệ.</strong> Nguyên nhân → because / because of; tương phản → although / despite / in spite of.</p><p><strong>Bước 2: Nhìn phần theo sau.</strong> Có chủ ngữ và động từ chia thì → because / although. Là danh từ, đại từ hoặc V-ing → because of / despite / in spite of.</p><p><strong>Bước 3: Kiểm tra nghĩa và chủ thể.</strong> <em>Although she was tired, she studied.</em> → <em>Despite being tired, she studied.</em> Người mệt và người học đều là she.</p></div><p>Nếu muốn giữ nguyên mệnh đề sau giới từ, có thể dùng <em>despite the fact that …</em> hoặc <em>because of the fact that …</em>; cách này thường dài hơn cần thiết.</p><p>Dấu phẩy thường được dùng sau mệnh đề phụ đứng đầu câu: <em>Although it was late, we stayed.</em></p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We stayed home {{because::Because đứng trước mệnh đề đầy đủ it rained và giới thiệu nguyên nhân.}} [vì] it rained."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The match stopped {{because of::Because of đứng trước cụm danh từ the rain.}} [vì] the rain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though::Although hoặc Though đứng trước mệnh đề she was tired để chỉ tương phản.}} [mặc dù] she was tired, she kept working."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Despite::Despite đứng trước cụm danh từ the cold weather và không đi kèm of.}} [mặc dù] the cold weather, we walked."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "In spite {{of::In spite of là một cụm giới từ cố định.}} [mặc dù] the rain, they played."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He smiled because {{he::Because đi với mệnh đề gồm chủ ngữ he và động từ was.}} [anh ấy] was happy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She stayed home because of {{being::Because of là giới từ nên dùng V-ing: being ill.}} (be) ill."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Despite {{feeling::Despite là giới từ nên theo sau bằng V-ing: feeling tired.}} (feel) tired, Mai studied."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They went swimming {{although | though::Although và Though đều mở đầu mệnh đề it was cold, diễn tả tương phản.}} [mặc dù] it was cold."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The train was late because {{of::Because of đứng trước danh từ snow; because một mình cần mệnh đề.}} [vì] the snow."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We left early ___ it was late. (( because of | **because** | despite :: Because đứng trước mệnh đề it was late và nêu nguyên nhân. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The school closed ___ the storm. (( although | because | **because of** :: The storm là cụm danh từ nêu nguyên nhân, nên dùng because of. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the rain, the game continued. (( Although | **Despite** | Because :: The rain là cụm danh từ và ý câu là tương phản, nên dùng despite. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ she was ill, she came to work. (( Despite | **Although** | Because of :: She was ill là mệnh đề đầy đủ nêu sự tương phản, nên dùng although. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( Despite of the rain, we left. | **In spite of the rain, we left.** | Although the rain, we left. :: In spite of theo sau bằng cụm danh từ; despite không đi với of. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ he was tired, he finished the book. (( Although ... but | **Although** | Despite of :: Although nối mệnh đề và không cần but trong cùng câu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | stayed | home | because | it | rained. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | game | continued | despite | the | rain. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Although | she | was | tired, | she | studied. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | train | was | late | because | of | snow. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The proposal was withdrawn {{because::Because đứng trước mệnh đề the costs exceeded the budget và nêu nguyên nhân.}} [vì] the costs exceeded the budget."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The flight was delayed {{because of::Because of đứng trước cụm danh từ a technical problem để nêu nguyên nhân.}} [vì] a technical problem."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though | Even though::Các liên từ này đứng trước mệnh đề the evidence was limited và nêu tương phản.}} [mặc dù] the evidence was limited, the committee proceeded cautiously."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Despite::Despite đứng trước cụm danh từ strong opposition và chỉ tương phản.}} [mặc dù] strong opposition, the policy was adopted."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers continued {{despite | in spite of::Despite và in spite of đều đứng trước cụm danh từ several setbacks.}} [mặc dù] several setbacks."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team revised its method because of {{receiving::Because of + V-ing: nhóm sửa phương pháp vì nhận được phản hồi mới.}} (receive) new feedback."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Despite::Despite the fact that có thể theo sau bởi mệnh đề; despite không đi kèm of.}} [mặc dù] the fact that funding was reduced, the project continued."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though::Although hoặc though mở đầu mệnh đề có chủ ngữ the findings và động từ were.}} [mặc dù] the findings were preliminary, they prompted further research."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The flight was cancelled ___ dense fog. (( because | **because of** | although :: Dense fog là cụm danh từ nêu nguyên nhân, dùng because of. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the budget was restricted, the programme achieved its goals. (( Despite | **Although** | Because of :: The budget was restricted là mệnh đề nêu sự tương phản nên dùng although. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The trial continued ___ several equipment failures. (( because | although | **in spite of** :: Several equipment failures là cụm danh từ nêu trở ngại, dùng in spite of. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which correctly rewrites “Because she was ill, she stayed home”? (( Because of she was ill, she stayed home. | **Because of her illness, she stayed home.** | Despite her illness, she stayed home. :: Her illness là cụm danh từ biểu đạt nguyên nhân; despite sẽ đổi quan hệ sang tương phản. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ receiving conflicting reports, the manager postponed the decision. (( Although | **Because of** | Because :: Receiving conflicting reports là cụm V-ing nêu nguyên nhân, theo sau because of. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which is grammatical? (( Although the evidence was limited, but they continued. | **Despite the limited evidence, they continued.** | Despite of the limited evidence, they continued. :: Despite đứng trước cụm danh từ, không thêm of; although không kết hợp but như trong lựa chọn đầu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | delayed | the | decision | because | of | insufficient | evidence. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Although | funding | was | reduced, | the | project | continued. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Despite | several | setbacks, | the | researchers | completed | the | trial. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The council reviewed a flood plan. The meeting was postponed {{because::Because đứng trước mệnh đề the roads were closed để nêu nguyên nhân.}} [vì] the roads were closed. {{Despite::Despite đứng trước cụm danh từ the delay để nêu tương phản.}} [mặc dù] the delay, staff completed the report. Further changes were needed {{because of::Because of đứng trước cụm danh từ new evidence.}} [vì] new evidence."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A laboratory updated its safety rules. {{Although::Although đứng trước mệnh đề most staff were experienced và chỉ tương phản.}} [mặc dù] most staff were experienced, everyone attended training. Some sessions moved online {{because of::Because of đứng trước cụm danh từ transport disruption.}} [vì] transport disruption. {{Despite::Despite đứng trước cụm danh từ these difficulties.}} [mặc dù] these difficulties, the programme finished on time."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A company examined customer complaints. Sales fell {{because::Because đứng trước mệnh đề delivery times increased.}} [vì] delivery times increased. {{In spite of::In spite of đứng trước danh từ the shortage và nêu trở ngại.}} [mặc dù] the shortage of staff, the team replied promptly. It introduced new procedures {{because of::Because of đứng trước cụm danh từ repeated delays.}} [vì] repeated delays."
+    }
+  ]
+}

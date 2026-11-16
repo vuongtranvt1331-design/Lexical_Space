@@ -1,0 +1,223 @@
+{
+  "id": "56",
+  "title": "56. Both / Either / Neither / Not only",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Both / Either / Neither",
+      "contentHTML": "<p>Các cặp liên từ giúp nối hai thành phần có vai trò ngữ pháp tương đương: hai danh từ, hai động từ hoặc hai cụm từ.</p><div class=\"rule-box\"><p><strong>Both A and B</strong> = cả A lẫn B: <em>Both Mai and Lan are here.</em> Khi nối hai chủ ngữ, động từ thường ở số nhiều.</p><p><strong>Either A or B</strong> = A hoặc B: <em>You can take either the bus or the train.</em></p><p><strong>Neither A nor B</strong> = không A cũng không B: <em>Neither tea nor coffee is available.</em> Neither mang nghĩa phủ định, nên tránh thêm một từ phủ định không cần thiết.</p></div><p>Chỉ dùng đúng cặp: both … and; either … or; neither … nor. Trong thực tế either … or có thể chỉ lựa chọn hoặc khả năng tùy ngữ cảnh.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Not only / But also và cấu trúc song song",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>Not only A but also B</strong> = không chỉ A mà còn B: <em>The room is not only quiet but also spacious.</em> Hai tính từ quiet / spacious cùng loại.</p><p>Nối hai động từ: <em>She not only writes reports but also checks the data.</em> Giữ dạng và vai trò của hai phần song song để câu rõ ràng.</p></div><p>Trong văn phong trang trọng, nếu <strong>Not only</strong> đứng đầu và bổ nghĩa cho cả mệnh đề, đảo trợ động từ trước chủ ngữ: <em>Not only did she write the report, but she also checked the data.</em> Không đảo nếu not only chỉ bổ nghĩa cho chủ ngữ: <em>Not only the manager but also the staff were present.</em></p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Hòa hợp chủ ngữ – động từ",
+      "contentHTML": "<p>Khi các cặp <strong>either … or</strong>, <strong>neither … nor</strong> và <strong>not only … but also</strong> nối hai chủ ngữ, trong cách dùng thông thường động từ hòa hợp với chủ ngữ gần nó nhất:</p><div class=\"rule-box\"><p><em>Either the teachers or the principal <strong>is</strong> attending.</em> Principal số ít gần động từ.</p><p><em>Either the principal or the teachers <strong>are</strong> attending.</em> Teachers số nhiều gần động từ.</p><p><em>Neither the assistants nor the supervisor <strong>has</strong> signed.</em></p></div><p>Với <strong>both A and B</strong> chỉ hai đối tượng khác nhau, thông thường dùng động từ số nhiều: <em>Both the manager and the assistant are present.</em> Nếu sự kết hợp dễ gây gượng, hãy viết lại câu cho rõ.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Both Anna {{and::Both phải đi với and.}} [và] Ben are here."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "You can take either the bus {{or::Either đi với or để nêu hai lựa chọn.}} [hoặc] the train."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Neither tea {{nor::Neither đi với nor: không trà cũng không cà phê.}} [cũng không] coffee is ready."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is not only kind {{but also::Not only đi cùng but also để bổ sung đặc điểm thứ hai.}} [mà còn] patient."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Both my brother and my sister {{are::Both nối hai chủ ngữ khác nhau nên dùng động từ số nhiều are.}} (be) at home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Either the children or their mother {{is::Với either … or, động từ thường hòa hợp với chủ ngữ gần nhất mother, số ít.}} (be) coming."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Neither the teacher nor the students {{are::Students số nhiều đứng gần động từ nên dùng are.}} (be) late."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Not only the children but also their father {{is::Father số ít là chủ ngữ gần động từ nên dùng is.}} (be) here."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We can eat either rice {{or::Either luôn ghép với or trong cặp liên từ này.}} [hoặc] noodles."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Both the dog {{and::Both … and nối hai chủ ngữ.}} [và] the cat are sleeping."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ Mai and Lan like music. (( Either | **Both** | Neither :: Both đi với and để chỉ cả hai. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "You can choose either soup ___ salad. (( and | **or** | nor :: Either đi với or. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Neither the book nor the pens ___ here. (( is | **are** | am :: Pens là chủ ngữ số nhiều gần động từ nên dùng are. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The test is not only short ___ easy. (( or | **but also** | nor :: Cặp đúng là not only … but also. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Both my parents ___ teachers. (( is | **are** | am :: Both nối hai người nên dùng are. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( Neither the dog or the cat is outside. | **Neither the dog nor the cat is outside.** | Both the dog nor the cat is outside. :: Cặp đúng là neither … nor. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Both | my | brother | and | my | sister | are | here. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ You | can | take | either | the | bus | or | the | train. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Neither | tea | nor | coffee | is | available. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | room | is | not | only | quiet | but | also | spacious. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Neither the board members nor the chair {{has::Chair số ít đứng gần động từ nên dùng has.}} (have) signed the agreement."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Either the director or the researchers {{are::Researchers số nhiều đứng gần động từ nên dùng are.}} (be) responsible for the report."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Both the regulator and the committee {{have::Both nối hai chủ ngữ nên thông thường dùng have số nhiều.}} (have) approved the proposal."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Not only the volunteers but also the coordinator {{was::Coordinator số ít đứng gần động từ; quá khứ dùng was.}} (be) present."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The policy affects not only employers {{but also::Not only A but also B nối hai nhóm employers và employees.}} [mà còn] employees."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report is both detailed {{and::Both … and nối hai tính từ song song.}} [và] accessible."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Neither the evidence {{nor::Neither ghép với nor để nối hai chủ ngữ.}} [cũng không] the testimony was conclusive."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Not only {{did::Not only đứng đầu bổ nghĩa cho mệnh đề; đảo did trước chủ ngữ và dùng động từ nguyên mẫu.}} (do) the team meet its target, but it also reduced costs."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Either the managers or the director ___ responsible. (( are | **is** | were :: Director số ít gần động từ nhất nên dùng is. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Neither the supervisor nor the assistants ___ signed. (( has | **have** | is :: Assistants số nhiều đứng gần động từ nên dùng have. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the researcher but also the technicians were acknowledged. (( Neither | **Not only** | Either :: Cặp not only … but also nối hai nhóm được ghi nhận. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Choose the parallel structure. (( The report is both detailed and explains clearly. | **The report is both detailed and accessible.** | The report is both detailed or accessible. :: Hai tính từ detailed và accessible song song sau both … and. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Choose the correct inversion. (( Not only she completed the audit, but she also filed it. | **Not only did she complete the audit, but she also filed it.** | Not only did she completed the audit, but she also filed it. :: Đầu câu not only yêu cầu đảo did; sau did động từ ở nguyên mẫu complete. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which correctly expresses “không bên nào”? (( Either department or agency supported it. | **Neither the department nor the agency supported it.** | Both the department and the agency supported it. :: Neither … nor phủ định cả hai bên. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Neither | the | board | members | nor | the | chair | has | signed. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Both | the | regulator | and | the | committee | have | approved | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Not | only | did | the | team | meet | its | target, | but | it | also | reduced | costs. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee reviewed two proposals. Both the chair {{and::Both đi với and.}} [và] the secretary supported the first. Neither the finance team nor the director {{was::Director số ít gần động từ; ngữ cảnh quá khứ dùng was.}} (be) ready to approve the second. The first proposal was not only practical {{but also::Not only đi với but also.}} [mà còn] affordable."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A project needs a final review. Either the coordinator or the assistants {{are::Assistants số nhiều gần động từ nên dùng are.}} (be) available today. Neither the assistants nor the manager {{has::Manager số ít gần động từ nên dùng has.}} (have) signed the form yet. Both the budget {{and::Both đi với and.}} [và] the schedule require approval."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum assessed its new exhibition. Both visitors {{and::Both … and nối hai chủ ngữ số nhiều.}} [và] staff welcomed the changes. Not only the designers but also the curator {{was::Curator số ít gần động từ; dùng was trong quá khứ.}} (be) thanked. The exhibit was not only informative {{but also::Not only đi với but also.}} [mà còn] engaging."
+    }
+  ]
+}

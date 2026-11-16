@@ -1,0 +1,764 @@
+{
+  "id": "36",
+  "lessonNumber": 4,
+  "title": "36. Ôn tập: Dạng động từ",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Ôn tập Dạng động từ C1",
+      "contentHTML": "<p>Ôn mẫu V-ing và to-infinitive, động từ đổi nghĩa và phân từ trong ba bài của nhóm.</p><div class=\"rule-box\">100 câu cơ bản và 50 câu vận dụng.</div><p><strong>Phạm vi bổ sung:</strong> Ôn thêm used to, prefer / would rather và các mẫu suggest, prevent, make, let, allow, help.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The board deferred {{disclosing::Defer thường đi với V-ing; disclosing là bổ ngữ của deferred.}} (disclose) the findings until the independent audit had concluded."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I used to {{walk::Used to nói về thói quen quá khứ và đi với động từ nguyên mẫu walk.}} (walk) to school."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The audience found the evidence {{compelling | convincing | persuasive::Các tính từ này đều có thể mô tả sức thuyết phục của bằng chứng.}} [thuyết phục], prompting a lengthy debate."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The committee agreed {{to reconsider::Agree đi với to-infinitive khi diễn tả sự đồng ý thực hiện hành động.}} (reconsider) its decision in light of new evidence."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The adviser remembered {{notifying::Remember doing chỉ ký ức về hành động đã xảy ra.}} (notify) the client; she could recall the conversation."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is used to {{getting::Trong be used to, to là giới từ nên dùng V-ing: getting.}} (get) up early."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The consultant avoided {{making::Avoid thường đi với V-ing; making bổ nghĩa cho avoided.}} (make) an unequivocal claim before verifying the figures."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The firm stopped {{using::Stop doing nghĩa là ngừng hoạt động đang được thực hiện.}} (use) the outdated system permanently."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We are getting used to {{living::Get used to đi với V-ing: living.}} (live) in the city."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The foundation aims {{to expand::Aim đi với to-infinitive để diễn tả mục tiêu.}} (expand) access to specialist training in rural areas."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "During the journey, the team stopped {{to consult::Stop to do nghĩa là dừng chuyến đi để tham khảo bản đồ.}} (consult) the map before continuing."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The residents remained {{concerned | worried::Concerned và worried đều có thể mô tả cảm giác lo ngại của cư dân.}} [lo ngại] about the proposed development."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He did not {{use::Sau did not dùng dạng use to, không dùng used to.}} (use) to like tea."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The spokesperson regretted {{disclosing | having disclosed::Regret doing hoặc having done có thể diễn tả hối tiếc về hành động đã xảy ra.}} (disclose) the confidential details; the information had already been released."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The documents {{submitted::Submitted bổ nghĩa bị động cho documents: những tài liệu đã được nộp.}} (submit) to the panel were incomplete."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The regulator refused {{to authorise | to authorize::Refuse đi với to-infinitive; authorise và authorize là hai cách viết hợp lệ.}} (authorise) the transaction without further safeguards."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Did you {{use::Sau did trong câu hỏi, dùng use to + nguyên mẫu.}} (use) to play football?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The analysts {{examining::Examining bổ nghĩa chủ động cho analysts: những người đang xem xét dữ liệu.}} (examine) the figures identified a discrepancy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The director is committed to {{improving::Trong committed to, to là giới từ nên theo sau bằng V-ing.}} (improve) transparency across the organisation."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My uncle ___ in this village, but he moved away. (( is used to live | **used to live** | used to living :: Used to + nguyên mẫu diễn tả trạng thái sống ở làng trong quá khứ, nay không còn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Having reviewed::Having + V3 có thể chỉ hành động hoàn tất trước mệnh đề chính; committee là chủ thể xem xét.}} (review) the evidence, the committee issued its decision."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The applicant was accused of {{misrepresenting | having misrepresented::Sau giới từ of dùng V-ing; having misrepresented nhấn mạnh hành động trước lời buộc tội.}} (misrepresent) her qualifications."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The technician tried {{to restore::Try to do nhấn mạnh nỗ lực khôi phục; ngữ cảnh cho biết không thành công.}} (restore) the files, but could not recover them."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence means “Tôi đã quen với trời lạnh”? (( I used to cold weather. | **I am used to cold weather.** | I used to be cold weather. :: Be used to + danh từ diễn tả trạng thái đã quen. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The agency decided {{to suspend::Decide đi với to-infinitive để diễn tả quyết định thực hiện.}} (suspend) the programme pending a review."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The chair forgot {{to circulate::Forget to do chỉ việc cần thực hiện đã bị quên; tài liệu chưa được gửi.}} (circulate) the agenda, so nobody received it."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | is | used | to | working | late. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The firm opted ___ the acquisition until market conditions improved. (( **to delay** | delaying to | delay yesterday :: Opt đi với to-infinitive. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The reviewer stopped ___ the article altogether after changing jobs. (( **editing** | to editing | edit to :: Stop doing nghĩa là ngừng hoạt động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The complexity of the case was ___ to the public, making the explanation hard to follow. (( **confusing** | confused | confusingly :: Confusing mô tả điều gây bối rối; confused thường mô tả người cảm thấy bối rối. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I prefer tea {{to::Prefer + danh từ + to + danh từ: thích trà hơn cà phê.}} [hơn] coffee."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "On the way to the conference, they stopped ___ some refreshments before continuing. (( **to buy** | buying to | buy yesterday :: Stop to do diễn tả dừng lại nhằm thực hiện một việc khác. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The visitors were ___ by the contradictory directions. (( **confused** | confusing | confusion :: Confused mô tả cảm xúc bối rối của visitors. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She prefers {{walking::Prefer + V-ing + to + V-ing; cả hai động từ cùng dạng.}} (walk) to driving."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She remembered ___ the application, as she could still recall pressing the send button. (( **submitting** | to submitting | submit to :: Remember doing chỉ ký ức về hành động đã xảy ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The evidence ___ during the inspection was later reviewed. (( **collected** | collecting by | collect yesterday :: Collected bổ nghĩa bị động cho evidence. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The organisation undertook ___ the allegations promptly. (( **to investigate** | investigating to | investigate yesterday :: Undertake đi với to-infinitive khi cam kết thực hiện. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We would rather {{stay::Would rather theo sau bằng động từ nguyên mẫu không to.}} (stay) home tonight."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The specialists ___ the inquiry recommended a further review. (( **conducting** | conducted by | conduct yesterday :: Conducting bổ nghĩa chủ động cho specialists. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The director insisted on ___ before a decision was made. (( **being consulted** | be consulted to | being consult :: Sau on dùng V-ing; being consulted là dạng bị động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "If the device remains unresponsive, try ___ it for a minute as an experiment. (( **unplugging** | to unplugging | unplug yesterday :: Try doing gợi ý thử một biện pháp. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I would prefer {{to leave::Would prefer + to V diễn tả lựa chọn cụ thể.}} (leave) now."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | board | deferred | disclosing | the | findings. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | remembered | to | notify | the | client. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They would rather {{not go::Would rather not + động từ nguyên mẫu là dạng phủ định.}} (go) out in the rain."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | agreed | to | reconsider | its | decision. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | remembered | notifying | the | client. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | reviewers | were | intrigued | by | the | pattern. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He would rather walk {{than::Would rather + V + than + V khi so sánh hai hành động.}} [hơn là] drive."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | firm | stopped | using | the | outdated | system. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | documents | submitted | to | the | panel | were | incomplete. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I prefer swimming ___ running. (( than | **to** | rather :: Prefer V-ing to V-ing dùng to làm giới từ so sánh. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | stopped | to | consult | the | map. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analysts | examining | the | figures | identified | a | discrepancy. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The firm intends {{to consult::Intend đi với to-infinitive.}} (consult) affected communities before proceeding."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | would | rather | walk | than | drive. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The researchers were {{surprised::Surprised mô tả cảm xúc của researchers.}} [ngạc nhiên] by the outcome."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The adviser recommended {{seeking::Recommend thường đi với V-ing khi khuyên thực hiện một hành động.}} (seek) independent legal advice."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She suggested {{taking::Suggest + V-ing: suggested taking a taxi.}} (take) a taxi."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The report {{prepared::Prepared là V3 bổ nghĩa bị động cho report.}} (prepare) by the team was published yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The organisation intends ___ with affected residents before the decision is final. (( **to liaise** | liaising to | liaise yesterday :: Intend đi với to-infinitive. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The chair suggested ___ an independent adviser before proceeding. (( **appointing** | to appointing | appoint yesterday :: Suggest thường đi với V-ing khi đề xuất một hành động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The rain prevented us {{from::Prevent + tân ngữ + from + V-ing.}} [khỏi] playing."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The agency is committed to ___ its reporting procedures. (( **revising** | revise to | revised to :: To trong committed to là giới từ; sau đó dùng V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The board agreed ___ the timetable in response to new evidence. (( **to amend** | amending to | amend yesterday :: Agree đi với to-infinitive. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The adviser recommended ___ further guidance before implementation. (( **obtaining** | to obtaining | obtain yesterday :: Recommend thường đi với V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My parents let me {{stay::Let + tân ngữ + động từ nguyên mẫu không to.}} (stay) home."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The spokesperson denied ___ any confidential records. (( **copying** | to copying | copy yesterday :: Deny đi với V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The committee opted ___ its findings until the audit was complete. (( **to withhold** | withholding to | withhold yesterday :: Opt đi với to-infinitive. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The teacher made him {{apologise | apologize::Make + tân ngữ + nguyên mẫu không to; cả hai cách viết đều đúng.}} (apologise) to the class."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The research involves ___ several independent sources. (( **comparing** | to comparing | compare yesterday :: Involve thường đi với V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The firm pledged ___ any errors promptly. (( **to correct** | correcting to | correct yesterday :: Pledge đi với to-infinitive. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The regulator postponed ___ its decision until the hearing had concluded. (( **announcing** | to announcing | announce yesterday :: Postpone thường đi với V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They allowed us {{to enter::Allow + tân ngữ + to V.}} (enter) the room."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The journalist stopped ___ the case after the inquiry had closed; she no longer worked on it. (( **investigating** | to investigating | investigate yesterday :: Stop doing chỉ ngừng hoạt động. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The delegation stopped ___ the ambassador before continuing its journey. (( **to meet** | meeting to | meet yesterday :: Stop to do chỉ dừng lại nhằm làm việc khác. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She helped me {{carry | to carry::Help + tân ngữ + V hoặc to V đều đúng.}} (carry) the bags."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Please remember ___ the form before the deadline; it has not yet been signed. (( **to sign** | signing to | sign yesterday :: Remember to do nói về nhiệm vụ cần thực hiện. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The author regretted ___ the source after discovering that it was unreliable. (( **citing** | to citing | cite yesterday :: Regret doing diễn tả sự hối tiếc về hành động đã xảy ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We regret ___ that the workshop is fully booked; this is the formal announcement. (( **to announce** | announcing to | announce yesterday :: Regret to announce thường dùng khi thông báo điều đáng tiếc. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He suggested that we {{leave | should leave::Suggest that + S + nguyên mẫu giả định hoặc should + nguyên mẫu.}} (leave) early."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The team tried ___ a replacement, but none was available. (( **to locate** | locating to | locate yesterday :: Try to do nhấn mạnh nỗ lực, có thể không thành công. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The speaker went on ___ the implications after outlining the evidence; this was the next topic. (( **to address** | addressing to | address yesterday :: Go on to do chỉ chuyển sang việc tiếp theo. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The fence stopped the dog from {{escaping::Sau giới từ from dùng V-ing.}} (escape)."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The new deadline means ___ additional staff; this follows from the decision. (( **recruiting** | to recruiting | recruit yesterday :: Mean doing diễn tả hệ quả. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She meant ___ the adviser but was interrupted before she could do so. (( **to contact** | contacting to | contact yesterday :: Mean to do có thể chỉ ý định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He forgot ___ the file; the records show he had sent it but no longer remembered doing so. (( **sending** | to sending | send yesterday :: Forget doing nói về việc không nhớ hành động đã xảy ra. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She was made {{to wait::Ở thể bị động, be made to + V.}} (wait) outside."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The complexity of the regulations was ___ to new applicants. (( **confusing** | confused | confusion :: Confusing mô tả điều gây bối rối. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The applicants were ___ by the contradictory guidance. (( **confused** | confusing | confusion :: Confused mô tả cảm xúc của người nhận hướng dẫn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The continuing delay was ___ to the stakeholders. (( **frustrating** | frustrated | frustration :: Frustrating mô tả điều gây bực bội. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She suggested ___ by bus. (( to go | **going** | go :: Suggest theo sau trực tiếp bằng V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The documents ___ during the inquiry were archived securely. (( **collected** | collecting by | collect yesterday :: Collected bổ nghĩa bị động cho documents. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The specialists ___ the evidence requested an extension. (( **inspecting** | inspected by | inspect yesterday :: Inspecting bổ nghĩa chủ động cho specialists. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He stopped ___ some water before continuing. (( drinking | **to drink** | drink :: Stopped to drink nghĩa là dừng việc đang làm để uống nước. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ of the delay, the applicants revised their plans. (( **Having been notified** | Having notified by | Having been notify :: Applicants được thông báo trước; dùng having been + V3. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The conclusions were ___ to the reviewers, prompting a request for clarification. (( **puzzling** | puzzled | puzzle :: Puzzling mô tả đặc điểm gây bối rối của kết luận. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The reviewers were ___ by the conclusions. (( **puzzled** | puzzling | puzzle :: Puzzled mô tả cảm xúc của reviewers. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | helped | me | carry | the | bags. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The team ___ the project will present its findings tomorrow. (( **leading** | led by | lead yesterday :: Leading bổ nghĩa chủ động cho team. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The panel considered {{appointing::Consider thường đi với V-ing khi nghĩa là cân nhắc thực hiện hành động.}} (appoint) an external adviser."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The organisation used to {{rely::Used to + nguyên mẫu chỉ cách làm cũ nay đã thay đổi.}} (rely) on paper records."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Several participants were {{disappointed::Disappointed mô tả cảm xúc thất vọng của người tham gia.}} [thất vọng] by the absence of feedback."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The company postponed {{launching::Postpone thường đi với V-ing.}} (launch) the product until the outstanding defects had been addressed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The analysts are used to {{interpreting::Be used to + V-ing diễn tả họ đã quen phân tích dữ liệu phức tạp.}} (interpret) complex data."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The policy {{introduced::Introduced là phân từ quá khứ bổ nghĩa bị động cho policy.}} (introduce) last year has attracted criticism."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The speaker declined {{to elaborate::Decline thường đi với to-infinitive khi từ chối thực hiện.}} (elaborate) on the confidential settlement."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "New employees are gradually getting used to {{collaborating::Get used to + V-ing chỉ quá trình dần quen với việc cộng tác.}} (collaborate) remotely."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The experts {{advising::Advising bổ nghĩa chủ động cho experts: những người tư vấn cho hội đồng.}} (advise) the board requested further evidence."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The organisation is intent on {{reducing::Sau giới từ on dùng V-ing; intent on diễn tả quyết tâm.}} (reduce) its environmental impact."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which question asks about a former habit? (( Are you used to working remotely? | **Did you use to work remotely?** | Are you getting used to working remotely? :: Did … use to + V hỏi về thói quen trước đây. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Having considered::Having considered chỉ việc xem xét đã hoàn tất trước quyết định; board là chủ thể thực hiện.}} (consider) the objections, the board amended the proposal."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The chair objected to {{being excluded::Object to có to là giới từ; being excluded là dạng V-ing bị động.}} (exclude) from the negotiations."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A small firm moved online last year. It used to {{send::Used to + nguyên mẫu nói về thói quen cũ.}} (send) all invoices by post. Its staff are now used to {{processing::Be used to + V-ing diễn tả trạng thái đã quen.}} (process) payments digitally. New recruits are still getting used to {{using::Get used to + V-ing diễn tả quá trình dần quen.}} (use) the software."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Having been warned::Having been warned diễn tả việc được cảnh báo trước hành động của chủ ngữ.}} (warn) about the delay, the clients adjusted their plans."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board agreed {{to commission::Agree đi với to-infinitive để diễn tả thỏa thuận thực hiện.}} (commission) an independent assessment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board would rather the director {{attended::Would rather + chủ ngữ khác + quá khứ đơn diễn tả mong muốn ở hiện tại hoặc tương lai.}} (attend) the next meeting."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The conclusion was {{convincing | compelling | persuasive::Các tính từ này đều có thể mô tả đặc điểm thuyết phục của kết luận.}} [thuyết phục] to most members of the panel."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The study involves {{analysing | analyzing::Involve thường đi với V-ing; analysing và analyzing đều đúng chính tả.}} (analyse) data from several separate sources."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "I would rather the team {{had checked::Mong điều khác với thực tế trong quá khứ dùng would rather + S + had + V3.}} (check) the figures before publication."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee remained {{unconvinced | unpersuaded | not convinced | not persuaded::Các dạng này đều mô tả trạng thái chưa bị thuyết phục của ủy ban.}} [chưa bị thuyết phục] by the proposed explanation."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The spokesperson admitted {{having overlooked | overlooking::Admit đi với V-ing; having overlooked nhấn mạnh việc bỏ sót xảy ra trước lời thừa nhận.}} (overlook) a significant qualification."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers prefer collecting fresh data {{to::Prefer V-ing to V-ing: to là giới từ.}} [hơn] relying on estimates."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The recommendations {{outlined::Outlined là V3 bổ nghĩa bị động cho recommendations.}} (outline) in the report require further discussion."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The panel resolved ___ the matter at its next meeting. (( **to address** | addressing to | addressed to :: Resolve đi với to-infinitive khi diễn tả quyết định. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "I regret that they did not notify us earlier. I would rather they ___. (( notify us earlier | notified us earlier | **had notified us earlier** :: Mong điều trái với quá khứ dùng had + V3 sau chủ ngữ khác. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The lengthy delay was ___ to the applicants. (( **frustrating** | frustrated | frustration :: Frustrating mô tả điều gây thất vọng hoặc bực bội. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team is choosing its working arrangements. Its members prefer meeting online {{to::Prefer V-ing to V-ing: to là giới từ.}} [hơn] travelling each week. For the next meeting, the manager would rather {{use::Would rather + V nguyên mẫu khi cùng chủ thể.}} (use) a video call. She would rather everyone {{joined::Would rather + chủ ngữ khác + quá khứ đơn nói mong muốn về tương lai.}} (join) on time."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The analyst regretted ___ the deadline after it had already passed. (( **missing** | to missing | miss to :: Regret doing nói hối tiếc về một việc đã xảy ra. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The applicants were ___ by the repeated postponements. (( **frustrated** | frustrating | frustrate :: Frustrated mô tả cảm xúc của applicants. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The consultant suggested {{reviewing::Suggest + V-ing khi gợi ý một hành động.}} (review) the evidence before publication."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "After describing the evidence, the witness went on ___ the events of the following day. (( **to recount** | recounting to | recount yesterday :: Go on to do chỉ chuyển sang hành động tiếp theo. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The proposals ___ at the meeting will be circulated tomorrow. (( **discussed** | discussing by | discuss yesterday :: Discussed bổ nghĩa bị động cho proposals. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The chair suggested that the committee {{reconsider | should reconsider::Suggest that + S + nguyên mẫu giả định hoặc should + nguyên mẫu.}} (reconsider) the proposal."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The proposed expansion means ___ additional staff; this is a consequence of the plan. (( **hiring** | to hiring | hire yesterday :: Mean doing diễn tả hệ quả. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ of the change, the committee amended the timetable. (( **Having been notified** | Having notified by | Having been notify :: Committee được thông báo trước; dùng having been + V3. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The security policy prevents staff from {{sharing::Prevent + tân ngữ + from + V-ing.}} (share) confidential records."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "She meant ___ the message, but an emergency interrupted her before she could do so. (( **to reply to** | replying to | reply yesterday :: Mean to do có thể chỉ ý định thực hiện. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The staff ___ the event must follow the revised guidelines. (( **organising** | organised by | organise yesterday :: Organising bổ nghĩa chủ động cho staff. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The court made the company {{disclose::Make + tân ngữ + nguyên mẫu không to.}} (disclose) the figures."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | spokesperson | regretted | disclosing | the | details. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Having | reviewed | the | evidence, | the | committee | issued | its | decision. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The contractor was made {{to revise::Be made to + nguyên mẫu ở thể bị động.}} (revise) the design."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | chair | forgot | to | circulate | the | agenda. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Having | been | informed | of | the | risk, | the | committee | revised | its | plan. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The panel suggested ___ an independent audit. (( to commission | **commissioning** | commission :: Sau suggest trực tiếp dùng V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | board | went | on | discussing | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | conclusion | was | convincing | to | the | panel. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A committee reviewed a proposal. One member suggested {{checking::Suggest + V-ing khi nêu một hành động.}} (check) the estimates. A new policy prevents staff from {{disclosing::Prevent + tân ngữ + from + V-ing.}} (disclose) private information. The chair allowed the analysts {{to inspect::Allow + tân ngữ + to V.}} (inspect) the records."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Please remember {{to attach::Remember to do nói về nhiệm vụ cần thực hiện; tài liệu chưa được đính kèm.}} (attach) the supporting documents before sending the application."
+    }
+  ]
+}

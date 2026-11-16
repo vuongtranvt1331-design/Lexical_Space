@@ -1,0 +1,484 @@
+:root {
+      --ivory: #F6EBD8;
+      --parchment: #E8D5B5;
+      --parchment-dark: #D5BC94;
+      --dark-brown: #1E110A;
+      --near-black: #110905;
+      --wood-mid: #2E1A10;
+      --antique-gold: #D4AF37;
+      --gold-bright: #F3D060;
+      --gold-dim: #9A7B2C;
+      --rust-red: #9E2A2B;
+      --rust-bright: #C83E3B;
+      --felt-green: #123C28;
+      --felt-dark: #0A2417;
+      --felt-light: #195237;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background-color: var(--near-black);
+      background-image:
+        radial-gradient(circle at 50% 30%, rgba(74, 40, 20, 0.45) 0%, rgba(15, 8, 4, 0.98) 80%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 18px);
+      font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+      color: var(--ivory);
+    }
+
+    .font-western {
+      font-family: 'Rye', 'Playfair Display', Georgia, serif;
+    }
+
+    .font-card-word {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    /* Main Saloon Frame */
+    .game-frame {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      height: 100dvh;
+      max-height: 920px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #27150C 0%, #1B0E07 40%, #150B05 100%);
+      border: 3px solid var(--rust-red);
+      box-shadow:
+        0 0 0 1px var(--antique-gold),
+        inset 0 0 0 2px rgba(212, 175, 55, 0.35),
+        0 20px 50px rgba(0, 0, 0, 0.9);
+      border-radius: 18px;
+      overflow: hidden;
+      padding: env(safe-area-inset-top, 4px) 6px env(safe-area-inset-bottom, 4px) 6px;
+    }
+
+    @media (max-width: 480px) {
+      .game-frame {
+        max-width: 100%;
+        max-height: 100dvh;
+        border-radius: 14px;
+      }
+    }
+
+    /* Green Felt Poker Table */
+    .poker-table {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(ellipse at 50% 48%, var(--felt-light) 0%, var(--felt-green) 58%, var(--felt-dark) 100%);
+      border: 2px solid var(--antique-gold);
+      border-radius: 14px;
+      box-shadow:
+        inset 0 0 24px rgba(0, 0, 0, 0.75),
+        inset 0 0 0 2px rgba(158, 42, 43, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.5);
+      padding: 6px 8px;
+      margin: 3px 2px;
+      overflow: hidden;
+    }
+
+    /* Subtle Felt Weave Overlay */
+    .poker-table::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1px dashed rgba(212, 175, 55, 0.28);
+      border-radius: 10px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .cards-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      flex: 1 1 0;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .card-slot {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 68px;
+      perspective: 900px;
+    }
+
+    .playing-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      transform-style: preserve-3d;
+      transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, filter 0.25s ease;
+      cursor: pointer;
+      will-change: transform;
+    }
+
+    .playing-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .playing-card.opponent-card {
+      cursor: default;
+    }
+
+    /* Card Faces (Front & Back) */
+    .card-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Front of Card: Aged Ivory & Multi-Layer Borders */
+    .card-front {
+      background:
+        radial-gradient(circle at 50% 50%, #FFF9EE 0%, var(--ivory) 65%, var(--parchment) 100%);
+      border: 2px solid #2A160B;
+      box-shadow:
+        inset 0 0 0 2px var(--antique-gold),
+        inset 0 0 0 4px #FDF6E7,
+        inset 0 0 0 5px rgba(154, 123, 44, 0.65),
+        0 4px 10px rgba(0, 0, 0, 0.55);
+      padding: 16px 10px;
+      color: var(--dark-brown);
+    }
+
+    /* Subtle Vintage Pattern on Card Front */
+    .card-front::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(158, 42, 43, 0.22);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    /* Back of Card: Dark Brown / Rust Red with Bison Skull & Gold Ornamentation */
+    .card-back {
+      transform: rotateY(180deg);
+      background:
+        radial-gradient(circle at 50% 50%, #6E1D1D 0%, #3E120C 62%, #220A06 100%);
+      border: 2px solid #2A160B;
+      box-shadow:
+        inset 0 0 0 2px var(--antique-gold),
+        inset 0 0 0 4px #2B0D08,
+        inset 0 0 0 5.5px rgba(212, 175, 55, 0.75),
+        0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-back::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(246, 235, 216, 0.35);
+      border-radius: 6px;
+      background-image:
+        radial-gradient(rgba(212, 175, 55, 0.16) 1px, transparent 1px);
+      background-size: 8px 8px;
+      pointer-events: none;
+    }
+
+    /* Corner Rank & Suit Styling */
+    .card-corner {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 0.92;
+      font-weight: 800;
+      font-size: clamp(0.62rem, 1.9vw, 0.76rem);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .card-corner.top-left {
+      top: 7px;
+      left: 8px;
+    }
+
+    .card-corner.bottom-right {
+      bottom: 7px;
+      right: 8px;
+      transform: rotate(180deg);
+    }
+
+    .suit-red {
+      color: var(--rust-red);
+    }
+
+    .suit-black {
+      color: #23120B;
+    }
+
+    /* Decorative Corner Filigree Dots */
+    .corner-ornament {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border: 1px solid rgba(154, 123, 44, 0.65);
+      transform: rotate(45deg);
+      pointer-events: none;
+    }
+    .corner-ornament.tr { top: 9px; right: 9px; }
+    .corner-ornament.bl { bottom: 9px; left: 9px; }
+
+    /* Active Target Opponent Card */
+    .playing-card.active-target {
+      transform: translateY(-2px) scale(1.02);
+    }
+    .playing-card.active-target .card-front {
+      border-color: var(--gold-bright);
+      box-shadow:
+        0 0 0 2px var(--gold-bright),
+        0 0 16px rgba(243, 208, 96, 0.85),
+        inset 0 0 0 2px var(--antique-gold),
+        inset 0 0 12px rgba(212, 175, 55, 0.35);
+      animation: pulseTargetGold 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseTargetGold {
+      0%, 100% {
+        box-shadow:
+          0 0 0 2px var(--gold-bright),
+          0 0 12px rgba(243, 208, 96, 0.7),
+          inset 0 0 0 2px var(--antique-gold);
+      }
+      50% {
+        box-shadow:
+          0 0 0 3px #FFF2A6,
+          0 0 22px rgba(243, 208, 96, 1),
+          inset 0 0 0 2px var(--antique-gold);
+      }
+    }
+
+    /* Correct Answer Highlight before Flip */
+    .playing-card.correct-flash .card-front {
+      border-color: var(--gold-bright) !important;
+      background: radial-gradient(circle, #FFF8CC 0%, #F5DF8B 100%) !important;
+      box-shadow: 0 0 24px rgba(243, 208, 96, 1), inset 0 0 0 3px var(--antique-gold) !important;
+    }
+
+    /* Incorrect Answer Highlight & Recoil */
+    .playing-card.wrong-flash {
+      animation: cardWrongRecoil 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      z-index: 20;
+    }
+    .playing-card.wrong-flash .card-front {
+      border-color: var(--rust-bright) !important;
+      background: radial-gradient(circle, #FFD6D6 0%, #F2A7A7 100%) !important;
+      box-shadow: 0 0 24px rgba(200, 62, 59, 0.95), inset 0 0 0 3px var(--rust-red) !important;
+    }
+
+    @keyframes cardWrongRecoil {
+      0% { transform: scale(1); }
+      15% { transform: translate(-7px, -4px) rotate(-4deg) scale(1.04); }
+      30% { transform: translate(7px, 3px) rotate(4deg) scale(1.02); }
+      45% { transform: translate(-5px, 2px) rotate(-2.5deg); }
+      60% { transform: translate(4px, -2px) rotate(2deg); }
+      80% { transform: translate(-2px, 1px) rotate(-1deg); }
+      100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    }
+
+    /* Student Card Interactive Touch Feedback */
+    .playing-card.student-selectable:active {
+      transform: scale(0.96);
+    }
+
+    /* Dealing Animation */
+    .playing-card.dealing-start {
+      opacity: 0;
+      transform: translateY(-90px) scale(0.45) rotate(-14deg);
+      pointer-events: none;
+    }
+    .playing-card.dealing-animate {
+      animation: dealCardIn 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.05) forwards;
+    }
+    @keyframes dealCardIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-90px) scale(0.45) rotate(-14deg);
+      }
+      75% {
+        opacity: 1;
+        transform: translateY(3px) scale(1.02) rotate(1.5deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+      }
+    }
+
+    /* Screen Shake for Gunshots & Showdowns */
+    .screen-shake {
+      animation: westernShake 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes westernShake {
+      0%, 100% { transform: translate(0, 0); }
+      15% { transform: translate(-6px, 4px) rotate(-0.6deg); }
+      30% { transform: translate(6px, -5px) rotate(0.6deg); }
+      45% { transform: translate(-5px, -3px) rotate(-0.4deg); }
+      60% { transform: translate(4px, 4px) rotate(0.3deg); }
+      75% { transform: translate(-3px, 2px); }
+    }
+
+    /* Chip Stack Animations */
+    .chip-token {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+    }
+    .chip-token.chip-gain-anim {
+      animation: chipPopIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .chip-token.chip-loss-anim {
+      animation: chipFlyOut 0.55s ease-in forwards;
+    }
+    @keyframes chipPopIn {
+      0% { transform: translateY(-22px) scale(0.2); opacity: 0; }
+      70% { transform: translateY(2px) scale(1.22); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes chipFlyOut {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(24px) scale(0.2) rotate(25deg); opacity: 0.15; }
+    }
+
+    /* Typography Scaling inside Cards */
+    .card-word-text {
+      font-weight: 800;
+      color: #1B0D06;
+      text-align: center;
+      line-height: 1.08;
+      word-break: break-word;
+      hyphens: auto;
+      max-width: 92%;
+      z-index: 2;
+    }
+
+    .card-vi-text {
+      font-weight: 600;
+      color: #5C341E;
+      text-align: center;
+      line-height: 1.15;
+      margin-top: 3px;
+      max-width: 94%;
+      z-index: 2;
+    }
+
+    .card-synonym-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 800;
+      color: #1B0D06;
+      text-align: center;
+      line-height: 1.12;
+      word-break: break-word;
+      hyphens: auto;
+      max-width: 92%;
+      z-index: 2;
+    }
+
+    /* Standardized Western Button Styling */
+    .western-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.375rem;
+      height: 32px;
+      min-height: 32px;
+      padding: 0 0.625rem;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(180deg, #4A2816 0%, #2B160B 100%);
+      border: 1.5px solid var(--antique-gold);
+      color: var(--ivory);
+      box-shadow: 0 2px 0 #140904, inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      transition: all 0.15s ease;
+    }
+    .western-btn:hover:not(:disabled) {
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 0 #140904, inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .western-btn:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: 0 1px 0 #140904, inset 0 1px 0 rgba(0, 0, 0, 0.2);
+      filter: brightness(0.95);
+    }
+    .western-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 2px #F3D060, 0 2px 0 #140904;
+    }
+    .western-btn:disabled,
+    .western-btn.disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      filter: grayscale(0.5);
+      transform: none !important;
+      box-shadow: 0 1px 0 #140904;
+    }
+
+    /* Primary Action Emphasis (e.g. Reshuffle) */
+    .western-btn-primary {
+      background: linear-gradient(180deg, #5A2F17 0%, #351A0C 100%);
+      border-color: #F3D060;
+      color: #FFF2D1;
+      box-shadow: 0 2px 0 #140904, 0 0 8px rgba(243, 208, 96, 0.25);
+    }
+    .western-btn-primary:hover:not(:disabled) {
+      box-shadow: 0 3px 0 #140904, 0 0 12px rgba(243, 208, 96, 0.4);
+    }
+
+    /* Secondary Controls (e.g. Exit, Sound) */
+    .western-btn-secondary {
+      background: linear-gradient(180deg, #381D0F 0%, #201008 100%);
+      border-color: rgba(212, 175, 55, 0.5);
+      color: #E8D5B5;
+    }
+
+    /* Icon-only standard sizing */
+    .western-btn-icon {
+      width: 32px;
+      min-width: 32px;
+      padding: 0;
+    }
+  
+/* Keep dialogs hidden even when the optional utility CDN is offline. */
+.hidden{display:none!important}

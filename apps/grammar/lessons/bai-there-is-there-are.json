@@ -1,0 +1,223 @@
+{
+  "id": "52",
+  "title": "52. There is / There are",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "There is / There are: giới thiệu sự tồn tại",
+      "contentHTML": "<p><strong>There is / There are</strong> giới thiệu có người hoặc vật ở một nơi; chọn động từ dựa trên danh từ theo sau, không phải từ <em>there</em>.</p><div class=\"rule-box\"><p><strong>There is + danh từ đếm được số ít / danh từ không đếm được:</strong> <em>There is a book on the desk.</em> <em>There is some milk in the fridge.</em></p><p><strong>There are + danh từ đếm được số nhiều:</strong> <em>There are two books on the desk.</em></p></div><p>There is thường viết tắt thành <em>there’s</em>; trong văn viết cẩn trọng, dùng <em>there are</em> trước danh từ số nhiều.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Phủ định, câu hỏi và thời gian",
+      "contentHTML": "<div class=\"rule-box\"><p>Phủ định: <strong>There is not / There are not</strong>. <em>There isn’t any water.</em> <em>There aren’t any chairs.</em></p><p>Câu hỏi đảo be lên trước: <strong>Is there …? / Are there …?</strong> <em>Are there any shops nearby?</em> — <em>Yes, there are.</em></p><p>Quá khứ: <strong>there was / there were</strong>. Tương lai: <strong>there will be</strong> với cả số ít và số nhiều.</p></div><p><em>There was a problem yesterday.</em> <em>There were three visitors.</em> <em>There will be more meetings next week.</em></p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Sự hòa hợp và phân biệt với have",
+      "contentHTML": "<p>Dùng <strong>there is / are</strong> để giới thiệu sự tồn tại: <em>There are two windows in the room.</em> Dùng <strong>have / has</strong> khi nói chủ thể sở hữu hoặc có đặc điểm: <em>The room has two windows.</em> Không nói <s>There has two windows</s>.</p><div class=\"rule-box\"><p>Chú ý danh từ không đếm được như <em>information, furniture, equipment</em>: <em>There is useful information.</em> Nếu danh từ theo sau là cụm số nhiều, dùng <em>there are</em>: <em>There are several pieces of equipment.</em></p><p>Với danh sách nhiều đối tượng, trong văn viết trang trọng nên sắp xếp lại câu để sự hòa hợp rõ ràng: <em>There are two chairs and a table.</em></p></div><p><strong>Cách làm:</strong> xác định thời gian; tìm danh từ đứng sau be; xác định số ít, không đếm được hay số nhiều; sau đó chọn is/are hoặc was/were.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{is::A cat là danh từ đếm được số ít, ở hiện tại dùng there is.}} (be) a cat in the garden."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{are::Three books là danh từ số nhiều nên dùng there are.}} (be) three books on the desk."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{is::Milk không đếm được nên ở hiện tại dùng there is.}} (be) some milk in the fridge."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{was::A shop là số ít; yesterday chỉ quá khứ nên dùng there was.}} (be) a shop here last year."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{were::Two dogs là số nhiều; yesterday chỉ quá khứ nên dùng there were.}} (be) two dogs outside yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There will {{be::Sau will dùng động từ nguyên mẫu be cho cả số ít và số nhiều.}} (be) a meeting tomorrow."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Are::Apples là danh từ số nhiều nên câu hỏi hiện tại bắt đầu Are there.}} (be) there any apples?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Is::Water là danh từ không đếm được nên dùng Is there.}} (be) there any water?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{are not | aren't::Chairs là số nhiều; phủ định hiện tại dùng are not hoặc aren’t.}} (be) any chairs in the room."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{is not | isn't::A bus stop là số ít; phủ định hiện tại dùng is not hoặc isn’t.}} (be) a bus stop here."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ a dog in the house. (( There are | **There is** | There have :: A dog số ít nên dùng there is. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ any students in the classroom? (( Is there | **Are there** | Has there :: Students số nhiều nên dùng Are there. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "There ___ two shops here last year. (( was | **were** | are :: Two shops số nhiều và last year chỉ quá khứ nên dùng were. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "There ___ a party tomorrow. (( will is | **will be** | will are :: Sau will luôn dùng be nguyên mẫu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( There have a garden. | **There is a garden.** | There are a garden. :: A garden là số ít; dùng there is. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The room has two windows. Which sentence has the same meaning? (( There is two windows. | **There are two windows in the room.** | There have two windows. :: Two windows số nhiều nên dùng there are. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ There | is | a | bird | in | the | tree. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ There | are | three | chairs | in | the | room. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Are | there | any | shops | nearby? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ There | will | be | a | meeting | tomorrow. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There {{is::Evidence là danh từ không đếm được; dùng there is.}} (be) insufficient evidence to support the claim."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There {{are::Several reasons là số nhiều, nên dùng there are.}} (be) several reasons to reconsider the policy."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There {{was::A significant delay là số ít; thời điểm quá khứ cần there was.}} (be) a significant delay during the trial."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There {{were::Numerous complaints là số nhiều; last month chỉ quá khứ nên dùng were.}} (be) numerous complaints last month."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There will {{be::Sau will dùng nguyên mẫu be bất kể danh từ số nhiều.}} (be) further consultations next week."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Is::Information không đếm được nên câu hỏi dùng Is there.}} (be) there enough information to make a decision?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Were::Any unexpected consequences là số nhiều; câu hỏi ở quá khứ dùng Were there.}} (be) there any unexpected consequences during the experiment?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There {{are::Several pieces là số nhiều; hòa hợp với pieces chứ không với equipment.}} (be) several pieces of equipment in the laboratory."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ limited funding for the project. (( There are | **There is** | There have :: Funding là danh từ không đếm được, dùng there is. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ several objections at the hearing yesterday. (( There was | **There were** | There is :: Several objections số nhiều và yesterday là quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence correctly introduces a future event? (( There will are two workshops. | **There will be two workshops.** | There will have two workshops. :: Sau will dùng be nguyên mẫu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ sufficient evidence to support the proposal? (( Are there | **Is there** | Have there :: Evidence không đếm được nên dùng Is there. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report has three sections. Which sentence describes the same structure? (( There is three sections in the report. | **There are three sections in the report.** | There have three sections in the report. :: Three sections là số nhiều, dùng there are. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ no straightforward solutions to the problem. (( There is | **There are** | There has :: Solutions là danh từ số nhiều, nên dùng there are. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ There | are | several | reasons | to | revise | the | policy. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ There | was | insufficient | evidence | to | support | the | claim. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ There | will | be | further | consultations | next | month. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A city reviewed its transport system. There {{were::Several complaints là số nhiều trong quá khứ nên dùng were.}} (be) several complaints last year. There {{is::A new proposal là số ít và đang hiện hữu nên dùng is.}} (be) a new proposal now. There will {{be::Sau will dùng be nguyên mẫu.}} (be) public meetings next month."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team examined the research. There {{was::A delay là số ít trong quá khứ nên dùng was.}} (be) a delay during the first trial. There {{are::Two questions là số nhiều nên dùng are.}} (be) two questions that remain unanswered. There {{is::Evidence không đếm được nên dùng is.}} (be) enough evidence to continue."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum is planning an exhibition. There {{are::Several galleries là số nhiều nên dùng are.}} (be) several galleries available. There {{is::Equipment không đếm được nên dùng is.}} (be) new equipment in the main hall. There will {{be::Sau will dùng be nguyên mẫu.}} (be) guided visits throughout the month."
+    }
+  ]
+}

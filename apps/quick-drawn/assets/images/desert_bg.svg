@@ -1,0 +1,58 @@
+<svg class="duel-svg" viewBox="0 0 360 170" xmlns="http://www.w3.org/2000/svg">
+            <!-- Desert Sky & Clouds -->
+            <rect width="360" height="170" fill="#f8edd6"/>
+            <g fill="#f3dcb3">
+              <path d="M140 28 h46 v-6 h-10 v-6 h-24 v6 h-12 z"/>
+              <path d="M35 45 h36 v-5 h-8 v-5 h-20 v5 h-8 z"/>
+              <path d="M285 36 h42 v-5 h-10 v-5 h-22 v5 h-10 z"/>
+            </g>
+
+            <!-- Distant Red-Sand Mesas & Buttes -->
+            <polygon points="0,122 18,74 44,74 58,108 82,82 118,82 136,122" fill="#e5b383"/>
+            <polygon points="185,122 204,76 230,76 246,112 275,92 315,72 342,72 360,122" fill="#e5b383"/>
+            <polygon points="10,122 24,84 40,84 52,122" fill="#d69c6a"/>
+            <polygon points="200,122 212,86 226,86 238,122" fill="#d69c6a"/>
+
+            <!-- Desert Ground & Fence -->
+            <rect x="0" y="120" width="360" height="50" fill="#f2d29b"/>
+            <rect x="0" y="120" width="360" height="5" fill="#dfb374"/>
+            <!-- Wooden Ranch Fence -->
+            <g fill="#b57c4a">
+              <rect x="190" y="106" width="4" height="18"/>
+              <rect x="212" y="106" width="4" height="18"/>
+              <rect x="234" y="106" width="4" height="18"/>
+              <rect x="186" y="110" width="56" height="3"/>
+              <rect x="186" y="116" width="56" height="3"/>
+            </g>
+
+            <!-- Cacti -->
+            <g fill="#879e62">
+              <!-- Left Cactus -->
+              <rect x="22" y="96" width="6" height="26"/>
+              <rect x="15" y="103" width="7" height="4"/>
+              <rect x="15" y="98" width="4" height="9"/>
+              <rect x="28" y="106" width="7" height="4"/>
+              <rect x="31" y="100" width="4" height="10"/>
+              <!-- Mid-Left Cactus -->
+              <rect x="136" y="104" width="5" height="18"/>
+              <rect x="130" y="110" width="6" height="3"/>
+              <rect x="130" y="106" width="3" height="7"/>
+              <rect x="141" y="109" width="6" height="3"/>
+              <rect x="144" y="105" width="3" height="7"/>
+              <!-- Mid-Right Cactus -->
+              <rect x="215" y="96" width="6" height="26"/>
+              <rect x="208" y="104" width="7" height="4"/>
+              <rect x="208" y="99" width="4" height="9"/>
+              <!-- Far Right Cactus -->
+              <rect x="322" y="98" width="6" height="24"/>
+              <rect x="315" y="105" width="7" height="4"/>
+              <rect x="315" y="100" width="4" height="9"/>
+              <rect x="328" y="104" width="7" height="4"/>
+              <rect x="331" y="99" width="4" height="9"/>
+            </g>
+
+            <!-- Ground Shadows Under Duelists -->
+            <ellipse cx="82" cy="146" rx="34" ry="6" fill="#d9b273"/>
+            <ellipse cx="278" cy="146" rx="34" ry="6" fill="#d9b273"/>
+
+            </svg>

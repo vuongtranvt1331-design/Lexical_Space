@@ -1,0 +1,773 @@
+{
+  "id": "6",
+  "title": "06. Ôn tập tổng hợp: Từ loại",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Danh từ và đại từ",
+      "contentHTML": "<p><strong>Bước 1:</strong> Xác định danh từ đếm được hay không. Với danh từ đếm được, chọn số ít hoặc số nhiều theo số lượng; danh từ không đếm được có thể dùng đơn vị đếm.</p><p>one book → two books; one child → two children.<br>a piece of advice; two pieces of information.</p><p><strong>Bước 2:</strong> Chọn đại từ theo vị trí: chủ ngữ trước động từ, tân ngữ sau động từ hoặc giới từ. Từ sở hữu đứng trước danh từ; đại từ sở hữu có thể đứng độc lập.</p><p>Lan is here. She is ready. / I see Lan. I see her.<br>This is my book. The book is mine. / That is their report. It is theirs.</p><p><strong>Phạm vi bổ sung:</strong> Ôn thêm enough / too, so / such, there is / there are và it takes / spend.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Tính từ, trạng từ và trợ động từ",
+      "contentHTML": "<p><strong>Bước 1:</strong> Dùng tính từ để mô tả danh từ hoặc sau be/động từ nối; dùng trạng từ để mô tả cách hành động diễn ra.</p><p>a careful student / The student is careful.<br>She works carefully. / He runs fast.</p><p><strong>Bước 2:</strong> Chọn am/is/are theo chủ ngữ. Với động từ thường, dùng do/does trong câu hỏi và phủ định hiện tại; sau chúng, động từ chính trở về nguyên mẫu.</p><p>I am ready. / They are ready.<br>Does she work here? / She does not work here.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Trật tự từ và cách tự kiểm tra",
+      "contentHTML": "<p><strong>Bước 1:</strong> Xác định chủ ngữ, động từ và tân ngữ. Trạng từ tần suất thường đứng trước động từ thường nhưng sau be; nơi chốn thường đứng trước thời gian.</p><p>The committee reviewed the evidence carefully.<br>She usually studies at home in the evening. / She is often busy.</p><p><strong>Bước 2:</strong> Ở Practice, kiểm tra cấu trúc bằng câu ngắn. Ở Apply, tìm cùng quan hệ ngữ pháp trong câu học thuật dài hơn: several pieces of evidence; the researchers examined the proposal carefully.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I have two {{books::Two đi với danh từ số nhiều; thêm s vào book.}} [quyển sách]."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The soup is not hot {{enough::Enough đứng sau tính từ hot để diễn tả đủ nóng.}} [đủ] to eat."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It is a {{small::Small đứng trước danh từ cat.}} [nhỏ] cat."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{am::I đi với am.}} [là] happy."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We have {{enough::Enough đứng trước danh từ số nhiều chairs để chỉ đủ số lượng.}} [đủ] chairs for everyone."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There is one {{cat::One đi với danh từ số ít.}} [con mèo]."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Tom is a boy. {{He::He thay cho Tom, làm chủ ngữ.}} [anh ấy] is tall."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The bag is {{too::Too đứng trước heavy và diễn tả túi quá nặng để mang.}} [quá] heavy for me to carry."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{is::She đi với is.}} [là] a teacher."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She {{reads::She đi với reads ở hiện tại đơn.}} [đọc] a book."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He walks slowly {{enough::Enough đứng sau trạng từ slowly.}} [đủ] for me to follow."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The cat is small. {{It::It thay cho con mèo.}} [nó] is black."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She has a {{red::Red là tính từ đứng trước bag.}} [đỏ] bag."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{are::They đi với are.}} [ở] at home."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The room is ___. (( enough big | **big enough** | too enough big :: Enough đứng sau tính từ big. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She has two {{apples::Two đi với số nhiều; apple thêm s.}} [quả táo]."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Tom and I are friends. {{We::We thay cho Tom và tôi.}} [chúng tôi] play."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We have eaten enough ___ the cake. (( for | **of** | to :: Trước the cake dùng enough of, vì the là từ hạn định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He {{is::He đi với is; thêm not để phủ định.}} [là] not sad."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We {{eat::Eat đứng sau we và trước apples.}} [ăn] apples."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | tea | is | cool | enough | to | drink. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The boys run. {{They::They thay cho các bé trai.}} [họ] are fast."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The girl walks {{slowly::Slowly là trạng từ tả cách đi.}} [chậm]."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | box | is | too | heavy | to | lift. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He {{often::Often thường đứng trước động từ thường runs.}} [thường] runs."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I see two {{boxes::Box kết thúc bằng x nên thêm es.}} [cái hộp]."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The soup is {{so::So đứng trước tính từ hot để nhấn mạnh mức độ.}} [rất] hot."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It is a {{big::Big bổ nghĩa cho house.}} [to] house."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Is::Câu hỏi với she dùng Is.}} [là] she a doctor?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It is {{such::Such đứng trước cụm danh từ a nice day.}} [thật là] a nice day."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There are three {{buses::Bus kết thúc bằng s nên thêm es.}} [xe buýt]."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I know Lan. I know {{her::Her thay cho Lan sau động từ know.}} [cô ấy]."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "That is such {{an::Interesting bắt đầu bằng nguyên âm trong phát âm; danh từ book đếm được số ít cần an.}} [một] interesting book."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Do::Câu hỏi với you và like dùng Do.}} [có] you like cats?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{play::Play đứng sau they.}} [chơi] at home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There are so {{many::Many đi với danh từ đếm được số nhiều apples.}} [nhiều] apples in the basket."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This is my book. It is {{my::My đứng trước book và chỉ của tôi.}} [của tôi] book."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The baby is {{sad::Sad đứng sau is để tả em bé.}} [buồn]."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Does::Câu hỏi với he và like dùng Does.}} [có] he like dogs?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We have so {{much::Much đi với danh từ không đếm được homework.}} [nhiều] homework tonight."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The two {{boys::Boy kết thúc bằng nguyên âm + y: thêm s.}} [bé trai] run."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Tom has a pen. It is {{his::His đứng trước pen và chỉ bút của Tom.}} [của anh ấy] pen."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Choose the correct sentence. (( It is so a cold day. | **It is such a cold day.** | It is such cold. :: Such đứng trước a + tính từ + danh từ số ít. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I do not {{like::Sau do not dùng like nguyên mẫu.}} [thích] milk."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I {{drink::Drink đứng sau I; at night ở cuối câu.}} [uống] tea at night."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ It | is | such | a | lovely | day. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Lan has a cat. It is {{her::Her đứng trước cat và chỉ mèo của Lan.}} [của cô ấy] cat."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This is a {{green::Green đứng trước apple.}} [xanh] apple."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | have | so | many | books. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He {{has::He đi với has ở hiện tại đơn.}} [có] a dog."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "There are four ___. (( **chairs** | chair | chaires :: Four đi với chairs, dạng số nhiều của chair. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{is::A cat là danh từ đếm được số ít, ở hiện tại dùng there is.}} (be) a cat in the garden."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It is a ___ box. (( smallly | **small** | smalls :: Small là tính từ đứng trước box. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I ___ nine. (( is | **am** | are :: I đi với am. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{are::Three books là danh từ số nhiều nên dùng there are.}} (be) three books on the desk."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He has one ___. (( hats | **hat** | hates :: One đi với danh từ số ít hat. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Ben is my brother. ___ is ten. (( It | **He** | We :: He thay cho Ben. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{is::Milk không đếm được nên ở hiện tại dùng there is.}} (be) some milk in the fridge."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My mum ___ kind. (( am | **is** | are :: Chủ ngữ số ít my mum đi với is. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The girl ___ in the garden. (( sit | **sits** | sitting :: The girl là số ít nên dùng sits. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There {{was::A shop là số ít; yesterday chỉ quá khứ nên dùng there was.}} (be) a shop here last year."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My book is old. ___ is blue. (( He | **It** | They :: It thay cho my book. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "He has a ___ hat. (( redly | **red** | reds :: Red đứng trước hat. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The boys ___ happy. (( is | **are** | am :: The boys là số nhiều nên dùng are. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There will {{be::Sau will dùng động từ nguyên mẫu be cho cả số ít và số nhiều.}} (be) a meeting tomorrow."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We have two ___. (( foxs | **foxes** | fox :: Fox kết thúc bằng x nên thêm es. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Mum and I sing. ___ are happy. (( He | **We** | She :: We thay cho mẹ và tôi. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Are::Apples là danh từ số nhiều nên câu hỏi hiện tại bắt đầu Are there.}} (be) there any apples?"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The book ___ not red. (( are | **is** | am :: The book là số ít nên dùng is. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We ___ songs. (( sings | **sing** | singing :: We đi với sing ở hiện tại đơn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ any students in the classroom? (( Is there | **Are there** | Has there :: Students số nhiều nên dùng Are there. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The girls dance. ___ are happy. (( He | **They** | It :: They thay cho the girls. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The old man eats ___. (( slow | **slowly** | slows :: Slowly là trạng từ tả cách ăn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ There | are | three | chairs | in | the | room. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She ___ jumps. (( am | **sometimes** | are :: Sometimes thường đứng trước động từ thường. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | have | two | books. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It {{takes::It là chủ ngữ số ít, hiện tại đơn dùng takes.}} (take) me ten minutes to walk home."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | cat | is | small. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | am | happy. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It {{took::Yesterday chỉ quá khứ; dạng quá khứ của take là took.}} (take) her an hour to cook yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | has | one | cat. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ He | has | a | dog. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It will {{take::Sau will dùng động từ nguyên mẫu take.}} (take) us two days to paint the room."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | is | a | teacher. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | has | a | red | bag. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She spends an hour {{reading::Sau spend + thời gian dùng V-ing.}} (read) every evening."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | are | my | friends. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | dog | is | happy. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | are | at | home. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I spend money {{on::Spend money on + danh từ chỉ khoản chi.}} [cho] books."
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ He | has | two | apples. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | see | her. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It ___ her an hour to make dinner. (( take | **takes** | spending :: It là chủ ngữ số ít hiện tại đơn nên dùng takes. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Do | you | like | cats? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | dog | runs | fast. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which means the same as “It takes him an hour to read”? (( He spends an hour to read. | **He spends an hour reading.** | He takes an hour reading it for him. :: Đổi him thành chủ ngữ he và to read thành reading. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ This | is | my | book. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | have | a | blue | pen. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | spends | an | hour | reading | every | day. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | play | at | home. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "A series of public {{campaigns::A series of theo sau bởi danh từ số nhiều chỉ nhiều chiến dịch; campaign thêm -s.}} [chiến dịch] was launched across the region."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The team reviewed enough {{of::Dùng enough of trước cụm danh từ có the: enough of the applications.}} [trong số] the applications to identify common problems."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Although the results initially looked {{uncertain::Looked ở đây là động từ nối; tính từ uncertain mô tả trạng thái của results.}} [không chắc chắn], the later evidence was convincing."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The document is too complicated ___. (( for me understanding | **for me to understand** | to me understand :: For + người + to V xác định người gặp khó khăn khi hiểu tài liệu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The campaign team {{rarely releases::Rarely thường đứng trước động từ thường releases; team được xem là một đơn vị số ít.}} (release) [hiếm khi] incomplete figures, because premature disclosure could undermine public confidence."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The laboratory purchased several precision {{instruments::Several yêu cầu danh từ đếm được số nhiều; instrument thêm -s.}} [dụng cụ] for measuring noise levels."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The evidence was too weak to support the claim. Which sentence preserves the meaning? (( The evidence was not weak enough to support it. | **The evidence was not strong enough to support it.** | The evidence was strong enough to support it. :: Đổi weak thành tính từ trái nghĩa strong và dùng not strong enough. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee listened {{carefully | attentively::Cả carefully và attentively đều là trạng từ chỉ cách lắng nghe, phù hợp với động từ listened.}} [một cách chú ý] to every witness."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | evidence | was | strong | enough | to | support | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The study group {{has already submitted::Already có thể đứng giữa trợ động từ has và phân từ submitted trong hiện tại hoàn thành.}} (submit) [đã] its ethics application."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Each applicant must submit two {{copies::Copy kết thúc bằng phụ âm + y; đổi y thành ies để tạo số nhiều sau two.}} [bản sao] of the signed agreement."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The council examined a proposal to reopen the bridge. Its budget was not {{large enough::Enough đứng sau tính từ large để nói ngân sách chưa đủ lớn.}} [đủ lớn] to cover the repairs. The bridge was {{too::Too đứng trước dangerous, nhấn mạnh mức nguy hiểm khiến việc mở cửa không khả thi.}} [quá] dangerous to reopen immediately. Officials therefore sought {{enough::Enough đứng trước danh từ funding để diễn tả đủ nguồn vốn.}} [đủ] funding before work began."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The scientist gave a {{friendly::Friendly là tính từ đuôi -ly và đứng trước danh từ explanation; không tạo friendlyly.}} [thân thiện] explanation of the complex process."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The roads flooded. ___, several bus routes were suspended. (( As a result of | **As a result** | Such a result of :: As a result nối câu nêu kết quả; as a result of cần một danh từ hoặc V-ing theo sau. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The lecturer presented {{the results clearly::The results là tân ngữ trực tiếp theo sau presented; clearly có thể đứng sau cụm tân ngữ.}} [rõ ràng / kết quả] during the conference."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "A lack of suitable {{accommodation::Accommodation trong nghĩa chỗ ở nhìn chung không đếm được; không thêm -s sau suitable.}} [chỗ ở] has discouraged visiting scholars."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ the shortage of staff, the clinic reduced its opening hours. (( As a result | **As a result of** | So that :: As a result of đứng trước cụm danh từ the shortage of staff để nêu nguyên nhân. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The cost of the project increased {{dramatically::Dramatically là trạng từ bổ nghĩa cho increased; dramatically diễn tả mức tăng mạnh.}} [đáng kể] after materials became scarce."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which preserves the meaning of “The lecture was so engaging that nobody left”? (( It was so an engaging lecture that nobody left. | **It was such an engaging lecture that nobody left.** | It was such engaging lecture that nobody left. :: Lecture đếm được số ít, engaging bắt đầu bằng nguyên âm: such an engaging lecture. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The board considers {{the proposal essential | the proposal to be essential::Consider có thể đi với tân ngữ + tính từ hoặc tân ngữ + to be + tính từ để mô tả proposal.}} [thiết yếu / đề xuất] for the next phase."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Three independent ___ of the survey results were compared before publication. (( analysises | **analyses** | analysis :: Three independent yêu cầu số nhiều; analysis đổi thành analyses. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The archive contained ___. (( so valuable information | **such valuable information** | such a valuable information :: Information không đếm được; dùng such + tính từ + danh từ, không thêm a. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Even after several revisions, the argument remains ___. (( weakly | **weak** | weakness :: Remains là động từ nối; cần tính từ weak để mô tả argument. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A town introduced a bus service. It proved {{so::So đứng trước tính từ popular.}} [rất] popular that passenger numbers doubled. The change had {{such::Such đứng trước cụm danh từ a positive effect.}} [một tác động thật] a positive effect that nearby towns asked for details. Demand rose {{so::So đứng trước trạng từ quickly.}} [rất] quickly that the operator added buses."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence uses the given adverb in the usual position? (( The project is completed often late. | **The project is often completed late.** | The project often completed is late. :: Often thường đứng sau trợ động từ is và trước phân từ completed trong câu bị động. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "A long-term shortage of ___ delayed construction of the laboratories. (( a skilled labour | **skilled labour** | skilled labours :: Labour trong nghĩa nguồn lao động là danh từ không đếm được; không dùng a hay thêm -s trong ngữ cảnh này. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There {{is::Evidence là danh từ không đếm được; dùng there is.}} (be) insufficient evidence to support the claim."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The researchers arrived ___ to set up the equipment before the lecture. (( earlily | **early** | earlierly :: Early có thể là trạng từ chỉ thời gian; không dùng earlily. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There will {{be::Sau will dùng nguyên mẫu be bất kể danh từ số nhiều.}} (be) further consultations next week."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence follows the pattern subject + verb + object + complement? (( The committee elected chairperson the researcher. | **The committee elected the researcher chairperson.** | The committee the researcher elected chairperson. :: The committee là chủ ngữ, elected là động từ, the researcher là tân ngữ và chairperson là bổ ngữ của tân ngữ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The committee requested several ___ to support the recommendation. (( evidences | **pieces of evidence** | an evidence :: Evidence không đếm được; several pieces of evidence đếm từng đơn vị bằng chứng. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "There {{are::Several pieces là số nhiều; hòa hợp với pieces chứ không với equipment.}} (be) several pieces of equipment in the laboratory."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The new treatment worked ___ in the preliminary trial. (( **well** | good | goodly :: Sau động từ chỉ hành động worked, dùng trạng từ well; good là tính từ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The report has three sections. Which sentence describes the same structure? (( There is three sections in the report. | **There are three sections in the report.** | There have three sections in the report. :: Three sections là số nhiều, dùng there are. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which order places the object immediately after the verb? (( The researchers analysed thoroughly the survey responses. | **The researchers analysed the survey responses thoroughly.** | The researchers the survey responses analysed thoroughly. :: The survey responses là tân ngữ trực tiếp của analysed; thoroughly đặt sau tân ngữ là cách diễn đạt tự nhiên. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | compared | several | independent | analyses | before | endorsing | the | proposed | environmental | policy. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A city reviewed its transport system. There {{were::Several complaints là số nhiều trong quá khứ nên dùng were.}} (be) several complaints last year. There {{is::A new proposal là số ít và đang hiện hữu nên dùng is.}} (be) a new proposal now. There will {{be::Sau will dùng be nguyên mẫu.}} (be) public meetings next month."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | carefully | evaluated | the | evidence | before | presenting | a | remarkably | clear | explanation. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It {{took::Last month chỉ quá khứ; take chuyển thành took.}} (take) the researchers six months to complete the study last month."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | research | team | has | already | submitted | its | findings | to | the | review | panel | for | consideration. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | archive | preserved | rare | manuscripts | and | classified | the | materials | according | to | their | historical | significance. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The museum spent a large sum {{on::Spend money on + danh từ chỉ khoản chi.}} [cho] conservation equipment."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | revised | proposal | appears | considerably | more | practical | after | several | substantial | amendments. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which correctly rewrites “It took the team three days to analyse the data”? (( The team spent three days to analyse the data. | **The team spent three days analysing the data.** | The team takes three days analysed the data. :: Took ở quá khứ tương ứng spent; sau spent + thời gian dùng V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | usually | examines | the | supporting | evidence | carefully | before | announcing | its | decision. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | identified | unusual | phenomena | during | the | investigation | and | documented | their | observations | in | detail. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | spent | several | weeks | reviewing | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | responded | calmly | and | constructively | despite | the | unexpected | criticism | it | received. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team planned a new exhibition. It {{took::Quá khứ của take là took.}} (take) the team six months to collect the objects. The curators spent several weeks {{writing::Sau spent + thời gian dùng V-ing.}} (write) the descriptions. The museum spent additional funds {{on::Spend funds on + danh từ.}} [cho] accessible signs."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | analysts | presented | the | preliminary | results | clearly | at | the | international | research | conference. ~~"
+    }
+  ]
+}

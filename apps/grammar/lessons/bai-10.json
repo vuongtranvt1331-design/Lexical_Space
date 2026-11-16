@@ -1,0 +1,224 @@
+{
+  "id": "11",
+  "title": "11. So sánh bằng, hơn & nhất",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "So sánh bằng",
+      "contentHTML": "<p>Dùng as + tính từ + as: My bag is as big as yours.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>So sánh bằng dùng as + tính từ/trạng từ nguyên dạng + as. Phủ định có thể dùng not as/so ... as, tùy sắc thái câu.</p><p>My bag is as big as yours. → Túi tôi to bằng túi bạn.<br>She works as carefully as he does. → Cô ấy làm cẩn thận bằng anh ấy.<br>This route is not as long as that one. → Tuyến này không dài bằng tuyến kia.</p></div><h3>Mở rộng: So sánh bằng</h3><p>Dùng so sánh bằng để đối chiếu mức độ của hai người hoặc sự vật.</p><blockquote><p><strong><span style=\"color:#2e9c70\">KHUNG GHI NHỚ</span></strong><br>Khẳng định: S + be + as + tính từ + as + đối tượng.<br>Phủ định: S + be + not as + tính từ + as + đối tượng.</p></blockquote><h3><span style=\"color:#3498db\">Ví dụ trong ngữ cảnh</span></h3><p>Lan is as tall as Mai. → Lan cao bằng Mai.<br>This bag is not as heavy as that one. → Túi này không nặng bằng túi kia.</p><p><span class=\"highlight\">Lưu ý:</span> Giữa hai từ as dùng tính từ ở dạng gốc: as tall as, không dùng as taller as.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "So sánh hơn",
+      "contentHTML": "<p>Với tính từ ngắn, thêm -er + than: taller than. Với nhiều tính từ dài, dùng more + tính từ + than: more interesting than.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Với nhiều tính từ ngắn, thêm -er rồi dùng than; với nhiều tính từ dài, dùng more ... than. Chú ý quy tắc chính tả và dạng bất quy tắc như better.</p><p>This room is larger than that one. → Phòng này lớn hơn.<br>The second plan is more effective than the first. → Kế hoạch thứ hai hiệu quả hơn.<br>This result is better than the earlier one. → Kết quả này tốt hơn.</p></div><h3>Mở rộng: So sánh hơn</h3><p>So sánh hơn dùng khi đối chiếu hai đối tượng và có thể nêu đối tượng thứ hai bằng than.</p><blockquote><p><strong><span style=\"color:#2e9c70\">KHUNG GHI NHỚ</span></strong><br>Tính từ ngắn: adjective-er + than; tall → taller, large → larger.<br>Nhiều tính từ dài dùng more + adjective + than; useful → more useful.<br>Dạng đặc biệt: good → better; bad → worse.</p></blockquote><h3><span style=\"color:#3498db\">Ví dụ trong ngữ cảnh</span></h3><p>This route is shorter than that one. → Tuyến này ngắn hơn tuyến kia.<br>The new plan is more practical than the old one. → Kế hoạch mới thực tế hơn.</p><p><span class=\"highlight\">Lưu ý:</span> Với phụ âm + y, thường đổi y thành i rồi thêm -er: busy → busier. Không dùng more taller.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "So sánh nhất",
+      "contentHTML": "<p>Dùng the + tính từ ngắn nhất đuôi -est hoặc the most + tính từ dài: the tallest, the most interesting.</p><div class=\"rule-box\"><strong>Giải thích từng bước:</strong><p>Khi so sánh một thành viên với cả nhóm, dùng the + dạng so sánh nhất. Cần kiểm tra số đối tượng và nghĩa của câu; một số dạng bất quy tắc phải học riêng.</p><p>It is the tallest tree in the garden. → Đây là cây cao nhất vườn.<br>This is the most useful of the three options. → Đây là phương án hữu ích nhất trong ba phương án.<br>That was the best result. → Đó là kết quả tốt nhất.</p></div><h3>Mở rộng: So sánh nhất</h3><p>So sánh nhất nêu đối tượng nổi bật trong một nhóm từ ba đối tượng trở lên.</p><blockquote><p><strong><span style=\"color:#2e9c70\">KHUNG GHI NHỚ</span></strong><br>Tính từ ngắn: the + adjective-est; tall → the tallest.<br>Nhiều tính từ dài: the most + adjective; useful → the most useful.<br>Dạng đặc biệt: good → the best; bad → the worst.</p></blockquote><h3><span style=\"color:#3498db\">Ví dụ trong ngữ cảnh</span></h3><p>Mai is the tallest student in her class. → Mai cao nhất lớp.<br>This is the most useful chapter in the book. → Đây là chương hữu ích nhất.</p><p><span class=\"highlight\">Lưu ý:</span> Không dùng đồng thời most và đuôi -est. Trong một số ngữ cảnh sở hữu, my best friend không cần the.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This bag is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than that one."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My room is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than yours."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The red box is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than the blue one."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Our garden is {{bigger::Big là tính từ ngắn, gấp đôi g và thêm er khi so sánh hơn.}} [to] than theirs."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This road is {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than that road."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My hair is {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than yours."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The blue line is {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than the red line."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Summer days are {{longer::Long thêm er thành longer khi so sánh hai đối tượng.}} [dài] than winter days."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Anna is the {{tallest::Dùng the tallest để chỉ đối tượng cao nhất trong một nhóm.}} [cao] girl in the class."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "This is the {{tallest::Dùng the tallest để chỉ đối tượng cao nhất trong một nhóm.}} [cao] tree in our garden."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My sister is ___ than me. (( young | **younger** | youngest :: So sánh hai người dùng younger than. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "This is the ___ room in the house. (( smaller | **smallest** | small :: So sánh trong một nhóm dùng the smallest. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "This test is as ___ as the last one. (( easier | **easy** | easiest :: As ... as đi với tính từ nguyên dạng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "A train is usually ___ than a bus. (( fast | **faster** | fastest :: So sánh hai phương tiện dùng faster than. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "This is the ___ day of my holiday. (( better | **best** | good :: The best là dạng so sánh nhất bất quy tắc của good. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ My | bag | is | bigger | than | yours. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ This | road | is | longer | than | that | one. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Anna | is | the | tallest | girl. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | film | is | more | interesting. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ My | room | is | as | big | as | yours. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The new model is {{more efficient::Efficient là tính từ dài; dùng more efficient than.}} [hiệu quả] than the old one because it uses less electricity."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The earlier survey was {{smaller::So sánh hai quy mô; tính từ ngắn small chuyển thành smaller.}} [nhỏ] than the revised survey, with 80 rather than 200 participants."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The last proposal was {{the most expensive::Trong nhóm ba phương án, dùng the most + tính từ dài expensive.}} [đắt] of the three."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The result was {{as high as::As + high + as diễn tả giá trị đúng bằng mức đã dự kiến.}} [cao] expected; both figures were identical."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The revised proposal is ___ than the original. (( practicaler | **more practical** | most practical :: Practical là tính từ dài; so sánh hai phương án dùng more practical than. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Of all the proposed evacuation routes, this one is ___ according to the latest safety assessment. (( safer | **the safest** | more safe than :: Trong nhóm các tuyến đường, the safest diễn đạt mức an toàn cao nhất. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The second estimate is ___ the first; both are 30%. (( higher than | **as high as** | the highest :: Hai giá trị bằng nhau nên dùng as high as. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team tested three water filters. Filter A was {{cheaper::Cheaper than là so sánh hơn của cheap khi so sánh hai bộ lọc.}} than Filter B. Filter C was {{the most effective::Trong ba bộ lọc, the most effective là dạng so sánh nhất của effective.}} [hiệu quả] of the three. Filter A was {{as reliable as::As + reliable + as diễn tả hai bộ lọc có cùng độ tin cậy.}} [đáng tin cậy] Filter B; both passed every test."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | revised | method | is | considerably | more | efficient | than | the | approach | used | in | the | initial | study. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Of | the | three | proposals, | the | final | option | is | the | most | effective | in | the | long | term. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The final estimate was {{lower::Low là tính từ ngắn; so sánh hai ước lượng dùng lower than.}} than the preliminary calculation, reflecting revisions to the underlying assumptions."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The urban sample was {{as large as::Hai mẫu có cùng số người nên dùng as large as.}} [lớn] the rural sample; each had 200 participants."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The revised instrument was {{the most accurate::Trong nhóm ba mẫu, dùng the most + tính từ dài accurate.}} [chính xác] of the three models tested."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The second approach is {{more economical::Economical là tính từ dài; dùng more economical than.}} [tiết kiệm] than the first because it uses fewer resources."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The northern region recorded ___ rainfall of the four regions. (( less than | **the least** | as little as :: Trong nhóm bốn vùng, the least diễn tả lượng mưa ít nhất. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The second sample is ___ the first; both contain 100 observations. (( larger than | **as large as** | the largest :: Cùng 100 quan sát nên dùng so sánh bằng as large as. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team tested three water filters. Filter A was {{cheaper::Cheap tạo so sánh hơn cheaper khi so sánh hai bộ lọc.}} than Filter B. Filter C was {{the most effective::The most effective là so sánh nhất trong nhóm ba.}} [hiệu quả] of the three. Filter A was {{as reliable as::As reliable as diễn tả hai bộ lọc có cùng độ tin cậy.}} [đáng tin cậy] Filter B; both passed every test."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A university compared three transport options. Cycling was {{faster::Faster là so sánh hơn của fast khi so sánh hai cách đi lại.}} [nhanh] than walking on the test route. The train was {{the most expensive::The most expensive là so sánh nhất của expensive trong nhóm ba.}} [đắt]. Walking was {{as environmentally friendly as::As + tính từ + as diễn tả hai lựa chọn có mức thân thiện môi trường bằng nhau.}} [thân thiện với môi trường] cycling according to the study."
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | urban | sample | is | as | large | as | the | rural | sample, | although | their | characteristics | differ. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | second | estimate | was | lower | than | the | first | after | the | analysts | corrected | the | underlying | figures. ~~"
+    }
+  ],
+  "lessonNumber": 5
+}

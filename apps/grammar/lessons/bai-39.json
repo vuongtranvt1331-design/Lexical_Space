@@ -1,0 +1,224 @@
+{
+  "id": "46",
+  "title": "46. Câu gián tiếp",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Lời nói gián tiếp và thay đổi ngôi",
+      "contentHTML": "<p>Khi chuyển lời nói trực tiếp sang gián tiếp, thay đại từ theo người nói và người nghe: Maria said, “I need help” → Maria said that she needed help. Say thường không đi trực tiếp với tân ngữ người; tell thường cần tân ngữ: told us that.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Lùi thì và thời gian",
+      "contentHTML": "<p>Sau động từ tường thuật ở quá khứ, có thể lùi thì khi phù hợp: present simple → past simple; present continuous → past continuous; present perfect → past perfect; will → would. Không phải lúc nào cũng bắt buộc lùi thì nếu thông tin vẫn còn đúng hoặc liên quan hiện tại. Điều chỉnh today, tomorrow, here theo thời điểm và địa điểm tường thuật.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Câu hỏi, yêu cầu và sắc thái",
+      "contentHTML": "<p>Câu hỏi gián tiếp thường dùng trật tự khẳng định: She asked where the documents were. Dùng if / whether cho câu hỏi yes/no. Với yêu cầu, dùng ask / tell + người nghe + to-infinitive; phủ định dùng not to-infinitive.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Yesterday Maria said, “I need assistance.” Reporting her words later, the chair said that Maria {{needed | needs::Needed là cách lùi thì thông thường; needs cũng có thể phù hợp nếu nhu cầu vẫn tồn tại.}} (need) assistance."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "At yesterday’s briefing, the director said, “We are reviewing the figures.” The report stated that the director’s team {{was reviewing | is reviewing::Was reviewing là cách lùi thì thông thường; is reviewing có thể phù hợp nếu quá trình vẫn đang diễn ra.}} (review) the figures."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "On Monday, the chair said, “The team will respond.” The minutes recorded that the team {{would respond | will respond::Would respond là cách lùi will; will respond có thể phù hợp nếu lời dự báo vẫn còn hiệu lực.}} (respond)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The director said, “I have signed the agreement.” The report stated that she {{had signed | has signed::Had signed là cách lùi thì thường gặp; has signed có thể phù hợp nếu kết quả vẫn liên quan hiện tại.}} (sign) the agreement."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The auditor asked, “Where are the records?” She asked where the records {{were | are::Trong câu hỏi gián tiếp dùng trật tự chủ ngữ + động từ; were là dạng lùi thì, are có thể phù hợp nếu vị trí vẫn hiện tại.}} (be)."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The client asked, “Is the report ready?” He asked {{if | whether::If và whether đều có thể mở đầu câu hỏi gián tiếp yes/no.}} [liệu] the report was ready."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The chair said to the assistant, “Please send the file.” She asked the assistant {{to send::Ask + người nghe + to-infinitive dùng để tường thuật yêu cầu.}} (send) the file."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The manager said to staff, “Do not share the password.” She told them {{not to share::Tell + người nghe + not to-infinitive tường thuật yêu cầu phủ định.}} (share) the password."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "At Monday’s briefing, the engineer said, “I can complete the test.” The minutes recorded that the engineer {{could complete | can complete::Could là dạng lùi thường gặp của can; can cũng có thể dùng nếu khả năng vẫn hiện tại.}} (complete) the test."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The analyst asked, “Where is the file?” She asked where the file ___. (( **was** | was it | did was :: Câu hỏi gián tiếp dùng trật tự chủ ngữ + động từ; was là dạng lùi thì. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The client asked, “Are they available?” He asked ___ they were available. (( **whether** | that are | whether are :: Whether có thể mở đầu câu hỏi gián tiếp yes/no. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The chair said to the team, “Check the figures.” She told the team ___ the figures. (( **to check** | check to | checking to :: Tell + người nghe + to-infinitive tường thuật yêu cầu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The adviser said to us, “Do not disclose it.” He asked us ___ it. (( **not to disclose** | to not discloses | not disclose to :: Ask + người nghe + not to-infinitive tường thuật yêu cầu phủ định. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She said to the panel, “I am ready.” She ___ the panel that she was ready. (( **told** | said to that | told to :: Tell đi trực tiếp với tân ngữ người: told the panel. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | chair | said | that | Maria | needed | assistance. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | auditor | asked | where | the | records | were. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | client | asked | whether | the | report | was | ready. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | chair | asked | the | assistant | to | send | the | file. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The analyst said to us, “The method is reliable.” She {{told::Tell đi trực tiếp với tân ngữ người: told us that.}} (tell) us that the method was reliable."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The director asked, “Is the document ready?” She asked {{whether | if::Whether và if có thể mở đầu câu hỏi gián tiếp yes/no.}} [liệu] the document was ready."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The witness said, “I saw the vehicle yesterday.” Reporting two days later, the officer said the witness had seen it {{the previous day | the day before::Khi thời điểm tường thuật thay đổi, yesterday có thể trở thành the previous day hoặc the day before.}} [ngày hôm trước]."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The consultant said to us, “The figures are preliminary.” She {{told::Tell cần tân ngữ người: told us that.}} (tell) us that the figures were preliminary."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The reviewer asked, “Why was the proposal rejected?” He asked why the proposal {{had been rejected | was rejected::Had been rejected là cách lùi thì; was rejected cũng có thể phù hợp trong ngữ cảnh tường thuật.}} (reject)."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The supervisor said, “I may revise the schedule.” The report stated that she {{might revise | may revise::Might là dạng lùi thường gặp; may cũng có thể dùng nếu khả năng vẫn liên quan hiện tại.}} (revise) the schedule."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "At a briefing on Monday, the organiser said, “The event is tomorrow.” Reporting on Wednesday, the minutes said it was {{the following day | the next day::Tomorrow tại thời điểm thứ Hai trở thành the following day / the next day khi tường thuật từ mốc đó.}} [ngày hôm sau]."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The chair asked, “Have the members agreed?” She asked {{whether | if::Whether và if có thể mở đầu câu hỏi gián tiếp yes/no.}} [liệu] the members had agreed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The director said to the analyst, “Review the source.” She told the analyst {{to review::Tell + người nghe + to-infinitive tường thuật yêu cầu.}} (review) the source."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The adviser said to us, “Do not publish the draft.” He asked us {{not to publish::Ask + người nghe + not to-infinitive tường thuật yêu cầu phủ định.}} (publish) the draft."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The speaker said, “I worked there in 2020.” The report stated that she {{had worked | worked::Had worked thường dùng để lùi thì; worked cũng có thể giữ nguyên khi thời điểm quá khứ đã rõ.}} (work) there in 2020."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "He asked, “When does the meeting start?” He asked when the meeting ___. (( **started** | did start it | does started :: Câu hỏi gián tiếp dùng trật tự khẳng định; started là cách lùi thì thông thường. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The director said, “We will reconsider.” The minutes stated that the team ___ reconsider. (( **would** | woulds | would to :: Would là dạng lùi thường gặp của will. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The researcher asked, “Can I access the files?” She asked whether she ___ access the files. (( **could** | coulds | could to :: Could là dạng lùi thường gặp của can và theo sau bởi nguyên mẫu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The officer asked, “Why are they absent?” He asked why they ___ absent. (( **were** | were they | did were :: Câu hỏi gián tiếp dùng trật tự chủ ngữ + động từ; were là dạng lùi thì. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The editor said to the writer, “Please revise the title.” She asked the writer ___ the title. (( **to revise** | revising to | revised to :: Ask + người nghe + to-infinitive tường thuật yêu cầu. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | manager | told | them | not | to | share | the | password. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ She | told | us | that | the | figures | were | preliminary. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ He | asked | why | the | proposal | had | been | rejected. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | chair | asked | whether | the | members | had | agreed. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "At Monday’s briefing Maria said, “I need assistance.” The minutes stated that she {{needed | needs::Needed là cách lùi thì thường gặp; needs cũng có thể phù hợp nếu nhu cầu vẫn tồn tại.}} (need) assistance. The chair asked, “Are the figures final?” She asked {{whether | if::Whether và if mở đầu câu hỏi gián tiếp yes/no.}} [liệu] the figures were final. She also told the assistant {{to send::Tell + người nghe + to-infinitive tường thuật yêu cầu.}} (send) the file."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The adviser said to the team, “Do not disclose the draft.” He told them {{not to disclose::Tell + người nghe + not to-infinitive tường thuật yêu cầu phủ định.}} (disclose) it. The chair asked, “Where is the source?” She asked where the source {{was | is::Was là dạng lùi thì thường gặp; is cũng có thể dùng nếu thông tin vẫn hiện tại.}} (be). The director said, “We will respond.” The minutes stated that the team {{would respond | will respond::Would là cách lùi thường gặp; will cũng có thể phù hợp nếu lời dự báo vẫn còn hiệu lực.}} (respond)."
+    }
+  ],
+  "lessonNumber": 5
+}

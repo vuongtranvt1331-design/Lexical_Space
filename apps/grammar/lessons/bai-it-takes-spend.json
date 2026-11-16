@@ -1,0 +1,223 @@
+{
+  "id": "54",
+  "title": "54. It takes / Spend: Thời gian và chi phí",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "It takes: mất bao lâu để làm việc gì",
+      "contentHTML": "<p><strong>It takes + người + khoảng thời gian + to V</strong> diễn tả thời gian cần để làm một việc.</p><div class=\"rule-box\"><p><em>It takes me 30 minutes to get to school.</em> Tôi mất 30 phút để đến trường. <em>It takes her an hour to cook dinner.</em> Cô ấy mất một giờ nấu bữa tối.</p><p>It là chủ ngữ giả; động từ <strong>take</strong> chia theo thời gian: <em>It took us two days to finish.</em> / <em>It will take them a week to prepare.</em></p></div><p>Có thể bỏ người thực hiện khi không quan trọng: <em>It takes ten minutes to walk there.</em></p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Spend: dành thời gian và tiền",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>S + spend + thời gian / tiền + V-ing:</strong> <em>I spend an hour reading.</em> Tôi dành một giờ đọc sách.</p><p><strong>S + spend + thời gian / tiền + on + danh từ:</strong> <em>She spends money on books.</em> Cô ấy chi tiền cho sách.</p></div><p>Chia spend theo chủ ngữ và thời gian: <em>He spends two hours studying.</em>; <em>We spent a week preparing.</em> Sau spend + khoảng thời gian, dùng V-ing chứ không dùng to V.</p><p>Có thể dùng <em>on</em> với danh từ chỉ hoạt động: <em>They spent a week on the project.</em></p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Chuyển đổi và lỗi thường gặp",
+      "contentHTML": "<p>Hai cách diễn đạt có thể mô tả cùng một khoảng thời gian:</p><div class=\"rule-box\"><p><em>It takes Lan two hours to study.</em> → <em>Lan spends two hours studying.</em></p><p><em>It took us three days to complete the project.</em> → <em>We spent three days completing the project.</em></p></div><p>Đổi người sau takes thành chủ ngữ; giữ thì và thời gian; đổi <strong>to V</strong> thành <strong>V-ing</strong>. Ngược lại, khi chuyển từ spend sang take, đổi V-ing thành to V.</p><p><strong>Phân biệt:</strong> spend money on something = chi tiền cho vật/dịch vụ. Với giá của vật, thường dùng <em>The book costs ten dollars</em>; không nhầm người chi tiền với vật có giá.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It {{takes::It là chủ ngữ số ít, hiện tại đơn dùng takes.}} (take) me ten minutes to walk home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It {{took::Yesterday chỉ quá khứ; dạng quá khứ của take là took.}} (take) her an hour to cook yesterday."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It will {{take::Sau will dùng động từ nguyên mẫu take.}} (take) us two days to paint the room."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She spends an hour {{reading::Sau spend + thời gian dùng V-ing.}} (read) every evening."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We spent two hours {{cleaning::Sau spent + thời gian dùng V-ing: cleaning.}} (clean) the house."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He {{spends::He là chủ ngữ số ít ở hiện tại đơn nên spend thêm s.}} (spend) a lot of time studying."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I spend money {{on::Spend money on + danh từ chỉ khoản chi.}} [cho] books."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It takes them twenty minutes {{to get::It takes + người + thời gian + to V.}} (get) to school."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They {{spent::Last week chỉ quá khứ; spend chuyển thành spent.}} (spend) a week preparing last week."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It takes {{me::Sau takes dùng đại từ tân ngữ me, không dùng I.}} [tôi] five minutes to get dressed."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It ___ her an hour to make dinner. (( take | **takes** | spending :: It là chủ ngữ số ít hiện tại đơn nên dùng takes. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "They spent a day ___ the garden. (( clean | to clean | **cleaning** :: Sau spend + khoảng thời gian dùng V-ing. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We spend money ___ food. (( to | **on** | for to :: Spend money on + danh từ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "It took ___ two hours to finish. (( I | **me** | my :: Sau took dùng đại từ tân ngữ me. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which means the same as “It takes him an hour to read”? (( He spends an hour to read. | **He spends an hour reading.** | He takes an hour reading it for him. :: Đổi him thành chủ ngữ he và to read thành reading. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Yesterday we ___ two hours waiting. (( spend | spends | **spent** :: Yesterday chỉ quá khứ; spend có dạng quá khứ bất quy tắc spent. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ It | takes | me | ten | minutes | to | walk | home. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | spends | an | hour | reading | every | day. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | spent | two | days | painting | the | room. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ They | spend | money | on | books. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It {{took::Last month chỉ quá khứ; take chuyển thành took.}} (take) the researchers six months to complete the study last month."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee spent several weeks {{reviewing::Spend + khoảng thời gian + V-ing; review thêm ing.}} (review) the proposals."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The organisation {{spends::The organisation là chủ ngữ số ít ở hiện tại đơn nên dùng spends.}} (spend) substantial resources maintaining the archive."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It will {{take::Sau will dùng take nguyên mẫu.}} (take) the team several months to implement the recommendations."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The museum spent a large sum {{on::Spend money on + danh từ chỉ khoản chi.}} [cho] conservation equipment."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It takes {{them::Sau takes dùng đại từ tân ngữ them cho người thực hiện.}} [họ] hours to inspect each document."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The analyst spent the morning {{examining::Sau spent + thời gian dùng V-ing.}} (examine) the survey responses."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "It {{takes::It là chủ ngữ số ít ở hiện tại đơn; động từ là takes.}} (take) considerable effort to maintain public trust."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which correctly rewrites “It took the team three days to analyse the data”? (( The team spent three days to analyse the data. | **The team spent three days analysing the data.** | The team takes three days analysed the data. :: Took ở quá khứ tương ứng spent; sau spent + thời gian dùng V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The agency spent considerable funds ___ the new equipment. (( for buy | **on** | to buying :: Spend funds on + cụm danh từ the new equipment. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "It will take the board weeks ___ a decision. (( reaching | **to reach** | reached :: It will take + người + thời gian + to V. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The investigators spent months ___ witnesses. (( to interview | **interviewing** | interview :: Spend + khoảng thời gian + V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "It took ___ several attempts to obtain reliable results. (( they | **them** | their :: Sau took dùng đại từ tân ngữ them. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( The committee spent two weeks to prepare the report. | **The committee spent two weeks preparing the report.** | The committee spent two weeks prepare the report. :: Spend + thời gian + V-ing: preparing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | spent | several | weeks | reviewing | the | proposal. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ It | took | the | researchers | six | months | to | complete | the | study. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | museum | spent | money | on | conservation | equipment. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A team planned a new exhibition. It {{took::Quá khứ của take là took.}} (take) the team six months to collect the objects. The curators spent several weeks {{writing::Sau spent + thời gian dùng V-ing.}} (write) the descriptions. The museum spent additional funds {{on::Spend funds on + danh từ.}} [cho] accessible signs."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A city introduced a recycling scheme. It will {{take::Sau will dùng nguyên mẫu take.}} (take) several months to reach every neighbourhood. Staff are spending time {{explaining::Sau spend time dùng V-ing.}} (explain) the new rules. The city has spent money {{on::Spend money on + danh từ.}} [cho] new collection points."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research group reviewed its results. It {{took::Dùng took khi kể một hành động hoàn tất trong quá khứ.}} (take) the group a week to check the data. One analyst spent three days {{comparing::Sau spent + thời gian dùng V-ing.}} (compare) the figures. The group spent additional funds {{on::Spend funds on + danh từ.}} [cho] independent verification."
+    }
+  ]
+}

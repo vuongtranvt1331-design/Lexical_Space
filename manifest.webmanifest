@@ -2,7 +2,7 @@
   "id": "./",
   "name": "LexicalSpace",
   "short_name": "LexicalSpace",
-  "description": "Your vocabulary library and daily recall practice.",
+  "description": "LexicalSpace, GrammarSpace and ArcadeSpace in one application.",
   "lang": "en",
   "start_url": "./",
   "scope": "./",

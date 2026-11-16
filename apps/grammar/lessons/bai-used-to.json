@@ -1,0 +1,223 @@
+{
+  "id": "51",
+  "title": "51. Used to / Be used to / Get used to",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Used to: thói quen và trạng thái trong quá khứ",
+      "contentHTML": "<p><strong>Used to + động từ nguyên mẫu</strong> nói về thói quen hoặc trạng thái trong quá khứ không còn đúng ở hiện tại: <em>I used to walk to school.</em> Trước đây tôi thường đi bộ đến trường, giờ không còn như vậy.</p><div class=\"rule-box\"><p>Khẳng định: <strong>S + used to + V</strong>: <em>She used to live here.</em></p><p>Phủ định: <strong>S + did not use to + V</strong>: <em>She did not use to drive.</em></p><p>Câu hỏi: <strong>Did + S + use to + V?</strong> <em>Did you use to play tennis?</em> Sau did, thông thường viết <strong>use</strong>, không viết used.</p></div><p>Used to cũng diễn tả trạng thái cũ: <em>There used to be a cinema here.</em> Trước đây ở đây có rạp chiếu phim.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "Be used to: đã quen với",
+      "contentHTML": "<p><strong>Be used to + danh từ / đại từ / V-ing</strong> nghĩa là đã quen với điều gì; <strong>to</strong> ở đây là giới từ, không phải dấu hiệu của nguyên mẫu.</p><div class=\"rule-box\"><p><em>She is used to cold weather.</em> Cô ấy đã quen với thời tiết lạnh.</p><p><em>They are used to working at night.</em> Họ đã quen làm việc ban đêm.</p><p>Chia <strong>be</strong> theo chủ ngữ và thời gian: <em>I am used to it.</em> / <em>He was used to getting up early.</em></p></div><p>So sánh: <em>I used to get up early</em> = tôi từng dậy sớm; <em>I am used to getting up early</em> = tôi hiện đã quen với việc dậy sớm.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Get used to: dần trở nên quen",
+      "contentHTML": "<p><strong>Get used to + danh từ / V-ing</strong> diễn tả quá trình dần quen; khác với <em>be used to</em>, vốn mô tả trạng thái đã quen.</p><div class=\"rule-box\"><p><em>I am getting used to the new schedule.</em> Tôi đang dần quen lịch mới.</p><p><em>She got used to speaking English at work.</em> Cô ấy đã dần quen nói tiếng Anh tại nơi làm việc.</p><p><em>You will get used to living here.</em> Bạn sẽ quen dần với việc sống ở đây.</p></div><p><strong>Kiểm tra từng bước:</strong> (1) Thói quen cũ không còn? dùng used to + V. (2) Đã quen? dùng be used to + V-ing / danh từ. (3) Đang hoặc sẽ quen dần? dùng get used to + V-ing / danh từ. Chia be/get theo ngữ cảnh.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I used to {{walk::Used to nói về thói quen quá khứ và đi với động từ nguyên mẫu walk.}} (walk) to school."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She is used to {{getting::Trong be used to, to là giới từ nên dùng V-ing: getting.}} (get) up early."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We are getting used to {{living::Get used to đi với V-ing: living.}} (live) in the city."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He did not {{use::Sau did not dùng dạng use to, không dùng used to.}} (use) to like tea."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Did you {{use::Sau did trong câu hỏi, dùng use to + nguyên mẫu.}} (use) to play football?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "My father used to {{work::Used to + động từ nguyên mẫu work.}} (work) in a shop."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They are used to {{studying::Sau be used to dùng V-ing: studying.}} (study) together."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I am getting used to {{cooking::Sau get used to dùng V-ing: cooking.}} (cook) for myself."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "There used to {{be::Used to + động từ nguyên mẫu be, dùng để nói về trạng thái quá khứ.}} (be) a park here."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She was used to {{taking::Was used to + V-ing nói rằng cô ấy đã quen đi xe buýt trong quá khứ.}} (take) the bus."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "My uncle ___ in this village, but he moved away. (( is used to live | **used to live** | used to living :: Used to + nguyên mẫu diễn tả trạng thái sống ở làng trong quá khứ, nay không còn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I am used to ___ early. (( wake | **waking** | woke :: Be used to + V-ing: đã quen dậy sớm. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She is getting used to ___ English at work. (( speak | **speaking** | spoke :: Get used to + V-ing diễn tả quá trình quen dần. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ you use to swim every day? (( Do | **Did** | Are :: Câu hỏi về thói quen quá khứ dùng Did + chủ ngữ + use to. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "They did not ___ have a car. (( used to | **use to** | using to :: Sau did not dùng use to + động từ nguyên mẫu. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence means “Tôi đã quen với trời lạnh”? (( I used to cold weather. | **I am used to cold weather.** | I used to be cold weather. :: Be used to + danh từ diễn tả trạng thái đã quen. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | used | to | play | here. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | is | used | to | working | late. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | are | getting | used | to | the | weather. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Did | he | use | to | live | here? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The organisation used to {{rely::Used to + nguyên mẫu chỉ cách làm cũ nay đã thay đổi.}} (rely) on paper records."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The analysts are used to {{interpreting::Be used to + V-ing diễn tả họ đã quen phân tích dữ liệu phức tạp.}} (interpret) complex data."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "New employees are gradually getting used to {{collaborating::Get used to + V-ing chỉ quá trình dần quen với việc cộng tác.}} (collaborate) remotely."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee did not {{use::Sau did not, dùng use to ở dạng nguyên mẫu.}} (use) to publish its minutes."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The curator was used to {{handling::Was used to + V-ing chỉ trạng thái đã quen xử lý tài liệu dễ hỏng trong quá khứ.}} (handle) fragile documents."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Residents will eventually get used to {{sharing::Sau get used to dùng V-ing: sharing.}} (share) the new facilities."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The building used to {{serve::Used to + nguyên mẫu diễn tả công dụng trước đây của tòa nhà.}} (serve) as a library."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers are used to {{working::Be used to + V-ing: các nhà nghiên cứu đã quen làm việc với thời hạn gấp.}} (work) under tight deadlines."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Before the reform, local councils ___ on handwritten records. (( were used to rely | **used to rely** | used to relying :: Used to + nguyên mẫu chỉ thực tế trong quá khứ đã thay đổi. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The editor is accustomed to strict deadlines. Which has the same meaning? (( The editor used to meet strict deadlines. | **The editor is used to strict deadlines.** | The editor is getting used to strict deadlines. :: Is used to mô tả trạng thái đã quen, tương đương is accustomed to. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The staff are gradually ___ the revised procedure. (( used to follow | **getting used to following** | use to following :: Gradually và are gợi quá trình đang quen dần; get used to + V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which question asks about a former habit? (( Are you used to working remotely? | **Did you use to work remotely?** | Are you getting used to working remotely? :: Did … use to + V hỏi về thói quen trước đây. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "She had to adapt to ___ clients from different backgrounds. (( used to meet | **meeting** | meet :: Adapt to có to là giới từ nên theo sau bằng V-ing. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The technicians ___ unusual schedules, so working overnight presents no difficulty. (( used to | **are used to** | did use to :: Are used to + danh từ nói họ hiện đã quen lịch làm việc. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | organisation | used | to | keep | paper | records. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | is | used | to | meeting | tight | deadlines. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ New | employees | are | getting | used | to | working | remotely. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A small firm moved online last year. It used to {{send::Used to + nguyên mẫu nói về thói quen cũ.}} (send) all invoices by post. Its staff are now used to {{processing::Be used to + V-ing diễn tả trạng thái đã quen.}} (process) payments digitally. New recruits are still getting used to {{using::Get used to + V-ing diễn tả quá trình dần quen.}} (use) the software."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A researcher moved to a new country. She did not {{use::Sau did not dùng use to.}} (use) to commute by train. At first, she found the journey tiring, but she gradually got used to {{travelling::Get used to + V-ing diễn tả dần quen với việc đi lại.}} (travel) each morning. She is now used to {{reading::Be used to + V-ing chỉ trạng thái hiện đã quen.}} (read) on the train."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum renovated its archive. Volunteers used to {{store::Used to + nguyên mẫu chỉ thói quen trước đây.}} (store) documents in open boxes. They are getting used to {{following::Get used to + V-ing chỉ quá trình dần quen.}} (follow) stricter procedures. The curator is already used to {{checking::Be used to + V-ing diễn tả trạng thái đã quen.}} (check) the temperature daily."
+    }
+  ]
+}

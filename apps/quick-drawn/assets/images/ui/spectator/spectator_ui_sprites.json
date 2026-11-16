@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "file": "spectator_ui_sprites.png",
+  "width": 1448,
+  "height": 1086,
+  "rendering": "Observed alpha>16 bounds plus16px padding; faint alpha<=16 generation dust excluded from bounds. Integer named source rectangles; no runtime grid guesses.",
+  "frames": {
+    "turn-ribbon": {
+      "x": 10,
+      "y": 111,
+      "width": 758,
+      "height": 213,
+      "padding": 16,
+      "slice": null
+    },
+    "clock-frame": {
+      "x": 775,
+      "y": 109,
+      "width": 633,
+      "height": 210,
+      "padding": 16,
+      "slice": 48
+    },
+    "capture-tray": {
+      "x": 43,
+      "y": 455,
+      "width": 690,
+      "height": 209,
+      "padding": 16,
+      "slice": 48
+    },
+    "live-pill": {
+      "x": 767,
+      "y": 469,
+      "width": 650,
+      "height": 179,
+      "padding": 16,
+      "slice": null
+    },
+    "fullscreen-expand": {
+      "x": 94,
+      "y": 800,
+      "width": 211,
+      "height": 205,
+      "padding": 16,
+      "slice": null
+    },
+    "fullscreen-collapse": {
+      "x": 441,
+      "y": 799,
+      "width": 209,
+      "height": 206,
+      "padding": 16,
+      "slice": null
+    },
+    "side-black": {
+      "x": 756,
+      "y": 775,
+      "width": 259,
+      "height": 259,
+      "padding": 16,
+      "slice": null
+    },
+    "side-white": {
+      "x": 1110,
+      "y": 775,
+      "width": 260,
+      "height": 259,
+      "padding": 16,
+      "slice": null
+    }
+  }
+}

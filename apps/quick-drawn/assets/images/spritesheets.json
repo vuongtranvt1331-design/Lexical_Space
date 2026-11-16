@@ -1,0 +1,35 @@
+{
+  "frameWidth": 128,
+  "frameHeight": 128,
+  "columns": 40,
+  "rows": 3,
+  "width": 5120,
+  "height": 384,
+  "safePadding": 16,
+  "sourceDirection": "right",
+  "mirrorEnemyInCSS": true,
+  "files": {
+    "player": "./assets/images/player_spritesheet.png",
+    "enemy": "./assets/images/enemy_spritesheet.png"
+  },
+  "animations": {
+    "idle": {
+      "row": 0,
+      "frames": 40,
+      "durationMs": 2800,
+      "loop": true
+    },
+    "shoot": {
+      "row": 1,
+      "frames": 8,
+      "durationMs": 500,
+      "loop": false
+    },
+    "hit": {
+      "row": 2,
+      "frames": 8,
+      "durationMs": 500,
+      "loop": false
+    }
+  }
+}

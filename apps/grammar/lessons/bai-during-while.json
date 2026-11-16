@@ -1,0 +1,223 @@
+{
+  "id": "63",
+  "title": "63. During / While / For & Liên từ – Giới từ",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "During và While",
+      "contentHTML": "<p><strong>During</strong> là giới từ, theo sau bởi danh từ/cụm danh từ; <strong>while</strong> là liên từ, thường theo sau bởi mệnh đề có chủ ngữ và động từ.</p><div class=\"rule-box\"><p><em>During the lesson, I took notes.</em> Tôi ghi chép trong buổi học. <em>During</em> theo sau bởi cụm danh từ <em>the lesson</em>.</p><p><em>While the teacher explained the lesson, I took notes.</em> Trong khi giáo viên giải thích, tôi ghi chép. Sau <em>while</em> có chủ ngữ và động từ.</p></div><p>Để chuyển đổi cần chọn cụm danh từ diễn đạt đúng nội dung: <em>during the meeting</em> ↔ <em>while the meeting was taking place</em>. Không viết <s>during the meeting was taking place</s>.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "During, For và While rút gọn",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>During + sự kiện/khoảng thời gian:</strong> <em>during the meeting</em>, <em>during the summer</em> cho biết việc xảy ra trong khoảng nào.</p><p><strong>For + độ dài thời gian:</strong> <em>for two hours</em>, <em>for three days</em> cho biết sự việc kéo dài bao lâu. Không dùng <s>during two hours</s> để chỉ thời lượng.</p><p>Trong một số mệnh đề rút gọn, <strong>while + V-ing</strong> có thể dùng khi chủ thể được hiểu rõ: <em>While walking home, she called me.</em> Người đi bộ là she.</p></div><p>While cũng có thể chỉ sự tương phản: <em>One group preferred buses, while the other preferred trains.</em> Cần đọc toàn câu để xác định nghĩa.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Đối chiếu các cặp liên từ – giới từ",
+      "contentHTML": "<div class=\"rule-box\"><p><strong>Because + mệnh đề / because of + danh từ:</strong> <em>because it rained</em> / <em>because of the rain</em>.</p><p><strong>Although + mệnh đề / despite + danh từ hoặc V-ing:</strong> <em>although she was tired</em> / <em>despite her tiredness</em>.</p><p><strong>While + mệnh đề / during + danh từ:</strong> <em>while they met</em> / <em>during the meeting</em>.</p></div><p><strong>Cách chọn:</strong> (1) Xác định ý cần diễn tả: thời gian, nguyên nhân hay tương phản. (2) Xem phần sau là mệnh đề hay cụm danh từ. (3) Kiểm tra việc chuyển đổi có giữ đúng người, thời gian và nghĩa hay không.</p><p>Danh động từ sau giới từ như <em>despite feeling tired</em> cũng phải có chủ thể được hiểu phù hợp với phần còn lại của câu.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I slept {{during::During là giới từ, đứng trước cụm danh từ the flight.}} [trong] the flight."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She called {{while::While là liên từ, đứng trước mệnh đề I was cooking.}} [trong khi] I was cooking."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "We waited {{for::For + khoảng thời gian chỉ thời lượng.}} [trong] two hours."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "He read {{during::During đứng trước danh từ the break để chỉ khoảng xảy ra hành động.}} [trong] the break."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "They talked {{while::While đứng trước mệnh đề they walked home.}} [trong khi] they walked home."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "I stayed there {{for::For + three days chỉ độ dài thời gian.}} [trong] three days."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "It rained {{during::During đứng trước cụm danh từ the night.}} [trong] the night."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "She listened {{while::While đứng trước mệnh đề the teacher spoke.}} [trong khi] the teacher spoke."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The game stopped {{because of::Because of đứng trước cụm danh từ the rain và chỉ nguyên nhân.}} [vì] the rain."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though::Although hoặc though đứng trước mệnh đề it was cold để chỉ tương phản.}} [mặc dù] it was cold, we walked."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "I took notes ___ the meeting. (( while | **during** | because :: The meeting là cụm danh từ; dùng during. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "She called ___ I was working. (( during | **while** | because of :: I was working là mệnh đề chỉ thời gian; dùng while. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We talked ___ an hour. (( during | **for** | while :: For + an hour chỉ thời lượng. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ the rain, they played outside. (( Although | **Despite** | Because :: The rain là cụm danh từ chỉ trở ngại; dùng despite. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "We stayed home ___ it rained. (( because of | **because** | during :: It rained là mệnh đề nêu nguyên nhân; dùng because. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Which sentence is correct? (( During she slept, the phone rang. | **While she slept, the phone rang.** | For she slept, the phone rang. :: She slept là mệnh đề chỉ thời gian; dùng while. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ I | took | notes | during | the | meeting. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | called | while | I | was | cooking. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ We | waited | for | two | hours. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Despite | the | rain, | they | played | outside. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The committee discussed the proposal {{during::During đứng trước cụm danh từ the hearing.}} [trong] the hearing."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The error appeared {{while::While đứng trước mệnh đề the system was being tested.}} [trong khi] the system was being tested."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The researchers monitored the samples {{for::For + six weeks chỉ thời lượng.}} [trong] six weeks."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The report was delayed {{because of::Because of đứng trước cụm danh từ a shortage of staff.}} [vì] a shortage of staff."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Although | Though::Although hoặc though đứng trước mệnh đề the results were preliminary và nêu tương phản.}} [mặc dù] the results were preliminary, they informed the next study."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The system failed {{during::During đứng trước cụm danh từ the final inspection.}} [trong] the final inspection."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The panel met {{while::While đứng trước mệnh đề the investigation continued.}} [trong khi] the investigation continued."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Despite::Despite đứng trước cụm danh từ limited funding và nêu trở ngại.}} [mặc dù] limited funding, the team completed the study."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The researcher recorded observations ___ the experiment. (( while | **during** | for :: The experiment là cụm danh từ chỉ sự kiện, nên dùng during. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The team revised its method ___ it analysed the initial results. (( during | **while** | because of :: It analysed the initial results là mệnh đề chỉ thời gian. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The inspection lasted ___ three days. (( during | **for** | while :: For + three days diễn tả thời lượng. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The hearing continued ___ several objections. (( although | **despite** | because :: Several objections là cụm danh từ chỉ trở ngại, nên dùng despite. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The trial was postponed ___ the equipment failed. (( because of | **because** | during :: The equipment failed là mệnh đề nêu nguyên nhân. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Which sentence uses a reduced clause with the same subject? (( While walking to the meeting, the report was lost. | **While walking to the meeting, the analyst called her colleague.** | During the analyst walked, she called. :: Chủ thể walking là the analyst; mệnh đề rút gọn và câu chính có cùng chủ thể. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | researchers | monitored | the | samples | for | six | weeks. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | committee | discussed | the | proposal | during | the | hearing. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Although | the | results | were | preliminary, | they | informed | the | next | study. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A research team conducted a trial. It recorded observations {{during::During + cụm danh từ the trial.}} [trong] the trial. Staff monitored the equipment {{for::For + thời lượng two weeks.}} [trong] two weeks. One error appeared {{while::While + mệnh đề staff were reviewing.}} [trong khi] staff were reviewing the data."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A city held public meetings. Attendance increased {{during::During đứng trước cụm danh từ the consultation.}} [trong] the consultation. One session was delayed {{because of::Because of + danh từ transport problems.}} [vì] transport problems. {{Although::Although + mệnh đề the session started late.}} [mặc dù] the session started late, residents raised several questions."
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "A museum prepared an exhibition. Staff worked {{for::For + three months chỉ thời lượng.}} [trong] three months. They checked the lighting {{while::While + mệnh đề the displays were being installed.}} [trong khi] the displays were being installed. {{Despite::Despite + danh từ limited time.}} [mặc dù] limited time, the exhibition opened on schedule."
+    }
+  ]
+}

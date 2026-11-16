@@ -1,0 +1,224 @@
+{
+  "id": "22",
+  "title": "22. Can, Could, May, Might",
+  "pages": [
+    {
+      "pageNumber": 1,
+      "pageTitle": "Can và could",
+      "contentHTML": "<p>Can + động từ nguyên mẫu diễn tả khả năng hiện tại, hoặc sự cho phép trong ngữ cảnh phù hợp. Could diễn tả khả năng chung trong quá khứ và cũng dùng trong lời đề nghị lịch sự. Với thành công cụ thể trong quá khứ, was/were able to thường phù hợp hơn could: Despite the storm, we were able to reach the village.</p>"
+    },
+    {
+      "pageNumber": 2,
+      "pageTitle": "May, might và could",
+      "contentHTML": "<p>May, might và could đều có thể diễn tả một khả năng chưa chắc chắn. Ngữ cảnh và sắc thái quan trọng hơn một tỉ lệ xác suất cố định. Ví dụ: The flight may / might / could be delayed.</p>"
+    },
+    {
+      "pageNumber": 3,
+      "pageTitle": "Xin phép và nhờ vả",
+      "contentHTML": "<p>May I ...? trang trọng; Can I ...? thân mật hơn; Could I ...? thường lịch sự. Can / Could / Would you ...? đều có thể dùng để nhờ vả. Không thêm to sau các modal này.</p>"
+    }
+  ],
+  "exercises": [
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The new software {{can::Can diễn tả khả năng hiện tại; động từ sau can ở dạng nguyên mẫu.}} handle large files without slowing down."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "As a child, Maya {{could | was able to::Could hoặc was able to diễn tả khả năng chung trong quá khứ.}} speak three languages."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{May | Can | Could::Cả May, Can và Could I đều có thể dùng để xin phép; sắc thái trang trọng khác nhau.}} I ask a question before we move on?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The weather forecast is uncertain, so the concert {{may | might | could::May, might và could đều nêu một khả năng chưa chắc chắn.}} take place indoors."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "{{Can | Could | Would::Cả ba cách hỏi đều có thể dùng để nhờ người nghe; Could và Would thường lịch sự hơn.}} you check the final version, please?"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Despite the storm, the rescue team {{was able to | managed to::Was able to hoặc managed to phù hợp với một thành công cụ thể trong quá khứ.}} reach the village before dark."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "Students {{can | may::Can và may đều có thể diễn tả sự cho phép theo quy định; may trang trọng hơn.}} use the library until ten under the new rules."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The delay {{may | might | could::May, might và could đều nêu khả năng khi nguyên nhân chưa được xác nhận.}} be due to heavy traffic, but we do not know yet."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The old printer {{could | was able to::Could hoặc was able to diễn tả khả năng chung của chiếc máy trong quá khứ.}} print only ten pages a minute."
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The committee ___ review the figures before publishing its decision; a review is possible but not certain. (( **might** | must to | mights :: Might + động từ nguyên mẫu diễn tả khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "When our grandmother was young, she ___ run long distances. (( **could** | could to | cans :: Could diễn tả khả năng chung trong quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "Despite the noise, the speaker ___ finish the presentation. (( **was able to** | coulds | is able yesterday :: Was able to phù hợp với thành công cụ thể trong quá khứ. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "___ I speak to the manager, please? (( **May** | Must to | Mights :: May I ...? là một cách xin phép lịch sự. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "mcq",
+      "questionHTML": "The new scanner ___ identify damaged labels automatically. (( **can** | cans | can to :: Can + động từ nguyên mẫu diễn tả khả năng hiện tại. ))"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ The | flight | may | be | delayed | by | the | weather. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ Could | you | explain | the | final | point? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ She | could | speak | three | languages | as | a | child. ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "unscramble",
+      "questionHTML": "~~ May | I | ask | a | question? ~~"
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The device {{can::Can + nguyên mẫu diễn tả khả năng hiện tại của thiết bị.}} record sound without an internet connection."
+    },
+    {
+      "tier": "practice",
+      "type": "gap-fill",
+      "questionHTML": "The students {{could | were able to::Could hoặc were able to diễn tả khả năng chung của học sinh trong quá khứ.}} use the old system independently."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "I {{cannot | can't | can’t::Cannot và hai cách viết của can’t diễn tả việc hiện tại không thể đăng nhập.}} sign in because I have forgotten my password."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "The results {{may | might | could::Cả ba modal đều có thể chỉ khả năng chưa chắc chắn, không khẳng định kết quả.}} change after further testing."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{Could | Can | Would::Could, Can và Would đều dùng được để nhờ người nghe; Could và Would thường lịch sự hơn.}} you clarify what you mean by the final point?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Even without a map, the guide {{was able to | managed to::Was able to và managed to nhấn mạnh thành công cụ thể trong tình huống quá khứ.}} find the path back to camp."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "During the trial, participants {{could | were able to::Could và were able to đều mô tả khả năng chung của các nhóm tham gia thử nghiệm.}} complete the task without assistance."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "We {{may | might | could::Cả ba modal đều diễn tả khả năng chưa chắc chắn; ngày họp chưa được xác nhận.}} need to change the meeting date; nothing is confirmed."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "According to the rules, each member {{can | may::Can và may đều diễn tả sự cho phép; each member dùng cùng dạng modal nguyên mẫu.}} invite one guest."
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "{{May | Could | Can::May, Could và Can I đều có thể xin phép; May thường trang trọng hơn.}} I leave the discussion a little early?"
+    },
+    {
+      "tier": "apply",
+      "type": "gap-fill",
+      "questionHTML": "Although the door was stuck, we {{were able to | managed to::Were able to hoặc managed to nói về việc đã thành công mở cửa trong một tình huống cụ thể.}} open it after several attempts."
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The delivery ___ arrive later today; the company has not confirmed a time. (( **may** | musts | may to :: May diễn tả một khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "___ you explain the schedule once more, please? (( **Would** | Woulds | Would to :: Would you + nguyên mẫu là một cách nhờ vả lịch sự. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "After several attempts, the driver ___ restart the engine. (( **managed to** | can yesterday | coulds :: Managed to nhấn mạnh thành công trong một tình huống cụ thể ở quá khứ. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "Under the current policy, registered guests ___ access the online materials. (( **may** | mays | may to :: May + nguyên mẫu có thể diễn tả sự cho phép trang trọng. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "mcq",
+      "questionHTML": "The new route ___ reduce travel time, although more research is needed. (( **could** | coulds | could to :: Could + nguyên mẫu diễn tả khả năng chưa chắc chắn. ))"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | team | was | able | to | reach | the | village. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ The | results | might | change | after | further | testing. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Members | can | invite | one | guest. ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "unscramble",
+      "questionHTML": "~~ Would | you | check | the | final | version? ~~"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The team is planning a visit. The forecast {{may | might | could::Các modal này đều chỉ một khả năng chưa chắc chắn.}} change, so the trip could be postponed. Each member {{can | may::Can và may đều diễn tả sự cho phép theo quy định.}} invite one guest. The organiser asks, “{{Could | Can | Would::Cả ba cách đều có thể dùng trong lời nhờ vả.}} you confirm the numbers?”"
+    },
+    {
+      "tier": "apply",
+      "type": "paragraph-gap-fill",
+      "questionHTML": "The museum is preparing an event. Its new system {{can::Can + nguyên mẫu chỉ khả năng hiện tại của hệ thống.}} manage bookings automatically. Last year, the older system {{could | was able to::Cả hai dạng đều mô tả khả năng chung trong quá khứ.}} handle only a few requests at once. The event {{may | might | could::Cả ba modal đều nêu khả năng chưa chắc chắn.}} attract more visitors than expected."
+    }
+  ],
+  "lessonNumber": 1
+}

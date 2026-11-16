@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "purpose": "Shared visual elements for desktop spectators and portrait players. All labels, names, moves, ratings and counters remain live HTML.",
+  "new_atlas": "spectator_ui_sprites.json",
+  "reuse": {
+    "player_card_and_score_frame": {
+      "manifest": "../gold_ui_sprites.json",
+      "frame": "leaderboard/board-muted"
+    },
+    "buttons": {
+      "manifest": "../gold_ui_sprites.json",
+      "families": [
+        "red",
+        "navy",
+        "icon"
+      ],
+      "states": [
+        "normal",
+        "hover",
+        "pressed",
+        "disabled"
+      ]
+    },
+    "exit_rematch_draw_resign_icons": "../../chess/chess_actions.json",
+    "board_tiles_and_pieces": "../../chess/chess_viet_sprites.json",
+    "quiet_background": "../../map_palace.png",
+    "heroes": {
+      "ngo": {
+        "file": "../../heroes/ngo.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "trung": {
+        "file": "../../heroes/trung.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "an": {
+        "file": "../../heroes/an.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "giong": {
+        "file": "../../heroes/giong.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "tran": {
+        "file": "../../heroes/tran.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "chu": {
+        "file": "../../heroes/chu.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "lac": {
+        "file": "../../heroes/lac.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "mai": {
+        "file": "../../heroes/mai.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "toan": {
+        "file": "../../heroes/toan.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      },
+      "vuong": {
+        "file": "../../heroes/vuong.png",
+        "idle_frame": [
+          0,
+          0,
+          229,
+          229
+        ],
+        "portrait": "Use exact upper half of original first idle frame; CSS zoom2; inward-facing according to actual source orientation."
+      }
+    }
+  },
+  "new_elements": [
+    "turn-ribbon",
+    "clock-frame",
+    "capture-tray",
+    "live-pill",
+    "fullscreen-expand",
+    "fullscreen-collapse",
+    "side-black",
+    "side-white"
+  ],
+  "padding": 16,
+  "runtime": "js/chess-spectator-ui.js validates exact dimensions and integer rectangles, smoothing disabled; fallback visual remains usable.",
+  "portrait_player": {
+    "pieces": "Reuse unchanged assets/images/chess/chess_viet_spritesheet.png via existing --chess-* variables.",
+    "captures": "Five opponent-piece types; ghosts at zero, no number at one, plain count underneath at two or more.",
+    "avatars": "Original selected hero idle sprite, upper body crop; portrait faces inward toward the identity area.",
+    "scope": "Host/guest only while orientation:portrait; mobile spectators and landscape players retain existing compact layout."
+  }
+}

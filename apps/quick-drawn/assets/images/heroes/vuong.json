@@ -1,0 +1,550 @@
+{
+  "hero": "vuong",
+  "name": "Teacher Vương",
+  "width": 1374,
+  "height": 1145,
+  "columns": 6,
+  "rows": 5,
+  "cellWidth": 229,
+  "cellHeight": 229,
+  "feet": [
+    [
+      222,
+      222,
+      222,
+      222,
+      222,
+      222
+    ],
+    [
+      211,
+      211,
+      214,
+      212,
+      215,
+      214
+    ],
+    [
+      221,
+      221,
+      221,
+      221,
+      221,
+      221
+    ],
+    [
+      221,
+      222,
+      221,
+      221,
+      221,
+      221
+    ],
+    [
+      221,
+      218,
+      211,
+      203,
+      203,
+      203
+    ]
+  ],
+  "center": 119,
+  "animations": {
+    "idle": {
+      "row": 0,
+      "frames": 6,
+      "frameMs": 166.667,
+      "loop": true
+    },
+    "attack": {
+      "row": 1,
+      "frames": 6,
+      "sequence": [
+        0,
+        1,
+        2,
+        3,
+        2,
+        4,
+        2,
+        3,
+        5
+      ],
+      "changesAtMs": [
+        0,
+        100,
+        200,
+        300,
+        420,
+        510,
+        600,
+        690,
+        780
+      ],
+      "durationMs": 900,
+      "loop": false
+    },
+    "hit": {
+      "row": 2,
+      "frames": 6,
+      "frameMs": 60,
+      "loop": false
+    },
+    "victory": {
+      "row": 3,
+      "frames": 6,
+      "frameMs": 150,
+      "loop": false
+    },
+    "dead": {
+      "row": 4,
+      "frames": 6,
+      "frameMs": 70,
+      "loop": false
+    }
+  },
+  "attack": {
+    "type": "melee",
+    "impactMs": [
+      360,
+      540,
+      720
+    ],
+    "weapon": "hand-held pink slipper; never a projectile"
+  },
+  "cells": [
+    {
+      "row": 0,
+      "frame": 0,
+      "x": 0,
+      "y": 0,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 71,
+        "top": 24,
+        "right": 58,
+        "bottom": 6
+      }
+    },
+    {
+      "row": 0,
+      "frame": 1,
+      "x": 229,
+      "y": 0,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 72,
+        "top": 24,
+        "right": 58,
+        "bottom": 6
+      }
+    },
+    {
+      "row": 0,
+      "frame": 2,
+      "x": 458,
+      "y": 0,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 71,
+        "top": 24,
+        "right": 58,
+        "bottom": 6
+      }
+    },
+    {
+      "row": 0,
+      "frame": 3,
+      "x": 687,
+      "y": 0,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 72,
+        "top": 24,
+        "right": 58,
+        "bottom": 6
+      }
+    },
+    {
+      "row": 0,
+      "frame": 4,
+      "x": 916,
+      "y": 0,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 71,
+        "top": 24,
+        "right": 58,
+        "bottom": 6
+      }
+    },
+    {
+      "row": 0,
+      "frame": 5,
+      "x": 1145,
+      "y": 0,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 71,
+        "top": 24,
+        "right": 57,
+        "bottom": 6
+      }
+    },
+    {
+      "row": 1,
+      "frame": 0,
+      "x": 0,
+      "y": 229,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 50,
+        "top": 43,
+        "right": 49,
+        "bottom": 17
+      }
+    },
+    {
+      "row": 1,
+      "frame": 1,
+      "x": 229,
+      "y": 229,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 55,
+        "top": 29,
+        "right": 53,
+        "bottom": 17
+      }
+    },
+    {
+      "row": 1,
+      "frame": 2,
+      "x": 458,
+      "y": 229,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 58,
+        "top": 19,
+        "right": 59,
+        "bottom": 14
+      }
+    },
+    {
+      "row": 1,
+      "frame": 3,
+      "x": 687,
+      "y": 229,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 28,
+        "top": 39,
+        "right": 38,
+        "bottom": 16
+      }
+    },
+    {
+      "row": 1,
+      "frame": 4,
+      "x": 916,
+      "y": 229,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 56,
+        "top": 36,
+        "right": 58,
+        "bottom": 13
+      }
+    },
+    {
+      "row": 1,
+      "frame": 5,
+      "x": 1145,
+      "y": 229,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 54,
+        "top": 35,
+        "right": 61,
+        "bottom": 14
+      }
+    },
+    {
+      "row": 2,
+      "frame": 0,
+      "x": 0,
+      "y": 458,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 65,
+        "top": 28,
+        "right": 62,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 2,
+      "frame": 1,
+      "x": 229,
+      "y": 458,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 54,
+        "top": 29,
+        "right": 60,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 2,
+      "frame": 2,
+      "x": 458,
+      "y": 458,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 38,
+        "top": 28,
+        "right": 58,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 2,
+      "frame": 3,
+      "x": 687,
+      "y": 458,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 45,
+        "top": 29,
+        "right": 66,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 2,
+      "frame": 4,
+      "x": 916,
+      "y": 458,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 55,
+        "top": 26,
+        "right": 65,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 2,
+      "frame": 5,
+      "x": 1145,
+      "y": 458,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 71,
+        "top": 24,
+        "right": 56,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 3,
+      "frame": 0,
+      "x": 0,
+      "y": 687,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 71,
+        "top": 24,
+        "right": 56,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 3,
+      "frame": 1,
+      "x": 229,
+      "y": 687,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 48,
+        "top": 26,
+        "right": 57,
+        "bottom": 6
+      }
+    },
+    {
+      "row": 3,
+      "frame": 2,
+      "x": 458,
+      "y": 687,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 48,
+        "top": 22,
+        "right": 56,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 3,
+      "frame": 3,
+      "x": 687,
+      "y": 687,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 57,
+        "top": 20,
+        "right": 56,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 3,
+      "frame": 4,
+      "x": 916,
+      "y": 687,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 52,
+        "top": 24,
+        "right": 56,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 3,
+      "frame": 5,
+      "x": 1145,
+      "y": 687,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 57,
+        "top": 24,
+        "right": 57,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 4,
+      "frame": 0,
+      "x": 0,
+      "y": 916,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 71,
+        "top": 24,
+        "right": 57,
+        "bottom": 7
+      }
+    },
+    {
+      "row": 4,
+      "frame": 1,
+      "x": 229,
+      "y": 916,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 37,
+        "top": 26,
+        "right": 56,
+        "bottom": 10
+      }
+    },
+    {
+      "row": 4,
+      "frame": 2,
+      "x": 458,
+      "y": 916,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 15,
+        "top": 38,
+        "right": 67,
+        "bottom": 17
+      }
+    },
+    {
+      "row": 4,
+      "frame": 3,
+      "x": 687,
+      "y": 916,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 26,
+        "top": 54,
+        "right": 35,
+        "bottom": 25
+      }
+    },
+    {
+      "row": 4,
+      "frame": 4,
+      "x": 916,
+      "y": 916,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 26,
+        "top": 56,
+        "right": 31,
+        "bottom": 25
+      }
+    },
+    {
+      "row": 4,
+      "frame": 5,
+      "x": 1145,
+      "y": 916,
+      "width": 229,
+      "height": 229,
+      "padding": {
+        "left": 26,
+        "top": 56,
+        "right": 32,
+        "bottom": 25
+      }
+    }
+  ],
+  "audio": {
+    "regular": "teacher_vuong_punch.mp3 at360,540,720ms",
+    "finisher": "teacher_vuong_slap.mp3 once at360ms; replaces all punch cues"
+  },
+  "sourceFacingByRow": [
+    "left",
+    "right",
+    "left",
+    "left",
+    "left"
+  ],
+  "facingContract": "Normalize each source row to right-facing after the side/recoil transform, then use side flip to look toward the opponent. Frame order and pixels remain unchanged."
+}
