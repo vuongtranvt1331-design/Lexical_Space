@@ -9,7 +9,7 @@
         constructor() {
           this.ctx = null;
           this.muted = false;
-          this.volume = 1;
+          this.volume = 0.5;
           try {
             this.muted = localStorage.getItem('arcade_sound_muted') === 'true';
             const saved = localStorage.getItem('arcade_sound_volume');

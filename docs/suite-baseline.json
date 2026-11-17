@@ -12,7 +12,7 @@
       "sky-dominators",
       "poker"
     ],
-    "cacheVersion": "00ccf0ae26d700"
+    "cacheVersion": "4e41ad5b5c1d48"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -1213,8 +1213,8 @@
     },
     {
       "path": "apps/arcade/index.html",
-      "bytes": 11907,
-      "sha256": "cbd2ee4160fa063909350cb38b80b66cc7e343b593b1e93f494f78de52d6e731"
+      "bytes": 11905,
+      "sha256": "6e3beb5639badf056823189013f0f20c9dd0a15c59215b336a439bd2b19c9e3a"
     },
     {
       "path": "apps/arcade/js/action-frames.js",
@@ -1228,8 +1228,8 @@
     },
     {
       "path": "apps/arcade/js/arcade-2.js",
-      "bytes": 26630,
-      "sha256": "641f4b1d70c51d63d2363c84801a550fd5670503f368c7c148077ced5e147cef"
+      "bytes": 26632,
+      "sha256": "bf710493a508eda8c55c3e03a6f21ec8def436129817e4252614f5943f38e5b9"
     },
     {
       "path": "apps/grammar/css/notebook-3d.css",
@@ -7859,7 +7859,7 @@
     {
       "path": "service-worker.js",
       "bytes": 12984,
-      "sha256": "1daee4fb2d08443161084e2dc9a893c4e648f734e532962867cd14ff85a9bffa"
+      "sha256": "385e019bd2af2309437ce493c097022932b20ad48d21691ce713d6150311dab2"
     },
     {
       "path": "start-localhost.bat",
@@ -7919,7 +7919,7 @@
     {
       "path": "suite/release.json",
       "bytes": 282,
-      "sha256": "0457cab3583f753b1db08b42b1dccea20e99d14ba8a2dcf0d7676d406e7f3b61"
+      "sha256": "94c780b998ff8561dc1c323253de11330140260bf02e10c21252034aa74b4edc"
     },
     {
       "path": "teacher/index.html",
@@ -8332,7 +8332,8 @@
     "legacyScoreVisible": false,
     "settingsButtons": "Theme-derived settings button fill, rim and foreground.",
     "launchFeedback": "Immediate game-logo loading screen on playable launch, with launch sound during loading. Unavailable games play audio only.",
-    "volume": "Hub effects volume 0-100 and mute saved separately as arcade_sound_volume and arcade_sound_muted."
+    "volume": "Hub effects volume 0-100 and mute saved separately as arcade_sound_volume and arcade_sound_muted.",
+    "defaultVolumePercent": 50
   },
   "arcadeLibraryView": {
     "mode": "single circular row",
