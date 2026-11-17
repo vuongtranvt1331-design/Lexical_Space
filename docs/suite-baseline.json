@@ -12,7 +12,7 @@
       "sky-dominators",
       "poker"
     ],
-    "cacheVersion": "0b2cca285b266e"
+    "cacheVersion": "00ccf0ae26d700"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -1157,6 +1157,11 @@
       "sha256": "bb7a7a91303987ee7c93457ff10b6d1786a836ffe8fdf045e8974eedb3d78884"
     },
     {
+      "path": "apps/arcade/assets/logo/quick_ears.png",
+      "bytes": 1237133,
+      "sha256": "ab620800de0c517b89b136448874050a3f6422627ad51eb465309f24dd165c5c"
+    },
+    {
       "path": "apps/arcade/assets/logo/quiz.png",
       "bytes": 1604407,
       "sha256": "0c2bafbb1248d9ac90804e998d3dc63794351f46e934f543bb2902940c3cd2cc"
@@ -1203,13 +1208,13 @@
     },
     {
       "path": "apps/arcade/css/arcade-1.css",
-      "bytes": 18209,
-      "sha256": "02b2bb6db888961813d04a7ca945d341b1c4a6653de7ccc765d796c82ab41f7d"
+      "bytes": 18646,
+      "sha256": "c93bcd877ec53d9498989d7caf6c1a4789a2993217c8f511b1eac573072b6e4b"
     },
     {
       "path": "apps/arcade/index.html",
-      "bytes": 11227,
-      "sha256": "2a341914d9f4d2ebae80c2ab08bed921932df9057a45bf00b94bb95d9baa2dec"
+      "bytes": 11907,
+      "sha256": "cbd2ee4160fa063909350cb38b80b66cc7e343b593b1e93f494f78de52d6e731"
     },
     {
       "path": "apps/arcade/js/action-frames.js",
@@ -1223,8 +1228,8 @@
     },
     {
       "path": "apps/arcade/js/arcade-2.js",
-      "bytes": 25149,
-      "sha256": "b9b4bd37b506c972a6a60e9205a3acae60cd4a014f74e6629dbfdc73b8b98531"
+      "bytes": 26630,
+      "sha256": "641f4b1d70c51d63d2363c84801a550fd5670503f368c7c148077ced5e147cef"
     },
     {
       "path": "apps/grammar/css/notebook-3d.css",
@@ -7854,7 +7859,7 @@
     {
       "path": "service-worker.js",
       "bytes": 12984,
-      "sha256": "a115a06e3b115a6b7fa9154c5ad60ff191b573045b2ef1625dafb798df3db21b"
+      "sha256": "1daee4fb2d08443161084e2dc9a893c4e648f734e532962867cd14ff85a9bffa"
     },
     {
       "path": "start-localhost.bat",
@@ -7914,7 +7919,7 @@
     {
       "path": "suite/release.json",
       "bytes": 282,
-      "sha256": "2faeaed72293f031abf1c780e763c1f3c1690495e83e2001e1e3722259960412"
+      "sha256": "0457cab3583f753b1db08b42b1dccea20e99d14ba8a2dcf0d7676d406e7f3b61"
     },
     {
       "path": "teacher/index.html",
@@ -8326,7 +8331,8 @@
     "themeButtonSprites": true,
     "legacyScoreVisible": false,
     "settingsButtons": "Theme-derived settings button fill, rim and foreground.",
-    "launchFeedback": "Immediate game-logo loading screen on playable launch, with launch sound during loading. Unavailable games play audio only."
+    "launchFeedback": "Immediate game-logo loading screen on playable launch, with launch sound during loading. Unavailable games play audio only.",
+    "volume": "Hub effects volume 0-100 and mute saved separately as arcade_sound_volume and arcade_sound_muted."
   },
   "arcadeLibraryView": {
     "mode": "single circular row",

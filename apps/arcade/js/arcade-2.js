@@ -9,6 +9,12 @@
         constructor() {
           this.ctx = null;
           this.muted = false;
+          this.volume = 1;
+          try {
+            this.muted = localStorage.getItem('arcade_sound_muted') === 'true';
+            const saved = localStorage.getItem('arcade_sound_volume');
+            if (saved !== null && /^(100|[1-9]?\d)$/.test(saved)) this.volume = Number(saved) / 100;
+          } catch { /* Settings still work for this visit. */ }
         }
 
         init() {
@@ -23,9 +29,9 @@
 
 
         async playBlip() {
-          if (this.muted) return;
+          if (this.muted || !this.volume) return;
           try { await this.init(); } catch { return; }
-          if (!this.ctx || this.muted || this.ctx.state !== "running") return;
+          if (!this.ctx || this.muted || !this.volume || this.ctx.state !== "running") return;
 
           const now = this.ctx.currentTime;
           const osc = this.ctx.createOscillator();
@@ -33,8 +39,8 @@
           osc.type = "triangle";
           osc.frequency.setValueAtTime(480, now);
           osc.frequency.exponentialRampToValueAtTime(960, now + 0.05);
-          gain.gain.setValueAtTime(0.08, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+          gain.gain.setValueAtTime(0.08 * this.volume, now);
+          gain.gain.exponentialRampToValueAtTime(0.001 * this.volume, now + 0.06);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.start(now);
@@ -120,8 +126,19 @@
         let selected = 0, ready = false, swipe, suppressClickUntil = 0;
         const wrap = index => ((index % tiles.length) + tiles.length) % tiles.length;
 
+        const volumeSlider = dialog.querySelector('[data-hub-volume]');
+        const volumeValue = dialog.querySelector('[data-volume-value]');
+        const soundClips = [...document.querySelectorAll('audio')];
         function renderSound() {
           const enabled = !audio.muted;
+          volumeSlider.disabled = !enabled;
+          volumeSlider.value = Math.round(audio.volume * 100);
+          volumeValue.textContent = volumeSlider.value + '%';
+          volumeSlider.setAttribute('aria-valuetext', volumeValue.textContent);
+          for (const clip of soundClips) {
+            clip.volume = audio.volume;
+            clip.muted = !enabled || audio.volume === 0;
+          }
           soundIcon.classList.toggle('icon-sound-on', enabled);
           soundIcon.classList.toggle('icon-sound-off', !enabled);
           soundState.textContent = enabled ? 'On' : 'Off';
@@ -131,6 +148,7 @@
         }
         function setSound(enabled) {
           audio.muted = !enabled;
+          try { localStorage.setItem('arcade_sound_muted', String(audio.muted)); } catch {}
           if (!enabled) { switchSound.pause(); unavailableSound.pause(); }
           renderSound();
           if (enabled) audio.playBlip();
@@ -233,6 +251,14 @@
           unavailableSound.currentTime = 0;
           unavailableSound.play().catch(() => {});
         }
+        volumeSlider.addEventListener('input', () => {
+          audio.volume = Number(volumeSlider.value) / 100;
+          renderSound();
+        });
+        volumeSlider.addEventListener('change', () => {
+          try { localStorage.setItem('arcade_sound_volume', volumeSlider.value); } catch {}
+          audio.playBlip();
+        });
         soundButton.addEventListener('click', () => setSound(audio.muted));
         renderSound();
         settingsButton.addEventListener('click', () => { dialog.showModal(); audio.playBlip(); });
@@ -440,7 +466,7 @@
             pendingLaunch = null;
           }
           window.addEventListener('pagehide', cancel, options);
-          if (audio.muted || launchSound.error) { finish(); return; }
+          if (audio.muted || !audio.volume || launchSound.error) { finish(); return; }
           launchSound.addEventListener('ended', finish, options);
           launchSound.addEventListener('error', finish, options);
           // A blocked audio device or a stalled connection must not trap the player.

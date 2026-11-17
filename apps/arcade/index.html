@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../suite/css/components.css?v=43.19.0-69a13ed7c3">
-  <link rel="stylesheet" href="./css/arcade-1.css?v=43.19.0-02b2bb6db8">
+  <link rel="stylesheet" href="./css/arcade-1.css?v=43.19.0-c93bcd877e">
   <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=43.19.0-2a571df59e"></noscript>
   <link rel="manifest" href="../../manifest.webmanifest">
   <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
@@ -48,6 +48,7 @@
         <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Vocabulary Test — coming soon" data-game-tile data-game-name="Vocabulary Test" data-game-description="Test your vocabulary" data-game-index="5"><button class="game-cover" type="button" disabled aria-label="Vocabulary Test — coming soon"><img src="./assets/logo/vocabulary_test.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Test your vocabulary</p></article>
         <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Spellsmith — coming soon" data-game-tile data-game-name="Spellsmith" data-game-description="Forge words from letters" data-game-index="6"><button class="game-cover" type="button" disabled aria-label="Spellsmith — coming soon"><img src="./assets/logo/spellsmith.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Forge words from letters</p></article>
         <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Fist of Legends — coming soon" data-game-tile data-game-name="Fist of Legends" data-game-description="Ride with Thánh Gióng" data-game-index="7"><button class="game-cover" type="button" disabled aria-label="Fist of Legends — coming soon"><img src="./assets/logo/fist_of_legends.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Ride with Thánh Gióng</p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Quick Ears — coming soon" data-game-tile data-game-name="Quick Ears" data-game-description="Listen and fill in the answer" data-game-index="8"><button class="game-cover" type="button" disabled aria-label="Quick Ears — coming soon"><img src="./assets/logo/quick_ears.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Listen and fill in the answer</p></article>
       </div>
       <p class="sr-only" data-selection-summary aria-live="polite" aria-atomic="true">Sky Dominators selected.</p>
     </main>
@@ -70,8 +71,11 @@
       </div>
     </fieldset>
     <button id="btnSoundToggle" class="sound-setting" type="button" aria-pressed="true" aria-label="Turn sound effects off" data-action-face="main"><span id="soundIcon" class="pixel-icon icon-sound-on" aria-hidden="true"></span><span class="sound-setting-copy">Sound effects</span><span data-sound-state>On</span><span class="switch-track" aria-hidden="true"></span></button>
+    <label class="volume-setting"><span>Volume</span><span data-volume-value>100%</span>
+      <input type="range" data-hub-volume aria-label="Volume" min="0" max="100" step="1" value="100">
+    </label>
     <button type="button" class="settings-done" data-close-settings data-action-face="main">Done</button>
   </dialog>
-  <script src="./js/arcade-2.js?v=43.19.0-b9b4bd37b5"></script>
+  <script src="./js/arcade-2.js?v=43.19.0-641f4b1d70"></script>
 </body>
 </html>

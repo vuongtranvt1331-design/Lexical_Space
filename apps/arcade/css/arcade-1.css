@@ -129,3 +129,8 @@ html[data-arcade-theme="pocket"], html[data-arcade-theme="ivory"] { --hub-on-pla
 }
 .settings-dialog .sound-setting[aria-pressed="true"] .switch-track::after { background:var(--hub-play); }
 
+
+.volume-setting { display:grid; grid-template-columns:1fr auto; align-items:center; margin:10px 4px; color:var(--hub-ink); font-weight:700; }
+.volume-setting [data-volume-value] { font-variant-numeric:tabular-nums; }
+.volume-setting input { grid-column:1/-1; width:100%; margin:0; height:32px; accent-color:var(--hub-play); cursor:pointer; }
+.volume-setting input:disabled { accent-color:#808080; filter:grayscale(1); cursor:default; }
