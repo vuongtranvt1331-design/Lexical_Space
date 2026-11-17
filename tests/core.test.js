@@ -318,12 +318,13 @@ test('Daily practice gives Hard and Good review priority and budgets early revie
 test('manual Daily practice rounds can repeat counted cards without adding new cards or bypassing a zero review cap', () => {
   const now = new Date(2026, 10, 6, 9).getTime();
   const card = (id, lastGrade, reviewCount = 1) => normalize({
-    ...patch, id, lastGrade, reviewCount, lastReviewedAt: reviewCount ? now - 60_000 : null, dueDate: addCalendarDays(now, 1)
+    ...patch, id, lastGrade, reviewCount, lastReviewedAt: reviewCount ? now - 60_000 : null, dueDate: lastGrade === 0 ? new Date(now).toISOString() : addCalendarDays(now, 1)
   });
   const words = [card('again-counted', 0), card('easy', 3), card('hard', 1), card('good', 2), card('fresh', null, 0)];
   const options = { now, repeat: true, ledger: { dailyNewIds: ['hard'], dailyReviewIds: ['again-counted'] } };
   const reviewIds = settings => selectPracticeWords(words, { ...options, settings }).review.map(word => word.id);
   assert.deepEqual(selectPracticeWords(words, options).fresh, []);
+  assert.ok(!selectPracticeWords(words, { ...options, now: now - 1 }).review.some(word => word.id === 'again-counted'));
   assert.deepEqual(reviewIds({}), ['hard', 'good', 'again-counted']);
   assert.deepEqual(reviewIds({ dailyReviewLimit: 2 }), ['hard', 'good', 'again-counted']);
   assert.deepEqual(reviewIds({ dailyReviewLimit: 1 }), ['hard']);

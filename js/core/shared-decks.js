@@ -16,7 +16,7 @@ function requireProfile(username) {
 
 function validateDeckId(id) {
   if (typeof id !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,127}$/.test(id)) {
-    throw new Error('This deck link is invalid.');
+    throw new Error('Invalid deck identifier.');
   }
   return id;
 }
@@ -78,7 +78,7 @@ function validateDeck(input) {
   const bytes = new TextEncoder().encode(JSON.stringify(input)).byteLength;
   // Leave room for Firestore's document overhead and the nested card maps.
   if (bytes + 32 * input.words.length > DOCUMENT_BUDGET) {
-    throw new Error('This deck is too large for one share link. Choose a smaller topic.');
+    throw new Error('This deck is too large for one share code. Choose a smaller topic.');
   }
   return { deckId, title, createdAt: input.createdAt, wordCount: input.wordCount, words: input.words.map(validateCard) };
 }
@@ -105,25 +105,31 @@ export async function prepareShareDeck(username, topic) {
 }
 
 export async function publishSharedDeck(db, input) {
-  if (!db) throw new Error('Connect to the cloud to create a share link.');
+  if (!db) throw new Error('Connect to the internet to share a deck.');
   const deck = validateDeck(input);
-  const ref = db.collection(DECK_COLLECTION).doc(deck.deckId);
-  await db.runTransaction(async tx => {
-    const snapshot = await tx.get(ref);
-    if (snapshot.exists) throw new Error('That link already exists. Create a new share link.');
-    tx.set(ref, deck);
-  });
-  return deck.deckId;
+  for (let attempt = 0; attempt < 8; attempt++) {
+    const number = crypto.getRandomValues(new Uint32Array(1))[0] % 1000000;
+    const code = String(number).padStart(6, '0');
+    const expiresAt = new Date(Date.now() + 72 * 3600000 + 5 * 60000);
+    try {
+      // Rules reserve each code atomically: an active document cannot be overwritten.
+      await db.collection(DECK_COLLECTION).doc(code).set({
+        ...deck, issuedAt: firebase.firestore.FieldValue.serverTimestamp(), expiresAt
+      });
+      return code;
+    } catch (error) {
+      if (error.code !== 'permission-denied' || attempt === 7) throw error;
+    }
+  }
 }
 
-export async function fetchSharedDeck(db, id) {
-  const deckId = validateDeckId(id);
-  if (!db) throw new Error('Connect to the cloud to open this share link.');
-  const snapshot = await db.collection(DECK_COLLECTION).doc(deckId).get();
-  if (!snapshot.exists) throw new Error('This shared deck could not be found.');
-  const deck = validateDeck(snapshot.data());
-  if (deck.deckId !== deckId) throw new Error('The shared deck does not match this link.');
-  return deck;
+export async function fetchSharedDeck(db, code) {
+  if (!/^\d{6}$/.test(code)) throw new Error('Enter exactly six digits.');
+  if (!db) throw new Error('Connect to the internet to open a deck.');
+  const snapshot = await db.collection(DECK_COLLECTION).doc(code).get({ source: 'server' });
+  if (!snapshot.exists) throw new Error('Code not found or expired.');
+  const { expiresAt, issuedAt, ...deck } = snapshot.data();
+  return validateDeck(deck);
 }
 
 const importKey = (username, deckId) => `importedDecks:${encodeURIComponent(username)}:${deckId}`;

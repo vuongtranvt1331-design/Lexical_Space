@@ -1,0 +1,40 @@
+/* Only the game's approved PNG is visible. There is no minimum startup time. */
+.game-logo-loader {
+  --game-logo-width: clamp(144px, min(58vw, 48svh), 292px);
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 16px;
+  border: 0;
+  outline: 0;
+  background: #171b24;
+  isolation: isolate;
+  pointer-events: auto;
+  animation: gameLogoFailOpen 0s linear 8s forwards;
+}
+.game-logo-loader[data-game-logo-loader="sky"] { background: #071923; }
+.game-logo-loader[data-game-logo-loader="word-battles"] { background: #20150e; }
+.game-logo-loader[data-game-logo-loader="poker"] { background: #1b0e08; }
+.game-logo-loader[hidden] { display: none !important; }
+.game-logo-loader > img {
+  display: block;
+  width: var(--game-logo-width);
+  height: auto;
+  max-width: calc(100vw - 32px);
+  object-fit: contain;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  animation: gameLogoPulse 1.35s ease-in-out infinite;
+}
+@keyframes gameLogoPulse {
+  0%, 100% { width: var(--game-logo-width); opacity: .86; }
+  50% { width: calc(var(--game-logo-width) + 3px); opacity: 1; }
+}
+/* A failed JS request must not trap the page beneath a permanent overlay. */
+@keyframes gameLogoFailOpen { to { visibility: hidden; pointer-events: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .game-logo-loader > img { animation: none; opacity: 1; }
+}

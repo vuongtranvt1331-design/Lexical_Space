@@ -93,10 +93,17 @@ export function selectPracticeWords(words, { mode = 'learning', topic = 'ALL', f
     return limit == null || used.size < limit;
   };
   const allowedReviews = repeatPractice ? reviews.filter(repeatWithinCap) : reviews;
-  const selectedReview = withinDailyLimit(randomize ? shufflePracticeWords(allowedReviews) : allowedReviews,
+  let nextRetryAt = Infinity;
+  const readyReviews = allowedReviews.filter(word => {
+    const due = timestamp(word.dueDate ?? word.due);
+    if (!repeatPractice || word.lastGrade !== 0 || due <= now) return true;
+    nextRetryAt = Math.min(nextRetryAt, due);
+    return false;
+  });
+  const selectedReview = withinDailyLimit(randomize ? shufflePracticeWords(readyReviews) : readyReviews,
     settings.dailyReviewLimit, reviewed,
     word => (repeatPractice || dueInMode(word) ? counted : reviewed).has(word.id), preferred, comparePriority);
   const selectedNew = withinDailyLimit(randomize ? shufflePracticeWords(fresh) : fresh,
     settings.dailyNewLimit, learned, word => counted.has(word.id), preferred);
-  return { review: selectedReview, fresh: selectedNew, limited: selectedReview.length < reviews.length || selectedNew.length < fresh.length };
+  return { review: selectedReview, fresh: selectedNew, ...(Number.isFinite(nextRetryAt) && { nextRetryAt }), limited: selectedReview.length < readyReviews.length || allowedReviews.length < reviews.length || selectedNew.length < fresh.length };
 }

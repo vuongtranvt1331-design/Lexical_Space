@@ -463,8 +463,22 @@ $('rematch').onclick=async()=>{
  if(mode==='bot'){startRematch();return}if(!conn?.open){updateRematchStatus();return}if(myRematchReady)return;
  myRematchReady=true;send({type:'REMATCH_READY',match:matchId,rating:latestStandingSnapshot(match.profile)});updateRematchStatus();if(mode==='host'&&peerRematchReady)startRematch()
 };
+// Hub navigation from a duel uses the same local/peer cleanup as leaving the match.
+$('battle').addEventListener('click',event=>{
+ if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+ if(event.target.closest('a[data-suite-return]')) $('leave').click();
+});
 $('returnLobby').onclick=()=>{$('leave').click()};
 document.addEventListener('keydown',event=>{if(event.repeat||event.ctrlKey||event.altKey||event.metaKey||$('battle').hidden||paused||ended||locked)return;if(event.target instanceof HTMLElement&&(event.target.isContentEditable||['INPUT','TEXTAREA','SELECT'].includes(event.target.tagName)))return;if(!/^[1-4]$/.test(event.key))return;const button=$('answers').children[Number(event.key)-1];if(button&&!button.disabled){event.preventDefault();button.click()}});
+const soundControls=document.querySelectorAll('[data-word-sound]');
+for(const control of soundControls)control.onclick=()=>{
+ combatSound.muted=!combatSound.muted;
+ for(const button of soundControls){
+  button.textContent=combatSound.muted?'Âm thanh · Tắt':'Âm thanh · Bật';
+  button.dataset.commonGameIcon=combatSound.muted?'sound-off':'sound-on';
+  button.setAttribute('aria-pressed',String(!combatSound.muted));
+ }
+};
 $('pause').onclick=()=>setPaused(true);$('resume').onclick=()=>setPaused(false);
 $('leave').onclick=()=>{clean();$('battle').hidden=true;$('lobby').hidden=false;document.body.classList.remove('in-battle');status('Chọn chế độ để bắt đầu.')};
 function drawDragonHalo(size,now,c=ctx){
@@ -521,3 +535,24 @@ window.QuickDrawnChessBridge=Object.freeze({
   const result=standingWrites.then(save,save);standingWrites=result.catch(()=>{});result.then(()=>{syncSharedStandings();renderStandingBoard()}).catch(()=>{standingUnsaved=true;renderStandingBoard()});return result;
  }
 });
+
+// Only local artwork gates startup. Account/standing network work stays independent.
+(() => {
+ const finish = () => { window.__spaceGameReady = true; document.dispatchEvent(new Event('spacegame:ready')); };
+ const waitForImage = image => {
+  if (!image || image.complete) return Promise.resolve();
+  return new Promise(resolve => {
+   const done = () => { image.removeEventListener('load',done); image.removeEventListener('error',done); resolve(); };
+   image.addEventListener('load',done,{once:true}); image.addEventListener('error',done,{once:true});
+   if (image.complete) done();
+  });
+ };
+ const localArtworkReady = () => {
+  const images = [...Object.values(sprites),...Object.values(mapImages),...['slash','arrow','scroll','watermelon','orange'].map(name=>combatAnimator[name])];
+  const pending = images.map(waitForImage);
+  for (const ui of [window.quickDrawnUISprites,window.quickDrawnSpectatorSprites]) if (ui?.ready) pending.push(ui.ready);
+  Promise.allSettled(pending).then(finish);
+ };
+ if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',localArtworkReady,{once:true});
+ else localArtworkReady();
+})();

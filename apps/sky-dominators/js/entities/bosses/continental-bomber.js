@@ -61,10 +61,14 @@ class Encounter{
   entry.director=new this.Director(h);entry.director.reset('continental-escort-'+index,[1,3,4,5]);entry.director.rowCompleted(20);entry.director.phase='fight';entry.director.missileTimer=0;entry.director.gunTimer=0;entry.director.gunPause=0;
   Object.assign(entry.director.boss,{kind:'escort',width:158.4,height:176,ownerBoss:this.b},h.positionBoss(entry.director.boss));return entry;});}
  visible(){return ['entrance','launch','return','protection_exit','combat_return','exit_return','exit_hold','thrusting'].includes(this.state);}
- bodyY(){const {h}=this.d.h.context();if(this.state==='entrance')return h+160-(h-140)*ease(this.phaseAge/CONFIG.entrance);
-  if(this.state==='launch')return 300-525*ease((this.phaseAge-1300)/700);
-  if(['return','combat_return','exit_return'].includes(this.state))return h+160-(h-140)*ease(this.phaseAge/(this.state==='return'?CONFIG.return:this.state==='combat_return'?CONFIG.combatReturn:CONFIG.exitReturn));
-  if(['protection_exit','thrusting'].includes(this.state))return 300-(h+700)*ease(this.phaseAge/(this.state==='protection_exit'?CONFIG.protectionExit:CONFIG.thrust));return 300;}
+ bodyY(){
+  const {h}=this.d.h.context(),rest=(this.d.h.layout?.(true)?.bossHudBottom||55)+118;
+  if(this.state==='entrance')return h+160-(h+160-rest)*ease(this.phaseAge/CONFIG.entrance);
+  if(this.state==='launch')return rest-(rest+225)*ease((this.phaseAge-1300)/700);
+  if(['return','combat_return','exit_return'].includes(this.state))return h+160-(h+160-rest)*ease(this.phaseAge/(this.state==='return'?CONFIG.return:this.state==='combat_return'?CONFIG.combatReturn:CONFIG.exitReturn));
+  if(['protection_exit','thrusting'].includes(this.state))return rest-(h+700)*ease(this.phaseAge/(this.state==='protection_exit'?CONFIG.protectionExit:CONFIG.thrust));
+  return rest;
+ }
  updatePose(){const {w}=this.d.h.context();this.b.x=w/2+Math.sin(this.age/900)*3;this.b.y=this.bodyY()+Math.sin(this.age/700)*2;this.b.width=400;this.b.height=224;}
  processBodyShots(){if(!this.visible())return;for(const p of this.d.h.context().bullets){if(!p.active)continue;if(this.segmentBox(p.prevX??p.x,p.prevY??p.y,p.x,p.y,this.b.x,this.b.y,200,112)){
    this.hit({target:this.b,collision:true,projectile:p,token:p.attackId,kind:p.bomberSpecial?'bomber':p.isSpecial?'phantom':'normal'});

@@ -6,7 +6,7 @@ Chọn Đấu với máy để thi đấu tính điểm với một đối thủ
 
 Trong PvP, mỗi bên bắt đầu với 10 cục máu; mỗi lượt giải đúng trừ đúng 1 HP dù hoạt ảnh có nhiều lần chạm. Trả lời sai khiến đối thủ tấn công. Trong PvC người chơi có 10 máu còn máy có máu vô hạn. Mỗi trận mới luân phiên hoàng cung, thao trường, đồng bằng và bến sông Bạch Đằng. Tạm dừng sẽ dừng bộ đếm và hoạt ảnh của hai phía. Khi hết máu, trận đấu kết thúc và hiện bảng Bá Vương cùng cảnh phóng to người thắng. Chọn Tái đấu để chơi lại; trong PvP cả hai người cần đồng ý và tiếp tục dùng cùng phòng.
 
-Chủ phòng phân xử các đòn theo thứ tự đến và đồng bộ kết quả; độ trễ mạng có thể tạo lợi thế cho chủ phòng khi hai người bấm rất gần nhau. Phiên bản luyện từ cũ vẫn ở legacy.html.
+Chủ phòng phân xử các đòn theo thứ tự đến và đồng bộ kết quả; độ trễ mạng có thể tạo lợi thế cho chủ phòng khi hai người bấm rất gần nhau.
 
 ## Âm thanh tùy chọn
 

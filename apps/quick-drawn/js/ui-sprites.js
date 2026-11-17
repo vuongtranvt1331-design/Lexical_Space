@@ -18,3 +18,5 @@
  }).catch(error=>{root.dataset.uiSprites='fallback';console.warn('Gold UI sprites: using existing visual fallback.',error.message);return false});
  window.quickDrawnUISprites=Object.freeze({ready,manifest});
 })();
+
+import('../../arcade/js/action-frames.js').catch(() => { document.documentElement.dataset.actionArt = 'fallback'; });

@@ -5,6 +5,7 @@ const PREFIX = 'lexicalspace-shell-' + encodeURIComponent(BASE.pathname) + '-';
 const SHELL = PREFIX + VERSION;
 const MEDIA = PREFIX + 'media-v1';
 const CORE=__CORE__;
+const SHARED_LOGOS=__SHARED_LOGOS__;
 const EXTERNAL = ['https://cdn.tailwindcss.com', 'https://unpkg.com/@phosphor-icons/web', 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js', 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js'];
 self.addEventListener('install', event => event.waitUntil((async () => {
   const cache = await caches.open(SHELL);
@@ -29,10 +30,14 @@ self.addEventListener('fetch', event => {
   const key = local ? new URL(url.pathname, BASE.origin).href : url.href;
   event.respondWith((async () => {
     const shell = await caches.open(SHELL), media = await caches.open(MEDIA);
+    const sharedLogo = local && SHARED_LOGOS.some(path => new URL(path, BASE).href === key);
+    // Versioned shell identity includes logo content hashes, so reused artwork
+    // is immediate within this release and is refreshed by the next release.
+    if (sharedLogo) { const reused = await shell.match(key); if (reused) return reused; }
     try {
       const response = await fetch(request, { cache: 'no-cache' });
       if (response.ok || response.type === 'opaque') {
-        const target = external || CORE.some(path => new URL(path, BASE).href === key) ? shell : media;
+        const target = external || sharedLogo || CORE.some(path => new URL(path, BASE).href === key) ? shell : media;
         try { await target.put(key, response.clone()); } catch { /* Storage pressure must not block the live response. */ }
       }
       return response;

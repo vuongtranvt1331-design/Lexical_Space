@@ -1,7 +1,9 @@
 /* js/config/gameplay.js — ordered classic script; entrypoints declare dependency order. */
-const GAME_WIDTH = 540;
+let GAME_WIDTH = 540;
 
-const GAME_HEIGHT = 960;
+let GAME_HEIGHT = 960;
+
+const PLAYER_SHOT_INTERVAL = 200;
 
 const STANDARD_ENEMY_BULLET_SPEED = 190;
 

@@ -82,7 +82,7 @@ Object.assign(window, { applyUser: auth.activateUser, switchView: auth.switchVie
 let startupTask, localReady = false, deckStartupTask;
 function connectCloudForPage() {
   if (!localReady || deckStartupTask) return;
-  deckStartupTask = context.connectCloud().then(() => decks.loadDeckFromLocation())
+  deckStartupTask = context.connectCloud()
     .finally(() => { deckStartupTask = null; });
 }
 function announceStartup(storageReady) {

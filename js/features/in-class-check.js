@@ -2,16 +2,21 @@ import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
 import { escapeHtml, getStudentKey } from '../utils/helpers.js';
 import { clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
-import { recallLevelFor, timestamp } from '../core/vocabulary.js';
+import { recallLevelFor } from '../core/vocabulary.js';
 
-const WINDOW_MS = 72 * 60 * 60 * 1000;
-const CHECK_SIZE = 15;
+const WINDOW_MS = 7 * 24 * 60 * 60 * 1000;
+const CHECK_SIZE = 15, MIXED_SIZE = 25;
 const BLANK = '[ _____ ]';
 const $ = id => document.getElementById(id);
 const stages = ['intro', 'empty', 'question', 'results'];
 let attempt = null, opening = false, generation = 0;
-const historyKey = user => `inclassCheckedIds_${getStudentKey(user)}`;
-const uniqueIds = value => [...new Set((Array.isArray(value) ? value : []).filter(id => typeof id === 'string'))];
+const historyKey = user => `inclassCheckedAt_${getStudentKey(user)}`;
+let preview = null, previewVersion = 0;
+function recentChecks(value, now) {
+  const entries = Object.entries(value || {}).filter(([, at]) =>
+    Number.isFinite(at) && at > now - WINDOW_MS);
+  return new Map(entries);
+}
 function shuffled(words, random) {
   const pool = [...words];
   for (let i = pool.length - 1; i > 0; i--) {
@@ -21,25 +26,24 @@ function shuffled(words, random) {
   return pool;
 }
 
-export function selectInClassPool(words, now = Date.now(), random = Math.random, checkedIds = []) {
-  const recent = [], previous = [];
-  const ids = new Set();
-  for (const word of words) {
+export function selectInClassPool(words, now = Date.now(), random = Math.random, history = {}) {
+  const checked = recentChecks(history, now);
+  const ids = new Set(), fresh = [], review = [];
+  for (const word of shuffled(words, random)) {
     if (word.deleted || typeof word.id !== 'string' || ids.has(word.id)) continue;
+    if (![2, 3, 4].includes(recallLevelFor(word))) continue;
     ids.add(word.id);
-    const level = recallLevelFor(word);
-    if (level !== 3 && level !== 4) continue;
-    const reviewedAt = timestamp(word.lastReviewedAt);
-    if (reviewedAt > 0 && reviewedAt <= now && now - reviewedAt <= WINDOW_MS) recent.push(word);
-    else previous.push(word);
+    (checked.has(word.id) ? review : fresh).push(word);
   }
-  const pool = recent.length ? recent : previous;
-  const history = new Set(uniqueIds(checkedIds));
-  const unseen = shuffled(pool.filter(word => !history.has(word.id)), random);
-  const resetHistory = unseen.length < CHECK_SIZE;
-  const selected = unseen.slice(0, CHECK_SIZE);
-  if (resetHistory) selected.push(...shuffled(pool.filter(word => history.has(word.id)), random).slice(0, CHECK_SIZE - selected.length));
-  return { kind: selected.length ? (recent.length ? 'recent' : 'previous') : 'empty', words: selected, resetHistory };
+  const byLevel = (a, b) => recallLevelFor(b) - recallLevelFor(a);
+  fresh.sort(byLevel);
+  const selected = fresh.slice(0, CHECK_SIZE);
+  const freshCount = selected.length;
+  if (freshCount < CHECK_SIZE) {
+    review.sort((a, b) => checked.get(a.id) - checked.get(b.id) || byLevel(a, b));
+    selected.push(...review.slice(0, MIXED_SIZE - freshCount));
+  }
+  return { words: selected, freshCount, reviewCount: selected.length - freshCount };
 }
 
 function currentPool(history = []) {
@@ -50,14 +54,32 @@ function showStage(stage) {
   for (const name of stages) $(`check-${name}`).hidden = name !== stage;
 }
 
-function renderIntro(focus) {
-  const pool = currentPool();
-  const empty = pool.words.length === 0;
+function displayPreview(pool, focus) {
+  preview = pool;
+  const empty = !pool.words.length;
   showStage(empty ? 'empty' : 'intro');
   $('check-available-count').textContent = pool.words.length;
-  $('check-pool-description').textContent = pool.kind === 'recent'
-    ? 'Up to 15 green and blue words from the last 72 hours; unchecked words first.' : 'Up to 15 green and blue words; unchecked words first.';
+  $('check-pool-description').textContent = pool.freshCount
+    ? pool.freshCount + ' not checked in the past 7 days · ' + pool.reviewCount + ' review.'
+    : 'All eligible words were checked in the past 7 days. 0 new · ' + pool.reviewCount + ' review.';
   if (focus) $(empty ? 'check-empty-heading' : 'check-heading').focus();
+}
+async function renderIntro(focus) {
+  const ticket = ++previewVersion, user = context.currentUser;
+  preview = null;
+  $('btn-check-start').disabled = true;
+  showStage('intro');
+  $('check-available-count').textContent = '…';
+  $('check-pool-description').textContent = 'Checking your history…';
+  try {
+    const history = await idbGet('metadata', historyKey(user));
+    if (ticket !== previewVersion || attempt || context.currentUser !== user) return;
+    displayPreview(currentPool(history), focus);
+  } catch {
+    if (ticket === previewVersion) $('check-pool-description').textContent = 'Could not read check history. Press Start to retry.';
+  } finally {
+    if (ticket === previewVersion && !opening) $('btn-check-start').disabled = false;
+  }
 }
 
 export function refreshInClassCheckPool() {
@@ -122,11 +144,10 @@ async function saveCompletedHistory(finished) {
     const selected = finished.words.map(word => word.id);
     // One local metadata transaction; merge the latest history if another tab completed meanwhile.
     await updateMetadata([finished.historyKey], values => {
-      const latest = uniqueIds(values[finished.historyKey]?.value);
-      const previous = new Set(finished.historyBefore);
-      const unchanged = latest.length === previous.size && latest.every(id => previous.has(id));
-      const ids = uniqueIds([...(finished.resetHistory && unchanged ? [] : latest), ...selected]);
-      return { records: [{ key: finished.historyKey, value: ids }], result: ids };
+      const latest = recentChecks(values[finished.historyKey]?.value, Date.now());
+      for (const id of selected) latest.set(id, Math.max(latest.get(id) || 0, finished.completedAt));
+      return { records: [{ key: finished.historyKey, value: Object.fromEntries(latest) }] };
+
     });
     finished.historySaved = true;
     if (active()) status.textContent = '';
@@ -145,12 +166,15 @@ async function startCheck() {
   $('btn-check-start').disabled = true;
   $('check-status').hidden = true;
   try {
-    const history = uniqueIds(await idbGet('metadata', historyKey(user)));
+    const history = await idbGet('metadata', historyKey(user));
     if (ticket !== generation || user !== context.currentUser || !canUseCheck()) return;
-    const { words, resetHistory } = currentPool(history);
-    if (!words.length) { renderIntro(true); return; }
-    attempt = { user, words, index: 0, missed: [], answers: [], historyKey: historyKey(user), historyBefore: history,
-      resetHistory, historySaved: false, historySaving: false, startedAt: performance.now(), elapsed: null };
+    const pool = currentPool(history);
+    if (!preview || preview.freshCount !== pool.freshCount || preview.reviewCount !== pool.reviewCount || !pool.words.length) {
+      displayPreview(pool, true);
+      return;
+    }
+    attempt = { user, words: pool.words, index: 0, missed: [], answers: [], historyKey: historyKey(user),
+      historySaved: false, historySaving: false, startedAt: performance.now(), elapsed: null };
     renderQuestion({ clearAnswer: true });
   } catch (error) {
     if (ticket === generation && user === context.currentUser) {
@@ -163,7 +187,7 @@ async function startCheck() {
 }
 
 export function resetInClassCheck() {
-  generation++; opening = false; attempt = null;
+  generation++; previewVersion++; preview = null; opening = false; attempt = null;
   $('btn-check-start').disabled = false;
   $('btn-check-save-history').hidden = true;
   for (const id of ['check-progress', 'check-meaning', 'check-cloze', 'check-score', 'check-time', 'check-missed-list', 'check-answer-list', 'check-history-status', 'check-status']) {
@@ -210,6 +234,7 @@ export function setupInClassCheck() {
     if (!correct) attempt.missed.push(word);
     input.value = '';
     if (attempt.index < attempt.words.length) { renderQuestion(); return; }
+    attempt.completedAt = Date.now();
     attempt.elapsed = Math.floor((performance.now() - attempt.startedAt) / 1000);
     $('check-meaning').textContent = '';
     $('check-cloze').textContent = '';

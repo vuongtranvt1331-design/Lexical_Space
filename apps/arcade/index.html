@@ -1,242 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" data-suite-module="arcade">
+<html lang="en" data-suite-module="arcade" data-arcade-theme="twicelight">
 <head>
-  <script src="../../suite/js/core.js?v=43.3.0-4ba1a9ac80"></script>
-  <link rel="stylesheet" href="../../suite/css/components.css?v=43.3.0-69a13ed7c3">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>ArcadeSpace — 8-Bit Mobile Hub</title>
-  
-  <!-- Retro 8-Bit & Mobile Fonts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#171A30">
+  <title>ArcadeSpace — Game Library</title>
+  <script src="../../suite/js/core.js?v=43.19.0-4ba1a9ac80"></script>
+  <script src="./js/appearance.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="./css/arcade-1.css">
-  <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=43.3.0-2a571df59e"></noscript>
-  
-  
-  <script src="assets/lexical-vocabulary.js"></script>
-<link rel="manifest" href="../../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icons/icon-192.png"><script defer src="../../js/core/offline.js?v=43.3.0-39c886b7ac"></script><link rel="stylesheet" href="../../suite/css/loader.css?v=43.3.0-1112a32a51"><script defer src="../../js/features/loading.js?v=43.3.0-0ab2d880db"></script></head>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../suite/css/components.css?v=43.19.0-69a13ed7c3">
+  <link rel="stylesheet" href="./css/arcade-1.css?v=43.19.0-9dde2df87d">
+  <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=43.19.0-2a571df59e"></noscript>
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
+  <script src="./assets/lexical-vocabulary.js"></script>
+  <script defer src="../../js/core/offline.js?v=43.19.0-39c886b7ac"></script>
+  <link rel="stylesheet" href="../../suite/css/loader.css?v=43.19.0-1112a32a51">
+  <script defer src="../../js/features/loading.js?v=43.19.0-0ab2d880db"></script>
+<link rel="stylesheet" href="../../suite/css/game-icons.css?v=43.19.0-18940026b2"><link rel="stylesheet" href="./css/action-frames.css?v=43.19.0-c3a3b6e058"></head>
 <body>
+  <audio data-unavailable-sound preload="auto" src="./assets/audio/game-unavailable.mp3" hidden></audio>
+  <audio data-switch-sound preload="auto" src="./assets/audio/game-switch.mp3" hidden></audio>
+  <audio data-launch-sound preload="auto" src="./assets/audio/game-open.mp3" hidden></audio>
   <section id="space-loader" class="startup-loader" data-loader-name="ArcadeSpace" role="status" aria-label="Opening ArcadeSpace"><div class="startup-panel"><div class="startup-mark" aria-hidden="true">&gt;/_</div><p class="startup-type" aria-hidden="true"><span data-loader-text></span><span class="startup-caret">_</span></p><p>Opening your library…</p></div></section>
-
-  <!-- Ambient 20% Neon Atmosphere -->
-  <div class="ambient-glow-top"></div>
-
-  <!-- Mobile App Frame (Mobile Use Only) -->
-  <div class="mobile-app">
-
-    <!-- Top Sticky Mobile Bar -->
-    <nav class="mobile-app-bar">
-      <a href="../../" class="btn-app-back" id="btnBackToLS" title="Return to Lexical Space">
-        <span class="btn-back-arrow" aria-hidden="true">←</span> Back to Lexical Space
-      </a>
-
-      <button id="btnSoundToggle" class="btn-app-sound" type="button" aria-label="Toggle 8-bit Sound">
-        <span id="soundIcon">🔊</span>
-      </button>
-    </nav>
-
-    <!-- Logo Header with 8-Bit Golden Pixel Coins -->
-    <header class="logo-container">
-      <div class="mobile-logo-row">
-        <!-- Task 1: Static Retro Game Card Logo -->
-        <div class="header-logo-card arcade-logo" id="headerLogoCard" title="ArcadeSpace Retro Game Card" aria-label="ArcadeSpace Logo"><img src="../../suite/assets/arcade-space.svg" alt="ArcadeSpace game controller"></div>
-
-        <div class="header-brand-info">
-          <h1 class="mobile-logo-title">ARCADE <span>SPACE</span></h1>
-          <div class="header-terminal-tag">&gt; ArcadeSpace_</div>
-        </div>
-      </div>
+  <div class="hub-shell">
+    <header class="hub-header" aria-label="ArcadeSpace profile">
+      <div class="profile-lockup"><div id="playerAvatar" class="profile-avatar" aria-hidden="true">G</div><div id="playerName" class="profile-name">Guest Cowboy</div></div>
+      <div id="headerLogoCard" class="hub-brand"><h1><img src="./assets/arcade_space_logo.png" width="2172" height="724" alt="ARCADE SPACE"></h1></div>
+      <div class="word-ready"><span class="pixel-icon icon-words" aria-hidden="true"></span><span><strong id="playerWordCount">--</strong><small>words ready</small></span></div>
     </header>
-
-    <!-- Student Status Card (Essential Info Only) -->
-    <section class="student-card">
-      <div class="student-info">
-        <div id="playerAvatar" class="student-avatar">G</div>
-        <div style="min-width: 0;">
-          <div id="playerName" class="student-name">Guest Cowboy</div>
-          <div class="student-status">● READY TO PLAY</div>
-        </div>
-      </div>
-
-      <div class="words-ready-badge">
-        <span id="playerWordCount" class="words-count-num">--</span>
-        <span class="words-count-lbl">WORDS READY</span>
-      </div>
+    <section class="vocabulary-bar" aria-label="Vocabulary selection">
+      <div class="control-field"><label for="arcadeVocabModeSelect">Vocabulary</label><span id="vocabModeBadge" hidden>FULL VOCABULARY</span><div class="select-wrap"><select id="arcadeVocabModeSelect"><option value="full">Full vocabulary</option><option value="topic">By topic</option></select><span class="pixel-icon icon-chevron" aria-hidden="true"></span></div></div>
+      <div id="arcadeTopicWrapper" class="control-field"><label id="topicLabelText" for="arcadeTopicSelect">Topic</label><span id="topicWordCountBadge" hidden>ALL TOPICS</span><div class="select-wrap"><select id="arcadeTopicSelect"><option value="">All topics</option></select><span class="pixel-icon icon-chevron" aria-hidden="true"></span></div></div>
+      <p id="modeWarningMsg" class="mode-warning" role="alert" style="display:none">Please select a topic before playing.</p>
     </section>
-
-    <!-- Dynamic Topic & Mode Mission Control -->
-    <section class="topic-select-card" style="margin: 0 14px 14px; background: #110e21; border: 1.5px solid var(--border-retro); border-radius: 12px; padding: 12px 14px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);">
-      
-      <!-- Vocabulary Mode Dropdown (Exactly: Full Vocabulary, Topic) -->
-      <div style="margin-bottom: 10px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-          <span style="font-family: var(--font-pixel); font-size: 0.65rem; color: var(--neon-yellow); letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
-            <span>🎮</span> VOCABULARY MODE:
-          </span>
-          <span id="vocabModeBadge" style="font-family: var(--font-pixel); font-size: 0.55rem; padding: 3px 8px; border-radius: 6px; background: #0b0917; border: 1px solid var(--neon-yellow); color: var(--neon-yellow);">
-            FULL VOCABULARY
-          </span>
-        </div>
-        <div style="position: relative;">
-          <select id="arcadeVocabModeSelect" style="width: 100%; min-height: 42px; background: #17132e; border: 1.5px solid var(--border-retro); border-radius: 8px; color: #f5f3ff; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 700; padding: 8px 12px; outline: none; cursor: pointer; transition: all 0.15s ease;">
-            <option value="full">Full Vocabulary</option>
-            <option value="topic">Topic</option>
-          </select>
-        </div>
+    <main class="game-library" aria-label="Game library">
+      <p class="library-count" data-library-count></p>
+      <div class="game-carousel" data-game-carousel aria-label="Choose a game with the left and right arrow keys">
+        <article class="game-tile is-selected" data-game-tile data-game-name="Sky Dominators" data-game-description="Vocabulary dogfights" data-game-index="0"><a id="btnPlayAirStrike" class="game-cover mobile-btn-play" href="../sky-dominators/" aria-label="Play Sky Dominators" data-game-launch><img src="./assets/logo/sky_dominators_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Vocabulary dogfights</p></article>
+        <article class="game-tile" data-game-tile data-game-name="Word Battles" data-game-description="Word duels &amp; chess" data-game-index="1"><a id="btnPlayQuickDrawn" class="game-cover mobile-btn-play" href="../quick-drawn/" aria-label="Play Word Battles" data-game-launch><img src="./assets/logo/word_battles_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Word duels &amp; chess</p></article>
+        <article class="game-tile" data-game-tile data-game-name="Wild West Poker" data-game-description="Synonym card matches" data-game-index="2"><a id="btnPlayPoker" class="game-cover mobile-btn-play" href="../poker/" aria-label="Play Wild West Poker" data-game-launch><img src="./assets/logo/wild_west_poker_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Synonym card matches</p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Farming game, coming soon" data-game-tile data-game-name="Coming Soon" data-game-description="A farming adventure in the making" data-game-index="3"><button id="btnInsertCartridge" class="game-cover" type="button" disabled aria-disabled="true" aria-label="Farming game — coming soon"><img src="./assets/logo/coming_soon_farm.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">A farming adventure in the making</p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Quiz — coming soon" data-game-tile data-game-name="Quiz" data-game-description="Vocabulary quiz show" data-game-index="4"><button class="game-cover" type="button" disabled aria-label="Quiz — coming soon"><img src="./assets/logo/quiz.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Vocabulary quiz show</p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Vocabulary Test — coming soon" data-game-tile data-game-name="Vocabulary Test" data-game-description="Test your vocabulary" data-game-index="5"><button class="game-cover" type="button" disabled aria-label="Vocabulary Test — coming soon"><img src="./assets/logo/vocabulary_test.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Test your vocabulary</p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Spellsmith — coming soon" data-game-tile data-game-name="Spellsmith" data-game-description="Forge words from letters" data-game-index="6"><button class="game-cover" type="button" disabled aria-label="Spellsmith — coming soon"><img src="./assets/logo/spellsmith.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Forge words from letters</p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Fist of Legends — coming soon" data-game-tile data-game-name="Fist of Legends" data-game-description="Ride with Thánh Gióng" data-game-index="7"><button class="game-cover" type="button" disabled aria-label="Fist of Legends — coming soon"><img src="./assets/logo/fist_of_legends.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Ride with Thánh Gióng</p></article>
       </div>
-
-      <!-- Topic Mission Control (Active & required when Mode = Topic) -->
-      <div id="arcadeTopicWrapper" style="position: relative; transition: opacity 0.2s ease;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-          <span id="topicLabelText" style="font-family: var(--font-pixel); font-size: 0.65rem; color: var(--neon-cyan); letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px;">
-            <span>🎯</span> TARGET TOPIC:
-          </span>
-          <span id="topicWordCountBadge" style="font-family: var(--font-pixel); font-size: 0.55rem; padding: 3px 8px; border-radius: 6px; background: #0b0917; border: 1px solid var(--neon-cyan); color: var(--neon-cyan);">
-            ALL TOPICS
-          </span>
-        </div>
-        <div style="position: relative;">
-          <select id="arcadeTopicSelect" style="width: 100%; min-height: 42px; background: #17132e; border: 1.5px solid var(--border-retro); border-radius: 8px; color: #f5f3ff; font-family: var(--font-ui); font-size: 0.88rem; font-weight: 700; padding: 8px 12px; outline: none; cursor: pointer; transition: all 0.15s ease;">
-            <option value="">⚡ Select a Topic...</option>
-          </select>
-        </div>
-        <div id="modeWarningMsg" style="display: none; margin-top: 6px; font-size: 0.75rem; color: #f87171; font-weight: 700; font-family: var(--font-ui); padding: 4px 8px; background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px;">
-          ⚠️ Please select a topic to start playing in Topic mode!
-        </div>
-      </div>
-
-    </section>
-
-    <!-- Mobile Games Stack (Direct Thumb Actions) -->
-    <main class="mobile-games-stack">
-
-      <!-- ==================== GAME 1: SKY DOMINATORS (FEATURED) ==================== -->
-      <article class="mobile-card theme-airstrike">
-        <header class="card-header-two-col">
-          <div class="card-icon-box card-icon-logo" title="Sky Dominators" aria-hidden="true">
-            <img src="assets/logo/sky_dominators_logo.png" alt="Sky Dominators Logo" class="card-logo-img" />
-          </div>
-          <div class="card-header-titles">
-            <h2 class="card-title">SKY DOMINATORS</h2>
-            <div class="card-season-subtitle">SEASON 1</div>
-            <div class="card-subtitle">Air Strike • Canyon Protocol</div>
-          </div>
-        </header>
-
-        <div class="card-body">
-          <p class="card-short-desc">
-            High-octane retro aerial combat! Shoot enemy helicopter formations and target synonyms to clear the canyon.
-          </p>
-          <div class="card-meta-row">
-            <span class="card-stat-badge">Arcade Flight Combat</span>
-          </div>
-        </div>
-
-        <a id="btnPlayAirStrike" href="air_strike_arcade_game%20(1).html" class="mobile-btn-play">
-          <span>⚡</span> Scramble Jets
-        </a>
-      </article>
-
-      <!-- ==================== GAME 2: QUICK DRAWN ==================== -->
-      <article class="mobile-card theme-duel">
-        <header class="card-header-two-col">
-          <div class="card-icon-box" aria-hidden="true">🤠</div>
-          <div class="card-header-titles">
-            <h2 class="card-title">QUICK DRAWN</h2>
-            <div class="card-subtitle">Synonym Shootout</div>
-          </div>
-        </header>
-
-        <div class="card-body">
-          <p class="card-short-desc">
-            Test your reflexes! Draw fast and pick the matching synonym before the dynamite fuse burns out.
-          </p>
-          <div class="card-meta-row">
-            <span id="statBestDuel" class="card-stat-badge">Personal Best: --</span>
-          </div>
-        </div>
-
-        <a id="btnPlayQuickDrawn" href="fast_drawn_wilhelm_scream_instructions%20(1).html" class="mobile-btn-play">
-          <span>⚡</span> Get to Shooting Range
-        </a>
-      </article>
-
-      <!-- ==================== GAME 3: WILD WEST POKER ==================== -->
-      <article class="mobile-card theme-poker">
-        <header class="card-header-two-col">
-          <div class="card-icon-box" aria-hidden="true">🃏</div>
-          <div class="card-header-titles">
-            <h2 class="card-title">WILD WEST POKER</h2>
-            <div class="card-subtitle">4-Card Synonym Poker</div>
-          </div>
-        </header>
-
-        <div class="card-body">
-          <p class="card-short-desc">
-            Match synonym pairs to build winning poker hands! Start with 5 chips and aim for 10 chips to win.
-          </p>
-          <div class="card-meta-row">
-            <span class="card-stat-badge">Starting with 5 chips</span>
-          </div>
-        </div>
-
-        <a id="btnPlayPoker" href="wild_west_vocabulary_poker_fixed.html" class="mobile-btn-play">
-          <span>⚡</span> Enter the Casino
-        </a>
-      </article>
-
-      <!-- ==================== GAME 4: CARTRIDGE BAY (IN DEVELOPMENT) ==================== -->
-      <article class="mobile-card theme-cartridge">
-        <header class="card-header-two-col">
-          <div class="card-icon-box" title="8-Bit Memory Cartridge Slot" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="2" width="18" height="16" rx="2" fill="#1b1736" stroke="#00F0FF" stroke-width="1.8"/>
-              <rect x="6" y="5" width="12" height="6" rx="1" fill="#00F0FF" fill-opacity="0.2" stroke="#00F0FF" stroke-width="1.2"/>
-              <line x1="8" y1="7.5" x2="16" y2="7.5" stroke="#00F0FF" stroke-width="1"/>
-              <rect x="5.5" y="13.5" width="2" height="2.5" fill="#00F0FF"/>
-              <rect x="9" y="13.5" width="2" height="2.5" fill="#00F0FF"/>
-              <rect x="13" y="13.5" width="2" height="2.5" fill="#00F0FF"/>
-              <rect x="16.5" y="13.5" width="2" height="2.5" fill="#00F0FF"/>
-              <rect x="5" y="18" width="2" height="3" fill="#FFD700"/>
-              <rect x="8" y="18" width="2" height="3" fill="#FFD700"/>
-              <rect x="11" y="18" width="2" height="3" fill="#FFD700"/>
-              <rect x="14" y="18" width="2" height="3" fill="#FFD700"/>
-              <rect x="17" y="18" width="2" height="3" fill="#FFD700"/>
-            </svg>
-          </div>
-          <div class="card-header-titles">
-            <h2 class="card-title">GAME 4</h2>
-            <div class="card-subtitle">Put in ROM / Plug Chip</div>
-          </div>
-        </header>
-
-        <div class="card-body">
-          <p class="card-short-desc">
-            Put in a game cartridge or plug in a memory chip to load your next 8-bit challenge!
-          </p>
-          <div class="card-meta-row">
-            <span class="card-in-dev-pill">IN DEVELOPMENT</span>
-          </div>
-        </div>
-
-        <button id="btnInsertCartridge" type="button" class="mobile-btn-cartridge in-dev-btn" disabled aria-disabled="true">
-          <span>🔒</span> IN DEVELOPMENT
-        </button>
-      </article>
-
+      <p class="sr-only" data-selection-summary aria-live="polite" aria-atomic="true">Sky Dominators selected.</p>
     </main>
-
-    <!-- Minimal Mobile Footer -->
-    <footer class="mobile-footer">
-      ARCADE SPACE • 8-BIT EDITION
-    </footer>
-
+    <footer class="hub-footer"><nav class="system-dock" aria-label="System controls">
+      <button type="button" class="dock-item" data-game-previous aria-label="Previous game"><span class="pixel-icon icon-previous" aria-hidden="true"></span></button>
+      <a id="btnBackToLS" class="dock-item" href="../../" aria-label="Return to LexicalSpace"><span class="pixel-icon icon-home" aria-hidden="true"></span><span class="dock-label">Home</span></a>
+      <button class="dock-item dock-play" type="button" data-hub-play disabled aria-label="Play Sky Dominators"><span class="pixel-icon icon-play" aria-hidden="true"></span><span class="dock-label" data-play-label>Play</span></button>
+      <button class="dock-item" type="button" data-open-settings aria-haspopup="dialog" aria-label="Open settings"><span class="pixel-icon icon-settings" aria-hidden="true"></span><span class="dock-label">Settings</span></button>
+      <button type="button" class="dock-item" data-game-next aria-label="Next game"><span class="pixel-icon icon-next" aria-hidden="true"></span></button>
+    </nav><p class="keyboard-hint">Left / Right to select · Enter to play</p></footer>
   </div>
-
-  <!-- Retro Web Audio Engine & Fast Mobile Logic -->
-  <script src="./js/arcade-2.js?v=43.3.0-dd63c37cc6"></script>
+  <dialog class="settings-dialog" data-settings-dialog aria-label="ArcadeSpace settings">
+    <div class="settings-heading"><h2>Settings</h2><button type="button" class="round-button close-settings" data-close-settings aria-label="Close settings" data-action-face="quiet"><span class="pixel-icon icon-close" aria-hidden="true"></span><span>Close</span></button></div>
+    <fieldset class="theme-fieldset"><legend>Appearance</legend>
+      <div class="theme-options">
+        <label title="Twicelight"><input type="radio" name="arcade-theme" value="twicelight" aria-label="Twicelight" checked><span class="palette-strip" data-palette="twicelight" aria-hidden="true"></span></label>
+        <label title="Pocket Day"><input type="radio" name="arcade-theme" value="pocket" aria-label="Pocket Day"><span class="palette-strip" data-palette="pocket" aria-hidden="true"></span></label>
+        <label title="Neon Night"><input type="radio" name="arcade-theme" value="neon" aria-label="Neon Night"><span class="palette-strip" data-palette="neon" aria-hidden="true"></span></label>
+        <label title="Lexical Ivory"><input type="radio" name="arcade-theme" value="ivory" aria-label="Lexical Ivory"><span class="palette-strip" data-palette="ivory" aria-hidden="true"></span></label>
+      </div>
+    </fieldset>
+    <button id="btnSoundToggle" class="sound-setting" type="button" aria-pressed="true" aria-label="Turn sound effects off" data-action-face="main"><span id="soundIcon" class="pixel-icon icon-sound-on" aria-hidden="true"></span><span class="sound-setting-copy">Sound effects</span><span data-sound-state>On</span><span class="switch-track" aria-hidden="true"></span></button>
+    <button type="button" class="settings-done" data-close-settings data-action-face="main">Done</button>
+  </dialog>
+  <script src="./js/arcade-2.js?v=43.19.0-e61fe6a3b1"></script>
 </body>
 </html>

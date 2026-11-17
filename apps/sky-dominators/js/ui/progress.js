@@ -54,16 +54,17 @@ async function refreshBoards(force=false){
  boardPromise=(async()=>{try{boardRows=await P.leaderboard(force);boardError='';}catch{boardError='Leaderboard unavailable — retry when connected.';}finally{boardPromise=null;renderBoards();}})();return boardPromise;
 }
 function renderHangar(){
- const cfg=AIRCRAFT_CONFIGS[selectedHangarIndex]||AIRCRAFT_CONFIGS[0],owned=P.owns(selectedHangarIndex),img=$('hangarAircraftBigImg');img.src=SkySkins.path(selectedHangarIndex,inspectedSkin||P.skin(selectedHangarIndex));img.dataset.aircraftKey=cfg.key;img.dataset.skinId=inspectedSkin||P.skin(selectedHangarIndex);img.classList.toggle('skin-glacier',inspectedSkin==='glacier');img.alt=cfg.name;
- text('hangarAircraftName',cfg.name);text('hangarClassName',cfg.title);text('hangarUnlockStatus',owned?'OWNED · '+P.state.coins+' Coins':'LOCKED · 500 Coins · Balance '+P.state.coins);
+ const cfg=AIRCRAFT_CONFIGS[selectedHangarIndex]||AIRCRAFT_CONFIGS[0],img=$('hangarAircraftBigImg');if(!inspectedSkin||!C.skinCompatible(selectedHangarIndex,inspectedSkin))inspectedSkin=P.skin(selectedHangarIndex);img.src=SkySkins.path(selectedHangarIndex,inspectedSkin||P.skin(selectedHangarIndex));img.dataset.aircraftKey=cfg.key;img.dataset.skinId=inspectedSkin||P.skin(selectedHangarIndex);img.classList.toggle('skin-glacier',inspectedSkin==='glacier');img.alt=cfg.name;
+ text('hangarAircraftName',cfg.name);text('hangarClassName',cfg.skillName);text('hangarUnlockStatus',P.state.coins.toLocaleString()+' Coins');
  text('hangarDamageNumber',cfg.damagePerShot||1);
  const health=$('hangarHealthBar');health.replaceChildren();health.setAttribute('aria-label',cfg.maxHp+' HP');for(let i=0;i<cfg.maxHp;i++)health.append(el('span','health-block-hp'));
  const desc=$('hangarDescList');desc.replaceChildren();for(const line of cfg.descriptions||[])desc.append(el('li','',line));
- const button=$('hangarConfirmBtn');button.disabled=purchasing||(owned&&!!inspectedSkin&&inspectedSkin!==P.skin(selectedHangarIndex));button.textContent=purchasing?'SAVING…':owned?'TAKE OFF':P.state.coins<500?'500 COINS · INSUFFICIENT COINS':'BUY AIRCRAFT · 500 COINS';
  const list=$('hangarThumbnailList'),scroll=list.scrollTop;list.replaceChildren();
  for(const index of getHangarAircraftOrder()){
   const c=AIRCRAFT_CONFIGS[index],ready=P.owns(index),item=el('button','hangar-thumb-item'+(index===selectedHangarIndex?' is-selected':'')+(!ready?' is-locked':''));item.type='button';item.dataset.index=index;item.dataset.locked=String(!ready);item.setAttribute('aria-pressed',String(index===selectedHangarIndex));
-  const image=el('img','hangar-thumb-img');image.src=c.file;image.alt='';const copy=el('span');copy.append(el('span','hangar-card-name',c.name),el('span','hangar-card-status',ready?'OWNED':'LOCKED · 500 COINS'));item.append(image,copy);item.addEventListener('click',()=>selectHangarAircraft(index));list.append(item);
+  const image=el('img','hangar-thumb-img');image.src=c.file;image.alt='';const name=el('span','hangar-card-name',c.name);
+  if(!ready){const lock=el('span','aircraft-lock','🔒');lock.setAttribute('aria-hidden','true');name.append(' ',lock);item.setAttribute('aria-label',c.name+', locked');}
+  item.append(image,name);item.addEventListener('click',()=>selectHangarAircraft(index));list.append(item);
  }list.scrollTop=scroll;renderSkins();SkyExalted.updatePreviews(performance.now());SkyCelestial.updatePreviews(performance.now());
 }
 function renderSkins(){
@@ -74,48 +75,67 @@ function renderSkins(){
   card.type='button';card.dataset.skin=skin.id;card.dataset.ownershipId=C.skinOwnershipId(index,skin.id);card.setAttribute('aria-pressed',String(skin.id===inspectedSkin));
   const img=el('img');img.src=SkySkins.path(index,skin.id);img.alt='';img.dataset.aircraftKey=cfg.key;img.dataset.skinId=skin.id;img.width=96;img.height=72;
   card.append(img,el('strong','',skin.name),el('span','skin-rarity',skin.rarity||''),el('span','',skin.id===current?'EQUIPPED':owned?'OWNED':skin.unlock?.type==='rank'?'0 COINS · CELESTIAL I GIFT':skin.price===null?'COMING SOON':'LOCKED · '+skin.price+' Coins'));
-  card.addEventListener('click',()=>{if(purchasing)return;inspectedSkin=skin.id;renderHangar();});host.append(card);
+  card.addEventListener('click',()=>{if(purchasing)return;inspectedSkin=skin.id;text('skinStatus','');renderHangar();});host.append(card);
  }
- host.scrollTop=scroll;const skin=SkySkinCatalog.lines.find(l=>l.id===inspectedSkin),owned=P.ownsSkin(index,skin.id),button=$('skinAction');
- button.disabled=purchasing||!P.owns(index)||skin.id===current||(!owned&&(skin.unlock?.type==='rank'||!Number.isSafeInteger(skin.price)));
- button.textContent=purchasing?'SAVING…':!P.owns(index)?'UNLOCK AIRCRAFT FIRST':skin.id===current?'EQUIPPED':owned?'EQUIP SKIN':skin.unlock?.type==='rank'?'REACH CELESTIAL I':skin.price===null?'COMING SOON':'UNLOCK · '+skin.price+' COINS';
+ host.scrollTop=scroll;
+ const skin=SkySkinCatalog.lines.find(entry=>entry.id===inspectedSkin);
+ const action=hangarAction(index,skin);
+ const button=$('hangarConfirmBtn');
+ button.disabled=purchasing||action==='rank'||action==='unavailable';
+ const labels={flight:'SCRAMBLE JETS',aircraft:'PURCHASE AIRCRAFT · 500 COINS',skin:'PURCHASE · '+skin.price+' COINS',rank:'REACH CELESTIAL I',unavailable:'COMING SOON'};
+ text('skinAction',purchasing?'SAVING…':labels[action]);
+ button.dataset.actionFace=action==='flight'?'accent':'gold';
+ button.dataset.commonGameIcon=button.disabled?'lock':action==='flight'?'jet':'check';
 }
-function skinFeedback(message,error=false){
- const status=$('skinStatus');status.textContent=message;status.dataset.error=String(error);
- status.setAttribute('role',error?'alert':'status');status.hidden=false;
- requestAnimationFrame(()=>status.scrollIntoView({block:'nearest'}));
-}
-async function skinAction(){
- if(purchasing)return;const index=selectedHangarIndex,id=inspectedSkin;if(!P.owns(index)||!id||id===P.skin(index))return;
- const skin=SkySkinCatalog.lines.find(s=>s.id===id);
- if(skin.unlock?.type==='rank'&&!P.ownsSkin(index,id)){skinFeedback('Gifted automatically at Celestial I. No Coins required.');return;}
- if(!P.ownsSkin(index,id)&&P.state.coins<skin.price){skinFeedback('Not enough Coins. '+skin.name+' costs '+skin.price.toLocaleString()+' Coins. Balance: '+P.state.coins.toLocaleString()+'. Need '+(skin.price-P.state.coins).toLocaleString()+' more.',true);return;}
- purchasing=true;skinFeedback('Checking artwork and saving your skin purchase…');renderHangar();
- try{
-  await SkySkins.ensure(index,id);
-  if(!P.ownsSkin(index,id)){
-   await P.buySkin(index,id);
-   if(!P.ownsSkin(index,id)){await P.init(true);if(!P.ownsSkin(index,id))throw Error('Purchase could not be confirmed. Reconnect and reload your profile before trying again.');}
-   skinFeedback('Skin unlocked. Select EQUIP SKIN to use it.');
-  }
-  else{await P.equipSkin(index,id);if(player.aircraftIndex===index)player.applyAircraftImage();skinFeedback('Skin equipped. Ready for Take Off.');}
- }catch(e){skinFeedback('Unable to unlock/equip skin: '+(e?.message||String(e)||'Unknown error. Please reconnect and try again.'),true);}finally{purchasing=false;renderHangar();}
+function hangarAction(index,skin){
+ if(!P.owns(index))return 'aircraft';
+ if(P.ownsSkin(index,skin.id))return 'flight';
+ if(skin.unlock?.type==='rank')return 'rank';
+ return Number.isSafeInteger(skin.price)?'skin':'unavailable';
 }
 async function confirmHangar(){
- if(purchasing||(P.owns(selectedHangarIndex)&&inspectedSkin&&inspectedSkin!==P.skin(selectedHangarIndex)))return;const index=selectedHangarIndex;
- if(!P.owns(index)){
-  purchasing=true;renderHangar();
-  try{await P.buy(index);text('aircraftLockNotice','Aircraft purchased. Press TAKE OFF to fly.');$('aircraftLockNotice').hidden=false;}
-  catch(error){text('aircraftLockNotice',error.message);$('aircraftLockNotice').hidden=false;}
-  finally{purchasing=false;renderHangar();}return;
- }
- // Local selection is immediate; a failed cloud selection never discards ownership or blocks offline play.
- void P.select(index);if(!player.setAircraft(index))return;nextMatchAircraftIndex=index;
- $('inGameHangarModal').classList.add('hidden');resetGame();
+ if(purchasing||$('inGameHangarModal').classList.contains('hidden'))return;
+ const index=selectedHangarIndex,id=inspectedSkin,skin=SkySkinCatalog.lines.find(entry=>entry.id===id);
+ if(!skin)return;
+ const action=hangarAction(index,skin);
+ if(action==='rank'||action==='unavailable')return;
+ const owner=P.name;
+ purchasing=true;
+ $('closeHangarBtn').disabled=true;
+ const feedback=(message,error=false)=>{text('skinStatus',message);$('skinStatus').dataset.error=String(error);};
+ feedback('');renderHangar();
+ try{
+  if(action==='aircraft'||action==='skin'){
+   const price=action==='aircraft'?500:skin.price;
+   if(P.state.coins<price)throw Error('Need '+(price-P.state.coins).toLocaleString()+' more Coins.');
+   if(action==='aircraft')await P.buy(index);
+   else{
+    await SkySkins.ensure(index,id);
+    if(P.name!==owner)return;
+    await P.buySkin(index,id);
+    if(!P.ownsSkin(index,id))await P.init(true);
+    if(!P.ownsSkin(index,id))throw Error('Purchase not confirmed. Check your connection.');
+   }
+   feedback(action==='aircraft'?'Aircraft unlocked.':'Skin unlocked.');
+   return;
+  }
+  if(id!==P.skin(index)){
+   await SkySkins.ensure(index,id);
+   if(P.name!==owner)return;
+   await P.equipSkin(index,id);
+   if(P.skin(index)!==id)throw Error('Skin selection could not be saved.');
+  }
+  if(P.name!==owner||$('inGameHangarModal').classList.contains('hidden'))return;
+  void P.select(index);
+  if(!player.setAircraft(index))return;
+  nextMatchAircraftIndex=index;
+  $('inGameHangarModal').classList.add('hidden');resetGame();
+ }catch(error){feedback(error?.message||'Unable to save. Check your connection and try again.',true);}
+ finally{purchasing=false;$('closeHangarBtn').disabled=false;renderHangar();}
 }
 function selectAircraft(index){
- if(!Number.isInteger(index)||index<0||index>=AIRCRAFT_CONFIGS.length)return false;
- selectedHangarIndex=index;inspectedSkin=P.skin(index);$('aircraftLockNotice').hidden=true;
+ if(purchasing||!Number.isInteger(index)||index<0||index>=AIRCRAFT_CONFIGS.length)return false;
+ text('skinStatus','');selectedHangarIndex=index;inspectedSkin=P.skin(index);$('aircraftLockNotice').hidden=true;
  if(P.owns(index)){void P.select(index);player.setAircraft(index);nextMatchAircraftIndex=index;}
  renderHangar();return true;
 }
@@ -152,8 +172,6 @@ window.SkyUI={render,refreshBoards,renderHangar,confirmHangar,selectAircraft,sho
 window.addEventListener('sky-profile',render);
 window.addEventListener('load',()=>{
  P.connect(SKYDOMINATORS_FIREBASE_CONFIG,{isFlying:()=>gameState==='PLAYING'||gameState==='PAUSED'});
- $('skinAction').addEventListener('click',()=>void skinAction());
- $('retryProgress').addEventListener('click',e=>{e.preventDefault();void P.init(true);void refreshBoards(true);});
  render();void refreshBoards();
  // Historical unscoped local records are shown separately; they are never silently attributed to another student.
  try{const records=JSON.parse(localStorage.getItem('air_strike_personal_records')||'[]');if(records.length){const details=$('legacyLocalRecords');details.hidden=false;for(const r of records){const li=el('li','',(r.date||'Previous flight')+' · '+Number(r.score).toLocaleString()+' · '+(AIRCRAFT_CONFIGS[r.aircraftIndex]?.name||'Unknown aircraft'));details.querySelector('ul').append(li);}}}catch{}

@@ -278,3 +278,6 @@
 .check-answer-audio { display: inline-grid; place-items: center; width: 34px; height: 34px; margin-top: 8px; border: 1px solid currentColor; border-radius: 50%; color: inherit; background: transparent; }
 .check-answer-audio:hover { background: #d1fae5; }
 .check-answer-audio:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.grade-button[hidden] { display: none; }
+.recall-action-bar:has(.grade-2[hidden]):has(.grade-1:not([hidden])) { grid-template-columns: repeat(2, minmax(0, 1fr)); }

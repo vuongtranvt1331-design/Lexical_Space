@@ -27,7 +27,7 @@ class Director{
  }
  targets(){if(this.titanus)return this.titanus.targets();if(this.swarm)return this.swarm.targets();if(this.continental)return this.continental.targets();return this.fortress?this.fortress.targets():this.phase==='fight'&&this.boss?.hp>0?[this.boss]:[];}
  priorityTarget(){const {player}=this.h.context();return this.targets().slice().sort((a,b)=>Math.hypot(a.x-player.x,a.y-player.y)-Math.hypot(b.x-player.x,b.y-player.y))[0]||null;}
- rowCompleted(count){if(this.blocksRegular)return false;const cfg=STAGES.find(x=>!this.completed.has(x.id));if(!Number.isInteger(count)||!cfg||count!==cfg.round)return false;this.phase='intro';this.elapsed=0;const {w}=this.h.context();this.boss={...cfg,maxHp:cfg.hp,active:true,x:w/2,y:265,age:0,hitFlash:0};this.seen.clear();this.shots=[];this.warnings=[];this.burst=[];this.resetMissileBurst();this.h.suspend?.(cfg);if(cfg.id===3)this.fortress=new Fortress.Encounter(this,segmentBox);if(cfg.id===4)this.continental=new Continental.Encounter(this,segmentBox,Director);if(cfg.id===5)this.swarm=new Swarm.TacticalDroneSwarm(this,segmentBox);if(cfg.id===6)this.titanus=new Titanus.Encounter(this,segmentBox);return true;}
+ rowCompleted(count){if(this.blocksRegular)return false;const cfg=STAGES.find(x=>!this.completed.has(x.id));if(!Number.isInteger(count)||!cfg||count!==cfg.round)return false;this.phase='intro';this.elapsed=0;const {w}=this.h.context();this.boss={...cfg,maxHp:cfg.hp,active:true,x:w/2,y:(this.h.layout?.(true)?.bossHudBottom||60)+100,age:0,hitFlash:0};this.seen.clear();this.shots=[];this.warnings=[];this.burst=[];this.resetMissileBurst();this.h.suspend?.(cfg);if(cfg.id===3)this.fortress=new Fortress.Encounter(this,segmentBox);if(cfg.id===4)this.continental=new Continental.Encounter(this,segmentBox,Director);if(cfg.id===5)this.swarm=new Swarm.TacticalDroneSwarm(this,segmentBox);if(cfg.id===6)this.titanus=new Titanus.Encounter(this,segmentBox);return true;}
  hit(attack){if(this.titanus)return this.titanus.hit(attack);if(this.swarm)return this.swarm.hit(attack);if(this.continental)return this.continental.hit(attack);if(this.fortress)return this.fortress.hit(attack);const b=this.boss;if(this.phase!=='fight'||!b||b.hp<=0||!attack?.collision||!attack.token||this.seen.has(attack.token)||!this.h.validAttack(attack))return false;
   const baseDamage=attack.kind==='bomber'?20:attack.kind==='phantom'?30:attack.damage;
   const damage=baseDamage*(this.h.damageMultiplier?.(b,attack)??1);
@@ -58,11 +58,11 @@ class Director{
   if(this.phase==='intro'){if(this.elapsed>=1200){this.phase='fight';this.elapsed=0;this.resetMissileBurst();this.warn(0);this.missileChargeIndex=1;this.gunTimer=600;this.gunPause=0;}return;}
   if(this.phase==='victory'){if(this.elapsed>=1600){this.phase='regular';this.boss=null;this.h.resume?.();}return;}
   const {w,h,player,bullets}=this.h.context();const fixed=this.h.positionBoss?.(b,dt);if(fixed){Object.assign(b,fixed);if(b.kind==='escort')b.fortressVisualBox={x:b.x,y:b.y,w:158.4*(b.renderScale||1),h:176*(b.renderScale||1)};}else {
-   const layout=this.h.layout?.()||{},halfW=b.id===1?84:113.3,halfH=b.id===1?98:88;
-   const minY=Math.max(170,(layout.hudBottom||145)+12)+halfH,maxY=Math.max(minY,Math.min(h*.57,(layout.controlsTop||h-30)-halfH-12));
-   const centerY=Math.min(Math.max(285,minY),maxY),sweep=Math.max(0,Math.min(b.id===1?105:125,w/2-halfW-12));
+   const layout=this.h.layout?.(true)||{},halfW=b.id===1?84:113.3,halfH=b.id===1?98:88;
+   const minY=(layout.bossHudBottom||55)+8+halfH,maxY=Math.max(minY,Math.min(h*.57,(layout.controlsTop||h-30)-halfH-12));
+   const centerY=minY,sweep=Math.max(0,Math.min(b.id===1?105:125,w/2-halfW-12));
    b.x=w/2+Math.sin(b.age/1900)*sweep;
-   b.y=centerY+Math.min(56,maxY-centerY)*(1-Math.cos(b.age/1450))*.5;
+   b.y=centerY+Math.min(24,maxY-centerY)*(1-Math.cos(b.age/1450))*.5;
   }
   this.missileClock+=dt;this.gunTimer+=dt;this.gunPause=Math.max(0,this.gunPause-dt);
   for(let i=this.warnings.length-1;i>=0;i--){const q=this.warnings[i];q.x=b.x;q.y=b.y+18*(b.renderScale||1);q.age+=dt;

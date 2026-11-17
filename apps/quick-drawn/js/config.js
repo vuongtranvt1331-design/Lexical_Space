@@ -15,10 +15,6 @@ const LEXICALSPACE_CONFIG = {
       wordsCollection: "words"
     };
 
-    const LOCAL_KEYS = {
-      BEST_SCORE_PREFIX: "quickDrawn_bestScore_"
-    };
-
 // Existing Homepage Web App configuration; vocabulary still uses IndexedDB read-only.
 const QUICKDRAWN_FIREBASE_CONFIG = {
   "apiKey": "AIzaSyCAejXQfHKQ0ZKTpR7kphaDFCGqCcuoRfI",

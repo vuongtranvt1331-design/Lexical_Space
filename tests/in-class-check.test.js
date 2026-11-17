@@ -8,69 +8,24 @@ const require = createRequire(process.env.LEXICALSPACE_TEST_MODULES || import.me
 const { JSDOM } = require('jsdom');
 const { indexedDB, IDBKeyRange } = require('fake-indexeddb');
 
-test('the check samples at most 15 green and blue cards from either the recent or previous pool', () => {
-  const now = Date.parse('2026-11-06T15:00:00.000Z'), windowMs = 72 * 60 * 60 * 1000;
-  const words = [
-    { id: 'boundary', recallLevel: 3, lastReviewedAt: now - windowMs },
-    { id: 'iso', memoryStatus: 'mastered', lastReviewedAt: new Date(now - 1000).toISOString() },
-    { id: 'firestore', lastGrade: 2, lastReviewedAt: { seconds: now / 1000 - 5 } },
-    { id: 'old', recallLevel: 3, lastReviewedAt: now - windowMs - 1, reviewCount: 4 },
-    { id: 'no-date', lastGrade: 2, reviewCount: 1 },
-    { id: 'manual-green', masteryOverride: 'not_remembered' },
-    { id: 'manual-blue', masteryOverride: 'mastered', memoryStatus: 'mastered' },
-    { id: 'future', recallLevel: 3, lastReviewedAt: now + 1 },
-    { id: 'deleted', recallLevel: 3, lastReviewedAt: now - 1, deleted: true },
-    { id: 'recent-red', recallLevel: 1, lastReviewedAt: now - 1, reviewCount: 1 },
-    { id: 'recent-yellow', lastGrade: 1, lastReviewedAt: now - 1, reviewCount: 1 },
-    { id: 'edited-new', updatedAt: now, reviewCount: 1 }
-  ];
-  const recent = selectInClassPool(words, now, () => 0.999);
-  assert.equal(recent.kind, 'recent');
-  assert.deepEqual(recent.words.map(word => word.id), ['boundary', 'iso', 'firestore']);
-  const recentWords = Array.from({ length: 24 }, (_, id) => ({ id: String(id), recallLevel: 3, lastReviewedAt: now - 1 }));
-  const recentSample = selectInClassPool(recentWords, now, () => 0.9);
-  assert.equal(recentSample.words.length, 15);
-  assert.equal(new Set(recentSample.words.map(word => word.id)).size, 15);
-  assert.notDeepEqual(recentSample.words, recentWords.slice(0, 15));
-  assert.deepEqual(recentWords.map(word => word.id), Array.from({ length: 24 }, (_, id) => String(id)));
-
-  const reviewed = Array.from({ length: 24 }, (_, id) => ({ id: String(id), recallLevel: 3, reviewCount: 1 }));
-  const pool = selectInClassPool(reviewed, now, () => 0.9);
-  assert.equal(pool.kind, 'previous');
-  assert.equal(pool.words.length, 15);
-  assert.equal(new Set(pool.words.map(word => word.id)).size, 15);
-  assert.notDeepEqual(pool.words, reviewed.slice(0, 15));
-  const fallback = selectInClassPool(words.slice(3), now, () => 0.999);
-  assert.equal(fallback.kind, 'previous');
-  assert.deepEqual(fallback.words.map(word => word.id), ['old', 'no-date', 'manual-green', 'manual-blue', 'future']);
-  assert.deepEqual(selectInClassPool(words.slice(8), now), { kind: 'empty', words: [], resetHistory: true });
-});
-
-test('history prioritizes unchecked IDs, rolls over to the selected batch, and never duplicates a word within a check', () => {
-  const words = Array.from({length: 31}, (_, i) => ({ id: `w${i}`, recallLevel: 3 }));
-  const first = selectInClassPool(words, Date.now(), () => .999);
-  assert.equal(first.resetHistory, false);
-  assert.equal(first.words.length, 15);
-  const ids = pool => pool.words.map(word => word.id);
-  const second = selectInClassPool(words, Date.now(), () => .999, ids(first));
-  assert.equal(second.resetHistory, false);
-  assert.equal(second.words.length, 15);
-  assert.ok(ids(second).every(id => !ids(first).includes(id)));
-  const checked = [...ids(first), ...ids(second)];
-  const rollover = selectInClassPool(words, Date.now(), () => .999, checked);
-  assert.equal(rollover.resetHistory, true);
-  assert.equal(rollover.words.length, 15);
-  assert.equal(rollover.words[0].id, 'w30');
-  assert.equal(new Set(ids(rollover)).size, 15);
-  const next = selectInClassPool(words, Date.now(), () => .999, ids(rollover));
-  assert.ok(ids(next).every(id => !ids(rollover).includes(id)));
-  assert.equal(next.resetHistory, false);
-  const exhausted = selectInClassPool(words.slice(0, 4), Date.now(), () => .999, ['w0','w1','w2','w3']);
-  assert.equal(exhausted.words.length, 4);
-  assert.equal(new Set(ids(exhausted)).size, 4);
-  assert.equal(exhausted.resetHistory, true);
-  assert.equal(selectInClassPool([...words, words[0]], Date.now(), () => .999).words.length, 15);
-  assert.equal(selectInClassPool(words, Date.now(), () => .999, 'malformed').words.length, 15);
+test('weekly check prioritizes 4/3/2, includes the seven-day boundary, and fills short checks oldest first', () => {
+  const now = Date.now(), week = 7 * 86400000;
+  const words = Array.from({length: 40}, (_, i) => ({id: String(i), recallLevel: 2 + i % 3, memoryStatus: i % 3 === 2 ? 'mastered' : 'not_remembered'}));
+  const choose = history => selectInClassPool([...words, words[0], {id:'skip',recallLevel:1}], now, () => .999, history);
+  const history = Object.fromEntries(words.map((w,i) => [w.id, now - week + 1 + i]));
+  for (const count of [0, 1, 10, 14, 15, 16, 40]) {
+    const times = {...history};
+    for (let i=0; i<count; i++) times[String(i)] = now - week;
+    const result = choose(times);
+    assert.equal(result.words.length, count >= 15 ? 15 : 25);
+    assert.equal(result.freshCount, Math.min(count,15));
+    assert.equal(result.reviewCount, result.words.length-result.freshCount);
+    assert.equal(new Set(result.words.map(w=>w.id)).size, result.words.length);
+    const fresh = result.words.slice(0,result.freshCount);
+    assert.deepEqual(fresh, words.slice(0,count).sort((a,b)=>b.recallLevel-a.recallLevel).slice(0,15));
+    assert.deepEqual(result.words.slice(result.freshCount),words.slice(count,count+result.reviewCount));
+  }
+  assert.equal(selectInClassPool(words.slice(0,6), now, Math.random, history).words.length,6);
 });
 
 test('a local check hides answers, reports results immediately, and queues only misses for this profile', async () => {
@@ -93,7 +48,7 @@ test('a local check hides answers, reports results immediately, and queues only 
   await storage.mutateWords([
     { username: user, id: 'first', patch: { ...reviewed, masteryOverride: 'mastered', word: 'resilient', meaning: 'kiên cường', synonyms: ['tough'], clozeSentence: 'Stay [ _____ ] and resilient.' } },
     { username: user, id: 'second', patch: { ...reviewed, word: 'adapt', meaning: 'thích nghi', exampleSentence: 'They adapted quickly.' } },
-    { username: user, id: 'old', patch: { ...reviewed, lastReviewedAt: 1, word: 'old', meaning: 'cũ' } },
+    { username: user, id: 'third', patch: { ...reviewed, lastReviewedAt: 1, word: 'old', meaning: 'cũ' } },
     { username: user, id: 'yellow', patch: { ...reviewed, lastGrade: 1, word: 'cautious', meaning: 'thận trọng' } },
     { username: other, id: 'second', patch: { word: 'elsewhere', meaning: 'nơi khác' } }
   ]);
@@ -117,11 +72,12 @@ test('a local check hides answers, reports results immediately, and queues only 
     const before = await storage.readUserWord(user, 'second');
     context.switchView('view-in-class-check');
     assert.equal($('check-intro').hidden, false);
-    assert.equal($('check-available-count').textContent, '2');
-    assert.equal($('check-pool-description').textContent, 'Up to 15 green and blue words from the last 72 hours; unchecked words first.');
+    await waitFor(() => !$('btn-check-start').disabled);
+    assert.equal($('check-available-count').textContent, '4');
+    assert.equal($('check-pool-description').textContent, '4 not checked in the past 7 days · 0 review.');
     $('btn-check-start').click();
     await waitFor(() => !$('check-question').hidden);
-    assert.equal($('check-progress').textContent, 'Word 1 of 2');
+    assert.equal($('check-progress').textContent, 'Word 1 of 4');
     assert.equal($('check-meaning').textContent, 'kiên cường');
     assert.equal($('check-cloze').textContent, 'Stay [ _____ ] and [ _____ ].');
     assert.equal(document.activeElement, $('check-answer'));
@@ -130,16 +86,18 @@ test('a local check hides answers, reports results immediately, and queues only 
     assert.equal($('check-cloze').textContent, 'They [ _____ ] quickly.');
     assert.equal($('check-results').hidden, true);
     submit('adjusting');
+    submit('old');
+    submit('cautious');
     assert.equal($('check-results').hidden, false);
     assert.equal($('check-question').hidden, true);
-    assert.equal($('check-score').textContent, '1 / 2 (50%)');
+    assert.equal($('check-score').textContent, '3 / 4 (75%)');
     assert.match($('check-time').textContent, /^\d+:\d\d$/);
     assert.deepEqual([...$('check-missed-list').children].map(item => item.textContent), ['adapt']);
     assert.equal(document.activeElement, $('check-results-heading'));
     await waitFor(() => $('check-history-status').textContent === '');
-    assert.deepEqual(await storage.idbGet('metadata', 'inclassCheckedIds_Guest'), ['first', 'second']);
+    assert.deepEqual(Object.keys(await storage.idbGet('metadata', 'inclassCheckedAt_Guest')).sort(), ['first', 'second', 'third', 'yellow']);
     const comparisons = $('check-answer-list').querySelectorAll('.check-answer-item');
-    assert.equal(comparisons.length, 2);
+    assert.equal(comparisons.length, 4);
     assert.equal(comparisons[0].querySelector('.check-typed-answer').textContent, '  TOUGH  ');
     assert.equal(comparisons[0].querySelector('.check-answer-badge').textContent, 'Correct');
     assert.equal(comparisons[1].querySelector('.check-typed-answer').textContent, 'adjusting');
@@ -175,24 +133,28 @@ test('a local check hides answers, reports results immediately, and queues only 
     assert.deepEqual(flash.getSessionState().pendingMisses, []);
 
     context.switchView('view-in-class-check');
+    await waitFor(() => !$('btn-check-start').disabled);
     $('btn-check-start').click();
     await waitFor(() => !$('check-question').hidden);
     submit('Resilient');
     submit('adapt');
-    assert.equal($('check-score').textContent, '2 / 2 (100%)');
+    submit('old');
+    submit('cautious');
+    assert.equal($('check-score').textContent, '4 / 4 (100%)');
     assert.equal($('check-missed').hidden, true);
     assert.equal($('btn-check-review-misses').hidden, true);
     $('check-results').querySelector('[data-check-done]').click();
     assert.equal($('view-review').classList.contains('hidden'), false);
 
     context.switchView('view-in-class-check');
+    await waitFor(() => !$('btn-check-start').disabled);
     $('btn-check-start').click();
     await waitFor(() => !$('check-question').hidden);
     assert.equal($('check-question').hidden, false);
     assert.equal(await context.activateUser(other), true);
     context.switchView('view-in-class-check');
-    assert.equal($('check-empty').hidden, false);
-    assert.equal($('check-empty-heading').textContent, 'No green or blue words to check yet');
+    await waitFor(() => !$('check-empty').hidden);
+    assert.equal($('check-empty-heading').textContent, 'No level 2–4 words to check yet');
     assert.equal($('check-question').hidden, true);
     assert.equal($('check-meaning').textContent, '');
     assert.equal($('check-missed-list').textContent, '');
@@ -201,7 +163,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     assert.equal($('view-review').classList.contains('hidden'), false);
 
     const student = 'History / A', studentB = 'History ? A';
-    const key = `inclassCheckedIds_${encodeURIComponent(student)}`;
+    const key = `inclassCheckedAt_${encodeURIComponent(student)}`;
     saveSettings(student, {autoPronounce:false, soundEffects:false});
     saveSettings(studentB, {autoPronounce:false, soundEffects:false});
     await storage.mutateWords(Array.from({length:31}, (_, i) => ({username:student, id:`h${String(i).padStart(2,'0')}`, patch:{
@@ -212,6 +174,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     const beforeOutbox = await storage.pendingOperations(student);
     const start = async () => {
       context.switchView('view-in-class-check');
+      await waitFor(() => !$('btn-check-start').disabled);
       $('btn-check-start').click(); $('btn-check-start').click();
       await waitFor(() => !$('check-question').hidden);
     };
@@ -222,7 +185,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     await start();
     const complete = async ({unsafe = false} = {}) => {
       const selected = [];
-      for(let i=0;i<15;i++) {
+      for(let i=0,total=Number($('check-available-count').textContent);i<total;i++) {
         const num = Number($('check-meaning').textContent.slice('prompt'.length));
         selected.push(`h${String(num).padStart(2,'0')}`);
         submit(unsafe && i === 0 ? '' : unsafe && i === 1 ? '  <img src=x onerror="alert(1)"> & \'  ' : `target${num}`);
@@ -231,7 +194,7 @@ test('a local check hides answers, reports results immediately, and queues only 
     };
     const batch1 = await complete({unsafe:true});
     await waitFor(() => $('check-history-status').textContent === '');
-    assert.deepEqual(await storage.idbGet('metadata',key),batch1);
+    assert.deepEqual(Object.keys(await storage.idbGet('metadata',key)),batch1);
     assert.equal($('check-answer-list').querySelector('.check-typed-answer').textContent,'(Empty)');
     assert.equal($('check-answer-list').querySelectorAll('.check-typed-answer')[1].textContent, '  <img src=x onerror="alert(1)"> & \'  ');
     assert.equal($('check-answer-list').querySelectorAll('img, script, [onerror]').length,0);
@@ -244,12 +207,14 @@ test('a local check hides answers, reports results immediately, and queues only 
     const batch2 = await complete();
     await waitFor(() => $('check-history-status').textContent === '');
     assert.ok(batch2.every(id=>!batch1.includes(id)));
-    assert.equal((await storage.idbGet('metadata',key)).length,30);
+    assert.equal(Object.keys(await storage.idbGet('metadata',key)).length,30);
     doneCheck(); await start();
     const batch3 = await complete();
     await waitFor(() => $('check-history-status').textContent === '');
     assert.equal(batch3[0],'h30');
-    assert.deepEqual(await storage.idbGet('metadata',key),batch3,'rollover retains only the newly checked batch');
+    const afterThree = await storage.idbGet('metadata',key);
+    assert.equal(batch3.length,25);
+    assert.equal(Object.keys(afterThree).length,31);
     doneCheck(); await start();
     const db = await storage.openIndexedDB();
     const transaction = db.transaction;
@@ -260,23 +225,23 @@ test('a local check hides answers, reports results immediately, and queues only 
     };
     const batch4 = await complete();
     await waitFor(() => !$('btn-check-save-history').hidden);
-    assert.deepEqual(await storage.idbGet('metadata',key),batch3);
-    assert.ok(batch4.every(id=>!batch3.includes(id)));
+    assert.deepEqual(await storage.idbGet('metadata',key),afterThree);
+    assert.equal(batch4.length,25);
     assert.equal($('check-results').hidden,false);
     $('btn-check-save-history').click(); $('btn-check-save-history').click();
     await waitFor(() => $('check-history-status').textContent === '');
     db.transaction = transaction;
-    assert.equal(new Set(await storage.idbGet('metadata',key)).size,30);
+    assert.equal(Object.keys(await storage.idbGet('metadata',key)).length,31);
     doneCheck(); await start();
     const latestHistory = await storage.idbGet('metadata',key);
-    await storage.idbPut('metadata',{key,value:[...latestHistory,'parallel-check-word']});
+    await storage.idbPut('metadata',{key,value:{...latestHistory,'parallel-check-word':Date.now()}});
     const concurrentBatch = await complete();
     await waitFor(() => $('check-history-status').textContent === '');
     const concurrentSaved = await storage.idbGet('metadata',key);
-    assert.ok(concurrentSaved.includes('parallel-check-word'), 'completion retains another tab history write');
-    assert.ok(concurrentBatch.every(id=>concurrentSaved.includes(id)));
+    assert.ok(concurrentSaved['parallel-check-word'], 'completion retains another tab history write');
+    assert.ok(concurrentBatch.every(id=>concurrentSaved[id]));
     await context.activateUser(studentB);
-    assert.equal(await storage.idbGet('metadata',`inclassCheckedIds_${encodeURIComponent(studentB)}`),null);
+    assert.equal(await storage.idbGet('metadata',`inclassCheckedAt_${encodeURIComponent(studentB)}`),null);
     assert.deepEqual(await storage.idbGet('metadata',key),concurrentSaved);
   } finally {
     Math.random = originalRandom;

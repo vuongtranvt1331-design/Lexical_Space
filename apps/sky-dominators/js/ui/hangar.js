@@ -26,7 +26,7 @@ function openHangarModal() {
     }
     hangarPrevGameState = gameState;
     const currentIdx = (typeof player !== 'undefined' && player) ? player.aircraftIndex : 0;
-    selectedHangarIndex = isAircraftUnlocked(currentIdx) ? currentIdx : 0;
+    selectedHangarIndex = getHangarAircraftOrder().includes(currentIdx) && isAircraftUnlocked(currentIdx) ? currentIdx : 0;
     updateHangarModalUI();
     document.getElementById('inGameHangarModal')?.classList.remove('hidden');
     SkyExalted.updatePreviews(performance.now());SkyCelestial.updatePreviews(performance.now());
@@ -51,7 +51,7 @@ function selectHangarAircraft(idx) {return SkyUI.selectAircraft(idx);}
 function getHangarAircraftOrder() {
     const bottom = ['titan', 'phantom_prototype'];
     return AIRCRAFT_CONFIGS.map((cfg, index) => index)
-        .filter(index => !bottom.includes(AIRCRAFT_CONFIGS[index].key))
+        .filter(index => AIRCRAFT_CONFIGS[index].key !== 'viper' && !bottom.includes(AIRCRAFT_CONFIGS[index].key))
         .concat(bottom.map(key => AIRCRAFT_CONFIGS.findIndex(cfg => cfg.key === key)).filter(index => index >= 0));
 }
 

@@ -29,14 +29,7 @@ function gameLoop(now) {
         player.update(dt, keys, mouse);
         if (!isPaused) SkyExalted.updatePlayer(player, dt);
         bomberHazard.update(dt);
-        // Movement resolves and snaps to the latest destination before any firing attempt.
-        // Queued touch shots take priority; a failed cooldown attempt never consumes one.
-        // Space has its own 500ms gate; queued touch shots retain their existing timing.
-        if (!isDestinationTraveling() && (pendingTouchShots > 0 || keys['Space'])) {
-            const fromTouch = pendingTouchShots > 0;
-            if (player.shoot(fromTouch ? 'touch' : 'space') && fromTouch) pendingTouchShots--;
-            triggerDivingAttackIfEligible();
-        }
+        processManualFire();
 
         if (!bossEncounter.blocksRegular) {
         // Formation spawn scheduling: Time-based authoritative scheduler

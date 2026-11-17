@@ -8,6 +8,7 @@ import { targetSegments, clozeText, matchesRecallAnswer } from '../core/recall-u
 import { trackIntentionalClicks } from '../utils/intentional-click.js';
 const $ = id => document.getElementById(id);
 let session = null, generation = 0, busy = false, loading = false, refreshRequested = false, dailyLimitReached = false, canContinue = false;
+let nextRetryAt = 0;
 let writes = Promise.resolve(), rollover, lastSpokenEntry = '', lastRenderedEntry = '', lastFocusedEntry = '';
 const clone = value => JSON.parse(JSON.stringify(value));
 const ledgerKey = (user, day) => `practice:v2:${encodeURIComponent(user)}:${day}`;
@@ -48,7 +49,7 @@ function persist(next) {
 function notifyFailure(error) { console.error(error); context.showToast(error.message || 'Could not save practice progress.', 'error'); }
 export function resetForUser() {
   generation++; session = null; busy = false; loading = false; refreshRequested = false;
-  dailyLimitReached = false; canContinue = false;
+  dailyLimitReached = false; canContinue = false; nextRetryAt = 0;
   const checkMore = $('btn-session-restart');
   if (checkMore) checkMore.disabled = false;
   lastSpokenEntry = ''; lastRenderedEntry = ''; lastFocusedEntry = '';
@@ -188,7 +189,7 @@ export async function startNewSession(options = {}) {
         candidates = resumed.review;
       }
       const finished = saved && !pending.length && saved.cardQueue.every(item => item.graded || !availableIds.has(item.wordId));
-      const startingRound = finished && options.continueLearning;
+      const startingRound = finished && options.continueLearning && (candidates.length || nextRound.review.length);
       if (startingRound) inClassMisses = priorityIds;
       if (startingRound && !candidates.length) { candidates = nextRound.review; repeat = true; }
       const moreRounds = candidates.length > 0 || nextRound.review.length > 0;
@@ -210,7 +211,7 @@ export async function startNewSession(options = {}) {
       };
       const records = result === saved ? [] : [result];
       if (!options.refresh || result.key !== session?.key) records.push({ ...active, sessionKey: result.key }, { key: scopeId, username: user, sessionKey: result.key });
-      return { records, result: { session: result, limited: selection.limited || repeatLimited, moreRounds, queued: priorityIds.length } };
+      return { records, result: { session: result, limited: selection.limited || repeatLimited, moreRounds, nextRetryAt: nextRound.nextRetryAt || 0, queued: priorityIds.length } };
     });
     if (!isCurrent() || !next) return 0;
     if (next.queued) {
@@ -222,9 +223,10 @@ export async function startNewSession(options = {}) {
     session = next.session;
     dailyLimitReached = next.limited;
     canContinue = next.moreRounds;
+    nextRetryAt = next.nextRetryAt;
     clearTimeout(rollover);
     const midnight = new Date(); midnight.setHours(24, 0, 0, 20);
-    rollover = setTimeout(() => { void startNewSession(); }, midnight.getTime() - Date.now());
+    rollover = setTimeout(() => { void startNewSession(); }, Math.max(0, Math.min(midnight.getTime(), nextRetryAt || Infinity) - Date.now()));
     return next.queued;
   } catch (error) {
     if (requestedMisses.length) throw error;
@@ -267,10 +269,13 @@ function renderSentence(container, sentence, word, cloze = false) {
     else { const mark = document.createElement('mark'); mark.textContent = cloze ? '[ _____ ]' : part.text; container.append(mark); }
   }
 }
+function reviewingWrongAnswer(item) {
+  return reverseMode() && item?.answerCorrect === false && Boolean(item.answerAttempt);
+}
 export function canGradeRecall(grade) {
   const item = current();
   return !actionsBlocked() && !!item?.revealed && !item.graded &&
-    (!reverseMode() || grade === 0 || (item.answerCorrect === true && !item.assisted));
+    (!reverseMode() || grade === 0 || (grade === 1 && reviewingWrongAnswer(item)) || (item.answerCorrect === true && !item.assisted));
 }
 export function renderActiveCard() {
   syncLegacyState();
@@ -301,6 +306,7 @@ export function renderActiveCard() {
     setText('empty-state-subtitle', canContinue ?
       context.reviewMode === 'review' ? 'Start another round with these words. Repeated reviews do not use additional daily slots.' :
         'Start another round with words you have already studied.' :
+      nextRetryAt ? 'Missed words will be available again at ' + new Date(nextRetryAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + '.' :
       dailyLimitReached ? 'Raise the limit for new words or reviews, or clear it for unlimited practice. Your daily limit resets each day.' :
       context.reviewMode === 'review' ? 'No reviews are due in this selection. You can switch to Daily practice for new words.' :
       context.reviewMode === 'learning' ? 'Choose another topic, add words, or open Due Reviews to check for scheduled reviews.' :
@@ -341,8 +347,8 @@ export function renderActiveCard() {
     else source.removeAttribute('href');
     show('fc-answer-source', !!sourceUrl && item.revealed);
   }
-  const feedback = !reverse || !item.revealed ? '' : item.graded && item.answerCorrect === false ?
-    `Not quite. The answer is “${word.word}”. Try again or switch to English → Vietnamese.` : item.assisted ?
+  const feedback = !reverse || !item.revealed ? '' : reviewingWrongAnswer(item) ?
+    `Not quite. The answer is “${word.word}”. ${item.graded ? '' : 'Choose Again (1) or Hard (2) to continue.'}` : item.assisted ?
     'Answer hinted. Choose Again to practise in a later round.' : item.answerCorrect ? 'Correct. Choose your recall grade.' : 'Answer shown. Choose Again to practise in a later round.';
   show('recall-feedback', !!feedback); setText('recall-feedback', feedback);
   $('recall-feedback').dataset.correct = String(item.answerCorrect === true && !item.assisted);
@@ -350,16 +356,16 @@ export function renderActiveCard() {
     (item.revealed ? 'Recall feedback' : 'Recall the English word from its meaning and context.') :
     (item.revealed ? 'Grade your first recall attempt honestly.' : 'Recall the meaning before flipping.'));
   const flip = $('btn-fc-reveal'), flipLabel = item.revealed ? 'Hide answer (Space)' : 'Flip card (Space)';
-  flip.disabled = actionsBlocked();
+  flip.disabled = actionsBlocked() || (reviewingWrongAnswer(item) && !item.graded);
   flip.setAttribute('aria-label', flipLabel); flip.title = flipLabel;
   flip.setAttribute('aria-expanded', String(!!item.revealed));
   const wordButton = $('fc-front-word');
-  wordButton.disabled = actionsBlocked();
+  wordButton.disabled = flip.disabled;
   wordButton.title = flipLabel;
   wordButton.setAttribute('aria-expanded', String(!!item.revealed));
   for (const id of ['btn-fc-fav', 'btn-fc-sound', 'btn-fc-edit', 'btn-fc-delete']) $(id).disabled = actionsBlocked();
   for (const button of document.querySelectorAll('[data-recall-grade]')) {
-    button.hidden = Boolean(item.graded);
+    button.hidden = Boolean(item.graded) || (reviewingWrongAnswer(item) && Number(button.dataset.recallGrade) > 1);
     button.disabled = !canGradeRecall(Number(button.dataset.recallGrade));
   }
   $('btn-fc-previous').disabled = actionsBlocked() || adjacentCardIndex(-1) < 0;
@@ -405,22 +411,17 @@ export async function submitReverseAnswer() {
   if (!reverseMode() || actionsBlocked() || !word || item.revealed || item.graded) return;
   const answer = $('recall-answer-input').value;
   if (!answer.trim()) { $('recall-answer-input').focus(); return; }
-  if (!matchesRecallAnswer(answer, word)) {
-    const ticket = generation;
-    await gradeRecall(0, { submission: answer });
-    if (ticket === generation) context.showToast('Not quite. This word will be available in the next round.');
-    return;
-  }
+  const correct = matchesRecallAnswer(answer, word);
   busy = true;
   const ticket = generation, user = context.currentUser, navigation = context.navigationGeneration, next = clone(session);
-  Object.assign(next.cardQueue[next.queueIndex], { revealed: true, answerCorrect: true, answerAttempt: answer });
+  Object.assign(next.cardQueue[next.queueIndex], { revealed: true, answerCorrect: correct, answerAttempt: answer });
   try { await persist(next); if (ticket === generation && user === context.currentUser) session = next; }
   catch (error) { if (ticket === generation) notifyFailure(error); }
   finally { finishAction(ticket); }
   if (ticket !== generation || session !== next || user !== context.currentUser ||
       navigation !== context.navigationGeneration || !practiceIsVisible($('practice-card'))) return;
-  if (!document.hidden && loadSettings(user).autoPronounce) void pronunciation.say(word);
-  document.querySelector(`[data-recall-grade="${current().assisted ? 0 : 2}"]`)?.focus({ preventScroll: true });
+  if (correct && !document.hidden && loadSettings(user).autoPronounce) void pronunciation.say(word);
+  document.querySelector(`[data-recall-grade="${!correct || current().assisted ? 0 : 2}"]`)?.focus({ preventScroll: true });
 }
 async function useWordHint(action) {
   const item = current(), word = context.wordsData.find(w => w.id === item?.wordId); if (!word || actionsBlocked()) return;
@@ -439,7 +440,7 @@ function readCurrentExample() {
   if (example && !pronunciation.sayExample(example)) context.showToast('Example audio is unavailable in this browser.', 'error');
 }
 export async function revealCard() {
-  if (actionsBlocked() || !current()) return;
+  if (actionsBlocked() || !current() || (reviewingWrongAnswer(current()) && !current().graded)) return;
   if (session.day !== calendarDay()) { await startNewSession(); return; }
   busy = true; const ticket = generation, next = clone(session);
   const item = next.cardQueue[next.queueIndex];
@@ -449,10 +450,10 @@ export async function revealCard() {
   catch (error) { if (ticket === generation) notifyFailure(error); }
   finally { finishAction(ticket); }
 }
-export async function gradeRecall(grade, { submission = null } = {}) {
+export async function gradeRecall(grade) {
   const item = current();
   if (actionsBlocked() || !item || item.graded || ![0, 1, 2, 3].includes(grade)) return;
-  if (!canGradeRecall(grade) && !(reverseMode() && grade === 0 && submission !== null && !item.revealed)) return;
+  if (!canGradeRecall(grade)) return;
   if (session.day !== calendarDay()) { await startNewSession(); return; }
   const word = context.wordsData.find(w => w.id === item.wordId); if (!word) return;
   busy = true; renderActiveCard();
@@ -470,7 +471,6 @@ export async function gradeRecall(grade, { submission = null } = {}) {
     const earlyReview = kind === 'review' && !retry && context.reviewMode === 'learning' && !isDue(word, now);
     const scheduled = scheduleReview(word, grade, now, { earlyReview, inDueReview: context.reviewMode === 'review' });
     graded.graded = true; graded.grade = grade; graded.revealed = true; next.completedAttempts++;
-    if (submission !== null) Object.assign(graded, { answerAttempt: submission, answerCorrect: false });
     if (grade === 0) {
       if (!next.pendingMisses.includes(word.id)) next.pendingMisses.push(word.id);
     } else {

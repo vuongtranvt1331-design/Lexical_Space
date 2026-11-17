@@ -106,6 +106,16 @@ test('practice, library, and entry workflows', async t => {
       exampleAudio.click();
       assert.equal(spoken.length, count);
       $('recall-answer-input').value = 'not the word'; $('reverse-recall-form').dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+      await until(() => current().answerCorrect === false && current().revealed);
+      assert.equal(flash.getSessionState().queueIndex, before.queueIndex);
+      assert.equal($('fc-answer-target').textContent, target.word);
+      flash.resetForUser(); await flash.startNewSession({ restore: true });
+      assert.ok([0, 1].every(g => !gradeButton(g).hidden && !gradeButton(g).disabled));
+      assert.ok([2, 3].every(g => gradeButton(g).hidden && gradeButton(g).disabled));
+      await flash.gradeRecall(2); await flash.revealCard();
+      assert.equal(current().wordId, target.id);
+      assert.equal(current().revealed, true);
+      await flash.gradeRecall(0);
       await until(() => flash.getSessionState().queueIndex === before.queueIndex + 1);
       const failed = flash.getSessionState();
       assert.equal(failed.cardQueue[before.queueIndex].grade, 0);
@@ -349,7 +359,7 @@ test('practice, library, and entry workflows', async t => {
       const candidate = { ...fixtureWord, word: 'adapt', pos: 'v', meaning: 'thích nghi', phonetic: '/əˈdæpt/',
         collocations: ['adapt quickly', 'adapt to change'], synonyms: ['adjust'], exampleSentence: 'We adapt to change.', clozeSentence: 'We [ _____ ] to change.' };
       $('btn-toggle-ai-library').click(); $('ai-raw-words').value = 'adapt'; $('btn-copy-ai-prompt').click(); await until(() => copied.length === 1);
-      assert.ok(copied[0].includes('["adapt"]')); assert.ok(copied[0].includes('"clozeSentence"'));
+      assert.ok(copied[0].includes('["adapt"]')); assert.ok(copied[0].includes('Vietnamese meaning | POS code'));
       const before = (await storage.readUserWords('UIFixture')).length;
       $('import-raw-input').value = JSON.stringify([candidate, { ...candidate, pos: 'invalid' }]); $('btn-preview-import').click();
       assert.equal($('btn-execute-import').textContent, 'Import valid words only');

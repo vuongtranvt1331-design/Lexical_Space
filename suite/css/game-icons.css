@@ -1,0 +1,150 @@
+/* Common controls share the exact already-cached ArcadeSpace24icon PNG. */
+[data-common-game-icon]::before {
+  content: '';
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  margin-inline-end: .4em;
+  vertical-align: middle;
+  background: url('../../apps/arcade/assets/ui_spritesheet.png') no-repeat;
+  background-size: 600% 400%;
+  background-position: var(--common-game-icon-position, 0 0);
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+[data-common-game-icon="home"] { --common-game-icon-position: 0 0; }
+[data-common-game-icon="play"] { --common-game-icon-position: 20% 0; }
+[data-common-game-icon="leaderboard"] { --common-game-icon-position: 100% 33.333333%; }
+[data-common-game-icon="close"] { --common-game-icon-position: 40% 66.666667%; }
+[data-common-game-icon="back"] { --common-game-icon-position: 60% 66.666667%; }
+[data-common-game-icon="check"] { --common-game-icon-position: 100% 66.666667%; }
+[data-common-game-icon="exit"] { --common-game-icon-position: 80% 100%; }
+[data-common-game-icon="replay"] { --common-game-icon-position: 100% 100%; }
+[data-bare-control][data-common-game-icon="close"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 0 !important;
+}
+[data-common-game-icon="close"]::before { margin: 0; }
+/* The original labelled spans/handlers stay; only these two common faces change.
+ * Resign/Draw retain their chess-specific approved PNGs. */
+.chess-action-icon[data-chess-icon="rematch"],
+.chess-action-icon[data-chess-icon="exit"] {
+  width: 22px !important;
+  height: 22px !important;
+  flex: 0 0 22px;
+  font-size: 0 !important;
+  background-image: url('../../apps/arcade/assets/ui_spritesheet.png') !important;
+  background-size: 600% 400% !important;
+  background-repeat: no-repeat !important;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+.chess-action-icon[data-chess-icon="rematch"] { background-position: 100% 100% !important; }
+.chess-action-icon[data-chess-icon="exit"] { background-position: 80% 100% !important; }
+
+/* System controls keep their original slots and event targets. */
+[data-common-game-icon="settings"] { --common-game-icon-position: 40% 0; }
+[data-system-control] {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0;
+}
+[data-system-control]::before { margin: 0; }
+
+[data-common-game-icon="profile"] { --common-game-icon-position: 60% 0; }
+[data-common-game-icon="shuffle"] { --common-game-icon-position: 60% 33.333333%; }
+[data-common-game-icon="hint"] { --common-game-icon-position: 80% 33.333333%; }
+[data-common-game-icon="next"] { --common-game-icon-position: 20% 100%; }
+[data-common-game-icon="lock"] { --common-game-icon-position: 40% 100%; }
+[data-common-game-icon="pause"] { --action-glyph-position: 0% 0; }
+[data-common-game-icon="jet"] { --action-glyph-position: 11.111111% 0; }
+[data-common-game-icon="bolt"] { --action-glyph-position: 22.222222% 0; }
+[data-common-game-icon="edit"] { --action-glyph-position: 33.333333% 0; }
+[data-common-game-icon="bot"] { --action-glyph-position: 44.444444% 0; }
+[data-common-game-icon="duel"] { --action-glyph-position: 55.555556% 0; }
+[data-common-game-icon="chess"] { --action-glyph-position: 66.666667% 0; }
+[data-common-game-icon="room"] { --action-glyph-position: 77.777778% 0; }
+[data-common-game-icon="download"] { --action-glyph-position: 88.888889% 0; }
+[data-common-game-icon="draw"] { --action-glyph-position: 100% 0; }
+:is([data-common-game-icon="draw"], [data-common-game-icon="pause"], [data-common-game-icon="jet"], [data-common-game-icon="bolt"], [data-common-game-icon="edit"], [data-common-game-icon="bot"], [data-common-game-icon="duel"], [data-common-game-icon="chess"], [data-common-game-icon="room"], [data-common-game-icon="download"])::before {
+  background-image: url("../../apps/arcade/assets/action-glyphs.png");
+  background-size: 1000% 100%;
+  background-position: var(--action-glyph-position);
+}
+
+/* Earlier game skins include inline gradients, nine-slice borders and animated
+   shadows. A named layer gives these limited resets priority over those skins
+   without changing the display rules used to hide controls between phases. */
+@layer bare-game-controls {
+  [data-bare-control] {
+    appearance: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-image: none !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    -webkit-tap-highlight-color: transparent;
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+    filter: none !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    letter-spacing: 0 !important;
+    text-decoration: none !important;
+    padding: 0 !important;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 0 !important;
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+  [data-bare-control][data-common-game-icon]::before {
+    position: static !important;
+    margin: 0 !important;
+    width: var(--action-icon-size, 28px) !important;
+    height: var(--action-icon-size, 28px) !important;
+    flex: 0 0 var(--action-icon-size, 28px) !important;
+  }
+  [data-bare-control]::after { content: none !important; }
+  [data-bare-control] :is(.chess-action-icon, .spectate-fullscreen-icon, .poker-icon),
+  [data-bare-control][data-common-game-icon]::before {
+    filter: var(--action-ink, none) !important;
+  }
+  @media (hover: hover) {
+    [data-bare-control]:not(:disabled):hover { --action-ink: brightness(1.14) drop-shadow(0 0 2px #ffe3a1); }
+  }
+  [data-bare-control]:focus-visible { --action-ink: brightness(1.35) drop-shadow(0 0 1px white) drop-shadow(0 0 3px #ffda71); }
+  [data-bare-control]:not(:disabled):active { --action-ink: brightness(1.25) drop-shadow(0 0 2px #95ffdf); }
+  [data-bare-control]:disabled { --action-ink: grayscale(.8); opacity: .5 !important; }
+}
+
+/* Transparent system PNG: rows pause / hub / home, columns follow action states. */
+[data-system-control][data-bare-control]::before {
+  background-image: url('../../apps/arcade/assets/system-controls.png');
+  background-size: 400% 300%;
+  background-position: var(--system-x, 0%) var(--system-y, 0%);
+}
+[data-system-control][data-common-game-icon="exit"] { --system-y: 50%; }
+[data-system-control][data-common-game-icon="home"] { --system-y: 100%; }
+@media (hover: hover) {
+  [data-system-control]:hover { --system-x: 33.333333%; }
+}
+[data-system-control]:focus-visible { --system-x: 33.333333%; }
+[data-system-control]:active { --system-x: 66.666667%; }
+[data-system-control]:disabled { --system-x: 100%; }
+
+[data-common-game-icon="sound-on"] { --common-game-icon-position: 80% 0; }
+[data-common-game-icon="sound-off"] { --common-game-icon-position: 100% 0; }

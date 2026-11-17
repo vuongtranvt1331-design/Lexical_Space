@@ -52,7 +52,7 @@ test('the local application can start while optional CDN requests remain pending
   } finally { window.close(); }
 });
 
-test('local login is ready before Firebase loads, then late cloud startup opens the requested deck', async () => {
+test('local login is ready before Firebase loads, then cloud sync connects without opening a deck', async () => {
   const { window } = new JSDOM(html, { url: 'http://127.0.0.1:8780/?deck=delayed-deck', pretendToBeVisual: true });
   const { document, localStorage, sessionStorage } = window;
   Object.assign(globalThis, { window, document, localStorage, sessionStorage, indexedDB: new IDBFactory(), IDBKeyRange });
@@ -87,10 +87,10 @@ test('local login is ready before Firebase loads, then late cloud startup opens 
     };
     globalThis.firebase.firestore = () => db;
     document.querySelector('script[src$="/firebase-firestore-compat.js"]').dispatchEvent(new window.Event('load'));
-    await waitFor(() => !$('modal-import-deck').hidden && !$('btn-confirm-deck-import').disabled);
+    await waitFor(() => subscriptions.length > 0);
     assert.equal(context.db, db);
     assert.deepEqual(subscriptions, ['Local learner']);
-    assert.equal($('import-deck-title').textContent, 'Late deck');
+    assert.equal($('modal-import-deck').hidden, true);
   } finally {
     delete globalThis.firebase;
     context.resetForUser?.();

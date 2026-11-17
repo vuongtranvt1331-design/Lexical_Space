@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-suite-module="lexical">
+<html lang="en" data-suite-module="lexical" data-lexical-theme="ivory">
 <head>
-  <script src="./suite/js/core.js?v=43.3.0-4ba1a9ac80"></script>
-  <link rel="stylesheet" href="./suite/css/components.css?v=43.3.0-69a13ed7c3">
+  <script src="./suite/js/core.js?v=43.19.0-4ba1a9ac80"></script>
+  <link rel="stylesheet" href="./suite/css/components.css?v=43.19.0-69a13ed7c3">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>LexicalSpace - Smart Vocabulary Notebook</title>
 
-  <meta name="theme-color" content="#4255ff" />
+  <meta name="theme-color" content="#F5F1E8" />
+  <script src="./js/features/appearance.js?v=43.19.0-600e490765"></script>
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
@@ -23,14 +24,14 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 
   <script src="./js/features/loading-failsafe.js"></script>
-  <link rel="stylesheet" href="./css/main.css?v=43.3.0-light1">
-  <link rel="stylesheet" href="./css/animations.css?v=43.3.0-light1">
-  <link rel="stylesheet" href="./css/recall-ui.css?v=43.3.0-light1">
-  <link rel="stylesheet" href="./css/entry-ui.css?v=43.3.0-light1">
-  <link rel="stylesheet" href="./css/theme.css?v=43.3.0-light1">
-  <script defer src="./js/features/loading.js?v=43.3.0-0ab2d880db"></script>
-  <script defer src="./js/core/offline.js?v=43.3.0-39c886b7ac"></script>
-<link rel="stylesheet" href="./suite/css/loader.css?v=43.3.0-1112a32a51"></head>
+  <link rel="stylesheet" href="./css/main.css?v=43.8.0-light1">
+  <link rel="stylesheet" href="./css/animations.css?v=43.8.0-light1">
+  <link rel="stylesheet" href="./css/recall-ui.css?v=43.8.0-light1">
+  <link rel="stylesheet" href="./css/entry-ui.css?v=43.19.0-bddea1d69e">
+  <link rel="stylesheet" href="./css/theme.css?v=43.19.0-0d9f0e4ae0">
+  <script defer src="./js/features/loading.js?v=43.19.0-0ab2d880db"></script>
+  <script defer src="./js/core/offline.js?v=43.19.0-39c886b7ac"></script>
+<link rel="stylesheet" href="./suite/css/loader.css?v=43.19.0-1112a32a51"></head>
 <body class="flex flex-col antialiased selection:theme-primary selection:theme-on-primary overflow-hidden">
   <section id="space-loader" class="startup-loader" role="status" aria-label="Opening LexicalSpace">
     <div class="startup-panel"><div class="startup-mark" aria-hidden="true">&gt;/_</div>
@@ -39,7 +40,7 @@
     </div>
   </section>
 
-<noscript><link rel="stylesheet" href="./css/no-script.css?v=43.3.0-light1"></noscript>
+<noscript><link rel="stylesheet" href="./css/no-script.css?v=43.8.0-light1"></noscript>
 
   <!-- Regular Alert Toast Notification -->
   <div id="toast" class="fixed top-3 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-2xl theme-shadow transition-all duration-300 opacity-0 pointer-events-none translate-y-[-20px] font-bold text-xs max-w-[92vw] text-center theme-surface theme-text border theme-line">
@@ -121,8 +122,8 @@
 
     <footer class="drawer-footer">
       <div class="drawer-build">
-        <p>LexicalSpace v43.3.0 <span class="drawer-build-ref">LexicalSpace-v43.3.0</span></p>
-        <p>Updated <time datetime="2026-11-17">Nov 17, 2026</time></p>
+        <p>LexicalSpace v43.19.0 <span class="drawer-build-ref">LexicalSpace-v43.19.0</span></p>
+        <p>Updated <time datetime="2026-11-18">Nov 18, 2026</time></p>
       </div>
       <button id="btn-close-drawer" type="button" aria-label="Close menu" class="drawer-control drawer-icon-button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
@@ -306,7 +307,8 @@
       <header class="entry-heading"><p>Vocabulary</p><h2 id="entry-heading">Add to your library</h2></header>
       <div class="entry-tabs" role="tablist" aria-label="Vocabulary entry">
         <button id="btn-entry-single" type="button" role="tab" aria-controls="entry-phase-1" aria-selected="true">Single word</button>
-        <button id="btn-toggle-ai-library" type="button" role="tab" aria-controls="section-ai-library" aria-selected="false">AI Library Generator</button>
+        <button id="btn-entry-code" type="button" role="tab" aria-controls="section-entry-code" aria-selected="false">Code</button>
+        <button id="btn-toggle-ai-library" type="button" role="tab" aria-controls="section-ai-library" aria-selected="false">AI Library</button>
       </div>
       <div id="entry-phase-1" role="tabpanel" aria-labelledby="btn-entry-single">
         <form id="single-entry-form" class="entry-sheet" autocomplete="off">
@@ -337,13 +339,23 @@
           <button id="btn-confirm-save" type="submit" class="entry-primary"><span id="btn-confirm-save-text">Save word</span></button>
         </form>
       </div>
+      <div id="section-entry-code" role="tabpanel" aria-labelledby="btn-entry-code" hidden>
+        <form id="deck-code-form" class="entry-sheet">
+          <label for="deck-code-input">Six-digit deck code</label>
+          <input id="deck-code-input" class="entry-input" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="000000" required>
+          <button type="submit" class="entry-primary">Preview deck</button>
+          <p id="deck-code-status" role="status"></p>
+        </form>
+      </div>
       <div id="section-ai-library" role="tabpanel" aria-labelledby="btn-toggle-ai-library" class="entry-sheet ai-sheet" hidden>
         <div id="ai-import-editor" class="ai-import-stage">
-          <p>Paste a list of English words, copy the prompt to your AI, then bring back its JSON response.</p>
+          <p>Paste a list of English words, copy the prompt to your AI, then paste its reply here.</p>
           <label for="ai-raw-words">Word list</label><textarea id="ai-raw-words" class="entry-input" rows="4" placeholder="resilient&#10;give up&#10;curriculum"></textarea>
+          <label for="ai-topic-choice">Topic</label>
+          <input id="ai-topic-choice" class="entry-input" list="ai-topic-list" maxlength="200" placeholder="keywords"><datalist id="ai-topic-list"></datalist>
           <button id="btn-copy-ai-prompt" class="entry-secondary" type="button">Copy AI Prompt</button>
           <label id="ai-prompt-preview-label" for="ai-prompt-preview" hidden>Prompt to copy</label><textarea id="ai-prompt-preview" class="entry-input" rows="5" readonly hidden></textarea>
-          <label for="import-raw-input">AI response (JSON)</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder='[{"word":"resilient", …}]'></textarea>
+          <label for="import-raw-input">AI response</label><textarea id="import-raw-input" class="entry-input json-input" rows="7" spellcheck="false" placeholder="resilient | kiên cường | adj | A resilient team adapts."></textarea>
           <label class="overwrite-label"><input id="import-opt-overwrite" type="checkbox"> Update matching words and keep their review history</label>
           <label for="import-file-input">Or load a JSON or TXT file</label>
           <input id="import-file-input" class="entry-input" type="file" accept=".json,.txt,application/json,text/plain">
@@ -463,8 +475,8 @@
       </section>
 
       <section id="check-empty" class="check-panel" aria-labelledby="check-empty-heading" hidden>
-        <h3 id="check-empty-heading" tabindex="-1">No green or blue words to check yet</h3>
-        <p>Get a Good rating in Practice or mark a word as Mastered in Library to make it eligible.</p>
+        <h3 id="check-empty-heading" tabindex="-1">No level 2–4 words to check yet</h3>
+        <p>Words at recall levels 4, 3 and 2 are eligible. Continue practising to add words to this check.</p>
         <div class="check-actions">
           <button type="button" data-check-done class="entry-primary">Back to Practice</button>
         </div>
@@ -583,6 +595,12 @@
         </button>
       </div>
       <div id="settings-main" class="settings-content">
+        <fieldset class="lexical-appearance">
+          <legend>Giao diện</legend>
+          <label title="Giấy ngà – Xanh mực"><input type="radio" name="lexical-theme" value="ivory" aria-label="Giấy ngà – Xanh mực" checked><span class="palette-strip" data-palette="ivory" aria-hidden="true"></span></label>
+          <label title="Sương xanh – Chàm"><input type="radio" name="lexical-theme" value="mist" aria-label="Sương xanh – Chàm"><span class="palette-strip" data-palette="mist" aria-hidden="true"></span></label>
+          <label title="Mận đêm – Tím sương"><input type="radio" name="lexical-theme" value="plum" aria-label="Mận đêm – Tím sương"><span class="palette-strip" data-palette="plum" aria-hidden="true"></span></label>
+        </fieldset>
         <div class="ai-import-stage">
           <button id="btn-update-old-vocabulary" type="button" class="entry-secondary">Cập nhật bộ từ cũ</button>
           <p class="deck-import-profile">Bổ sung nghĩa, IPA, loại từ, từ đồng nghĩa, cụm từ, ví dụ và cloze còn trống khi có dữ liệu tra cứu.</p>
@@ -620,8 +638,8 @@
         <p class="user-guide-notice"><strong>Học sinh bắt buộc phải học đều đặn từng ngày. Thầy sẽ kiểm tra bài trực tiếp vào đầu mỗi buổi học trên lớp (In-Class Check)!</strong></p>
         <dl class="user-guide-tools">
           <div><dt>Quick Fill / Điền nhanh</dt><dd>Trong Add New Words, bấm Điền nhanh để tra nghĩa tiếng Việt, IPA, cụm từ đi kèm, câu ví dụ và câu điền từ khi có dữ liệu. Một số ví dụ lấy từ <a class="example-source" href="https://tatoeba.org/" target="_blank" rel="noopener noreferrer">Tatoeba</a> (CC BY 2.0 FR hoặc CC0 1.0).</dd></div>
-          <div><dt>Chia sẻ bộ từ (Deck Sharing)</dt><dd>Trong Library, chọn một bộ từ rồi bấm Share Deck để tạo link mà không cần tài khoản. Link được tự động sao chép vào clipboard.</dd></div>
-          <div><dt>Chế độ kiểm tra trên lớp (In-Class Check)</dt><dd>Mỗi bài chọn tối đa 15 thẻ xanh lá hoặc xanh dương, ưu tiên từ chưa kiểm tra trong nhóm đã ôn 72 giờ qua. Lịch sử chỉ được lưu khi hoàn thành bài. Nếu không có, hệ thống chọn từ các thẻ đủ điều kiện trước đó. Gõ từ tiếng Anh để trả lời.</dd></div>
+          <div><dt>Chia sẻ bộ từ (Deck Sharing)</dt><dd>Trong Library, chọn Share Deck để lấy mã 6 số có hiệu lực 72 giờ. Học sinh nhập mã ở mục Code, chọn chủ đề rồi xác nhận.</dd></div>
+          <div><dt>Chế độ kiểm tra trên lớp (In-Class Check)</dt><dd>Ưu tiên mức 4 → 3 → 2. Nếu đủ 15 từ chưa kiểm tra trong 7 ngày, đề có 15 câu. Nếu thiếu, đề lấy hết các từ đó rồi bù từ ôn lên tối đa 25 câu. Lịch sử chỉ ghi khi hoàn thành bài.</dd></div>
           <div><dt>ArcadeSpace &amp; GrammarSpace</dt><dd>Chuyển nhanh giữa các không gian học tập từ menu chính.</dd></div>
         </dl>
       </section>
@@ -651,15 +669,15 @@
     </section>
   </div>
 
-  <div id="modal-share-link" class="deck-modal" role="dialog" aria-modal="true" aria-labelledby="share-link-heading" hidden>
+  <div id="modal-share-code" class="deck-modal" role="dialog" aria-modal="true" aria-labelledby="share-code-heading" hidden>
     <section class="deck-dialog">
-      <h2 id="share-link-heading">Shareable deck link</h2>
-      <label for="shared-deck-url">Copy this link to share the deck</label>
-      <input id="shared-deck-url" class="entry-input" type="url" readonly>
-      <p id="share-link-status" class="deck-dialog-status" role="status" aria-live="polite"></p>
+      <h2 id="share-code-heading">Share deck code</h2>
+      <label for="shared-deck-code">Six-digit code</label>
+      <input id="shared-deck-code" class="entry-input" type="text" readonly>
+      <p id="share-code-status" class="deck-dialog-status" role="status" aria-live="polite"></p>
       <div class="deck-dialog-actions">
-        <button id="btn-close-share-link" type="button" class="entry-secondary">Close</button>
-        <button id="btn-copy-share-link" type="button" class="entry-primary">Copy Link</button>
+        <button id="btn-close-share-code" type="button" class="entry-secondary">Close</button>
+        <button id="btn-copy-share-code" type="button" class="entry-primary">Copy Code</button>
       </div>
     </section>
   </div>

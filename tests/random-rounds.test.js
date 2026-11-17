@@ -11,6 +11,8 @@ const { IDBFactory, IDBKeyRange } = require('fake-indexeddb');
 test('rounds shuffle once, preserve resume, finish with misses and restart only on request', async () => {
   const html = await fs.readFile(new URL('../index.html', import.meta.url), 'utf8');
   const { window } = new JSDOM(html, { url: 'http://localhost:8787/', pretendToBeVisual: true });
+  const realNow = Date.now;
+  const advanceCooldown = async () => { const due = Date.now() + 600001; Date.now = () => due; await flash.reconcileSession(); };
   const originalRandom = Math.random;
   let seed = 121;
   Math.random = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
@@ -61,6 +63,8 @@ test('rounds shuffle once, preserve resume, finish with misses and restart only 
     while (state().queueIndex < state().cardQueue.length) await failCard();
     assert.equal(state().completedAttempts, 4);
     assert.equal(state().pendingMisses.length, 4);
+    assert.equal($('btn-session-continue').hidden,true);
+    await advanceCooldown();
     assert.equal(context.sessionCompleted, true);
     assert.equal($('btn-session-continue').hidden, false);
     const done = state();
@@ -87,6 +91,7 @@ test('rounds shuffle once, preserve resume, finish with misses and restart only 
     assert.equal(context.sessionCompleted, true);
     assert.equal($('btn-session-continue').hidden, true);
     assert.equal($('empty-state-title').textContent, 'Daily limit reached');
+    await advanceCooldown();
     saveSettings(cappedUser, { dailyNewLimit: 3, dailyReviewLimit: 0, autoPronounce: false });
     await flash.reconcileSession();
     assert.equal(state().queueIndex, 2);
@@ -151,6 +156,7 @@ test('rounds shuffle once, preserve resume, finish with misses and restart only 
     context.clearActivityTimers();
     window.close();
     Math.random = originalRandom;
+    Date.now = realNow;
   }
 });
 

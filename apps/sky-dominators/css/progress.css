@@ -10,7 +10,6 @@
 .progress-links{font:12px Arial,sans-serif;color:#cbd5e1;text-align:center;width:100%;max-width:440px;margin:5px auto 10px}
 .progress-links summary{cursor:pointer;min-height:28px}
 #profileDetails{display:grid;justify-items:center;gap:5px;padding:10px}#profileDetails p{margin:0}
-.progress-retry{color:#7dd3fc;background:transparent;border:0;text-decoration:underline;padding:10px;min-height:40px;cursor:pointer}
 .progress-board-title{font:800 12px Orbitron,monospace;color:#f8d877;letter-spacing:.1em;text-align:left;padding:10px 6px 7px;margin:0;border-bottom:1px solid #334155}
 .progress-table{table-layout:fixed;border-collapse:collapse;width:100%;font:12px/1.3 Arial,sans-serif;color:#e2e8f0}
 .progress-table th{color:#94a3b8;text-align:left;font-size:10px;font-weight:normal;padding:6px 4px}
@@ -50,9 +49,40 @@
 #inGameHangarModal .skin-card.is-locked>span:last-child{color:#fbbf24}
 #inGameHangarModal .skin-card.is-legend{border-color:#c4b5fd;background:linear-gradient(140deg,#14273b,#182138)}
 #inGameHangarModal .skin-rarity{color:#a5d9f8;letter-spacing:.05em}
-#skinAction{width:100%;min-height:44px;margin-top:8px;white-space:normal;font:700 12px Arial,sans-serif}
 #inGameHangarModal .skin-glacier{animation:skin-glint 3s ease-in-out infinite}
 @keyframes skin-glint{50%{opacity:.82}}
 @media(max-width:560px){#inGameHangarModal .hangar-collections{grid-template-columns:minmax(0,1fr)}#inGameHangarModal .hangar-thumbnail-row{max-height:160px}#inGameHangarModal .skin-cards{max-height:290px}#inGameHangarModal .skin-card{min-height:128px}}
 @media(prefers-reduced-motion:reduce){#inGameHangarModal .skin-glacier{animation:none}}
 #inGameHangarModal #skinStatus:not(:empty){display:block;padding:9px;border:1px solid #38bdf8;border-radius:4px;background:#102333;color:#e0f2fe;font-weight:bold}#inGameHangarModal #skinStatus[data-error="true"]{border-color:#f87171;background:#3b1018;color:#fecaca}
+
+#inGameHangarModal .hangar-collections { grid-template-columns: minmax(0, 1fr); }
+#inGameHangarModal #hangarThumbnailList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 1fr;
+    max-height: none;
+}
+#inGameHangarModal .hangar-thumb-item {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    align-content: center;
+    gap: 3px;
+    padding: 6px 3px;
+    text-align: center;
+}
+#inGameHangarModal .skin-cards {
+    --skin-row: 136px;
+    grid-auto-rows: var(--skin-row);
+    max-height: calc(3 * var(--skin-row) + 18px);
+    box-sizing: border-box;
+    touch-action: pan-y;
+}
+
+#hangarTitle { margin: 0; min-width: 0; text-align: left; }
+#hangarTitle small { display: block; margin-top: 2px; color: #cbd5e1; letter-spacing: normal; }
+#inGameHangarModal .aircraft-lock { white-space: nowrap; font-size: .78em; }
+#inGameHangarModal .hangar-flight-action {
+    position: sticky; bottom: 0; z-index: 2; margin-top: 8px;
+    padding: 4px 0; background: #0f172a;
+}
+#inGameHangarModal #hangarConfirmBtn { width: 100%; }
+#skinStatus:empty { display: none; }

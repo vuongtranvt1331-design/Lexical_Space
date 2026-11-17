@@ -413,9 +413,9 @@ class Encounter{
  }
  clearAttacks(preserveLeft=false){this.resetLaneSkill();this.droneClock=0;this.d.shots=[];this.d.warnings=preserveLeft?this.d.warnings.filter(q=>q.kind==='left_missile'):[];this.d.burst=[];if(!preserveLeft)this.leftClock=0;}
  updateGeometry(){
-  const {w,h,player}=this.d.h.context(),b=this.b,layout=this.d.h.layout?.()||{},pixel=layout.unitsPerPixel||1;
+  const {w,h,player}=this.d.h.context(),b=this.b,layout=this.d.h.layout?.(true)||{},pixel=layout.unitsPerPixel||1;
   this.hudFont=Math.max(12,9*pixel);this.phaseFont=Math.max(11,8*pixel);
-  this.hudY=Math.max(140,(layout.hudBottom||126)+this.hudFont+4*pixel);
+  this.hudY=(layout.bossHudBottom||48)+this.hudFont+3*pixel;
   this.phaseY=this.hudY+Math.max(33,20+this.phaseFont);const deckTop=this.phaseY+8*pixel;
   const available=(layout.controlsTop||h-100)-deckTop-12*pixel;
   this.baseScale=Math.max(.3,Math.min(1.25,(w-48)/256,h*.34/256,available/330));let shrink=1;

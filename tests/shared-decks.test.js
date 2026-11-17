@@ -129,29 +129,29 @@ test('a failed outbox write rolls back the word and import marker', async () => 
   }
 });
 
-test('share links use immutable Firestore documents and reject invalid and oversized payloads', async () => {
+test('six-digit codes retry collisions and preserve deck identity independently of the code', async () => {
   const records = new Map();
-  const db = {
-    collection(name) {
-      assert.equal(name, 'shared_decks');
-      return { doc: id => ({ id, get: async () => ({ exists: records.has(id), data: () => records.get(id) }) }) };
-    },
-    runTransaction: async callback => callback({
-      get: ref => ref.get(),
-      set: (ref, value) => records.set(ref.id, structuredClone(value))
-    })
-  };
-  const payload = deck('public-link', 'Deck', [resilient]);
-  assert.equal(await publishSharedDeck(db, payload), payload.deckId);
-  assert.deepEqual(await fetchSharedDeck(db, payload.deckId), payload);
-  const older = deck('legacy-link', 'Deck', [{ ...resilient, cefr: 'B2' }]);
-  records.set(older.deckId, older);
-  assert.deepEqual(await fetchSharedDeck(db, older.deckId), { ...older, words: [resilient] });
-  assert.equal((await importSharedDeck('Legacy recipient', older)).added, 1);
-  assert.equal(Object.hasOwn((await storage.readUserWords('Legacy recipient'))[0], 'cefr'), false);
-  await assert.rejects(publishSharedDeck(db, payload), /already exists/);
-  await assert.rejects(fetchSharedDeck(db, 'no-such-deck'), /could not be found/);
-  await assert.rejects(fetchSharedDeck(db, '../other'), /invalid/);
+  globalThis.firebase = {firestore:{FieldValue:{serverTimestamp:()=>new Date()}}};
+  let writes = 0;
+  const db = {collection(name) {
+    assert.equal(name, 'shared_decks');
+    return {doc: id => ({
+      async set(data) {
+        if (!writes++) throw Object.assign(Error('Code reserved'), {code:'permission-denied'});
+        records.set(id,data);
+      },
+      async get(options) {
+        assert.equal(options.source,'server');
+        return {exists: records.has(id),data:()=>records.get(id)};
+      }
+    })};
+  }};
+  const payload = deck('public-deck', 'Deck', [resilient]);
+  const code = await publishSharedDeck(db,payload);
+  assert.match(code,/^\d{6}$/);
+  assert.equal(writes,2);
+  assert.deepEqual(await fetchSharedDeck(db, code), payload);
+  await assert.rejects(fetchSharedDeck(db,'invalid'), /six digits/);
   await assert.rejects(publishSharedDeck(db, { ...payload, words: [{ ...resilient, reviewCount: 3 }] }), /invalid card/);
   await assert.rejects(publishSharedDeck(db, { ...payload, title: 'All' }), /reserved topic/);
   await assert.rejects(publishSharedDeck(db, { ...payload, words: [{ ...resilient, topics: ['FAVORITES'] }] }), /reserved topic/);

@@ -16,6 +16,9 @@ window.addEventListener('load', async () => {
     updateAircraftUI();
     updateLeftHUD();
     refreshMainMenuView();
+    // Local assets, vocabulary and menu are ready; remote profile work stays independent.
+    window.__spaceGameReady = true;
+    document.dispatchEvent(new Event('spacegame:ready'));
     lastTime = performance.now();
     requestAnimationFrame(gameLoop);
 });

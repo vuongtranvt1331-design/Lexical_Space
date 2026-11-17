@@ -20,22 +20,6 @@ if (inGamePauseBtn) {
     }, { passive: false });
 }
 
-const handleTakeOffCallsignEdit = async (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const current = leaderboardService.getPlayerNickname() || 'PILOT-01';
-    const input = window.prompt("Enter pilot name (max 80 characters):", current);
-    if (input !== null) {
-        const cleaned = input.trim().slice(0, 80);
-        if (cleaned) {
-            await leaderboardService.setPlayerNickname(cleaned);
-            refreshMainMenuView();
-        }
-    }
-};
-
-document.getElementById('takeOffEditPencil')?.addEventListener('click', handleTakeOffCallsignEdit);
-
 document.getElementById('startBtn')?.addEventListener('click', () => {
     audio.init();
     document.getElementById('startOverlay')?.classList.add('hidden');
@@ -162,12 +146,6 @@ if (inGameSkillBtn) {
     }, { passive: false });
 }
 
-document.getElementById('touchShootBtn')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    window.alert('Each tap moves toward the latest destination and queues exactly one shot. Hold Spacebar for manual fire.');
-});
-
 window.addEventListener('resize', () => {
     if (typeof updateMobileControlsVisibility === 'function') {
         updateMobileControlsVisibility();
@@ -178,10 +156,17 @@ document.getElementById('exitBtn')?.addEventListener('click', returnToSkyMainMen
 
 document.getElementById('pauseExitBtn')?.addEventListener('click', returnToSkyMainMenu);
 
-document.getElementById('gameOverExitBtn')?.addEventListener('click', returnToSkyMainMenu);
 
 document.getElementById('btnBackToArcadeHub')?.addEventListener('click', navigateToArcadeHub);
 
-document.getElementById('pauseArcadeHubBtn')?.addEventListener('click', navigateToArcadeHub);
 
-document.getElementById('detailedArcadeHubBtn')?.addEventListener('click', navigateToArcadeHub);
+
+import('../../../arcade/js/action-frames.js').catch(() => { document.documentElement.dataset.actionArt = 'fallback'; });
+
+const skySoundControl = document.querySelector('[data-sky-sound]');
+skySoundControl.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    skySoundControl.setAttribute('aria-pressed', String(!audio.muted));
+    skySoundControl.dataset.commonGameIcon = audio.muted ? 'sound-off' : 'sound-on';
+    skySoundControl.textContent = audio.muted ? 'Sound · Off' : 'Sound · On';
+});

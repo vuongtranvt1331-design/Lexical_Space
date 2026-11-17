@@ -16,11 +16,11 @@ test('PWA identity, launch URL and icons resolve inside the GitHub Pages subpath
   assert.equal(manifest.name, 'LexicalSpace');
   assert.equal(manifest.display, 'standalone');
   assert.equal(manifest.prefer_related_applications, false);
-  assert.equal(manifest.theme_color, '#4255ff');
-  assert.equal(manifest.background_color, '#f6f7fb');
+  assert.equal(manifest.theme_color, '#F5F1E8');
+  assert.equal(manifest.background_color, '#F5F1E8');
   const html = await read('index.html');
   assert.match(html, /<link rel="manifest" href="\.\/manifest\.webmanifest"/);
-  assert.match(html, /<meta name="theme-color" content="#4255ff"/);
+  assert.match(html, /<meta name="theme-color" content="#F5F1E8"/);
   for (const purpose of ['any', 'maskable']) for (const size of [192, 512]) {
     const icon = manifest.icons.find(icon => icon.purpose === purpose && icon.sizes === `${size}x${size}`);
     assert.ok(icon, `${purpose} ${size} icon must exist`);
@@ -64,3 +64,39 @@ test('worker precaches PWA resources and activation only retires its own previou
   assert.equal(claimed, 1);
   assert.doesNotMatch(script, /indexedDB|localStorage|\.unregister\(/);
 });
+
+test('game loader reuses Hub logos without a second network request and leaves other media fresh', async () => {
+  const script = await read('service-worker.js');
+  const logos = JSON.parse(script.match(/const SHARED_LOGOS=(\[.*?\]);/s)[1]);
+  assert.equal(logos.length, 3);
+  const base = 'https://example.test/Lexical_Space/';
+  const entries = new Map(), handlers = {}, puts = [];
+  let network = 0;
+  const shell = {match: async key => entries.get(key), put: async (key, response) => {puts.push(key);entries.set(key, response);}};
+  const media = {match: async () => null, put: async () => {}};
+  vm.runInNewContext(script, {
+    URL, Request, Response,
+    self: {registration: {scope: base}, addEventListener: (type, fn) => {handlers[type] = fn;}},
+    caches: {open: async name => name.endsWith('media-v1') ? media : shell},
+    fetch: async () => {network++;return new Response('fresh-art');}
+  });
+  const request = async path => {
+    let pending;
+    handlers.fetch({request: new Request(new URL(path, base)), respondWith: p => {pending = p;}});
+    return pending;
+  };
+  const logo = new URL(logos[0], base).href;
+  entries.set(logo, new Response('already-seen-in-hub'));
+  assert.equal(await (await request(logos[0])).text(), 'already-seen-in-hub');
+  assert.equal(network, 0);
+  assert.equal(await (await request(logos[1])).text(), 'fresh-art');
+  assert.equal(network, 1);
+  assert.ok(puts.includes(new URL(logos[1], base).href));
+  assert.equal(await (await request(logos[1])).text(), 'fresh-art');
+  assert.equal(network, 1, 'next game navigation must reuse the Hub logo');
+  await request('./assets/audio/example.mp3');
+  assert.equal(network, 2, 'other media keeps its established refresh policy');
+  const core = JSON.parse(script.match(/const CORE=(\[.*?\]);/s)[1]);
+  for (const path of logos) assert.ok(!core.includes(path), 'large logos must not expand installation downloads');
+});
+

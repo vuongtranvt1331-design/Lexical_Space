@@ -185,13 +185,14 @@ function updateSkillButtonUI() {
         if (btn) {
             btn.className = 'tactical-skill-btn ready';
         }
-        if (timerEl) timerEl.textContent = 'READY [E]';
+        const readyLabel = document.documentElement.dataset.flightInput === 'touch' ? 'READY' : 'READY [E]';
+        if (timerEl) timerEl.textContent = readyLabel;
         if (hudBadge) {
             if (player.aircraftIndex === 4) {
                 const costNote = (player.armor > 0) ? '(-1 ARMOR)' : (player.hp > 1 ? '(-1 HP)' : '(0 HP)');
-                hudBadge.textContent = `${cfg.skillName.toUpperCase()}: READY [E] ${costNote}`;
+                hudBadge.textContent = `${cfg.skillName.toUpperCase()}: ${readyLabel} ${costNote}`;
             } else {
-                hudBadge.textContent = `${cfg.skillName.toUpperCase()}: READY [E]`;
+                hudBadge.textContent = `${cfg.skillName.toUpperCase()}: ${readyLabel}`;
             }
             hudBadge.style.color = '#00F0FF';
         }

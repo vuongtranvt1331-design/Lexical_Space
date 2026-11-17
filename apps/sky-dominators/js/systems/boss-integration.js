@@ -26,6 +26,11 @@ function updateBossHealthHUD() {
     }
     if (bossHealthMeter.max !== max) bossHealthMeter.max = max;
     if (bossHealthMeter.value !== hp) bossHealthMeter.value = hp;
+    const opacity = (.6 + .4 * (1 - hp / Math.max(1, max))).toFixed(2);
+    if (bossHealthPanel.dataset.intensity !== opacity) {
+        bossHealthPanel.style.opacity = opacity;
+        bossHealthPanel.dataset.intensity = opacity;
+    }
     if (bossHealthValue.textContent !== value) bossHealthValue.textContent = value;
     if (bossHealthPhase.textContent !== phase) bossHealthPhase.textContent = phase;
     if (bossHealthPhase.hidden !== !phase) bossHealthPhase.hidden = !phase;
@@ -55,10 +60,10 @@ bossEncounter = new SkyBosses.Director({
         const field=canvas.getBoundingClientRect(),hud=document.getElementById('leftHUDContainer').getBoundingClientRect();
         if(!field.height)return {};
         const unitsPerPixel=GAME_HEIGHT/field.height;
-        const controls=['inGameSkillBtn','touchShootBtn'].map(id=>document.getElementById(id).getBoundingClientRect()).filter(r=>r.width>0&&r.height>0);
-        const layout={unitsPerPixel,hudBottom:(hud.bottom-field.top)*unitsPerPixel,controlsTop:controls.length?(Math.min(...controls.map(r=>r.top))-field.top)*unitsPerPixel:GAME_HEIGHT-100};
+        const controls=['inGameSkillBtn'].map(id=>document.getElementById(id).getBoundingClientRect()).filter(r=>r.width>0&&r.height>0);
+        const layout={unitsPerPixel,safeTop:flightInsets.top,hudBottom:(hud.bottom-field.top)*unitsPerPixel,controlsTop:controls.length?(Math.min(...controls.map(r=>r.top))-field.top)*unitsPerPixel:GAME_HEIGHT-100};
         if(includeBossHud){
-            const top=document.getElementById('battleTopHud').getBoundingClientRect();
+            const top=(bossHealthPanel.hidden ? document.getElementById('inGamePauseBtn') : bossHealthPanel).getBoundingClientRect();
             layout.bossHudBottom=(top.bottom-field.top)*unitsPerPixel;
         }
         return layout;

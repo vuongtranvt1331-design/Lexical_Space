@@ -47,10 +47,10 @@
        */
       const CARD_RANKS = ['A', 'K', 'Q', 'J', '10', '9', '8', '7'];
       const CARD_SUITS = [
-        { symbol: '♠', colorClass: 'suit-black', name: 'spades' },
-        { symbol: '♥', colorClass: 'suit-red', name: 'hearts' },
-        { symbol: '♦', colorClass: 'suit-red', name: 'diamonds' },
-        { symbol: '♣', colorClass: 'suit-black', name: 'clubs' }
+        { symbol: '♠', name: 'spades' },
+        { symbol: '♥', name: 'hearts' },
+        { symbol: '♦', name: 'diamonds' },
+        { symbol: '♣', name: 'clubs' }
       ];
 
       /**
@@ -65,13 +65,19 @@
         unusedPoolIds: [],         // Tracks unused vocabulary IDs in current deck cycle
         opponentHand: [],          // 4 cards: { slotIndex, vocabId, word, translation, rank, suit, resolved, outcome }
         studentHand: [],           // 4 cards: { slotIndex, vocabId, synonym, rank, suit, used, outcome }
-        activeOpponentIndex: 0,    // Current opponent card index (0..3)
+        consecutiveCorrect: 0,
+        roundStreakAwarded: false,
+        totalPairs: 0,
+        totalAttempts: 0,
+        mistakes: [],
+        roundsPlayed: 0,
+        activeOpponentIndex: -1,   // No target until the dealer finishes drawing.
         roundCorrectCount: 0,
         roundIncorrectAttempts: 0,
         roundScored: false,        // Guard ensuring round bonus is applied once per round
         soundEnabled: true,
         sessionToken: 0,           // Incremented on restart/end to invalidate stale callbacks
-        activeTimers: new Set()    // Tracks all pending setTimeout IDs
+        activeTimers: new Map()    // Timer ID to callback and deadline
       };
 
       /**
@@ -367,21 +373,44 @@
       /**
        * SAFE TIMER SCHEDULER
        */
+      let pausedTimers = null;
+
       function scheduleTimer(callback, delayMs) {
-        const capturedToken = state.sessionToken;
-        const timerId = window.setTimeout(() => {
-          state.activeTimers.delete(timerId);
-          if (state.sessionToken !== capturedToken) return;
+        if (pausedTimers) {
+          pausedTimers.push({callback, delayMs});
+          return;
+        }
+        const token = state.sessionToken;
+        const id = window.setTimeout(() => {
+          if (!state.activeTimers.delete(id) || token !== state.sessionToken) return;
           callback();
         }, delayMs);
-        state.activeTimers.add(timerId);
-        return timerId;
+        state.activeTimers.set(id, {callback, deadline: performance.now() + delayMs});
+        return id;
+      }
+
+      function parkTimers() {
+        if (pausedTimers) return;
+        const now = performance.now();
+        pausedTimers = [];
+        for (const [id, task] of state.activeTimers) {
+          window.clearTimeout(id);
+          pausedTimers.push({callback: task.callback, delayMs: Math.max(0, task.deadline - now)});
+        }
+        state.activeTimers.clear();
+      }
+
+      function resumeTimers() {
+        const pending = pausedTimers || [];
+        pausedTimers = null;
+        for (const {callback, delayMs} of pending) scheduleTimer(callback, delayMs);
       }
 
       function clearAllScheduledTimers() {
         state.sessionToken += 1;
-        state.activeTimers.forEach((id) => window.clearTimeout(id));
+        for (const id of state.activeTimers.keys()) window.clearTimeout(id);
         state.activeTimers.clear();
+        pausedTimers = null;
       }
 
       /**
@@ -605,6 +634,148 @@
         return { opponentHand, studentHand };
       }
 
+      const ASSIST_COST = 2;
+      const WRONG_PAIR_COST = 2;
+
+      function payForAssist() {
+        if (state.gameState !== GAME_STATES.PLAYING || state.chips < ASSIST_COST) return false;
+        const previous = state.chips;
+        state.chips -= ASSIST_COST;
+        renderChipStack(previous);
+        sound.playChipLoss();
+        return true;
+      }
+
+      function stopPronunciation() {
+        pronunciationToken += 1;
+        const synth = window.speechSynthesis;
+        try { if (pendingVoiceListener) synth?.removeEventListener('voiceschanged', pendingVoiceListener); } catch (_) {}
+        pendingVoiceListener = null;
+        try { synth?.cancel(); } catch (_) {}
+      }
+      function pronounceWord(word) {
+        stopPronunciation();
+        const synth = window.speechSynthesis;
+        if (!state.soundEnabled || !synth || typeof window.SpeechSynthesisUtterance !== 'function') return false;
+        const token = pronunciationToken, session = state.sessionToken;
+        const current = () => token === pronunciationToken && session === state.sessionToken && state.soundEnabled && state.gameState === GAME_STATES.RESOLVING;
+        const speak = () => {
+          if (!current()) return false;
+          try {
+            const voice = synth.getVoices().find(v => v.localService === true && /^en(?:[-_]|$)/i.test(v.lang));
+            if (!voice) return false;
+            const utterance = new SpeechSynthesisUtterance(String(word));
+            utterance.voice = voice; utterance.lang = voice.lang; utterance.rate = .9;
+            utterance.onerror = () => {}; synth.speak(utterance);
+            return true;
+          } catch (_) { return false; }
+        };
+        if (speak()) return true;
+        if (typeof synth.addEventListener === 'function') {
+          const listener = () => { if (!current() || speak()) { synth.removeEventListener('voiceschanged', listener); if (pendingVoiceListener === listener) pendingVoiceListener = null; } };
+          pendingVoiceListener = listener; synth.addEventListener('voiceschanged', listener);
+          scheduleTimer(() => { synth.removeEventListener('voiceschanged', listener); if (pendingVoiceListener === listener) pendingVoiceListener = null; }, 1200);
+        }
+        return false;
+      }
+      function vocabularyEntry(card) { return state.vocabLibrary.find(entry => entry.id === card?.vocabId); }
+      function cardElement(side, index) { return document.getElementById(`${side === 'opponent' ? 'opp' : 'stu'}Card_${index}`); }
+      function matchedCard(side, card) { return side === 'opponent' ? card?.resolved : card?.used; }
+      function loadCardArtwork() {
+        const script = document.currentScript?.src || new URL('./js/poker-1.js', location.href).href;
+        return preloadPokerImage(new URL('../assets/poker_cards_spritesheet.png',script).href,3840,480).then(valid => {
+          document.documentElement.classList.toggle('poker-cards-ready',valid);
+          return valid;
+        });
+      }
+      function preloadPokerImage(url,width,height) {
+        return new Promise(resolve => {
+          const image = new Image();
+          image.onload = () => resolve(image.naturalWidth === width && image.naturalHeight === height);
+          image.onerror = () => resolve(false);
+          image.src = url;
+        });
+      }
+      function loadCriticalArtwork() {
+        const script = document.currentScript?.src || new URL('./js/poker-1.js',location.href).href;
+        return Promise.all([
+          loadCardArtwork(),
+          preloadPokerImage(new URL('../assets/cowboy_dealer_spritesheet.png',script).href,1536,2304),
+          preloadPokerImage(new URL('../assets/poker_elements_spritesheet.png',script).href,1024,64),
+          preloadPokerImage(new URL('../../arcade/assets/ui_spritesheet.png',script).href,384,256)
+        ]).then(result => {
+          document.documentElement.classList.toggle('poker-dealer-unavailable',!result[1]);
+          document.documentElement.classList.toggle('poker-elements-unavailable',!result[2]);
+          document.documentElement.classList.toggle('poker-controls-unavailable',!result[3]);
+          return result;
+        });
+      }
+      function renderEndingSummary() {
+        const accuracy = state.totalAttempts ? Math.round(state.totalPairs / state.totalAttempts * 100) : 0;
+        const mistakes = state.mistakes.map(item => `<li><strong>${escapeHTML(item.word)}</strong> + ${escapeHTML(item.selectedSynonym)}<br><span>Correct: ${escapeHTML(item.correctSynonym)} · ${escapeHTML(item.translation)}</span></li>`).join('');
+        dom.endingStatsSummary.innerHTML = `<div class="poker-run-stats"><span>Final chips<strong>${state.chips}</strong></span><span>Rounds played<strong>${state.roundsPlayed}</strong></span><span>Pairs matched<strong>${state.totalPairs}</strong></span><span>Accuracy<strong>${accuracy}%</strong></span></div>${mistakes ? `<details class="poker-mistakes" open><summary>Mistake review (${state.mistakes.length})</summary><ol>${mistakes}</ol></details>` : '<p class="poker-no-mistakes">No mistakes this run.</p>'}`;
+      }
+      function beginDealerTurn() {
+        const unmatched = state.opponentHand.filter(card => !card.resolved);
+        if (!unmatched.length) return;
+        // A wrong answer or a restored page keeps the current challenge.
+        const current = state.opponentHand[state.activeOpponentIndex];
+        if (!current || current.resolved) {
+          state.activeOpponentIndex = unmatched[Math.floor(Math.random() * unmatched.length)].slotIndex;
+        }
+        state.gameState = GAME_STATES.PLAYING;
+        setDealerPose('idle');
+        dom.turnStatusSubtext.textContent = 'Pick its synonym from your hand.';
+        showTableStatus('MATCH THE HIGHLIGHTED WORD');
+        updateActiveCardStates();
+      }
+
+      function useHint() {
+        const index = state.activeOpponentIndex;
+        const card = state.opponentHand[index];
+        const element = cardElement('opponent', index);
+        if (!card || card.resolved || !card.translation || !element ||
+            element.classList.contains('meaning-visible') || !payForAssist()) return false;
+        element.classList.add('meaning-visible');
+        dom.turnStatusSubtext.textContent = card.translation;
+        showTableStatus('MEANING HINT');
+        updateAssistButtons();
+        scheduleTimer(() => {
+          if (!card.revealingMeaning) element.classList.remove('meaning-visible');
+          if (state.gameState === GAME_STATES.PLAYING && state.activeOpponentIndex === index) {
+            dom.turnStatusSubtext.textContent = 'Pick its synonym from your hand.';
+            showTableStatus('MATCH THE HIGHLIGHTED WORD');
+          }
+          updateAssistButtons();
+        }, 1200);
+        return true;
+      }
+
+      function handleStudentChoice(studentIndex) {
+        if (state.gameState !== GAME_STATES.PLAYING) return;
+        const opponentIndex = state.activeOpponentIndex;
+        const opp = state.opponentHand[opponentIndex], stu = state.studentHand[studentIndex];
+        if (!opp || opp.resolved || !stu || stu.used) return;
+        state.gameState = GAME_STATES.RESOLVING;
+        state.totalAttempts += 1;
+        stopPronunciation();
+        updateActiveCardStates();
+        const oppEl = cardElement('opponent', opponentIndex), stuEl = cardElement('student', studentIndex);
+        if (opp.vocabId === stu.vocabId) resolveCorrectTurn(opponentIndex, studentIndex, oppEl, stuEl);
+        else resolveIncorrectTurn(opponentIndex, studentIndex, oppEl, stuEl);
+      }
+
+      function awardCompletedRound() {
+        if (state.roundScored || state.roundCorrectCount !== 4 || !state.opponentHand.every(card => card.resolved)) return false;
+        state.roundScored = true;
+        if (state.roundIncorrectAttempts === 0) {
+          const previous = state.chips; state.chips += 2; renderChipStack(previous); sound.playChipGain();
+          showRoundResultToast('ROYAL SHOWDOWN: +2 CHIPS','Four pairs. No mistakes.',true); showTableStatus('PERFECT HAND · ROYAL SHOWDOWN +2');
+        } else { showRoundResultToast('ROUND COMPLETE','Four pairs matched!',true); showTableStatus('ROUND COMPLETE'); }
+        return true;
+      }
+      let pronunciationToken = 0, pendingVoiceListener = null;
+
       function getWordFontSizeClass(text, isSynonym = false) {
         const len = (text || '').length;
         if (len >= 15) return isSynonym ? 'text-xs sm:text-sm' : 'text-xs sm:text-sm';
@@ -612,394 +783,145 @@
         return isSynonym ? 'text-base sm:text-lg' : 'text-base sm:text-lg';
       }
 
-      function getBisonSkullCardBackHTML() {
-        return `
-          <div class="card-face card-back">
-            <div class="relative w-full h-full flex flex-col items-center justify-center p-2">
-              <div class="absolute top-2.5 left-2.5 w-2.5 h-2.5 border-t border-l border-[#D4AF37]"></div>
-              <div class="absolute top-2.5 right-2.5 w-2.5 h-2.5 border-t border-r border-[#D4AF37]"></div>
-              <div class="absolute bottom-2.5 left-2.5 w-2.5 h-2.5 border-b border-l border-[#D4AF37]"></div>
-              <div class="absolute bottom-2.5 right-2.5 w-2.5 h-2.5 border-b border-r border-[#D4AF37]"></div>
+      // Presentation state only. Pose resets use the SAME existing token-aware
+      // scheduler; no independent animation timer can survive restart/end.
+      let dealerPoseToken = 0;
+      function setDealerPose(pose, restoreAfter = 0) {
+        const valid = ['idle', 'deal', 'impressed', 'shoot', 'victory', 'defeat'];
+        if (!valid.includes(pose)) return;
+        const token = ++dealerPoseToken;
+        const dealer = document.querySelector('[data-poker-dealer]');
+        if (dealer) {
+          dealer.style.animation = 'none';
+          dealer.dataset.pose = pose;
+          void dealer.offsetWidth;
+          dealer.style.animation = '';
+        }
+        if (restoreAfter) scheduleTimer(() => {
+          if (dealerPoseToken === token && state.gameState !== GAME_STATES.VICTORY && state.gameState !== GAME_STATES.DEFEAT) setDealerPose('idle');
+        }, restoreAfter);
+      }
+      function placeDealerAtEnding(ending) {
+        const dealer = document.querySelector('[data-dealer-sprite-wrap]');
+        const target = document.querySelector(ending ? '[data-ending-dealer-slot]' : '[data-dealer-home]');
+        if (dealer && target) target.appendChild(dealer);
+        dom.gameFrame.classList.toggle('is-ending', ending);
+      }
 
-              <svg viewBox="0 0 80 72" class="w-11 h-11 sm:w-12 sm:h-12 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                <circle cx="40" cy="37" r="24" fill="#1E0B06" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="3 2"/>
-                <path d="M14 25 C6 15, 14 5, 22 14 C25 18, 25 24, 25 24 L55 24 C55 24, 55 18, 58 14 C66 5, 74 15, 66 25 C60 31, 53 30, 53 30 L27 30 C27 30, 20 31, 14 25 Z" fill="#D4AF37" stroke="#1E110A" stroke-width="1.6"/>
-                <path d="M26 22 L54 22 L50 44 L44 60 L36 60 L30 44 Z" fill="#F6EBD8" stroke="#1E110A" stroke-width="1.8"/>
-                <polygon points="40,26 43,31 40,36 37,31" fill="#9E2A2B"/>
-                <circle cx="32" cy="37" r="3.6" fill="#1E110A"/>
-                <circle cx="48" cy="37" r="3.6" fill="#1E110A"/>
-                <polygon points="40,44 36.5,53 43.5,53" fill="#1E110A"/>
-              </svg>
-              <span class="mt-0.5 font-western text-[8px] tracking-widest text-[#D4AF37] uppercase">MATCHED</span>
-            </div>
-          </div>
-        `;
+      function getBisonSkullCardBackHTML() {
+        return '<div class="card-face card-back"><span class="poker-card-art card-art-back" aria-hidden="true"></span><span class="card-art-fallback">MATCHED</span></div>';
       }
 
       function renderHands(withDealAnimation = false) {
-        dom.opponentGrid.innerHTML = state.opponentHand
-          .map((card, idx) => {
-            const wordSize = getWordFontSizeClass(card.word, false);
-            const isFlipped = card.resolved && card.outcome === 'correct';
-            const isActive =
-              (state.gameState === GAME_STATES.PLAYING || state.gameState === GAME_STATES.RESOLVING) &&
-              idx === state.activeOpponentIndex &&
-              !card.resolved;
-
-            const stateClasses = [
-              'playing-card opponent-card',
-              withDealAnimation ? 'dealing-start' : '',
-              isFlipped ? 'is-flipped' : '',
-              isActive ? 'active-target' : ''
-            ]
-              .filter(Boolean)
-              .join(' ');
-
-            return `
-              <div class="card-slot" data-opponent-slot="${idx}">
-                <div id="oppCard_${idx}" class="${stateClasses}" data-vocab-id="${card.vocabId}">
-                  <div class="card-face card-front">
-                    <div class="card-corner top-left ${card.suit.colorClass}">
-                      <span>${card.rank}</span>
-                      <span>${card.suit.symbol}</span>
-                    </div>
-
-                    <div class="corner-ornament tr"></div>
-                    <div class="corner-ornament bl"></div>
-
-                    ${
-                      isActive
-                        ? `<div data-target-badge="true" class="absolute top-1.5 px-2 py-0.2 rounded-full bg-[#9E2A2B] border border-[#D4AF37] text-[8px] font-bold tracking-widest text-[#F6EBD8] uppercase shadow-sm">TARGET</div>`
-                        : ''
-                    }
-
-                    <div class="card-word-text font-card-word ${wordSize}">${escapeHTML(card.word)}</div>
-                    <div class="card-vi-text text-[11px] sm:text-xs">${escapeHTML(card.translation)}</div>
-
-                    <div class="card-corner bottom-right ${card.suit.colorClass}">
-                      <span>${card.rank}</span>
-                      <span>${card.suit.symbol}</span>
-                    </div>
-                  </div>
-                  ${getBisonSkullCardBackHTML()}
-                </div>
-              </div>
-            `;
-          })
-          .join('');
-
-        dom.studentGrid.innerHTML = state.studentHand
-          .map((card, idx) => {
-            const synSize = getWordFontSizeClass(card.synonym, true);
-            const isFlipped = card.used && card.outcome === 'correct';
-            const isSelectable = state.gameState === GAME_STATES.PLAYING && !card.used;
-
-            const stateClasses = [
-              'playing-card',
-              withDealAnimation ? 'dealing-start' : '',
-              isFlipped ? 'is-flipped' : '',
-              isSelectable ? 'student-selectable' : 'cursor-default'
-            ]
-              .filter(Boolean)
-              .join(' ');
-
-            return `
-              <div class="card-slot" data-student-slot="${idx}">
-                <div id="stuCard_${idx}" class="${stateClasses}" data-student-index="${idx}" data-vocab-id="${card.vocabId}" role="button" tabindex="${isSelectable ? '0' : '-1'}" aria-disabled="${!isSelectable}">
-                  <div class="card-face card-front">
-                    <div class="card-corner top-left ${card.suit.colorClass}">
-                      <span>${card.rank}</span>
-                      <span>${card.suit.symbol}</span>
-                    </div>
-
-                    <div class="corner-ornament tr"></div>
-                    <div class="corner-ornament bl"></div>
-
-                    <div class="card-synonym-text ${synSize}">${escapeHTML(card.synonym)}</div>
-
-                    <div class="card-corner bottom-right ${card.suit.colorClass}">
-                      <span>${card.rank}</span>
-                      <span>${card.suit.symbol}</span>
-                    </div>
-                  </div>
-                  ${getBisonSkullCardBackHTML()}
-                </div>
-              </div>
-            `;
-          })
-          .join('');
-
-        const studentCardEls = dom.studentGrid.querySelectorAll('[data-student-index]');
-        studentCardEls.forEach((el) => {
-          el.addEventListener('click', () => {
-            const idx = parseInt(el.getAttribute('data-student-index'), 10);
-            handleStudentCardSelect(idx);
-          });
+        const renderSide = (side, hand) => hand.map((card, index) => {
+          const isMatched = matchedCard(side, card), label = side === 'opponent' ? card.word : card.synonym;
+          const playable = side === 'student' && state.gameState === GAME_STATES.PLAYING && !isMatched;
+          const selected = side === 'opponent' && state.activeOpponentIndex === index && !card.resolved;
+          const classes = ['playing-card',side === 'opponent' ? 'opponent-card' : '',withDealAnimation ? 'dealing-start' : '',isMatched && !card.revealingMeaning ? 'is-flipped' : '',isMatched ? 'matched-card' : '',selected ? 'is-selected' : '',card.revealingMeaning ? 'meaning-visible' : '',playable ? 'student-selectable' : ''].filter(Boolean).join(' ');
+          const entry = vocabularyEntry(card);
+          const face = {diamonds:'diamond',spades:'spade',clubs:'club',hearts:'heart'}[card.suit.name] || 'spade';
+          return `<div class="card-slot" data-${side === 'opponent' ? 'opponent' : 'student'}-slot="${index}"><div id="${side === 'opponent' ? 'opp' : 'stu'}Card_${index}" class="${classes}" data-poker-side="${side}" data-poker-index="${index}" ${side === 'student' ? `data-student-index="${index}"` : ''} data-vocab-id="${escapeHTML(card.vocabId)}" role="${side === 'student' ? 'button' : 'img'}" tabindex="${playable ? 0 : -1}" aria-disabled="${!playable}" aria-current="${selected}" aria-label="${side === 'opponent' ? 'Word' : 'Synonym'}: ${escapeHTML(label)}"><div class="card-face card-front"><span class="poker-card-art card-art-${face}" aria-hidden="true"></span><div class="card-live-content"><div class="${side === 'opponent' ? 'card-word-text font-card-word' : 'card-synonym-text'} ${getWordFontSizeClass(label, side === 'student')}">${escapeHTML(label)}</div><div class="card-meaning-text">${escapeHTML(entry?.translation || card.translation || '')}</div></div></div>${getBisonSkullCardBackHTML()}</div></div>`;
+        }).join('');
+        dom.opponentGrid.innerHTML = renderSide('opponent', state.opponentHand);
+        dom.studentGrid.innerHTML = renderSide('student', state.studentHand);
+        dom.studentGrid.querySelectorAll('[data-poker-index]').forEach(element => {
+          const choose = () => handleStudentChoice(Number(element.dataset.pokerIndex));
+          element.addEventListener('click', choose);
+          element.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); choose(); } });
         });
       }
 
       function renderChipStack(previousChips = state.chips) {
         dom.chipCountValue.textContent = String(state.chips);
         const slots = [];
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 1; i <= 12; i++) {
           const isFilled = i <= state.chips;
           const wasFilled = i <= previousChips;
           let animClass = '';
           if (isFilled && !wasFilled) animClass = 'chip-gain-anim';
           if (!isFilled && wasFilled) animClass = 'chip-loss-anim';
-
-          if (isFilled || (!isFilled && wasFilled)) {
-            slots.push(`
-              <div class="chip-token w-4 h-4 sm:w-4.5 sm:h-4.5 ${animClass}" title="Chip ${i}">
-                <svg viewBox="0 0 28 28" class="w-full h-full">
-                  <circle cx="14" cy="14" r="12" fill="${i === 10 ? '#D4AF37' : '#9E2A2B'}" stroke="#F3D060" stroke-width="2"/>
-                  <circle cx="14" cy="14" r="9" fill="none" stroke="#F6EBD8" stroke-width="1.5" stroke-dasharray="3 2.5"/>
-                  <circle cx="14" cy="14" r="4" fill="#1E110A"/>
-                </svg>
-              </div>
-            `);
-          } else {
-            slots.push(`
-              <div class="w-4 h-4 sm:w-4.5 sm:h-4.5 rounded-full border border-[#D4AF37]/25 bg-[#1B0E08]/60" title="Empty Chip Slot ${i}"></div>
-            `);
-          }
+          const color = i === 12 ? 'gold' : i % 2 ? 'red' : 'blue';
+          slots.push(`<div class="chip-token poker-chip-slot ${animClass} ${!isFilled && !wasFilled ? 'is-empty' : ''}" title="${isFilled ? 'Chip' : 'Empty Chip Slot'} ${i}"><span class="poker-sprite sprite-chip-${color}" aria-hidden="true"></span></div>`);
         }
         dom.chipStackContainer.innerHTML = slots.join('');
-        updateReshuffleButtonState();
+        updateAssistButtons();
       }
 
       function updateHUD() {
         dom.roundCounterText.textContent = `ROUND ${state.round}`;
-        const total = state.vocabLibrary.length;
-        const usedInCycle = total - state.unusedPoolIds.length;
-        const urlParams = new URLSearchParams(window.location.search);
-        let urlMode = (urlParams.get("mode") || "full").trim().toLowerCase();
-        if (!["full", "topic"].includes(urlMode)) {
-          urlMode = "full";
-        }
-        const topicParam = (urlParams.get("topic") || "").trim();
-        if (urlMode === "topic" && topicParam) {
-          dom.deckProgressText.textContent = `${topicParam.toUpperCase()} (${Math.min(usedInCycle, total)}/${total})`;
-        } else {
-          dom.deckProgressText.textContent = `FULL DECK (${Math.min(usedInCycle, total)}/${total})`;
-        }
-
-        const currentCardNum = Math.min(state.activeOpponentIndex + 1, 4);
-        dom.turnCounterBadge.textContent = `CARD ${currentCardNum} OF 4`;
+        const total = state.vocabLibrary.length, usedInCycle = total - state.unusedPoolIds.length;
+        const params = new URLSearchParams(location.search), topic = params.get('topic')?.trim();
+        dom.deckProgressText.textContent = params.get('mode')?.toLowerCase() === 'topic' && topic ? `${topic.toUpperCase()} (${Math.min(usedInCycle,total)}/${total})` : `FULL DECK (${Math.min(usedInCycle,total)}/${total})`;
+        const target = state.opponentHand[state.activeOpponentIndex];
+        dom.turnCounterBadge.textContent = target && !target.resolved ? 'DEALER’S PICK' : '';
         dom.roundMatchTracker.textContent = `${state.roundCorrectCount} / 4 MATCHED`;
-        dom.cowboySpeech.textContent = '“Make your move.”';
-        updateReshuffleButtonState();
+        dom.cowboySpeech.textContent = target && !target.resolved ? `“${target.word}”` : '“Watch my hand.”';
+        updateAssistButtons();
       }
 
-      function startNewRound() {
-        if (state.gameState === GAME_STATES.VICTORY || state.gameState === GAME_STATES.DEFEAT) {
-          return;
-        }
-
-        const fourEntries = selectFourRoundEntries();
-        if (!fourEntries) {
-          showTableStatus('INVALID VOCABULARY POOL - IMPORT VALID JSON');
-          return;
-        }
-
-        state.gameState = GAME_STATES.DEALING;
-        state.activeOpponentIndex = 0;
-        state.roundCorrectCount = 0;
-        state.roundIncorrectAttempts = 0;
-        state.roundScored = false;
-
-        const { opponentHand, studentHand } = buildHandsForRound(fourEntries);
-        state.opponentHand = opponentHand;
-        state.studentHand = studentHand;
-
-        hideRoundResultToast();
-        updateHUD();
-        showTableStatus('DEALING NEW HAND...');
-        dom.turnStatusSubtext.textContent = 'Shuffling the deck...';
-
-        renderHands(true);
-        sound.playCardShuffle();
-
-        const dealOrder = [
-          'oppCard_0',
-          'stuCard_0',
-          'oppCard_1',
-          'stuCard_1',
-          'oppCard_2',
-          'stuCard_2',
-          'oppCard_3',
-          'stuCard_3'
-        ];
-
-        const baseDelay = 260;
-        const stepDelay = 175;
-
-        dealOrder.forEach((cardDomId, index) => {
-          scheduleTimer(() => {
-            const el = document.getElementById(cardDomId);
-            if (!el) return;
-            el.classList.remove('dealing-start');
-            el.classList.add('dealing-animate');
-            sound.playCardDeal();
-
-            scheduleTimer(() => {
-              sound.playCardPlace();
-            }, 260);
-          }, baseDelay + index * stepDelay);
-        });
-
-        const totalDealDuration = baseDelay + dealOrder.length * stepDelay + 280;
-
-        scheduleTimer(() => {
-          state.gameState = GAME_STATES.PLAYING;
-          dom.turnStatusSubtext.textContent = 'Match the highlighted card';
-          showTableStatus('TAP THE MATCHING SYNONYM');
-          updateActiveCardStates();
-        }, totalDealDuration);
+      function startNewRound(preparedEntries = null) {
+        if ([GAME_STATES.VICTORY,GAME_STATES.DEFEAT].includes(state.gameState)) return false;
+        const fourEntries = preparedEntries || selectFourRoundEntries();
+        if (!fourEntries || fourEntries.length !== 4) { showTableStatus('POKER REQUIRES FOUR VALID PAIRS'); return false; }
+        clearAllScheduledTimers(); stopPronunciation();
+        state.gameState = GAME_STATES.DEALING; setDealerPose('deal');
+        state.activeOpponentIndex = -1;
+        state.roundCorrectCount = 0; state.roundIncorrectAttempts = 0; state.roundScored = false;
+        state.consecutiveCorrect = 0; state.roundStreakAwarded = false; state.roundsPlayed += 1;
+        const hands = buildHandsForRound(fourEntries); state.opponentHand = hands.opponentHand; state.studentHand = hands.studentHand;
+        hideRoundResultToast(); dom.wrongShotOverlay.classList.add('hidden'); dom.wrongShotOverlay.classList.remove('flex'); dom.wrongShotOverlay.innerHTML = '';
+        updateHUD(); showTableStatus('DEALING NEW HAND...'); dom.turnStatusSubtext.textContent = 'Shuffling the deck...';
+        renderHands(true); sound.playCardShuffle();
+        const order = ['oppCard_0','stuCard_0','oppCard_1','stuCard_1','oppCard_2','stuCard_2','oppCard_3','stuCard_3'];
+        order.forEach((id,index) => scheduleTimer(() => { const el = document.getElementById(id); if (!el) return; el.classList.remove('dealing-start'); el.parentElement.classList.add('dealing-animate'); sound.playCardDeal(); scheduleTimer(() => sound.playCardPlace(),260); },260 + index * 175));
+        scheduleTimer(beginDealerTurn, 1940);
+        return true;
       }
 
       function updateActiveCardStates() {
-        state.opponentHand.forEach((card, idx) => {
-          const el = document.getElementById(`oppCard_${idx}`);
-          if (!el) return;
-          const isActive =
-            (state.gameState === GAME_STATES.PLAYING || state.gameState === GAME_STATES.RESOLVING) &&
-            idx === state.activeOpponentIndex &&
-            !card.resolved;
-          el.classList.toggle('active-target', isActive);
-
-          const front = el.querySelector('.card-front');
-          const existingBadge = front.querySelector('[data-target-badge]');
-          if (existingBadge) existingBadge.remove();
-          if (isActive) {
-            const badge = document.createElement('div');
-            badge.setAttribute('data-target-badge', 'true');
-            badge.className =
-              'absolute top-1.5 px-2 py-0.2 rounded-full bg-[#9E2A2B] border border-[#D4AF37] text-[8px] font-bold tracking-widest text-[#F6EBD8] uppercase shadow-sm';
-            badge.textContent = 'TARGET';
-            front.appendChild(badge);
-          }
+        ['opponent','student'].forEach(side => {
+          const hand = side === 'opponent' ? state.opponentHand : state.studentHand;
+          hand.forEach((card,index) => {
+            const element = cardElement(side,index); if (!element) return;
+            const matched = matchedCard(side,card), playable = side === 'student' && state.gameState === GAME_STATES.PLAYING && !matched;
+            const selected = side === 'opponent' && state.activeOpponentIndex === index && !card.resolved;
+            element.classList.toggle('is-selected',selected); element.classList.toggle('matched-card',matched); element.classList.toggle('student-selectable',playable);
+            element.setAttribute('aria-disabled',String(!playable)); element.setAttribute('aria-current',String(selected)); element.tabIndex = playable ? 0 : -1;
+          });
         });
-
-        state.studentHand.forEach((card, idx) => {
-          const el = document.getElementById(`stuCard_${idx}`);
-          if (!el) return;
-          const isSelectable = state.gameState === GAME_STATES.PLAYING && !card.used;
-          el.classList.toggle('student-selectable', isSelectable);
-          el.setAttribute('aria-disabled', String(!isSelectable));
-        });
-
         updateHUD();
       }
 
-      function handleStudentCardSelect(studentIndex) {
-        if (state.gameState !== GAME_STATES.PLAYING) return;
 
-        const oppIndex = state.activeOpponentIndex;
-        const oppCard = state.opponentHand[oppIndex];
-        const stuCard = state.studentHand[studentIndex];
-
-        if (!oppCard || !stuCard) return;
-        if (oppCard.resolved || stuCard.used) return;
-
-        state.gameState = GAME_STATES.RESOLVING;
-        updateActiveCardStates();
-
-        const oppEl = document.getElementById(`oppCard_${oppIndex}`);
-        const stuEl = document.getElementById(`stuCard_${studentIndex}`);
-
-        const isCorrect = oppCard.vocabId === stuCard.vocabId;
-
-        if (isCorrect) {
-          resolveCorrectTurn(oppIndex, studentIndex, oppEl, stuEl);
-        } else {
-          resolveIncorrectTurn(oppIndex, studentIndex, oppEl, stuEl);
-        }
+      function resolveCorrectTurn(oppIndex,studentIndex,oppEl,stuEl) {
+        const opp = state.opponentHand[oppIndex], stu = state.studentHand[studentIndex];
+        if (opp.resolved || stu.used) return;
+        setDealerPose('impressed',520); opp.resolved = true; opp.outcome = 'correct'; opp.revealingMeaning = true; stu.used = true; stu.outcome = 'correct'; stu.revealingMeaning = true;
+        state.roundCorrectCount += 1; state.totalPairs += 1; state.consecutiveCorrect += 1;
+        let gain = 1;
+        if (state.consecutiveCorrect >= 2 && !state.roundStreakAwarded) { state.roundStreakAwarded = true; gain += 1; showRoundResultToast('2x STREAK! +1 CHIP','Two consecutive pairs!',true); }
+        const previous = state.chips; state.chips += gain; renderChipStack(previous);
+        if (state.roundCorrectCount === 4) awardCompletedRound();
+        [oppEl,stuEl].forEach(el => el?.classList.add('correct-flash','meaning-visible'));
+        updateActiveCardStates(); sound.playCorrectMatch(); pronounceWord(opp.word);
+        showTableStatus(gain === 2 ? 'MATCH +1 · STREAK +1' : 'MATCH: +1 CHIP'); dom.turnStatusSubtext.textContent = opp.translation;
+        scheduleTimer(() => {
+          opp.revealingMeaning = false; stu.revealingMeaning = false;
+          [oppEl,stuEl].forEach(el => { el?.classList.remove('correct-flash','meaning-visible'); el?.classList.add('is-flipped'); });
+          sound.playCardDeal(.06,1000); if (state.roundCorrectCount !== 4) hideRoundResultToast(); advanceToNextTurnOrCompleteRound();
+        },1200);
       }
 
-      function resolveCorrectTurn(oppIndex, studentIndex, oppEl, stuEl) {
-        const oppCard = state.opponentHand[oppIndex];
-        const stuCard = state.studentHand[studentIndex];
-
-        oppCard.resolved = true;
-        oppCard.outcome = 'correct';
-        stuCard.used = true;
-        stuCard.outcome = 'correct';
-        state.roundCorrectCount += 1;
-
-        if (oppEl) {
-          oppEl.classList.remove('active-target');
-          oppEl.classList.add('correct-flash');
-        }
-        if (stuEl) {
-          stuEl.classList.add('correct-flash');
-        }
-
-        sound.playCorrectMatch();
-        showTableStatus('SHARP SHOOTING! MATCH CONFIRMED');
-        dom.turnStatusSubtext.textContent = `${oppCard.word} = ${stuCard.synonym}`;
-        updateHUD();
-
-        scheduleTimer(() => {
-          if (oppEl) {
-            oppEl.classList.remove('correct-flash');
-            oppEl.classList.add('is-flipped');
-          }
-          if (stuEl) {
-            stuEl.classList.remove('correct-flash');
-            stuEl.classList.add('is-flipped');
-          }
-          sound.playCardDeal(0.06, 1000);
-        }, 280);
-
-        scheduleTimer(() => {
-          advanceToNextTurnOrCompleteRound();
-        }, 820);
-      }
-
-      function resolveIncorrectTurn(oppIndex, studentIndex, oppEl, stuEl) {
-        state.roundIncorrectAttempts += 1;
-        const prevChips = state.chips;
-        const newChips = Math.max(0, prevChips - 2);
-        state.chips = newChips;
-
-        renderChipStack(prevChips);
-        sound.playChipLoss();
-
-        if (stuEl) {
-          stuEl.classList.add('wrong-flash');
-        }
-
-        sound.playGunshot();
-        scheduleTimer(() => {
-          sound.playBulletWhizz();
-        }, 95);
-
-        triggerScreenShake();
-        showBriefTableBulletImpact();
-
-        showTableStatus('MISFIRE! -2 CHIPS — TRY AGAIN');
-        dom.turnStatusSubtext.textContent = 'Wrong card — try another synonym!';
-        updateHUD();
-
-        // Check if chip penalty resulted in immediate defeat (0 chips)
-        if (state.chips <= 0) {
-          scheduleTimer(() => {
-            triggerTerminalEnding(false);
-          }, 650);
-          return;
-        }
-
-        // Return student card to selectable state for retry
-        scheduleTimer(() => {
-          if (stuEl) {
-            stuEl.classList.remove('wrong-flash');
-          }
-          state.gameState = GAME_STATES.PLAYING;
-          dom.turnStatusSubtext.textContent = 'Match the highlighted card';
-          showTableStatus('SELECT MATCHING SYNONYM');
-          updateActiveCardStates();
-        }, 580);
+      function resolveIncorrectTurn(oppIndex,studentIndex,oppEl,stuEl) {
+        setDealerPose('shoot',520); state.roundIncorrectAttempts += 1; state.consecutiveCorrect = 0;
+        const opp = state.opponentHand[oppIndex], stu = state.studentHand[studentIndex], correct = vocabularyEntry(opp);
+        state.mistakes.push({round:state.round,word:opp.word,selectedSynonym:stu.synonym,correctSynonym:correct?.synonym || '',translation:opp.translation});
+        const previous = state.chips; state.chips = Math.max(0, state.chips - WRONG_PAIR_COST); renderChipStack(previous); sound.playChipLoss();
+        [oppEl,stuEl].forEach(el => el?.classList.add('wrong-flash'));
+        sound.playGunshot(); scheduleTimer(() => sound.playBulletWhizz(),95); triggerScreenShake(); showBriefTableBulletImpact();
+        showTableStatus('WRONG PAIR: -' + WRONG_PAIR_COST + ' CHIPS'); dom.turnStatusSubtext.textContent = 'Try another synonym for the same word.';
+        if (!state.chips) { scheduleTimer(() => triggerTerminalEnding(false),650); return; }
+        scheduleTimer(() => { [oppEl,stuEl].forEach(el => el?.classList.remove('wrong-flash')); beginDealerTurn(); },580);
       }
 
       function triggerScreenShake() {
@@ -1009,7 +931,7 @@
       }
 
       function showBriefTableBulletImpact() {
-        dom.wrongShotOverlay.innerHTML = createBulletHoleSVG(50, 52, 1.1);
+        dom.wrongShotOverlay.innerHTML = createBulletHoleSprite(50, 52, 1.1) + '<span class="poker-sprite sprite-muzzle-flash poker-shot-flash" aria-hidden="true"></span>';
         dom.wrongShotOverlay.classList.remove('hidden');
         dom.wrongShotOverlay.classList.add('flex');
         scheduleTimer(() => {
@@ -1020,195 +942,41 @@
       }
 
       function advanceToNextTurnOrCompleteRound() {
-        const nextIndex = state.opponentHand.findIndex((c) => !c.resolved);
-        if (nextIndex !== -1) {
-          state.activeOpponentIndex = nextIndex;
-          state.gameState = GAME_STATES.PLAYING;
-          dom.turnStatusSubtext.textContent = 'Match the highlighted card';
-          showTableStatus('SELECT MATCHING SYNONYM');
-          updateActiveCardStates();
-        } else {
-          completeCurrentRound();
-        }
+        if (state.opponentHand.every(card => card.resolved)) { completeCurrentRound(); return; }
+        if (state.chips >= 12) { scheduleTimer(() => triggerTerminalEnding(true), 520); return; }
+        beginDealerTurn();
       }
 
       function completeCurrentRound() {
-        if (state.roundScored) return;
-        state.roundScored = true;
+        if (state.gameState === GAME_STATES.ROUND_COMPLETE || [GAME_STATES.VICTORY,GAME_STATES.DEFEAT].includes(state.gameState) || state.roundCorrectCount !== 4 || !state.opponentHand.every(card => card.resolved)) return;
+        awardCompletedRound();
         state.gameState = GAME_STATES.ROUND_COMPLETE;
-
-        const prevChips = state.chips;
-        const newChips = Math.min(10, prevChips + 1);
-        state.chips = newChips;
-
-        renderChipStack(prevChips);
-        sound.playChipGain();
-        showRoundResultToast('ROUND BONUS: +1 CHIP', 'All 4 pairs correctly matched!', true);
-        showTableStatus('ROUND BONUS: +1 CHIP');
-
-        if (state.chips >= 10) {
-          scheduleTimer(() => {
-            triggerTerminalEnding(true);
-          }, 950);
-          return;
-        }
-
-        scheduleTimer(() => {
-          state.round += 1;
-          startNewRound();
-        }, 1650);
+        updateActiveCardStates();
+        if (state.chips >= 12) { scheduleTimer(() => triggerTerminalEnding(true), 520); return; }
+        scheduleTimer(() => { state.round += 1; startNewRound(); },1650);
       }
 
-      let isReshuffling = false;
 
-      function updateReshuffleButtonState() {
-        if (!dom.reshuffleBtn) return;
-        const canReshuffle = state.chips >= 2 && state.gameState === GAME_STATES.PLAYING && !isReshuffling;
-        dom.reshuffleBtn.disabled = !canReshuffle;
-        if (canReshuffle) {
-          dom.reshuffleBtn.classList.remove('disabled');
-        } else {
-          dom.reshuffleBtn.classList.add('disabled');
-        }
+      function updateAssistButtons() {
+        const enabled = state.gameState === GAME_STATES.PLAYING && state.chips >= ASSIST_COST;
+        dom.reshuffleBtn.disabled = !enabled;
+        dom.reshuffleBtn.classList.toggle('disabled', !enabled);
+        const target = state.opponentHand[state.activeOpponentIndex];
+        const showingHint = cardElement('opponent', state.activeOpponentIndex)?.classList.contains('meaning-visible');
+        document.querySelector('[data-poker-hint]').disabled = !enabled || !target?.translation || showingHint;
       }
 
       function reshuffleDeck() {
-        if (isReshuffling) return;
-        if (state.gameState !== GAME_STATES.PLAYING) {
-          showTableStatus('CAN ONLY RESHUFFLE DURING ACTIVE PLAY');
-          return;
-        }
-
-        if (state.chips < 2) {
-          showTableStatus('INSUFFICIENT CHIPS (NEED 2 CHIPS TO RESHUFFLE)');
-          dom.turnStatusSubtext.textContent = 'You have ' + state.chips + ' chip(s), but reshuffle costs 2 chips.';
-          sound.playBulletWhizz?.();
-          return;
-        }
-
-        // Deduct exactly 2 chips immediately
-        isReshuffling = true;
-        state.gameState = GAME_STATES.DEALING;
-        const prevChips = state.chips;
-        state.chips = Math.max(0, state.chips - 2);
-        renderChipStack(prevChips);
-        sound.playChipLoss();
-        updateReshuffleButtonState();
-
-        showTableStatus('RESHUFFLING DECK (-2 CHIPS)...');
-        dom.turnStatusSubtext.textContent = 'Randomizing remaining cards...';
-
-        // Find unresolved opponent cards
-        const unresolvedOpponentIndices = [];
-        state.opponentHand.forEach((card, idx) => {
-          if (!card.resolved) {
-            unresolvedOpponentIndices.push(idx);
-          }
-        });
-
-        if (unresolvedOpponentIndices.length === 0) {
-          isReshuffling = false;
-          state.gameState = GAME_STATES.PLAYING;
-          updateReshuffleButtonState();
-          return;
-        }
-
-        // Return unresolved cards back to unused pool
-        unresolvedOpponentIndices.forEach(idx => {
-          const vocabId = state.opponentHand[idx].vocabId;
-          if (vocabId && !state.unusedPoolIds.includes(vocabId)) {
-            state.unusedPoolIds.push(vocabId);
-          }
-        });
-
-        // Exclude cards already resolved in this round
-        const resolvedVocabIds = new Set(
-          state.opponentHand.filter(c => c.resolved).map(c => c.vocabId)
-        );
-
-        let eligiblePool = state.unusedPoolIds.filter(id => !resolvedVocabIds.has(id));
-        if (eligiblePool.length < unresolvedOpponentIndices.length) {
-          const allLibIds = state.vocabLibrary.map(e => e.id).filter(id => !resolvedVocabIds.has(id));
-          eligiblePool = shuffleArray(allLibIds);
-        } else {
-          eligiblePool = shuffleArray(eligiblePool);
-        }
-
-        const chosenIds = eligiblePool.slice(0, unresolvedOpponentIndices.length);
-        state.unusedPoolIds = eligiblePool.slice(unresolvedOpponentIndices.length);
-
-        const newEntries = chosenIds.map(id => state.vocabLibrary.find(e => e.id === id)).filter(Boolean);
-        const decorativeFaces = generateDecorativeCardFaces(8);
-
-        unresolvedOpponentIndices.forEach((oppIdx, i) => {
-          const entry = newEntries[i];
-          if (!entry) return;
-          state.opponentHand[oppIdx] = {
-            slotIndex: oppIdx,
-            vocabId: entry.id,
-            word: entry.word,
-            translation: entry.translation,
-            rank: decorativeFaces[i].rank,
-            suit: decorativeFaces[i].suit,
-            resolved: false,
-            outcome: null
-          };
-        });
-
-        // Find matching unused student cards
-        const unusedStudentIndices = [];
-        state.studentHand.forEach((card, idx) => {
-          if (!card.used) {
-            unusedStudentIndices.push(idx);
-          }
-        });
-
-        const shuffledStudentEntries = shuffleArray(newEntries);
-        unusedStudentIndices.forEach((stuIdx, i) => {
-          const entry = shuffledStudentEntries[i] || newEntries[i];
-          if (!entry) return;
-          state.studentHand[stuIdx] = {
-            slotIndex: stuIdx,
-            vocabId: entry.id,
-            synonym: entry.synonym,
-            rank: decorativeFaces[i + 4].rank,
-            suit: decorativeFaces[i + 4].suit,
-            used: false,
-            outcome: null
-          };
-        });
-
-        state.activeOpponentIndex = state.opponentHand.findIndex(c => !c.resolved);
-
-        sound.playCardShuffle();
-        renderHands(true);
-
-        const dealOrder = [];
-        unresolvedOpponentIndices.forEach(idx => dealOrder.push(`oppCard_${idx}`));
-        unusedStudentIndices.forEach(idx => dealOrder.push(`stuCard_${idx}`));
-
-        const baseDelay = 180;
-        const stepDelay = 110;
-        dealOrder.forEach((domId, idx) => {
-          scheduleTimer(() => {
-            const el = document.getElementById(domId);
-            if (!el) return;
-            el.classList.remove('dealing-start');
-            el.classList.add('dealing-animate');
-            sound.playCardDeal();
-          }, baseDelay + idx * stepDelay);
-        });
-
-        const totalDuration = baseDelay + dealOrder.length * stepDelay + 240;
-        scheduleTimer(() => {
-          isReshuffling = false;
-          state.gameState = GAME_STATES.PLAYING;
-          dom.turnStatusSubtext.textContent = 'Match the highlighted card';
-          showTableStatus('TAP THE MATCHING SYNONYM');
-          updateActiveCardStates();
-          updateHUD();
-          updateReshuffleButtonState();
-        }, totalDuration);
+        if (state.gameState !== GAME_STATES.PLAYING || state.chips < ASSIST_COST) return false;
+        const current = new Set(state.opponentHand.map(card => card.vocabId));
+        const fresh = shuffleArray(state.vocabLibrary.filter(entry => !current.has(entry.id)));
+        const previous = shuffleArray(state.vocabLibrary.filter(entry => current.has(entry.id)));
+        const chosen = fresh.concat(previous).slice(0, 4);
+        if (chosen.length !== 4 || !payForAssist()) return false;
+        const used = new Set(chosen.map(entry => entry.id));
+        state.unusedPoolIds = state.unusedPoolIds.filter(id => !used.has(id));
+        state.round += 1;
+        return startNewRound(chosen);
       }
 
       function showRoundResultToast(title, subtitle, isWin) {
@@ -1231,24 +999,17 @@
         dom.tableStatusText.textContent = text;
       }
 
-      function createBulletHoleSVG(leftPct, topPct, scale = 1) {
-        return `
-          <div style="position:absolute; left:${leftPct}%; top:${topPct}%; transform:translate(-50%,-50%) scale(${scale});" class="w-16 h-16 pointer-events-none">
-            <svg viewBox="0 0 80 80" class="w-full h-full drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
-              <path d="M40 40 L12 18 M40 40 L68 15 M40 40 L74 44 M40 40 L62 70 M40 40 L25 72 M40 40 L8 48 M40 40 L38 8" stroke="#D4AF37" stroke-width="1.4" opacity="0.75"/>
-              <path d="M40 40 L22 10 M40 40 L55 12 M40 40 L68 58 M40 40 L15 62" stroke="#F6EBD8" stroke-width="1" opacity="0.5"/>
-              <circle cx="40" cy="40" r="14" fill="#2A160B" stroke="#9A7B2C" stroke-width="2"/>
-              <polygon points="40,27 47,30 52,37 50,45 44,52 36,52 29,46 28,37 33,30" fill="#0B0503" stroke="#E8D5B5" stroke-width="1.2"/>
-              <circle cx="40" cy="40" r="6" fill="#000000"/>
-            </svg>
-          </div>
-        `;
+      function createBulletHoleSprite(leftPct, topPct, scale = 1) {
+        return `<span class="poker-sprite sprite-bullet-hole poker-bullet-hole" aria-hidden="true" style="left:${leftPct}%;top:${topPct}%;transform:translate(-50%,-50%) scale(${scale});"></span>`;
       }
 
       function triggerTerminalEnding(isVictory) {
         clearAllScheduledTimers();
         state.gameState = isVictory ? GAME_STATES.VICTORY : GAME_STATES.DEFEAT;
+        placeDealerAtEnding(true);
+        setDealerPose(isVictory ? 'defeat' : 'victory');
         hideRoundResultToast();
+        stopPronunciation();
 
         const holesPositions = [
           { x: 22, y: 20, s: 1.05 },
@@ -1259,15 +1020,16 @@
         dom.endingBulletHoles.innerHTML = '';
 
         if (isVictory) {
-          dom.endingBadge.textContent = '10 CHIPS REACHED · FINAL SHOWDOWN';
+          dom.endingBadge.querySelector('[data-ending-badge-text]').textContent = '12 CHIPS REACHED · FINAL SHOWDOWN';
           dom.endingExactMessage.textContent = '“you won? but at what cost?”';
         } else {
-          dom.endingBadge.textContent = 'OUT OF CHIPS · BUSTED';
+          dom.endingBadge.querySelector('[data-ending-badge-text]').textContent = 'OUT OF CHIPS · BUSTED';
           dom.endingExactMessage.textContent = '“Reckon you need a bit more practice, partner.”';
         }
 
-        dom.endingStatsSummary.textContent = `Final Chips: ${state.chips} · Rounds Completed: ${state.round}`;
+        renderEndingSummary();
 
+        pauseButton.hidden = true;
         dom.endingOverlay.classList.remove('hidden');
         dom.endingOverlay.classList.add('flex');
         triggerScreenShake();
@@ -1275,22 +1037,22 @@
         sound.playGunshot();
         dom.endingBulletHoles.insertAdjacentHTML(
           'beforeend',
-          createBulletHoleSVG(holesPositions[0].x, holesPositions[0].y, holesPositions[0].s)
+          createBulletHoleSprite(holesPositions[0].x, holesPositions[0].y, holesPositions[0].s)
         );
         dom.endingBulletHoles.insertAdjacentHTML(
           'beforeend',
-          createBulletHoleSVG(holesPositions[1].x, holesPositions[1].y, holesPositions[1].s)
+          createBulletHoleSprite(holesPositions[1].x, holesPositions[1].y, holesPositions[1].s)
         );
 
         scheduleTimer(() => {
           sound.playBulletWhizz();
           dom.endingBulletHoles.insertAdjacentHTML(
             'beforeend',
-            createBulletHoleSVG(holesPositions[2].x, holesPositions[2].y, holesPositions[2].s)
+            createBulletHoleSprite(holesPositions[2].x, holesPositions[2].y, holesPositions[2].s)
           );
           dom.endingBulletHoles.insertAdjacentHTML(
             'beforeend',
-            createBulletHoleSVG(holesPositions[3].x, holesPositions[3].y, holesPositions[3].s)
+            createBulletHoleSprite(holesPositions[3].x, holesPositions[3].y, holesPositions[3].s)
           );
         }, 160);
 
@@ -1302,51 +1064,31 @@
       }
 
       function restartGame() {
-        clearAllScheduledTimers();
-
-        if (state.pendingVocabLibrary) {
-          state.vocabLibrary = state.pendingVocabLibrary;
-          state.pendingVocabLibrary = null;
-        }
-
-        // Leave terminal state before starting a new round; startNewRound()
-        // intentionally refuses to deal while VICTORY/DEFEAT is active.
-        state.gameState = GAME_STATES.READY;
-        state.chips = 5;
-        state.round = 1;
-        state.activeOpponentIndex = 0;
-        state.roundCorrectCount = 0;
-        state.roundIncorrectAttempts = 0;
-        state.roundScored = false;
-        state.opponentHand = [];
-        state.studentHand = [];
-        state.unusedPoolIds = shuffleArray(state.vocabLibrary.map((e) => e.id));
-
-        dom.endingOverlay.classList.add('hidden');
-        dom.endingOverlay.classList.remove('flex');
-        dom.endingCardBox.classList.add('opacity-0', 'translate-y-4');
-        dom.endingCardBox.classList.remove('opacity-100', 'translate-y-0');
-        dom.endingBulletHoles.innerHTML = '';
-        dom.wrongShotOverlay.innerHTML = '';
-        dom.wrongShotOverlay.classList.add('hidden');
-        dom.wrongShotOverlay.classList.remove('flex');
-        dom.gameFrame.classList.remove('screen-shake');
-
-        hideRoundResultToast();
-        renderChipStack(5);
-        startNewRound();
+        clearAllScheduledTimers(); stopPronunciation(); placeDealerAtEnding(false); setDealerPose('idle');
+        if (state.pendingVocabLibrary) { state.vocabLibrary = state.pendingVocabLibrary; state.pendingVocabLibrary = null; }
+        state.gameState = GAME_STATES.READY; state.chips = 5; state.round = 1; state.roundsPlayed = 0;
+        state.activeOpponentIndex = -1; state.roundCorrectCount = 0; state.roundIncorrectAttempts = 0; state.roundScored = false;
+        state.consecutiveCorrect = 0; state.roundStreakAwarded = false; state.totalPairs = 0; state.totalAttempts = 0; state.mistakes = [];
+        state.opponentHand = []; state.studentHand = []; state.unusedPoolIds = shuffleArray(state.vocabLibrary.map(entry => entry.id));
+        pauseButton.hidden = false;
+        dom.endingOverlay.classList.add('hidden'); dom.endingOverlay.classList.remove('flex');
+        dom.endingCardBox.classList.add('opacity-0','translate-y-4'); dom.endingCardBox.classList.remove('opacity-100','translate-y-0'); dom.endingBulletHoles.innerHTML = '';
+        dom.wrongShotOverlay.innerHTML = ''; dom.wrongShotOverlay.classList.add('hidden'); dom.wrongShotOverlay.classList.remove('flex'); dom.gameFrame.classList.remove('screen-shake');
+        hideRoundResultToast(); renderChipStack(5); startNewRound();
       }
 
       function toggleSound() {
         state.soundEnabled = !state.soundEnabled;
+        if (!state.soundEnabled) stopPronunciation();
         dom.soundOnIcon.classList.toggle('hidden', !state.soundEnabled);
         dom.soundOffIcon.classList.toggle('hidden', state.soundEnabled);
+        dom.soundToggleBtn.setAttribute('aria-pressed', String(state.soundEnabled));
+        document.querySelector('[data-poker-sound-label]').textContent = state.soundEnabled ? 'Sound · On' : 'Sound · Off';
 
         if (!state.soundEnabled && sound.ctx && sound.ctx.state === 'running') {
           sound.ctx.suspend().catch(() => {});
         } else if (state.soundEnabled) {
           sound.ensureContext();
-          sound.playCardPlace();
         }
       }
 
@@ -1488,12 +1230,50 @@
         }
       }
 
+      const mainMenu = document.querySelector('[data-poker-menu]');
+      const enterCasino = document.querySelector('[data-enter-casino]');
+      const pauseMenu = document.querySelector('[data-poker-pause-menu]');
+      const pauseButton = document.querySelector('[data-poker-pause]');
+
+      function showMainMenu() {
+        clearAllScheduledTimers();
+        stopPronunciation();
+        if (pauseMenu.open) pauseMenu.close();
+        state.gameState = GAME_STATES.READY;
+        dom.gameFrame.hidden = true;
+        mainMenu.hidden = false;
+        enterCasino.focus();
+      }
+
+      function enterTable() {
+        if (enterCasino.disabled || mainMenu.hidden) return;
+        mainMenu.hidden = true;
+        dom.gameFrame.hidden = false;
+        sound.ensureContext();
+        restartGame();
+        pauseButton.focus();
+      }
+
+      function openPauseMenu() {
+        if (dom.gameFrame.hidden || pauseMenu.open || !dom.endingOverlay.classList.contains('hidden')) return;
+        parkTimers();
+        stopPronunciation();
+        pauseMenu.showModal();
+      }
+
+      function resumePoker() {
+        if (!pauseMenu.open) return;
+        pauseMenu.close();
+        resumeTimers();
+        pauseButton.focus();
+      }
+
       async function initGame() {
+        const criticalArtwork = loadCriticalArtwork();
         const urlParams = new URLSearchParams(window.location.search);
-        const defaultReturn = window.location.hostname.endsWith("github.io")
-          ? "https://vuongtranvt1331-design.github.io/Arcadehub/"
-          : "arcade.html";
-        const returnUrl = window.SpaceSuite ? SpaceSuite.safeReturn(urlParams.get("returnUrl"), "arcade") : urlParams.get("returnUrl") || defaultReturn;
+        const returnUrl = window.SpaceSuite
+          ? SpaceSuite.safeReturn(urlParams.get("returnUrl"), "arcade")
+          : new URL("../arcade/", document.baseURI).href;
         const exitArcadeBtn = document.getElementById("exitArcadeBtn");
         if (exitArcadeBtn) exitArcadeBtn.href = returnUrl;
         document.querySelectorAll("a[href='arcade.html']").forEach(a => { a.href = returnUrl; });
@@ -1528,11 +1308,31 @@
           reshuffleDeck();
         });
 
-        renderChipStack(5);
-        updateReshuffleButtonState();
-        startNewRound();
+        document.querySelector('[data-poker-hint]')?.addEventListener('click', useHint);
+        enterCasino.addEventListener('click', enterTable);
+        pauseButton.addEventListener('click', openPauseMenu);
+        document.querySelector('[data-poker-resume]').addEventListener('click', resumePoker);
+        pauseMenu.addEventListener('cancel', event => { event.preventDefault(); resumePoker(); });
+        document.querySelectorAll('[data-poker-main]').forEach(button => button.addEventListener('click', showMainMenu));
+        await criticalArtwork;
+        enterCasino.disabled = state.vocabLibrary.length < 4;
+        window.__spaceGameReady = true;
+        document.dispatchEvent(new Event('spacegame:ready'));
       }
 
+      document.addEventListener('click', event => {
+        const link = event.target.closest?.('a[href]');
+        if (link && !event.defaultPrevented && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey && event.button === 0 && link.target !== '_blank') { clearAllScheduledTimers(); stopPronunciation(); }
+      });
+      window.addEventListener('pagehide', event => {
+        if (event.persisted) parkTimers();
+        else clearAllScheduledTimers();
+        stopPronunciation();
+      });
+      window.addEventListener('pageshow', event => {
+        if (event.persisted && !pauseMenu.open) resumeTimers();
+      });
       window.addEventListener('DOMContentLoaded', initGame);
     })();
   
+import('../../arcade/js/action-frames.js').catch(() => { document.documentElement.dataset.actionArt = 'fallback'; });

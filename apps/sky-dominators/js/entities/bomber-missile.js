@@ -32,7 +32,7 @@ function clearBomberRow(row,skinId) {
 }
 
 function launchBomberStrike() {
-    if(gameState!=='PLAYING'||isPaused||player.hp<=0||AIRCRAFT_CONFIGS[player.aircraftIndex].key!=='bomber'||player.skillCooldownTimer>0||!bossEncounter.canShoot||isDestinationTraveling())return false;
+    if(gameState!=='PLAYING'||isPaused||player.hp<=0||AIRCRAFT_CONFIGS[player.aircraftIndex].key!=='bomber'||player.skillCooldownTimer>0||!bossEncounter.canShoot)return false;
     const bossTargeting=bossEncounter.blocksRegular&&bossEncounter.canShoot;
     const row=bossTargeting?null:getActiveFormationRows()[0];
     if(!row&&!bossEncounter.boss)return false;

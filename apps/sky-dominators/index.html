@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" data-suite-module="sky-dominators">
 <head>
-  <script src="../../suite/js/core.js?v=43.3.0-4ba1a9ac80"></script>
-  <link rel="stylesheet" href="../../suite/css/components.css?v=43.3.0-69a13ed7c3">
+  <script src="../../suite/js/core.js?v=43.19.0-4ba1a9ac80"></script>
+  <link rel="stylesheet" href="../../suite/css/components.css?v=43.19.0-69a13ed7c3">
     <meta name="sky-dominators-release" content="2026-11-01-celestial-1">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -12,79 +12,80 @@
     <!-- Firebase SDK v10 Compat for Sky Dominators Cloud Firestore -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <link rel="stylesheet" href="css/game.css?v=boss-hud-roaming-1">
-    <link rel="stylesheet" href="css/progress.css?v=2026-11-01-modular-1">
-    <link rel="stylesheet" href="css/intro.css?v=reactor-intro-1">
-    <link rel="preload" as="image" href="assets/logo/sky_dominators_logo.png">
-    <script defer src="js/config/skins/red-wraith-config.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/config/skins/elder-wood-config.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/config/ornithopter.js?v=2026-11-01-ornithopter-tip-jitter-1"></script>
-    <script defer src="js/entities/skins/ornithopter.js?v=2026-11-01-ornithopter-tip-jitter-1"></script>
-    <script defer src="js/config/skins/exalted-config.js?v=2026-11-01-exalted-animation-8"></script>
-    <script defer src="js/entities/skins/exalted.js?v=2026-11-01-exalted-animation-8"></script>
-    <script defer src="js/config/skins/celestial-config.js?v=2026-11-01-celestial-1"></script>
-    <script defer src="js/entities/skins/celestial.js?v=2026-11-01-celestial-1"></script>
-    <script defer src="js/config/skins/prism-core-config.js?v=2026-11-04-prism-core-gothic-1"></script>
-    <script defer src="js/entities/skins/prism-core.js?v=2026-11-04-prism-core-gothic-1"></script>
-    <script defer src="js/config/skins/catalog.js?v=2026-11-04-prism-core-gothic-1"></script>
-    <script defer src="js/entities/skins/hazard.js?v=2026-11-01-titan-buff-1"></script>
-    <script defer src="js/rendering/skins.js?v=2026-11-04-prism-core-gothic-1"></script>
-    <script defer src="js/entities/bosses/drone-swarm.js?v=boss5-lock-750"></script>
-    <script defer src="js/entities/bosses/sky-fortress.js?v=boss-hud-roaming-1"></script>
-    <script defer src="js/entities/bosses/continental-bomber.js?v=boss-hud-roaming-1"></script>
-    <script defer src="js/entities/bosses/titanus-veronica.js?v=boss6-missile-smoke-1"></script>
-    <script defer src="js/systems/boss-director.js?v=boss-hud-roaming-1"></script>
-    <script defer src="js/systems/progress/core.js?v=2026-11-01-celestial-1"></script>
-    <script defer src="js/systems/progress/firestore.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/progress/client.js?v=43.3.0-bba73dc72f"></script>
-    <script defer src="js/config/gameplay.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/config/aircraft.js?v=2026-11-01-titan-buff-1"></script>
-    <script defer src="js/config/audio.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/config/vocabulary.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/config/firebase.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/core/canvas.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/assets.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/audio.js?v=boss6-titanus-1"></script>
-    <script defer src="js/systems/vocabulary.js?v=2026-11-06-lexicalspace-db"></script>
-    <script defer src="js/ui/danger-hud.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/missions.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/formations.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/entities/enemy-helicopter.js?v=2026-11-01-titan-buff-1"></script>
-    <script defer src="js/entities/enemy-formation.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/rendering/terrain.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/entities/projectiles.js?v=2026-11-01-boss5-phases-1"></script>
-    <script defer src="js/systems/ownership.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/rendering/player-effects.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/entities/player.js?v=2026-11-04-prism-core-gothic-1"></script>
-    <script defer src="js/ui/aircraft-previews.js?v=2026-11-04-prism-core-gothic-1"></script>
-    <script defer src="js/entities/effects.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/rendering/effects.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/state.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/spawn.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/ui/hud.js?v=2026-11-01-titan-buff-1"></script>
-    <script defer src="js/core/world.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/input.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/systems/lifecycle.js?v=2026-11-01-exalted-animation-8"></script>
-    <script defer src="js/systems/boss-integration.js?v=boss-hud-roaming-1"></script>
-    <script defer src="js/entities/bomber-missile.js?v=2026-11-01-boss5-phases-1"></script>
-    <script defer src="js/systems/collisions.js?v=2026-11-01-titan-buff-1"></script>
-    <script defer src="js/core/game-loop.js?v=boss-hud-roaming-1"></script>
-    <script defer src="js/ui/leaderboards.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/ui/hangar.js?v=2026-11-01-celestial-1"></script>
-    <script defer src="js/ui/navigation.js?v=43.3.0-d09380e4d5"></script>
-    <script defer src="js/ui/events.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/app.js?v=2026-11-01-modular-1"></script>
-    <script defer src="js/ui/progress.js?v=2026-11-01-celestial-1"></script>
-    <script defer src="js/ui/intro.js?v=reactor-intro-1"></script>
-<link rel="manifest" href="../../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icons/icon-192.png"><script defer src="../../js/core/offline.js?v=43.3.0-39c886b7ac"></script></head>
+    <link rel="stylesheet" href="css/game.css?v=43.19.0-7787d6321c">
+    <link rel="stylesheet" href="css/progress.css?v=43.19.0-cb9575f759">
+    <link rel="stylesheet" href="../../suite/css/game-logo-loader.css?v=43.19.0-f0a2c333e0">
+    <link rel="preload" as="image" href="./assets/logo/sky_dominators_logo.png">
+    <script defer src="js/config/skins/red-wraith-config.js?v=43.8.0-cb6a21c273"></script>
+    <script defer src="js/config/skins/elder-wood-config.js?v=43.8.0-4a2d2cedec"></script>
+    <script defer src="js/config/ornithopter.js?v=43.8.0-7415c83176"></script>
+    <script defer src="js/entities/skins/ornithopter.js?v=43.8.0-f195ab1056"></script>
+    <script defer src="js/config/skins/exalted-config.js?v=43.8.0-d35d4da4d1"></script>
+    <script defer src="js/entities/skins/exalted.js?v=43.8.0-f2477a8bff"></script>
+    <script defer src="js/config/skins/celestial-config.js?v=43.8.0-4af0f4d022"></script>
+    <script defer src="js/entities/skins/celestial.js?v=43.8.0-f40e5c8ccf"></script>
+    <script defer src="js/config/skins/prism-core-config.js?v=43.8.0-9d9ce3ee5a"></script>
+    <script defer src="js/entities/skins/prism-core.js?v=43.8.0-40c7d2c594"></script>
+    <script defer src="js/config/skins/catalog.js?v=43.8.0-e60a721703"></script>
+    <script defer src="js/entities/skins/hazard.js?v=43.8.0-6f5034c841"></script>
+    <script defer src="js/rendering/skins.js?v=43.8.0-c8b037661d"></script>
+    <script defer src="js/entities/bosses/drone-swarm.js?v=43.8.0-95da813310"></script>
+    <script defer src="js/entities/bosses/sky-fortress.js?v=43.8.0-06013dd5fc"></script>
+    <script defer src="js/entities/bosses/continental-bomber.js?v=43.8.0-ef767c6b9c"></script>
+    <script defer src="js/entities/bosses/titanus-veronica.js?v=43.8.0-a639b2c976"></script>
+    <script defer src="js/systems/boss-director.js?v=43.8.0-ee77f33f23"></script>
+    <script defer src="js/systems/progress/core.js?v=43.8.0-636c252055"></script>
+    <script defer src="js/systems/progress/firestore.js?v=43.8.0-01cf2133c6"></script>
+    <script defer src="js/systems/progress/client.js?v=43.19.0-bba73dc72f"></script>
+    <script defer src="js/config/gameplay.js?v=43.8.0-08d9f9e9b6"></script>
+    <script defer src="js/config/aircraft.js?v=43.8.0-de9fb9f12d"></script>
+    <script defer src="js/config/audio.js?v=43.8.0-bb6b092623"></script>
+    <script defer src="js/config/vocabulary.js?v=43.8.0-d49adbb6c1"></script>
+    <script defer src="js/config/firebase.js?v=43.8.0-1b39e49e8c"></script>
+    <script defer src="js/core/canvas.js?v=43.8.0-aac5d1140f"></script>
+    <script defer src="js/systems/assets.js?v=43.8.0-1756c15a4c"></script>
+    <script defer src="js/systems/audio.js?v=43.8.0-bfcd9fcb64"></script>
+    <script defer src="js/systems/vocabulary.js?v=43.8.0-9d93e9080a"></script>
+    <script defer src="js/ui/danger-hud.js?v=43.8.0-2c645b1a67"></script>
+    <script defer src="js/systems/missions.js?v=43.8.0-00483e3b6a"></script>
+    <script defer src="js/systems/formations.js?v=43.8.0-32937b08fb"></script>
+    <script defer src="js/entities/enemy-helicopter.js?v=43.8.0-2969b772b4"></script>
+    <script defer src="js/entities/enemy-formation.js?v=43.8.0-75a3dddf2f"></script>
+    <script defer src="js/rendering/terrain.js?v=43.8.0-b7d753cf91"></script>
+    <script defer src="js/entities/projectiles.js?v=43.8.0-c93bf2135b"></script>
+    <script defer src="js/systems/ownership.js?v=43.8.0-f1b87750e9"></script>
+    <script defer src="js/rendering/player-effects.js?v=43.8.0-a35f72bf76"></script>
+    <script defer src="js/entities/player.js?v=43.8.0-6014543b80"></script>
+    <script defer src="js/ui/aircraft-previews.js?v=43.8.0-da3e020bbd"></script>
+    <script defer src="js/entities/effects.js?v=43.8.0-94cb70b7fe"></script>
+    <script defer src="js/rendering/effects.js?v=43.8.0-21a378194d"></script>
+    <script defer src="js/systems/state.js?v=43.8.0-04d9911d93"></script>
+    <script defer src="js/systems/spawn.js?v=43.8.0-b5a564a699"></script>
+    <script defer src="js/ui/hud.js?v=43.19.0-665188c3bf"></script>
+    <script defer src="js/core/world.js?v=43.8.0-d52d99ef7e"></script>
+    <script defer src="js/systems/input.js?v=43.19.0-d75089e11e"></script>
+    <script defer src="js/systems/lifecycle.js?v=43.8.0-11ed12868a"></script>
+    <script defer src="js/systems/boss-integration.js?v=43.8.0-9ad2ef7ce0"></script>
+    <script defer src="js/entities/bomber-missile.js?v=43.8.0-35fcab53d4"></script>
+    <script defer src="js/systems/collisions.js?v=43.8.0-d2218363f7"></script>
+    <script defer src="js/core/game-loop.js?v=43.8.0-6c55d56fc7"></script>
+    <script defer src="js/ui/leaderboards.js?v=43.8.0-e5461a9efc"></script>
+    <script defer src="js/ui/hangar.js?v=43.19.0-cbf975100b"></script>
+    <script defer src="js/ui/navigation.js?v=43.19.0-d09380e4d5"></script>
+    <script defer src="js/ui/events.js?v=43.19.0-cf5b9542b1"></script>
+    <script defer src="js/app.js?v=43.8.0-e27a081f91"></script>
+    <script defer src="js/ui/progress.js?v=43.19.0-fd4a367c5a"></script>
+    <script defer src="../../suite/components/game-logo-loader.js?v=43.19.0-a94e01bbc5"></script>
+<link rel="manifest" href="../../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icons/icon-192.png"><script defer src="../../js/core/offline.js?v=43.19.0-39c886b7ac"></script><link rel="stylesheet" href="../../suite/css/game-icons.css?v=43.19.0-18940026b2"><link rel="stylesheet" href="../arcade/css/action-frames.css?v=43.19.0-c3a3b6e058"><script defer src="../../suite/js/game-menu-audio.js?v=43.19.0-56ff82a688"></script></head>
 <body>
+  <section class="game-logo-loader" data-game-logo-loader="sky" role="status" aria-label="Loading Sky Dominators"><img src="../arcade/assets/logo/sky_dominators_logo.png" width="576" height="576" alt="Sky Dominators" decoding="async"></section>
 
     <!-- Main Game Frame -->
     <div class="game-wrapper">
 
-        <!-- Game Canvas Screen Container: Portrait 9:16 Aspect Ratio -->
+        <!-- Flight viewport -->
         <div id="canvasContainer">
-            <!-- Native 9:16 Canvas Coordinates: 540x960 -->
+            <!-- Initial canvas size before viewport measurement -->
             <canvas id="gameCanvas" width="540" height="960"></canvas>
 
             <div id="battleTopHud" class="battle-top-hud">
@@ -122,30 +123,22 @@
                     <span id="bossHealthPhase" class="boss-health-phase" hidden></span>
                 </div>
                 <!-- Requirement 3: Minimal In-Game Control: Single Small Pause Button in Top-Right Corner -->
-                <button id="inGamePauseBtn" class="in-game-pause-btn" type="button" aria-label="Pause Game" title="Pause Game">
-                    <span>⏸</span>
+                <button id="inGamePauseBtn" data-common-game-icon="pause" data-system-control class="in-game-pause-btn" type="button" aria-label="Pause Game" title="Pause Game" data-bare-control>
+                    
                 </button>
             </div>
 
             <!-- In-Game Tactical Skill Button (Fighter 1, Phantom, Phantom Prototype) -->
             <div id="skillButtonContainer" class="skill-button-container">
-                <button id="inGameSkillBtn" class="tactical-skill-btn ready" type="button" aria-label="Activate Special Ability">
+                <button id="inGameSkillBtn" aria-describedby="hudSkillBadge" class="tactical-skill-btn ready" type="button" aria-label="Activate Special Ability" data-common-game-icon="bolt" title="Activate aircraft skill" data-action-face="accent">
                     <span id="skillBtnIcon" class="skill-btn-icon">🎯</span>
                     <span id="skillBtnName" class="skill-btn-name">TARGET LOCK</span>
                     <span id="skillBtnTimer" class="skill-btn-timer">READY [E]</span>
                 </button>
             </div>
 
-            <!-- Mobile firing guide (special ability button remains above) -->
-            <div id="mobileControlsContainer" class="mobile-controls-overlay" style="display: none;">
-                <!-- Left Action Cluster: SHOOT Button (Skill button is positioned above via CSS) -->
-                <div class="mobile-action-group">
-                    <button id="touchShootBtn" class="mobile-shoot-btn" type="button" aria-label="Firing help" title="Each tap selects a destination and queues one shot. Spacebar fires manually.">
-                        <span class="shoot-btn-icon">⚡</span>
-                        <span class="shoot-btn-label">FIRE?</span>
-                    </button>
-                </div>
-
+            <div id="mobileControlsContainer" class="mobile-controls-overlay" aria-hidden="true" style="display:none">
+                <div id="touchShootBtn" class="flight-stick" hidden><span></span></div>
             </div>
 
             <!-- DANGER / TARGET VOCABULARY FRAME (Using panel_danger.png, positioned between player & enemies) -->
@@ -162,20 +155,17 @@
             <div id="inGameHangarModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="hangarTitle">
                 <div class="hangar-modal-box">
                     <div class="hangar-header">
-                        <span id="hangarTitle" class="hangar-title">✈ TACTICAL HANGAR</span>
-                        <button id="closeHangarBtn" class="hangar-close-btn" type="button" aria-label="Close Hangar">✕</button>
+                        <h2 id="hangarTitle" class="hangar-title"><span id="hangarAircraftName"></span><small id="hangarClassName"></small></h2>
+                        <button id="closeHangarBtn" class="hangar-close-btn" type="button" aria-label="Close Hangar" data-common-game-icon="close" title="Close Hangar" data-action-face="quiet">Close</button>
                     </div>
                     <section class="hangar-selected-info" aria-label="Selected aircraft">
                         <img id="hangarAircraftBigImg" class="hangar-big-img" src="assets/models/player_default.png" alt="Fighter 1" />
                         <div class="hangar-selected-copy">
-                            <h2 id="hangarAircraftName" class="hangar-aircraft-name"></h2>
-                            <p id="hangarClassName"></p>
                             <p id="aircraftLockNotice" hidden role="status" style="font-family:Arial,sans-serif;color:#fbbf24;font-size:15px"></p><p id="hangarUnlockStatus" role="status"></p>
                             <div class="hangar-stat-line"><span id="hangarHealthBar" class="hangar-health-bar"></span><span>Damage <strong id="hangarDamageNumber">1</strong></span></div>
                             <ul id="hangarDescList" class="hangar-desc-list"></ul>
 
                         </div>
-                        <button id="hangarConfirmBtn" class="tactical-btn" type="button">CONFIRM AIRCRAFT SELECTION</button>
                     </section>
                     <div class="hangar-collections">
                         <section class="hangar-aircraft-section" aria-labelledby="hangarAircraftHeading">
@@ -184,12 +174,13 @@
                         </section>
                         <section class="hangar-skins-section" aria-labelledby="skinHeading">
                             <h3 id="skinHeading">SKIN COLLECTION</h3>
-                            <p class="skin-help">Unlock skins for the selected aircraft. Previewing is free.</p>
                             <div id="skinCards" class="skin-cards"></div>
-                            <p id="skinStatus" role="status" aria-live="polite"></p>
-                            <button id="skinAction" class="tactical-btn" type="button">EQUIPPED</button>
                         </section>
 
+                    </div>
+                    <div class="hangar-flight-action">
+                        <p id="skinStatus" role="status" aria-live="polite"></p>
+                        <button id="hangarConfirmBtn" class="tactical-btn" type="button" data-common-game-icon="jet" data-action-face="accent"><span id="skinAction">SCRAMBLE JETS</span></button>
                     </div>
                 </div>
             </div>
@@ -199,7 +190,7 @@
                 <div class="leaderboard-modal-box">
                     <div class="leaderboard-header">
                         <span class="leaderboard-title">🏆 FLIGHT ACADEMY LEADERBOARD</span>
-                        <button id="closeLeaderboardBtn" class="hangar-close-btn" type="button">✕</button>
+                        <button id="closeLeaderboardBtn" class="hangar-close-btn" type="button" data-common-game-icon="close" aria-label="Close leaderboard" title="Close leaderboard" data-action-face="quiet">Close</button>
                     </div>
 
                     <!-- Mode / Status Banner -->
@@ -212,7 +203,7 @@
                     <div class="leaderboard-player-strip">
                         <span class="player-callsign-label">CALLSIGN:</span>
                         <input type="text" id="leaderboardCallsignInput" class="callsign-input" maxlength="80" value="PILOT-01" placeholder="CALLSIGN" style="min-height: 44px; font-size: 13px;" />
-                        <button id="saveCallsignBtn" class="tactical-btn" style="min-height: 44px; padding: 0 16px; font-size: 12px; font-weight: 700; border-radius: 4px;">SET</button>
+                        <button id="saveCallsignBtn" class="tactical-btn" style="min-height: 44px" data-common-game-icon="check" title="Save pilot callsign" aria-label="Save pilot callsign" data-action-face="main">SET</button>
                     </div>
 
                     <!-- Leaderboard Table Container -->
@@ -226,7 +217,7 @@
                         <!-- Error State -->
                         <div id="leaderboardErrorState" class="leaderboard-state-msg hidden">
                             <span style="color: #ef4444; font-weight: bold;">⚠️ TELEMETRY CONNECTION FAILED</span>
-                            <button id="leaderboardRetryBtn" class="tactical-btn" style="min-height: 44px; padding: 0 18px; font-size: 12px; margin-top: 8px;">RETRY</button>
+                            <button id="leaderboardRetryBtn" class="tactical-btn" style="min-height: 44px; margin-top: 8px" data-common-game-icon="replay" title="Retry leaderboard" aria-label="Retry leaderboard" data-action-face="quiet">RETRY</button>
                         </div>
 
                         <!-- Empty State -->
@@ -245,7 +236,7 @@
                         SORTED IN DESCENDING ORDER OF FINAL SCORE
                     </div>
 
-                    <button id="leaderboardCloseBottomBtn" class="tactical-btn" style="width: 100%; min-height: 48px; padding: 12px; font-size: 13px; font-weight: 800; border-radius: 6px;">
+                    <button id="leaderboardCloseBottomBtn" class="tactical-btn" style="width: 100%; min-height: 48px" data-common-game-icon="back" title="Return" aria-label="Return" data-action-face="quiet">
                         RETURN
                     </button>
                 </div>
@@ -257,18 +248,15 @@
 
             <!-- Start Screen / Main Menu Interface (Vertically Scrollable) -->
             <div id="startOverlay" class="modal-overlay">
-                <!-- Top Navigation Bar: Return to Arcade Hub -->
+                    
+                <!-- Flight sector heading -->
                 <div style="width: 100%; max-width: 494px; display: flex; align-items: center; justify-content: space-between; margin: 4px auto 10px auto; padding: 0 2px; box-sizing: border-box;">
-                    <a id="btnBackToArcadeHub" href="#" class="btn-return-hub" title="Return to Arcade Hub">
-                        <span style="font-size: 11px;">◀</span>
-                        <span>ARCADE HUB</span>
-                    </a>
                     <span style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; color: #64748b; letter-spacing: 0.12em;">TAC-OPS // S1</span>
                 </div>
 
                 <!-- 1. Centered Official Game Logo at Top (2X Rendered Size) -->
                 <div style="width: 100%; max-width: 440px; margin: 6px auto 14px auto; text-align: center;">
-                    <img id="mainMenuLogoImg" src="assets/logo/sky_dominators_logo.png" alt="Sky Dominators" style="width: 100%; max-height: 250px; object-fit: contain; filter: drop-shadow(0 0 18px rgba(220, 38, 38, 0.75)); display: block; margin: 0 auto;" />
+                    <img id="mainMenuLogoImg" src="./assets/logo/sky_dominators_logo.png" alt="Sky Dominators" width="576" height="576" style="image-rendering: pixelated; width: 100%; max-height: 250px; object-fit: contain; filter: drop-shadow(0 0 18px rgba(220, 38, 38, 0.75)); display: block; margin: 0 auto;" />
                 </div>
 
                 <!-- Flight medals, verified Legend, and secondary badges use separate artwork groups. -->
@@ -277,23 +265,16 @@
 <div id="pilotCoins">0 Coins</div><p id="pilotProgress"></p></section>
 
 
-                <!-- 3. Prominent TAKE OFF Button (With Integrated Player Callsign) -->
-                <button id="startBtn" class="tactical-btn take-off-btn" type="button" aria-label="Take Off and Start Flight" style="width: 100%; max-width: 440px; min-height: 68px; padding: 10px 16px; border-radius: 8px; background: linear-gradient(180deg, #ef4444 0%, #dc2626 45%, #991b1b 100%); border: 2px solid #fca5a5; color: #ffffff; text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 18px #dc2626; box-shadow: 0 0 25px rgba(239, 68, 68, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 6px rgba(0, 0, 0, 0.4); cursor: pointer; margin-bottom: 14px; font-family: 'Orbitron', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; box-sizing: border-box;">
-                    <!-- Pilot Identity Line -->
-                    <div class="take-off-pilot-line" style="display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11.5px; letter-spacing: 0.16em; font-weight: 800; color: #fef08a; text-shadow: 0 0 8px rgba(0, 0, 0, 0.9); max-width: 100%; overflow: hidden;">
-                        <span style="color: #fed7aa; opacity: 0.9;">PILOT:</span>
-                        <span id="takeOffPilotCallsign" style="color: #fef08a; text-decoration: underline dotted #facc15; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">PILOT-01</span>
-                        <span id="takeOffEditPencil" title="Click to edit callsign" style="font-size: 11px; cursor: pointer; opacity: 0.85; padding: 1px 4px; background: rgba(0,0,0,0.3); border-radius: 3px;">✎</span>
-                    </div>
-                    <!-- Action Launch Line -->
-                    <div class="take-off-action-line" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 20px; font-weight: 900; letter-spacing: 0.24em; color: #ffffff;">
-                        <span style="font-size: 19px;">✈</span>
-                        <span id="takeOffActionLabel">TAKE OFF</span>
-                    </div>
-                </button>
+                <div class="pilot-launch game-menu-column">
+                    <div class="take-off-pilot-line"><span>PILOT:</span> <span id="takeOffPilotCallsign">PILOT-01</span>
 
+                    </div>
+                    <button id="startBtn" class="tactical-btn take-off-btn" type="button" aria-label="Select aircraft" title="Select aircraft" data-action-face="main"><span id="takeOffActionLabel">Select aircraft</span></button>
 
-                <details class="progress-links"><summary>PLAYER INFO</summary><div id="profileDetails"></div></details>
+                    <details class="progress-links"><summary data-action-face="quiet" title="Pilot information" aria-label="Pilot information">PLAYER INFO</summary><div id="profileDetails"></div></details>                    <a id="btnBackToArcadeHub" href="../arcade/" class="tactical-btn" data-menu-hub aria-label="Return to ArcadeSpace" title="Return to ArcadeSpace" data-action-face="quiet">Return to Arcade Hub</a>
+                </div>
+
+                
                 <!-- 4. Shared Leaderboard (Top 6 Players on Sky Dominators Pixel Leaderboard.png - Enlarged 30%, Zero Gap) -->
                 <div style="width: 100%; max-width: 494px; margin-bottom: 0px;">
                     <div id="mainMenuLeaderboardContainer"></div>
@@ -305,8 +286,7 @@
                 </div>
 
                 <div id="profileSync" class="progress-status" role="status"></div>
-<a id="retryProgress" class="progress-retry" href="#">Refresh saved progress</a>
-<details class="progress-links" id="legacyLocalRecords" hidden><summary>Earlier records on this device</summary><p>These older records do not identify a pilot. They remain on this device and are not assigned to another student.</p><ul></ul></details>
+<details class="progress-links" id="legacyLocalRecords" hidden><summary data-action-face="quiet" title="Earlier records on this device" aria-label="Earlier records on this device">Earlier records on this device</summary><p>These older records do not identify a pilot. They remain on this device and are not assigned to another student.</p><ul></ul></details>
 <!-- 6. Compact Tactical Combat Protocols Briefing Card -->
                 <div style="position: relative; background: rgba(15, 23, 42, 0.94); border: 1px solid rgba(185, 28, 28, 0.8); border-radius: 6px; padding: 10px 12px; margin-bottom: 20px; text-align: left; font-size: 10.5px; color: #cbd5e1; width: 100%; max-width: 380px; box-shadow: 0 0 20px rgba(220, 38, 38, 0.2); box-sizing: border-box;">
                     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid rgba(153, 27, 27, 0.5);">
@@ -323,13 +303,12 @@
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; font-size: 9.5px; color: #94a3b8; padding-top: 4px; border-top: 1px solid #1e293b;">
                         <div>
                             <span style="color: #38bdf8; font-weight: bold; display: block;">STEERING</span>
-                            <span>• Arrow / WASD</span><br>
-                            <span>• Tap destination</span>
+                            <span><span data-mouse-help>• Move mouse or use WASD / arrows</span><span data-touch-help>• Drag on the left</span></span>
                         </div>
                         <div>
                             <span style="color: #38bdf8; font-weight: bold; display: block;">FIRING</span>
-                            <span>• Space / Tap</span><br>
-                            <span>• 1 Bullet/Shot</span>
+                            <span><span data-mouse-help>• Hold left click or Space</span><span data-touch-help>• Hold on the right</span></span><br>
+                            <span>• Up to 5 shots/sec</span>
                         </div>
                         <div>
                             <span style="color: #38bdf8; font-weight: bold; display: block;">TACTICAL JET</span>
@@ -344,27 +323,27 @@
 
             <!-- Pause Modal (Hangar strictly blocked during active flight) -->
             <div id="pauseOverlay" class="modal-overlay hidden">
+
                 <div class="relative px-6 py-2 mb-4 border-y-2 border-cyan-500 bg-cyan-950/40" style="padding: 8px 24px; border-top: 2px solid #00F0FF; border-bottom: 2px solid #00F0FF; background: rgba(8, 51, 68, 0.5);">
                     <h2 style="font-size: 26px; font-weight: 900; color: #00F0FF; text-shadow: 0 0 15px #00F0FF; font-family: 'Orbitron', sans-serif;">
                         TACTICAL PAUSE
                     </h2>
                 </div>
                 <p style="font-size: 12px; color: #cbd5e1; margin-bottom: 16px;">Flight telemetry suspended.</p>
-                <div style="display: flex; gap: 8px; align-items: center; justify-content: center; flex-wrap: wrap;">
-                    <button id="resumeBtn" class="tactical-btn" style="min-height: 48px; padding: 12px 20px; font-size: 13px; font-weight: bold; border-radius: 4px; background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%); border-color: #38bdf8;">
+                <div class="game-menu-column">
+                    <button id="resumeBtn" class="tactical-btn" style="min-height: 48px" data-common-game-icon="play" title="Resume combat" aria-label="Resume combat" data-action-face="main">
                         RESUME COMBAT
                     </button>
-                    <button id="pauseExitBtn" class="tactical-btn" style="min-height: 48px; padding: 12px 16px; font-size: 13px; font-weight: bold; border-radius: 4px; background: rgba(30, 41, 59, 0.8); border-color: #64748b;">
-                        ⮌ MAIN MENU
-                    </button>
-                    <button id="pauseArcadeHubBtn" class="tactical-btn" style="min-height: 48px; padding: 12px 16px; font-size: 13px; font-weight: bold; border-radius: 4px; background: rgba(15, 23, 42, 0.9); border-color: #facc15; color: #facc15;">
-                        ◀ ARCADE HUB
+                    <button type="button" data-sky-sound data-action-face="quiet" data-common-game-icon="sound-on" aria-pressed="true">Sound · On</button>
+                    <button id="pauseExitBtn" class="tactical-btn" style="min-height: 48px" data-common-game-icon="back" title="Main menu" aria-label="Main menu" data-action-face="quiet">
+                         MAIN MENU
                     </button>
                 </div>
             </div>
 
             <!-- Stage 1: Immediate Game Over / Mission Debrief Modal (STRICTLY NO BUTTONS - TAP TO ADVANCE) -->
             <div id="gameOverOverlay" class="modal-overlay hidden" style="cursor: pointer; user-select: none;">
+
                 <div class="relative px-6 py-2 mb-3 border-y-2 border-red-600 bg-red-950/40" style="position: relative; padding: 8px 24px; margin-bottom: 12px; border-top: 2px solid #dc2626; border-bottom: 2px solid #dc2626; background: rgba(69, 10, 10, 0.4);">
                     <div class="hud-corner-tl"></div>
                     <div class="hud-corner-tr"></div>
@@ -409,14 +388,13 @@
                 </div>
 
                 <!-- Pulsing Tap-To-Continue prompt (STRICTLY NO BUTTONS on Stage 1!) -->
-                <div class="pulse-prompt" style="margin-top: 8px; font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700; color: #38bdf8; letter-spacing: 0.15em; text-shadow: 0 0 8px rgba(56, 189, 248, 0.7);">
-                    [ TAP ANYWHERE TO VIEW FLIGHT RECORDS ]
-                </div>
+                <button type="button" data-action-face="quiet" data-common-game-icon="leaderboard">View flight records</button>
             </div>
 
             <section id="postFlightPromotion" aria-live="polite" hidden></section>
             <!-- Stage 2: Detailed Best Records Screen (BOARDS ONLY + ACTION BUTTONS) -->
             <div id="detailedRecordsOverlay" class="modal-overlay hidden">
+
                 <!-- Upper Section: Reusable Shared Leaderboard (Top 6 - Enlarged 30%, Zero Gap) -->
                 <div style="width: 100%; max-width: 494px; margin-bottom: 0px;">
                     <div id="detailedLeaderboardContainer"></div>
@@ -427,31 +405,22 @@
                     <div id="detailedPersonalRecordsContainer"></div>
                 </div>
 
-                <!-- Bottom Navigation Actions -->
-                <div style="width: 100%; max-width: 494px; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; box-sizing: border-box;">
-                    <!-- Upper Row: Relinquish / Menu + Hangar + Arcade Hub -->
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px;">
-                        <button id="detailedMainMenuBtn" class="tactical-btn" style="min-height: 48px; padding: 13px 4px; font-size: 11px; font-weight: 800; border-radius: 4px; background: rgba(30, 41, 59, 0.9); border-color: #64748b; color: #cbd5e1; font-family: 'Orbitron', sans-serif;">
-                            ⮌ MAIN MENU
-                        </button>
-                        <button id="detailedHangarBtn" class="tactical-btn" style="min-height: 48px; padding: 13px 4px; font-size: 11px; font-weight: 800; border-radius: 4px; background: rgba(8, 51, 68, 0.9); border-color: #38bdf8; color: #38bdf8; font-family: 'Orbitron', sans-serif;">
-                            ✈ HANGAR
-                        </button>
-                        <button id="detailedArcadeHubBtn" class="tactical-btn" style="min-height: 48px; padding: 13px 4px; font-size: 10px; font-weight: 800; border-radius: 4px; background: rgba(15, 23, 42, 0.9); border-color: #facc15; color: #facc15; font-family: 'Orbitron', sans-serif;">
-                            ◀ ARCADE HUB
-                        </button>
-                    </div>
-                    <!-- Lower Row: Full-width Retry -->
-                    <button id="detailedRetryBtn" class="tactical-btn" style="width: 100%; min-height: 52px; padding: 14px 16px; font-size: 14px; font-weight: 900; border-radius: 4px; background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%); border-color: #ef4444; color: #ffffff; text-shadow: 0 0 10px #dc2626; box-shadow: 0 0 18px rgba(220, 38, 38, 0.45); font-family: 'Orbitron', sans-serif; letter-spacing: 0.12em;">
-                        ⚡ RETRY SORTIE
+                <div class="game-menu-column">
+                    <button id="detailedRetryBtn" class="tactical-btn" style="width: 100%; min-height: 52px" data-common-game-icon="replay" title="Retry flight" aria-label="Retry flight" data-action-face="accent">
+                         RETRY FLIGHT
                     </button>
+                    <button id="detailedHangarBtn" class="tactical-btn" style="min-height: 48px" data-common-game-icon="jet" title="Open hangar" aria-label="Open hangar" data-action-face="main">
+                            HANGAR
+                        </button>
+                    <button id="detailedMainMenuBtn" class="tactical-btn" style="min-height: 48px" data-common-game-icon="back" title="Main menu" aria-label="Main menu" data-action-face="quiet">
+                             MAIN MENU
+                        </button>
                 </div>
 
                 <!-- Legacy trigger targets -->
                 <button id="restartBtn" style="display: none;"></button>
                 <button id="gameOverHangarBtn" style="display: none;"></button>
                 <button id="gameOverLeaderboardBtn" style="display: none;"></button>
-                <button id="gameOverExitBtn" style="display: none;"></button>
             </div>
 
             <!-- Legacy fallbacks for headless telemetry queries -->

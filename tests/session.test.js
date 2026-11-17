@@ -268,6 +268,7 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
         } else {
           $('recall-answer-input').value = 'incorrect';
           await flash.submitReverseAnswer();
+          await flash.gradeRecall(0);
         }
         const failed = flash.getSessionState();
         assert.equal(failed.cardQueue[0].grade, 0);
@@ -290,6 +291,9 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
         flash.resetForUser();
         await flash.startNewSession({ restore: true });
         assert.deepEqual(flash.getSessionState(), switched);
+        assert.equal($('btn-session-continue').hidden, true);
+        await storage.mutateWords([{ id: 'only', username: user, patch: { dueDate: new Date(Date.now() - 1).toISOString() } }]);
+        await context.refreshVocabulary(user);
         $('btn-session-continue').click();
         await until(() => flash.getSessionState().queueIndex === 0);
         assert.equal($('fc-front-word').textContent, 'auditorium');
@@ -357,7 +361,9 @@ test('integrated recall flow, keyboard, exact resume, import and missed-card com
       await flash.revealCard();
       $('recall-answer-input').value = 'incorrect';
       await flash.submitReverseAnswer();
-      assert.equal(flash.getSessionState().cardQueue[0].grade, 0);
+      assert.equal(flash.getSessionState().queueIndex, 0);
+      await flash.gradeRecall(1);
+      assert.equal(flash.getSessionState().cardQueue[0].grade, 1);
       assert.equal(spoken.length, count);
 
       $('btn-fc-next').click();

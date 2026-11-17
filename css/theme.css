@@ -1,4 +1,72 @@
-/* Shared light palette utilities work with or without the optional Tailwind CDN. */
+html[data-lexical-theme="ivory"], .palette-strip[data-palette="ivory"] {
+  --page-bg: #F5F1E8;
+  --surface: #FFFCF6;
+  --ink: #263647;
+  --primary: #285673;
+  --line: #D9D2C4;
+  --accent-soft: #DFE9E8;
+  --muted: #566675;
+  --on-primary: #FFFFFF;
+}
+html[data-lexical-theme="mist"], .palette-strip[data-palette="mist"] {
+  --page-bg: #EDF2F8;
+  --surface: #FCFDFF;
+  --ink: #26334C;
+  --primary: #425C9D;
+  --line: #CAD5E3;
+  --accent-soft: #E3EAF8;
+  --muted: #54627A;
+  --on-primary: #FFFFFF;
+}
+html[data-lexical-theme="plum"], .palette-strip[data-palette="plum"] {
+  --page-bg: #252333;
+  --surface: #312F40;
+  --ink: #F2EDF5;
+  --primary: #C6BAE9;
+  --line: #514C63;
+  --accent-soft: #454057;
+  --muted: #C1B9CA;
+  --on-primary: #292339;
+}
+html[data-lexical-theme="plum"] {
+  color-scheme: dark;
+  --danger: #ffadb8;
+  --danger-soft: #512f39;
+  --warning: #f2cf83;
+  --warning-soft: #493e28;
+  --success: #94dfb7;
+  --success-soft: #29473c;
+  --shadow: 0 4px 12px rgb(0 0 0 / 22%);
+  --overlay: rgb(7 12 17 / 65%);
+}
+.lexical-appearance { display: flex; gap: 8px; margin: 0; padding: 0; border: 0; }
+.lexical-appearance legend { margin-bottom: 6px; font-weight: 700; }
+.lexical-appearance label { position: relative; flex: 1; min-width: 0; cursor: pointer; }
+.lexical-appearance input {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer;
+}
+.palette-strip {
+  display: block; position: relative; pointer-events: none; height: 44px; border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .18);
+  background: linear-gradient(115deg, var(--page-bg) 20%, var(--surface) 20% 40%,
+    var(--ink) 40% 60%, var(--primary) 60% 80%, var(--line) 80%);
+}
+.lexical-appearance input:checked + .palette-strip::after {
+  content: "✓"; display: grid; place-items: center; position: absolute; right: 4px; bottom: 4px;
+  width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: var(--surface);
+  font: bold 13px/1 system-ui;
+}
+.lexical-appearance input:focus-visible + .palette-strip { outline: 2px solid currentColor; outline-offset: 2px; }
+html[data-lexical-theme="plum"] .grade-0 { --grade-bg: var(--danger-soft); --grade-text: var(--danger); }
+html[data-lexical-theme="plum"] .grade-1 { --grade-bg: var(--warning-soft); --grade-text: var(--warning); }
+html[data-lexical-theme="plum"] .grade-2 { --grade-bg: var(--success-soft); --grade-text: var(--success); }
+html[data-lexical-theme="plum"] .grade-3 { --grade-bg: var(--accent-soft); --grade-text: var(--primary); --grade-border: var(--primary); }
+html[data-lexical-theme="plum"] :is(.check-answer-yours, .check-answer-badge.is-incorrect) {
+  background: var(--danger-soft); color: var(--danger);
+}
+html[data-lexical-theme="plum"] :is(.check-answer-target, .check-answer-yours.is-correct, .check-answer-badge.is-correct, .check-answer-audio:hover) {
+  background: var(--success-soft); color: var(--success);
+}
 .theme-surface { background-color: var(--surface); }
 .theme-text { color: var(--ink); }
 .theme-muted { color: var(--muted); }

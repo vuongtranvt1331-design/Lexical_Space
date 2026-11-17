@@ -17,7 +17,7 @@ def main():
  try:server=LocalServer(('127.0.0.1',args.port),Handler)
  except OSError:
   print(f'Port {args.port} is already in use. Close the old local server and run again.\nUse the same port to keep access to your existing local library.');return 1
- url=f'http://localhost:{args.port}/';print('SpaceSuite / LexicalSpace43.3.0\n'+url+'\nKeep this window open. Ctrl+C stops the server.')
+ url=f'http://localhost:{args.port}/';print('SpaceSuite / LexicalSpace43.19.0\n'+url+'\nKeep this window open. Ctrl+C stops the server.')
  if not args.no_browser:webbrowser.open(url)
  try:server.serve_forever()
  except KeyboardInterrupt:pass

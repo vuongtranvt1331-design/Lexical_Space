@@ -50,6 +50,7 @@ function clearForm() {
   status('quickfill-status'); renderEntryTopicCards();
 }
 export function renderEntryTopicCards(topics = context.getAlphabeticalTopics()) {
+  $('ai-topic-list').replaceChildren(...topics.map(topic => Object.assign(document.createElement('option'), { value: topic })));
   const select = $('select-entry-topic'); if (!select) return;
   const selected = context.draftWord.topic || context.DEFAULT_TOPIC;
   select.replaceChildren();
@@ -226,9 +227,14 @@ export function setupEntryModule() {
   });
 }
 function selectTab(ai) {
+  const code = ai === 'code';
+  ai = ai === true;
+  $('section-entry-code').hidden = !code;
+  $('btn-entry-code').setAttribute('aria-selected', String(code));
   if (!ai) cancelImportFileRead();
-  $('entry-phase-1').hidden = ai; $('section-ai-library').hidden = !ai;
-  $('btn-entry-single').setAttribute('aria-selected', String(!ai)); $('btn-toggle-ai-library').setAttribute('aria-selected', String(ai));
+  $('entry-phase-1').hidden = ai || code; $('section-ai-library').hidden = !ai;
+  $('btn-entry-single').setAttribute('aria-selected', String(!ai && !code)); $('btn-toggle-ai-library').setAttribute('aria-selected', String(ai));
+  if (code) { $('deck-code-input').focus(); return; }
   if (ai) $(importPreview ? 'ai-import-preview-heading' : 'ai-raw-words').focus({ preventScroll: true }); else focusEntryWord();
 }
 function batchInput() {
@@ -275,17 +281,18 @@ function previewImportWord(word) {
 export function setupQuickImport() {
   const topicSelect = $('ai-import-topic'), newTopic = $('ai-import-new-topic');
   window.toggleAiLibrarySection = ai => selectTab(Boolean(ai));
+  $('btn-entry-code').addEventListener('click', () => selectTab('code'));
   $('btn-entry-single')?.addEventListener('click', () => selectTab(false));
   $('btn-toggle-ai-library')?.addEventListener('click', () => selectTab(true));
   $('btn-copy-ai-prompt')?.addEventListener('click', async () => {
     const ticket = context.accountGeneration;
     const stillEditing = () => ticket === context.accountGeneration && !$('ai-import-editor')?.hidden;
     let prompt;
-    try { prompt = buildAIPrompt($('ai-raw-words').value); }
+    try { prompt = buildAIPrompt($('ai-raw-words').value, validateImportTopic($('ai-topic-choice').value.trim() || 'keywords')); }
     catch (error) { status('batch-import-status', error.message, true); return; }
     try {
       await navigator.clipboard.writeText(prompt);
-      if (stillEditing()) status('batch-import-status', 'Prompt copied. Paste it into your AI, then bring back the JSON.');
+      if (stillEditing()) status('batch-import-status', 'Prompt copied. Paste it into your AI, then paste its reply here.');
     } catch {
       if (!stillEditing()) return;
       const preview = $('ai-prompt-preview');
@@ -326,7 +333,9 @@ export function setupQuickImport() {
         return item;
       }));
       $('btn-execute-import').textContent = issues.length ? 'Import valid words only' : 'Approve & save to Library';
-      renderImportTopicOptions(topicSelect, 'Use source topic or New Words');
+      const topic = validateImportTopic($('ai-topic-choice').value.trim() || 'keywords');
+      renderImportTopicOptions(topicSelect, topic);
+      topicSelect.value = [...topicSelect.options].some(option => option.value === topic) ? topic : '';
       newTopic.value = '';
       $('ai-import-editor').hidden = true;
       $('ai-import-preview').hidden = false;
@@ -376,7 +385,7 @@ export function setupQuickImport() {
       return;
     }
     let targetTopic;
-    try { targetTopic = validateImportTopic(newTopic.value.trim() || topicSelect.value); }
+    try { targetTopic = validateImportTopic(newTopic.value.trim() || topicSelect.value || $('ai-topic-choice').value.trim() || 'keywords'); }
     catch (error) { status('batch-import-status', error.message, true); return; }
     importing = true;
     const button = event.currentTarget, back = $('btn-edit-import');
@@ -405,7 +414,7 @@ export function resetEntryForUser() {
   saving = false; importing = false; quickFillRequest = null;
   for (const id of ['btn-confirm-save', 'btn-entry-quickfill', 'btn-execute-import', 'ai-import-topic', 'ai-import-new-topic']) $(id).disabled = false;
   if ($('btn-edit-import')) $('btn-edit-import').disabled = false;
-  for (const id of ['ai-raw-words', 'import-raw-input', 'ai-prompt-preview', 'input-inline-topic-name']) $(id).value = '';
+  for (const id of ['ai-topic-choice', 'ai-raw-words', 'import-raw-input', 'ai-prompt-preview', 'input-inline-topic-name']) $(id).value = '';
   $('ai-prompt-preview').hidden = true; $('ai-prompt-preview-label').hidden = true; $('import-opt-overwrite').checked = false;
   status('entry-save-status'); status('batch-import-status'); selectTab(false);
 }

@@ -1,0 +1,141 @@
+html[data-suite-module="quick-drawn"] { --action-rim:#e8bc62; --action-base:#593126; }
+html[data-suite-module="poker"] { --action-rim:#ddb767; --action-base:#594028; }
+html[data-suite-module="sky-dominators"] { --action-rim:#84d9ee; --action-base:#20384c; }
+/* Menu/action targets are independent of playing cards, answer content, chess
+   squares and corner controls. Never change the display of a hidden control. */
+[data-action-face="main"] {
+  --action-idle: var(--frame-main-idle);
+  --action-hover: var(--frame-main-hover);
+  --action-pressed: var(--frame-main-pressed);
+  --action-disabled: var(--frame-main-disabled);
+}
+[data-action-face="accent"] {
+  --action-idle: var(--frame-accent-idle);
+  --action-hover: var(--frame-accent-hover);
+  --action-pressed: var(--frame-accent-pressed);
+  --action-disabled: var(--frame-accent-disabled);
+}
+[data-action-face="gold"] {
+  --action-idle: var(--frame-gold-idle);
+  --action-hover: var(--frame-gold-hover);
+  --action-pressed: var(--frame-gold-pressed);
+  --action-disabled: var(--frame-gold-disabled);
+}
+[data-action-face="quiet"] {
+  --action-idle: var(--frame-quiet-idle);
+  --action-hover: var(--frame-quiet-hover);
+  --action-pressed: var(--frame-quiet-pressed);
+  --action-disabled: var(--frame-quiet-disabled);
+}
+[data-action-face="accept"] {
+  --action-idle: var(--frame-accept-idle);
+  --action-hover: var(--frame-accept-hover);
+  --action-pressed: var(--frame-accept-pressed);
+  --action-disabled: var(--frame-accept-disabled);
+}
+[data-action-face="danger"] {
+  --action-idle: var(--frame-danger-idle);
+  --action-hover: var(--frame-danger-hover);
+  --action-pressed: var(--frame-danger-pressed);
+  --action-disabled: var(--frame-danger-disabled);
+}
+[data-action-face="blue"] {
+  --action-idle: var(--frame-blue-idle);
+  --action-hover: var(--frame-blue-hover);
+  --action-pressed: var(--frame-blue-pressed);
+  --action-disabled: var(--frame-blue-disabled);
+}
+[data-action-face="ivory"] {
+  --action-idle: var(--frame-ivory-idle);
+  --action-hover: var(--frame-ivory-hover);
+  --action-pressed: var(--frame-ivory-pressed);
+  --action-disabled: var(--frame-ivory-disabled);
+}
+
+@layer action-buttons {
+  [data-action-face] {
+    --action-face: var(--action-idle);
+    --action-icon-size: 19px;
+    appearance: none !important;
+    box-sizing: border-box;
+    border: solid var(--action-rim, #a7c2ce) !important;
+    border-width: 2px !important;
+    border-radius: 0 !important;
+    background: var(--action-base, #344451) !important;
+    color: var(--action-text, #fff) !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+    min-height: 44px;
+    line-height: 1.15 !important;
+    font-size: var(--action-font, 15px) !important;
+    font-weight: 700 !important;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    letter-spacing: .015em !important;
+    padding: 2px 3px !important;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    vertical-align: middle;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+  html[data-action-art="ready"] [data-action-face] {
+    border-color:transparent !important;
+    border-width:8px 14px !important;
+    background: transparent !important;
+    border-image: var(--action-face) 8 14 fill / 8px 14px / 0 stretch !important;
+  }
+  html[data-action-art="ready"] [data-action-face="ivory"]:not(:disabled),
+  html[data-action-art="ready"][data-suite-module="poker"] [data-action-face="gold"]:not(:disabled) {
+    color: #28190e !important;
+  }
+  @media (hover:hover) {
+    [data-action-face]:not(:disabled):hover { --action-face: var(--action-hover); }
+  }
+  [data-action-face]:focus-visible, [data-action-face]:focus-within:has(input:focus-visible) {
+    --action-face: var(--action-hover);
+    outline: 2px solid var(--hub-focus, var(--action-rim, #f3cf75)) !important;
+    outline-offset: 1px;
+  }
+  [data-action-face]:not(:disabled):active { --action-face: var(--action-pressed); }
+  [data-action-face]:is(:disabled, [aria-disabled="true"]) {
+    --action-face: var(--action-disabled);
+    cursor: default;
+    opacity: 1 !important;
+    color: var(--action-disabled-text, #f4f1e8) !important;
+  }
+  [data-action-face][data-common-game-icon]::before {
+    display: inline-block !important;
+    width: var(--action-icon-size) !important;
+    height: var(--action-icon-size) !important;
+    flex: 0 0 var(--action-icon-size) !important;
+    margin: 0 .35em 0 0;
+  }
+  [data-action-face][hidden] { display:none !important; }
+}
+.game-menu-column {
+  width: min(100%, 320px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  margin-inline: auto;
+  align-content: center;
+}
+.game-menu-column > [data-action-face] {
+  display: flex; width: 100%; min-height: 48px; margin: 0;
+}
+.game-menu-column > [data-menu-hub] { margin-top: 4px; }
+
+@layer action-buttons {
+ html[data-action-art="ready"] :is(#lobby [data-action-face], [data-enter-casino])[data-single-frame] {
+   border-image:none !important; background:var(--action-face) center / 100% 100% no-repeat border-box !important;
+ }
+}

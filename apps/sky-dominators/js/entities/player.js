@@ -12,7 +12,6 @@ class Player {
         this.modelRotation = 0; // Model orientation in game coordinates
         this.boostTimer = 0;
         this.shootCooldown = 0;
-        this.spaceShootCooldown = 0; // Independent manual Spacebar limit.
         this.wraithShotIndex = 0; // Advances only for accepted Wraith shots; survives firing pauses and skin changes.
         this.invulnerableTimer = 0;
         this.isMovingForward = false;
@@ -407,35 +406,19 @@ class Player {
         if (curKeys['ArrowUp'] || curKeys['KeyW']) moveY -= 1;
         if (curKeys['ArrowDown'] || curKeys['KeyS']) moveY += 1;
 
-        moveX = Math.max(-1, Math.min(1, moveX));
-        moveY = Math.max(-1, Math.min(1, moveY));
-
-        if (moveX !== 0 || moveY !== 0) {
-            moved = true;
-            // Normalized speed vector: 1 / sqrt(2) so diagonal is never faster than normal speed
-            let speedMult = 1.0;
-            if (moveX !== 0 && moveY !== 0) {
-                speedMult = Math.SQRT1_2;
-            }
-            this.x += moveX * speedMult * (movementSpeed * dt / 1000);
-            this.y += moveY * speedMult * (movementSpeed * dt / 1000);
-            if (moveY < 0) {
-                movingForward = true;
-            }
+        if (!moveX && !moveY && stick.id !== null) {
+            moveX = stick.x;
+            moveY = stick.y;
         }
-
-        if (moved) {
-            // Keyboard steering takes ownership; no pullback when keys are released.
-            clearTouchDestination();
+        if (moveX || moveY) {
+            moved = true;
+            const length = Math.max(1, Math.hypot(moveX, moveY));
+            this.x += moveX / length * movementSpeed * dt / 1000;
+            this.y += moveY / length * movementSpeed * dt / 1000;
+            movingForward = moveY < 0;
             mouse.active = false;
         }
-        if (!moved && touchDestination.active) {
-            const dx = touchDestination.x - this.x;
-            const dy = touchDestination.y - this.y;
-            this.x += dx * follow;
-            this.y += dy * follow;
-            if (dy < -4) movingForward = true;
-        } else if (!moved && mouse.active) {
+        if (!moved && mouse.active) {
             const dx = mouse.x - this.x;
             const dy = mouse.y - this.y;
             this.x += dx * follow;
@@ -445,18 +428,8 @@ class Player {
             }
         }
 
-        this.x = Math.max(30, Math.min(GAME_WIDTH - 30, this.x));
-        this.y = Math.max(120, Math.min(GAME_HEIGHT - 45, this.y));
-
-        if (touchDestination.active && !movementLocked) {
-            touchDestination.arrived = Math.hypot(
-                touchDestination.x - this.x, touchDestination.y - this.y
-            ) <= ARRIVAL_TOLERANCE;
-            if (touchDestination.arrived) {
-                this.x = touchDestination.x;
-                this.y = touchDestination.y;
-            }
-        }
+        this.x = Math.max(flightInsets.left + 30, Math.min(GAME_WIDTH - flightInsets.right - 30, this.x));
+        this.y = Math.max(Math.max(120, flightInsets.top + 45), Math.min(GAME_HEIGHT - flightInsets.bottom - 45, this.y));
 
         this.vx = this.x - this.prevX;
         const BANK_MAX_RAD = 30 * Math.PI / 180;
@@ -473,7 +446,6 @@ class Player {
         this.updateCosmeticSkin(dt);
 
         if (this.shootCooldown > 0) this.shootCooldown -= dt;
-        this.spaceShootCooldown = Math.max(0, this.spaceShootCooldown - dt);
         if (this.invulnerableTimer > 0) this.invulnerableTimer = Math.max(0, this.invulnerableTimer - dt);
         if (this.shieldFlashTimer > 0) this.shieldFlashTimer = Math.max(0, this.shieldFlashTimer - dt);
 
@@ -542,8 +514,8 @@ class Player {
             if (this.squadronTimer <= 0) { this.endSquadron(); return; }
             this.squadronShootTimer += dt;
 
-            // Coordinated barrage every 180ms
-            if (this.squadronShootTimer >= 180 && !isDestinationTraveling() && (!bossEncounter || bossEncounter.canShoot)) {
+            // Wingmen join the pilot’s manual fire.
+            if (this.squadronShootTimer >= PLAYER_SHOT_INTERVAL && isFireHeld() && (!bossEncounter || bossEncounter.canShoot)) {
                 this.squadronShootTimer = 0;
                 bullets.push(new Bullet(this.x, this.y - 30, true));
                 for (const w of this.wingmen) {
@@ -577,11 +549,9 @@ class Player {
         this.ornithopter.update(dt,{dy:this.y-this.prevY});
     }
 
-    shoot(source = 'default') {
-        if (gameState !== 'PLAYING' || isPaused || this.hp <= 0 || this.shootCooldown > 0 || isDestinationTraveling() || (bossEncounter && !bossEncounter.canShoot)) return false;
-        if (source === 'space' && this.spaceShootCooldown > 0) return false;
-        if (source === 'space') this.spaceShootCooldown = 500;
-        this.shootCooldown = 150; // Existing cooldown for touch and other shot sources.
+    shoot() {
+        if (gameState !== 'PLAYING' || isPaused || this.hp <= 0 || this.shootCooldown > 0 || (bossEncounter && !bossEncounter.canShoot)) return false;
+        this.shootCooldown = PLAYER_SHOT_INTERVAL;
         const cfg = AIRCRAFT_CONFIGS[this.aircraftIndex] || AIRCRAFT_CONFIGS[0];
         const spawnY = this.y - Math.round(cfg.height / 2) - 2;
 

@@ -26,11 +26,8 @@ class TerrainRenderer {
             const renderedH = this.bgImg.naturalHeight * scale;
 
             const wrapY = this.scrollY % renderedH;
-            // Mathematically 0-seam continuous vertical loop
-            ctx.drawImage(this.bgImg, 0, wrapY, GAME_WIDTH, renderedH);
-            ctx.drawImage(this.bgImg, 0, wrapY - renderedH, GAME_WIDTH, renderedH);
-            if (wrapY + renderedH < GAME_HEIGHT) {
-                ctx.drawImage(this.bgImg, 0, wrapY + renderedH, GAME_WIDTH, renderedH);
+            for (let y = wrapY - renderedH; y < GAME_HEIGHT; y += renderedH) {
+                ctx.drawImage(this.bgImg, 0, y, GAME_WIDTH, renderedH);
             }
         } else {
             ctx.fillStyle = '#0f172a';

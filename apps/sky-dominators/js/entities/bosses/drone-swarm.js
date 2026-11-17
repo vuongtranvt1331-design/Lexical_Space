@@ -77,7 +77,7 @@
         }
         enterFinal(){this.clearAttacks();this.rows=[];this.finalLost=0;this.setState('final');this.nextVortexAt=CONFIG.vortexIntervalMs;this.spawnVortex();}
         updatePose(){
-            const {w,h}=this.d.h.context(),cy=Math.max(205,Math.min(285,h*.31));
+            const {w}=this.d.h.context(),cy=(this.d.h.layout?.(true)?.bossHudBottom||55)+100;
             this.b.x=w/2;this.b.y=cy;
             if(this.state==='wall')this.b.y=cy-(cy+160)*smooth(this.stateAge/CONFIG.returnMs);
             if(this.phase===3)this.b.y=-160+(cy+160)*smooth((this.age-this.returnStartedAt)/CONFIG.returnMs);

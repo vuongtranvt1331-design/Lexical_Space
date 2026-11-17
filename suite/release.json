@@ -1,7 +1,7 @@
 {
   "name": "SpaceSuite",
-  "lexicalVersion": "43.3.0",
-  "date": "2026-11-17",
+  "lexicalVersion": "43.19.0",
+  "date": "2026-11-18",
   "root": "LexicalSpace-project",
   "modules": [
     "lexical",
@@ -11,5 +11,5 @@
     "sky-dominators",
     "poker"
   ],
-  "cacheVersion": "f8d1a0b43f92f9"
+  "cacheVersion": "2515dec83b8d28"
 }

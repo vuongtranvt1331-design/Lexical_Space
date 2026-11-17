@@ -185,3 +185,72 @@ body.in-chess{background:#2b1810}.in-chess .shell{background:#2b1810}.chess-play
 
 /* Branding belongs to the lobby, never to a live/result/rematch battle. */
 body:is(.in-battle,.in-chess) .shell>.brand-header{display:none}
+
+/* Word Battles square emblem: lobby presentation only; match visibility flags stay unchanged. */
+.shell>.brand-header .brand-title{width:min(100%,240px)}
+.shell>.brand-header .brand-logo{width:100%;height:auto;max-height:240px;object-fit:contain}
+@media(max-width:500px){.shell>.brand-header .brand-title{width:min(100%,180px)}.shell>.brand-header .brand-logo{max-height:180px}}
+
+.word-hub-control {
+  position:absolute; top:15px; right:15px; z-index:3;
+  background:#361c12; border:1px solid var(--gold); border-radius:3px;
+  color:var(--ivory);
+}
+.shell { position:relative; }
+#lobby > .word-hub-control { position:fixed; top:calc(15px + env(safe-area-inset-top)); right:calc(15px + env(safe-area-inset-right)); }
+#battle .battle-top { padding-right:102px; min-height:60px; }
+.battle-top .word-hub-control { top:6px; right:6px; }
+#battle .battle-top #pause { top:6px; right:54px; width:44px; height:44px; }
+.pause-card { padding-top:57px; }
+.pause-card .word-hub-control { top:8px; right:8px; }
+.chess-top .chess-toolbar [data-chess-leave] { order:1; }
+
+.chess-toolbar [data-bare-control] > span:not(.chess-action-icon):not(.spectate-fullscreen-icon) { display: none; }
+.chess-toolbar [data-bare-control] { flex-direction: row; }
+[data-chess-promote] .chess-piece { width: 32px; height: 32px; margin: auto; filter: var(--action-ink, none); }
+.battle-cta[data-bare-control] { --action-icon-size: 36px; }
+
+#lobby > .game-menu-column { margin: 12px auto 16px; }
+#lobby .game-menu-column .battle-cta { margin: 0; }
+#battle .battle-top #pause { right: 6px; }
+.battle-top .word-hub-control { right: 54px; }
+[data-chess-personal-menu] { margin: auto; width: min(90vw, 350px); padding: 20px; text-align: center; color: #f6e9cd; background: #301e14; border: 2px solid #b78d45; }
+[data-chess-personal-menu]::backdrop { background: rgb(15 8 4 / .75); }
+[data-chess-personal-menu] p { margin: 6px 0 12px; }
+.chess-top .chess-toolbar:has([data-chess-pause]:not([hidden])) { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); align-items:stretch; gap:4px; }
+.chess-top .chess-toolbar [data-chess-resign] { grid-column: 1; }
+.chess-top .chess-toolbar [data-chess-draw] { grid-column: 2 / span 2; }
+.chess-top .chess-toolbar[data-incoming="true"] [data-chess-draw] { grid-column: 2; }
+.chess-top .chess-toolbar [data-chess-decline] { grid-column: 3; }
+.chess-top .chess-toolbar [data-chess-pause] { grid-column: 4; }
+.chess-toolbar .chess-pause-glyph {
+  background: url('../../arcade/assets/system-controls.png') no-repeat 0 0 / 400% 300%;
+  image-rendering: pixelated;
+}
+.chess-toolbar [hidden] { display: none !important; }
+.chess-toolbar [data-action-face] { display: flex; align-items: center; justify-content:center; min-width:0; width:100%; }
+.chess-finish-actions .chess-toolbar [data-chess-leave] { order: 1; }
+.chess-meta [data-chess-pgn] { display:inline-flex; --action-font:11px; }
+.modal-card .close-modal[data-action-face] { width:auto; height:auto; --action-font:12px; }
+[data-chess-promote][data-action-face] { width:100%; flex-direction:column; --action-font:12px; }
+@media(max-width:520px) {
+ .chess-top .chess-toolbar [data-action-face] { --action-font:clamp(10px,2.6vw,13px); overflow-wrap:break-word; }
+ .chess-top .chess-toolbar [data-action-face] .chess-action-icon { display:none; }
+}
+
+/* The draw slot switches back to its live label for an offer or reply. */
+.chess-top .chess-toolbar :is([data-chess-resign], [data-chess-pause], [data-chess-draw][data-action-face="ivory"]:not(:disabled)) > span {
+  display: none;
+}
+.chess-top .chess-toolbar :is([data-chess-resign], [data-chess-pause], [data-chess-draw][data-action-face="ivory"]:not(:disabled))::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  background: url('../assets/images/chess/chess_toolbar_emojis.png') var(--chess-emoji-x, 0%) center / 300% 100% no-repeat;
+  image-rendering: pixelated;
+}
+.chess-top .chess-toolbar [data-chess-draw] { --chess-emoji-x: 50%; }
+.chess-top .chess-toolbar [data-chess-pause] { --chess-emoji-x: 100%; }
+.chess-top .chess-toolbar [data-chess-draw] .chess-action-icon { display:none; }

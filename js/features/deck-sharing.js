@@ -4,7 +4,7 @@ import { validateImportTopic } from '../core/vocabulary.js';
 import { renderImportTopicOptions } from './library.js';
 
 const $ = id => document.getElementById(id);
-const COPY_SUCCESS = 'Link đã được lưu vào clipboard!';
+const COPY_SUCCESS = 'Đã sao chép mã chia sẻ!';
 const sharing = new Set();
 const shareKey = (profile, topic) => JSON.stringify([profile, topic]);
 let pendingDeck, preview, shareButton, requestVersion = 0;
@@ -12,7 +12,7 @@ let importing = false;
 
 function toggleDialog(id, open) {
   $(id).hidden = !open;
-  context.deckDialogOpen = !$('modal-import-deck').hidden || !$('modal-share-link').hidden;
+  context.deckDialogOpen = !$('modal-import-deck').hidden || !$('modal-share-code').hidden;
   context.updateProfileLock();
 }
 
@@ -29,7 +29,7 @@ function updateImportTopicChoice() {
   if (!create) input.value = '';
   $('shared-import-topic-help').textContent = create
     ? 'Create a new topic for this deck.'
-    : option?.value ? 'Use this topic in your library.' : 'Keep the sender’s topic name and any additional topic tags.';
+    : option?.value ? 'Use this topic in your library.' : 'Use keywords for every imported word.';
 }
 
 function closeImport({ discard = true, restoreFocus = true } = {}) {
@@ -40,28 +40,28 @@ function closeImport({ discard = true, restoreFocus = true } = {}) {
   if (restoreFocus) context.focusNavigation();
 }
 
-function closeShareLink(restoreFocus = true) {
-  toggleDialog('modal-share-link', false);
-  $('shared-deck-url').value = '';
+function closeShareCode(restoreFocus = true) {
+  toggleDialog('modal-share-code', false);
+  $('shared-deck-code').value = '';
   if (restoreFocus && shareButton?.isConnected) shareButton.focus();
   shareButton = null;
 }
 
 export function resetDeckPreview() {
-  if (importing) pendingDeck = null;
+  pendingDeck = null; $('deck-code-status').textContent = ''; $('deck-code-input').value = '';
   importing = false;
   closeImport({ discard: false, restoreFocus: false });
-  closeShareLink(false);
+  closeShareCode(false);
 }
 
-const copyLink = url => navigator.clipboard.writeText(url);
+const copyCode = code => navigator.clipboard.writeText(code);
 
 export function renderShareButton(topic, button) {
   const busy = sharing.has(shareKey(context.currentUser, topic));
   button.dataset.deckTopic = topic;
   button.disabled = busy;
   button.classList.toggle('is-sharing', busy);
-  const label = busy ? 'Generating share link…' : 'Share Deck';
+  const label = busy ? 'Generating share code…' : 'Share Deck';
   button.title = label;
   button.setAttribute('aria-label', label);
   button.setAttribute('aria-busy', String(busy));
@@ -74,22 +74,21 @@ export async function shareTopic(topic, button) {
   sharing.add(key);
   if (button) renderShareButton(topic, button);
   const isCurrent = () => ticket === context.accountGeneration && user === context.currentUser;
-  let shareUrl, copied = false, errorMessage;
+  let code, copied = false, errorMessage;
   try {
     if (!context.db) await context.connectCloud?.();
     if (!isCurrent()) return;
-    if (!context.db) throw new Error('Connect to the internet to generate a share link.');
+    if (!context.db) throw new Error('Connect to the internet to generate a share code.');
     const deck = await prepareShareDeck(user, topic);
     if (!isCurrent()) return;
-    const deckId = await publishSharedDeck(context.db, deck);
+    code = await publishSharedDeck(context.db, deck);
     if (!isCurrent()) return;
-    shareUrl = `${window.location.origin}${window.location.pathname}?deck=${encodeURIComponent(deckId)}`;
-    try { await copyLink(shareUrl); copied = true; }
-    catch { /* The published link is still available for manual copying. */ }
+    try { await copyCode(code); copied = true; }
+    catch { /* The published code is still available for manual copying. */ }
   } catch (error) {
     errorMessage = error.code === 'permission-denied'
       ? 'Firebase blocked publishing. Check that the shared deck rules are published.'
-      : error.message || 'Could not generate the share link. Please try again.';
+      : error.message || 'Could not generate the share code. Please try again.';
   } finally {
     sharing.delete(key);
     if (user === context.currentUser) {
@@ -101,27 +100,35 @@ export async function shareTopic(topic, button) {
   }
   if (!isCurrent()) return;
   if (errorMessage) { context.showToast(errorMessage, 'error'); return; }
-  if (copied) { context.showToast(COPY_SUCCESS, 'success'); return; }
+  if (copied) context.showToast(COPY_SUCCESS, 'success');
 
   shareButton = button;
-  const input = $('shared-deck-url');
-  input.value = shareUrl;
-  $('share-link-status').textContent = 'The link is ready. Copy it manually or try Copy Link.';
-  toggleDialog('modal-share-link', true);
+  const input = $('shared-deck-code');
+  input.value = code;
+  $('share-code-status').textContent = 'Valid for 72 hours. Enter this code in Add to your library → Code.';
+  toggleDialog('modal-share-code', true);
   input.focus();
   input.select();
-  context.showToast('Deck shared, but clipboard access failed. Copy the link manually.', 'error');
+  if (!copied) context.showToast('Select and copy the code.', 'error');
 }
 
-export async function loadDeckFromLocation() {
-  const deckId = new URLSearchParams(window.location.search).get('deck');
-  if (deckId === null) return;
+export async function openDeckCode() {
+  const code = $('deck-code-input').value.trim(), user = context.currentUser;
+  const ticket = context.accountGeneration, version = ++requestVersion;
+  const current = () => ticket === context.accountGeneration && version === requestVersion && user === context.currentUser;
+  const status = $('deck-code-status');
+  if (!/^\d{6}$/.test(code)) { status.textContent = 'Enter exactly six digits.'; return; }
+  status.textContent = 'Checking code…';
   try {
-    pendingDeck = await fetchSharedDeck(context.db, deckId);
-    window.history.replaceState({}, document.title, window.location.origin + window.location.pathname);
+    if (!context.db) await context.connectCloud?.();
+    if (!current()) return;
+    const deck = await fetchSharedDeck(context.db, code);
+    if (!current()) return;
+    pendingDeck = deck;
+    status.textContent = '';
     await showPendingDeck();
   } catch (error) {
-    context.showToast(error.message || 'Could not load the shared deck. Check the link and try again.', 'error');
+    if (current()) status.textContent = error.code === 'permission-denied' ? 'Code not found or expired.' : error.message;
   }
 }
 
@@ -139,7 +146,7 @@ export async function showPendingDeck() {
   $('btn-confirm-deck-import').disabled = true;
   $('btn-cancel-deck-import').disabled = false;
   const topicSelect = $('shared-import-topic'), newTopic = $('shared-import-new-topic');
-  renderImportTopicOptions(topicSelect, `Keep sender’s topics (${deck.title})`);
+  renderImportTopicOptions(topicSelect, 'keywords (default)');
   const createOption = document.createElement('option');
   createOption.dataset.createTopic = '';
   createOption.textContent = 'Create a new topic…';
@@ -177,7 +184,7 @@ async function confirmImport() {
     return;
   }
   let targetTopic;
-  try { targetTopic = validateImportTopic(create ? newTopic.value : topicSelect.value); }
+  try { targetTopic = validateImportTopic(create ? newTopic.value : (topicSelect.value || 'keywords')); }
   catch (error) { setImportStatus(error.message); if (create) newTopic.focus(); return; }
   const { user, deck, ticket } = preview;
   const version = requestVersion;
@@ -211,29 +218,30 @@ async function confirmImport() {
 }
 
 export function setupDeckSharing() {
+  $('deck-code-form').addEventListener('submit', event => { event.preventDefault(); void openDeckCode(); });
   $('shared-import-topic').addEventListener('change', updateImportTopicChoice);
   $('btn-confirm-deck-import').addEventListener('click', () => void confirmImport());
   $('btn-cancel-deck-import').addEventListener('click', () => { if (!importing) closeImport(); });
-  $('btn-close-share-link').addEventListener('click', () => closeShareLink());
-  $('btn-copy-share-link').addEventListener('click', async () => {
-    const input = $('shared-deck-url'), ticket = context.accountGeneration;
+  $('btn-close-share-code').addEventListener('click', () => closeShareCode());
+  $('btn-copy-share-code').addEventListener('click', async () => {
+    const input = $('shared-deck-code'), ticket = context.accountGeneration;
     try {
-      await copyLink(input.value);
-      if (ticket !== context.accountGeneration || $('modal-share-link').hidden) return;
+      await copyCode(input.value);
+      if (ticket !== context.accountGeneration || $('modal-share-code').hidden) return;
       context.showToast(COPY_SUCCESS, 'success');
-      closeShareLink();
+      closeShareCode();
     }
     catch {
-      if (ticket !== context.accountGeneration || $('modal-share-link').hidden) return;
-      $('share-link-status').textContent = 'Select and copy the link manually.';
+      if (ticket !== context.accountGeneration || $('modal-share-code').hidden) return;
+      $('share-code-status').textContent = 'Select and copy the code manually.';
       input.focus();
       input.select();
-      context.showToast('Clipboard access failed. Select and copy the link manually.', 'error');
+      context.showToast('Clipboard access failed. Select and copy the code manually.', 'error');
     }
   });
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
     if (!$('modal-import-deck').hidden && !importing) closeImport();
-    else if (!$('modal-share-link').hidden) closeShareLink();
+    else if (!$('modal-share-code').hidden) closeShareCode();
   });
 }

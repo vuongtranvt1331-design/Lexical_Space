@@ -1,8 +1,8 @@
 {
   "release": {
     "name": "SpaceSuite",
-    "lexicalVersion": "43.3.0",
-    "date": "2026-11-17",
+    "lexicalVersion": "43.19.0",
+    "date": "2026-11-18",
     "root": "LexicalSpace-project",
     "modules": [
       "lexical",
@@ -12,7 +12,7 @@
       "sky-dominators",
       "poker"
     ],
-    "cacheVersion": "f8d1a0b43f92f9"
+    "cacheVersion": "2515dec83b8d28"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -105,6 +105,7 @@
         "view-entry",
         "entry-heading",
         "btn-entry-single",
+        "btn-entry-code",
         "btn-toggle-ai-library",
         "entry-phase-1",
         "single-entry-form",
@@ -129,9 +130,15 @@
         "entry-save-status",
         "btn-confirm-save",
         "btn-confirm-save-text",
+        "section-entry-code",
+        "deck-code-form",
+        "deck-code-input",
+        "deck-code-status",
         "section-ai-library",
         "ai-import-editor",
         "ai-raw-words",
+        "ai-topic-choice",
+        "ai-topic-list",
         "btn-copy-ai-prompt",
         "ai-prompt-preview-label",
         "ai-prompt-preview",
@@ -248,12 +255,12 @@
         "import-deck-status",
         "btn-cancel-deck-import",
         "btn-confirm-deck-import",
-        "modal-share-link",
-        "share-link-heading",
-        "shared-deck-url",
-        "share-link-status",
-        "btn-close-share-link",
-        "btn-copy-share-link",
+        "modal-share-code",
+        "share-code-heading",
+        "shared-deck-code",
+        "share-code-status",
+        "btn-close-share-code",
+        "btn-copy-share-code",
         "modal-login",
         "login-heading",
         "input-username",
@@ -266,35 +273,34 @@
         "lexicalspace-app"
       ],
       "scriptOrder": [
-        "./suite/js/core.js?v=43.3.0-4ba1a9ac80",
+        "./suite/js/core.js?v=43.19.0-4ba1a9ac80",
+        "./js/features/appearance.js?v=43.19.0-600e490765",
         "https://cdn.tailwindcss.com",
         "https://unpkg.com/@phosphor-icons/web",
         "./js/features/loading-failsafe.js",
-        "./js/features/loading.js?v=43.3.0-0ab2d880db",
-        "./js/core/offline.js?v=43.3.0-39c886b7ac",
+        "./js/features/loading.js?v=43.19.0-0ab2d880db",
+        "./js/core/offline.js?v=43.19.0-39c886b7ac",
         "./js/main.js"
       ],
       "styleOrder": [
-        "./suite/css/components.css?v=43.3.0-69a13ed7c3",
-        "./css/main.css?v=43.3.0-light1",
-        "./css/animations.css?v=43.3.0-light1",
-        "./css/recall-ui.css?v=43.3.0-light1",
-        "./css/entry-ui.css?v=43.3.0-light1",
-        "./css/theme.css?v=43.3.0-light1",
-        "./suite/css/loader.css?v=43.3.0-1112a32a51",
-        "./css/no-script.css?v=43.3.0-light1"
-      ]
+        "./suite/css/components.css?v=43.19.0-69a13ed7c3",
+        "./css/main.css?v=43.8.0-light1",
+        "./css/animations.css?v=43.8.0-light1",
+        "./css/recall-ui.css?v=43.8.0-light1",
+        "./css/entry-ui.css?v=43.19.0-bddea1d69e",
+        "./css/theme.css?v=43.19.0-0d9f0e4ae0",
+        "./suite/css/loader.css?v=43.19.0-1112a32a51",
+        "./css/no-script.css?v=43.8.0-light1"
+      ],
+      "domIdOrderChangedFrom43_3_0": false
     },
     "arcade": {
       "entry": "apps/arcade/index.html",
       "domIds": [
         "space-loader",
-        "btnBackToLS",
-        "btnSoundToggle",
-        "soundIcon",
-        "headerLogoCard",
         "playerAvatar",
         "playerName",
+        "headerLogoCard",
         "playerWordCount",
         "vocabModeBadge",
         "arcadeVocabModeSelect",
@@ -304,25 +310,31 @@
         "arcadeTopicSelect",
         "modeWarningMsg",
         "btnPlayAirStrike",
-        "statBestDuel",
         "btnPlayQuickDrawn",
         "btnPlayPoker",
-        "btnInsertCartridge"
+        "btnInsertCartridge",
+        "btnBackToLS",
+        "btnSoundToggle",
+        "soundIcon"
       ],
       "scriptOrder": [
-        "../../suite/js/core.js?v=43.3.0-4ba1a9ac80",
-        "assets/lexical-vocabulary.js",
-        "../../js/core/offline.js?v=43.3.0-39c886b7ac",
-        "../../js/features/loading.js?v=43.3.0-0ab2d880db",
-        "./js/arcade-2.js?v=43.3.0-dd63c37cc6"
+        "../../suite/js/core.js?v=43.19.0-4ba1a9ac80",
+        "./js/appearance.js",
+        "./assets/lexical-vocabulary.js",
+        "../../js/core/offline.js?v=43.19.0-39c886b7ac",
+        "../../js/features/loading.js?v=43.19.0-0ab2d880db",
+        "./js/arcade-2.js?v=43.19.0-bf424467b1"
       ],
       "styleOrder": [
-        "../../suite/css/components.css?v=43.3.0-69a13ed7c3",
-        "https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Press+Start+2P&display=swap",
-        "./css/arcade-1.css",
-        "../../suite/css/no-script.css?v=43.3.0-2a571df59e",
-        "../../suite/css/loader.css?v=43.3.0-1112a32a51"
-      ]
+        "https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Press+Start+2P&display=swap",
+        "../../suite/css/components.css?v=43.11.0-69a13ed7c3",
+        "./css/arcade-1.css?v=43.11.0-b611dcdafd",
+        "../../suite/css/no-script.css?v=43.11.0-2a571df59e",
+        "../../suite/css/loader.css?v=43.11.0-1112a32a51",
+        "../../suite/css/game-icons.css?v=43.11.0-18940026b2",
+        "./css/action-frames.css?v=43.11.0-6f8c4c9c09"
+      ],
+      "domIdOrderChangedFrom43_3_0": true
     },
     "grammar": {
       "entry": "apps/grammar/index.html",
@@ -346,25 +358,26 @@
         "lesson-progress"
       ],
       "scriptOrder": [
-        "../../suite/js/core.js?v=43.3.0-4ba1a9ac80",
-        "../../js/core/offline.js?v=43.3.0-39c886b7ac",
-        "../../js/features/loading.js?v=43.3.0-0ab2d880db",
-        "../../suite/components/profile.js?v=43.3.0-21e4c8c4e4",
+        "../../suite/js/core.js?v=43.11.0-4ba1a9ac80",
+        "../../js/core/offline.js?v=43.11.0-39c886b7ac",
+        "../../js/features/loading.js?v=43.11.0-0ab2d880db",
+        "../../suite/components/profile.js?v=43.11.0-21e4c8c4e4",
         "./js/storage-decay.js",
         "./js/parser.js",
         "./js/notebook-ui.js?v=hide_filename1",
-        "./js/app.js?v=43.3.0-1dee084e21"
+        "./js/app.js?v=43.11.0-1dee084e21"
       ],
       "styleOrder": [
-        "../../suite/css/components.css?v=43.3.0-69a13ed7c3",
+        "../../suite/css/components.css?v=43.11.0-69a13ed7c3",
         "https://fonts.googleapis.com/css2?family=Pangolin&display=swap",
         "./css/notebook-3d.css?v=hide_filename1",
         "./css/style.css?v=font_unify1",
-        "../../suite/css/brands.css?v=43.3.0-71a67e797c",
-        "../../suite/css/loader.css?v=43.3.0-1112a32a51",
-        "../../suite/css/no-script.css?v=43.3.0-2a571df59e",
-        "../../suite/css/no-script.css?v=43.3.0-2a571df59e"
-      ]
+        "../../suite/css/brands.css?v=43.11.0-71a67e797c",
+        "../../suite/css/loader.css?v=43.11.0-1112a32a51",
+        "../../suite/css/no-script.css?v=43.11.0-2a571df59e",
+        "../../suite/css/no-script.css?v=43.11.0-2a571df59e"
+      ],
+      "domIdOrderChangedFrom43_3_0": false
     },
     "quick-drawn": {
       "entry": "apps/quick-drawn/index.html",
@@ -418,31 +431,36 @@
         "status"
       ],
       "scriptOrder": [
-        "../../suite/js/core.js?v=43.3.0-4ba1a9ac80",
-        "../../js/core/offline.js?v=43.3.0-39c886b7ac",
+        "../../suite/js/core.js?v=43.11.0-4ba1a9ac80",
+        "../../js/core/offline.js?v=43.11.0-39c886b7ac",
+        "../../suite/components/game-logo-loader.js?v=43.11.0-a94e01bbc5",
         "https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js",
-        "js/config.js?v=8",
-        "./assets/vendor/firebase-app-compat-10.12.2.js",
-        "./assets/vendor/firebase-firestore-compat-10.12.2.js",
-        "./js/standings-service.js?v=3",
-        "js/firebase-service.js?v=8",
-        "js/audio.js?v=7",
-        "js/sprite-animator.js?v=6",
-        "./js/connection-recovery.js?v=1",
-        "js/duel.js?v=18",
-        "./assets/vendor/chess-1.4.0.js",
-        "./js/chess-session.js?v=2",
-        "./js/chess.js?v=9",
-        "./js/chess-ui.js?v=1",
-        "./js/chess-spectator-ui.js?v=1",
-        "./js/ui-sprites.js?v=1",
-        "./js/event-promo.js?v=1"
+        "js/config.js?v=43.8.0-de6806dde0",
+        "./assets/vendor/firebase-app-compat-10.12.2.js?v=43.8.0-24a1fd90a9",
+        "./assets/vendor/firebase-firestore-compat-10.12.2.js?v=43.8.0-25133ac64b",
+        "./js/standings-service.js?v=43.8.0-20dd2a4ac3",
+        "js/firebase-service.js?v=43.8.0-bf3b42352b",
+        "js/audio.js?v=43.8.0-934c6d6452",
+        "js/sprite-animator.js?v=43.8.0-253692217d",
+        "./js/connection-recovery.js?v=43.11.0-455fa507ad",
+        "js/duel.js?v=43.11.0-0af4c98c91",
+        "./assets/vendor/chess-1.4.0.js?v=43.8.0-720d2c68cd",
+        "./js/chess-session.js?v=43.8.0-2f1eb20b74",
+        "./js/chess.js?v=43.11.0-932a95b8f0",
+        "./js/chess-ui.js?v=43.8.0-289db81b44",
+        "./js/chess-spectator-ui.js?v=43.8.0-f553997f49",
+        "./js/ui-sprites.js?v=43.11.0-b4a696201a",
+        "./js/event-promo.js?v=43.8.0-1f1eb59d46"
       ],
       "styleOrder": [
-        "../../suite/css/components.css?v=43.3.0-69a13ed7c3",
+        "../../suite/css/components.css?v=43.11.0-69a13ed7c3",
         "https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&display=swap",
-        "css/duel.css?v=28"
-      ]
+        "css/duel.css?v=43.11.0-d5479a8b0c",
+        "../../suite/css/game-logo-loader.css?v=43.11.0-f0a2c333e0",
+        "../../suite/css/game-icons.css?v=43.11.0-18940026b2",
+        "../arcade/css/action-frames.css?v=43.11.0-6f8c4c9c09"
+      ],
+      "domIdOrderChangedFrom43_3_0": false
     },
     "sky-dominators": {
       "entry": "apps/sky-dominators/index.html",
@@ -512,26 +530,23 @@
         "leaderboardList",
         "leaderboardCloseBottomBtn",
         "startOverlay",
-        "btnBackToArcadeHub",
         "mainMenuLogoImg",
         "pilotRank",
         "pilotCoins",
         "pilotProgress",
         "startBtn",
-        "takeOffPilotCallsign",
-        "takeOffEditPencil",
         "takeOffActionLabel",
+        "takeOffPilotCallsign",
         "profileDetails",
+        "btnBackToArcadeHub",
         "mainMenuLeaderboardContainer",
         "mainMenuPersonalRecordsContainer",
         "profileSync",
-        "retryProgress",
         "legacyLocalRecords",
         "deckBadge",
         "pauseOverlay",
         "resumeBtn",
         "pauseExitBtn",
-        "pauseArcadeHubBtn",
         "gameOverOverlay",
         "gameOverTitle",
         "finalScoreText",
@@ -548,101 +563,99 @@
         "detailedRecordsOverlay",
         "detailedLeaderboardContainer",
         "detailedPersonalRecordsContainer",
-        "detailedMainMenuBtn",
-        "detailedHangarBtn",
-        "detailedArcadeHubBtn",
         "detailedRetryBtn",
+        "detailedHangarBtn",
+        "detailedMainMenuBtn",
         "restartBtn",
         "gameOverHangarBtn",
         "gameOverLeaderboardBtn",
-        "gameOverExitBtn",
         "statusInfo",
         "activeTopicBadge"
       ],
       "scriptOrder": [
-        "../../suite/js/core.js?v=43.3.0-4ba1a9ac80",
+        "../../suite/js/core.js?v=43.11.0-4ba1a9ac80",
         "https://cdn.tailwindcss.com",
         "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js",
         "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js",
-        "js/config/skins/red-wraith-config.js?v=2026-11-01-modular-1",
-        "js/config/skins/elder-wood-config.js?v=2026-11-01-modular-1",
-        "js/config/ornithopter.js?v=2026-11-01-ornithopter-tip-jitter-1",
-        "js/entities/skins/ornithopter.js?v=2026-11-01-ornithopter-tip-jitter-1",
-        "js/config/skins/exalted-config.js?v=2026-11-01-exalted-animation-8",
-        "js/entities/skins/exalted.js?v=2026-11-01-exalted-animation-8",
-        "js/config/skins/celestial-config.js?v=2026-11-01-celestial-1",
-        "js/entities/skins/celestial.js?v=2026-11-01-celestial-1",
-        "js/config/skins/prism-core-config.js?v=2026-11-04-prism-core-gothic-1",
-        "js/entities/skins/prism-core.js?v=2026-11-04-prism-core-gothic-1",
-        "js/config/skins/catalog.js?v=2026-11-04-prism-core-gothic-1",
-        "js/entities/skins/hazard.js?v=2026-11-01-titan-buff-1",
-        "js/rendering/skins.js?v=2026-11-04-prism-core-gothic-1",
-        "js/entities/bosses/drone-swarm.js?v=boss5-lock-750",
-        "js/entities/bosses/sky-fortress.js?v=boss-hud-roaming-1",
-        "js/entities/bosses/continental-bomber.js?v=boss-hud-roaming-1",
-        "js/entities/bosses/titanus-veronica.js?v=boss6-missile-smoke-1",
-        "js/systems/boss-director.js?v=boss-hud-roaming-1",
-        "js/systems/progress/core.js?v=2026-11-01-celestial-1",
-        "js/systems/progress/firestore.js?v=2026-11-01-modular-1",
-        "js/systems/progress/client.js?v=43.3.0-bba73dc72f",
-        "js/config/gameplay.js?v=2026-11-01-modular-1",
-        "js/config/aircraft.js?v=2026-11-01-titan-buff-1",
-        "js/config/audio.js?v=2026-11-01-modular-1",
-        "js/config/vocabulary.js?v=2026-11-01-modular-1",
-        "js/config/firebase.js?v=2026-11-01-modular-1",
-        "js/core/canvas.js?v=2026-11-01-modular-1",
-        "js/systems/assets.js?v=2026-11-01-modular-1",
-        "js/systems/audio.js?v=boss6-titanus-1",
-        "js/systems/vocabulary.js?v=2026-11-06-lexicalspace-db",
-        "js/ui/danger-hud.js?v=2026-11-01-modular-1",
-        "js/systems/missions.js?v=2026-11-01-modular-1",
-        "js/systems/formations.js?v=2026-11-01-modular-1",
-        "js/entities/enemy-helicopter.js?v=2026-11-01-titan-buff-1",
-        "js/entities/enemy-formation.js?v=2026-11-01-modular-1",
-        "js/rendering/terrain.js?v=2026-11-01-modular-1",
-        "js/entities/projectiles.js?v=2026-11-01-boss5-phases-1",
-        "js/systems/ownership.js?v=2026-11-01-modular-1",
-        "js/rendering/player-effects.js?v=2026-11-01-modular-1",
-        "js/entities/player.js?v=2026-11-04-prism-core-gothic-1",
-        "js/ui/aircraft-previews.js?v=2026-11-04-prism-core-gothic-1",
-        "js/entities/effects.js?v=2026-11-01-modular-1",
-        "js/rendering/effects.js?v=2026-11-01-modular-1",
-        "js/systems/state.js?v=2026-11-01-modular-1",
-        "js/systems/spawn.js?v=2026-11-01-modular-1",
-        "js/ui/hud.js?v=2026-11-01-titan-buff-1",
-        "js/core/world.js?v=2026-11-01-modular-1",
-        "js/systems/input.js?v=2026-11-01-modular-1",
-        "js/systems/lifecycle.js?v=2026-11-01-exalted-animation-8",
-        "js/systems/boss-integration.js?v=boss-hud-roaming-1",
-        "js/entities/bomber-missile.js?v=2026-11-01-boss5-phases-1",
-        "js/systems/collisions.js?v=2026-11-01-titan-buff-1",
-        "js/core/game-loop.js?v=boss-hud-roaming-1",
-        "js/ui/leaderboards.js?v=2026-11-01-modular-1",
-        "js/ui/hangar.js?v=2026-11-01-celestial-1",
-        "js/ui/navigation.js?v=43.3.0-d09380e4d5",
-        "js/ui/events.js?v=2026-11-01-modular-1",
-        "js/app.js?v=2026-11-01-modular-1",
-        "js/ui/progress.js?v=2026-11-01-celestial-1",
-        "js/ui/intro.js?v=reactor-intro-1",
-        "../../js/core/offline.js?v=43.3.0-39c886b7ac"
+        "js/config/skins/red-wraith-config.js?v=43.8.0-cb6a21c273",
+        "js/config/skins/elder-wood-config.js?v=43.8.0-4a2d2cedec",
+        "js/config/ornithopter.js?v=43.8.0-7415c83176",
+        "js/entities/skins/ornithopter.js?v=43.8.0-f195ab1056",
+        "js/config/skins/exalted-config.js?v=43.8.0-d35d4da4d1",
+        "js/entities/skins/exalted.js?v=43.8.0-f2477a8bff",
+        "js/config/skins/celestial-config.js?v=43.8.0-4af0f4d022",
+        "js/entities/skins/celestial.js?v=43.8.0-f40e5c8ccf",
+        "js/config/skins/prism-core-config.js?v=43.8.0-9d9ce3ee5a",
+        "js/entities/skins/prism-core.js?v=43.8.0-40c7d2c594",
+        "js/config/skins/catalog.js?v=43.8.0-e60a721703",
+        "js/entities/skins/hazard.js?v=43.8.0-6f5034c841",
+        "js/rendering/skins.js?v=43.8.0-c8b037661d",
+        "js/entities/bosses/drone-swarm.js?v=43.8.0-95da813310",
+        "js/entities/bosses/sky-fortress.js?v=43.8.0-06013dd5fc",
+        "js/entities/bosses/continental-bomber.js?v=43.8.0-ef767c6b9c",
+        "js/entities/bosses/titanus-veronica.js?v=43.8.0-a639b2c976",
+        "js/systems/boss-director.js?v=43.8.0-ee77f33f23",
+        "js/systems/progress/core.js?v=43.8.0-636c252055",
+        "js/systems/progress/firestore.js?v=43.8.0-01cf2133c6",
+        "js/systems/progress/client.js?v=43.11.0-bba73dc72f",
+        "js/config/gameplay.js?v=43.8.0-08d9f9e9b6",
+        "js/config/aircraft.js?v=43.8.0-de9fb9f12d",
+        "js/config/audio.js?v=43.8.0-bb6b092623",
+        "js/config/vocabulary.js?v=43.8.0-d49adbb6c1",
+        "js/config/firebase.js?v=43.8.0-1b39e49e8c",
+        "js/core/canvas.js?v=43.8.0-aac5d1140f",
+        "js/systems/assets.js?v=43.8.0-1756c15a4c",
+        "js/systems/audio.js?v=43.8.0-bfcd9fcb64",
+        "js/systems/vocabulary.js?v=43.8.0-9d93e9080a",
+        "js/ui/danger-hud.js?v=43.8.0-2c645b1a67",
+        "js/systems/missions.js?v=43.8.0-00483e3b6a",
+        "js/systems/formations.js?v=43.8.0-32937b08fb",
+        "js/entities/enemy-helicopter.js?v=43.8.0-2969b772b4",
+        "js/entities/enemy-formation.js?v=43.8.0-75a3dddf2f",
+        "js/rendering/terrain.js?v=43.8.0-b7d753cf91",
+        "js/entities/projectiles.js?v=43.8.0-c93bf2135b",
+        "js/systems/ownership.js?v=43.8.0-f1b87750e9",
+        "js/rendering/player-effects.js?v=43.8.0-a35f72bf76",
+        "js/entities/player.js?v=43.8.0-6014543b80",
+        "js/ui/aircraft-previews.js?v=43.8.0-da3e020bbd",
+        "js/entities/effects.js?v=43.8.0-94cb70b7fe",
+        "js/rendering/effects.js?v=43.8.0-21a378194d",
+        "js/systems/state.js?v=43.8.0-04d9911d93",
+        "js/systems/spawn.js?v=43.8.0-b5a564a699",
+        "js/ui/hud.js?v=43.8.0-ec185e2f57",
+        "js/core/world.js?v=43.8.0-d52d99ef7e",
+        "js/systems/input.js?v=43.8.0-cac146ea24",
+        "js/systems/lifecycle.js?v=43.8.0-11ed12868a",
+        "js/systems/boss-integration.js?v=43.8.0-9ad2ef7ce0",
+        "js/entities/bomber-missile.js?v=43.8.0-35fcab53d4",
+        "js/systems/collisions.js?v=43.8.0-d2218363f7",
+        "js/core/game-loop.js?v=43.8.0-6c55d56fc7",
+        "js/ui/leaderboards.js?v=43.8.0-e5461a9efc",
+        "js/ui/hangar.js?v=43.8.0-7c820b20ab",
+        "js/ui/navigation.js?v=43.11.0-d09380e4d5",
+        "js/ui/events.js?v=43.11.0-cf5b9542b1",
+        "js/app.js?v=43.8.0-e27a081f91",
+        "js/ui/progress.js?v=43.11.0-d283e6b9be",
+        "../../suite/components/game-logo-loader.js?v=43.11.0-a94e01bbc5",
+        "../../js/core/offline.js?v=43.11.0-39c886b7ac"
       ],
       "styleOrder": [
-        "../../suite/css/components.css?v=43.3.0-69a13ed7c3",
-        "css/game.css?v=boss-hud-roaming-1",
-        "css/progress.css?v=2026-11-01-modular-1",
-        "css/intro.css?v=reactor-intro-1"
-      ]
+        "../../suite/css/components.css?v=43.11.0-69a13ed7c3",
+        "css/game.css?v=43.11.0-1868cb376d",
+        "css/progress.css?v=43.8.0-9db7883780",
+        "../../suite/css/game-logo-loader.css?v=43.11.0-f0a2c333e0",
+        "../../suite/css/game-icons.css?v=43.11.0-18940026b2",
+        "../arcade/css/action-frames.css?v=43.11.0-6f8c4c9c09"
+      ],
+      "domIdOrderChangedFrom43_3_0": true
     },
     "poker": {
       "entry": "apps/poker/index.html",
       "domIds": [
+        "exitArcadeBtn",
         "gameFrame",
         "roundCounterText",
         "deckProgressText",
-        "soundToggleBtn",
-        "soundOnIcon",
-        "soundOffIcon",
-        "exitArcadeBtn",
         "cowboySpeech",
         "turnStatusSubtext",
         "pokerTable",
@@ -666,58 +679,146 @@
         "endingCardBox",
         "endingExactMessage",
         "endingStatsSummary",
-        "playAgainBtn"
+        "playAgainBtn",
+        "soundToggleBtn",
+        "soundOnIcon",
+        "soundOffIcon"
       ],
       "scriptOrder": [
-        "../../suite/js/core.js?v=43.3.0-4ba1a9ac80",
+        "../../suite/js/core.js?v=43.11.0-4ba1a9ac80",
         "https://cdn.tailwindcss.com",
-        "../../js/core/offline.js?v=43.3.0-39c886b7ac",
-        "./js/poker-1.js?v=43.3.0-d78eb09f59"
+        "../../js/core/offline.js?v=43.11.0-39c886b7ac",
+        "../../suite/components/game-logo-loader.js?v=43.11.0-a94e01bbc5",
+        "./js/poker-1.js?v=43.11.0-7f5f87ad1c"
       ],
       "styleOrder": [
-        "../../suite/css/components.css?v=43.3.0-69a13ed7c3",
+        "../../suite/css/components.css?v=43.11.0-69a13ed7c3",
         "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Playfair+Display:wght@700;800;900&family=Rye&display=swap",
-        "./css/poker-1.css"
-      ]
+        "../../suite/css/game-icons.css?v=43.11.0-18940026b2",
+        "./css/poker-1.css?v=43.11.0-1ec3a17210",
+        "../../suite/css/game-logo-loader.css?v=43.11.0-f0a2c333e0",
+        "../arcade/css/action-frames.css?v=43.11.0-6f8c4c9c09"
+      ],
+      "domIdOrderChangedFrom43_3_0": true
     }
   },
   "changedExistingSourceFiles": {
-    "lexical": [
-      "AGENTS.md",
-      "index.html",
-      "manifest.webmanifest",
-      "package-lock.json",
-      "package.json",
-      "service-worker.js",
-      "start-localhost.bat",
-      "teacher/index.html",
-      "tests/profile-navigation.test.js",
-      "tests/pwa.test.js",
-      "js/core/offline.js",
-      "js/features/loading.js"
-    ],
-    "arcade": [
-      "index.html"
-    ],
-    "grammar": [
-      "index.html",
-      "manifest.json",
-      "js/app.js"
-    ],
-    "quick-drawn": [
-      "index.html",
-      "legacy.html"
-    ],
-    "sky-dominators": [
-      "boss-test.html",
-      "index.html",
-      "intro.html",
-      "js/ui/navigation.js",
-      "js/systems/progress/client.js"
-    ],
-    "poker": [
-      "index.html"
-    ]
+    "AGENTS.md": {
+      "beforeSha256": "feb078ad6bb44e288ce7a949462821ef1e8af92edc3d6501733a6036300bce75",
+      "afterSha256": "5448266577cd89067b111bf5a53e5a5094bca10efc3ffe22b4932c77593d9058"
+    },
+    "README-SUITE.md": {
+      "beforeSha256": "e34f358bb31600be0cda8a231bfb342540741f7aa8fe4e0487b1a7df8ff5fc97",
+      "afterSha256": "d5e49ed3016266ce3ed71913cc47e4a825d91cc89d904ed24255a30b4b4e2976"
+    },
+    "index.html": {
+      "beforeSha256": "753c75dd51d6855351d5d0f53372c21947ec17e9a404e0ccfb74f38f14606126",
+      "afterSha256": "15faaedf5de2f4890b51439bdb0a67d0cf210f4815416c6389259dd6d326afaa"
+    },
+    "offline.html": {
+      "beforeSha256": "fd72a3372c935e8ac478b0b3b82b35df1252ee51e0bfede2c05c503e675a0f5d",
+      "afterSha256": "fb30c98f50e5fd8b9b81b8b43f917711f43af4b343164f5df010bc1061d53898"
+    },
+    "package-lock.json": {
+      "beforeSha256": "d6a9e70143d86c26fa2286293c21a14cc186fbae287c57e7c01cc5d515435b02",
+      "afterSha256": "f33523ba8f560f376c64729111c93974322a2190dd1c0289bbccb646b44b48f7"
+    },
+    "package.json": {
+      "beforeSha256": "0418d6aeb4e9273b0b154de0e26e8e305a02102bcaad79a5aeaf7c63be0db40d",
+      "afterSha256": "6a85d9024cd8bebcef64a7f83501e763d8c057fccab0d8a5138c40daf7505637"
+    },
+    "run-local.py": {
+      "beforeSha256": "6ef359a6e30ce9e0244f32cf22a327225160f5ea9d5c464801183e1efcc3837f",
+      "afterSha256": "29fd808aae301f7edea8168a836c87b9f43715d64d9b3fdf0410a7a03779e09e"
+    },
+    "service-worker.js": {
+      "beforeSha256": "0bcfc8e1bf76df18c0115aab664ecf4975e85d4e74e62471af2faf6a445d6449",
+      "afterSha256": "d4d5edf7b386b3534943bb83f41d21e8ff285491971d83c369e3b5bd5f1ccc94"
+    },
+    "apps/arcade/index.html": {
+      "beforeSha256": "a5176eac4b69c1f38704128e3b3cecdd767ae6e73b4a5dfadcd15ebbcd730f63",
+      "afterSha256": "05af089d02bb56e85578306acb0dd082e89335dd91c255e1ad043c5cf0ba9a51"
+    },
+    "apps/arcade/assets/logo/sky_dominators_logo.png": {
+      "beforeSha256": "53f24091d9b57abed3286ba60100330f02169018fa47413b81e2dacd0d901775",
+      "afterSha256": "aa1aa020e49141bb23871e21b899a6d67bc24d5c3ae4739ff1b5c750a25208a8"
+    },
+    "apps/arcade/css/arcade-1.css": {
+      "beforeSha256": "f9a8ce2024618274180dcd96d9e03fded6aceacaba6dd220243ea56740c8da3c",
+      "afterSha256": "1e160888e8d1912f8a82ae1a7d78ac60a2fe1eddbfc9c31e36856181e28b822d"
+    },
+    "apps/arcade/js/arcade-2.js": {
+      "beforeSha256": "dd63c37cc6a01f767a60d2e648f6dcca3f6c35a3ede89ea24ba1e2a61627660b",
+      "afterSha256": "b0b8895217c2943e997dbe7a6354529032d07ed073f91e11185a7153dba96f55"
+    },
+    "apps/grammar/index.html": {
+      "beforeSha256": "436b4d9df96a0e968db5d8768d74d4c124e6613f5e0794fb21fa17b83f7b9b1b",
+      "afterSha256": "76ffcab68dfe8eaf9e3eaad35d09c9fe1aaac9ec6e493359f5050781adf6a5f7"
+    },
+    "apps/poker/index.html": {
+      "beforeSha256": "422f2940ab9124d2dc7043b62b8d60ff12831f1193266164898402288b22bc1b",
+      "afterSha256": "9c5e3f31b24d1200cd0452cf32cc821105192064bdee16ad56b568251fcb9a66"
+    },
+    "apps/poker/css/poker-1.css": {
+      "beforeSha256": "dda7c47956ccfa226f5cf209929323051d341b81d50a6afb31d3255539588be8",
+      "afterSha256": "26089d69b4174d380e5a65a512b39c986be4a625f93d9267c05e8be06802c6c9"
+    },
+    "apps/poker/js/poker-1.js": {
+      "beforeSha256": "d78eb09f59cf185d6b1de82f5b72df33cc82f5435f20c72b8699eb831eb9e11f",
+      "afterSha256": "7f5f87ad1ca1d8e1998417ce5204854411eed57ac6b65673ecfa4df7625180e1"
+    },
+    "apps/quick-drawn/index.html": {
+      "beforeSha256": "73e9f4800384aa0326315871a764cf1931420f777dad12ce96376610a03d6f0c",
+      "afterSha256": "df6bdfc1ae8ad74128fbd431b95bea0bc1f879c783089d86158ecc6b5af556c0"
+    },
+    "apps/quick-drawn/css/duel.css": {
+      "beforeSha256": "99cbff09fbf2485f8afb7a4b48524674636f0f566bdb0e69d7c2ebf1a3547178",
+      "afterSha256": "6a208eeb77da1f487d5dc7baa79398b6c1a8def3d8bad4bcbbf1c6e49199e77e"
+    },
+    "apps/quick-drawn/js/audio.js": {
+      "beforeSha256": "a98a2f92393e1d775540e900795aae8f07eda6cca52745345d8732d3be92bad1",
+      "afterSha256": "934c6d64529dde1c57c79b7a8f83162108d601d90b7deb326fe54c34b4ace5d9"
+    },
+    "apps/quick-drawn/js/duel.js": {
+      "beforeSha256": "243002bd42d5a62aa43d2b98f2df1ea8c7b4db3ee20ba28e15a316a03dbb7f4b",
+      "afterSha256": "0af4c98c9163fe80fc958c55f3c540a8ac07a56ddc6fcde77c6b43cf78353c76"
+    },
+    "apps/quick-drawn/js/sprite-animator.js": {
+      "beforeSha256": "5fff82932be63b009fdce116819562dcb0c94abfffe092b974f353db8709a12b",
+      "afterSha256": "253692217dd2b6def72d4a8fe5baaa39c13e5664f7ef00eb409bf528748c6f9f"
+    },
+    "apps/sky-dominators/index.html": {
+      "beforeSha256": "0cbd8f65c17bfb790b9ccbacda5143e07fcf72a76c085c1f715b92ab3b5080b8",
+      "afterSha256": "f85dd0b0fd9d6dc4b15e2ec3f7d855b4df24eb3e3cf1c9de0d0187b10c8d6afd"
+    },
+    "apps/sky-dominators/assets/logo/sky_dominators_logo.png": {
+      "beforeSha256": "4ce155d8328b4261e39814bc076a84bc6ccf3920f5eba2cba3ad57430876d663",
+      "afterSha256": "91057d04fa56a6a6691d30467ed5be7ea817333268f08b3159e12bc995129b27"
+    },
+    "apps/sky-dominators/js/app.js": {
+      "beforeSha256": "8ef5035d5ce1bb74f1a16803e32d0ec52636e33f4b1c53f4d8d9ebb9d6b16f02",
+      "afterSha256": "e27a081f9184b320967f7fc51e7501a9d1ff2470bd42b2fd0a1dd0bcc559b3dd"
+    },
+    "suite/release.json": {
+      "beforeSha256": "8dc2642bb003875b0ead577b4ab61a16219c538d0ec87ddd79824df6e8871462",
+      "afterSha256": "fab26383c42f0d1d3ab85095bd47fa5cceb1ab33cac99e999f18308fd383ccf0"
+    },
+    "teacher/index.html": {
+      "beforeSha256": "809099d0071b654b3b3d58686d3241e5a4e49b9d2c2a3fd404ebb52fc97e1e2f",
+      "afterSha256": "c01477a6bc97966509ed78dc7ed103419c525db9dc0df16890e9d6cb74f02301"
+    },
+    "tests/pwa.test.js": {
+      "beforeSha256": "d77b6893350b3398fd3b97d90992069ba4aecb104a3503e9d20fe57d63291374",
+      "afterSha256": "921204f2978f2e23f6b0b55ba517970ba8aa53dd15624c6c6928ec05148276f6"
+    },
+    "tools/build-suite.py": {
+      "beforeSha256": "1e0cc004a2bdac8ee236533e8ba96d4e4b792f82200f4f66bca75375f446d67c",
+      "afterSha256": "f755da33b5ff0204c66a854a62f1d90fe436c42ff5be11ecac6ffe808eaa97e9"
+    },
+    "tools/service-worker.template.js": {
+      "beforeSha256": "13ebd5251259da44e94e13339bccd1450fd0f79181d8df44e42932cb07e9dc02",
+      "afterSha256": "c58c3911bec3d861c3a42921c35716c6a051a4ea57bec5f6f072b6662451c0e4"
+    }
   },
   "integrationFunctions": {
     "suite/js/core.js": {
@@ -772,27 +873,46 @@
     },
     "apps/arcade/js/arcade-2.js": {
       "function updateGameLinks": [
-        328
+        350
       ],
       "SpaceSuite.href": [
-        344,
-        347,
-        350,
-        445
+        357,
+        359,
+        361,
+        404
       ],
       "const finalLsUrl": [
-        445
+        404
       ],
-      "brand animation is silent": [
-        459
-      ],
+      "brand animation is silent": [],
       "SpaceSuite?.ready": [
-        484
+        409
       ]
     },
     "apps/poker/js/poker-1.js": {
       "const returnUrl =": [
-        1496
+        1275
+      ],
+      "function scheduleTimer": [
+        378
+      ],
+      "function parkTimers": [
+        392
+      ],
+      "function resumeTimers": [
+        403
+      ],
+      "function resolveIncorrectTurn": [
+        915
+      ],
+      "function enterTable": [
+        1249
+      ],
+      "function showMainMenu": [
+        1239
+      ],
+      "async function initGame": [
+        1272
       ]
     },
     "apps/sky-dominators/js/ui/navigation.js": {
@@ -816,19 +936,19 @@
         2
       ],
       "addAll(CORE": [
-        11
+        12
       ],
       "addEventListener('activate": [
-        14
+        15
       ],
       "const external": [
-        23
+        24
       ],
       "fetch(request": [
-        33
+        38
       ],
       "request.mode": [
-        43
+        48
       ]
     },
     "run-local.py": {
@@ -841,7 +961,23 @@
     },
     "tools/build-suite.py": {
       "def build": [
-        18
+        22
+      ]
+    },
+    "apps/quick-drawn/js/chess.js": {
+      "function renderChessActions": [
+        291
+      ],
+      "function setResultView": [
+        46
+      ],
+      "function closePersonalMenu": [
+        45
+      ]
+    },
+    "apps/arcade/js/action-frames.js": {
+      "async function loadActionFrames": [
+        7
       ]
     }
   },
@@ -891,7 +1027,7 @@
       ],
       "vocabularyProtocol": 13,
       "chessProtocol": 2,
-      "gameScriptsStylesAssets": "byte-identical to audited original"
+      "gameScriptsStylesAssets": "Active duel/chess/data contracts preserved; local artwork-ready bootstrap appended; unused cowboy prefixes removed with exact active suffix hashes retained; branding/common icons updated."
     },
     "sky": {
       "progressProject": "skydominators",
@@ -902,7 +1038,21 @@
     },
     "poker": {
       "vocabulary": "readonly LexicalSpaceDB",
-      "cloudWrites": "none"
+      "cloudWrites": "none",
+      "assists": {
+        "storage": "In-match chips in memory",
+        "price": 2,
+        "legacy": "Existing per-profile assist records are not read, migrated or written.",
+        "available": "Any playable turn with at least 2 chips. Spending the final two is safe. An incorrect answer leaving zero chips loses."
+      },
+      "scoring": {
+        "startingChips": 5,
+        "victoryChips": 12,
+        "correct": 1,
+        "wrong": -2,
+        "minimum": 0,
+        "loss": "A wrong match that leaves zero chips; a paid assist that reaches zero stays playable."
+      }
     }
   },
   "installation": {
@@ -913,33 +1063,17 @@
     "childManifest": "../../manifest.webmanifest",
     "worker": "root service-worker.js",
     "retireCaches": "own scoped old shell only; media-v1 retained",
-    "updates": "fresh integration URLs, reload shell install, network revalidation; no automatic in-match reload",
+    "updates": "Versioned install + normal revalidation; three already-viewed Hub logos cache-first in current content-hashed shell; no forced in-match reload.",
     "offlineMedia": "cached on use, not all82MB at install"
   },
   "verification": {
-    "nodeTests": 134,
+    "release": "43.9.0",
+    "nodeTests": 135,
     "nodeFailures": 0,
-    "static": {
-      "checks": 254,
-      "issues": []
-    },
-    "http": {
-      "issues": [],
-      "rootStatus": 200,
-      "rootCacheControl": "no-cache",
-      "precacheRequests": 239,
-      "occupiedPortRejected": true,
-      "unicodeBatchLauncher": true
-    },
-    "browser": [
-      "root and /Lexical_Space/ routing",
-      "320/390px and1280px layouts",
-      "Grammar63lesson library and lesson opening",
-      "shared4-word bag in QuickDrawn/Poker/Sky",
-      "QuickDrawn lobby-only logo, PvC start/pause/return and chess room controls",
-      "safe same-tab topic-preserving return",
-      "device installation not tested on physical Android/iOS"
-    ]
+    "skyBootChecks": 6,
+    "wordBattlesBootChecks": 12,
+    "pokerDealerScenarios": 6,
+    "browser": "Edge, 320px and 1280px. Four visual action states in each game and Arcade, three live Hub returns, cached UI resources offline, Poker pause/resume and menu-to-game scoring. Chess host/guest/spectator exercised with a local peer transport; all four draw-response toolbar cells match at 320/390/1280px."
   },
   "files": [
     {
@@ -954,8 +1088,13 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 5028,
-      "sha256": "feb078ad6bb44e288ce7a949462821ef1e8af92edc3d6501733a6036300bce75"
+      "bytes": 6967,
+      "sha256": "9504c950c732e820956d9686fd8113fcef56fcf48446be4bf9d3b0931649623c"
+    },
+    {
+      "path": "README-SUITE.md",
+      "bytes": 9513,
+      "sha256": "9d0e279e28c68b58f98293f06d5922d6efa7bc7334294a87b42a6b40e4c9a199"
     },
     {
       "path": "apps/arcade/.nojekyll",
@@ -963,29 +1102,129 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "apps/arcade/assets/action-buttons.png",
+      "bytes": 2562,
+      "sha256": "35a4dc1beaea6f0470499e901db197d7b710aef586ad3326c144ff40a68bc537"
+    },
+    {
+      "path": "apps/arcade/assets/action-glyphs.png",
+      "bytes": 825,
+      "sha256": "a8ddcf36a77b8e8bff6e0be7b0a8a073cd8ea615dd92f34638bb50df5146eea2"
+    },
+    {
+      "path": "apps/arcade/assets/arcade_space_logo.png",
+      "bytes": 1214369,
+      "sha256": "b4465514c914346e315a64641a436e8bc371b8e7ce274afd12f24d56bccf4b07"
+    },
+    {
+      "path": "apps/arcade/assets/audio/game-open.mp3",
+      "bytes": 49093,
+      "sha256": "d193618f2fc207326175b37f9ba46b09e2d364d91235df63bcc6a232dcf854d1"
+    },
+    {
+      "path": "apps/arcade/assets/audio/game-switch.mp3",
+      "bytes": 9733,
+      "sha256": "5462ad858404e01b66c432d9aafc18cb4793fb8b444169f8f040f92ff1bfd092"
+    },
+    {
+      "path": "apps/arcade/assets/audio/game-unavailable.mp3",
+      "bytes": 38533,
+      "sha256": "b4622f1085491ffee4140eb2912f00da98f7d4a4fe2910af65b67ced24725af2"
+    },
+    {
+      "path": "apps/arcade/assets/audio/menu-exit.mp3",
+      "bytes": 34693,
+      "sha256": "f9ea6c46820073b08e320d5170c8df023351c52f398ea2ae39e8fc8c7dcd16a8"
+    },
+    {
+      "path": "apps/arcade/assets/audio/menu-select.mp3",
+      "bytes": 6853,
+      "sha256": "0b5f114a358f15a6c73bb409e28c55b2d2773a36e15b5b345e44bda085dfb905"
+    },
+    {
       "path": "apps/arcade/assets/lexical-vocabulary.js",
       "bytes": 3080,
       "sha256": "c4c7f38eeb5e620ef6885ea6187818e94bc33125093afbb9384aeb131f605381"
     },
     {
+      "path": "apps/arcade/assets/logo/coming_soon_farm.png",
+      "bytes": 1519873,
+      "sha256": "499d5b6fece877af0ec3229b5207a331fad2dad3edd0886f7d9fe314cd6edd09"
+    },
+    {
+      "path": "apps/arcade/assets/logo/fist_of_legends.png",
+      "bytes": 2273414,
+      "sha256": "bb7a7a91303987ee7c93457ff10b6d1786a836ffe8fdf045e8974eedb3d78884"
+    },
+    {
+      "path": "apps/arcade/assets/logo/quiz.png",
+      "bytes": 1604407,
+      "sha256": "0c2bafbb1248d9ac90804e998d3dc63794351f46e934f543bb2902940c3cd2cc"
+    },
+    {
       "path": "apps/arcade/assets/logo/sky_dominators_logo.png",
-      "bytes": 1976138,
-      "sha256": "53f24091d9b57abed3286ba60100330f02169018fa47413b81e2dacd0d901775"
+      "bytes": 1400091,
+      "sha256": "aa1aa020e49141bb23871e21b899a6d67bc24d5c3ae4739ff1b5c750a25208a8"
+    },
+    {
+      "path": "apps/arcade/assets/logo/spellsmith.png",
+      "bytes": 1932339,
+      "sha256": "26cbc7789e63207aa208c18e5a88579de522f83fc70bd8aa0f657a6e5826a512"
+    },
+    {
+      "path": "apps/arcade/assets/logo/vocabulary_test.png",
+      "bytes": 1442958,
+      "sha256": "d942083688fe192ccec325fa75ced2a2d81ba387755d33ea3125471648f1eca6"
+    },
+    {
+      "path": "apps/arcade/assets/logo/wild_west_poker_logo.png",
+      "bytes": 1381239,
+      "sha256": "39e7cea3648c2daa017510740c167ff7749927fa90b95fefb801cf1d4f1d85d6"
+    },
+    {
+      "path": "apps/arcade/assets/logo/word_battles_logo.png",
+      "bytes": 1526527,
+      "sha256": "b857800f9a562d9249d383ca6ab885b1b704c026cee973cb628ec5bb712f7333"
+    },
+    {
+      "path": "apps/arcade/assets/system-controls.png",
+      "bytes": 6099,
+      "sha256": "d2ea002060a9a195abd839feec04b1838edbe027de286a6d4bcdd0c48a4b4c61"
+    },
+    {
+      "path": "apps/arcade/assets/ui_spritesheet.png",
+      "bytes": 27893,
+      "sha256": "d781bd0bc7bc68c24884efd38b820d460111da871b777e3c713547e65816db35"
+    },
+    {
+      "path": "apps/arcade/css/action-frames.css",
+      "bytes": 5445,
+      "sha256": "c3a3b6e0586c968c2ffda217820b50d11f82080d2c9d12b2a70ae262bf66bada"
     },
     {
       "path": "apps/arcade/css/arcade-1.css",
-      "bytes": 15759,
-      "sha256": "f9a8ce2024618274180dcd96d9e03fded6aceacaba6dd220243ea56740c8da3c"
+      "bytes": 18644,
+      "sha256": "9dde2df87dcc991789ab84f54c31e964daf6533d04b2bcdfe3dd5a6b37a848b0"
     },
     {
       "path": "apps/arcade/index.html",
-      "bytes": 12580,
-      "sha256": "a5176eac4b69c1f38704128e3b3cecdd767ae6e73b4a5dfadcd15ebbcd730f63"
+      "bytes": 11059,
+      "sha256": "79194464beff9e575144720def03bdb68b88c544046c6d9d8592f88c20a15e55"
+    },
+    {
+      "path": "apps/arcade/js/action-frames.js",
+      "bytes": 4864,
+      "sha256": "ae0ad3b6a77283cb64c14a1a785846bbae583c49f49187c060a9e1002f0fbcbc"
+    },
+    {
+      "path": "apps/arcade/js/appearance.js",
+      "bytes": 1315,
+      "sha256": "cf9de97306c64693716e02bf73c6f3f93045eaef004bc06113d58797f108da1e"
     },
     {
       "path": "apps/arcade/js/arcade-2.js",
-      "bytes": 20622,
-      "sha256": "dd63c37cc6a01f767a60d2e648f6dcca3f6c35a3ede89ea24ba1e2a61627660b"
+      "bytes": 26049,
+      "sha256": "e61fe6a3b1c99709d02139cd82909e4f836a0bcab8c36ee5b7fa94a6e8f8ace2"
     },
     {
       "path": "apps/grammar/css/notebook-3d.css",
@@ -998,39 +1237,14 @@
       "sha256": "b866daee1c64565dfe0cec49ecfcea945487fc7955a35cfe0b340706cff5f52e"
     },
     {
-      "path": "apps/grammar/icon-192.png",
-      "bytes": 749,
-      "sha256": "7b9fd63c79b4056b04669b511f299af91c22b907d7ca422a995dea2485d86faa"
-    },
-    {
-      "path": "apps/grammar/icon-512.png",
-      "bytes": 3016,
-      "sha256": "c0d3eb74fe7afd7b595587c888e13e84a6ac434b2f837bcb69fc0e45d287ffff"
-    },
-    {
-      "path": "apps/grammar/icon.svg",
-      "bytes": 597,
-      "sha256": "b98465900aac5d2a969a0be64f413987279144de37f8f82e22fa76532e23c9d6"
-    },
-    {
       "path": "apps/grammar/index.html",
-      "bytes": 6153,
-      "sha256": "436b4d9df96a0e968db5d8768d74d4c124e6613f5e0794fb21fa17b83f7b9b1b"
+      "bytes": 6163,
+      "sha256": "8e4db2d590dc6ec5f3ca93e3c912d457d7f40de9c4aad19729b4572ec1288cbe"
     },
     {
       "path": "apps/grammar/js/app.js",
       "bytes": 25736,
       "sha256": "1dee084e211e16b1f11cd74fe854a16be980c048754481aee0f9eea19fe272ea"
-    },
-    {
-      "path": "apps/grammar/js/firebase-service.js",
-      "bytes": 3103,
-      "sha256": "6ad7bf2df1ae3393a2d93aa6e12b0d55b5b67b5f99dc2955192f19fbed305940"
-    },
-    {
-      "path": "apps/grammar/js/loading-screen.js",
-      "bytes": 465,
-      "sha256": "45ada5c0bb8100ac5f4b3af6dce25c66f35daf544ae14389daed575800ec6607"
     },
     {
       "path": "apps/grammar/js/notebook-ui.js",
@@ -1046,16 +1260,6 @@
       "path": "apps/grammar/js/storage-decay.js",
       "bytes": 15476,
       "sha256": "2f3438103900dda463b917eea88cc5202c9f4d49208b779c7f9b967269c05c98"
-    },
-    {
-      "path": "apps/grammar/js/student.js",
-      "bytes": 11137,
-      "sha256": "c7b18a996e99d5b9d8d94e28f55469fa5880291deabc55785ba55e3db5ed2748"
-    },
-    {
-      "path": "apps/grammar/js/teacher.js",
-      "bytes": 8441,
-      "sha256": "717b8d400ab16889487b8fc083bc5ac8b3fb2d1cfb0202ba7d5a7e2b6de3f2ef"
     },
     {
       "path": "apps/grammar/lessons/bai-01.json",
@@ -1383,39 +1587,49 @@
       "sha256": "1cf74e0baa8dcea7055ebcd8b2c8699ae41b59643646499f6e62337d4df65d75"
     },
     {
-      "path": "apps/grammar/manifest.json",
-      "bytes": 980,
-      "sha256": "8850d9ed5e848d0c8526742e52b5da1f0b4158baf38d1004c9243ef6336bcf26"
-    },
-    {
-      "path": "apps/grammar/service-worker.js",
-      "bytes": 3313,
-      "sha256": "624581943b56e67a1ff968646951d1d756c2a0ac38ef602e0b6141c3e0507157"
-    },
-    {
       "path": "apps/poker/.nojekyll",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
+      "path": "apps/poker/README.md",
+      "bytes": 1302,
+      "sha256": "9debf84d992f9bf6ae3d0ed00d06726be62f35ff971f6205b211926ab7dc7d0a"
+    },
+    {
+      "path": "apps/poker/assets/action-buttons.png",
+      "bytes": 5120,
+      "sha256": "e4bb12ce01dbbee5093e53799773af90cf084560aca3df383fe9468d81c14065"
+    },
+    {
+      "path": "apps/poker/assets/cowboy_dealer_spritesheet.png",
+      "bytes": 314673,
+      "sha256": "ae5b4cb6e80f8be8edfe26c05938e68cbf0d86a2436781c91ae4f946553dd658"
+    },
+    {
+      "path": "apps/poker/assets/poker_cards_spritesheet.png",
+      "bytes": 231750,
+      "sha256": "b1bb7790c9e6650768a3d9f61ebaaacdbdd08256cab29bfad82ee837a8fdaaa5"
+    },
+    {
+      "path": "apps/poker/assets/poker_elements_spritesheet.png",
+      "bytes": 3548,
+      "sha256": "a79a164028eba1277c4cb66461924886e07f602103ea5591d78d1bf51e6e4b1c"
+    },
+    {
       "path": "apps/poker/css/poker-1.css",
-      "bytes": 14355,
-      "sha256": "dda7c47956ccfa226f5cf209929323051d341b81d50a6afb31d3255539588be8"
+      "bytes": 29655,
+      "sha256": "1ec3a172109515bbccbfcc9cade987fa1b630405ae9c0d6d415341e06b7477dd"
     },
     {
       "path": "apps/poker/index.html",
-      "bytes": 16912,
-      "sha256": "422f2940ab9124d2dc7043b62b8d60ff12831f1193266164898402288b22bc1b"
+      "bytes": 14387,
+      "sha256": "c645e07ff50987fca369ba25f5bc7a99ed769638901e086ddfe27e3729cb1263"
     },
     {
       "path": "apps/poker/js/poker-1.js",
-      "bytes": 60182,
-      "sha256": "d78eb09f59cf185d6b1de82f5b72df33cc82f5435f20c72b8699eb831eb9e11f"
-    },
-    {
-      "path": "apps/poker/README.md",
-      "bytes": 981,
-      "sha256": "cf1b005ca2777e9736017cac376b87ba7403720c9ceb5f7d20ee753b860c969c"
+      "bytes": 63740,
+      "sha256": "032442b3d8d634eaf0a0570ba7dc67853cbeeb64442fc837f3de769658aa5142"
     },
     {
       "path": "apps/quick-drawn/.gitignore",
@@ -1428,9 +1642,14 @@
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
-      "path": "apps/quick-drawn/assets/audio/README.txt",
-      "bytes": 392,
-      "sha256": "8d7bfdde735eb3fd926c5c2bebc8aa1616db8477d0a3edad2d31baa7553ca840"
+      "path": "apps/quick-drawn/README.md",
+      "bytes": 4564,
+      "sha256": "ea58a66de867183684ae014130b1896e6824faa48ea263bbcb319989ede9d7a0"
+    },
+    {
+      "path": "apps/quick-drawn/assets/action-buttons.png",
+      "bytes": 8595,
+      "sha256": "2321527b6db9a8e954bc74ee64215532d87493844e21d9a65999f8a0401cf37c"
     },
     {
       "path": "apps/quick-drawn/assets/audio/teacher_vuong_punch.mp3",
@@ -1441,11 +1660,6 @@
       "path": "apps/quick-drawn/assets/audio/teacher_vuong_slap.mp3",
       "bytes": 15046,
       "sha256": "61c0b70535e1ff0dca83498e896a72394b0a956d38c88094e22cf1c07d943583"
-    },
-    {
-      "path": "apps/quick-drawn/assets/audio/wilhelmscream.mp3",
-      "bytes": 28419,
-      "sha256": "05540049fa9ba71865c37eac5e74b27e1bb4b0285a2cea68ed535640ec6fc1a5"
     },
     {
       "path": "apps/quick-drawn/assets/images/ancient_battlefield.png",
@@ -1468,6 +1682,11 @@
       "sha256": "c436436640fcbdbc5a5afce9b13a0aa0f686f342eede1e96e21e185dc8d38ca2"
     },
     {
+      "path": "apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png",
+      "bytes": 13075,
+      "sha256": "f4ee17f9fb4c82d463ea41f45f79492574482e44c98d67171210abd9195fd553"
+    },
+    {
       "path": "apps/quick-drawn/assets/images/chess/chess_viet_sprites.json",
       "bytes": 1206,
       "sha256": "7d794c2b3a4e45e9c947e324cc486c25800145dff32aa782621e1a21f7fc7a8c"
@@ -1483,19 +1702,9 @@
       "sha256": "17effa7807114f71a08ae4faaeae5541dc639e8687a0332235be547bfd7e579e"
     },
     {
-      "path": "apps/quick-drawn/assets/images/desert_bg.svg",
-      "bytes": 2959,
-      "sha256": "7825342fd48165b2d87ade0fb8eee1eb3c38efb154ec6af4add68041e7d6a98a"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/desert_bg_8bit.png",
-      "bytes": 12338,
-      "sha256": "dda6a4f099ac5b5c1922dd06906626439626babfc093e8afed054027a07efdaa"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/enemy_spritesheet.png",
-      "bytes": 153767,
-      "sha256": "2231843ac21ac7f4ff0a618f2e02aacfc612e5a29748b7cdd24fb294e01bbf5f"
+      "path": "apps/quick-drawn/assets/images/events/Sunday-the-king-plays-poster.png",
+      "bytes": 2883645,
+      "sha256": "94c96eacdec2762241bfe33f93fe5feb054708653aafc6dab383ca83fd2aa737"
     },
     {
       "path": "apps/quick-drawn/assets/images/events/dang-ki-ngay-transparent.png",
@@ -1503,24 +1712,9 @@
       "sha256": "ba68579c0f5e606b68afb753eecff87b447c964909cd613a136e1c434364ba56"
     },
     {
-      "path": "apps/quick-drawn/assets/images/events/Sunday-the-king-plays-poster.png",
-      "bytes": 2883645,
-      "sha256": "94c96eacdec2762241bfe33f93fe5feb054708653aafc6dab383ca83fd2aa737"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/GENERATION_PROMPTS.txt",
-      "bytes": 2491,
-      "sha256": "d4729810535186a813abf321c44b10464c26094a04959f1008e2c7138f9db581"
-    },
-    {
       "path": "apps/quick-drawn/assets/images/heroes/an.png",
       "bytes": 1210502,
       "sha256": "710af549f1b10d50f707a73fbf3e8d6ab7253cfb2e75d553dd62974a05df4091"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/heroes/anchors/vuong_anchor.png",
-      "bytes": 1422453,
-      "sha256": "c1691f24ab3f294b5afeb165db254156d6bc628f3999c4da6233cc1b68183fa1"
     },
     {
       "path": "apps/quick-drawn/assets/images/heroes/chu.png",
@@ -1563,11 +1757,6 @@
       "sha256": "4c239c50fdb7842e7d8ff73718b1b367077203f7690b4f91eb722bec14621432"
     },
     {
-      "path": "apps/quick-drawn/assets/images/heroes/vuong.json",
-      "bytes": 9329,
-      "sha256": "d92461fef3e0dc7b459f9e24c3df376d0f4ef519ae17a59020be8e0ab6069151"
-    },
-    {
       "path": "apps/quick-drawn/assets/images/heroes/vuong.png",
       "bytes": 1351763,
       "sha256": "973a438e1fab6bbabad3e1f5156e44fbf8e65507374e633ff6e6337dd4d7b831"
@@ -1598,11 +1787,6 @@
       "sha256": "00e1d9a4d95a2e8cb3033dad0faad87f0efdef082d804cf724d1ba87fac40890"
     },
     {
-      "path": "apps/quick-drawn/assets/images/player_spritesheet.png",
-      "bytes": 182016,
-      "sha256": "2e3e6edb7cd74e9d360e7c6d66f974aec4dfd32da2263e68e762e5e42a821680"
-    },
-    {
       "path": "apps/quick-drawn/assets/images/scroll_projectile.png",
       "bytes": 553455,
       "sha256": "558b8c0aa1602e95b273f8b86c3e9575dc166aa8e5826a75da346c57a57918e8"
@@ -1613,54 +1797,9 @@
       "sha256": "b4a390c6edab497bf0150972c180610bba0afae6db0e58a2bac919d560529811"
     },
     {
-      "path": "apps/quick-drawn/assets/images/source/cowboy_duel_spritesheet.json",
-      "bytes": 518,
-      "sha256": "956bec9ec2f4f4498ab3601c60d9487886470ecc65afb23f9d63f6bbfdf7bec4"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/source/cowboy_duel_spritesheet.png",
-      "bytes": 553380,
-      "sha256": "34dfa936d7eea6358f720411224af8bd0cca7dcc29d5c4ea94eca119fe32117e"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/source/cowboy_enemy_128_2231843ac2.png",
-      "bytes": 153767,
-      "sha256": "2231843ac21ac7f4ff0a618f2e02aacfc612e5a29748b7cdd24fb294e01bbf5f"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/source/cowboy_enemy_spritesheet.png",
-      "bytes": 153767,
-      "sha256": "2231843ac21ac7f4ff0a618f2e02aacfc612e5a29748b7cdd24fb294e01bbf5f"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/source/cowboy_individual_spritesheets.json",
-      "bytes": 478,
-      "sha256": "9a35276f360d038dd57c63e77c1c3b21c3fb67454f4dcf3eb5104a87cee58df5"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/source/cowboy_player_128_2e3e6edb7c.png",
-      "bytes": 182016,
-      "sha256": "2e3e6edb7cd74e9d360e7c6d66f974aec4dfd32da2263e68e762e5e42a821680"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/source/cowboy_player_spritesheet.png",
-      "bytes": 182016,
-      "sha256": "2e3e6edb7cd74e9d360e7c6d66f974aec4dfd32da2263e68e762e5e42a821680"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/spritesheets.json",
-      "bytes": 675,
-      "sha256": "ec68b7ce2b2ccbd0a65d0d3db9b1394a795d348e0e9b8007ba32b8c8af4c7d22"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/TWO_CANVAS_GENERATION_PROMPTS.txt",
-      "bytes": 2206,
-      "sha256": "7573e767b5fdff21474bacc1f54aacb74f4193c6a17b50a334525eb93941cd0a"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/ui/brand/anh-hung-hao-kiet-logo.png",
-      "bytes": 1336446,
-      "sha256": "7fe81dca2b8d14a502fcde80366708ce572be0d606c1803124487e09b32eb3eb"
+      "path": "apps/quick-drawn/assets/images/ui/brand/word_battles_logo.png",
+      "bytes": 1524536,
+      "sha256": "392147730715d0b74dd3027e035728f376decc2e1b50357e9ba55b7f3ba699a8"
     },
     {
       "path": "apps/quick-drawn/assets/images/ui/buttons_gold_spritesheet.png",
@@ -1668,19 +1807,9 @@
       "sha256": "31fac3f87388c2aec3413370726e02e2aa33db8f19bff8666be670d71342ac87"
     },
     {
-      "path": "apps/quick-drawn/assets/images/ui/gold_ui_sprites.json",
-      "bytes": 3391,
-      "sha256": "8606b4469f5a76bfd37dfcf178ed1afc2099d3ba74983b47c6886815ebe592ad"
-    },
-    {
       "path": "apps/quick-drawn/assets/images/ui/leaderboard_gold_spritesheet.png",
       "bytes": 994786,
       "sha256": "0005d451a908e94a2a027cd6666126e3729615bc4550d0f974100a5e207dbd0d"
-    },
-    {
-      "path": "apps/quick-drawn/assets/images/ui/spectator/spectator_assets.json",
-      "bytes": 4752,
-      "sha256": "e54a278ecd73f1e8df197ceb3ad1cc8f3dc8ffa9cfdb3fcc5aafe1c053fdefdc"
     },
     {
       "path": "apps/quick-drawn/assets/images/ui/spectator/spectator_ui_sprites.json",
@@ -1719,23 +1848,18 @@
     },
     {
       "path": "apps/quick-drawn/css/duel.css",
-      "bytes": 65673,
-      "sha256": "99cbff09fbf2485f8afb7a4b48524674636f0f566bdb0e69d7c2ebf1a3547178"
-    },
-    {
-      "path": "apps/quick-drawn/css/style.css",
-      "bytes": 39237,
-      "sha256": "de7d0108794bc7d3147ac0ca38ad36602503785d38a3ec4576933fb6c3d3bde2"
+      "bytes": 69938,
+      "sha256": "d5479a8b0ceb01e695fc13dfd37fc9b00f03e796509a1c39c2c46cffb9448c50"
     },
     {
       "path": "apps/quick-drawn/index.html",
-      "bytes": 13339,
-      "sha256": "73e9f4800384aa0326315871a764cf1931420f777dad12ce96376610a03d6f0c"
+      "bytes": 18321,
+      "sha256": "6122b3554a4006672c81961c82d9c99f5576bcbe68cb83f2d96979ab609a763f"
     },
     {
       "path": "apps/quick-drawn/js/audio.js",
-      "bytes": 18755,
-      "sha256": "a98a2f92393e1d775540e900795aae8f07eda6cca52745345d8732d3be92bad1"
+      "bytes": 2641,
+      "sha256": "934c6d64529dde1c57c79b7a8f83162108d601d90b7deb326fe54c34b4ace5d9"
     },
     {
       "path": "apps/quick-drawn/js/chess-session.js",
@@ -1754,28 +1878,28 @@
     },
     {
       "path": "apps/quick-drawn/js/chess.js",
-      "bytes": 47842,
-      "sha256": "f07c1b095e1b43a4dbcd595e186aca0e123e88d3c588fdadd64d24f16e59c70f"
+      "bytes": 48913,
+      "sha256": "932a95b8f00ec37322efb38260b8dcb2ecca3ae279b1d8fcd2fed3226c506895"
     },
     {
       "path": "apps/quick-drawn/js/config.js",
-      "bytes": 974,
-      "sha256": "f80c4861b8952a51b45a385a6a2c2217bc29f2651a76d4ad8441933bbc1a3ad8"
+      "bytes": 918,
+      "sha256": "de6806dde0fa25a1374127e2da48ad8b11e53b816b181a9972d116e1a27e822a"
     },
     {
       "path": "apps/quick-drawn/js/connection-recovery.js",
-      "bytes": 12666,
-      "sha256": "9ae438bd3ac834c65f5de5077358d3f6f9f6c120176fccac7b3ad175fd6364c2"
+      "bytes": 12938,
+      "sha256": "455fa507ad033419389bdc9632a6efff19eca576474a8d1a664b4f7c0a527a38"
     },
     {
       "path": "apps/quick-drawn/js/duel.js",
-      "bytes": 73269,
-      "sha256": "243002bd42d5a62aa43d2b98f2df1ea8c7b4db3ee20ba28e15a316a03dbb7f4b"
+      "bytes": 75204,
+      "sha256": "0af4c98c9163fe80fc958c55f3c540a8ac07a56ddc6fcde77c6b43cf78353c76"
     },
     {
       "path": "apps/quick-drawn/js/event-promo.js",
-      "bytes": 2220,
-      "sha256": "2e7c23f0a78b72144decb3c545a267ae9f74f5553242c224a8aea5fedbf00393"
+      "bytes": 2350,
+      "sha256": "1f1eb59d46eab0894f08d8198e1f1389bd6b44a633316101204f630d11b3c16f"
     },
     {
       "path": "apps/quick-drawn/js/firebase-service.js",
@@ -1783,14 +1907,9 @@
       "sha256": "bf3b42352b5c04b0a42ddcf2124986a9de8335cbbf0f67ffce76f363fe69125c"
     },
     {
-      "path": "apps/quick-drawn/js/game.js",
-      "bytes": 42371,
-      "sha256": "8dcfdc95ebc8b170d588bf8b16528ee5fbd332d7dc804814f50dd704387430d8"
-    },
-    {
       "path": "apps/quick-drawn/js/sprite-animator.js",
-      "bytes": 9426,
-      "sha256": "5fff82932be63b009fdce116819562dcb0c94abfffe092b974f353db8709a12b"
+      "bytes": 3873,
+      "sha256": "253692217dd2b6def72d4a8fe5baaa39c13e5664f7ef00eb409bf528748c6f9f"
     },
     {
       "path": "apps/quick-drawn/js/standings-service.js",
@@ -1799,23 +1918,8 @@
     },
     {
       "path": "apps/quick-drawn/js/ui-sprites.js",
-      "bytes": 3560,
-      "sha256": "e3bb85bfef49e8efde7a621475f6dee275a158f80d76688ba2052f1b249ee93a"
-    },
-    {
-      "path": "apps/quick-drawn/legacy.html",
-      "bytes": 18684,
-      "sha256": "6769b9861c44061d3963988b710e6768ec97617c8482854e03b2836424ff4a8f"
-    },
-    {
-      "path": "apps/quick-drawn/README-DUEL.md",
-      "bytes": 4617,
-      "sha256": "9c0577d146817fdad452bdcafd77c30472ec9fa4a9551c006489506aa6ea6aa1"
-    },
-    {
-      "path": "apps/quick-drawn/README.md",
-      "bytes": 4617,
-      "sha256": "9c0577d146817fdad452bdcafd77c30472ec9fa4a9551c006489506aa6ea6aa1"
+      "bytes": 3701,
+      "sha256": "b4a696201ad368ac75e1a7cc04e35196491def561bc7e17ea4b17e5e9523592f"
     },
     {
       "path": "apps/sky-dominators/.gitattributes",
@@ -1831,6 +1935,16 @@
       "path": "apps/sky-dominators/.nojekyll",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "apps/sky-dominators/README.md",
+      "bytes": 1191,
+      "sha256": "1df44b1dfc0690727deaa86b16c8d392c4ea7e1325bb16654bea7ff6fefc91d5"
+    },
+    {
+      "path": "apps/sky-dominators/assets/action-buttons.png",
+      "bytes": 4712,
+      "sha256": "d13d0084774f0d1e5b1fafa473b223414d67e161aadf859856a0ee4cfb5aec7e"
     },
     {
       "path": "apps/sky-dominators/assets/aircraft_1.png",
@@ -1876,11 +1990,6 @@
       "path": "apps/sky-dominators/assets/audio/player-garand-shot.mp3",
       "bytes": 53275,
       "sha256": "24c04a21bb429c016ca11d0a00f7ebd8aa99789474d14680b6f4f678d608a9a0"
-    },
-    {
-      "path": "apps/sky-dominators/assets/audio/sky-dominators-intro.mp3",
-      "bytes": 251090,
-      "sha256": "7ef6d1c62edf65b9db480abe89064d8e42a8eaaf0b26b8d3c298c9537403412c"
     },
     {
       "path": "apps/sky-dominators/assets/bg_combined_seamless.png",
@@ -2519,8 +2628,8 @@
     },
     {
       "path": "apps/sky-dominators/assets/logo/sky_dominators_logo.png",
-      "bytes": 1857341,
-      "sha256": "4ce155d8328b4261e39814bc076a84bc6ccf3920f5eba2cba3ad57430876d663"
+      "bytes": 1364418,
+      "sha256": "91057d04fa56a6a6691d30467ed5be7ea817333268f08b3159e12bc995129b27"
     },
     {
       "path": "apps/sky-dominators/assets/models/chronos.png",
@@ -3171,16 +3280,6 @@
       "path": "apps/sky-dominators/assets/skins/aircraft/t1_esports/viper_scarlet_sprint.png",
       "bytes": 24211,
       "sha256": "5959ff16dbc2a8c0f716fd86e1a20ca9648b1c345f6692b521e9f65a6120bb94"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/celestial/generation-prompt.txt",
-      "bytes": 2743,
-      "sha256": "9f13a919e9887d41c652ff16bd8d38db2375699b2b866f6adf559953fe99b47e"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/celestial/manifest.json",
-      "bytes": 3472,
-      "sha256": "7513317b6d0fc594026787ad602cae80dc0ccff555136b698df9ed3a37355313"
     },
     {
       "path": "apps/sky-dominators/assets/skins/celestial/preview.png",
@@ -5948,6 +6047,11 @@
       "sha256": "2eda654ccefaf4f49075838d6a295a627c75c55988b447bfab6804e8c0ccee35"
     },
     {
+      "path": "apps/sky-dominators/assets/skins/hazard/README.md",
+      "bytes": 3197,
+      "sha256": "df3f44d129cc616de1c56638bf195e8a7fdc51327cc25512332cef20403200bc"
+    },
+    {
       "path": "apps/sky-dominators/assets/skins/hazard/explosion/frame_01.png",
       "bytes": 7189,
       "sha256": "2096f561368d94db4943adcfa823f15c096e36316420062376b08a5daa0a1dad"
@@ -5991,16 +6095,6 @@
       "path": "apps/sky-dominators/assets/skins/hazard/fuselage.png",
       "bytes": 96779,
       "sha256": "124432bcfd6a5bbb247de3168e316decf3fd7fba9989247761f6469a05e1940f"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/hazard/generation-prompts.json",
-      "bytes": 2368,
-      "sha256": "a3db5a4fe6d5e35aa4034c685b3331c2230d81b4990da38151117e84c6a97435"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/hazard/manifest.json",
-      "bytes": 2511,
-      "sha256": "7d8670d4dcaa44bb7457743371aa6ca6194f55a5a67f141e80b96d4b9ded42ad"
     },
     {
       "path": "apps/sky-dominators/assets/skins/hazard/muzzle_flash/frame_01.png",
@@ -6048,11 +6142,6 @@
       "sha256": "75f698173d346c664f745c479aeaf81c5eb89ebec75ea7cf6420358a1370719e"
     },
     {
-      "path": "apps/sky-dominators/assets/skins/hazard/README.md",
-      "bytes": 3197,
-      "sha256": "df3f44d129cc616de1c56638bf195e8a7fdc51327cc25512332cef20403200bc"
-    },
-    {
       "path": "apps/sky-dominators/assets/skins/hazard/rotor/frame_01.png",
       "bytes": 7364,
       "sha256": "bec6eb26601a38cecda19f9a807a663994069b002dcd127bf44e35cec371b373"
@@ -6071,16 +6160,6 @@
       "path": "apps/sky-dominators/assets/skins/hazard/rotor/frame_04.png",
       "bytes": 7263,
       "sha256": "450a0f2880f62efde0b52c146bdd98ce65da76cddae34f69041231fb5e81d0de"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/hazard/source-body.png",
-      "bytes": 1394329,
-      "sha256": "17c2b17abd52f46455ad7cb960dafeebcd9de45418de5db7c032020c581dc823"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/hazard/source-effects.png",
-      "bytes": 1073560,
-      "sha256": "b4b3bfb927ec8d81f11249c47ba2e79548927966935bbc54e34642189ec5aede"
     },
     {
       "path": "apps/sky-dominators/assets/skins/king_ghidorah/flight_12/frame_01.png",
@@ -6383,6 +6462,11 @@
       "sha256": "aab621b7541ff3571e18d87550f54f8f67d379ec55382e7076b90d8402d30417"
     },
     {
+      "path": "apps/sky-dominators/assets/skins/prism_core/README.md",
+      "bytes": 4516,
+      "sha256": "9bc841d98845bf2b226e0c0d3aa40e0cf418ae428395408009f2342c67850b26"
+    },
+    {
       "path": "apps/sky-dominators/assets/skins/prism_core/flight-40.png",
       "bytes": 1342978,
       "sha256": "88debff2e98d369bca76a387810497da75791d31ba5fe6603a8f49776bec4501"
@@ -6588,54 +6672,14 @@
       "sha256": "81825ecc57e0af997b06c5b5ae89812a949803044882190974b1e706344fe2c1"
     },
     {
-      "path": "apps/sky-dominators/assets/skins/prism_core/generation-prompts.json",
-      "bytes": 5330,
-      "sha256": "61312601e78903f16fceed4dd16412ad319d9962edacb5f934bdf15b711ca391"
-    },
-    {
       "path": "apps/sky-dominators/assets/skins/prism_core/hull.png",
       "bytes": 33821,
       "sha256": "41985498d5f20cf55271fd9ce3cf280ccb23855d54d7a08eb123134e503c0ec8"
     },
     {
-      "path": "apps/sky-dominators/assets/skins/prism_core/manifest.json",
-      "bytes": 17955,
-      "sha256": "ef689e8d65eeee03eaa09a5947f09230150a53eab8662c7e5f730eef19419811"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/prism_core/preview.html",
-      "bytes": 2792,
-      "sha256": "e6b7fec57e12e4f574c28f91126e223ee207153897daab593ae703f369cacf22"
-    },
-    {
       "path": "apps/sky-dominators/assets/skins/prism_core/preview.png",
       "bytes": 52261,
       "sha256": "4b6fbca9a5276dd1f03e4dc4a4fa38c80e3f5a4a6b2849a170909cbd78a4de57"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/prism_core/README.md",
-      "bytes": 4516,
-      "sha256": "9bc841d98845bf2b226e0c0d3aa40e0cf418ae428395408009f2342c67850b26"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/prism_core/source-black-fire.png",
-      "bytes": 1159156,
-      "sha256": "58fcba5885a2458ed51a3b130b140829507c3ed45ec66b94af471f04612786c9"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/prism_core/source-gothic-hull.png",
-      "bytes": 848685,
-      "sha256": "71d95a6b4b6f106daa2448252ee8455787ec76f93921f0f7de84865d01367f70"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/prism_core/source-hull.png",
-      "bytes": 790051,
-      "sha256": "5d25005198f254f0a962678ef94f8414b72c43138fb7f2b93d07e527a12b5638"
-    },
-    {
-      "path": "apps/sky-dominators/assets/skins/prism_core/source-vfx.png",
-      "bytes": 1502376,
-      "sha256": "f1a7f8d03f486ba9ed150ba696a75bc48ac1756b4c9442f37d3ad35954458aa7"
     },
     {
       "path": "apps/sky-dominators/assets/skins/red_wraith/ability_activation/ability_activation_frame_01.png",
@@ -7223,44 +7267,24 @@
       "sha256": "03fc9369ab1437df0e36816471f809b2bb942404bb3884d76f1e2b2230c03531"
     },
     {
-      "path": "apps/sky-dominators/boss-test.html",
-      "bytes": 36709,
-      "sha256": "41f9029a9746cd19748baa617d3a1d49fcd19fc1b8a7697765b0276e564d614d"
-    },
-    {
-      "path": "apps/sky-dominators/css/boss-test.css",
-      "bytes": 1510,
-      "sha256": "cad7cbda81a6cb80090a35b048825d6f28dd6f11ca7f6efacfa822de4196ba2e"
-    },
-    {
       "path": "apps/sky-dominators/css/game.css",
-      "bytes": 43178,
-      "sha256": "ffe5f94da7c1dd789a838ee5dd50e4b74ea9065bf165f1561660654e7ff16317"
-    },
-    {
-      "path": "apps/sky-dominators/css/intro.css",
-      "bytes": 11133,
-      "sha256": "f114947246c42fe292040887cc4f370ec27161e8003161d3a31099f91365c418"
+      "bytes": 47024,
+      "sha256": "7787d6321cde0a69b5024067a279e96a5fffbc8fe68263314f87c4d2f4022de4"
     },
     {
       "path": "apps/sky-dominators/css/progress.css",
-      "bytes": 6941,
-      "sha256": "9db7883780077523d82509f3133ad5bfe36e411fe0ad54543ee96ece0140778b"
+      "bytes": 7831,
+      "sha256": "cb9575f75947950121d4ae57a1508dde00da0438bb00c653f2a0bf547ae2b1ad"
     },
     {
       "path": "apps/sky-dominators/index.html",
-      "bytes": 36433,
-      "sha256": "0cbd8f65c17bfb790b9ccbacda5143e07fcf72a76c085c1f715b92ab3b5080b8"
-    },
-    {
-      "path": "apps/sky-dominators/intro.html",
-      "bytes": 1163,
-      "sha256": "d4670dc35e1cdfc41cfbabccf8fbda8c517fdea4434acb808c32271b55ac78fd"
+      "bytes": 33265,
+      "sha256": "123efa0981e663c87f7cbe9391ce90f200ffdf3ac544116e86e53946f7d10639"
     },
     {
       "path": "apps/sky-dominators/js/app.js",
-      "bytes": 634,
-      "sha256": "8ef5035d5ce1bb74f1a16803e32d0ec52636e33f4b1c53f4d8d9ebb9d6b16f02"
+      "bytes": 822,
+      "sha256": "e27a081f9184b320967f7fc51e7501a9d1ff2470bd42b2fd0a1dd0bcc559b3dd"
     },
     {
       "path": "apps/sky-dominators/js/config/aircraft.js",
@@ -7279,8 +7303,8 @@
     },
     {
       "path": "apps/sky-dominators/js/config/gameplay.js",
-      "bytes": 875,
-      "sha256": "a8f424b3a8ee33e8e44510838ff9a83d7b44d155e08fa49f680172ace2d54d34"
+      "bytes": 934,
+      "sha256": "08d9f9e9b65fbbaea7a98f9e72ff6d7c14193f0d10c629b3937a9c3e11adad4c"
     },
     {
       "path": "apps/sky-dominators/js/config/ornithopter.js",
@@ -7324,13 +7348,13 @@
     },
     {
       "path": "apps/sky-dominators/js/core/canvas.js",
-      "bytes": 232,
-      "sha256": "f1a7fe3c47ffeeea02dcb93bb0709dc49831f8f7f837e3427e0927340c22aa4d"
+      "bytes": 1769,
+      "sha256": "aac5d1140fcb7bb7b32985445cb5360730927849055f5de8406222a3e8649c36"
     },
     {
       "path": "apps/sky-dominators/js/core/game-loop.js",
-      "bytes": 5258,
-      "sha256": "61cda7804eb0a2ffc3735ec9f14d79bee6ca39ce66cb73957b6ce98c662ea98a"
+      "bytes": 4863,
+      "sha256": "6c55d56fc74f43f9f74ec335cecbe22e1147b2bc198ffbc744951ccbb43f8095"
     },
     {
       "path": "apps/sky-dominators/js/core/world.js",
@@ -7338,39 +7362,29 @@
       "sha256": "d52d99ef7e0c954a539bebac9f594fa993601b3453f55da8e65d01e5b838ef8c"
     },
     {
-      "path": "apps/sky-dominators/js/dev/boss-test-profile.js",
-      "bytes": 2027,
-      "sha256": "697edfb9aa1e3dcd1390d5e40cd32acfd21a81a29894430e905aac53550a32a7"
-    },
-    {
-      "path": "apps/sky-dominators/js/dev/boss-test.js",
-      "bytes": 2659,
-      "sha256": "8afb7d1520f5a9eac1268092d64fc5d4542ff7695cbacb3989935835c99f0679"
-    },
-    {
       "path": "apps/sky-dominators/js/entities/bomber-missile.js",
-      "bytes": 2664,
-      "sha256": "e5ab9f4125672d691cdf5682b36001530fb97b777c1a8b734e6d5a043dc50413"
+      "bytes": 2647,
+      "sha256": "35fcab53d451789a6fd54931e83adf68d120608046db504d4a824f53cb72774d"
     },
     {
       "path": "apps/sky-dominators/js/entities/bosses/continental-bomber.js",
-      "bytes": 17238,
-      "sha256": "03a4324e93f19bfd0a5813f4a638b51da169481188a62ed393421bad7cb121eb"
+      "bytes": 17327,
+      "sha256": "ef767c6b9cd1392125449ce3a5c56743c12a657b685302c613f7319acdd8cd6c"
     },
     {
       "path": "apps/sky-dominators/js/entities/bosses/drone-swarm.js",
-      "bytes": 24440,
-      "sha256": "d963db49a78829d1382df9ef85d6dda9f8d939471dde9e9ed2e74981adfd2cb5"
+      "bytes": 24454,
+      "sha256": "95da8133107a3ceaea0eeed6176b332246762fc555f77190fb8e8d9f8dac0a52"
     },
     {
       "path": "apps/sky-dominators/js/entities/bosses/sky-fortress.js",
-      "bytes": 34849,
-      "sha256": "13ed68a3d0210e6a4c3f9438958e345f9e1cc589feb229d1a425c877fa7ff833"
+      "bytes": 34842,
+      "sha256": "06013dd5fc28273fbd53cbd39da8d471855db931c23be29503f409b66ce5d9f4"
     },
     {
       "path": "apps/sky-dominators/js/entities/bosses/titanus-veronica.js",
-      "bytes": 30158,
-      "sha256": "84d1925c3c93693a2f0dba30ce1807c2055347044d6df6b3a3a0fcdc96039dc6"
+      "bytes": 30828,
+      "sha256": "a639b2c976b5e92ba6a5ccfcf81bcfcfeb1539d30831d184e2e1ae8939358842"
     },
     {
       "path": "apps/sky-dominators/js/entities/effects.js",
@@ -7384,13 +7398,13 @@
     },
     {
       "path": "apps/sky-dominators/js/entities/enemy-helicopter.js",
-      "bytes": 11848,
-      "sha256": "44df57f418d775b4f78d231e3185aa1efd2abcc9f545575c254aa78999fd85a2"
+      "bytes": 12229,
+      "sha256": "2969b772b4cf177aa0c0fe37165a7b7078670fc13ff946902722f11bc29415ec"
     },
     {
       "path": "apps/sky-dominators/js/entities/player.js",
-      "bytes": 33223,
-      "sha256": "8f44e1d3d858db4d2dac717a7718b7ccf58db1376f3b5f2a8a076edad88f9756"
+      "bytes": 32659,
+      "sha256": "6014543b8065ac07239dfcd286db3dde272e9c243c31244653e375e8ff7ce910"
     },
     {
       "path": "apps/sky-dominators/js/entities/projectiles.js",
@@ -7439,8 +7453,8 @@
     },
     {
       "path": "apps/sky-dominators/js/rendering/terrain.js",
-      "bytes": 1561,
-      "sha256": "c27a5e48de2bfb17ae5e3103e59f0a258b6bee5854d487eb7b118f10690c9819"
+      "bytes": 1356,
+      "sha256": "b7d753cf91f95c0469755f5b5897659305b9a376f7805dd5c8223f6b95517101"
     },
     {
       "path": "apps/sky-dominators/js/systems/assets.js",
@@ -7454,13 +7468,13 @@
     },
     {
       "path": "apps/sky-dominators/js/systems/boss-director.js",
-      "bytes": 12950,
-      "sha256": "5dda49824c30b5f81cd8f5fa0717c11aeab7d9dd552d6d97c1f3219b327394bc"
+      "bytes": 12963,
+      "sha256": "ee77f33f23ddfa4c979196f0cef14fd530b313ed252d2108f55a41cda366e4dc"
     },
     {
       "path": "apps/sky-dominators/js/systems/boss-integration.js",
-      "bytes": 8197,
-      "sha256": "7e44ed6fd08a0430ff35aaae941ddecc9bc839bb20a378c3066f562809c0e614"
+      "bytes": 8530,
+      "sha256": "9ad2ef7ce01cf1bc6acedcddf6e07a303bd161d85425fb27d9f310f1d5b26cc1"
     },
     {
       "path": "apps/sky-dominators/js/systems/collisions.js",
@@ -7474,8 +7488,8 @@
     },
     {
       "path": "apps/sky-dominators/js/systems/input.js",
-      "bytes": 6585,
-      "sha256": "03858d520720a027485d7d291f3538f3e01465e16a442bfe8b5044e7ee75d212"
+      "bytes": 8293,
+      "sha256": "d75089e11e2617a42709a8b8afbf96e0aadfaec68bc40ebfe2a8c2820c1c4646"
     },
     {
       "path": "apps/sky-dominators/js/systems/lifecycle.js",
@@ -7534,23 +7548,18 @@
     },
     {
       "path": "apps/sky-dominators/js/ui/events.js",
-      "bytes": 6191,
-      "sha256": "3fb8897ddc737da76b63b93a9fc94da48c13770725a80deb2fcf863be5f61e0c"
+      "bytes": 5644,
+      "sha256": "cf5b9542b1078a672bb22c4d71bbd94f4751727d87a001f8e6c2a524efed8f9c"
     },
     {
       "path": "apps/sky-dominators/js/ui/hangar.js",
-      "bytes": 2749,
-      "sha256": "7c820b20abef41eba188f15c457fb108153dea3f93316a1d529eef3dc2f8becd"
+      "bytes": 2913,
+      "sha256": "cbf975100baebea374a6673a9982ec67c0ee0dbd02b360537f4bdfe9edbd277b"
     },
     {
       "path": "apps/sky-dominators/js/ui/hud.js",
-      "bytes": 8468,
-      "sha256": "2d28f8197e0bf24aae2e2fd7c9c9b81c853917965eb504c4932cbaf997b3e644"
-    },
-    {
-      "path": "apps/sky-dominators/js/ui/intro.js",
-      "bytes": 20530,
-      "sha256": "aebbdbd4721d1303b555379b9122c26ef1aa5cc314ff592aa48801fccc6c28f5"
+      "bytes": 8593,
+      "sha256": "665188c3bfb56f04b748a75edbade75cf2fdf5663cd6c698a2865e3b223660b2"
     },
     {
       "path": "apps/sky-dominators/js/ui/leaderboards.js",
@@ -7564,18 +7573,13 @@
     },
     {
       "path": "apps/sky-dominators/js/ui/progress.js",
-      "bytes": 14701,
-      "sha256": "512d06afd736ad4d6378cb6ff0f7d273e1a2bfa4743cd6f4f300764d5927a93b"
+      "bytes": 14248,
+      "sha256": "fd4a367c5afb48bd28d494b9719efccef5fc0b0fa594b5f197f73e930aa4c88a"
     },
     {
       "path": "apps/sky-dominators/package.json",
       "bytes": 259,
       "sha256": "70c4f93a0ec9974d9251d860fa9ac553292142cb300ef3a53eb61f8e306cb472"
-    },
-    {
-      "path": "apps/sky-dominators/README.md",
-      "bytes": 1191,
-      "sha256": "1df44b1dfc0690727deaa86b16c8d392c4ea7e1325bb16654bea7ff6fefc91d5"
     },
     {
       "path": "assets/icons/icon-192.png",
@@ -7598,24 +7602,14 @@
       "sha256": "51f1f83cd8da7deb5f776cb777af4da4a9ee627d12feba1fa7ac63cbb08447dc"
     },
     {
-      "path": "assets/ls-loading-normalized.wav",
-      "bytes": 192044,
-      "sha256": "cd1dee2e6b657f4aa62f7a02e5e544708a227d1c8bb25c1e44050ef172eaec10"
-    },
-    {
-      "path": "assets/ls-loading.mp3",
-      "bytes": 5125,
-      "sha256": "77d044dbbd321400fa31655ce8f39483b6693767b65582b73ee1e54fb13158b1"
-    },
-    {
       "path": "css/animations.css",
       "bytes": 6657,
       "sha256": "20fb3e4de0b6b3072bd231dfd3fe7cd9fcfce23893ef2a377f9e0b7d33afc398"
     },
     {
       "path": "css/entry-ui.css",
-      "bytes": 6670,
-      "sha256": "daa0ee2dd6d68b0a6e9b8c0400817b70fd49f7c1f83962207c148843a985bfea"
+      "bytes": 6681,
+      "sha256": "bddea1d69ee5f0a90cc1fb31109fb947fa26a8fe6734bfbcfbf7b8d252f7265d"
     },
     {
       "path": "css/main.css",
@@ -7629,48 +7623,53 @@
     },
     {
       "path": "css/recall-ui.css",
-      "bytes": 15063,
-      "sha256": "543158e1296267d79b6b836bc9bfacc9af3358c3bc298c0af0b3f74c814963ff"
+      "bytes": 15231,
+      "sha256": "54a6c43df85ff76c4d56d6c90417dc5223653266cb5669e0079d0472054202d0"
     },
     {
       "path": "css/theme.css",
-      "bytes": 5422,
-      "sha256": "32f5c700fed522b503ba802e63028aa0bc5602f96d2117d53a643ecba90eebfe"
+      "bytes": 8331,
+      "sha256": "0d9f0e4ae0d274ca1da33dff251457740db6d0fbecb42039d8cf2096c2a373ed"
     },
     {
-      "path": "firestore/firestore.rules",
-      "bytes": 1235,
-      "sha256": "ae4e021194fe8f0e2021c904bd456065317e29d420508748348fa1b5b07a645b"
+      "path": "docs/architecture-delta-43.19.0.md",
+      "bytes": 1053,
+      "sha256": "cfb289be2ee111633e267b6a449589afd77ab39f25656d3b3020e65a0ebb3d46"
+    },
+    {
+      "path": "docs/architecture-delta-43.4.0.md",
+      "bytes": 5073,
+      "sha256": "1f6a4d60fe1b87246b90649493d9c40e03de419171064f6fbc5d79ec6edf1878"
+    },
+    {
+      "path": "docs/architecture-delta-43.9.0.md",
+      "bytes": 1766,
+      "sha256": "2785889575821e47f4e86b8a5a33327a26af692bb7c99c608efa0a4bf4b9245a"
     },
     {
       "path": "firestore/README.md",
-      "bytes": 1270,
-      "sha256": "3ba99fc23b26d938074784e8f4ca47c478ec1415c3e7b2ddece3bd05764c475e"
+      "bytes": 1233,
+      "sha256": "6cc15e15d1da5c6eca95bff35a85efc895214fefe50bfe689d7ca372998db84f"
+    },
+    {
+      "path": "firestore/firestore.rules",
+      "bytes": 1962,
+      "sha256": "fee2aa72ffc952d0aba626ff993f98cf297e21e745d09475edc55b5e47bca5f3"
     },
     {
       "path": "firestore/shared-decks.match.rules",
-      "bytes": 1006,
-      "sha256": "759eabb34c1e5dd3a073ee8e92cf8a98de8cdca70cdcd4428cc47a3ad5bab869"
-    },
-    {
-      "path": "IMPLEMENTATION.md",
-      "bytes": 10826,
-      "sha256": "be8af897b3be57735a773d4878bab0403fda51e53a2a3f402ae20149d33335ba"
-    },
-    {
-      "path": "INCLASS-UPDATE.md",
-      "bytes": 4243,
-      "sha256": "eeb4c6fcc51361bdb24a628838a6a4c525dbcdafe4ae4f5041dabdc975d2278e"
+      "bytes": 1676,
+      "sha256": "719e0d733f93c96fce84698ffd086565cfce6964e16d78003ccda2cab698d58f"
     },
     {
       "path": "index.html",
-      "bytes": 53118,
-      "sha256": "753c75dd51d6855351d5d0f53372c21947ec17e9a404e0ccfb74f38f14606126"
+      "bytes": 54833,
+      "sha256": "b45ed586c6665d829c488588553d085a5a56aea43ec3af67174dad1a9801ee83"
     },
     {
       "path": "js/core/ai-vocabulary.js",
-      "bytes": 10071,
-      "sha256": "2263b72e5b447cc39b80b63eaab01b6f7d8d6b760bae0ec57396810c5f6ccac5"
+      "bytes": 10271,
+      "sha256": "2c4dce0727e4864e4b66fdd5f2d1072cca8d0b5a6b2dc3fcf420beca6834d644"
     },
     {
       "path": "js/core/context.js",
@@ -7724,8 +7723,8 @@
     },
     {
       "path": "js/core/shared-decks.js",
-      "bytes": 9927,
-      "sha256": "b1bcb0ea57adfb1b6ef9702b48f79c085bd04e7583be295b684b962c9517ee20"
+      "bytes": 10481,
+      "sha256": "9534a59da423c4c82e10782402dfc5094fcb271d235dacd1d4d01e0b5f21bebb"
     },
     {
       "path": "js/core/sound-manager.js",
@@ -7734,8 +7733,8 @@
     },
     {
       "path": "js/core/srs.js",
-      "bytes": 7053,
-      "sha256": "3e05e70be9cb63519da8fcbfa0c22e1cc5e19ed15a62249a00e8d4f68902ef9b"
+      "bytes": 7543,
+      "sha256": "2046aa91666468c96d0870daddbf507c9ffb5306d48e585d731a6692f1384255"
     },
     {
       "path": "js/core/vocabulary.js",
@@ -7748,9 +7747,14 @@
       "sha256": "cf74a57c88043044a184b6fc38555af6703621add265bb507dfcf4d7ae6230d6"
     },
     {
+      "path": "js/features/appearance.js",
+      "bytes": 1287,
+      "sha256": "600e490765b1793129b93fd61144751af2c79c1b4be26050d5ecd4dd121e82bd"
+    },
+    {
       "path": "js/features/application.js",
-      "bytes": 7943,
-      "sha256": "d53094a27ee3e25cee6d473e5e8807d4650b1da70ca4441557416a1d3a988ab3"
+      "bytes": 8051,
+      "sha256": "aebfb2908097ce392098e2227740f7d9aff10d6518d20d6db327066136b09b32"
     },
     {
       "path": "js/features/auth.js",
@@ -7759,23 +7763,23 @@
     },
     {
       "path": "js/features/deck-sharing.js",
-      "bytes": 10660,
-      "sha256": "e5282610ccb426a3d2f61c809b35a2b9a8623d3abcc353bfbfb66ead6ebd0a06"
+      "bytes": 11290,
+      "sha256": "09b05030ac016e4e9f7b7d483d156950aee3d5a4a468ca98eae1ac7306bacf67"
     },
     {
       "path": "js/features/entry.js",
-      "bytes": 23863,
-      "sha256": "f4e496e89b4a2804b0675750504065ec09cf168fa03afe242badf81f5ea649ee"
+      "bytes": 25025,
+      "sha256": "c757f97a8fc77f6d87fd04bea2c383173bf1e453ca18b6740cd5a451894d0717"
     },
     {
       "path": "js/features/flashcard.js",
-      "bytes": 42503,
-      "sha256": "16b61bf6132694d1c5e51ffe154216edf318d675b17539851ed50573b75e4c8c"
+      "bytes": 42865,
+      "sha256": "28a03f1bd6fa0c7cb222e4ac852f198dbaafb59d062145c6b54c25c7463d69ef"
     },
     {
       "path": "js/features/in-class-check.js",
-      "bytes": 12268,
-      "sha256": "940ad52320d4cf450fcf48c107b79e36c8b71cbfecbc699a9082b1b5e7a4f865"
+      "bytes": 13031,
+      "sha256": "b52469f31e4836822613efe0b1572dbe11d13d4ec2be1df1d489ce072ac0364d"
     },
     {
       "path": "js/features/library.js",
@@ -7815,32 +7819,22 @@
     {
       "path": "manifest.webmanifest",
       "bytes": 956,
-      "sha256": "8dc7d0440126b7a98d1cd0c87505d7ea5537b92c1221813d9a305b1570a38275"
+      "sha256": "c1cdeea044e5aeb2389d26a0f03ea1b110067297475fe217870f0e7d0dc37a6e"
     },
     {
       "path": "offline.html",
-      "bytes": 676,
-      "sha256": "fd72a3372c935e8ac478b0b3b82b35df1252ee51e0bfede2c05c503e675a0f5d"
+      "bytes": 678,
+      "sha256": "6c35a52eedfe4e9f4cda0290278838eb8a2d08fc1161c88e412519b2e5bea807"
     },
     {
       "path": "package-lock.json",
-      "bytes": 13730,
-      "sha256": "d6a9e70143d86c26fa2286293c21a14cc186fbae287c57e7c01cc5d515435b02"
+      "bytes": 13732,
+      "sha256": "7012fdc8cc69dcbdbabf8e14f72560820ce735da039a142d860a33883ea581ab"
     },
     {
       "path": "package.json",
-      "bytes": 247,
-      "sha256": "0418d6aeb4e9273b0b154de0e26e8e305a02102bcaad79a5aeaf7c63be0db40d"
-    },
-    {
-      "path": "PWA-UPDATE.md",
-      "bytes": 6962,
-      "sha256": "fa1404e684ab686c1a2fc672100f1049e5035c44be3590fb83b37bbadbbcf3c8"
-    },
-    {
-      "path": "README-SUITE.md",
-      "bytes": 6560,
-      "sha256": "e34f358bb31600be0cda8a231bfb342540741f7aa8fe4e0487b1a7df8ff5fc97"
+      "bytes": 248,
+      "sha256": "ae569e9db6ba410e704c91296daae5cbd4f16cf4a60f4a500d9fe1cf43be99e0"
     },
     {
       "path": "run-local.bat",
@@ -7849,8 +7843,8 @@
     },
     {
       "path": "run-local.py",
-      "bytes": 1439,
-      "sha256": "6ef359a6e30ce9e0244f32cf22a327225160f5ea9d5c464801183e1efcc3837f"
+      "bytes": 1466,
+      "sha256": "3250be0cb6b1a66232493c46ff98e1c58b4a58037ee58955f2c63b81b65c5394"
     },
     {
       "path": "run-local.sh",
@@ -7858,14 +7852,9 @@
       "sha256": "1784656fc082d1588f3cc68f080eaae5700f2ba610c3a2c3c7f488c4ba4f51ef"
     },
     {
-      "path": "serve_local.py",
-      "bytes": 1754,
-      "sha256": "935f0debf67694168068c7f503de2c0bf35feb3a66b3595ff6010a3bcfb71686"
-    },
-    {
       "path": "service-worker.js",
-      "bytes": 12835,
-      "sha256": "0bcfc8e1bf76df18c0115aab664ecf4975e85d4e74e62471af2faf6a445d6449"
+      "bytes": 12984,
+      "sha256": "3bf6885fb101bdb94cc62af4fecbec17d46d151441712fa7804c8778d3140525"
     },
     {
       "path": "start-localhost.bat",
@@ -7873,9 +7862,9 @@
       "sha256": "e9eff6c43485163b743da1598026444794f360ee5f0f8df7b2da40ec54d4444e"
     },
     {
-      "path": "suite/assets/arcade-space.svg",
-      "bytes": 554,
-      "sha256": "c68e5338441d36fa7b11c7532325de8d8e4722a06811847141e2335dc6a57b92"
+      "path": "suite/components/game-logo-loader.js",
+      "bytes": 5514,
+      "sha256": "a94e01bbc50b7e7e758f1328958cdf401f1c54ecae3e35031fb9f86d5f68b1b8"
     },
     {
       "path": "suite/components/profile.js",
@@ -7893,6 +7882,16 @@
       "sha256": "69a13ed7c32e1ae99f46b93fcaf5734b8524482440b128b1ae0379ecf35dbcae"
     },
     {
+      "path": "suite/css/game-icons.css",
+      "bytes": 7149,
+      "sha256": "18940026b24ba5f9138a56df8a045a067b6023d395b406ade1ae7b6a3d8ef343"
+    },
+    {
+      "path": "suite/css/game-logo-loader.css",
+      "bytes": 1403,
+      "sha256": "f0a2c333e0898d6f15da95d37d3226e67d10e60f93250108634f1ff7ccade945"
+    },
+    {
       "path": "suite/css/loader.css",
       "bytes": 998,
       "sha256": "1112a32a51b653a5d495ea21d816b84ef7d886d9f84009dcc1af247b52b42b91"
@@ -7908,19 +7907,24 @@
       "sha256": "4ba1a9ac80e36e28d95ba9d74918725024614a2f4f90ed4d1d1ddb7c7e30e6bd"
     },
     {
+      "path": "suite/js/game-menu-audio.js",
+      "bytes": 2807,
+      "sha256": "56ff82a68886742ea5c2437a491d311eb49b54ca9ab0f12eaa204b77b550ec48"
+    },
+    {
       "path": "suite/release.json",
-      "bytes": 281,
-      "sha256": "8dc2642bb003875b0ead577b4ab61a16219c538d0ec87ddd79824df6e8871462"
+      "bytes": 282,
+      "sha256": "2c35edd20ab9b0c5e0aa7675bfbb541d6609ce4e258eded5ea60a8aa29376e56"
     },
     {
       "path": "teacher/index.html",
-      "bytes": 24403,
-      "sha256": "809099d0071b654b3b3d58686d3241e5a4e49b9d2c2a3fd404ebb52fc97e1e2f"
+      "bytes": 24406,
+      "sha256": "8e4288b49f14569a920d63d933eeba2e0110817ba9353ff129ce003f2c7be379"
     },
     {
       "path": "tests/ai-entry.test.js",
-      "bytes": 15398,
-      "sha256": "fa6bbc7e1b52b2542be863e8ca97f100c2e788b20b54a455770818ec0ec74659"
+      "bytes": 15330,
+      "sha256": "657da03bda28457a590898c75a0b5e9d029e2cd301d11442da667b8d5fe18f3e"
     },
     {
       "path": "tests/card-borders.test.js",
@@ -7934,13 +7938,13 @@
     },
     {
       "path": "tests/cloud-bootstrap.test.js",
-      "bytes": 4942,
-      "sha256": "9c7ef39736dd07b62ba258e261f6bbf1fe6b2ae2a54782cca0842bac1c7e9978"
+      "bytes": 4981,
+      "sha256": "446c5407b7b647181f053815f98759e8218bd4a8d37125f6934a433705a44700"
     },
     {
       "path": "tests/core.test.js",
-      "bytes": 33261,
-      "sha256": "11fb26faa552e4bedd32dc2ddc8c32e233a19daa33a0f302f7d9ebcc142aada0"
+      "bytes": 33899,
+      "sha256": "8f2b140e8535b8d55bf11354bb8f80dac8087005ad9af85fa913700a2e93a954"
     },
     {
       "path": "tests/daily-limit-storage.test.js",
@@ -7953,9 +7957,9 @@
       "sha256": "9acef2903e2ee64e1625c15f67ef43aeb795bc05b0b62b1a1cd22df49c85b0b2"
     },
     {
-      "path": "tests/deck-links.test.js",
-      "bytes": 9275,
-      "sha256": "aa0fa6c09184e8842f72eaa0656aa3dcde61e57140dd83f77f6fb35db0e5ed25"
+      "path": "tests/deck-codes.test.js",
+      "bytes": 9183,
+      "sha256": "bb484e24a86ff6e313954743d07e4cc266d78ba6a05bf5ae18244c47f2cd5bba"
     },
     {
       "path": "tests/entry-return.test.js",
@@ -7964,8 +7968,8 @@
     },
     {
       "path": "tests/in-class-check.test.js",
-      "bytes": 17474,
-      "sha256": "fb314b452c5d88cde0303dfaa0fdc236bf7de55681287fa9d23ababe015c6637"
+      "bytes": 15105,
+      "sha256": "bc5113355c7dc03ff6c06499fd65143b81173fa17add79765c55c3b6de9f8d37"
     },
     {
       "path": "tests/library-v31.test.js",
@@ -7989,13 +7993,13 @@
     },
     {
       "path": "tests/pwa.test.js",
-      "bytes": 3739,
-      "sha256": "d77b6893350b3398fd3b97d90992069ba4aecb104a3503e9d20fe57d63291374"
+      "bytes": 5751,
+      "sha256": "a0e9ed9bcca3800d99a8ff7be9b3db5950c1e983f057d2656af564352bfb4ac7"
     },
     {
       "path": "tests/random-rounds.test.js",
-      "bytes": 8446,
-      "sha256": "42950efa5cc424846b994b4305f9dd014d3a7fd24baca0f4e6e450241bee7396"
+      "bytes": 8749,
+      "sha256": "6f37b387207d70f13f0e75b16fe7d7c3d4ff43015d40fd7856c272985d449cf4"
     },
     {
       "path": "tests/recall-utils.test.js",
@@ -8004,8 +8008,8 @@
     },
     {
       "path": "tests/session.test.js",
-      "bytes": 25526,
-      "sha256": "49121df6399ddbcf6f2a3730d5433dd65ca687e7f913a9cca55224eb9e365a5d"
+      "bytes": 26301,
+      "sha256": "e78576c73b2e05dede79c83abcfebedb01c3048fb0f3052d01ee7f62203fc19e"
     },
     {
       "path": "tests/settings.test.js",
@@ -8014,8 +8018,8 @@
     },
     {
       "path": "tests/shared-decks.test.js",
-      "bytes": 9611,
-      "sha256": "b8420436d6b54d8b5c946ede444dfa669e653f9ad5fc8ce36a0fad5028e5ebc3"
+      "bytes": 9419,
+      "sha256": "4bfbd10517b64b20c5474f109de3b9c797f4c676ceb5aad4297000155a51de76"
     },
     {
       "path": "tests/startup-recovery.test.js",
@@ -8029,8 +8033,8 @@
     },
     {
       "path": "tests/ui-v30.test.js",
-      "bytes": 29963,
-      "sha256": "0b614e8259657b7c84660bf517a4c8a0429cf18617cbd395f27b527848715e8a"
+      "bytes": 30651,
+      "sha256": "1e835299086dba2f2ad4f62d80ec25d49d987f3cc3957767cc2d241a9ae076fd"
     },
     {
       "path": "tests/vocabulary-update.test.js",
@@ -8038,29 +8042,353 @@
       "sha256": "306d24adc3fa4ed948d826d0ca9a225fec6ab2b0134df2243ce9047bb85f31fd"
     },
     {
+      "path": "tools/Enable-Deck-TTL.cmd",
+      "bytes": 435,
+      "sha256": "b8328181fde6283e9b7ecb528c5e0199257205d5f957f38c38fa83bc00ec6e52"
+    },
+    {
       "path": "tools/build-suite.py",
-      "bytes": 3981,
-      "sha256": "1e0cc004a2bdac8ee236533e8ba96d4e4b792f82200f4f66bca75375f446d67c"
+      "bytes": 5779,
+      "sha256": "6d4fcac483f9d42f13c8f2f55af46030c049e06b818a279ae33fa955816df06d"
+    },
+    {
+      "path": "tools/enable-deck-ttl.cjs",
+      "bytes": 1525,
+      "sha256": "430543d8ac73430edd4307bc22ebf4f48adecc12189705164d9b22ed78e50a92"
     },
     {
       "path": "tools/service-worker.template.js",
-      "bytes": 2776,
-      "sha256": "13ebd5251259da44e94e13339bccd1450fd0f79181d8df44e42932cb07e9dc02"
-    },
-    {
-      "path": "update-github.bat",
-      "bytes": 186,
-      "sha256": "fa1cf08c26225cd1bfa4a24bb94f22e7b14065194277aaedd19b6b6ca77c87dc"
-    },
-    {
-      "path": "update-github.ps1",
-      "bytes": 5543,
-      "sha256": "aa92eca88a533dfb7a6456ea51a4df78682cd6cd9acaf97b74da28ff63f0d94a"
-    },
-    {
-      "path": "UPDATE-v30.md",
-      "bytes": 2357,
-      "sha256": "69aacd3472fb13ab03913b584247404aca6b14c57703f1ab53638b27232f0abc"
+      "bytes": 3220,
+      "sha256": "c58c3911bec3d861c3a42921c35716c6a051a4ea57bec5f6f072b6662451c0e4"
     }
-  ]
+  ],
+  "currentArchitectureDelta": "docs/architecture-delta-43.19.0.md",
+  "pruning": {
+    "deletedFiles": 68,
+    "deletedBytes": 13173297,
+    "dynamicSkinFilesPreserved": 876,
+    "bossAssetsPreserved": 86,
+    "currentTestFilesPreserved": 24,
+    "details": "external delivery outputs/space-suite-final/deleted-files.json",
+    "status": "applied after full feature implementation/verification"
+  },
+  "removedSince43.3.0": [
+    "IMPLEMENTATION.md",
+    "INCLASS-UPDATE.md",
+    "PWA-UPDATE.md",
+    "serve_local.py",
+    "update-github.bat",
+    "update-github.ps1",
+    "UPDATE-v30.md",
+    "apps/grammar/icon-192.png",
+    "apps/grammar/icon-512.png",
+    "apps/grammar/icon.svg",
+    "apps/grammar/manifest.json",
+    "apps/grammar/service-worker.js",
+    "apps/grammar/js/firebase-service.js",
+    "apps/grammar/js/loading-screen.js",
+    "apps/grammar/js/student.js",
+    "apps/grammar/js/teacher.js",
+    "apps/quick-drawn/legacy.html",
+    "apps/quick-drawn/README-DUEL.md",
+    "apps/quick-drawn/assets/audio/wilhelmscream.mp3",
+    "apps/quick-drawn/assets/images/desert_bg.svg",
+    "apps/quick-drawn/assets/images/desert_bg_8bit.png",
+    "apps/quick-drawn/assets/images/enemy_spritesheet.png",
+    "apps/quick-drawn/assets/images/GENERATION_PROMPTS.txt",
+    "apps/quick-drawn/assets/images/player_spritesheet.png",
+    "apps/quick-drawn/assets/images/spritesheets.json",
+    "apps/quick-drawn/assets/images/TWO_CANVAS_GENERATION_PROMPTS.txt",
+    "apps/quick-drawn/assets/images/heroes/vuong.json",
+    "apps/quick-drawn/assets/images/heroes/anchors/vuong_anchor.png",
+    "apps/quick-drawn/assets/images/source/cowboy_duel_spritesheet.json",
+    "apps/quick-drawn/assets/images/source/cowboy_duel_spritesheet.png",
+    "apps/quick-drawn/assets/images/source/cowboy_enemy_128_2231843ac2.png",
+    "apps/quick-drawn/assets/images/source/cowboy_enemy_spritesheet.png",
+    "apps/quick-drawn/assets/images/source/cowboy_individual_spritesheets.json",
+    "apps/quick-drawn/assets/images/source/cowboy_player_128_2e3e6edb7c.png",
+    "apps/quick-drawn/assets/images/source/cowboy_player_spritesheet.png",
+    "apps/quick-drawn/assets/images/ui/gold_ui_sprites.json",
+    "apps/quick-drawn/assets/images/ui/brand/anh-hung-hao-kiet-logo.png",
+    "apps/quick-drawn/assets/images/ui/spectator/spectator_assets.json",
+    "apps/quick-drawn/css/style.css",
+    "apps/quick-drawn/js/game.js",
+    "apps/sky-dominators/boss-test.html",
+    "apps/sky-dominators/intro.html",
+    "apps/sky-dominators/assets/audio/sky-dominators-intro.mp3",
+    "apps/sky-dominators/assets/skins/celestial/generation-prompt.txt",
+    "apps/sky-dominators/assets/skins/celestial/manifest.json",
+    "apps/sky-dominators/assets/skins/hazard/generation-prompts.json",
+    "apps/sky-dominators/assets/skins/hazard/manifest.json",
+    "apps/sky-dominators/assets/skins/hazard/source-body.png",
+    "apps/sky-dominators/assets/skins/hazard/source-effects.png",
+    "apps/sky-dominators/assets/skins/prism_core/generation-prompts.json",
+    "apps/sky-dominators/assets/skins/prism_core/manifest.json",
+    "apps/sky-dominators/assets/skins/prism_core/preview.html",
+    "apps/sky-dominators/assets/skins/prism_core/source-black-fire.png",
+    "apps/sky-dominators/assets/skins/prism_core/source-gothic-hull.png",
+    "apps/sky-dominators/assets/skins/prism_core/source-hull.png",
+    "apps/sky-dominators/assets/skins/prism_core/source-vfx.png",
+    "apps/sky-dominators/css/boss-test.css",
+    "apps/sky-dominators/css/intro.css",
+    "apps/sky-dominators/js/dev/boss-test-profile.js",
+    "apps/sky-dominators/js/dev/boss-test.js",
+    "apps/sky-dominators/js/ui/intro.js",
+    "assets/ls-loading-normalized.wav",
+    "assets/ls-loading.mp3",
+    "suite/assets/arcade-space.svg",
+    "suite/css/game-action-glyphs.svg"
+  ],
+  "newSince43.3.0": [
+    "apps/arcade/assets/arcade_space_logo.png",
+    "apps/arcade/assets/ui_spritesheet.png",
+    "apps/arcade/assets/logo/coming_soon_farm.png",
+    "apps/arcade/assets/logo/wild_west_poker_logo.png",
+    "apps/arcade/assets/logo/word_battles_logo.png",
+    "apps/poker/assets/cowboy_dealer_spritesheet.png",
+    "apps/poker/assets/poker_cards_spritesheet.png",
+    "apps/poker/assets/poker_elements_spritesheet.png",
+    "apps/quick-drawn/assets/images/ui/brand/word_battles_logo.png",
+    "docs/architecture-delta-43.4.0.md",
+    "suite/components/game-logo-loader.js",
+    "suite/css/game-icons.css",
+    "suite/css/game-logo-loader.css"
+  ],
+  "inventory": {
+    "filesIncludingBaseline": 1399,
+    "subdirectories": 263,
+    "baselineSelfHashExcluded": true
+  },
+  "previousReleaseVerification": {
+    "release": "43.8.0",
+    "nodeTests": 135,
+    "nodeFailures": 0,
+    "skyBootChecks": 6,
+    "wordBattlesBootChecks": 12,
+    "pokerDealerScenarios": 5,
+    "browser": "Edge desktop and emulated touch, icon reaction, navigation and transparent computed styles; first-use offline icon atlas fetch in a freshly installed worker."
+  },
+  "pokerLayout": {
+    "owners": [
+      "apps/poker/index.html",
+      "apps/poker/css/poker-1.css",
+      "apps/poker/js/poker-1.js"
+    ],
+    "portrait": "2x2 per hand",
+    "wide": "4 across per hand",
+    "gapCssPixels": 2.5,
+    "sprite": "Existing five 768x480 cells. Visible bounds start (24,16), width 720, height 444 for diamonds/spades/clubs, 448 for hearts/back.",
+    "matched": "deal animates slot; inner card flips after 1200 ms meaning feedback.",
+    "turns": "Dealer picks one random unresolved upper card; only lower unmatched cards accept an answer. Retry keeps target. Correct pair flips, then the next target is drawn.",
+    "entry": "Casino menu before first deal; resume preserves the remaining delay and Main Menu exits the table."
+  },
+  "gameControls43_7_0": {
+    "sky": "js/core/canvas.js sets the flight world and screen transform; js/systems/input.js handles contacts and manual fire; js/entities/player.js handles movement and shot cadence; boss-integration and boss classes own health display and flight envelope.",
+    "navigation": "Existing Arcade UI atlas and suite/css/game-icons.css. Sky top-right exit on menu/pause/results. Word lobby, battle, pause and chess; completed chess exits wait for the queued local result. Poker uses its header exit."
+  },
+  "targetedPruning43_7_0": {
+    "removed": "apps/quick-drawn/assets/audio/README.txt",
+    "bytes": 392,
+    "reason": "Retired Wilhelm scream documentation. Removed obsolete README link and unused best-score prefix declaration. Former cowboy HTML, JS, CSS and sprite assets already absent."
+  },
+  "systemControls43_8_0": {
+    "owners": [
+      "suite/css/game-icons.css",
+      "suite/css/game-action-glyphs.svg",
+      "apps/arcade/assets/ui_spritesheet.png"
+    ],
+    "marker": "data-bare-control",
+    "scope": "System and auxiliary actions in the three games. Content tiles, answer buttons, chess squares and playable cards keep their artwork.",
+    "inputs": "Game events use their existing DOM targets. Hover, active and keyboard focus tint the glyph; controls retain accessible names. Supplemental pixel icons and shared Arcade atlas are precached."
+  },
+  "actionControls43_9_0": {
+    "frames": {
+      "cell": [
+        96,
+        40
+      ],
+      "columns": [
+        "normal",
+        "hover",
+        "pressed",
+        "disabled"
+      ],
+      "sheets": [
+        "apps/arcade/assets/action-buttons.png",
+        "apps/sky-dominators/assets/action-buttons.png",
+        "apps/quick-drawn/assets/action-buttons.png",
+        "apps/poker/assets/action-buttons.png"
+      ],
+      "renderer": "apps/arcade/js/action-frames.js",
+      "css": "apps/arcade/css/action-frames.css"
+    },
+    "menus": "Existing Hub links end each game main menu column. Poker logo/Enter the Casino/Return to Arcade Hub precede any deal.",
+    "chess": "Framed Pause at right opens the personal menu, does not stop clocks. Two middle slots represent the offer or Yes/No.",
+    "pokerWrongPairCost": 2
+  },
+  "chessToolbarEmojis": {
+    "asset": "apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png",
+    "cell": [
+      64,
+      64
+    ],
+    "order": [
+      "resign",
+      "draw",
+      "pause"
+    ]
+  },
+  "menuControls43_11": "Arcade circular icon dock and bare carousel arrows. Game menus use text. Poker aligns header and assists in grids. Sky removed menu callsign editing and pause/result corner exits. Poker and Sky pause illustration proposals are workspace previews only.",
+  "menuAndFlight43_12": {
+    "hub": "Home, Play, Settings",
+    "wordBattles": "Green PvC, blue PvP modes, red Hub",
+    "poker": "Single raster frame on Enter the Casino",
+    "sky": "Left touch steers, right touch fires. Half-size skill artwork. Pilot above launch. Nine-aircraft grid excluding Viper; three-column scrollable skins."
+  },
+  "skyMenu43_12_1": {
+    "actionMinHeightPx": 48,
+    "gapPx": 8,
+    "verifiedViewportWidths": [
+      320,
+      390,
+      1280
+    ]
+  },
+  "skyInput43_13": {
+    "initial": "Primary pointer capability",
+    "switch": "Actual pointerdown or mouse movement, including on hybrid devices",
+    "verification": "Edge mouse and multitouch emulation during flight"
+  },
+  "lexicalAppearance": {
+    "default": "ivory",
+    "storage": "lexical_theme",
+    "entry": "js/features/appearance.js",
+    "palettes": [
+      "ivory",
+      "mist",
+      "plum"
+    ],
+    "legacy": {
+      "light": "mist",
+      "dark": "plum"
+    }
+  },
+  "skyHangar43_15": {
+    "header": "Aircraft and skill",
+    "primaryAction": "Launch with owned skin, purchase by price, rank and unreleased gates preserved"
+  },
+  "practice43_16_1": {
+    "checks": "Up to 15, unchecked recent then unchecked older, then checked fillers",
+    "repeat": "Again waits until due; completed view refreshes at earliest eligible retry",
+    "testsPassed": 136
+  },
+  "reverseRecall43_17": {
+    "wrongAnswer": "Persist revealed answer and wait for Again (1) or Hard (2)",
+    "testsPassed": 136
+  },
+  "weeklyClassCheck": {
+    "priority": [
+      4,
+      3,
+      2
+    ],
+    "windowDays": 7,
+    "freshTarget": 15,
+    "mixedLimit": 25,
+    "history": "Per-profile local metadata inclassCheckedAt_; completed tests only",
+    "verified": 134
+  },
+  "deckCodes": {
+    "version": "43.19.0",
+    "testsPassed": 134,
+    "ttlActivated": false,
+    "reason": "Project billing disabled",
+    "lifetimeHours": 72
+  },
+  "arcadeAppearance": {
+    "entry": "apps/arcade/js/appearance.js",
+    "storage": "arcade_theme",
+    "default": "twicelight",
+    "choices": [
+      "twicelight",
+      "pocket",
+      "neon",
+      "ivory"
+    ],
+    "legacy": {
+      "light": "pocket",
+      "dark": "twicelight"
+    },
+    "browserChecks": [
+      390,
+      1480
+    ],
+    "themeButtonSprites": true,
+    "legacyScoreVisible": false,
+    "settingsButtons": "Theme-derived settings button fill, rim and foreground.",
+    "launchFeedback": "Unavailable games play audio only. Playable games have two outward ripples over 400ms."
+  },
+  "arcadeLibraryView": {
+    "mode": "single circular row",
+    "phone": "one full cover with adjacent previews",
+    "desktopMax": 3,
+    "dock": [
+      "previous",
+      "home",
+      "play",
+      "settings",
+      "next"
+    ],
+    "viewportChecks": [
+      390,
+      1366,
+      1920
+    ],
+    "motion": {
+      "drag": "pointer-tracked",
+      "buttonStepMs": 500,
+      "reducedMotion": "direct arrows slide; other automatic snaps immediate",
+      "checkedWidths": [
+        390,
+        1440
+      ]
+    },
+    "count": "all catalog tiles, including coming soon",
+    "priorEntryHash": "0ec1db4c16d5fc52f0c523b86e675195766c87edd9956e41341eb1b06748b3ef",
+    "switchSound": "apps/arcade/assets/audio/game-switch.mp3",
+    "minimumSwitchIntervalMs": 500,
+    "desktopEdgePreviewFraction": 0.08,
+    "comingSoon": [
+      "Farm",
+      "Quiz",
+      "Vocabulary Test",
+      "Spellsmith",
+      "Fist of Legends"
+    ],
+    "unavailableSound": "apps/arcade/assets/audio/game-unavailable.mp3"
+  },
+  "gameButtonFrames": {
+    "arcadeOnlyTint": true,
+    "art": "Sky cockpit, Word Battles lacquer and gold, Wild West Poker saloon brass",
+    "verifiedReadyAndFallback": {
+      "quick-drawn": 32,
+      "poker": 9,
+      "sky-dominators": 19,
+      "arcade": 3
+    }
+  },
+  "arcadeLaunchSound": {
+    "asset": "apps/arcade/assets/audio/game-open.mp3",
+    "preload": "auto",
+    "precache": true,
+    "navigation": "after ended, immediate if muted or audio fails",
+    "source": "14-0-01.mp3",
+    "unavailableSource": "16-0-01.mp3"
+  },
+  "gameMenuSounds": {
+    "select": "23-0-00.mp3",
+    "exit": "24-0-01.mp3",
+    "owner": "suite/js/game-menu-audio.js",
+    "exitScope": "Only navigation out of a game; internal close/back/main menu use select."
+  }
 }

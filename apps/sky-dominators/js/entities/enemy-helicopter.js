@@ -4,6 +4,7 @@ class EnemyAircraft {
         this.formation = formation;
         this.slotIndex = slotIndex;
         this.baseX = x;
+        this.horizontalSlot = x / GAME_WIDTH;
         this.offsetX = offsetX;
         this.offsetY = offsetY;
         this.x = Math.round(x + offsetX);
@@ -104,6 +105,7 @@ class EnemyAircraft {
     }
 
     update(dt) {
+        this.baseX = this.horizontalSlot * GAME_WIDTH;
         if (!this.active) return;
 
         // 1. Rotor spinning animation

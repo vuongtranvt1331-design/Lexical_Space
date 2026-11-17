@@ -8,6 +8,10 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))['version']
+# Reuse the same approved Hub logo bytes across game loading screens. They are
+# cached on first view, not downloaded as part of the installation precache.
+SHARED_LOGOS = ['./apps/arcade/assets/logo/' + name + '_logo.png' for name in
+                ('sky_dominators', 'word_battles', 'wild_west_poker')]
 
 
 def write_if_changed(path, text):
@@ -18,8 +22,14 @@ def write_if_changed(path, text):
 def build():
     versioned = [*list((ROOT / 'suite').rglob('*.js')), *list((ROOT / 'suite').rglob('*.css'))]
     versioned += [ROOT / name for name in (
-        'js/features/loading.js', 'js/core/offline.js', 'apps/grammar/js/app.js',
-        'apps/arcade/js/arcade-2.js', 'apps/poker/js/poker-1.js',
+        'js/features/loading.js', 'js/features/appearance.js', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js',
+        'apps/arcade/js/arcade-2.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
+        'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
+        'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
+        'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
+        'apps/sky-dominators/css/game.css', 'apps/sky-dominators/js/ui/events.js',
+        'apps/sky-dominators/js/ui/progress.js', 'apps/sky-dominators/css/progress.css',
+        'apps/sky-dominators/js/systems/input.js', 'apps/sky-dominators/js/ui/hangar.js', 'apps/sky-dominators/js/ui/hud.js',
         'apps/sky-dominators/js/ui/navigation.js', 'apps/sky-dominators/js/systems/progress/client.js')]
     stamps = {p.resolve(): hashlib.sha256(p.read_bytes()).hexdigest()[:10] for p in versioned}
     for page in ROOT.rglob('*.html'):
@@ -44,7 +54,11 @@ def build():
         if updated != text:
             write_if_changed(page, updated)
 
-    core = ['./']
+    # Icon-only controls must be visible on the first offline game launch.
+    core = ['./', './apps/arcade/assets/audio/game-open.mp3', './apps/arcade/assets/audio/game-switch.mp3', './apps/arcade/assets/audio/menu-select.mp3', './apps/arcade/assets/audio/menu-exit.mp3', './apps/arcade/assets/audio/game-unavailable.mp3', './apps/arcade/assets/ui_spritesheet.png',
+            './apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png', './apps/arcade/assets/action-glyphs.png', './apps/arcade/assets/system-controls.png']
+    core.extend('./apps/' + module + '/assets/action-buttons.png'
+                for module in ('arcade', 'sky-dominators', 'quick-drawn', 'poker'))
     excluded = {'tests', 'tools', '.git', 'node_modules', 'firestore', '__pycache__'}
     for path in sorted(ROOT.rglob('*')):
         if not path.is_file():
@@ -60,9 +74,9 @@ def build():
             core.append('./' + relative)
 
     worker = (ROOT / 'tools/service-worker.template.js').read_text(encoding='utf-8')
-    fingerprints = [name + '\0' + hashlib.sha256((ROOT / name.removeprefix('./')).read_bytes()).hexdigest() for name in core if name != './']
+    fingerprints = [name + '\0' + hashlib.sha256((ROOT / name.removeprefix('./')).read_bytes()).hexdigest() for name in [*core, *SHARED_LOGOS] if name != './']
     digest = hashlib.sha256((worker + '\n' + '\n'.join(fingerprints)).encode()).hexdigest()[:14]
-    write_if_changed(ROOT / 'service-worker.js', worker.replace('__VERSION__', VERSION + '-' + digest).replace('__CORE__', json.dumps(core)))
+    write_if_changed(ROOT / 'service-worker.js', worker.replace('__VERSION__', VERSION + '-' + digest).replace('__CORE__', json.dumps(core)).replace('__SHARED_LOGOS__', json.dumps(SHARED_LOGOS)))
     release = {'name': 'SpaceSuite', 'lexicalVersion': VERSION,
                'date': datetime.now(timezone(timedelta(hours=7))).date().isoformat(),
                'root': 'LexicalSpace-project',

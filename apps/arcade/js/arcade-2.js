@@ -16,41 +16,16 @@
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
             if (AudioCtx) this.ctx = new AudioCtx();
           }
-          if (this.ctx && this.ctx.state === "suspended") {
-            this.ctx.resume();
+          if (this.ctx && this.ctx.state !== "running" && this.ctx.state !== "closed") {
+            return this.ctx.resume();
           }
         }
 
-        toggleMute() {
-          this.muted = !this.muted;
-          return this.muted;
-        }
 
-        playCoin() {
+        async playBlip() {
           if (this.muted) return;
-          this.init();
-          if (!this.ctx) return;
-
-          const notes = [523.25, 659.25, 783.99, 1046.5];
-          notes.forEach((freq, i) => {
-            const start = this.ctx.currentTime + i * 0.055;
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = "square";
-            osc.frequency.setValueAtTime(freq, start);
-            gain.gain.setValueAtTime(0.08, start);
-            gain.gain.exponentialRampToValueAtTime(0.001, start + 0.14);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(start);
-            osc.stop(start + 0.15);
-          });
-        }
-
-        playBlip() {
-          if (this.muted) return;
-          this.init();
-          if (!this.ctx) return;
+          try { await this.init(); } catch { return; }
+          if (!this.ctx || this.muted || this.ctx.state !== "running") return;
 
           const now = this.ctx.currentTime;
           const osc = this.ctx.createOscillator();
@@ -67,139 +42,19 @@
         }
 
         // Tactile Mechanical Keyboard / Gamepad Switch Sound
-        playKeyClick() {
-          if (this.muted) return;
-          this.init();
-          if (!this.ctx) return;
-          const now = this.ctx.currentTime;
-          const jitter = 0.92 + Math.random() * 0.16; // Subtle organic pitch variation
 
-          // 1. Sharp microswitch transient snap (click)
-          const clickOsc = this.ctx.createOscillator();
-          const clickGain = this.ctx.createGain();
-          clickOsc.type = "triangle";
-          clickOsc.frequency.setValueAtTime(1200 * jitter, now);
-          clickOsc.frequency.exponentialRampToValueAtTime(140 * jitter, now + 0.022);
-          clickGain.gain.setValueAtTime(0.22, now);
-          clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.024);
-          clickOsc.connect(clickGain);
-          clickGain.connect(this.ctx.destination);
-          clickOsc.start(now);
-          clickOsc.stop(now + 0.026);
 
-          // 2. Plastic bottom-out resonant thump (gamepad button feel)
-          const thudOsc = this.ctx.createOscillator();
-          const thudGain = this.ctx.createGain();
-          thudOsc.type = "sine";
-          thudOsc.frequency.setValueAtTime(180 * jitter, now);
-          thudOsc.frequency.exponentialRampToValueAtTime(45 * jitter, now + 0.035);
-          thudGain.gain.setValueAtTime(0.16, now);
-          thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.038);
-          thudOsc.connect(thudGain);
-          thudGain.connect(this.ctx.destination);
-          thudOsc.start(now);
-          thudOsc.stop(now + 0.04);
-        }
 
-        playTypewriterTick() {
-          this.playKeyClick();
-        }
-
-        playStartSound() {
-          if (this.muted) return;
-          try {
-            const fileAudio = new Audio('assets/as-start.mp3');
-            fileAudio.play().catch(() => {
-              const wavAudio = new Audio('assets/as-start.wav');
-              wavAudio.play().catch(() => {});
-            });
-          } catch (_) {}
-
-          this.init();
-          if (!this.ctx) return;
-          const now = this.ctx.currentTime;
-
-          // 1. Mechanical arcade microswitch click (0.0 to 0.09s)
-          const clickOsc = this.ctx.createOscillator();
-          const clickGain = this.ctx.createGain();
-          clickOsc.type = "triangle";
-          clickOsc.frequency.setValueAtTime(200, now);
-          clickOsc.frequency.exponentialRampToValueAtTime(25, now + 0.08);
-          clickGain.gain.setValueAtTime(0.32, now);
-          clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-          clickOsc.connect(clickGain);
-          clickGain.connect(this.ctx.destination);
-          clickOsc.start(now);
-          clickOsc.stop(now + 0.09);
-
-          // 2. 8-Bit Laser "Pew-Pew" Sweep (0.07s to 0.55s)
-          const laserTime = now + 0.07;
-          const laserOsc = this.ctx.createOscillator();
-          const laserGain = this.ctx.createGain();
-          laserOsc.type = "square";
-          laserOsc.frequency.setValueAtTime(2400, laserTime);
-          laserOsc.frequency.exponentialRampToValueAtTime(160, laserTime + 0.45);
-          laserGain.gain.setValueAtTime(0.2, laserTime);
-          laserGain.gain.exponentialRampToValueAtTime(0.001, laserTime + 0.48);
-          laserOsc.connect(laserGain);
-          laserGain.connect(this.ctx.destination);
-          laserOsc.start(laserTime);
-          laserOsc.stop(laserTime + 0.49);
-
-          // 3. Second Laser & Power-Up Arpeggio Chime (0.50s to 2.0s)
-          const arpTime = now + 0.50;
-          const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
-          notes.forEach((freq, idx) => {
-            const t = arpTime + idx * 0.11;
-            const osc = this.ctx.createOscillator();
-            const gain = this.ctx.createGain();
-            osc.type = "square";
-            osc.frequency.setValueAtTime(freq, t);
-            gain.gain.setValueAtTime(0.12, t);
-            gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
-            osc.connect(gain);
-            gain.connect(this.ctx.destination);
-            osc.start(t);
-            osc.stop(t + 0.36);
-          });
-        }
-
-        playCartridgeSnap() {
-          if (this.muted) return;
-          this.init();
-          if (!this.ctx) return;
-          const now = this.ctx.currentTime;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = "sawtooth";
-          osc.frequency.setValueAtTime(140, now);
-          osc.frequency.exponentialRampToValueAtTime(35, now + 0.1);
-          gain.gain.setValueAtTime(0.18, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start(now);
-          osc.stop(now + 0.11);
-
-          setTimeout(() => {
-            if (!this.ctx || this.muted) return;
-            const t = this.ctx.currentTime;
-            const osc2 = this.ctx.createOscillator();
-            const gain2 = this.ctx.createGain();
-            osc2.type = "square";
-            osc2.frequency.setValueAtTime(1046.5, t);
-            osc2.frequency.setValueAtTime(2093, t + 0.05);
-            gain2.gain.setValueAtTime(0.1, t);
-            gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
-            osc2.connect(gain2);
-            gain2.connect(this.ctx.destination);
-            osc2.start(t);
-            osc2.stop(t + 0.13);
-          }, 60);
-        }
       }
 
       const audio = new RetroAudioEngine();
+      const unavailableSound = document.querySelector('[data-unavailable-sound]');
+      const switchSound = document.querySelector('[data-switch-sound]');
+      function playSwitchSound() {
+        if (audio.muted || switchSound.error) return;
+        switchSound.currentTime = 0;
+        switchSound.play().catch(() => {});
+      }
 
       // =========================================================================
       // 2. USER PASSPORT & LOCAL WORDS DETECTION
@@ -243,245 +98,402 @@
         return { totalCount: words.length, synonymCount, topicMap, sortedTopics: sortTopicsNumericFirst(topicMap.keys()) };
       }
 
-      function getBestDuelScore(username) {
-        const u = username ? username.toLowerCase() : "guest";
-        try {
-          const val = parseInt(
-            localStorage.getItem("quickDrawn_bestScore_" + u) ||
-            localStorage.getItem("ls_qd_best_" + u),
-            10
-          );
-          return Number.isFinite(val) && val > 0 ? val : null;
-        } catch (_) {
-          return null;
+
+      // Console presentation only; no vocabulary, profile or game-state writes.
+      function createHubControls() {
+        const carousel = document.querySelector('[data-game-carousel]');
+        const tiles = [...document.querySelectorAll('[data-game-tile]')];
+        carousel.parentElement.querySelector('[data-library-count]').textContent = tiles.length + (tiles.length === 1 ? ' game' : ' games');
+        const previous = document.querySelector('[data-game-previous]');
+        const next = document.querySelector('[data-game-next]');
+        const play = document.querySelector('[data-hub-play]');
+        const playLabel = document.querySelector('[data-play-label]');
+        const summary = document.querySelector('[data-selection-summary]');
+        const dialog = document.querySelector('[data-settings-dialog]');
+        const settingsButton = document.querySelector('[data-open-settings]');
+        const soundButton = document.getElementById('btnSoundToggle');
+        const soundIcon = document.getElementById('soundIcon');
+        const soundState = document.querySelector('[data-sound-state]');
+        const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+        const switchInterval = 500;
+        let nextSwitchAt = 0;
+        let selected = 0, ready = false, swipe, suppressClickUntil = 0;
+        const wrap = index => ((index % tiles.length) + tiles.length) % tiles.length;
+
+        function renderSound() {
+          const enabled = !audio.muted;
+          soundIcon.classList.toggle('icon-sound-on', enabled);
+          soundIcon.classList.toggle('icon-sound-off', !enabled);
+          soundState.textContent = enabled ? 'On' : 'Off';
+          soundButton.setAttribute('aria-pressed', String(enabled));
+          soundButton.setAttribute('aria-label', enabled ? 'Turn sound effects off' : 'Turn sound effects on');
+          soundButton.title = enabled ? 'Sound effects: on' : 'Sound effects: off';
         }
+        function setSound(enabled) {
+          audio.muted = !enabled;
+          if (!enabled) { switchSound.pause(); unavailableSound.pause(); }
+          renderSound();
+          if (enabled) audio.playBlip();
+        }
+        // Position is measured in cards, so crossing the last index has no seam.
+        let position = 0, destination = 0, frame = 0, layoutCenter, pitch = 1;
+        const edges = [-1, 1].map(() => {
+          const edge = document.createElement('article');
+          edge.className = 'game-tile ring-edge';
+          edge.inert = true;
+          edge.setAttribute('aria-hidden', 'true');
+          carousel.append(edge);
+          return edge;
+        });
+        function paint(value) {
+          position = value;
+          const center = Math.round(value);
+          if (center !== layoutCenter) {
+            layoutCenter = center;
+            const count = Math.min(tiles.length, 3);
+            const first = center - Math.floor((count - 1) / 2);
+            tiles.forEach((tile, index) => {
+              const slot = wrap(index - first);
+              tile.hidden = slot >= count;
+              tile.style.gridColumn = String(Math.min(slot, count - 1) + 1);
+            });
+            edges.forEach((edge, index) => {
+              const source = tiles[wrap(first + (index ? count : -1))];
+              const cover = document.createElement('span');
+              cover.className = 'game-cover';
+              cover.append(source.querySelector('img').cloneNode());
+              edge.replaceChildren(cover, source.querySelector('.game-caption').cloneNode(true));
+              edge.style.gridColumn = String(index ? count : 1);
+              edge.style.setProperty('--edge-shift', index ? '1' : '-1');
+            });
+            pitch = tiles[wrap(center)].getBoundingClientRect().width + parseFloat(getComputedStyle(carousel).columnGap);
+            carousel.style.setProperty('--ring-pitch', pitch + 'px');
+          }
+          carousel.style.setProperty('--ring-offset', ((center - value) * pitch) + 'px');
+        }
+        function renderSelection() {
+          const tile = tiles[selected];
+          tiles.forEach((item, index) => {
+            item.classList.toggle('is-selected', index === selected);
+            const link = item.querySelector('[data-game-launch]');
+            if (link) {
+              link.tabIndex = index === selected ? 0 : -1;
+              if (index === selected) link.setAttribute('aria-current', 'true');
+              else link.removeAttribute('aria-current');
+            }
+          });
+          const playable = !!tile.querySelector('[data-game-launch]');
+          play.disabled = !ready;
+          play.toggleAttribute('data-coming-soon', !playable);
+          play.setAttribute('aria-label', playable ? 'Play ' + tile.dataset.gameName : tile.dataset.gameName + ' — coming soon');
+          playLabel.textContent = playable ? 'Play' : 'Coming soon';
+          summary.textContent = tile.dataset.gameName + ' selected. ' + tile.dataset.gameDescription;
+        }
+        function settle(target, focus = false, arrow = false, onSettled) {
+          cancelAnimationFrame(frame);
+          const start = position, distance = target - start;
+          destination = target;
+          selected = wrap(target);
+          renderSelection();
+          function finish() {
+            paint(target);
+            frame = 0;
+            onSettled?.();
+            if (focus) (tiles[selected].querySelector('[data-game-launch]') || tiles[selected]).focus({preventScroll:true});
+          }
+          if ((!arrow && reduceMotion.matches) || Math.abs(distance) < .001) { finish(); return; }
+          const began = performance.now();
+          const duration = arrow ? switchInterval : Math.min(switchInterval, 240 + Math.abs(distance) * 260);
+          function advance(now) {
+            const t = Math.max(0, Math.min(1, (now - began) / duration));
+            if (t >= 1) { finish(); return; }
+            const progress = arrow ? t * t * (3 - 2 * t) : 1 - (1 - t) ** 3;
+            paint(start + distance * progress);
+            frame = requestAnimationFrame(advance);
+          }
+          frame = requestAnimationFrame(advance);
+        }
+        function select(index, {focus = false, sound = false, arrow = false, onSettled} = {}) {
+          const now = performance.now();
+          if (now < nextSwitchAt || swipe?.dragging || wrap(index) === selected) return;
+          let delta = index - selected;
+          if (Math.abs(delta) > tiles.length / 2) delta -= Math.sign(delta) * tiles.length;
+          nextSwitchAt = now + switchInterval;
+          swipe = null;
+          settle(destination + Math.sign(delta), focus, arrow, onSettled);
+          if (delta && sound) playSwitchSound();
+        }
+        function launchSelected() {
+          if (!ready || dialog.open) return;
+          // Always reuse the original launch anchor and its topic validation.
+          const link = tiles[selected].querySelector('[data-game-launch]');
+          if (link) { link.click(); return; }
+          if (audio.muted || unavailableSound.error || !unavailableSound.paused) return;
+          switchSound.pause();
+          unavailableSound.currentTime = 0;
+          unavailableSound.play().catch(() => {});
+        }
+        soundButton.addEventListener('click', () => setSound(audio.muted));
+        renderSound();
+        settingsButton.addEventListener('click', () => { dialog.showModal(); audio.playBlip(); });
+        document.querySelectorAll('[data-close-settings]').forEach(button => button.addEventListener('click', () => dialog.close()));
+        dialog.addEventListener('close', () => settingsButton.focus({preventScroll: true}));
+        dialog.addEventListener('click', event => {
+          if (event.target !== dialog) return;
+          const box = dialog.getBoundingClientRect();
+          if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
+        });
+        play.addEventListener('click', launchSelected);
+        tiles.forEach((tile, index) => {
+          tile.addEventListener('click', event => {
+            if (index !== selected) {
+              event.preventDefault();
+              event.stopPropagation();
+              const unavailable = !tile.querySelector('[data-game-launch]');
+              select(index, {sound:!unavailable, onSettled:unavailable ? launchSelected : undefined});
+            } else if (!tile.querySelector('[data-game-launch]')) launchSelected();
+          }, true);
+          const link = tile.querySelector('[data-game-launch]');
+          link?.addEventListener('click', event => {
+            select(index);
+            if (!ready) event.preventDefault();
+          });
+        });
+        previous?.addEventListener('click', () => { if (!dialog.open) select(selected - 1, {sound: true, arrow:true}); });
+        next?.addEventListener('click', () => { if (!dialog.open) select(selected + 1, {sound: true, arrow:true}); });
+        function refreshLayout() { layoutCenter = undefined; paint(position); }
+        refreshLayout();
+        new ResizeObserver(refreshLayout).observe(carousel);
+        carousel.addEventListener('dragstart', event => event.preventDefault());
+        carousel.addEventListener('pointerdown', event => {
+          if (performance.now() >= nextSwitchAt && event.isPrimary && event.button === 0) swipe = {id:event.pointerId, x:event.clientX, y:event.clientY, dragging:false};
+        });
+        function drag(event) {
+          if (!swipe || swipe.id !== event.pointerId) return;
+          const dx = event.clientX - swipe.x, dy = event.clientY - swipe.y;
+          if (!swipe.dragging) {
+            if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) { swipe = null; return; }
+            if (Math.abs(dx) < 5 || Math.abs(dx) <= Math.abs(dy)) return;
+            cancelAnimationFrame(frame);
+            frame = 0;
+            swipe.start = position;
+            swipe.dragging = true;
+            carousel.setPointerCapture(event.pointerId);
+          }
+          paint(Math.max(destination - 1, Math.min(destination + 1, swipe.start - dx / pitch)));
+        }
+        carousel.addEventListener('pointermove', drag);
+        function release(event) {
+          if (!swipe || swipe.id !== event.pointerId) return;
+          const gesture = swipe;
+          swipe = null;
+          if (!gesture.dragging) return;
+          suppressClickUntil = performance.now() + 300;
+          const travel = position - destination;
+          if (event.type === 'pointerup' && Math.abs(travel) * pitch >= Math.min(35, pitch / 2)) {
+            select(selected + Math.sign(travel), {sound:true});
+          } else {
+            settle(destination);
+          }
+        }
+        window.addEventListener('pointerup', release);
+        window.addEventListener('pointercancel', release);
+        let wheelDistance = 0, lastWheel = 0;
+        carousel.addEventListener('wheel', event => {
+          const delta = event.deltaX || (event.shiftKey ? event.deltaY : 0);
+          if (!delta || event.ctrlKey || (!event.shiftKey && Math.abs(delta) < Math.abs(event.deltaY))) return;
+          event.preventDefault();
+          const now = performance.now();
+          if (now < nextSwitchAt || swipe?.dragging) { wheelDistance = 0; return; }
+          if (now - lastWheel > 200 || Math.sign(delta) !== Math.sign(wheelDistance)) wheelDistance = 0;
+          lastWheel = now;
+          wheelDistance += delta * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? carousel.clientWidth : 1);
+          if (Math.abs(wheelDistance) >= 80) { select(selected + Math.sign(delta), {sound:true}); wheelDistance = 0; }
+        }, {passive:false});
+        carousel.addEventListener('click', event => {
+          if (event.detail && (frame || performance.now() < suppressClickUntil)) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }, true);
+        document.addEventListener('keydown', event => {
+          if (dialog.open || event.altKey || event.ctrlKey || event.metaKey || event.isComposing) return;
+          const target = event.target;
+          if (target.closest('select, input, textarea, [contenteditable="true"]')) return;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            select(selected + (event.key === 'ArrowRight' ? 1 : -1), {focus: true, sound: true, arrow:true});
+          } else if (event.key === 'Enter' && !event.repeat && (target === document.body || target === carousel || target.matches('[data-game-launch], .is-coming-soon.is-selected'))) {
+            event.preventDefault();
+            launchSelected();
+          }
+        });
+        renderSelection();
+        return {setReady() { ready = true; renderSelection(); }};
       }
 
-      // =========================================================================
-      // 3. MOBILE INITIALIZATION & TOUCH EVENTS
-      // =========================================================================
-      window.addEventListener("DOMContentLoaded", async () => {
-        const profile = window.lexicalVocabulary?.activeProfile() || "";
-        const activeUser = profile || "Guest Cowboy";
-        const domName = document.getElementById("playerName");
-        const domAvatar = document.getElementById("playerAvatar");
-        const domWordCount = document.getElementById("playerWordCount");
-        const domBestDuel = document.getElementById("statBestDuel");
-        const btnSoundToggle = document.getElementById("btnSoundToggle");
-        const soundIcon = document.getElementById("soundIcon");
-        const vocabModeSelect = document.getElementById("arcadeVocabModeSelect");
-        const vocabModeBadge = document.getElementById("vocabModeBadge");
-        const topicWrapper = document.getElementById("arcadeTopicWrapper");
-        const topicSelect = document.getElementById("arcadeTopicSelect");
-        const topicWordBadge = document.getElementById("topicWordCountBadge");
-        const modeWarningMsg = document.getElementById("modeWarningMsg");
-        const btnQD = document.getElementById("btnPlayQuickDrawn");
-        const btnPK = document.getElementById("btnPlayPoker");
-        const btnAS = document.getElementById("btnPlayAirStrike");
-
-        // Set student info
+      window.addEventListener('DOMContentLoaded', async () => {
+        const hub = createHubControls();
+        const profile = window.lexicalVocabulary?.activeProfile() || '';
+        const activeUser = profile || 'Guest Cowboy';
+        const domName = document.getElementById('playerName');
+        const domAvatar = document.getElementById('playerAvatar');
+        const domWordCount = document.getElementById('playerWordCount');
+        const vocabModeSelect = document.getElementById('arcadeVocabModeSelect');
+        const vocabModeBadge = document.getElementById('vocabModeBadge');
+        const topicWrapper = document.getElementById('arcadeTopicWrapper');
+        const topicSelect = document.getElementById('arcadeTopicSelect');
+        const topicWordBadge = document.getElementById('topicWordCountBadge');
+        const modeWarningMsg = document.getElementById('modeWarningMsg');
+        const btnQD = document.getElementById('btnPlayQuickDrawn');
+        const btnPK = document.getElementById('btnPlayPoker');
+        const btnAS = document.getElementById('btnPlayAirStrike');
         domName.textContent = activeUser;
-        domAvatar.textContent = (activeUser.charAt(0) || "G").toUpperCase();
+        domAvatar.textContent = (activeUser.charAt(0) || 'G').toUpperCase();
 
-        // Best Duel Score
-        const bestScore = getBestDuelScore(activeUser);
-        if (domBestDuel) {
-          domBestDuel.textContent = bestScore ? `Personal Best: ${bestScore.toLocaleString()}` : "Personal Best: --";
-        }
-
-        // Query words and topics dynamically from LexicalSpaceDB
         const wordData = await queryIndexedDBWordData(profile);
-        domWordCount.textContent = wordData.totalCount > 0 ? String(wordData.totalCount) : "24+";
-
-        // Restore saved mode & topic preferences
+        domWordCount.textContent = wordData.totalCount > 0 ? String(wordData.totalCount) : '24+';
         const urlParams = new URLSearchParams(window.location.search);
-        let selectedMode = (urlParams.get("mode") || sessionStorage.getItem("arcade_vocab_mode") || "full").trim().toLowerCase();
-        if (!["full", "topic"].includes(selectedMode)) {
-          selectedMode = "full";
-          sessionStorage.setItem("arcade_vocab_mode", "full");
+        let selectedMode = (urlParams.get('mode') || sessionStorage.getItem('arcade_vocab_mode') || 'full').trim().toLowerCase();
+        if (!['full', 'topic'].includes(selectedMode)) {
+          selectedMode = 'full';
+          sessionStorage.setItem('arcade_vocab_mode', 'full');
         }
-        if (vocabModeSelect) {
-          vocabModeSelect.value = selectedMode;
-        }
-
-        let selectedTopic = (urlParams.get("topic") || sessionStorage.getItem("arcade_selected_topic") || "").trim();
-
-        // Populate topic dropdown
-        if (topicSelect) {
-          topicSelect.innerHTML = `<option value="">⚡ Select a Topic...</option>`;
-          wordData.sortedTopics.forEach(t => {
-            const count = wordData.topicMap.get(t) || 0;
-            const opt = document.createElement("option");
-            opt.value = t;
-            opt.textContent = `${t} (${count} words)`;
-            topicSelect.appendChild(opt);
-          });
-
-          if (selectedTopic && wordData.sortedTopics.some(t => t.toLowerCase() === selectedTopic.toLowerCase())) {
-            topicSelect.value = selectedTopic;
-          } else {
-            selectedTopic = "";
-            topicSelect.value = "";
-          }
-        }
+        vocabModeSelect.value = selectedMode;
+        let selectedTopic = (urlParams.get('topic') || sessionStorage.getItem('arcade_selected_topic') || '').trim();
+        topicSelect.replaceChildren(new Option('Choose a topic', ''));
+        wordData.sortedTopics.forEach(topic => {
+          const count = wordData.topicMap.get(topic) || 0;
+          topicSelect.appendChild(new Option(`${topic} (${count} words)`, topic));
+        });
+        // Restore the canonical option text after the existing case-insensitive lookup.
+        selectedTopic = wordData.sortedTopics.find(topic => topic.toLowerCase() === selectedTopic.toLowerCase()) || '';
+        topicSelect.value = selectedTopic;
 
         function updateGameLinks(mode, topic) {
-          const userParam = profile ? `user=${encodeURIComponent(profile)}` : "";
+          const userParam = profile ? `user=${encodeURIComponent(profile)}` : '';
           const modeParam = `mode=${encodeURIComponent(mode)}`;
-          const topicParam = (mode === "topic" && topic) ? `topic=${encodeURIComponent(topic)}` : "";
+          const topicParam = mode === 'topic' && topic ? `topic=${encodeURIComponent(topic)}` : '';
           const returnUrlParam = `returnUrl=${encodeURIComponent(window.location.href)}`;
-
-          const queryParts = [userParam, modeParam, topicParam, returnUrlParam].filter(Boolean);
-          const queryString = queryParts.length > 0 ? `?${queryParts.join("&")}` : "";
-
-          // Authoritative Production URLs
-          const PROD_QUICK_DRAWN_URL = "https://vuongtranvt1331-design.github.io/QuickDrawn/";
-          const PROD_POKER_URL = "https://vuongtranvt1331-design.github.io/Poker/";
-          const PROD_AIR_STRIKE_URL = "https://vuongtranvt1331-design.github.io/Sky_Dominators/";
-
-          // Automatically detect environment: GitHub Pages vs Local/File
-          const isGitHubPages = window.location.hostname.endsWith("github.io");
-          const qdUrl = window.SpaceSuite ? SpaceSuite.href("quick-drawn", {mode, topic}) : isGitHubPages
-            ? `${PROD_QUICK_DRAWN_URL}${queryString}`
-            : `fast_drawn_wilhelm_scream_instructions%20(1).html${queryString}`;
-          const pkUrl = window.SpaceSuite ? SpaceSuite.href("poker", {mode, topic}) : isGitHubPages
-            ? `${PROD_POKER_URL}${queryString}`
-            : `wild_west_vocabulary_poker_fixed.html${queryString}`;
-          const asUrl = window.SpaceSuite ? SpaceSuite.href("sky-dominators", {mode, topic}) : isGitHubPages
-            ? `${PROD_AIR_STRIKE_URL}${queryString}`
-            : `air_strike_arcade_game%20(1).html${queryString}`;
-
-          if (btnQD) {
-            btnQD.href = qdUrl;
-          }
-          if (btnPK) {
-            btnPK.href = pkUrl;
-          }
-          if (btnAS) {
-            btnAS.href = asUrl;
-          }
-
-          if (modeWarningMsg) {
-            modeWarningMsg.style.display = "none";
-          }
-
-          if (mode === "full") {
-            if (vocabModeBadge) {
-              vocabModeBadge.textContent = "FULL VOCABULARY";
-              vocabModeBadge.style.color = "var(--neon-yellow)";
-              vocabModeBadge.style.borderColor = "var(--neon-yellow)";
-            }
-            if (topicWordBadge) topicWordBadge.textContent = `${wordData.totalCount || '24+'} WORDS`;
-            if (topicWrapper) topicWrapper.style.opacity = "0.65";
-          } else if (mode === "topic") {
-            if (vocabModeBadge) {
-              vocabModeBadge.textContent = "TOPIC";
-              vocabModeBadge.style.color = "var(--neon-cyan)";
-              vocabModeBadge.style.borderColor = "var(--neon-cyan)";
-            }
-            if (topicWrapper) topicWrapper.style.opacity = "1";
-            if (topicWordBadge) {
-              if (topic) {
-                const count = wordData.topicMap.get(topic) || 0;
-                topicWordBadge.textContent = `${count} WORDS`;
-              } else {
-                topicWordBadge.textContent = "SELECT TOPIC";
-              }
-            }
-          }
+          const queryString = '?' + [userParam, modeParam, topicParam, returnUrlParam].filter(Boolean).join('&');
+          const isGitHubPages = window.location.hostname.endsWith('github.io');
+          const qdUrl = window.SpaceSuite ? SpaceSuite.href('quick-drawn', {mode, topic}) : isGitHubPages
+            ? `https://vuongtranvt1331-design.github.io/QuickDrawn/${queryString}` : `../quick-drawn/${queryString}`;
+          const pkUrl = window.SpaceSuite ? SpaceSuite.href('poker', {mode, topic}) : isGitHubPages
+            ? `https://vuongtranvt1331-design.github.io/Poker/${queryString}` : `../poker/${queryString}`;
+          const asUrl = window.SpaceSuite ? SpaceSuite.href('sky-dominators', {mode, topic}) : isGitHubPages
+            ? `https://vuongtranvt1331-design.github.io/Sky_Dominators/${queryString}` : `../sky-dominators/${queryString}`;
+          btnQD.href = qdUrl;
+          btnPK.href = pkUrl;
+          btnAS.href = asUrl;
+          modeWarningMsg.style.display = 'none';
+          vocabModeBadge.textContent = mode === 'topic' ? 'TOPIC' : 'FULL VOCABULARY';
+          topicWrapper.style.opacity = mode === 'full' ? '0.65' : '1';
+          topicSelect.disabled = mode !== 'topic';
+          topicSelect.options[0].textContent = mode === 'full' ? 'All topics' : 'Choose a topic';
+          topicSelect.value = mode === 'topic' ? topic : '';
+          topicWordBadge.textContent = mode === 'full' ? `${wordData.totalCount || '24+'} WORDS`
+            : topic ? `${wordData.topicMap.get(topic) || 0} WORDS` : 'CHOOSE TOPIC';
         }
-
-        // Initialize game links with current mode and topic
         updateGameLinks(selectedMode, selectedTopic);
-
-        // Vocab mode change event
-        vocabModeSelect?.addEventListener("change", () => {
+        vocabModeSelect.addEventListener('change', () => {
           selectedMode = vocabModeSelect.value.trim().toLowerCase();
-          if (!["full", "topic"].includes(selectedMode)) {
-            selectedMode = "full";
-          }
-          sessionStorage.setItem("arcade_vocab_mode", selectedMode);
+          if (!['full', 'topic'].includes(selectedMode)) selectedMode = 'full';
+          sessionStorage.setItem('arcade_vocab_mode', selectedMode);
           updateGameLinks(selectedMode, selectedTopic);
           audio.playBlip();
         });
-
-        // Topic select change event
-        topicSelect?.addEventListener("change", () => {
+        topicSelect.addEventListener('change', () => {
           selectedTopic = topicSelect.value.trim();
-          sessionStorage.setItem("arcade_selected_topic", selectedTopic);
+          sessionStorage.setItem('arcade_selected_topic', selectedTopic);
           updateGameLinks(selectedMode, selectedTopic);
           audio.playBlip();
         });
-
-        // Sound toggle
-        btnSoundToggle.addEventListener("click", () => {
-          const isMuted = audio.toggleMute();
-          soundIcon.textContent = isMuted ? "🔇" : "🔊";
-          if (!isMuted) audio.playBlip();
-        });
-
-        // Touch feedback on buttons & topic validation
-        document.querySelectorAll(".mobile-btn-play").forEach(btn => {
-          btn.addEventListener("click", (e) => {
-            if (selectedMode === "topic" && !selectedTopic) {
-              e.preventDefault();
+        const launchSound = document.querySelector('[data-launch-sound]');
+        let pendingLaunch;
+        function launchGame(button) {
+          if (pendingLaunch) return;
+          unavailableSound.pause();
+          switchSound.pause();
+          const controller = new AbortController();
+          pendingLaunch = controller;
+          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const bounds = button.getBoundingClientRect();
+          const ripples = [];
+          if (!reduced) {
+            for (const delay of [0, 80]) {
+              const ring = document.createElement('span');
+              ring.className = 'launch-ripple';
+              ring.setAttribute('aria-hidden', 'true');
+              Object.assign(ring.style, {left:bounds.left + 'px', top:bounds.top + 'px',
+                width:bounds.width + 'px', height:bounds.height + 'px',
+                borderRadius:getComputedStyle(button).borderRadius});
+              document.body.append(ring);
+              const animation = ring.animate([
+                {transform:'scale(1)', opacity:0.95},
+                {transform:'scale(1.26)', opacity:0.92, offset:0.55},
+                {transform:'scale(1.52)', opacity:0}
+              ], {duration:400 - delay, delay, easing:'ease-out'});
+              ripples.push(animation);
+              animation.finished.then(() => ring.remove(), () => ring.remove());
+            }
+          }
+          const wavesFinished = Promise.all(ripples.map(animation => animation.finished.catch(() => {})));
+          let timer;
+          const options = {once:true, signal:controller.signal};
+          function finish() {
+            if (controller.signal.aborted) return;
+            wavesFinished.then(() => {
+              if (controller.signal.aborted) return;
+              cancel();
+              location.assign(button.href);
+            }, () => {});
+          }
+          function cancel() {
+            controller.abort();
+            ripples.forEach(animation => animation.cancel());
+            clearTimeout(timer);
+            launchSound.pause();
+            pendingLaunch = null;
+          }
+          window.addEventListener('pagehide', cancel, options);
+          if (audio.muted || launchSound.error) { finish(); return; }
+          launchSound.addEventListener('ended', finish, options);
+          launchSound.addEventListener('error', finish, options);
+          // A blocked audio device or a stalled connection must not trap the player.
+          timer = setTimeout(finish, 1800);
+          launchSound.addEventListener('playing', () => {
+            clearTimeout(timer);
+            const duration = Number.isFinite(launchSound.duration) ? launchSound.duration : 10;
+            timer = setTimeout(finish, duration * 1000 + 1500);
+          }, options);
+          launchSound.currentTime = 0;
+          launchSound.play().catch(finish);
+        }
+        document.querySelectorAll('.mobile-btn-play').forEach(button => {
+          button.addEventListener('click', event => {
+            if (selectedMode === 'topic' && !selectedTopic) {
+              event.preventDefault();
               audio.playBlip();
-              if (modeWarningMsg) {
-                modeWarningMsg.style.display = "block";
-                modeWarningMsg.textContent = "⚠️ Please select a vocabulary topic before starting in Topic mode!";
-              }
-              topicSelect?.focus();
+              modeWarningMsg.style.display = 'block';
+              modeWarningMsg.textContent = 'Please select a vocabulary topic before playing.';
+              topicSelect.focus();
               return;
             }
-            audio.playCoin();
+            if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            launchGame(button);
           });
         });
-
-        // Configure return navigation to Lexical Space
-        const PROD_LS_URL = "https://vuongtranvt1331-design.github.io/Lexical_Space/";
-        const isGitHubPages = window.location.hostname.endsWith("github.io");
-        const returnUrlParam = urlParams.get("returnUrl");
-        const defaultLsUrl = isGitHubPages ? PROD_LS_URL : "index (1).html";
-        const finalLsUrl = window.SpaceSuite ? SpaceSuite.href("lexical") : returnUrlParam || defaultLsUrl;
-
-        const btnBackToLS = document.getElementById("btnBackToLS");
-        if (btnBackToLS) {
-          btnBackToLS.href = finalLsUrl;
-          btnBackToLS.addEventListener("click", () => {
-            audio.playBlip();
-          });
-        }
-
-        // ArcadeSpace Retro Game Card Header Interaction
-        const headerLogo = document.getElementById("headerLogoCard");
-        if (headerLogo) {
-          headerLogo.addEventListener("click", () => {
-            /* The brand animation is silent; gameplay/button sound controls are unchanged. */
-            headerLogo.style.transform = "scale(1.12)";
-            setTimeout(() => {
-              headerLogo.style.transform = "";
-            }, 300 / 0.7);
-          });
-        }
-
-        // 8-Bit Cartridge Bay Insert Interaction
-        const btnCartridge = document.getElementById("btnInsertCartridge");
-        if (btnCartridge) {
-          btnCartridge.addEventListener("click", () => {
-            audio.playCartridgeSnap();
-            btnCartridge.innerHTML = "<span>💾</span> CARTRIDGE INSERTED! [READY]";
-            btnCartridge.style.borderColor = "var(--neon-green)";
-            btnCartridge.style.color = "var(--neon-green)";
-            btnCartridge.style.boxShadow = "0 0 16px rgba(0, 255, 136, 0.4)";
-            setTimeout(() => {
-              btnCartridge.innerHTML = "<span>📼</span> PUT IN CARTRIDGE / PLUG CHIP";
-              btnCartridge.style.borderColor = "";
-              btnCartridge.style.color = "";
-              btnCartridge.style.boxShadow = "";
-            }, 2400);
-          });
-        }
+        const defaultLsUrl = window.location.hostname.endsWith('github.io')
+          ? 'https://vuongtranvt1331-design.github.io/Lexical_Space/' : '../../';
+        const finalLsUrl = window.SpaceSuite ? SpaceSuite.href('lexical') : urlParams.get('returnUrl') || defaultLsUrl;
+        const back = document.getElementById('btnBackToLS');
+        back.href = finalLsUrl;
+        back.addEventListener('click', () => audio.playBlip());
+        hub.setReady();
         window.SpaceSuite?.ready();
       });
     })();
-  
+
+import('./action-frames.js').catch(() => { document.documentElement.dataset.actionArt = 'fallback'; });

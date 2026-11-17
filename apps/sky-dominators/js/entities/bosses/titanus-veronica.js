@@ -110,7 +110,7 @@
         updatePose(){
             const {w}=this.d.h.context();
             this.b.x=w/2+Math.sin(this.age/2400)*72;
-            this.b.y=Math.max(190,this.hudFloor+76)+8*Math.sin(this.age/1500);
+            this.b.y=Math.max(108,this.hudFloor+84)+8*Math.sin(this.age/1500);
             const armored=this.state===PHASE.ARMORED;
             this.b.w=armored?134:88;
             this.b.h=armored?124:106;

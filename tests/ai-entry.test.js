@@ -6,17 +6,15 @@ const word = { word: 'resilient', phonetic: '/rɪˈzɪliənt/', pos: 'adj', mean
   collocations: ['highly resilient', 'resilient community'], synonyms: ['hardy', 'adaptable'],
   exampleSentence: 'A resilient community can recover.', clozeSentence: 'A [ _____ ] community can recover.' };
 const response = data => ({ ok: true, status: 200, json: async () => data });
-test('batch prompt contains the user list and a short JSON example; generation needs no API key', () => {
-  const prompt = buildAIPrompt('1. resilient\n- give up'); assert.ok(prompt.includes('["resilient","give up"]'));
-  assert.match(prompt, /Only word and meaning are required/);
-  assert.ok(prompt.includes('"clozeSentence"')); assert.ok(prompt.includes('[ _____ ]'));
-  assert.match(prompt, /\bvocabulary\.json\b/i);
-  const sample = prompt.split('FORMAT EXAMPLE (do not add this term unless it appears in WORD LIST):\n')[1]
-    ?.split('\nWORD LIST (JSON data):')[0];
-  assert.ok(sample);
-  assert.ok(Array.isArray(JSON.parse(sample)));
-  assert.equal(parseAIBatch(sample).length, 1);
-  assert.doesNotMatch(prompt, /cefr/i);
+test('a pasted AI reply is importable as plain text, including fenced replies', () => {
+  const prompt = buildAIPrompt('resilient', 'School');
+  assert.match(prompt, /School/);
+  const row = prompt.match(/Example format: (.*)/)[1];
+  for (const raw of [row, '```text\n'+row+'\n```']) {
+    const [card] = parseAIBatch(raw, 'resilient');
+    assert.equal(card.meaning, 'kiên cường');
+    assert.equal(card.pos, 'adj');
+  }
   assert.throws(() => buildAIPrompt(''), /Enter your word list/);
 });
 test('strict JSON rejects wrong shapes, unwanted SRS fields and incomplete batches', () => {
