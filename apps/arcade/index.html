@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-suite-module="arcade" data-arcade-theme="twicelight">
+<html lang="en" data-suite-module="arcade" data-arcade-theme="pocket">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#171A30">
+  <meta name="theme-color" content="#F5EEDC">
   <title>ArcadeSpace — Game Library</title>
   <script src="../../suite/js/core.js?v=43.19.0-4ba1a9ac80"></script>
   <script src="./js/appearance.js"></script>
@@ -11,12 +11,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../suite/css/components.css?v=43.19.0-69a13ed7c3">
-  <link rel="stylesheet" href="./css/arcade-1.css?v=43.19.0-9dde2df87d">
+  <link rel="stylesheet" href="./css/arcade-1.css?v=43.19.0-02b2bb6db8">
   <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=43.19.0-2a571df59e"></noscript>
   <link rel="manifest" href="../../manifest.webmanifest">
   <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
   <script src="./assets/lexical-vocabulary.js"></script>
   <script defer src="../../js/core/offline.js?v=43.19.0-39c886b7ac"></script>
+  <link rel="stylesheet" href="../../suite/css/game-logo-loader.css?v=43.19.0-f0a2c333e0">
   <link rel="stylesheet" href="../../suite/css/loader.css?v=43.19.0-1112a32a51">
   <script defer src="../../js/features/loading.js?v=43.19.0-0ab2d880db"></script>
 <link rel="stylesheet" href="../../suite/css/game-icons.css?v=43.19.0-18940026b2"><link rel="stylesheet" href="./css/action-frames.css?v=43.19.0-c3a3b6e058"></head>
@@ -39,9 +40,9 @@
     <main class="game-library" aria-label="Game library">
       <p class="library-count" data-library-count></p>
       <div class="game-carousel" data-game-carousel aria-label="Choose a game with the left and right arrow keys">
-        <article class="game-tile is-selected" data-game-tile data-game-name="Sky Dominators" data-game-description="Vocabulary dogfights" data-game-index="0"><a id="btnPlayAirStrike" class="game-cover mobile-btn-play" href="../sky-dominators/" aria-label="Play Sky Dominators" data-game-launch><img src="./assets/logo/sky_dominators_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Vocabulary dogfights</p></article>
-        <article class="game-tile" data-game-tile data-game-name="Word Battles" data-game-description="Word duels &amp; chess" data-game-index="1"><a id="btnPlayQuickDrawn" class="game-cover mobile-btn-play" href="../quick-drawn/" aria-label="Play Word Battles" data-game-launch><img src="./assets/logo/word_battles_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Word duels &amp; chess</p></article>
-        <article class="game-tile" data-game-tile data-game-name="Wild West Poker" data-game-description="Synonym card matches" data-game-index="2"><a id="btnPlayPoker" class="game-cover mobile-btn-play" href="../poker/" aria-label="Play Wild West Poker" data-game-launch><img src="./assets/logo/wild_west_poker_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Synonym card matches</p></article>
+        <article class="game-tile is-selected" data-game-tile data-game-name="Sky Dominators" data-game-description="Vocabulary dogfights" data-game-index="0"><a id="btnPlayAirStrike" data-loader-game="sky" class="game-cover mobile-btn-play" href="../sky-dominators/" aria-label="Play Sky Dominators" data-game-launch><img src="./assets/logo/sky_dominators_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Vocabulary dogfights</p></article>
+        <article class="game-tile" data-game-tile data-game-name="Word Battles" data-game-description="Word duels &amp; chess" data-game-index="1"><a id="btnPlayQuickDrawn" data-loader-game="word-battles" class="game-cover mobile-btn-play" href="../quick-drawn/" aria-label="Play Word Battles" data-game-launch><img src="./assets/logo/word_battles_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Word duels &amp; chess</p></article>
+        <article class="game-tile" data-game-tile data-game-name="Wild West Poker" data-game-description="Synonym card matches" data-game-index="2"><a id="btnPlayPoker" data-loader-game="poker" class="game-cover mobile-btn-play" href="../poker/" aria-label="Play Wild West Poker" data-game-launch><img src="./assets/logo/wild_west_poker_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Synonym card matches</p></article>
         <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Farming game, coming soon" data-game-tile data-game-name="Coming Soon" data-game-description="A farming adventure in the making" data-game-index="3"><button id="btnInsertCartridge" class="game-cover" type="button" disabled aria-disabled="true" aria-label="Farming game — coming soon"><img src="./assets/logo/coming_soon_farm.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">A farming adventure in the making</p></article>
         <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Quiz — coming soon" data-game-tile data-game-name="Quiz" data-game-description="Vocabulary quiz show" data-game-index="4"><button class="game-cover" type="button" disabled aria-label="Quiz — coming soon"><img src="./assets/logo/quiz.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Vocabulary quiz show</p></article>
         <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Vocabulary Test — coming soon" data-game-tile data-game-name="Vocabulary Test" data-game-description="Test your vocabulary" data-game-index="5"><button class="game-cover" type="button" disabled aria-label="Vocabulary Test — coming soon"><img src="./assets/logo/vocabulary_test.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Test your vocabulary</p></article>
@@ -62,8 +63,8 @@
     <div class="settings-heading"><h2>Settings</h2><button type="button" class="round-button close-settings" data-close-settings aria-label="Close settings" data-action-face="quiet"><span class="pixel-icon icon-close" aria-hidden="true"></span><span>Close</span></button></div>
     <fieldset class="theme-fieldset"><legend>Appearance</legend>
       <div class="theme-options">
-        <label title="Twicelight"><input type="radio" name="arcade-theme" value="twicelight" aria-label="Twicelight" checked><span class="palette-strip" data-palette="twicelight" aria-hidden="true"></span></label>
-        <label title="Pocket Day"><input type="radio" name="arcade-theme" value="pocket" aria-label="Pocket Day"><span class="palette-strip" data-palette="pocket" aria-hidden="true"></span></label>
+        <label title="Pocket Day"><input type="radio" name="arcade-theme" value="pocket" aria-label="Pocket Day" checked><span class="palette-strip" data-palette="pocket" aria-hidden="true"></span></label>
+        <label title="Twicelight"><input type="radio" name="arcade-theme" value="twicelight" aria-label="Twicelight"><span class="palette-strip" data-palette="twicelight" aria-hidden="true"></span></label>
         <label title="Neon Night"><input type="radio" name="arcade-theme" value="neon" aria-label="Neon Night"><span class="palette-strip" data-palette="neon" aria-hidden="true"></span></label>
         <label title="Lexical Ivory"><input type="radio" name="arcade-theme" value="ivory" aria-label="Lexical Ivory"><span class="palette-strip" data-palette="ivory" aria-hidden="true"></span></label>
       </div>
@@ -71,6 +72,6 @@
     <button id="btnSoundToggle" class="sound-setting" type="button" aria-pressed="true" aria-label="Turn sound effects off" data-action-face="main"><span id="soundIcon" class="pixel-icon icon-sound-on" aria-hidden="true"></span><span class="sound-setting-copy">Sound effects</span><span data-sound-state>On</span><span class="switch-track" aria-hidden="true"></span></button>
     <button type="button" class="settings-done" data-close-settings data-action-face="main">Done</button>
   </dialog>
-  <script src="./js/arcade-2.js?v=43.19.0-e61fe6a3b1"></script>
+  <script src="./js/arcade-2.js?v=43.19.0-b9b4bd37b5"></script>
 </body>
 </html>

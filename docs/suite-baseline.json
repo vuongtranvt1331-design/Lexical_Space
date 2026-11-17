@@ -12,7 +12,7 @@
       "sky-dominators",
       "poker"
     ],
-    "cacheVersion": "2515dec83b8d28"
+    "cacheVersion": "0b2cca285b266e"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -1203,13 +1203,13 @@
     },
     {
       "path": "apps/arcade/css/arcade-1.css",
-      "bytes": 18644,
-      "sha256": "9dde2df87dcc991789ab84f54c31e964daf6533d04b2bcdfe3dd5a6b37a848b0"
+      "bytes": 18209,
+      "sha256": "02b2bb6db888961813d04a7ca945d341b1c4a6653de7ccc765d796c82ab41f7d"
     },
     {
       "path": "apps/arcade/index.html",
-      "bytes": 11059,
-      "sha256": "79194464beff9e575144720def03bdb68b88c544046c6d9d8592f88c20a15e55"
+      "bytes": 11227,
+      "sha256": "2a341914d9f4d2ebae80c2ab08bed921932df9057a45bf00b94bb95d9baa2dec"
     },
     {
       "path": "apps/arcade/js/action-frames.js",
@@ -1218,13 +1218,13 @@
     },
     {
       "path": "apps/arcade/js/appearance.js",
-      "bytes": 1315,
-      "sha256": "cf9de97306c64693716e02bf73c6f3f93045eaef004bc06113d58797f108da1e"
+      "bytes": 1314,
+      "sha256": "3c1107b825fcb7b2af3125c07b32aefe77824bab0ff3e5b3437230c5e2106319"
     },
     {
       "path": "apps/arcade/js/arcade-2.js",
-      "bytes": 26049,
-      "sha256": "e61fe6a3b1c99709d02139cd82909e4f836a0bcab8c36ee5b7fa94a6e8f8ace2"
+      "bytes": 25149,
+      "sha256": "b9b4bd37b506c972a6a60e9205a3acae60cd4a014f74e6629dbfdc73b8b98531"
     },
     {
       "path": "apps/grammar/css/notebook-3d.css",
@@ -7854,7 +7854,7 @@
     {
       "path": "service-worker.js",
       "bytes": 12984,
-      "sha256": "3bf6885fb101bdb94cc62af4fecbec17d46d151441712fa7804c8778d3140525"
+      "sha256": "a115a06e3b115a6b7fa9154c5ad60ff191b573045b2ef1625dafb798df3db21b"
     },
     {
       "path": "start-localhost.bat",
@@ -7914,7 +7914,7 @@
     {
       "path": "suite/release.json",
       "bytes": 282,
-      "sha256": "2c35edd20ab9b0c5e0aa7675bfbb541d6609ce4e258eded5ea60a8aa29376e56"
+      "sha256": "2faeaed72293f031abf1c780e763c1f3c1690495e83e2001e1e3722259960412"
     },
     {
       "path": "teacher/index.html",
@@ -8308,10 +8308,10 @@
   "arcadeAppearance": {
     "entry": "apps/arcade/js/appearance.js",
     "storage": "arcade_theme",
-    "default": "twicelight",
+    "default": "pocket",
     "choices": [
-      "twicelight",
       "pocket",
+      "twicelight",
       "neon",
       "ivory"
     ],
@@ -8326,7 +8326,7 @@
     "themeButtonSprites": true,
     "legacyScoreVisible": false,
     "settingsButtons": "Theme-derived settings button fill, rim and foreground.",
-    "launchFeedback": "Unavailable games play audio only. Playable games have two outward ripples over 400ms."
+    "launchFeedback": "Immediate game-logo loading screen on playable launch, with launch sound during loading. Unavailable games play audio only."
   },
   "arcadeLibraryView": {
     "mode": "single circular row",

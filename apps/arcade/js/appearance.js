@@ -4,7 +4,7 @@
   const selector = 'input[name="arcade-theme"]';
   const backgrounds = new Map([['twicelight', '#171A30'], ['pocket', '#F5EEDC'], ['neon', '#10121C'], ['ivory', '#F5F1E8']]);
   function apply(value) {
-    const theme = backgrounds.has(value) ? value : value === 'light' ? 'pocket' : 'twicelight';
+    const theme = backgrounds.has(value) ? value : value === 'dark' ? 'twicelight' : 'pocket';
     document.documentElement.dataset.arcadeTheme = theme;
     document.querySelector('meta[name="theme-color"]').content = backgrounds.get(theme);
     document.querySelectorAll(selector).forEach(input => { input.checked = input.value === theme; });

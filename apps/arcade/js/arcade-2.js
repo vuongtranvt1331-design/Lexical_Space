@@ -417,41 +417,24 @@
           switchSound.pause();
           const controller = new AbortController();
           pendingLaunch = controller;
-          const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-          const bounds = button.getBoundingClientRect();
-          const ripples = [];
-          if (!reduced) {
-            for (const delay of [0, 80]) {
-              const ring = document.createElement('span');
-              ring.className = 'launch-ripple';
-              ring.setAttribute('aria-hidden', 'true');
-              Object.assign(ring.style, {left:bounds.left + 'px', top:bounds.top + 'px',
-                width:bounds.width + 'px', height:bounds.height + 'px',
-                borderRadius:getComputedStyle(button).borderRadius});
-              document.body.append(ring);
-              const animation = ring.animate([
-                {transform:'scale(1)', opacity:0.95},
-                {transform:'scale(1.26)', opacity:0.92, offset:0.55},
-                {transform:'scale(1.52)', opacity:0}
-              ], {duration:400 - delay, delay, easing:'ease-out'});
-              ripples.push(animation);
-              animation.finished.then(() => ring.remove(), () => ring.remove());
-            }
-          }
-          const wavesFinished = Promise.all(ripples.map(animation => animation.finished.catch(() => {})));
+          const loader = document.createElement('section');
+          loader.className = 'game-logo-loader';
+          loader.dataset.gameLogoLoader = button.dataset.loaderGame;
+          loader.setAttribute('role', 'status');
+          const logo = button.querySelector('img').cloneNode();
+          logo.removeAttribute('aria-hidden');
+          logo.alt = 'Loading ' + button.closest('[data-game-tile]').dataset.gameName;
+          loader.append(logo);
+          document.body.append(loader);
           let timer;
           const options = {once:true, signal:controller.signal};
           function finish() {
             if (controller.signal.aborted) return;
-            wavesFinished.then(() => {
-              if (controller.signal.aborted) return;
-              cancel();
-              location.assign(button.href);
-            }, () => {});
+            location.assign(button.href);
           }
           function cancel() {
             controller.abort();
-            ripples.forEach(animation => animation.cancel());
+            loader.remove();
             clearTimeout(timer);
             launchSound.pause();
             pendingLaunch = null;
