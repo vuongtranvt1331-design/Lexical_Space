@@ -30,20 +30,20 @@ test('draft, attempts, block recap and final result survive navigation under the
   };
   const enter=async id=>{click(id);await new Promise(r=>setTimeout(r,0));};
   try {
-    click('open-picker');await enter('start');submit('wrong');submit('wrong');
-    app.el('answer').value='draft';await reopen('B');assert.equal(app.el('continue-lesson').hidden,true);
-    await reopen();await enter('continue-lesson');assert.equal(app.el('answer').value,'draft');
+    click('open-picker');assert.deepEqual([...app.w.document.querySelector('.picker-actions').children].map(b=>b.id),['close-picker','continue-lesson','start']);assert.equal(app.el('continue-lesson').disabled,true);await enter('start');submit('wrong');submit('wrong');
+    app.el('answer').value='draft';await reopen('B');assert.equal(app.el('continue-lesson').disabled,true);
+    await reopen();click('open-picker');await enter('continue-lesson');assert.equal(app.el('answer').value,'draft');
     submit('word 0');click('next');submit('wrong');submit('wrong');submit('wrong');
-    await reopen();await enter('continue-lesson');submit('word 1');click('next');
+    await reopen();click('open-picker');await enter('continue-lesson');submit('word 1');click('next');
     for(let i=2;i<20;i++)click('skip');
-    assert.equal(app.el('summary-title').textContent,'Sentences 1–20');await reopen();await enter('continue-lesson');
+    assert.equal(app.el('summary-title').textContent,'Sentences 1–20');await reopen();click('open-picker');await enter('continue-lesson');
     assert.equal(app.el('summary').hidden,false);click('continue');assert.equal(app.el('position').textContent,'Sentence 21 / 21');
     click('skip');assert.equal(app.el('summary-title').textContent,'Lesson results');
     const runs=Object.keys(app.w.localStorage).filter(k=>k.startsWith('qe_run_'));
     assert.equal(runs.length,1);
     const run=JSON.parse(app.w.localStorage.getItem(runs[0]));
     assert.deepEqual([run.first,run.replayed,run.skipped,run.completed,run.checkpoint],[1,1,19,true,null]);
-    await reopen();assert.equal(app.el('continue-lesson').hidden,true);
+    await reopen();assert.equal(app.el('continue-lesson').disabled,true);
   }finally{app.dom.window.close();}
 });
 
@@ -59,12 +59,12 @@ test('one row per lesson shows latest attempt; restart requires consent and canc
     el('menu-history').click();
     assert.equal(w.document.querySelectorAll('.history-item').length,1);
     assert.match(el('history-list').textContent,/5\/21/);
-    w.document.querySelector('.history-item button').click();assert.equal(el('lesson-primary').textContent,'Continue from sentence 6');
-    w.confirm=()=>false;el('lesson-restart').click();assert.equal(el('lesson-actions').open,true);
-    assert.equal(w.localStorage.length,3);el('lesson-primary').click();await settle();
+    w.document.querySelector('.history-item button').click();assert.equal(el('continue-lesson').disabled,false);assert.equal(el('picker').hidden,false);
+    w.confirm=()=>false;el('start').click();assert.equal(el('picker').hidden,false);
+    assert.equal(w.localStorage.length,3);el('continue-lesson').click();await settle();
     assert.equal(el('position').textContent,'Sentence 6 / 21');
     w.HTMLMediaElement.prototype.load=()=>{};el('back-menu').click();el('open-picker').click();el('start').click();
-    w.confirm=()=>true;el('lesson-restart').click();await settle();
+    w.confirm=()=>true;el('start').click();await settle();
     assert.equal(el('position').textContent,'Sentence 1 / 21');
     el('back-menu').click();el('menu-history').click();
     assert.equal(w.document.querySelectorAll('.history-item').length,1);

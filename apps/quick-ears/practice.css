@@ -48,7 +48,7 @@ main[data-scene="menu"] header img {width:min(65%,240px)}
 .practice-actions button,.panel-actions button {min-width:0;margin:0;padding:8px 4px;min-height:44px;line-height:1.2}
 @media(max-width:480px) { .keyboard-tip {display:none} }
 
-.picker-actions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.picker-actions {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .picker-actions button {min-height:48px;margin:0;padding:8px}
 #close-picker,#back-menu {background:#fff9ec;color:#24564a}
 #pause {display:grid;place-items:center;background:transparent;border:0;padding:0;width:48px;height:48px}
@@ -202,3 +202,5 @@ main button.sprite-action:disabled {--frame:var(--art-disabled);color:#4e5750;cu
   font-size: 0.85rem;
   color: var(--text-muted, #aaa);
 }
+
+.picker-actions button:disabled { opacity: .45; filter: grayscale(1); cursor: default; }

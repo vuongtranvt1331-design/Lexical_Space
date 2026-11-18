@@ -27,26 +27,20 @@ function flushProgress() {
 }
 window.addEventListener('pagehide',flushProgress);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)flushProgress();});
-function refreshResume() {
-  latest=historyStore.latestRuns();
-  const run=[...latest.values()].find(r=>historyStore.resumable(r)&&catalog.some(x=>x.slug===r.slug));
-  const button=$('#continue-lesson');button.hidden=!run;
-  if(run){
-    button.textContent='Continue · '+run.title;
-    button.onclick=()=>{selectLesson(catalog.find(x=>x.slug===run.slug));show('picker');loadLesson();};
-  }
-}
 function selectLesson(item) {
   topic.value=item.topic;populate();
   if(item.topic==='ielts-listening'){
     const [book,test]=groupOf(item);$('#book').value=book;populate(1);$('#test').value=test;populate(2);
   }
-  lesson.value=item.slug;updateStartLabel();
+  lesson.value=item.slug;updatePickerActions();
 }
-function updateStartLabel(){
-  $('#start').textContent=historyStore.resumable(latest.get(lesson.value))?'Open lesson':latest.has(lesson.value)?'View lesson':'Start lesson';
+function updatePickerActions(){
+  $('#start').disabled = !lesson.value;
+  $('#continue-lesson').disabled = !historyStore.resumable(latest.get(lesson.value));
 }
-lesson.onchange=updateStartLabel;
+lesson.onchange=()=>{
+  ticket++; $('#retry').hidden=true; $('#status').textContent=''; updatePickerActions();
+};
 function restoreProgress(run) {
   if(!historyStore.resumable(run)||run.total!==parts.length)return false;
   const c=run.checkpoint;
@@ -107,7 +101,7 @@ $('#resume').onclick = () => panel.close();
 function menu() {
   flushProgress(); ticket++; player.pause(); player.removeAttribute('src'); player.load();
   if (panel.open) panel.close(); show('menu'); $('#status').textContent = ''; $('#retry').hidden = true;
-  $('#start').disabled = !lesson.value; refreshResume();
+  $('#start').disabled = !lesson.value; latest=historyStore.latestRuns();
 }
 $('#back-menu').onclick = $('#close-picker').onclick = menu;
 if ($('#history-back')) $('#history-back').onclick = menu;
@@ -119,9 +113,9 @@ if ($('#history-profile')) $('#history-profile').onchange = (e) => {
   window.QuickEarsHistory?.renderHistoryView(e.target.value,openHistoryLesson);
 };
 $('#open-picker').onclick = $('#done').onclick = () => { const slug = lesson.value;
-refreshResume(); populate(2);
+latest=historyStore.latestRuns(); populate(2);
 if (slug) lesson.value = slug;
-show('picker'); updateStartLabel();
+show('picker'); updatePickerActions();
 topic.focus(); };
 function groupOf(item) {
   const cam = item.title.match(/^(Cam\d+)\s*-\s*(Test\s*\d+)/i);
@@ -145,46 +139,27 @@ function populate(stage=0) {
     const prefix = window.QuickEarsHistory?.formatStatusPrefix(statusMap.get(x.slug)) || '';
     return [x.slug, prefix + rawTitle];
   }));
-  lesson.disabled = $('#start').disabled = !rows.length; updateStartLabel();
+  lesson.disabled = !rows.length; updatePickerActions();
 }
 topic.onchange=()=>populate(); $('#book').onchange=()=>populate(1); $('#test').onchange=()=>populate(2);
 function openHistoryLesson(slug) {
   const item = catalog.find(row=>row.slug===slug);
   if (!item) { $('#status').textContent='This lesson is unavailable.'; return; }
-  selectLesson(item);
-  openSelectedLesson();
+  latest=historyStore.latestRuns();
+  selectLesson(item); show('picker'); lesson.focus();
 }
-
 function openSelectedLesson() {
   const run = historyStore.latestRuns().get(lesson.value);
-  if (!run) { loadLesson(); return; }
-  const dialog = $('#lesson-actions'), primary = $('#lesson-primary');
-  const answered = run.first + run.replayed + run.skipped;
-  const resume = historyStore.resumable(run);
-  $('#lesson-action-title').textContent = run.title;
-  $('#lesson-action-progress').textContent = answered + ' / ' + run.total + ' sentences completed';
-  const scores = $('#previous-scores'); scores.hidden = true;
-  primary.textContent = resume ? 'Continue from sentence '+Math.min(run.total,(run.checkpoint?.index ?? answered)+1) : 'View results';
-  primary.onclick = () => {
-    if (resume) { dialog.close(); show('picker'); loadLesson(); }
-    else {
-      const label = run.grading === 'three-tries' ? 'Correct within 3 tries' : run.grading === 'mixed' ? 'Counted correct' : 'First try';
-      scores.textContent = label + ': ' + run.first + ' · Needed practice: ' + run.replayed + ' · Skipped: ' + run.skipped;
-      scores.hidden = false;
-    }
-  };
-  $('#lesson-restart').onclick = () => {
-    if (!confirmRestart()) return;
-    dialog.close(); show('picker'); loadLesson(true);
-  };
-  dialog.showModal();
+  if (run && !confirmRestart()) return;
+  loadLesson(true);
 }
 function confirmRestart() {
   return window.confirm('Start again from sentence 1? The new attempt will replace the progress shown for this lesson.');
 }
 async function loadLesson(startOver = false) {
   const id=++ticket, slug=lesson.value;
-  $('#retry').hidden=true; $('#start').disabled=true;
+  $('#retry').hidden=true; $('#start').disabled=true; $('#continue-lesson').disabled=true;
+  $('#retry').onclick=()=>{if (slug===lesson.value) loadLesson(startOver);};
   $('#status').textContent='Loading lesson…';
   try {
     const name = encodeURIComponent(slug);
@@ -222,7 +197,7 @@ async function loadLesson(startOver = false) {
       link.href=url.href;link.textContent='Open in the local app';$('#status').append(' ',link);
     }
     $('#retry').hidden=false;
-  } finally { if(id===ticket) $('#start').disabled=false; }
+  } finally { if(id===ticket) updatePickerActions(); }
 }
 function newRecord() {
   return {attempts:0,first:false,correct:false,heard:false,repeated:false,ended:false,skipped:false};
@@ -361,7 +336,8 @@ $('form').onsubmit=e=>{e.preventDefault(); if(!$('#next').hidden)advance();else 
 input.oninput = () => { result.replaceChildren(); clearTimeout(pendingSave); pendingSave=setTimeout(flushProgress,200); };
 $('#next').onclick=advance;
 $('#skip').onclick=()=>{if(!records[index].correct)records[index].skipped=true;advance();};
-$('#retry').onclick=$('#start').onclick=openSelectedLesson;
+$('#start').onclick=openSelectedLesson;
+$('#continue-lesson').onclick=()=>loadLesson();
 $('#restart').onclick=()=>{
   if (!confirmRestart()) return;
   carry=emptyCarry();
@@ -391,7 +367,7 @@ async function init(){
     options(topic,Object.entries(names).filter(([key]) => catalog.some(item => item.topic === key)));
     topic.disabled=false;
     const requested=catalog.find(x=>x.slug===new URLSearchParams(location.search).get('lesson'));
-    refreshResume();
+    latest=historyStore.latestRuns();
     if(requested)selectLesson(requested); else populate();
   }catch{$('#status').textContent='Couldn’t load the lesson list.';}
 }

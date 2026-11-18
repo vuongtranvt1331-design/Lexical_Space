@@ -29,7 +29,7 @@ document.getElementById('modal-settings').lang = ui;
 // The original static DOM contains interface text only. Vocabulary is mounted by main.js afterwards.
 const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
 for (let node; (node = walker.nextNode());) {
-  if (node.parentElement.closest('script,style,svg,input,textarea,.language-settings option')) continue;
+  if (node.parentElement.closest('script,style,svg,input,textarea')) continue;
   const original = node.data.trim();
   if (original && (english.has(original) || Object.hasOwn(messages, original))) {
     node.data = node.data.replace(original, () => translate(original));
@@ -45,15 +45,19 @@ if (localFrench) {
   const placeholders = {'input-word':'école, apprendre','input-phonetic':'/e.kɔl/','input-synonyms':'étudier, apprendre','input-collocations':'aller à l’école','input-example':'Je vais à l’école.','input-cloze':'Je vais à l’[ _____ ].','ai-raw-words':'livre\nécole\napprendre','import-raw-input':'livre | sách | n | Je lis un livre.'};
   for (const [id, value] of Object.entries(placeholders)) document.getElementById(id)?.setAttribute('placeholder', value);
 }
-const uiSelect = document.getElementById('interface-language');
-const studySelect = document.getElementById('learning-language');
-uiSelect.value = ui;
-studySelect.value = studyLanguage;
 document.getElementById('french-storage-note').hidden = !localFrench;
-for (const [select, key, previous] of [[uiSelect, uiKey, ui], [studySelect, 'lexical_learning_language', studyLanguage]]) {
-  select.addEventListener('change', () => {
-    try { localStorage.setItem(key, select.value); }
-    catch { select.value = previous; return; }
+for (const [id, key, previous] of [
+  ['interface-language', uiKey, ui],
+  ['learning-language', 'lexical_learning_language', studyLanguage]
+]) {
+  const group = document.getElementById(id);
+  const selected = group.querySelector('input[value="' + previous + '"]');
+  selected.checked = true;
+  group.addEventListener('change', event => {
+    const radio = event.target;
+    if (!radio.checked || radio.value === previous) return;
+    try { localStorage.setItem(key, radio.value); }
+    catch { selected.checked = true; return; }
     location.reload();
   });
 }

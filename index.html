@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="./css/recall-ui.css?v=43.8.0-light1">
   <link rel="stylesheet" href="./css/entry-ui.css?v=44.3.0-bddea1d69e">
   <link rel="stylesheet" href="./css/theme.css?v=44.3.0-0d9f0e4ae0">
-  <link rel="stylesheet" href="./css/lexical-layout.css?v=44.3.0-49ff385512">
+  <link rel="stylesheet" href="./css/lexical-layout.css?v=44.3.0-e1278009c9">
   <script defer src="./js/features/loading.js?v=44.3.0-0ab2d880db"></script>
   <script defer src="./js/core/offline.js?v=44.3.0-39c886b7ac"></script>
 <link rel="stylesheet" href="./suite/css/loader.css?v=44.3.0-1112a32a51"></head>
@@ -594,10 +594,16 @@
       </div>
       <div id="settings-main" class="settings-content">
         <section class="language-settings">
-          <label for="interface-language"><span>Interface language</span>
-            <select id="interface-language"><option value="en" lang="en">🇬🇧 English</option><option value="vi" lang="vi">🇻🇳 Tiếng Việt</option></select></label>
-          <label for="learning-language"><span>Learning language</span>
-            <select id="learning-language"><option value="en" lang="en">🇬🇧 English</option><option value="fr" lang="fr">🇫🇷 Français</option></select></label>
+          <fieldset id="interface-language" class="lexical-appearance language-flags">
+            <legend>Interface language</legend>
+            <label title="English"><input type="radio" name="interface-language" value="en" aria-label="English" lang="en" checked><span class="palette-strip flag-tile" data-flag="en" aria-hidden="true"></span></label>
+            <label title="Tiếng Việt"><input type="radio" name="interface-language" value="vi" aria-label="Tiếng Việt" lang="vi"><span class="palette-strip flag-tile" data-flag="vi" aria-hidden="true"></span></label>
+          </fieldset>
+          <fieldset id="learning-language" class="lexical-appearance language-flags">
+            <legend>Learning language</legend>
+            <label title="English"><input type="radio" name="learning-language" value="en" aria-label="English" lang="en" checked><span class="palette-strip flag-tile" data-flag="en" aria-hidden="true"></span></label>
+            <label title="Français"><input type="radio" name="learning-language" value="fr" aria-label="Français" lang="fr"><span class="palette-strip flag-tile" data-flag="fr" aria-hidden="true"></span></label>
+          </fieldset>
           <p id="french-storage-note" hidden>French is saved only on this device.</p>
         </section>
         <fieldset class="lexical-appearance">
@@ -709,7 +715,7 @@
     </div>
   </div>
 
-  <script type="module" src="./js/features/interface-language.js?v=44.3.0-00a3a2fba4"></script>
+  <script type="module" src="./js/features/interface-language.js?v=44.3.0-1782b81eed"></script>
   <script id="lexicalspace-app" type="module" src="./js/main.js"></script>
 </body>
 </html>
