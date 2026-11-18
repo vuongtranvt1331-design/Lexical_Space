@@ -201,10 +201,14 @@
             }
           });
           const playable = !!tile.querySelector('[data-game-launch]');
-          play.disabled = !ready;
+          const preview = tile.hasAttribute('data-space-chase');
+          play.disabled = !ready && !preview;
+          const icon = play.querySelector('.pixel-icon');
+          icon.classList.toggle('icon-lock', !playable);
+          icon.classList.toggle('icon-play', playable);
           play.toggleAttribute('data-coming-soon', !playable);
-          play.setAttribute('aria-label', playable ? 'Play ' + tile.dataset.gameName : tile.dataset.gameName + ' — coming soon');
-          playLabel.textContent = playable ? 'Play' : 'Coming soon';
+          play.setAttribute('aria-label', preview ? 'Space Dominators is locked. Preview the chase.' : playable ? 'Play ' + tile.dataset.gameName : tile.dataset.gameName + ' — coming soon');
+          playLabel.textContent = preview ? 'Preview' : playable ? 'Play' : 'Coming soon';
           summary.textContent = tile.dataset.gameName + ' selected. ' + tile.dataset.gameDescription;
         }
         function triggerTileLift(tile) {
@@ -252,7 +256,9 @@
           if (delta && sound) playSwitchSound();
         }
         function launchSelected() {
-          if (!ready || dialog.open) return;
+          if (dialog.open) return;
+          if (tiles[selected].hasAttribute('data-space-chase')) { window.SpaceChase.play(); return; }
+          if (!ready) return;
           triggerTileLift(tiles[selected]);
           // Always reuse the original launch anchor and its topic validation.
           const link = tiles[selected].querySelector('[data-game-launch]');
@@ -289,7 +295,10 @@
               event.preventDefault();
               event.stopPropagation();
               const unavailable = !tile.querySelector('[data-game-launch]');
-              select(curIndex, {sound:!unavailable, onSettled:unavailable ? launchSelected : undefined});
+              if (tile.hasAttribute('data-space-chase')) {
+                select(curIndex);
+                window.SpaceChase.play();
+              } else select(curIndex, {sound:!unavailable, onSettled:unavailable ? launchSelected : undefined});
             } else if (!tile.querySelector('[data-game-launch]')) launchSelected();
           }, true);
           const link = tile.querySelector('[data-game-launch]');

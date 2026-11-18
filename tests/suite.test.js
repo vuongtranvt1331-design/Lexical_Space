@@ -47,10 +47,11 @@ test('all child entrypoints use the central manifest and no child worker is regi
 test('Arcade carousel places playable entries first with matching indices and links',async()=>{
  const html=await fs.readFile(new URL('../apps/arcade/index.html',import.meta.url),'utf8');
  const dom=new JSDOM(html),tiles=[...dom.window.document.querySelectorAll('[data-game-tile]')];
- assert.deepEqual(tiles.map(t=>t.dataset.gameName),['Word Battles','Grammar Space','Sky Dominators','Wild West Poker','Test','Dictation Practice','Farming Game']);
- assert.deepEqual(tiles.map(t=>Number(t.dataset.gameIndex)),[0,1,2,3,4,5,6]);
- assert.deepEqual(tiles.slice(0,6).map(t=>t.querySelector('[data-game-launch]')?.getAttribute('href')),['../quick-drawn/','../grammar/','../sky-dominators/','../poker/','../vocabulary-test/','../quick-ears/']);
- assert.ok(tiles.slice(6).every(t=>t.classList.contains('is-coming-soon') && t.querySelector('button:disabled')));
+ assert.deepEqual(tiles.map(t=>t.dataset.gameName),['Sky Dominators','Grammar Space','Word Battles','Wild West Poker','Test','Dictation Practice','Barn Adventure','Space Dominators']);
+ assert.deepEqual(tiles.map(t=>Number(t.dataset.gameIndex)),[0,1,2,3,4,5,6,7]);
+ assert.deepEqual(tiles.slice(0,6).map(t=>t.querySelector('[data-game-launch]')?.getAttribute('href')),['../sky-dominators/','../grammar/','../quick-drawn/','../poker/','../vocabulary-test/','../quick-ears/']);
+ assert.ok(tiles[6].querySelector('button:disabled') && !tiles[6].querySelector('[data-game-launch]'));
+ assert.ok(tiles[7].matches('[data-space-chase]') && tiles[7].querySelector('button:enabled') && !tiles[7].querySelector('[data-game-launch]'));
  dom.window.close();
 });
 test('offline fetches return the correct child HTML, never the lexical page for another module',async()=>{
