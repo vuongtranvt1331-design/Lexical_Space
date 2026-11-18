@@ -92,13 +92,33 @@
     return raw.replace(/^(?:✓ |🟡 ⏸ |✕ )/, '');
   }
 
+  function latestRuns(profile = resolveProfile()) {
+    const runs = getRawRuns().filter(run => run.profile === profile);
+    const byTime = (a,b) => (b.updated || b.start || '').localeCompare(a.updated || a.start || '');
+    runs.sort((a,b) => (b.start || b.updated || '').localeCompare(a.start || a.updated || '') || byTime(a,b));
+    const latest = new Map();
+    for (const run of runs) if (!latest.has(run.slug)) latest.set(run.slug, run);
+    return new Map([...latest.entries()].sort((a,b) => byTime(a[1],b[1])));
+  }
+
+  function resumable(run) {
+    return run && (!run.completed || run.checkpoint?.stage === 'exercise');
+  }
+
   class RunTracker {
     constructor() {
       this.currentRun = null;
     }
 
+    restore(run) {
+      this.currentRun = {...run, key:run._key};
+      this.previous = safeStorageGet(run._key);
+    }
+
     startNewRun(topic, slug, title, total) {
+      this.previous = null;
       this.currentRun = {
+        grading: 'three-tries',
         key: STORAGE_PREFIX + Date.now() + '_' + Math.random().toString(36).slice(2, 8),
         profile: resolveProfile(),
         topic: topic || '',
@@ -115,70 +135,33 @@
       };
     }
 
-    onInteraction(records, forcePersist = false) {
-      if (!this.currentRun) return;
-
-      const hasAudio = records.some(r => r.heard);
-      const hasAttempt = records.some(r => (r.attempts > 0 || r.skipped || r.correct));
-      const shouldSave = forcePersist || hasAudio || hasAttempt;
-      if (!shouldSave) return;
-
-      let first = 0, replayed = 0, skipped = 0;
+    save(records, checkpoint, carry) {
+      const run = this.currentRun;
+      if (!run || run.profile !== resolveProfile()) return false;
+      // A tab that has fallen behind must not replace the newer saved draft.
+      if (safeStorageGet(run.key) !== this.previous) return false;
+      let {first, replayed, skipped} = carry;
       for (const r of records) {
-        if (r.correct) {
-          if (r.first) first++;
-          else replayed++;
-        } else if (r.skipped) {
-          skipped++;
-        }
+        if (r.correct && r.first) first++;
+        else if (r.correct) replayed++;
+        else if (r.skipped) skipped++;
       }
-
-      this.currentRun.first = first;
-      this.currentRun.replayed = replayed;
-      this.currentRun.skipped = skipped;
-      this.currentRun.updated = new Date().toISOString();
-
-      const answered = first + replayed + skipped;
-      this.currentRun.completed = this.currentRun.total > 0 && answered >= this.currentRun.total;
-
-      const payload = {
-        profile: this.currentRun.profile,
-        topic: this.currentRun.topic,
-        slug: this.currentRun.slug,
-        title: this.currentRun.title,
-        start: this.currentRun.start,
-        updated: this.currentRun.updated,
-        total: this.currentRun.total,
-        first: this.currentRun.first,
-        replayed: this.currentRun.replayed,
-        skipped: this.currentRun.skipped,
-        completed: this.currentRun.completed
-      };
-
-      if (safeStorageSet(this.currentRun.key, JSON.stringify(payload))) {
-        this.currentRun.persisted = true;
-      }
+      const {profile, topic, slug, title, start, total, grading} = run;
+      const payload = {profile, topic, slug, title, start, total, grading, first, replayed, skipped,
+        updated:new Date().toISOString(), completed:first + replayed + skipped === total, checkpoint};
+      const serialized = JSON.stringify(payload);
+      if (!safeStorageSet(run.key, serialized)) return false;
+      this.previous = serialized;
+      return true;
     }
   }
 
   const tracker = new RunTracker();
 
   function getProfileLessonStatusMap(profile) {
-    const target = profile || resolveProfile();
     const map = new Map();
-    const runs = getRawRuns();
-    for (const r of runs) {
-      if (r.profile !== target || !r.slug) continue;
-      const prev = map.get(r.slug);
-      const answered = (r.first || 0) + (r.replayed || 0) + (r.skipped || 0);
-      const isCompleted = r.completed === true || (r.total > 0 && answered >= r.total);
-      if (isCompleted) {
-        map.set(r.slug, 'completed');
-      } else {
-        if (prev !== 'completed') {
-          map.set(r.slug, 'in_progress');
-        }
-      }
+    for (const [slug, run] of latestRuns(profile)) {
+      map.set(slug, resumable(run) ? 'in_progress' : 'completed');
     }
     return map;
   }
@@ -195,7 +178,7 @@
     return '✕ Not started';
   }
 
-  function renderHistoryView(selectedProfile) {
+  function renderHistoryView(selectedProfile, openLesson) {
     const active = resolveProfile();
     const profileToFilter = selectedProfile || active;
     const profileSelect = document.getElementById('history-profile');
@@ -207,9 +190,7 @@
       }));
     }
 
-    const runs = getRawRuns()
-      .filter(r => r.profile === profileToFilter)
-      .sort((a, b) => new Date(b.updated || b.start || 0) - new Date(a.updated || a.start || 0));
+    const runs = [...latestRuns(profileToFilter).values()];
 
     const listContainer = document.getElementById('history-list');
     const emptyMsg = document.getElementById('history-empty');
@@ -240,7 +221,13 @@
       statusTag.className = 'history-tag ' + (isCompleted ? 'tag-completed' : 'tag-progress');
       statusTag.textContent = isCompleted ? 'Completed' : 'In progress';
 
-      header.append(titleEl, statusTag);
+      if (profileToFilter === active && openLesson) {
+        const open = document.createElement('button');
+        open.type = 'button';
+        open.textContent = titleEl.textContent;
+        open.onclick = () => openLesson(run.slug);
+        header.append(open, statusTag);
+      } else header.append(titleEl, statusTag);
 
       const meta = document.createElement('div');
       meta.className = 'history-item-meta';
@@ -259,7 +246,9 @@
       const skipPct = total > 0 ? Math.round((skipCount / total) * 100) : 0;
       const remPct = Math.max(0, 100 - firstPct - repPct - skipPct);
 
-      const progressText = `Progress: ${answered}/${total} sentences · First-try: ${firstCount}/${total} (${firstPct}%)`;
+      const successLabel = run.grading === 'three-tries' ? 'Within 3 tries' : run.grading === 'mixed' ? 'Counted correct' : 'First-try';
+      const reviewLabel = run.grading === 'three-tries' ? 'After 3 tries' : run.grading === 'mixed' ? 'Needed practice' : 'Replayed or corrected';
+      const progressText = `Progress: ${answered}/${total} sentences · ${successLabel}: ${firstCount}/${total} (${firstPct}%)`;
       const dateSpan = document.createElement('span');
       dateSpan.textContent = dateStr;
       const countsSpan = document.createElement('span');
@@ -269,19 +258,19 @@
 
       const bar = document.createElement('div');
       bar.className = 'history-bar';
-      const accessibleSummary = `First try: ${firstCount}, Replayed: ${repCount}, Skipped: ${skipCount}, Remaining: ${Math.max(0, total - answered)}`;
+      const accessibleSummary = `${successLabel}: ${firstCount}, ${reviewLabel}: ${repCount}, Skipped: ${skipCount}, Remaining: ${Math.max(0, total - answered)}`;
       bar.setAttribute('role', 'progressbar');
       bar.setAttribute('aria-label', `${cleanLessonTitle(run.title)}: ${accessibleSummary}`);
 
       const segGreen = document.createElement('div');
       segGreen.className = 'bar-seg seg-first';
       segGreen.style.width = firstPct + '%';
-      segGreen.title = `First try: ${firstCount}`;
+      segGreen.title = `${successLabel}: ${firstCount}`;
 
       const segYellow = document.createElement('div');
       segYellow.className = 'bar-seg seg-replayed';
       segYellow.style.width = repPct + '%';
-      segYellow.title = `Corrected/Replayed: ${repCount}`;
+      segYellow.title = `Corrected/${reviewLabel}: ${repCount}`;
 
       const segRed = document.createElement('div');
       segRed.className = 'bar-seg seg-skipped';
@@ -297,7 +286,7 @@
 
       const breakdown = document.createElement('div');
       breakdown.className = 'history-breakdown';
-      breakdown.textContent = `🟢 First try: ${firstCount} · 🟡 Replayed or corrected: ${repCount} · 🔴 Skipped: ${skipCount} · Remaining: ${total - answered}`;
+      breakdown.textContent = `🟢 ${successLabel}: ${firstCount} · 🟡 ${reviewLabel}: ${repCount} · 🔴 Skipped: ${skipCount} · Remaining: ${total - answered}`;
 
       card.append(header, meta, bar, breakdown);
       listContainer.append(card);
@@ -305,7 +294,7 @@
   }
 
   window.QuickEarsHistory = {
-    tracker,
+    tracker, latestRuns, resumable,
     resolveProfile,
     cleanLessonTitle,
     getProfileLessonStatusMap,

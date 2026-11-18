@@ -24,7 +24,7 @@ def build():
     versioned += [ROOT / name for name in (
         'js/features/loading.js', 'js/features/appearance.js', 'js/features/interface-language.js', 'css/lexical-layout.css', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
-        'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
+        'apps/quick-ears/history.js', 'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
         'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
         'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
