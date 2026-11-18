@@ -8450,10 +8450,11 @@
     "exitScope": "Only navigation out of a game; internal close/back/main menu use select."
   },
   "quickEarsPreview": {
-    "scope": "localhost only",
+    "scope": "Static hosting with prepackaged lessons; local launcher also supports live lessons.",
     "lesson": 407,
     "liveAudio": true,
-    "liveTranscript": "Selected lesson via run-local.py, eight lessons cached in process memory",
+    "liveTranscript": "Static deployments load lesson-packs/available.json and one answer/audio-URL pack on selection. Localhost additionally supports the original Python preview.",
+    "packageUpdate": "Update-Dictation-Pack.cmd resumes validated packs and rebuilds the PWA. MP3s remain on the source host. Only the available index is precached.",
     "previousObservedArcadeHash": "a8d17b0cc2e87e85933769453e95b5ad8246047885f6ded664c364ed8a6677cb",
     "catalog": "813 lessons across six topics including 360 IELTS Listening parts",
     "feedback": "Hints appear on submit only. Empty submission reveals the first word; otherwise reveal the first incorrect or missing word, masking all others. Optional full-answer checkbox shows the entire original sentence on unsuccessful submission.",

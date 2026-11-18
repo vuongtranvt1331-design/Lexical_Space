@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const base = new URL('../../', document.currentScript.src);
-  const paths = Object.freeze({ lexical: './', grammar: 'apps/grammar/', arcade: 'apps/arcade/', 'quick-drawn': 'apps/quick-drawn/', 'sky-dominators': 'apps/sky-dominators/', poker: 'apps/poker/', 'vocabulary-test': 'apps/vocabulary-test/' });
+  const paths = Object.freeze({ lexical: './', grammar: 'apps/grammar/', arcade: 'apps/arcade/', 'quick-ears': 'apps/quick-ears/', 'quick-drawn': 'apps/quick-drawn/', 'sky-dominators': 'apps/sky-dominators/', poker: 'apps/poker/', 'vocabulary-test': 'apps/vocabulary-test/' });
   const clean = value => typeof value === 'string' ? value.trim() : '';
   function profile() {
     try { const value = sessionStorage.getItem('ls_active_profile'); if (value !== null) return clean(value); } catch {}

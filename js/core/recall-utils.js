@@ -1,3 +1,4 @@
+import { localFrench } from './study-language.js';
 // Pure helpers shared by the recall UI, library and interaction tests.
 export function normalizeAnswer(value) {
   return String(value || '').normalize('NFKC').trim().toLocaleLowerCase('en')
@@ -5,6 +6,7 @@ export function normalizeAnswer(value) {
 }
 export const matchesTarget = (answer, target) => !!normalizeAnswer(answer) && normalizeAnswer(answer) === normalizeAnswer(target);
 export function matchesRecallAnswer(answer, { word, synonyms = [] }) {
+  if (localFrench) return [word, ...synonyms].some(value => typeof value === 'string' && matchesTarget(answer, value));
   const normalized = answer.trim().toLowerCase();
   return normalized !== '' && [word, ...synonyms].some(value => typeof value === 'string' && value.trim().toLowerCase() === normalized);
 }
@@ -13,6 +15,7 @@ const IRREGULAR = { be: ['am', 'is', 'are', 'was', 'were', 'been', 'being'], giv
   think: ['thought'], bring: ['brought'], buy: ['bought'], teach: ['taught'], write: ['wrote', 'written'], speak: ['spoke', 'spoken'], leave: ['left'],
   begin: ['began', 'begun'], keep: ['kept'], know: ['knew', 'known'], feel: ['felt'], hold: ['held'], child: ['children'], person: ['people'], mouse: ['mice'] };
 function targetForms(word) {
+  if (localFrench) return [word];
   const [first, ...tail] = normalizeAnswer(word).split(' '), forms = new Set([first]);
   if (!/^[a-z]{2,}$/.test(first)) return [word];
   const y = /[^aeiou]y$/.test(first), silentE = /[^e]e$/.test(first), stem = silentE ? first.slice(0, -1) : first;

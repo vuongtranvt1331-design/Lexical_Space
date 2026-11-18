@@ -1,3 +1,4 @@
+import { localFrench, studyLanguage } from '../core/study-language.js';
 import { context } from '../core/context.js';
 import { exampleSourceUrl, validateVocabulary, validateImportTopic, senseKey, newId, wordTopics } from '../core/vocabulary.js';
 import { buildAIPrompt, parseAIBatch } from '../core/ai-vocabulary.js';
@@ -119,6 +120,7 @@ export async function importVocabulary(entries, { overwrite = false, targetTopic
   return { added, updated, skipped };
 }
 export async function quickFillEntry() {
+  if (localFrench) return;
   if (!context.currentUser) return;
   const word = $('input-word').value.trim(), ticket = context.accountGeneration, activeEditor = editor;
   if (!word || word.length > 200) { status('quickfill-status', 'Enter a target word or phrase first.', true); focusEntryWord(); return; }
@@ -264,7 +266,7 @@ function editImportInput(message = '', error = false) {
 }
 function previewImportWord(word) {
   const item = document.createElement('li'), target = document.createElement('h4'), meaning = document.createElement('p');
-  target.lang = 'en'; target.textContent = word.word;
+  target.lang = studyLanguage; target.textContent = word.word;
   meaning.className = 'ai-review-meaning'; meaning.lang = 'vi'; meaning.textContent = word.meaning;
   const details = document.createElement('details'), summary = document.createElement('summary'), list = document.createElement('dl');
   details.className = 'entry-details'; summary.textContent = 'Word details';

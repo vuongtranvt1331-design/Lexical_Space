@@ -1,0 +1,128 @@
+/* ==========================================================================
+   LexicalSpace - Desktop Two-Column Layout & Persistent Sidebar
+   ========================================================================== */
+
+/* Prevent horizontal viewport overflow across root containers */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* ==========================================================================
+   Language Settings: Accessible Two Stacked Rows
+   ========================================================================== */
+
+.language-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  width: 100%;
+}
+
+.language-settings .form-group,
+.language-settings .setting-row,
+.language-settings > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+.language-settings label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 0.125rem;
+}
+
+.language-settings select {
+  display: block;
+  width: 100%;
+  min-height: 2.625rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background-color: var(--surface);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.language-settings select:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* ==========================================================================
+   Desktop Two-Column Layout (Persistent Sidebar)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+  /* Establish main layout context to accommodate persistent desktop sidebar */
+  body {
+    padding-left: 18rem; /* 72 = 18rem matches w-72 drawer */
+    box-sizing: border-box;
+  }
+
+  /* Keep topbar aligned with content area outside the fixed sidebar */
+  .app-topbar {
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+
+  /* Hide the toggle button since navigation is persistent on desktop */
+  #btn-open-drawer {
+    display: none !important;
+  }
+
+  /* Deactivate modal backdrop on desktop */
+  #drawer-backdrop {
+    display: none !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Make navigation drawer persistent, visible, and stationary */
+  #drawer,
+  #side-drawer {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 18rem !important;
+    max-width: 18rem !important;
+    height: 100vh !important;
+    transform: none !important;
+    transition: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 35 !important;
+    overflow-y: auto !important;
+  }
+
+  /* Hide the close button in persistent desktop sidebar */
+  #btn-close-drawer {
+    display: none !important;
+  }
+
+  /* Center main content container comfortably without horizontal overflow */
+  body > main {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+}
+
+body { margin: 0; }
+body > main, .app-topbar { box-sizing: border-box; }

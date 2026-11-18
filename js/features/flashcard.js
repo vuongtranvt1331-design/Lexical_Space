@@ -1,3 +1,4 @@
+import { studyLanguage, studyName } from '../core/study-language.js';
 import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
 import { exampleSourceUrl, newId, normalizeTerm, recallLevelFor } from '../core/vocabulary.js';
@@ -316,7 +317,7 @@ export function renderActiveCard() {
     return;
   }
   card.dataset.recallDirection = reverse ? 'vi-en' : 'en-vi';
-  setText('fc-front-word', reverse ? word.meaning : word.word); $('fc-front-word').lang = reverse ? 'vi' : 'en'; setText('fc-front-topic-badge', word.topic);
+  setText('fc-front-word', reverse ? word.meaning : word.word); $('fc-front-word').lang = reverse ? 'vi' : studyLanguage; setText('fc-front-topic-badge', word.topic);
   setText('fc-word-meta', word.pos || '');
   setText('card-num-front', `${session.queueIndex + 1} / ${session.cardQueue.length}`);
   if (reverse && word.clozeSentence?.includes('[ _____ ]') && !targetSegments(word.clozeSentence, word.word, { inflections: true }).some(part => part.target)) {
@@ -332,7 +333,7 @@ export function renderActiveCard() {
   show('reverse-recall-form', inputVisible);
   $('recall-answer-input').disabled = actionsBlocked(); $('reverse-recall-form').querySelector('button').disabled = actionsBlocked();
   show('fc-answer', item.revealed); $('fc-answer').setAttribute('aria-hidden', String(!item.revealed));
-  setText('fc-answer-label', reverse ? 'English target' : 'Meaning');
+  setText('fc-answer-label', reverse ? `${studyName} target` : 'Meaning');
   show('fc-answer-target', reverse && item.revealed);
   setText('fc-answer-target', reverse && item.revealed ? word.word : '');
   setText('fc-back-meaning', word.meaning); setText('fc-back-sense', word.sense);
@@ -353,7 +354,7 @@ export function renderActiveCard() {
   show('recall-feedback', !!feedback); setText('recall-feedback', feedback);
   $('recall-feedback').dataset.correct = String(item.answerCorrect === true && !item.assisted);
   setText('recall-instruction', item.graded ? 'Continue when you have reviewed the answer.' : reverse ?
-    (item.revealed ? 'Recall feedback' : 'Recall the English word from its meaning and context.') :
+    (item.revealed ? 'Recall feedback' : `Recall the ${studyName} word from its meaning and context.`) :
     (item.revealed ? 'Grade your first recall attempt honestly.' : 'Recall the meaning before flipping.'));
   const flip = $('btn-fc-reveal'), flipLabel = item.revealed ? 'Hide answer (Space)' : 'Flip card (Space)';
   flip.disabled = actionsBlocked() || (reviewingWrongAnswer(item) && !item.graded);

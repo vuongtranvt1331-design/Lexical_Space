@@ -1,3 +1,4 @@
+import { studyStorageKey } from './study-language.js';
 export const DEFAULT_SETTINGS = Object.freeze({
   autoPronounce: true,
   soundEffects: true,
@@ -5,7 +6,7 @@ export const DEFAULT_SETTINGS = Object.freeze({
   dailyNewLimit: null,
   dailyReviewLimit: null
 });
-const key = username => `ls_settings_v2:${encodeURIComponent(username)}`;
+const key = username => studyStorageKey(`ls_settings_v2:${encodeURIComponent(username)}`);
 const limit = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
 
 export function loadSettings(username) {

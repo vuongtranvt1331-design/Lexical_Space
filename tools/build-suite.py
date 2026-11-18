@@ -22,9 +22,9 @@ def write_if_changed(path, text):
 def build():
     versioned = [*list((ROOT / 'suite').rglob('*.js')), *list((ROOT / 'suite').rglob('*.css'))]
     versioned += [ROOT / name for name in (
-        'js/features/loading.js', 'js/features/appearance.js', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
+        'js/features/loading.js', 'js/features/appearance.js', 'js/features/interface-language.js', 'css/lexical-layout.css', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
-        'apps/arcade/js/arcade-2.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
+        'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
         'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
         'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
@@ -70,6 +70,9 @@ def build():
             continue
         if relative in {'service-worker.js', 'suite/release.json', 'docs/suite-baseline.json'} or relative.endswith('/service-worker.js'):
             continue
+        # Sentence data is fetched only when the student opens that lesson.
+        if relative.startswith('apps/quick-ears/lesson-packs/') and path.name != 'available.json':
+            continue
         if path.suffix.lower() in {'.js', '.css', '.html', '.json', '.webmanifest', '.svg'} or relative.startswith('assets/icons/'):
             if path.name.startswith(('test_', 'boss-test')) or path.stat().st_size > 1600000 or path.name in {'package-lock.json', 'package.json'}:
                 continue
@@ -82,7 +85,7 @@ def build():
     release = {'name': 'SpaceSuite', 'lexicalVersion': VERSION,
                'date': datetime.now(timezone(timedelta(hours=7))).date().isoformat(),
                'root': 'LexicalSpace-project',
-               'modules': ['lexical', 'grammar', 'arcade', 'quick-drawn', 'sky-dominators', 'poker', 'vocabulary-test'],
+               'modules': ['lexical', 'grammar', 'arcade', 'quick-drawn', 'sky-dominators', 'poker', 'vocabulary-test', 'quick-ears'],
                'cacheVersion': digest}
     write_if_changed(ROOT / 'suite/release.json', json.dumps(release, indent=2))
     print(json.dumps({'version': VERSION, 'cache': digest, 'coreFiles': len(core),

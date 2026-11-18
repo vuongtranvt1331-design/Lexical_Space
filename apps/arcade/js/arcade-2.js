@@ -109,23 +109,6 @@
       function createHubControls() {
         const carousel = document.querySelector('[data-game-carousel]');
         const tiles = [...document.querySelectorAll('[data-game-tile]')];
-        if (['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
-          const demo = tiles.find(tile => tile.dataset.gameName === 'Dictation Practice');
-          const cover = demo?.querySelector('button.game-cover');
-          if (cover) {
-            const link = document.createElement('a');
-            link.href = '../quick-ears/';
-            link.className = 'game-cover mobile-btn-play';
-            link.dataset.gameLaunch = '';
-            link.dataset.loaderGame = 'quick-ears';
-            link.setAttribute('aria-label', 'Play Dictation Practice local preview');
-            link.append(cover.querySelector('img'));
-            cover.replaceWith(link);
-            demo.classList.remove('is-coming-soon');
-            demo.removeAttribute('tabindex');
-            demo.setAttribute('aria-label', 'Dictation Practice local preview');
-          }
-        }
         carousel.parentElement.querySelector('[data-library-count]').textContent = tiles.length + (tiles.length === 1 ? ' application' : ' applications');
         const previous = document.querySelector('[data-game-previous]');
         const next = document.querySelector('[data-game-next]');

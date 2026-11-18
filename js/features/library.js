@@ -1,3 +1,4 @@
+import { localFrench, studyStorageKey } from '../core/study-language.js';
 import { canSyncProfile, context } from '../core/context.js';
 import { mutateWords, readUserWords, idbPut } from '../core/idb-manager.js';
 import { exampleSourceUrl, recallLevelFor, validateVocabulary, wordTopics } from '../core/vocabulary.js';
@@ -33,7 +34,7 @@ export function resetLibraryForUser() {
 export function loadUserTopics() {
   const user = context.currentUser;
   try {
-    const saved = user ? JSON.parse(localStorage.getItem(`vocab_topics_${user}`) || '[]') : [];
+    const saved = user ? JSON.parse(localStorage.getItem(studyStorageKey(`vocab_topics_${user}`)) || '[]') : [];
     context.userTopics = Array.isArray(saved) ? saved.filter(topic => typeof topic === 'string') : [];
   }
   catch { context.userTopics = []; }
@@ -41,7 +42,7 @@ export function loadUserTopics() {
 }
 export function saveUserTopics() {
   if (!context.currentUser) return;
-  try { localStorage.setItem(`vocab_topics_${context.currentUser}`, JSON.stringify(context.userTopics)); }
+  try { localStorage.setItem(studyStorageKey(`vocab_topics_${context.currentUser}`), JSON.stringify(context.userTopics)); }
   catch { /* Keep the active topics available when browser storage is restricted. */ }
 }
 export function addUserTopic(name) {
@@ -115,7 +116,7 @@ export async function commitVocabularyChanges(changes, metadata = [], user = con
     records.forEach(w => w.deleted ? byId.delete(w.id) : byId.set(w.id, w));
     context.wordsData = [...byId.values()]; updateBadges();
     if (render && !$('view-library')?.classList.contains('hidden')) renderLibrary();
-    context.updateStatusBadge(false, canSyncProfile(user) ? 'Saved locally · sync pending' : 'Guest library · saved on this device');
+    context.updateStatusBadge(false, localFrench ? 'Saved on this device' : canSyncProfile(user) ? 'Saved locally · sync pending' : 'Guest library · saved on this device');
     void context.syncPendingOperations();
     if (!metadata.length) void context.reconcileSession().catch(error => { if (isActiveUser(user, generation)) report(error); });
   } else if (user === context.currentUser) {
@@ -149,7 +150,7 @@ export function renderLibraryTopicUpwardMenu(topics) {
       if (topic !== context.DEFAULT_TOPIC) controls.push(['merge', 'Merge Decks', () => window.openMergeModalForTopic(topic)]);
       controls.push(['clear', 'Clear Topic Words', control => void clearTopicWords(topic, control)]);
       if (topic !== context.DEFAULT_TOPIC) controls.push(['delete', 'Delete Deck', () => window.deleteTopicDirectly(topic)]);
-      controls.push(['share', 'Share Deck', control => context.shareTopic(topic, control)]);
+      if (!localFrench) controls.push(['share', 'Share Deck', control => context.shareTopic(topic, control)]);
       for (const [symbol, label, action] of controls) {
         const control = document.createElement('button');
         control.type = 'button';

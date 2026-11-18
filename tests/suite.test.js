@@ -49,8 +49,8 @@ test('Arcade carousel places playable entries first with matching indices and li
  const dom=new JSDOM(html),tiles=[...dom.window.document.querySelectorAll('[data-game-tile]')];
  assert.deepEqual(tiles.map(t=>t.dataset.gameName),['Word Battles','Grammar Space','Sky Dominators','Wild West Poker','Test','Dictation Practice','Farming Game']);
  assert.deepEqual(tiles.map(t=>Number(t.dataset.gameIndex)),[0,1,2,3,4,5,6]);
- assert.deepEqual(tiles.slice(0,5).map(t=>t.querySelector('[data-game-launch]')?.getAttribute('href')),['../quick-drawn/','../grammar/','../sky-dominators/','../poker/','../vocabulary-test/']);
- assert.ok(tiles.slice(5).every(t=>t.classList.contains('is-coming-soon') && t.querySelector('button:disabled')));
+ assert.deepEqual(tiles.slice(0,6).map(t=>t.querySelector('[data-game-launch]')?.getAttribute('href')),['../quick-drawn/','../grammar/','../sky-dominators/','../poker/','../vocabulary-test/','../quick-ears/']);
+ assert.ok(tiles.slice(6).every(t=>t.classList.contains('is-coming-soon') && t.querySelector('button:disabled')));
  dom.window.close();
 });
 test('offline fetches return the correct child HTML, never the lexical page for another module',async()=>{

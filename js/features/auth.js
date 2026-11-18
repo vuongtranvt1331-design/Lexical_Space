@@ -1,3 +1,4 @@
+import { localFrench } from '../core/study-language.js';
 import { canSyncProfile, context, GUEST_PROFILE } from '../core/context.js';
 import { flushMutationOutbox } from '../core/firebase-sync.js';
 import { icon } from '../core/icons.js';
@@ -47,10 +48,10 @@ function setProfileDropdown(open, { focusAction, restoreFocus = false } = {}) {
 }
 
 function renderProfileMenu(user) {
-  const named = canSyncProfile(user);
+  const named = Boolean(user && user !== GUEST_PROFILE);
   $('current-user-name').textContent = user || 'Signed out';
   $('header-user-avatar').textContent = [...user][0]?.toLocaleUpperCase() || '–';
-  $('connection-dot').hidden = !named;
+  $('connection-dot').hidden = !named || localFrench;
   $('btn-switch-user').hidden = !named;
   $('btn-logout').hidden = !named;
   $('btn-profile-sign-in').hidden = named;
@@ -65,14 +66,15 @@ export function updateProfileLock() {
     $('btn-settings').setAttribute('aria-expanded', 'false');
   }
   const dialogOpen = primaryDialogOpen || settings?.hidden === false;
-  const drawer = $('drawer'), drawerOpen = drawer && !drawer.classList.contains('-translate-x-full');
+  const drawer = $('drawer'), persistent = window.matchMedia?.('(min-width: 1024px)')?.matches;
+  const drawerOpen = !persistent && drawer && !drawer.classList.contains('-translate-x-full');
   const main = document.querySelector('main'), header = document.querySelector('body > header');
   main?.classList.toggle('hidden', !context.currentUser && !dialogOpen);
   if (dialogOpen || drawerOpen) setProfileDropdown(false);
   for (const [element, lock] of [
     [main, dialogOpen || context.profileLoading || drawerOpen || !context.currentUser],
     [header, dialogOpen || drawerOpen],
-    [drawer, dialogOpen || !drawerOpen]
+    [drawer, dialogOpen || (!persistent && !drawerOpen)]
   ]) {
     if (!element) continue;
     element.inert = Boolean(lock);
@@ -219,7 +221,7 @@ export async function activateUser(name) {
     showProfileDialog(true, { focus: false });
     applyUser(user, { forceReset });
     switchView('view-review', { render: false });
-    await migrateLocalStorageToIndexedDB(user);
+    if (!localFrench) await migrateLocalStorageToIndexedDB(user);
     if (!isCurrent()) return false;
     context.loadUserTopics();
     await context.loadIndexedDBWordsData();
@@ -240,7 +242,8 @@ export async function activateUser(name) {
       context.profileLoading = false;
       showProfileDialog(!opened);
       if (opened) {
-        if (user === GUEST_PROFILE) updateStatusBadge(false, 'Guest library · saved on this device');
+        if (localFrench) updateStatusBadge(false, 'Saved on this device');
+        else if (user === GUEST_PROFILE) updateStatusBadge(false, 'Guest library · saved on this device');
         else if (!context.db) updateStatusBadge(false, navigator.onLine ? 'Local library ready' : 'Offline · saved locally');
         context.renderActiveCard();
         void context.showPendingDeck();
@@ -367,7 +370,15 @@ export function setupNavigation({ retryStartup } = {}) {
       focusNavigation();
     }
   }
-  setDrawer(false, { restoreFocus: false });
+  const desktop = window.matchMedia?.('(min-width: 1024px)');
+  function updateDrawerMode() {
+    drawer.setAttribute('role', desktop?.matches ? 'complementary' : 'dialog');
+    if (desktop?.matches) drawer.removeAttribute('aria-modal');
+    else drawer.setAttribute('aria-modal', 'true');
+    setDrawer(false, { restoreFocus: false });
+  }
+  desktop?.addEventListener?.('change', updateDrawerMode);
+  updateDrawerMode();
   trigger.addEventListener('click', () => {
     if (trigger.closest('[inert]')) return;
     context.SoundManager.playSelect();
@@ -380,7 +391,7 @@ export function setupNavigation({ retryStartup } = {}) {
     if (!event.currentTarget.closest('[hidden], [inert]')) settings.open($('practice-daily-limits'));
   });
   drawer.addEventListener('keydown', event => {
-    if (drawer.inert) return;
+    if (drawer.inert || desktop?.matches) return;
     if (event.key === 'Escape') {
       event.preventDefault();
       closeDrawer();
@@ -463,7 +474,7 @@ export function setupNavigation({ retryStartup } = {}) {
     setProfileDropdown(false);
     setDrawer(false, { restoreFocus: false });
     profileDialogCanCancel = true;
-    $('input-username').value = canSyncProfile(context.currentUser) ? context.currentUser : '';
+    $('input-username').value = context.currentUser !== GUEST_PROFILE ? context.currentUser : '';
     context.pausePracticeAudio();
     showProfileDialog(true);
     $('input-username').select();

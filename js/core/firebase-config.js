@@ -1,3 +1,4 @@
+import { localFrench } from './study-language.js';
 const firebaseConfig = {
       apiKey: "AIzaSyCAejXQfHKQ0ZKTpR7kphaDFCGqCcuoRfI",
       authDomain: "home-page-d6c39.firebaseapp.com",
@@ -29,6 +30,7 @@ function loadScript(file) {
 }
 
 export async function openFirebaseServices() {
+  if (localFrench) throw new Error("French study is stored on this device.");
   if (!globalThis.firebase) await loadScript('firebase-app-compat.js');
   if (!globalThis.firebase) throw new Error('Firebase SDK is unavailable.');
   if (typeof globalThis.firebase.firestore !== 'function') await loadScript('firebase-firestore-compat.js');

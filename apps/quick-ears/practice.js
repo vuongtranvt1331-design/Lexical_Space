@@ -2,6 +2,8 @@ const $ = selector => document.querySelector(selector);
 const topic = $('#topic'), lesson = $('#lesson'), player = $('audio'), input = $('#answer'), result = $('#result');
 const panel = $('#panel');
 const names = {'ielts-listening':'IELTS Listening','english-conversations':'English Conversations','short-stories':'Short Stories','toefl-listening':'TOEFL Listening',numbers:'Numbers','spelling-names':'Spelling Names'};
+const localPreview = ['localhost','127.0.0.1','[::1]'].includes(location.hostname);
+let packedLessons = new Set();
 let catalog = [], parts = [], records = [], index = 0, ticket = 0, scene = 'menu';
 let volume = 50;
 let fullAnswer = false;
@@ -84,8 +86,12 @@ async function loadLesson() {
   $('#retry').hidden=true; $('#start').disabled=true;
   $('#status').textContent='Loading lesson…';
   try {
-    let res=await fetch('./api/lesson/'+encodeURIComponent(slug),{cache:'no-store'});
-    if(res.status===502 && id===ticket) res=await fetch('./api/lesson/'+encodeURIComponent(slug),{cache:'no-store'});
+    const name = encodeURIComponent(slug);
+    const packed = packedLessons.has(slug);
+    let res = await fetch(packed ? './lesson-packs/' + name + '.json' : './api/lesson/' + name);
+    if (!res.ok && localPreview && (packed || res.status === 502) && id === ticket) {
+      res = await fetch('./api/lesson/' + name, {cache:'no-store'});
+    }
     if(!res.ok) throw Error();
     const rows=await res.json();
     if(!Array.isArray(rows)||!rows.length) throw Error();
@@ -101,7 +107,7 @@ async function loadLesson() {
   } catch {
     if(id!==ticket || slug!==lesson.value) return;
     $('#status').textContent='Couldn’t load the lesson. Check your connection or choose another lesson.';
-    if(location.port==='8000') {
+    if(localPreview && location.port==='8000') {
       const link=document.createElement('a'), url=new URL(location.href);
       url.port='8011';url.searchParams.set('lesson',slug);
       link.href=url.href;link.textContent='Open in the local app';$('#status').append(' ',link);
@@ -254,10 +260,21 @@ $('#restart').onclick=()=>{
 };
 player.onerror=()=>{if(scene==='exercise'&&player.getAttribute('src'))$('#status').textContent='Audio unavailable. Skip this sentence or open the original lesson.';};
 async function init(){
-  if(!['localhost','127.0.0.1','[::1]'].includes(location.hostname)){$('#status').textContent='Listening practice is only available on localhost.';return;}
   try{
-    const res=await fetch('./lessons.json');if(!res.ok)throw Error();catalog=await res.json();
-    options(topic,Object.entries(names));topic.disabled=false;
+    const res = await fetch('./lessons.json');
+    if (!res.ok) throw Error();
+    catalog = await res.json();
+    try {
+      const available = await fetch('./lesson-packs/available.json');
+      if (!available.ok) throw Error();
+      packedLessons = new Set(await available.json());
+    } catch (error) {
+      if (!localPreview) throw error;
+    }
+    if (!localPreview) catalog = catalog.filter(item => packedLessons.has(item.slug));
+    if (!catalog.length) throw Error();
+    options(topic,Object.entries(names).filter(([key]) => catalog.some(item => item.topic === key)));
+    topic.disabled=false;
     const requested=catalog.find(x=>x.slug===new URLSearchParams(location.search).get('lesson'));
     if(requested)topic.value=requested.topic;
     populate();

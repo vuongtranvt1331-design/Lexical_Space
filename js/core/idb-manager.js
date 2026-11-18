@@ -1,6 +1,7 @@
+import { localFrench } from './study-language.js';
 import { canSyncProfile } from './context.js';
 import { normalizeRemoteVocabulary, withoutLegacyLevel, compareVersions, newId } from './vocabulary.js';
-export const DB_NAME = 'LexicalSpaceDB', DB_VERSION = 3;
+export const DB_NAME = localFrench ? 'LexicalSpaceFrenchDB' : 'LexicalSpaceDB', DB_VERSION = 3;
 let connection, upgradeBlocked = false;
 const blockedListeners = new Set();
 const owned = value => typeof value === 'string' && value.trim() !== '';
