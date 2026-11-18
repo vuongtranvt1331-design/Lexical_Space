@@ -110,7 +110,7 @@
         const carousel = document.querySelector('[data-game-carousel]');
         const tiles = [...document.querySelectorAll('[data-game-tile]')];
         if (['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
-          const demo = tiles.find(tile => tile.dataset.gameName === 'Quick Ears');
+          const demo = tiles.find(tile => tile.dataset.gameName === 'Dictation Practice');
           const cover = demo?.querySelector('button.game-cover');
           if (cover) {
             const link = document.createElement('a');
@@ -118,12 +118,12 @@
             link.className = 'game-cover mobile-btn-play';
             link.dataset.gameLaunch = '';
             link.dataset.loaderGame = 'quick-ears';
-            link.setAttribute('aria-label', 'Play Quick Ears local preview');
+            link.setAttribute('aria-label', 'Play Dictation Practice local preview');
             link.append(cover.querySelector('img'));
             cover.replaceWith(link);
             demo.classList.remove('is-coming-soon');
             demo.removeAttribute('tabindex');
-            demo.setAttribute('aria-label', 'Quick Ears local preview');
+            demo.setAttribute('aria-label', 'Dictation Practice local preview');
           }
         }
         carousel.parentElement.querySelector('[data-library-count]').textContent = tiles.length + (tiles.length === 1 ? ' application' : ' applications');
@@ -279,6 +279,7 @@
           unavailableSound.currentTime = 0;
           unavailableSound.play().catch(() => {});
         }
+
         volumeSlider.addEventListener('input', () => {
           audio.volume = Number(volumeSlider.value) / 100;
           renderSound();
@@ -298,24 +299,32 @@
           if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close();
         });
         play.addEventListener('click', launchSelected);
-        tiles.forEach((tile, index) => {
+        tiles.forEach((tile) => {
           tile.addEventListener('click', event => {
-            if (index !== selected) {
+            const curIndex = tiles.indexOf(tile);
+            if (curIndex !== selected) {
               event.preventDefault();
               event.stopPropagation();
               const unavailable = !tile.querySelector('[data-game-launch]');
-              select(index, {sound:!unavailable, onSettled:unavailable ? launchSelected : undefined});
+              select(curIndex, {sound:!unavailable, onSettled:unavailable ? launchSelected : undefined});
             } else if (!tile.querySelector('[data-game-launch]')) launchSelected();
           }, true);
           const link = tile.querySelector('[data-game-launch]');
           link?.addEventListener('click', event => {
-            select(index);
-            if (index === selected) triggerTileLift(tile);
+            const curIndex = tiles.indexOf(tile);
+            select(curIndex);
+            if (curIndex === selected) triggerTileLift(tile);
             if (!ready) event.preventDefault();
           });
         });
-        previous?.addEventListener('click', () => { if (!dialog.open) select(selected - 1, {sound: true, arrow:true}); });
-        next?.addEventListener('click', () => { if (!dialog.open) select(selected + 1, {sound: true, arrow:true}); });
+        previous?.addEventListener('click', () => {
+          if (dialog.open) return;
+          select(selected - 1, {sound: true, arrow:true});
+        });
+        next?.addEventListener('click', () => {
+          if (dialog.open) return;
+          select(selected + 1, {sound: true, arrow:true});
+        });
         function refreshLayout() { layoutCenter = undefined; paint(position); }
         refreshLayout();
         new ResizeObserver(refreshLayout).observe(carousel);
@@ -366,7 +375,7 @@
           if (Math.abs(wheelDistance) >= 80) { select(selected + Math.sign(delta), {sound:true}); wheelDistance = 0; }
         }, {passive:false});
         carousel.addEventListener('click', event => {
-          if (event.detail && (frame || performance.now() < suppressClickUntil)) {
+          if ((event.detail && (frame || performance.now() < suppressClickUntil))) {
             event.preventDefault();
             event.stopPropagation();
           }
@@ -475,36 +484,43 @@
           const controller = new AbortController();
           pendingLaunch = controller;
           const options = {once:true, signal:controller.signal};
-          let timer;
-          function finish() {
-            if (controller.signal.aborted) return;
-            location.assign(button.href);
-          }
-          let loader;
-          function cancel() {
-            controller.abort();
-            loader?.remove();
-            clearTimeout(timer);
-            launchSound.pause();
-            pendingLaunch = null;
-          }
-          window.addEventListener('pagehide', cancel, options);
+          const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
 
-          if (!audio.muted && audio.volume && !launchSound.error) {
-            launchSound.addEventListener('ended', finish, options);
-            launchSound.addEventListener('error', finish, options);
-            timer = setTimeout(finish, 1800);
-            launchSound.addEventListener('playing', () => {
-              clearTimeout(timer);
-              const duration = Number.isFinite(launchSound.duration) ? launchSound.duration : 10;
-              timer = setTimeout(finish, duration * 1000 + 1500);
-            }, options);
-            launchSound.currentTime = 0;
-            launchSound.play().catch(finish);
+          let audioDone = false;
+          let cueDone = false;
+          let cueTimer = null;
+          let audioTimer = null;
+          let loader = null;
+
+          function navigate() {
+            if (controller.signal.aborted) return;
+            if (cueDone && audioDone) {
+              location.assign(button.href);
+            }
           }
 
-          const showLoader = () => {
-            if (controller.signal.aborted) return;
+          function finishAudio() {
+            if (audioDone) return;
+            audioDone = true;
+            if (audioTimer) {
+              clearTimeout(audioTimer);
+              audioTimer = null;
+            }
+            navigate();
+          }
+
+          function finishCue() {
+            if (cueDone) return;
+            cueDone = true;
+            if (cueTimer) {
+              clearTimeout(cueTimer);
+              cueTimer = null;
+            }
+            navigate();
+          }
+
+          function ensureLoader() {
+            if (loader || controller.signal.aborted) return;
             loader = document.createElement('section');
             loader.className = 'game-logo-loader';
             loader.dataset.gameLogoLoader = button.dataset.loaderGame;
@@ -514,15 +530,45 @@
             logo.alt = 'Loading ' + button.closest('[data-game-tile]').dataset.gameName;
             loader.append(logo);
             document.body.append(loader);
-            if (audio.muted || !audio.volume || launchSound.error) {
-              finish();
-            }
-          };
+          }
 
-          if (reduceMotion.matches) {
-            showLoader();
+          function cancel() {
+            controller.abort();
+            loader?.remove();
+            if (cueTimer) {
+              clearTimeout(cueTimer);
+              cueTimer = null;
+            }
+            if (audioTimer) {
+              clearTimeout(audioTimer);
+              audioTimer = null;
+            }
+            launchSound.pause();
+            pendingLaunch = null;
+          }
+          window.addEventListener('pagehide', cancel, options);
+
+          const soundPlayable = !audio.muted && !!audio.volume && !launchSound.error;
+          if (soundPlayable) {
+            launchSound.addEventListener('ended', finishAudio, options);
+            launchSound.addEventListener('error', finishAudio, options);
+            audioTimer = setTimeout(finishAudio, 1800);
+            launchSound.addEventListener('playing', () => {
+              if (audioTimer) clearTimeout(audioTimer);
+              const duration = Number.isFinite(launchSound.duration) ? launchSound.duration : 10;
+              audioTimer = setTimeout(finishAudio, duration * 1000 + 1500);
+            }, options);
+            launchSound.currentTime = 0;
+            launchSound.play().catch(finishAudio);
           } else {
-            setTimeout(showLoader, 500);
+            audioDone = true;
+          }
+
+          ensureLoader();
+          if (reduceMotion) {
+            finishCue();
+          } else {
+            cueTimer = setTimeout(finishCue, 500);
           }
         }
         document.querySelectorAll('.mobile-btn-play').forEach(button => {

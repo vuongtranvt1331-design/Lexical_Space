@@ -344,10 +344,11 @@ function getNormalizedTopic(group) {
   return (group || 'Khác').replace(/^Group\s*\d+\s*:\s*/i, '').trim() || 'Khác';
 }
 
-function createTopicOverviewCard(entries, now = Date.now()) {
-  if (!entries || !entries.length) return null;
+function getCleanLessonTitle(rawTitle) {
+  return (rawTitle || '').replace(/^\s*\d+[\.\:\-]?\s*/, '').trim();
+}
 
-  // Extract topics in curriculum progression order
+function getGroupedTopicStats(entries, now = Date.now()) {
   const topicMap = new Map();
   entries.forEach(lesson => {
     const rawGroup = lesson.group || 'Khác';
@@ -362,10 +363,29 @@ function createTopicOverviewCard(entries, now = Date.now()) {
     topicMap.get(cleanGroup).lessons.push(lesson);
   });
 
+  // Ensure "Từ loại" comes first
+  const groupOrder = ['Từ loại', 'Mạo từ & Giới từ', 'Các thì', 'Động từ khuyết thiếu', 'Bị động', 'Dạng động từ', 'Mệnh đề', 'Nâng cao'];
+  const topicList = Array.from(topicMap.values()).sort((a, b) => {
+    const idxA = groupOrder.indexOf(a.name);
+    const idxB = groupOrder.indexOf(b.name);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return a.name.localeCompare(b.name, 'vi', { numeric: true, sensitivity: 'base' });
+  });
+
   let totalLessonsCount = 0;
   let totalScoreSum = 0;
 
-  const topicStats = Array.from(topicMap.values()).map(topic => {
+  const topicStats = topicList.map(topic => {
+    // Sort lessons within topic by global id / original title sequence
+    topic.lessons.sort((a, b) => {
+      const numA = parseInt(a.id, 10);
+      const numB = parseInt(b.id, 10);
+      if (!isNaN(numA) && !isNaN(numB)) return numA - numB;
+      return (a.title || '').localeCompare(b.title || '', undefined, { numeric: true, sensitivity: 'base' });
+    });
+
     let topicScoreSum = 0;
     topic.lessons.forEach(l => {
       const status = ProgressManager.getLessonStatus(l.id, now);
@@ -381,7 +401,8 @@ function createTopicOverviewCard(entries, now = Date.now()) {
       count: topic.lessons.length,
       percent: topicPercent,
       color: getProgressColor(topicPercent),
-      colorClass: getProgressColorClass(topicPercent)
+      colorClass: getProgressColorClass(topicPercent),
+      lessons: topic.lessons
     };
   });
 
@@ -389,27 +410,37 @@ function createTopicOverviewCard(entries, now = Date.now()) {
   const overallColor = getProgressColor(overallPercent);
   const overallColorClass = getProgressColorClass(overallPercent);
 
+  return { topicStats, totalLessonsCount, overallPercent, overallColor, overallColorClass };
+}
+
+function createTopicOverviewCard(topicData, entries, now = Date.now()) {
+  const { topicStats, totalLessonsCount, overallPercent, overallColor, overallColorClass } = topicData;
+
   const card = document.createElement('li');
   card.className = 'lesson-card topic-overview-card';
   card.setAttribute('aria-label', `Tổng quan tiến độ ${topicStats.length} chủ đề: ${overallPercent}% hoàn thành`);
 
   // Top row: Badge + Total percentage
   const top = document.createElement('div');
-  top.className = 'lesson-card-top';
+  top.className = 'lesson-card-top overview-top-row';
 
   const badge = document.createElement('span');
   badge.className = 'lesson-group-badge overview-badge';
   badge.textContent = '📊 Tiến độ chủ đề';
 
+  const summaryCount = document.createElement('span');
+  summaryCount.className = 'overview-mobile-count';
+  summaryCount.textContent = `${topicStats.length} chủ đề · ${totalLessonsCount} bài học`;
+
   const overallIndicator = document.createElement('div');
   overallIndicator.className = 'overview-total-badge';
   overallIndicator.innerHTML = `<span class="overview-total-label">Tổng:</span> <strong class="overview-total-num ${overallColorClass}" style="color: ${overallColor};">${overallPercent}%</strong>`;
 
-  top.append(badge, overallIndicator);
+  top.append(badge, summaryCount, overallIndicator);
 
   // Title row
   const titleRow = document.createElement('div');
-  titleRow.className = 'lesson-title-row';
+  titleRow.className = 'lesson-title-row overview-title-row';
   const heading = document.createElement('h2');
   heading.className = 'lesson-title overview-title';
   heading.textContent = 'Tỉ lệ hoàn thành Chủ đề';
@@ -418,30 +449,34 @@ function createTopicOverviewCard(entries, now = Date.now()) {
   sub.textContent = `${topicStats.length} chủ đề · ${totalLessonsCount} bài học`;
   titleRow.append(heading, sub);
 
-  // Topics Grid
+  // Topics Grid (2x4 on phone, multi-column on desktop)
   const topicsGrid = document.createElement('div');
   topicsGrid.className = 'overview-topics-grid';
 
   topicStats.forEach(t => {
     const item = document.createElement('button');
     item.type = 'button';
-    item.setAttribute('aria-controls', 'topic-lessons');
     item.className = 'topic-stat-item' + (selectedTopic === t.name ? ' is-active' : '');
     item.setAttribute('aria-expanded', String(selectedTopic === t.name));
     item.setAttribute('title', `${t.name}: ${t.percent}% (${t.count} bài) · Nhấp để xem bài học`);
     item.setAttribute('aria-label', `${t.name}: ${t.percent}%`);
+    item.dataset.topicName = t.name;
 
     item.addEventListener('click', (e) => {
       e.stopPropagation();
-      selectedTopic = (selectedTopic === t.name) ? null : t.name;
-      const buttons = topicsGrid.querySelectorAll('.topic-stat-item');
-      buttons.forEach(btn => {
-        const isActive = (btn === item) && (selectedTopic === t.name);
-        btn.setAttribute('aria-expanded', String(isActive));
-        btn.classList.toggle('is-active', isActive);
-      });
-      appendLessonCards(byId('topic-lessons'), entries, now);
-
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      if (isMobile) {
+        selectedTopic = t.name;
+        renderLibrary();
+        document.querySelector('.mobile-back-btn')?.focus({ preventScroll: true });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      } else {
+        // Desktop smooth scroll to the grouped section
+        const targetSection = document.getElementById(`topic-section-${encodeURIComponent(t.name)}`);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
     });
 
     const header = document.createElement('div');
@@ -475,8 +510,206 @@ function createTopicOverviewCard(entries, now = Date.now()) {
     topicsGrid.append(item);
   });
 
-  card.append(top, titleRow, topicsGrid);
+  // Mobile footer Arcade Hub link below all topics
+  const mobileFooterExit = document.createElement('div');
+  mobileFooterExit.className = 'mobile-topic-footer-exit';
+  const hubLink = document.createElement('a');
+  hubLink.href = '../arcade/';
+  hubLink.setAttribute('data-suite-return', '');
+  hubLink.setAttribute('target', '_self');
+  hubLink.setAttribute('rel', 'noopener noreferrer');
+  hubLink.className = 'lexical-space-link mobile-hub-link';
+  hubLink.title = 'Quay lại Arcade Hub';
+  hubLink.innerHTML = '<span class="portal-arrow" aria-hidden="true"></span><span class="sub-brand-text">Arcade Hub</span>';
+  mobileFooterExit.append(hubLink);
+
+  card.append(top, titleRow, topicsGrid, mobileFooterExit);
   return card;
+}
+
+function createDualProgressBar(status) {
+  const practicePercent = status && typeof status.practiceScore === 'number'
+    ? Math.max(0, Math.min(100, Math.round(status.practiceScore)))
+    : (status ? Math.max(0, Math.min(100, Math.round(status.displayedScore))) : 0);
+  const applyPercent = status && typeof status.applyScore === 'number'
+    ? Math.max(0, Math.min(100, Math.round(status.applyScore)))
+    : 0;
+
+  const practiceColor = getProgressColor(practicePercent);
+  const practiceColorClass = getProgressColorClass(practicePercent);
+  const applyColor = getApplyProgressColor(applyPercent);
+  const applyColorClass = getApplyProgressColorClass(applyPercent);
+
+  const progressContainer = document.createElement('div');
+  progressContainer.className = 'card-progress-container dual-progress';
+  if (status) progressContainer.title = status.statusText;
+  progressContainer.setAttribute('aria-label', `Tiến độ Practice: ${practicePercent}%, Apply: ${applyPercent}%`);
+
+  // Practice Row
+  const practiceRow = document.createElement('div');
+  practiceRow.className = 'tier-progress-row';
+  const practiceInfo = document.createElement('div');
+  practiceInfo.className = 'tier-progress-info';
+  practiceInfo.innerHTML = `<span class="tier-progress-label">Practice:</span> <span class="tier-progress-percent ${practiceColorClass}" style="color: ${practiceColor};">${practicePercent}%</span>`;
+  const practiceTrack = document.createElement('div');
+  practiceTrack.className = 'card-progress-track practice-track';
+  practiceTrack.setAttribute('role', 'progressbar');
+  practiceTrack.setAttribute('aria-valuenow', practicePercent);
+  practiceTrack.setAttribute('aria-valuemin', '0');
+  practiceTrack.setAttribute('aria-valuemax', '100');
+  const practiceFill = document.createElement('div');
+  practiceFill.className = `card-progress-fill practice-fill ${practiceColorClass}`;
+  practiceFill.style.width = `${practicePercent}%`;
+  practiceFill.style.backgroundColor = practiceColor;
+  practiceTrack.append(practiceFill);
+  practiceRow.append(practiceInfo, practiceTrack);
+
+  // Apply Row
+  const applyRow = document.createElement('div');
+  applyRow.className = 'tier-progress-row';
+  const applyInfo = document.createElement('div');
+  applyInfo.className = 'tier-progress-info';
+  applyInfo.innerHTML = `<span class="tier-progress-label tier-apply-label">Apply (Nâng cao):</span> <span class="tier-progress-percent ${applyColorClass}" style="color: ${applyColor};">${applyPercent}%</span>`;
+  const applyTrack = document.createElement('div');
+  applyTrack.className = 'card-progress-track apply-track';
+  applyTrack.setAttribute('role', 'progressbar');
+  applyTrack.setAttribute('aria-valuenow', applyPercent);
+  applyTrack.setAttribute('aria-valuemin', '0');
+  applyTrack.setAttribute('aria-valuemax', '100');
+  const applyFill = document.createElement('div');
+  applyFill.className = `card-progress-fill apply-fill ${applyColorClass}`;
+  applyFill.style.width = `${applyPercent}%`;
+  applyFill.style.backgroundColor = applyColor;
+  applyTrack.append(applyFill);
+  applyRow.append(applyInfo, applyTrack);
+
+  progressContainer.append(practiceRow, applyRow);
+  return progressContainer;
+}
+
+function createDesktopLessonCard(lesson, localIndex, now = Date.now()) {
+  const item = document.createElement('li');
+  item.className = 'lesson-card card-item';
+  item.dataset.lessonId = lesson.id;
+  const cleanTopic = getNormalizedTopic(lesson.group);
+  if (cleanTopic) item.dataset.topic = cleanTopic;
+
+  item.addEventListener('click', () => {
+    openLesson(lesson.id);
+  });
+
+  const top = document.createElement('div');
+  top.className = 'lesson-card-top';
+
+  const badgeInfo = getGroupBadgeInfo(lesson.group);
+  if (badgeInfo) {
+    const badge = document.createElement('span');
+    badge.className = 'lesson-group-badge ' + badgeInfo.className;
+    badge.textContent = badgeInfo.text;
+    if (badgeInfo.dynamicStyle) {
+      badge.style.backgroundColor = badgeInfo.dynamicStyle.backgroundColor;
+      badge.style.color = badgeInfo.dynamicStyle.color;
+    }
+    top.append(badge);
+  }
+
+  const status = ProgressManager.getLessonStatus(lesson.id, now);
+
+  const cleanTitle = getCleanLessonTitle(lesson.title);
+  const formattedNumber = String(localIndex).padStart(2, '0');
+  const titleRow = document.createElement('div');
+  titleRow.className = 'lesson-title-row';
+  const heading = document.createElement('h2');
+  heading.className = 'lesson-title';
+  heading.textContent = `${formattedNumber}. ${cleanTitle}`;
+  titleRow.append(heading);
+
+  const progressContainer = createDualProgressBar(status);
+
+  if (top.hasChildNodes()) {
+    item.append(top);
+  }
+  item.append(titleRow, progressContainer);
+  return item;
+}
+
+function createDedicatedNumberedItem(lesson, localIndex, now = Date.now()) {
+  const item = document.createElement('li');
+  item.className = 'topic-numbered-item';
+  item.dataset.lessonId = lesson.id;
+
+  item.addEventListener('click', () => {
+    openLesson(lesson.id);
+  });
+
+  const numBadge = document.createElement('div');
+  numBadge.className = 'topic-item-num';
+  numBadge.textContent = String(localIndex).padStart(2, '0');
+
+  const body = document.createElement('div');
+  body.className = 'topic-item-body';
+
+  const titleRow = document.createElement('div');
+  titleRow.className = 'topic-item-title-row';
+
+  const heading = document.createElement('h2');
+  heading.className = 'topic-item-title';
+  heading.textContent = getCleanLessonTitle(lesson.title);
+  titleRow.append(heading);
+
+  const status = ProgressManager.getLessonStatus(lesson.id, now);
+  const progressContainer = createDualProgressBar(status);
+
+  body.append(titleRow, progressContainer);
+  item.append(numBadge, body);
+  return item;
+}
+
+function renderDedicatedTopicView(container, activeTopic, topicStats, entries, now = Date.now()) {
+  const targetStat = topicStats.find(t => t.name === activeTopic);
+  const targetLessons = targetStat ? targetStat.lessons : [];
+
+  const wrapper = document.createElement('li');
+  wrapper.className = 'mobile-topic-detail-view';
+
+  // Navigation: Back button + Topic heading info
+  const nav = document.createElement('div');
+  nav.className = 'mobile-topic-nav';
+
+  const backBtn = document.createElement('button');
+  backBtn.type = 'button';
+  backBtn.className = 'mobile-back-btn';
+  backBtn.setAttribute('aria-label', 'Quay lại danh sách chủ đề');
+  backBtn.innerHTML = '← Quay lại';
+  backBtn.addEventListener('click', () => {
+    selectedTopic = null;
+    renderLibrary();
+    Array.from(document.querySelectorAll('.topic-stat-item')).find(button => button.dataset.topicName === activeTopic)?.focus({ preventScroll: true });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  });
+
+  const topicHeaderInfo = document.createElement('div');
+  topicHeaderInfo.className = 'mobile-topic-header-info';
+  const topicTitle = document.createElement('h2');
+  topicTitle.className = 'mobile-topic-title';
+  topicTitle.textContent = activeTopic;
+  const countBadge = document.createElement('span');
+  countBadge.className = 'mobile-topic-count';
+  countBadge.textContent = `${targetLessons.length} bài`;
+  topicHeaderInfo.append(topicTitle, countBadge);
+
+  nav.append(backBtn, topicHeaderInfo);
+
+  // Numbered list
+  const list = document.createElement('ul');
+  list.className = 'topic-numbered-list';
+
+  targetLessons.forEach((lesson, index) => {
+    list.append(createDedicatedNumberedItem(lesson, index + 1, now));
+  });
+
+  wrapper.append(nav, list);
+  container.append(wrapper);
 }
 
 function renderLessonCards(listId, entries, now = Date.now()) {
@@ -484,135 +717,60 @@ function renderLessonCards(listId, entries, now = Date.now()) {
   if (!list) return;
   list.replaceChildren();
 
-  // 1. Topic Overview Card as the VERY FIRST card
+  const topicData = getGroupedTopicStats(entries, now);
+  const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+  // On mobile with a topic selected: show dedicated numbered list with back button
+  if (isMobile && selectedTopic) {
+    renderDedicatedTopicView(list, selectedTopic, topicData.topicStats, entries, now);
+    return;
+  }
+
+  // Topic Overview Card
   if (entries.length > 0) {
-    const overviewCard = createTopicOverviewCard(entries, now);
+    const overviewCard = createTopicOverviewCard(topicData, entries, now);
     if (overviewCard) {
       list.append(overviewCard);
     }
   }
 
-  appendLessonCards(byId('topic-lessons'), entries, now);
-  }
+  // Render all lessons grouped by topic below overview
+  topicData.topicStats.forEach(topic => {
+    const groupSection = document.createElement('li');
+    groupSection.className = 'topic-group-section';
+    groupSection.id = `topic-section-${encodeURIComponent(topic.name)}`;
 
-  function appendLessonCards(list, entries, now = Date.now()) {
-    if (!list) return;
-    list.replaceChildren();
-    list.hidden = !selectedTopic;
-    list.scrollTop = 0;
-    if (!selectedTopic) return;
+    const header = document.createElement('div');
+    header.className = 'topic-group-header';
 
-  const targetEntries = selectedTopic
-    ? entries.filter(l => getNormalizedTopic(l.group) === selectedTopic)
-    : [];
+    const titleWrap = document.createElement('div');
+    titleWrap.className = 'topic-group-title-wrap';
 
-  // Strict numerical and alphabetical sorting by lesson title / lesson number (01, 02, 03 ... 40)
-  const sorted = [...targetEntries].sort((a, b) => {
-    return (a.title || '').localeCompare(b.title || '', undefined, { numeric: true, sensitivity: 'base' });
-  });
+    const title = document.createElement('h2');
+    title.className = 'topic-group-title';
+    title.textContent = topic.name;
 
-  sorted.forEach(lesson => {
-    const item = document.createElement('li');
-    item.className = 'lesson-card card-item';
-    item.dataset.lessonId = lesson.id;
-    const cleanTopic = getNormalizedTopic(lesson.group);
-    if (cleanTopic) item.dataset.topic = cleanTopic;
+    const count = document.createElement('span');
+    count.className = 'topic-group-count';
+    count.textContent = `${topic.count} bài học`;
+    titleWrap.append(title, count);
 
-    // Card-level click interaction: binds to the entire card container
-    item.addEventListener('click', () => {
-      openLesson(lesson.id);
+    const percent = document.createElement('span');
+    percent.className = `topic-group-percent ${topic.colorClass}`;
+    percent.style.color = topic.color;
+    percent.textContent = `${topic.percent}%`;
+
+    header.append(titleWrap, percent);
+
+    const grid = document.createElement('ul');
+    grid.className = 'topic-group-grid';
+
+    topic.lessons.forEach((lesson, index) => {
+      grid.append(createDesktopLessonCard(lesson, index + 1, now));
     });
 
-    const top = document.createElement('div');
-    top.className = 'lesson-card-top';
-
-    // 1. Group Hashtag badge
-    const badgeInfo = getGroupBadgeInfo(lesson.group);
-    if (badgeInfo) {
-      const badge = document.createElement('span');
-      badge.className = 'lesson-group-badge ' + badgeInfo.className;
-      badge.textContent = badgeInfo.text;
-      if (badgeInfo.dynamicStyle) {
-        badge.style.backgroundColor = badgeInfo.dynamicStyle.backgroundColor;
-        badge.style.color = badgeInfo.dynamicStyle.color;
-      }
-      top.append(badge);
-    }
-
-    // Progress status calculation (used exclusively by the bottom progress bar)
-    const status = ProgressManager.getLessonStatus(lesson.id, now);
-
-    // 3. Lesson Title
-    const titleRow = document.createElement('div');
-    titleRow.className = 'lesson-title-row';
-    const heading = document.createElement('h2');
-    heading.className = 'lesson-title';
-    heading.textContent = lesson.title;
-    titleRow.append(heading);
-
-    // 4. Dual Lesson Progress Bars (Practice & Apply)
-    const practicePercent = status && typeof status.practiceScore === 'number'
-      ? Math.max(0, Math.min(100, Math.round(status.practiceScore)))
-      : (status ? Math.max(0, Math.min(100, Math.round(status.displayedScore))) : 0);
-    const applyPercent = status && typeof status.applyScore === 'number'
-      ? Math.max(0, Math.min(100, Math.round(status.applyScore)))
-      : 0;
-
-    const practiceColor = getProgressColor(practicePercent);
-    const practiceColorClass = getProgressColorClass(practicePercent);
-    const applyColor = getApplyProgressColor(applyPercent);
-    const applyColorClass = getApplyProgressColorClass(applyPercent);
-
-    const progressContainer = document.createElement('div');
-    progressContainer.className = 'card-progress-container dual-progress';
-    if (status) progressContainer.title = status.statusText;
-    progressContainer.setAttribute('aria-label', `Tiến độ Practice: ${practicePercent}%, Apply: ${applyPercent}%`);
-
-    // Practice Row
-    const practiceRow = document.createElement('div');
-    practiceRow.className = 'tier-progress-row';
-    const practiceInfo = document.createElement('div');
-    practiceInfo.className = 'tier-progress-info';
-    practiceInfo.innerHTML = `<span class="tier-progress-label">Practice:</span> <span class="tier-progress-percent ${practiceColorClass}" style="color: ${practiceColor};">${practicePercent}%</span>`;
-    const practiceTrack = document.createElement('div');
-    practiceTrack.className = 'card-progress-track practice-track';
-    practiceTrack.setAttribute('role', 'progressbar');
-    practiceTrack.setAttribute('aria-valuenow', practicePercent);
-    practiceTrack.setAttribute('aria-valuemin', '0');
-    practiceTrack.setAttribute('aria-valuemax', '100');
-    const practiceFill = document.createElement('div');
-    practiceFill.className = `card-progress-fill practice-fill ${practiceColorClass}`;
-    practiceFill.style.width = `${practicePercent}%`;
-    practiceFill.style.backgroundColor = practiceColor;
-    practiceTrack.append(practiceFill);
-    practiceRow.append(practiceInfo, practiceTrack);
-
-    // Apply Row
-    const applyRow = document.createElement('div');
-    applyRow.className = 'tier-progress-row';
-    const applyInfo = document.createElement('div');
-    applyInfo.className = 'tier-progress-info';
-    applyInfo.innerHTML = `<span class="tier-progress-label tier-apply-label">Apply (Nâng cao):</span> <span class="tier-progress-percent ${applyColorClass}" style="color: ${applyColor};">${applyPercent}%</span>`;
-    const applyTrack = document.createElement('div');
-    applyTrack.className = 'card-progress-track apply-track';
-    applyTrack.setAttribute('role', 'progressbar');
-    applyTrack.setAttribute('aria-valuenow', applyPercent);
-    applyTrack.setAttribute('aria-valuemin', '0');
-    applyTrack.setAttribute('aria-valuemax', '100');
-    const applyFill = document.createElement('div');
-    applyFill.className = `card-progress-fill apply-fill ${applyColorClass}`;
-    applyFill.style.width = `${applyPercent}%`;
-    applyFill.style.backgroundColor = applyColor;
-    applyTrack.append(applyFill);
-    applyRow.append(applyInfo, applyTrack);
-
-    progressContainer.append(practiceRow, applyRow);
-
-    if (top.hasChildNodes()) {
-      item.append(top);
-    }
-    item.append(titleRow, progressContainer);
-    list.append(item);
+    groupSection.append(header, grid);
+    list.append(groupSection);
   });
 }
 
@@ -713,6 +871,13 @@ const { renderLesson, syncBookHeight, updateLessonProgress, finishPageTurn } = n
 refreshLibrary();
 const startupCatalog = loadGeneralCatalog();
 showView('library', { focus: false });
+
+// Keep view in sync across resize
+window.matchMedia('(max-width: 767px)').addEventListener('change', () => {
+  if (currentView === 'library') {
+    renderLibrary();
+  }
+});
 
 // The common loader waits for the lesson list, including the existing error view.
 startupCatalog.then(() => window.SpaceSuite?.ready(), () => window.SpaceSuite?.ready());

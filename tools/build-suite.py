@@ -11,7 +11,7 @@ VERSION = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))['versi
 # Reuse the same approved Hub logo bytes across game loading screens. They are
 # cached on first view, not downloaded as part of the installation precache.
 SHARED_LOGOS = ['./apps/arcade/assets/logo/' + name + '_logo.png' for name in
-                ('sky_dominators', 'word_battles', 'wild_west_poker')]
+                ('sky_dominators', 'word_battles', 'wild_west_poker')] + ['./apps/arcade/assets/logo/dictation_practice.png']
 
 
 def write_if_changed(path, text):
@@ -22,9 +22,9 @@ def write_if_changed(path, text):
 def build():
     versioned = [*list((ROOT / 'suite').rglob('*.js')), *list((ROOT / 'suite').rglob('*.css'))]
     versioned += [ROOT / name for name in (
-        'js/features/loading.js', 'js/features/appearance.js', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js',
+        'js/features/loading.js', 'js/features/appearance.js', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
-        'apps/arcade/js/arcade-2.js', 'apps/arcade/js/game-order.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
+        'apps/arcade/js/arcade-2.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
         'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
         'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
@@ -57,7 +57,8 @@ def build():
 
     # Icon-only controls must be visible on the first offline game launch.
     core = ['./', './apps/quick-ears/button-sprites.png', './apps/arcade/assets/audio/game-open.mp3', './apps/arcade/assets/audio/game-switch.mp3', './apps/arcade/assets/audio/menu-select.mp3', './apps/arcade/assets/audio/menu-exit.mp3', './apps/arcade/assets/audio/game-unavailable.mp3', './apps/arcade/assets/ui_spritesheet.png',
-            './apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png', './apps/arcade/assets/action-glyphs.png', './apps/arcade/assets/system-controls.png']
+            './apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png', './apps/arcade/assets/action-glyphs.png', './apps/arcade/assets/system-controls.png',
+            './apps/grammar/assets/matcha-logo.png', './apps/grammar/assets/matcha-topic.png']
     core.extend('./apps/' + module + '/assets/action-buttons.png'
                 for module in ('arcade', 'sky-dominators', 'quick-drawn', 'poker'))
     excluded = {'tests', 'tools', '.git', 'node_modules', 'firestore', '__pycache__'}

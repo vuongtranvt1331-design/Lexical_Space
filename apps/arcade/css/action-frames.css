@@ -139,3 +139,15 @@ html[data-suite-module="sky-dominators"] { --action-rim:#84d9ee; --action-base:#
    border-image:none !important; background:var(--action-face) center / 100% 100% no-repeat border-box !important;
  }
 }
+
+/* Common menu geometry across the three games, including expandable menu items. */
+@layer action-buttons {
+  :is([data-suite-module="sky-dominators"], [data-suite-module="quick-drawn"], [data-suite-module="poker"]) .game-menu-column :is(button, a, summary)[data-action-face] {
+    box-sizing: border-box;
+    min-block-size: 48px !important;
+    inline-size: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

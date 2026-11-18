@@ -1401,7 +1401,10 @@ button.topic-stat-item[aria-expanded="true"] {
 }
 
 #library-lessons {
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
 }
 
 #library-lessons .topic-overview-card {
@@ -1425,6 +1428,188 @@ button.topic-stat-item[aria-expanded="true"] {
   word-break: break-word;
 }
 
+/* Desktop Topic Group Section */
+.topic-group-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.topic-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px 8px 4px;
+  border-bottom: 2px solid #e2ebe0;
+}
+
+.topic-group-title-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.topic-group-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #274522;
+  letter-spacing: -0.2px;
+}
+
+.topic-group-count {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #69835f;
+}
+
+.topic-group-percent {
+  font-size: 14.5px;
+  font-weight: 800;
+}
+
+.topic-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+}
+
+/* Dedicated Numbered List View */
+.mobile-topic-detail-view {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mobile-topic-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 4px 0 10px;
+}
+
+.mobile-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #edf5e8;
+  border: 1.5px solid #bdd3b0;
+  color: #274522;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.mobile-back-btn:hover,
+.mobile-back-btn:active {
+  background: #e2efdc;
+  border-color: #8dae7e;
+}
+
+.mobile-topic-header-info {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.mobile-topic-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #274522;
+}
+
+.mobile-topic-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #69835f;
+}
+
+.topic-numbered-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+}
+
+.topic-numbered-item {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1.5px solid #d4dfcc;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(56, 82, 42, 0.05);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.topic-numbered-item:hover,
+.topic-numbered-item:active {
+  border-color: #8dae7e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(45, 90, 39, 0.1);
+}
+
+.topic-item-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #edf5e8;
+  color: #2e5726;
+  font-size: 14px;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.topic-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.topic-item-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.topic-item-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #233e1e;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.topic-numbered-item:hover .topic-item-title {
+  color: #3f6f30;
+}
+
 #topic-lessons.library-grid {
   max-height: clamp(220px, 40dvh, 540px);
   overflow-y: auto;
@@ -1434,10 +1619,234 @@ button.topic-stat-item[aria-expanded="true"] {
   display: none;
 }
 
-@media (max-width: 480px) {
+.overview-mobile-count {
+  display: none;
+}
+.mobile-topic-footer-exit {
+  display: none;
+}
+.topic-lessons-actions {
+  display: none;
+}
+
+/* ==========================================================================
+   Mobile Library Redesign (<= 767px)
+   Matcha Brand Mark & 2x4 Topic Overview
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Header: Hide profile name & subtitle, clean up top spacing; logo and progress stay */
+  .app-header {
+    margin-bottom: 14px;
+    padding-top: max(2px, env(safe-area-inset-top, 0px));
+  }
+  .app-brand-lockup {
+    gap: 10px;
+    margin-bottom: 2px;
+  }
+  .app-brand-lockup .suite-profile {
+    display: none !important;
+  }
+  .app-subtitle {
+    display: none !important;
+  }
+  .sub-brand-container {
+    display: none !important;
+  }
+
+  /* Matcha Brand Mark left of GrammarSpace heading */
+  .app-brand-picture {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .app-brand-picture .app-brand-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+  }
+  .app-title {
+    font-size: 26px !important;
+    margin: 0 !important;
+    line-height: 1.2;
+  }
+
+  /* Library Container */
+  #library-view {
+    padding: 0;
+  }
+  .app-shell {
+    padding: 16px 12px 60px;
+  }
+
+  /* Topic Overview Card: Transparent framing on mobile */
+  .topic-overview-card {
+    padding: 6px 0 12px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    gap: 12px;
+  }
+  .topic-overview-card:hover {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Keep the progress label and value together above the library count. */
+  .overview-top-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "label value" "count count";
+    align-items: center;
+    gap: 4px 12px;
+    width: 100%;
+    padding: 0 4px;
+  }
+  .overview-badge {
+    grid-area: label;
+    justify-self: start;
+    max-width: 100%;
+    white-space: normal;
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+  .overview-mobile-count {
+    grid-area: count;
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a6341;
+  }
+  .overview-total-badge {
+    grid-area: value;
+    justify-self: end;
+    margin: 0;
+  }
+  .overview-total-label {
+    display: none !important;
+  }
+  .overview-total-num {
+    font-size: 15px !important;
+  }
+
+  /* Hide desktop secondary heading and duplicate count on mobile */
+  .overview-title-row {
+    display: none !important;
+  }
+
+  /* 2x4 Grid of Phone Topic Cards */
   .overview-topics-grid {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
-    gap: 8px;
-    padding: 8px;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Topic Button in 2x4 Phone Grid */
+  button.topic-stat-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    min-height: 68px !important;
+    padding: 10px 8px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    background: #edf5e8 !important;
+    border: 1.5px solid #bdd3b0 !important;
+    border-image: none !important;
+    border-image-source: none !important;
+    border-radius: 12px !important;
+    box-shadow: 0 2px 5px rgba(45, 90, 39, 0.08) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease !important;
+  }
+
+  button.topic-stat-item:hover,
+  button.topic-stat-item:active {
+    border-color: #8dae7e !important;
+    background: #e2efdc !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(45, 90, 39, 0.12) !important;
+  }
+
+  button.topic-stat-item.is-active,
+  button.topic-stat-item[aria-expanded="true"] {
+    background: #3d6a33 !important;
+    background-image: linear-gradient(180deg, #44773a 0%, #355d2c 100%) !important;
+    border: 2px solid #23401d !important;
+    border-image: none !important;
+    border-image-source: none !important;
+    box-shadow: 0 0 0 2px #2d5424, 0 4px 14px rgba(35, 64, 29, 0.3) !important;
+    color: #ffffff !important;
+  }
+
+  button.topic-stat-item.is-active .topic-stat-name,
+  button.topic-stat-item[aria-expanded="true"] .topic-stat-name {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  }
+
+  button.topic-stat-item.is-active .topic-stat-percent,
+  button.topic-stat-item[aria-expanded="true"] .topic-stat-percent {
+    color: #e2f7d8 !important;
+  }
+
+  /* Centered topic name with percent below name */
+  .topic-stat-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    width: 100% !important;
+  }
+  .topic-stat-name {
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    color: #274522 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    line-height: 1.25 !important;
+  }
+  .topic-stat-percent {
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+    text-align: center !important;
+  }
+
+  /* Per-topic progress bars hidden on mobile 2x4 grid */
+  .topic-stat-track {
+    display: none !important;
+  }
+
+  /* Footer link to Arcade Hub below all topics */
+  .mobile-topic-footer-exit {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding-top: 12px !important;
+    width: 100% !important;
+  }
+  .mobile-topic-footer-exit .lexical-space-link {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  #topic-lessons.library-grid {
+    display: none !important;
+  }
+
+  .topic-lessons-actions {
+    display: none !important;
+  }
+
+  /* On mobile hide all desktop grouped sections */
+  .topic-group-section {
+    display: none !important;
   }
 }
