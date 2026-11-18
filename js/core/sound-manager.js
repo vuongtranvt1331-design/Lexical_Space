@@ -33,7 +33,7 @@ import { loadSettings } from './settings.js';
         gain.gain.setValueAtTime(0.06, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.038);
         osc.connect(gain);
-        gain.connect(ctx.destination);
+        gain.connect(SpaceEffects.output(ctx));
         osc.start(now);
         osc.stop(now + 0.04);
       },
@@ -60,7 +60,7 @@ import { loadSettings } from './settings.js';
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
         noise.connect(filter);
         filter.connect(gain);
-        gain.connect(ctx.destination);
+        gain.connect(SpaceEffects.output(ctx));
         noise.start(now);
       },
       playSuccess() {
@@ -76,7 +76,7 @@ import { loadSettings } from './settings.js';
           gain.gain.linearRampToValueAtTime(0.09, now + idx * 0.045 + 0.01);
           gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.045 + 0.22);
           osc.connect(gain);
-          gain.connect(ctx.destination);
+          gain.connect(SpaceEffects.output(ctx));
           osc.start(now + idx * 0.045);
           osc.stop(now + idx * 0.045 + 0.24);
         });
@@ -97,7 +97,7 @@ import { loadSettings } from './settings.js';
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.17);
         osc.connect(filter);
         filter.connect(gain);
-        gain.connect(ctx.destination);
+        gain.connect(SpaceEffects.output(ctx));
         osc.start(now);
         osc.stop(now + 0.18);
       },
@@ -129,7 +129,7 @@ import { loadSettings } from './settings.js';
           gain.gain.exponentialRampToValueAtTime(0.001, now + t + d);
 
           osc.connect(gain);
-          gain.connect(ctx.destination);
+          gain.connect(SpaceEffects.output(ctx));
           osc.start(now + t);
           osc.stop(now + t + d + 0.02);
         });
@@ -161,7 +161,7 @@ import { loadSettings } from './settings.js';
           gain.gain.exponentialRampToValueAtTime(0.001, now + t + d);
 
           osc.connect(gain);
-          gain.connect(ctx.destination);
+          gain.connect(SpaceEffects.output(ctx));
           osc.start(now + t);
           osc.stop(now + t + d + 0.02);
         });

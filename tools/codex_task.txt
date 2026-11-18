@@ -1,0 +1,20 @@
+Remove the theme selector from Vocabulary Test so it automatically uses and inherits LexicalSpace's shared theme:
+
+1. In apps/vocabulary-test/index.html:
+- Remove '<select id="themeSelect" aria-label="Choose theme"><option value="ivory">Ivory</option><option value="mist">Mist</option><option value="plum">Plum</option></select>' from .header-actions.
+- Keep the header clean: only return link, title & set badge, timer pill, and load JSON button.
+
+2. In apps/vocabulary-test/js/exam.js:
+- Remove all references to 'themeSelect':
+  Remove:
+  const theme = $('themeSelect');
+  theme.value = ...
+  theme.addEventListener('change', ...);
+  window.addEventListener('storage', ... theme.value ...);
+- Theme is already automatically loaded and synchronized with LexicalSpace via js/features/appearance.js.
+
+3. In tests/vocabulary-test.test.js:
+- Update the test so it doesn't look for 'themeSelect', but instead asserts that document.documentElement.dataset.lexicalTheme is set to the inherited LexicalSpace theme.
+
+4. Run 'python tools/build-suite.py' to update cache.
+5. Run 'npm test' to verify all tests pass.

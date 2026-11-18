@@ -1,6 +1,6 @@
 {
   "name": "SpaceSuite",
-  "lexicalVersion": "43.19.0",
+  "lexicalVersion": "44.3.0",
   "date": "2026-11-18",
   "root": "LexicalSpace-project",
   "modules": [
@@ -9,7 +9,8 @@
     "arcade",
     "quick-drawn",
     "sky-dominators",
-    "poker"
+    "poker",
+    "vocabulary-test"
   ],
-  "cacheVersion": "4e41ad5b5c1d48"
+  "cacheVersion": "7594a4fd7d2df7"
 }

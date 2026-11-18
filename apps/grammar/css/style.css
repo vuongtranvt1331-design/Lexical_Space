@@ -30,14 +30,14 @@
       width: 100%;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 36px 24px 80px;
+      padding: 24px 24px 80px;
     }
 
     /* Landing Header */
     .app-header {
       text-align: center;
-      margin: 0 auto 36px;
-      padding: 10px 0;
+      margin: 0 auto 20px;
+      padding: 4px 0;
     }
     .app-title {
       margin: 0 0 8px;
@@ -1326,4 +1326,118 @@
 .app-brand-lockup .app-title {
   font-family: 'Pangolin', 'Segoe Print', cursive;
   color: #2d5a27;
+}
+
+/* GrammarSpace Scoped Enhancements */
+.app-brand-logo {
+  width: 46px;
+  height: 46px;
+  max-width: 100%;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@media (max-width: 600px) {
+  .app-brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+.lexical-space-link {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.portal-arrow {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url('../../arcade/assets/ui_spritesheet.png');
+  background-size: 600% 400%;
+  background-position: 60% 66.666667%;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
+}
+
+button.topic-stat-item {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  padding: 8px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+button.topic-stat-item:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+button.topic-stat-item:focus-visible {
+  outline: 2px solid var(--accent, #6366f1);
+  outline-offset: 2px;
+}
+
+button.topic-stat-item.is-active,
+button.topic-stat-item[aria-expanded="true"] {
+  background-color: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3);
+}
+
+:root {
+  scrollbar-gutter: stable;
+}
+
+#library-lessons {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+#library-lessons .topic-overview-card {
+  grid-column: 1 / -1;
+  transform: none;
+  min-width: 0;
+  height: auto;
+  overflow: visible;
+}
+
+.overview-topics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  height: auto;
+  overflow: visible;
+}
+
+.overview-topics-grid .topic-stat-item {
+  white-space: normal;
+  word-break: break-word;
+}
+
+#topic-lessons.library-grid {
+  max-height: clamp(220px, 40dvh, 540px);
+  overflow-y: auto;
+}
+
+#topic-lessons.library-grid[hidden] {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .overview-topics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+    gap: 8px;
+    padding: 8px;
+  }
 }

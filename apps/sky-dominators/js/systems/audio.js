@@ -22,7 +22,7 @@ class SoundFX {
                 voices: Array.from({length: 4}, () => {
                     const voice = new Audio(src);
                     voice.preload = 'auto';
-                    voice.volume = volume;
+                    voice.volume = volume * SpaceEffects.gain();
                     return voice;
                 })
             }]));
@@ -31,7 +31,7 @@ class SoundFX {
         if (!this.ghidorahRoar) {
             this.ghidorahRoar = new Audio('assets/audio/king-ghidorah-roar-1.mp3');
             this.ghidorahRoar.preload = 'auto';
-            this.ghidorahRoar.volume = 0.8;
+            this.ghidorahRoar.volume = 0.8 * SpaceEffects.gain();
         }
         if (!this.ctx) {
             const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -72,7 +72,7 @@ class SoundFX {
     }
 
     createPlayerVoice(pool) {
-        const voice=new Audio(pool.src);voice.preload='auto';voice.volume=.65;voice.shotBusy=false;
+        const voice=new Audio(pool.src);voice.preload='auto';voice.volume = .65 * SpaceEffects.gain();voice.shotBusy=false;
         const release=()=>{voice.shotBusy=false;if(pool.voices.length>4)pool.voices=pool.voices.filter(v=>v!==voice);};
         voice.addEventListener('ended',release);voice.addEventListener('error',release);voice.releaseShot=release;
         return voice;
@@ -131,7 +131,7 @@ class SoundFX {
         subGain.gain.setValueAtTime(isBig ? 0.45 : 0.25, now);
         subGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
-        subOsc.connect(subGain).connect(this.ctx.destination);
+        subOsc.connect(subGain).connect(SpaceEffects.output(this.ctx));
         subOsc.start(now);
         subOsc.stop(now + duration);
 
@@ -147,7 +147,7 @@ class SoundFX {
             noiseGain.gain.setValueAtTime(isBig ? 0.35 : 0.2, now);
             noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
-            noise.connect(filter).connect(noiseGain).connect(this.ctx.destination);
+            noise.connect(filter).connect(noiseGain).connect(SpaceEffects.output(this.ctx));
             noise.start(now);
             noise.stop(now + duration);
         }
@@ -165,7 +165,7 @@ class SoundFX {
             osc.frequency.exponentialRampToValueAtTime(frequency / 2, start + 0.13);
             gain.gain.setValueAtTime(0.24, start);
             gain.gain.exponentialRampToValueAtTime(0.001, start + 0.13);
-            osc.connect(gain).connect(this.ctx.destination);
+            osc.connect(gain).connect(SpaceEffects.output(this.ctx));
             osc.start(start);
             osc.stop(start + 0.13);
         }
@@ -183,7 +183,7 @@ class SoundFX {
             gain.gain.setValueAtTime(0.2, startTime);
             gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.3);
 
-            osc.connect(gain).connect(this.ctx.destination);
+            osc.connect(gain).connect(SpaceEffects.output(this.ctx));
             osc.start(startTime);
             osc.stop(startTime + 0.3);
         });
@@ -200,7 +200,7 @@ class SoundFX {
         gain.gain.setValueAtTime(0.32, now);
         gain.gain.linearRampToValueAtTime(0.01, now + 0.22);
 
-        osc.connect(gain).connect(this.ctx.destination);
+        osc.connect(gain).connect(SpaceEffects.output(this.ctx));
         osc.start(now);
         osc.stop(now + 0.22);
     }
@@ -217,7 +217,7 @@ class SoundFX {
             gain.gain.setValueAtTime(0.14, now);
             gain.gain.linearRampToValueAtTime(0.001, now + 0.16);
 
-            osc.connect(gain).connect(this.ctx.destination);
+            osc.connect(gain).connect(SpaceEffects.output(this.ctx));
             osc.start(now);
             osc.stop(now + 0.16);
         } catch (e) {}
@@ -235,7 +235,7 @@ class SoundFX {
             gain.gain.setValueAtTime(0.12, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
 
-            osc.connect(gain).connect(this.ctx.destination);
+            osc.connect(gain).connect(SpaceEffects.output(this.ctx));
             osc.start(now);
             osc.stop(now + 0.11);
         } catch (e) {}

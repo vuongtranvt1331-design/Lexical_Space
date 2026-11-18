@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>Quick Ears | Listening practice</title><link rel="stylesheet" href="practice.css"><script src="../../suite/js/effects-volume.js?v=44.3.0-ddd24e7a19"></script>
+    <script defer src="button-art.js"></script><script defer src="../../suite/js/game-menu-audio.js?v=44.3.0-a1553843c3"></script><script defer src="history.js"></script>
+  <script defer src="practice.js"></script></head>
+<body><main data-scene="menu" data-quiet-exercise>
+<header><img src="../arcade/assets/logo/quick_ears.png" alt="Quick Ears"><button id="pause" aria-label="Pause" hidden><span class="pause-icon" aria-hidden="true"></span></button></header>
+<nav id="menu" aria-label="Quick Ears menu">
+<button id="open-picker">Listening practice</button>
+<button id="menu-settings">Settings</button>
+      <button id="menu-history">Practice history</button>
+<a id="hub" data-menu-hub href="../arcade/">Back to Arcade Hub</a>
+</nav>
+    <section id="history" hidden>
+      <header class="section-header">
+        <button id="history-back" type="button" class="btn-secondary">Back to menu</button>
+        <h2>Practice history</h2>
+      </header>
+      <div class="history-controls">
+        <label for="history-profile">Student profile:</label>
+        <select id="history-profile"></select>
+      </div>
+      <div id="history-empty" class="history-empty" hidden>No practice history recorded yet for this profile.</div>
+      <div id="history-list" class="history-list" role="feed" aria-label="Practice attempts"></div>
+    </section>
+
+    <section id="picker" hidden><h1>Choose a lesson</h1>
+<label for="topic">Topic</label><select id="topic" disabled></select>
+<div id="groups" hidden><label for="book">IELTS collection</label><select id="book"></select><label for="test">Test</label><select id="test"></select></div>
+<label for="lesson">Lesson</label><select id="lesson" disabled></select>
+<div class="picker-actions"><button id="close-picker">Main menu</button><button id="start" disabled>Start lesson</button></div></section>
+<p id="status" role="status"></p><button id="retry" hidden>Retry</button>
+<section id="exercise" hidden><h2 id="title"></h2><p id="position"></p><p id="guide">Listen to the sentence and type what you hear.</p>
+<audio controls preload="metadata" aria-label="Listen to the sentence"></audio><p id="translation" aria-live="polite" hidden></p>
+<form><label for="answer">Your answer</label><input id="answer" maxlength="1600" autocomplete="off" spellcheck="false" aria-describedby="result"><p id="result" role="status"></p><div class="practice-actions"><button type="button" id="replay" aria-keyshortcuts="Control" title="Press Ctrl on its own to replay">Replay<span class="keyboard-tip"> · Ctrl</span></button><button type="submit">Check</button><button type="button" id="skip">Skip</button></div></form>
+<button id="next" hidden>Next sentence</button><footer><a id="source" target="_blank" rel="noopener noreferrer">Original lesson · DailyDictation</a></footer></section>
+<section id="summary" hidden><h2 id="summary-title">Results</h2><div id="bar" role="img"><span class="green"></span><span class="yellow"></span><span class="red"></span></div><p id="scores"></p><p id="last-block" hidden></p><button id="continue" hidden>Continue</button><button id="restart">Try again</button> <button id="done">Choose another lesson</button></section>
+<dialog id="panel" aria-labelledby="panel-title"><h2 id="panel-title">Settings</h2><section id="preferences"><label for="volume">Volume <output id="level"></output></label><input id="volume" type="range" min="0" max="100">
+<label><input type="checkbox" id="full-answer"> Show full answer</label>
+</section>
+<div class="panel-actions"><button id="resume">Continue</button><button id="back-menu">Main menu</button></div></dialog>
+</main></body></html>

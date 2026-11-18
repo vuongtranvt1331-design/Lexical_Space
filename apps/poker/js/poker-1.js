@@ -7,27 +7,307 @@
        * Follows the strict 3-field schema: word, translation, synonym.
        */
       const DEFAULT_VOCAB_JSON = [
-        { word: "substantial", translation: "đáng kể", synonym: "considerable" },
-        { word: "allocate", translation: "phân bổ", synonym: "assign" },
-        { word: "sustainable", translation: "bền vững", synonym: "viable" },
-        { word: "initiative", translation: "sáng kiến", synonym: "proposal" },
-        { word: "inevitable", translation: "không thể tránh khỏi", synonym: "unavoidable" },
-        { word: "meticulous", translation: "tỉ mỉ", synonym: "thorough" },
-        { word: "ambiguous", translation: "mơ hồ", synonym: "vague" },
-        { word: "deteriorate", translation: "xấu đi", synonym: "worsen" },
-        { word: "augment", translation: "làm tăng thêm", synonym: "increase" },
-        { word: "obsolete", translation: "lỗi thời", synonym: "outdated" },
-        { word: "resilient", translation: "kiên cường", synonym: "tough" },
-        { word: "scrutinize", translation: "xem xét kỹ", synonym: "examine" },
-        { word: "lucrative", translation: "sinh lời cao", synonym: "profitable" },
-        { word: "mitigate", translation: "giảm nhẹ", synonym: "alleviate" },
-        { word: "plausible", translation: "hợp lý", synonym: "believable" },
-        { word: "adversity", translation: "nghịch cảnh", synonym: "hardship" },
-        { word: "concur", translation: "đồng tình", synonym: "agree" },
-        { word: "reluctant", translation: "miễn cưỡng", synonym: "hesitant" },
-        { word: "pivotal", translation: "then chốt", synonym: "crucial" },
-        { word: "candid", translation: "thẳng thắn", synonym: "frank" }
-      ];
+        {
+                "word": "substantial",
+                "translation": "đáng kể",
+                "synonym": "considerable"
+        },
+        {
+                "word": "allocate",
+                "translation": "phân bổ",
+                "synonym": "assign"
+        },
+        {
+                "word": "sustainable",
+                "translation": "bền vững",
+                "synonym": "viable"
+        },
+        {
+                "word": "initiative",
+                "translation": "sáng kiến",
+                "synonym": "proposal"
+        },
+        {
+                "word": "inevitable",
+                "translation": "không thể tránh khỏi",
+                "synonym": "unavoidable"
+        },
+        {
+                "word": "meticulous",
+                "translation": "tỉ mỉ",
+                "synonym": "thorough"
+        },
+        {
+                "word": "ambiguous",
+                "translation": "mơ hồ",
+                "synonym": "vague"
+        },
+        {
+                "word": "deteriorate",
+                "translation": "xấu đi",
+                "synonym": "worsen"
+        },
+        {
+                "word": "augment",
+                "translation": "làm tăng thêm",
+                "synonym": "increase"
+        },
+        {
+                "word": "obsolete",
+                "translation": "lỗi thời",
+                "synonym": "outdated"
+        },
+        {
+                "word": "resilient",
+                "translation": "kiên cường",
+                "synonym": "tough"
+        },
+        {
+                "word": "scrutinize",
+                "translation": "xem xét kỹ",
+                "synonym": "examine"
+        },
+        {
+                "word": "lucrative",
+                "translation": "sinh lời cao",
+                "synonym": "profitable"
+        },
+        {
+                "word": "mitigate",
+                "translation": "giảm nhẹ",
+                "synonym": "alleviate"
+        },
+        {
+                "word": "plausible",
+                "translation": "hợp lý",
+                "synonym": "believable"
+        },
+        {
+                "word": "adversity",
+                "translation": "nghịch cảnh",
+                "synonym": "hardship"
+        },
+        {
+                "word": "concur",
+                "translation": "đồng tình",
+                "synonym": "agree"
+        },
+        {
+                "word": "reluctant",
+                "translation": "miễn cưỡng",
+                "synonym": "hesitant"
+        },
+        {
+                "word": "pivotal",
+                "translation": "then chốt",
+                "synonym": "crucial"
+        },
+        {
+                "word": "candid",
+                "translation": "thẳng thắn",
+                "synonym": "frank"
+        },
+        {
+                "word": "accommodate",
+                "translation": "thích nghi / đáp ứng",
+                "synonym": "adapt"
+        },
+        {
+                "word": "stabilize",
+                "translation": "ổn định",
+                "synonym": "steady"
+        },
+        {
+                "word": "vital",
+                "translation": "thiết yếu",
+                "synonym": "essential"
+        },
+        {
+                "word": "expand",
+                "translation": "mở rộng",
+                "synonym": "broaden"
+        },
+        {
+                "word": "rapid",
+                "translation": "nhanh chóng",
+                "synonym": "swift"
+        },
+        {
+                "word": "abundant",
+                "translation": "dồi dào",
+                "synonym": "plentiful"
+        },
+        {
+                "word": "hazardous",
+                "translation": "nguy hiểm",
+                "synonym": "perilous"
+        },
+        {
+                "word": "prohibit",
+                "translation": "ngăn cấm",
+                "synonym": "forbid"
+        },
+        {
+                "word": "innovative",
+                "translation": "sáng tạo đổi mới",
+                "synonym": "creative"
+        },
+        {
+                "word": "enhance",
+                "translation": "nâng cao",
+                "synonym": "improve"
+        },
+        {
+                "word": "diminish",
+                "translation": "giảm bớt",
+                "synonym": "lessen"
+        },
+        {
+                "word": "feasible",
+                "translation": "khả thi",
+                "synonym": "achievable"
+        },
+        {
+                "word": "acquire",
+                "translation": "thu được / đạt được",
+                "synonym": "obtain"
+        },
+        {
+                "word": "dormant",
+                "translation": "ngủ yên / bất hoạt",
+                "synonym": "inactive"
+        },
+        {
+                "word": "comprehensive",
+                "translation": "toàn diện",
+                "synonym": "exhaustive"
+        },
+        {
+                "word": "advocate",
+                "translation": "ủng hộ",
+                "synonym": "champion"
+        },
+        {
+                "word": "prevalent",
+                "translation": "phổ biến",
+                "synonym": "widespread"
+        },
+        {
+                "word": "commence",
+                "translation": "bắt đầu",
+                "synonym": "initiate"
+        },
+        {
+                "word": "terminate",
+                "translation": "chấm dứt",
+                "synonym": "conclude"
+        },
+        {
+                "word": "pragmatic",
+                "translation": "thực dụng / thực tế",
+                "synonym": "practical"
+        },
+        {
+                "word": "elaborate",
+                "translation": "chi tiết phức tạp",
+                "synonym": "intricate"
+        },
+        {
+                "word": "consecutive",
+                "translation": "liên tiếp",
+                "synonym": "successive"
+        },
+        {
+                "word": "compel",
+                "translation": "bắt buộc / ép buộc",
+                "synonym": "coerce"
+        },
+        {
+                "word": "disperse",
+                "translation": "phân tán",
+                "synonym": "scatter"
+        },
+        {
+                "word": "emerge",
+                "translation": "xuất hiện",
+                "synonym": "surface"
+        },
+        {
+                "word": "facilitate",
+                "translation": "tạo điều kiện dễ dàng",
+                "synonym": "expedite"
+        },
+        {
+                "word": "genuine",
+                "translation": "chân thật",
+                "synonym": "authentic"
+        },
+        {
+                "word": "hinder",
+                "translation": "cản trở",
+                "synonym": "impede"
+        },
+        {
+                "word": "indifferent",
+                "translation": "thờ ơ",
+                "synonym": "unconcerned"
+        },
+        {
+                "word": "mandatory",
+                "translation": "bắt buộc",
+                "synonym": "compulsory"
+        },
+        {
+                "word": "negligible",
+                "translation": "không đáng kể",
+                "synonym": "trivial"
+        },
+        {
+                "word": "optimistic",
+                "translation": "lạc quan",
+                "synonym": "hopeful"
+        },
+        {
+                "word": "paramount",
+                "translation": "tối quan trọng",
+                "synonym": "foremost"
+        },
+        {
+                "word": "reconcile",
+                "translation": "hòa giải",
+                "synonym": "harmonize"
+        },
+        {
+                "word": "spontaneous",
+                "translation": "tự phát / tự nhiên",
+                "synonym": "unprompted"
+        },
+        {
+                "word": "tentative",
+                "translation": "thăm dò / chưa chắc chắn",
+                "synonym": "provisional"
+        },
+        {
+                "word": "unprecedented",
+                "translation": "chưa từng có",
+                "synonym": "unmatched"
+        },
+        {
+                "word": "vulnerable",
+                "translation": "dễ bị tổn thương",
+                "synonym": "susceptible"
+        },
+        {
+                "word": "benevolent",
+                "translation": "nhân từ / từ tâm",
+                "synonym": "charitable"
+        },
+        {
+                "word": "dismantle",
+                "translation": "tháo dỡ",
+                "synonym": "demolish"
+        }
+];
 
       /**
        * EXPLICIT GAME STATES
@@ -147,7 +427,7 @@
 
           source.connect(filter);
           filter.connect(gain);
-          gain.connect(ctx.destination);
+          gain.connect(SpaceEffects.output(ctx));
           source.start(now);
         }
 
@@ -165,7 +445,7 @@
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
 
           osc.connect(gain);
-          gain.connect(ctx.destination);
+          gain.connect(SpaceEffects.output(ctx));
           osc.start(now);
           osc.stop(now + 0.065);
         }
@@ -186,7 +466,7 @@
             gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.055 + 0.32);
 
             osc.connect(gain);
-            gain.connect(ctx.destination);
+            gain.connect(SpaceEffects.output(ctx));
             osc.start(now + idx * 0.055);
             osc.stop(now + idx * 0.055 + 0.34);
           });
@@ -207,7 +487,7 @@
             gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.22);
 
             osc.connect(gain);
-            gain.connect(ctx.destination);
+            gain.connect(SpaceEffects.output(ctx));
             osc.start(now + i * 0.06);
             osc.stop(now + i * 0.06 + 0.24);
           });
@@ -233,7 +513,7 @@
 
             osc.connect(filter);
             filter.connect(gain);
-            gain.connect(ctx.destination);
+            gain.connect(SpaceEffects.output(ctx));
             osc.start(now + i * 0.065);
             osc.stop(now + i * 0.065 + 0.2);
           });
@@ -260,7 +540,7 @@
 
             noise.connect(filter);
             filter.connect(gain);
-            gain.connect(ctx.destination);
+            gain.connect(SpaceEffects.output(ctx));
             noise.start(now);
           }
 
@@ -274,7 +554,7 @@
           punchGain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
 
           punchOsc.connect(punchGain);
-          punchGain.connect(ctx.destination);
+          punchGain.connect(SpaceEffects.output(ctx));
           punchOsc.start(now);
           punchOsc.stop(now + 0.19);
         }
@@ -295,7 +575,7 @@
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
 
           osc.connect(gain);
-          gain.connect(ctx.destination);
+          gain.connect(SpaceEffects.output(ctx));
           osc.start(now);
           osc.stop(now + 0.26);
         }
@@ -358,7 +638,7 @@
             osc.connect(filter);
             subOsc.connect(filter);
             filter.connect(gain);
-            gain.connect(ctx.destination);
+            gain.connect(SpaceEffects.output(ctx));
 
             osc.start(start);
             subOsc.start(start);
@@ -464,7 +744,7 @@
       /**
        * STRICT VOCABULARY JSON VALIDATION
        */
-      function validateAndNormalizeVocabulary(rawList) {
+      function validateAndNormalizeVocabulary(rawList, { strict = false } = {}) {
         if (!Array.isArray(rawList)) {
           return { valid: false, error: 'Root JSON structure must be an Array of vocabulary objects.' };
         }
@@ -485,65 +765,62 @@
           const rowNum = i + 1;
 
           if (!item || typeof item !== 'object' || Array.isArray(item)) {
-            return { valid: false, error: `Entry #${rowNum} is not a valid JSON object.` };
+            if (strict) return { valid: false, error: `Entry #${rowNum} is not a valid JSON object.` };
+            continue;
           }
 
-          if ('synonyms' in item) {
+          if (strict && 'synonyms' in item) {
             return {
               valid: false,
               error: `Entry #${rowNum} uses a "synonyms" field. Each entry must use the singular "synonym" string field only.`
             };
           }
 
-          const keys = Object.keys(item);
-          const requiredKeys = ['word', 'translation', 'synonym'];
-          for (const reqKey of requiredKeys) {
-            if (!keys.includes(reqKey)) {
-              return { valid: false, error: `Entry #${rowNum} is missing required field "${reqKey}".` };
+          const word = String(item.word || '').trim();
+          const translation = String(item.translation || item.meaning || '').trim();
+          let synonym = String(item.synonym || (Array.isArray(item.synonyms) ? item.synonyms[0] : item.synonym1) || '').trim();
+          if (!synonym) synonym = translation;
+
+          if (strict) {
+            const keys = Object.keys(item);
+            const requiredKeys = ['word', 'translation', 'synonym'];
+            for (const reqKey of requiredKeys) {
+              if (!keys.includes(reqKey)) {
+                return { valid: false, error: `Entry #${rowNum} is missing required field "${reqKey}".` };
+              }
+            }
+            const extraKeys = keys.filter((k) => !requiredKeys.includes(k) && k !== 'id');
+            if (extraKeys.length > 0) {
+              return {
+                valid: false,
+                error: `Entry #${rowNum} contains unsupported field(s): ${extraKeys.join(', ')}. Only "word", "translation", and "synonym" are allowed.`
+              };
             }
           }
 
-          const extraKeys = keys.filter((k) => !requiredKeys.includes(k));
-          if (extraKeys.length > 0) {
-            return {
-              valid: false,
-              error: `Entry #${rowNum} contains unsupported field(s): ${extraKeys.join(', ')}. Only "word", "translation", and "synonym" are allowed.`
-            };
-          }
-
-          if (
-            typeof item.word !== 'string' ||
-            typeof item.translation !== 'string' ||
-            typeof item.synonym !== 'string'
-          ) {
-            return {
-              valid: false,
-              error: `Entry #${rowNum} must have string values for "word", "translation", and "synonym".`
-            };
-          }
-
-          const word = item.word.trim();
-          const translation = item.translation.trim();
-          const synonym = item.synonym.trim();
-
-          if (!word || !translation || !synonym) {
-            return { valid: false, error: `Entry #${rowNum} has empty field values.` };
+          if (!word || (!translation && !synonym)) {
+            if (strict) return { valid: false, error: `Entry #${rowNum} has empty field values.` };
+            continue;
           }
 
           const wordKey = word.toLowerCase();
-          const synKey = synonym.toLowerCase();
+          const synKey = (synonym || translation).toLowerCase();
 
-          if (wordKey === synKey) {
-            return {
-              valid: false,
-              error: `Entry #${rowNum} ("${word}") cannot have the exact same word as its own synonym.`
-            };
+          if (wordKey === synKey && !translation) {
+            if (strict) {
+              return {
+                valid: false,
+                error: `Entry #${rowNum} ("${word}") cannot have the exact same word as its own synonym.`
+              };
+            }
+            continue;
           }
 
           if (seenWords.has(wordKey)) {
-            return { valid: false, error: `Duplicate original word detected: "${word}" (Entry #${rowNum}).` };
+            if (strict) return { valid: false, error: `Duplicate original word detected: "${word}" (Entry #${rowNum}).` };
+            continue;
           }
-          if (seenSynonyms.has(synKey)) {
+          if (strict && seenSynonyms.has(synKey)) {
             return {
               valid: false,
               error: `Duplicate or ambiguous synonym detected: "${synonym}" (Entry #${rowNum}).`
@@ -554,11 +831,18 @@
           seenSynonyms.add(synKey);
 
           normalized.push({
-            id: `vocab_${String(i + 1).padStart(3, '0')}`,
+            id: item.id || `vocab_${String(normalized.length + 1).padStart(3, '0')}`,
             word,
-            translation,
-            synonym
+            translation: translation || synonym,
+            synonym: synonym || translation
           });
+        }
+
+        if (normalized.length < 4) {
+          return {
+            valid: false,
+            error: `Need at least 4 unique words to play (found ${normalized.length}).`
+          };
         }
 
         return { valid: true, entries: normalized };
@@ -577,13 +861,37 @@
           state.unusedPoolIds = shuffleArray(state.vocabLibrary.map((e) => e.id));
         }
 
-        const chosenIds = state.unusedPoolIds.slice(0, 4);
-        const chosenEntries = chosenIds
-          .map((id) => state.vocabLibrary.find((item) => item.id === id))
-          .filter(Boolean);
+        const chosen = [];
+        const chosenLabels = new Set();
+        const unchosenPool = [];
 
-        state.unusedPoolIds = state.unusedPoolIds.slice(4);
-        return chosenEntries;
+        for (const id of state.unusedPoolIds) {
+          const entry = state.vocabLibrary.find((item) => item.id === id);
+          if (!entry) continue;
+          const matchLabel = (entry.synonym || entry.translation || '').trim().toLowerCase();
+          if (chosen.length < 4 && !chosenLabels.has(matchLabel)) {
+            chosen.push(entry);
+            chosenLabels.add(matchLabel);
+          } else {
+            unchosenPool.push(id);
+          }
+        }
+
+        if (chosen.length < 4) {
+          const allShuffled = shuffleArray(state.vocabLibrary);
+          for (const entry of allShuffled) {
+            if (chosen.length === 4) break;
+            if (chosen.some(c => c.id === entry.id)) continue;
+            const matchLabel = (entry.synonym || entry.translation || '').trim().toLowerCase();
+            if (!chosenLabels.has(matchLabel)) {
+              chosen.push(entry);
+              chosenLabels.add(matchLabel);
+            }
+          }
+        }
+
+        state.unusedPoolIds = unchosenPool;
+        return chosen.length === 4 ? chosen : state.vocabLibrary.slice(0, 4);
       }
 
       function generateDecorativeCardFaces(count = 8) {
@@ -725,7 +1033,7 @@
         }
         state.gameState = GAME_STATES.PLAYING;
         setDealerPose('idle');
-        dom.turnStatusSubtext.textContent = 'Pick its synonym from your hand.';
+        dom.turnStatusSubtext.textContent = 'Pick its matching synonym or meaning from your hand.';
         showTableStatus('MATCH THE HIGHLIGHTED WORD');
         updateActiveCardStates();
       }
@@ -743,7 +1051,7 @@
         scheduleTimer(() => {
           if (!card.revealingMeaning) element.classList.remove('meaning-visible');
           if (state.gameState === GAME_STATES.PLAYING && state.activeOpponentIndex === index) {
-            dom.turnStatusSubtext.textContent = 'Pick its synonym from your hand.';
+            dom.turnStatusSubtext.textContent = 'Pick its matching synonym or meaning from your hand.';
             showTableStatus('MATCH THE HIGHLIGHTED WORD');
           }
           updateAssistButtons();
@@ -919,7 +1227,7 @@
         const previous = state.chips; state.chips = Math.max(0, state.chips - WRONG_PAIR_COST); renderChipStack(previous); sound.playChipLoss();
         [oppEl,stuEl].forEach(el => el?.classList.add('wrong-flash'));
         sound.playGunshot(); scheduleTimer(() => sound.playBulletWhizz(),95); triggerScreenShake(); showBriefTableBulletImpact();
-        showTableStatus('WRONG PAIR: -' + WRONG_PAIR_COST + ' CHIPS'); dom.turnStatusSubtext.textContent = 'Try another synonym for the same word.';
+        showTableStatus('WRONG PAIR: -' + WRONG_PAIR_COST + ' CHIPS'); dom.turnStatusSubtext.textContent = 'Try another card for the same word.';
         if (!state.chips) { scheduleTimer(() => triggerTerminalEnding(false),650); return; }
         scheduleTimer(() => { [oppEl,stuEl].forEach(el => el?.classList.remove('wrong-flash')); beginDealerTurn(); },580);
       }
@@ -1108,7 +1416,15 @@
           urlMode = "full";
         }
         const selectedTopic = (urlParams.get("topic") || "").trim();
-        let username = (urlParams.get("user") || "").trim();
+
+        // 1. Resolve active user from suite / storage / URL
+        let username = "";
+        if (window.lexicalVocabulary && typeof window.lexicalVocabulary.activeProfile === 'function') {
+          username = window.lexicalVocabulary.activeProfile();
+        }
+        if (!username) {
+          username = (urlParams.get("user") || "").trim();
+        }
         if (!username) {
           try {
             const profile = sessionStorage.getItem("ls_active_profile");
@@ -1116,10 +1432,17 @@
           } catch (_) {}
         }
 
-        async function fetchFromIDB() {
+        // 2. Fetch raw words using shared reader or direct IndexedDB
+        async function fetchSharedWords() {
+          if (window.lexicalVocabulary && typeof window.lexicalVocabulary.readWords === 'function') {
+            try {
+              const res = await window.lexicalVocabulary.readWords(username, { includeLegacyUnassigned: true });
+              if (Array.isArray(res) && res.length > 0) return { words: res };
+            } catch (_) {}
+          }
+
           return new Promise((resolve) => {
             try {
-              if (!username) return resolve({ words: [] });
               if (!window.indexedDB) return resolve({ words: [], error: "IndexedDB not supported" });
               const req = indexedDB.open("LexicalSpaceDB");
               req.onupgradeneeded = () => req.transaction.abort();
@@ -1136,14 +1459,16 @@
                 tx.onabort = () => { db.close(); resolve({ words: [], error: "Word read was aborted" }); };
                 const store = tx.objectStore("words");
                 const exactProfile = db.version >= 3;
-                const getReq = exactProfile && store.indexNames.contains("username")
+                const getReq = exactProfile && username && store.indexNames.contains("username")
                   ? store.index("username").getAll(username) : store.getAll();
                 getReq.onerror = () => resolve({ words: [], error: "Failed to read words from store" });
                 getReq.onsuccess = () => {
                   const expected = exactProfile ? username : username.toLowerCase();
                   const words = (getReq.result || []).filter(word => {
+                    if (!word || word.deleted === true || typeof word.word !== 'string') return false;
                     const owner = typeof word?.username === "string" ? word.username.trim() : "";
-                    return word?.deleted !== true && (exactProfile ? owner : owner.toLowerCase()) === expected;
+                    if (!username) return true; // Guest or unassigned mode: load all available words
+                    return (exactProfile ? owner : owner.toLowerCase()) === expected;
                   });
                   resolve({ words });
                 };
@@ -1155,49 +1480,51 @@
         }
 
         try {
-          const idbResult = await fetchFromIDB();
+          const idbResult = await fetchSharedWords();
           let rawWords = idbResult.words || [];
 
-          // Apply vocabulary mode rules:
-          if (urlMode === "topic") {
-            if (!selectedTopic) {
-              showTableStatus("NO TOPIC SELECTED IN ARCADEHUB");
-              dom.turnStatusSubtext.textContent = "Please return to Arcadehub and choose a topic.";
-              return false;
-            }
+          // 3. Topic filtering if requested
+          if (urlMode === "topic" && selectedTopic) {
             const topicKey = selectedTopic.toLowerCase();
             const topicFiltered = rawWords.filter(word => {
               const topics = [word.topic, ...(Array.isArray(word.topics) ? word.topics : [])];
               return topics.some(topic => typeof topic === "string" && topic.trim().toLowerCase() === topicKey);
             });
-            if (topicFiltered.length === 0) {
-              showTableStatus(`TOPIC "${selectedTopic.toUpperCase()}" HAS NO WORDS`);
-              dom.turnStatusSubtext.textContent = "Please add words in Lexical Space or choose another topic in Arcadehub.";
-              return false;
+            if (topicFiltered.length > 0) {
+              rawWords = topicFiltered;
+            } else if (rawWords.length > 0) {
+              showTableStatus(`TOPIC "${selectedTopic.toUpperCase()}" EMPTY`);
+              dom.turnStatusSubtext.textContent = `Topic "${selectedTopic}" has no words. Using all available words.`;
             }
-            rawWords = topicFiltered;
           }
-          // "full" mode uses all eligible words from student's vocabulary library across all topics
 
           if (rawWords.length === 0) {
-            showTableStatus("NO LOCAL VOCABULARY IN INDEXEDDB");
-            dom.turnStatusSubtext.textContent = `No words found in LexicalSpaceDB for "${username || 'student'}". Running in Demo Mode (Saloon Starter Deck).`;
+            showTableStatus("OFFLINE SALOON DECK");
+            dom.turnStatusSubtext.textContent = `No local words found in Lexical Space. Running with Saloon IELTS Deck (60 words).`;
             return false;
           }
 
-          // Filter mastered first, fallback to all if < 4
-          let eligible = rawWords.filter(w => w.memoryStatus === "mastered");
-          if (eligible.length < 4) eligible = rawWords;
-
-          // Convert to Poker schema
-          const converted = eligible.map(w => {
+          // 4. Convert all eligible words to Poker pairs
+          // Prioritize synonym; if no synonym, use Vietnamese meaning as the match!
+          const converted = rawWords.map(w => {
             const word = (w.word || "").trim();
             const translation = (w.meaning || w.translation || "").trim();
-            const syn = (w.synonym1 || w.synonym || w.synonym2 || (Array.isArray(w.synonyms) ? w.synonyms[0] : "") || "").trim();
-            return { word, translation, synonym: syn };
-          }).filter(w => w.word && w.translation && w.synonym && w.word.toLowerCase() !== w.synonym.toLowerCase());
+            const synCandidates = [
+              w.synonym1,
+              w.synonym2,
+              w.synonym,
+              ...(Array.isArray(w.synonyms) ? w.synonyms : (typeof w.synonyms === 'string' ? w.synonyms.split(',') : []))
+            ].map(s => typeof s === 'string' ? s.trim() : '').filter(s => s && s.toLowerCase() !== word.toLowerCase());
 
-          // Deduplicate
+            const synonym = synCandidates[0] || translation;
+            return {
+              word,
+              translation: translation || synonym,
+              synonym: synonym || translation
+            };
+          }).filter(w => w.word && (w.synonym || w.translation));
+
+          // Deduplicate by word
           const seen = new Set();
           const unique = [];
           for (const item of converted) {
@@ -1209,23 +1536,25 @@
           }
 
           if (unique.length >= 4) {
-            const validation = validateAndNormalizeVocabulary(unique);
+            const validation = validateAndNormalizeVocabulary(unique, { strict: false });
             if (validation.valid) {
               state.vocabLibrary = validation.entries;
               state.pendingVocabLibrary = null;
               state.unusedPoolIds = shuffleArray(state.vocabLibrary.map(e => e.id));
-              showTableStatus("STUDENT VOCABULARY LOADED");
-              dom.turnStatusSubtext.textContent = `Loaded ${unique.length} words from local IndexedDB (LexicalSpaceDB)!`;
+              showTableStatus("VOCABULARY LOADED");
+              const scopeLabel = urlMode === 'topic' && selectedTopic ? `topic "${selectedTopic}"` : "Lexical Space";
+              dom.turnStatusSubtext.textContent = `Loaded ${unique.length} words from ${scopeLabel}!`;
+              updateHUD();
               return true;
             }
           }
 
-          showTableStatus("INSUFFICIENT LOCAL VOCABULARY");
-          dom.turnStatusSubtext.textContent = `Found only ${unique.length} valid pair(s). Poker requires at least 4 pairs. Running in Demo Mode.`;
+          showTableStatus("INSUFFICIENT WORDS");
+          dom.turnStatusSubtext.textContent = `Found only ${unique.length} word(s). Poker requires at least 4. Using Saloon IELTS Deck.`;
           return false;
         } catch (err) {
           showTableStatus("INDEXEDDB READ ERROR");
-          dom.turnStatusSubtext.textContent = `Error reading local database: ${err.message || 'Unknown'}. Running in Demo Mode.`;
+          dom.turnStatusSubtext.textContent = `Error reading local database: ${err.message || 'Unknown'}. Using Saloon IELTS Deck.`;
           return false;
         }
       }

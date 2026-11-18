@@ -1,4 +1,4 @@
-﻿    function escapeHTML(value) {
+    function escapeHTML(value) {
       return value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
     }
     function safeColor(value, allowComputed = false) {

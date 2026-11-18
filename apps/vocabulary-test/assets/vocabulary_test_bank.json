@@ -1,0 +1,1670 @@
+{
+  "testTitle": "Academic Vocabulary · Set 1",
+  "testCode": "VOCAB-A101 · Bộ 1",
+  "durationMinutes": 15,
+  "passingScorePercent": 70,
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple_choice",
+      "topic": "Academic Vocabulary",
+      "question": "Choose the word that is closest in meaning to 'METICULOUS':",
+      "context": "The scientist conducted a meticulous investigation of all the laboratory samples.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Careful and precise"
+        },
+        {
+          "key": "B",
+          "text": "Hasty and careless"
+        },
+        {
+          "key": "C",
+          "text": "Aggressive and bold"
+        },
+        {
+          "key": "D",
+          "text": "Ambiguous and unclear"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "'Meticulous' means showing great attention to detail; very careful and precise."
+    },
+    {
+      "id": 2,
+      "type": "multiple_choice",
+      "topic": "Word in Context",
+      "question": "Fill in the blank: The mayor's speech was designed to _______ public anxiety following the crisis.",
+      "context": "The government aimed to calm nerves rather than cause panic.",
+      "options": [
+        {
+          "key": "A",
+          "text": "exacerbate"
+        },
+        {
+          "key": "B",
+          "text": "instigate"
+        },
+        {
+          "key": "C",
+          "text": "obfuscate"
+        },
+        {
+          "key": "D",
+          "text": "alleviate"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "'Alleviate' means to make suffering, deficiency, or a problem less severe or more bearable."
+    },
+    {
+      "id": 3,
+      "type": "multiple_choice",
+      "topic": "Synonyms & Antonyms",
+      "question": "Which of the following is an ANTONYM of 'CANDID'?",
+      "context": "She was completely candid about her past mistakes.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Genuine"
+        },
+        {
+          "key": "B",
+          "text": "Forthright"
+        },
+        {
+          "key": "C",
+          "text": "Deceitful"
+        },
+        {
+          "key": "D",
+          "text": "Frank"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "'Candid' means truthful, honest, and straightforward. 'Deceitful' is its direct opposite."
+    },
+    {
+      "id": 4,
+      "type": "multiple_choice",
+      "topic": "Academic Vocabulary",
+      "question": "What is the meaning of the word 'PRAGMATIC'?",
+      "context": "We need a pragmatic approach to solve this budgetary deficit.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Reluctant to take any action"
+        },
+        {
+          "key": "B",
+          "text": "Dealing with things sensibly and realistically"
+        },
+        {
+          "key": "C",
+          "text": "Based purely on abstract theories"
+        },
+        {
+          "key": "D",
+          "text": "Excessively emotional and irrational"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "'Pragmatic' refers to dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations."
+    },
+    {
+      "id": 5,
+      "type": "multiple_choice",
+      "topic": "Collocations",
+      "question": "Select the word that best completes the sentence: His constant complaints began to _______ on everyone's nerves.",
+      "context": "Idiomatic expression meaning to irritate or annoy somebody.",
+      "options": [
+        {
+          "key": "A",
+          "text": "grate"
+        },
+        {
+          "key": "B",
+          "text": "scratch"
+        },
+        {
+          "key": "C",
+          "text": "strike"
+        },
+        {
+          "key": "D",
+          "text": "pierce"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "The correct idiom is 'to grate on someone's nerves', meaning to annoy or irritate them intensely."
+    },
+    {
+      "id": 6,
+      "type": "multiple_choice",
+      "topic": "Advanced Vocabulary",
+      "question": "Which word describes a person who is 'ELOQUENT'?",
+      "context": "The ambassador delivered an eloquent defense of human rights.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Hesitant and quiet during debates"
+        },
+        {
+          "key": "B",
+          "text": "Extremely knowledgeable but arrogant"
+        },
+        {
+          "key": "C",
+          "text": "Quick-tempered and loud"
+        },
+        {
+          "key": "D",
+          "text": "Fluent and persuasive in speaking or writing"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "'Eloquent' means fluent or persuasive in speaking or writing; clearly expressing ideas in a powerful way."
+    },
+    {
+      "id": 7,
+      "type": "multiple_choice",
+      "topic": "Word in Context",
+      "question": "Choose the most appropriate word: The new evidence completely _______ the defendant of all criminal charges.",
+      "context": "The court declared him entirely innocent after reviewing the footage.",
+      "options": [
+        {
+          "key": "A",
+          "text": "prosecuted"
+        },
+        {
+          "key": "B",
+          "text": "subpoenaed"
+        },
+        {
+          "key": "C",
+          "text": "exonerated"
+        },
+        {
+          "key": "D",
+          "text": "implicated"
+        }
+      ],
+      "correctAnswer": "C",
+      "explanation": "'Exonerate' means to officially absolve someone from blame, fault, or wrongdoing."
+    },
+    {
+      "id": 8,
+      "type": "multiple_choice",
+      "topic": "Synonyms & Antonyms",
+      "question": "Which word is closest in meaning to 'RESILIENT'?",
+      "context": "Local communities proved resilient in the aftermath of the severe storm.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Pessimistic about the future"
+        },
+        {
+          "key": "B",
+          "text": "Able to recover quickly from difficulties"
+        },
+        {
+          "key": "C",
+          "text": "Fragile and prone to damage"
+        },
+        {
+          "key": "D",
+          "text": "Rigid and uncompromising"
+        }
+      ],
+      "correctAnswer": "B",
+      "explanation": "'Resilient' means able to withstand or recover quickly from difficult conditions."
+    },
+    {
+      "id": 9,
+      "type": "multiple_choice",
+      "topic": "Advanced Vocabulary",
+      "question": "What does 'UBIQUITOUS' mean?",
+      "context": "Smartphones have become ubiquitous in modern society.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Present, appearing, or found everywhere"
+        },
+        {
+          "key": "B",
+          "text": "Extremely rare and endangered"
+        },
+        {
+          "key": "C",
+          "text": "Outdated and obsolete"
+        },
+        {
+          "key": "D",
+          "text": "Difficult to understand"
+        }
+      ],
+      "correctAnswer": "A",
+      "explanation": "'Ubiquitous' means present, appearing, or found everywhere simultaneously."
+    },
+    {
+      "id": 10,
+      "type": "multiple_choice",
+      "topic": "Word in Context",
+      "question": "Select the correct word: The author's latest novel received _______ praise from critics worldwide.",
+      "context": "Every single review was overwhelmingly positive.",
+      "options": [
+        {
+          "key": "A",
+          "text": "ambivalent"
+        },
+        {
+          "key": "B",
+          "text": "tentative"
+        },
+        {
+          "key": "C",
+          "text": "lukewarm"
+        },
+        {
+          "key": "D",
+          "text": "unanimous"
+        }
+      ],
+      "correctAnswer": "D",
+      "explanation": "'Unanimous' means fully in agreement or held by all individuals involved without dissent."
+    }
+  ],
+  "sets": [
+    {
+      "testTitle": "Academic Vocabulary · Set 1",
+      "testCode": "VOCAB-A101 · Bộ 1",
+      "durationMinutes": 15,
+      "passingScorePercent": 70,
+      "questions": [
+        {
+          "id": 1,
+          "type": "multiple_choice",
+          "topic": "Academic Vocabulary",
+          "question": "Choose the word that is closest in meaning to 'METICULOUS':",
+          "context": "The scientist conducted a meticulous investigation of all the laboratory samples.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Careful and precise"
+            },
+            {
+              "key": "B",
+              "text": "Hasty and careless"
+            },
+            {
+              "key": "C",
+              "text": "Aggressive and bold"
+            },
+            {
+              "key": "D",
+              "text": "Ambiguous and unclear"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "'Meticulous' means showing great attention to detail; very careful and precise."
+        },
+        {
+          "id": 2,
+          "type": "multiple_choice",
+          "topic": "Word in Context",
+          "question": "Fill in the blank: The mayor's speech was designed to _______ public anxiety following the crisis.",
+          "context": "The government aimed to calm nerves rather than cause panic.",
+          "options": [
+            {
+              "key": "A",
+              "text": "exacerbate"
+            },
+            {
+              "key": "B",
+              "text": "instigate"
+            },
+            {
+              "key": "C",
+              "text": "obfuscate"
+            },
+            {
+              "key": "D",
+              "text": "alleviate"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "'Alleviate' means to make suffering, deficiency, or a problem less severe or more bearable."
+        },
+        {
+          "id": 3,
+          "type": "multiple_choice",
+          "topic": "Synonyms & Antonyms",
+          "question": "Which of the following is an ANTONYM of 'CANDID'?",
+          "context": "She was completely candid about her past mistakes.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Genuine"
+            },
+            {
+              "key": "B",
+              "text": "Forthright"
+            },
+            {
+              "key": "C",
+              "text": "Deceitful"
+            },
+            {
+              "key": "D",
+              "text": "Frank"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "'Candid' means truthful, honest, and straightforward. 'Deceitful' is its direct opposite."
+        },
+        {
+          "id": 4,
+          "type": "multiple_choice",
+          "topic": "Academic Vocabulary",
+          "question": "What is the meaning of the word 'PRAGMATIC'?",
+          "context": "We need a pragmatic approach to solve this budgetary deficit.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Reluctant to take any action"
+            },
+            {
+              "key": "B",
+              "text": "Dealing with things sensibly and realistically"
+            },
+            {
+              "key": "C",
+              "text": "Based purely on abstract theories"
+            },
+            {
+              "key": "D",
+              "text": "Excessively emotional and irrational"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "'Pragmatic' refers to dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations."
+        },
+        {
+          "id": 5,
+          "type": "multiple_choice",
+          "topic": "Collocations",
+          "question": "Select the word that best completes the sentence: His constant complaints began to _______ on everyone's nerves.",
+          "context": "Idiomatic expression meaning to irritate or annoy somebody.",
+          "options": [
+            {
+              "key": "A",
+              "text": "grate"
+            },
+            {
+              "key": "B",
+              "text": "scratch"
+            },
+            {
+              "key": "C",
+              "text": "strike"
+            },
+            {
+              "key": "D",
+              "text": "pierce"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "The correct idiom is 'to grate on someone's nerves', meaning to annoy or irritate them intensely."
+        },
+        {
+          "id": 6,
+          "type": "multiple_choice",
+          "topic": "Advanced Vocabulary",
+          "question": "Which word describes a person who is 'ELOQUENT'?",
+          "context": "The ambassador delivered an eloquent defense of human rights.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Hesitant and quiet during debates"
+            },
+            {
+              "key": "B",
+              "text": "Extremely knowledgeable but arrogant"
+            },
+            {
+              "key": "C",
+              "text": "Quick-tempered and loud"
+            },
+            {
+              "key": "D",
+              "text": "Fluent and persuasive in speaking or writing"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "'Eloquent' means fluent or persuasive in speaking or writing; clearly expressing ideas in a powerful way."
+        },
+        {
+          "id": 7,
+          "type": "multiple_choice",
+          "topic": "Word in Context",
+          "question": "Choose the most appropriate word: The new evidence completely _______ the defendant of all criminal charges.",
+          "context": "The court declared him entirely innocent after reviewing the footage.",
+          "options": [
+            {
+              "key": "A",
+              "text": "prosecuted"
+            },
+            {
+              "key": "B",
+              "text": "subpoenaed"
+            },
+            {
+              "key": "C",
+              "text": "exonerated"
+            },
+            {
+              "key": "D",
+              "text": "implicated"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "'Exonerate' means to officially absolve someone from blame, fault, or wrongdoing."
+        },
+        {
+          "id": 8,
+          "type": "multiple_choice",
+          "topic": "Synonyms & Antonyms",
+          "question": "Which word is closest in meaning to 'RESILIENT'?",
+          "context": "Local communities proved resilient in the aftermath of the severe storm.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Pessimistic about the future"
+            },
+            {
+              "key": "B",
+              "text": "Able to recover quickly from difficulties"
+            },
+            {
+              "key": "C",
+              "text": "Fragile and prone to damage"
+            },
+            {
+              "key": "D",
+              "text": "Rigid and uncompromising"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "'Resilient' means able to withstand or recover quickly from difficult conditions."
+        },
+        {
+          "id": 9,
+          "type": "multiple_choice",
+          "topic": "Advanced Vocabulary",
+          "question": "What does 'UBIQUITOUS' mean?",
+          "context": "Smartphones have become ubiquitous in modern society.",
+          "options": [
+            {
+              "key": "A",
+              "text": "Present, appearing, or found everywhere"
+            },
+            {
+              "key": "B",
+              "text": "Extremely rare and endangered"
+            },
+            {
+              "key": "C",
+              "text": "Outdated and obsolete"
+            },
+            {
+              "key": "D",
+              "text": "Difficult to understand"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "'Ubiquitous' means present, appearing, or found everywhere simultaneously."
+        },
+        {
+          "id": 10,
+          "type": "multiple_choice",
+          "topic": "Word in Context",
+          "question": "Select the correct word: The author's latest novel received _______ praise from critics worldwide.",
+          "context": "Every single review was overwhelmingly positive.",
+          "options": [
+            {
+              "key": "A",
+              "text": "ambivalent"
+            },
+            {
+              "key": "B",
+              "text": "tentative"
+            },
+            {
+              "key": "C",
+              "text": "lukewarm"
+            },
+            {
+              "key": "D",
+              "text": "unanimous"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "'Unanimous' means fully in agreement or held by all individuals involved without dissent."
+        }
+      ]
+    },
+    {
+      "testTitle": "Academic Vocabulary · Set 2",
+      "testCode": "VOCAB-A102 · Bộ 2",
+      "durationMinutes": 15,
+      "passingScorePercent": 70,
+      "questions": [
+        {
+          "id": 1,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “corroborate” mean?",
+          "context": "The second experiment helped corroborate the initial finding.",
+          "options": [
+            {
+              "key": "A",
+              "text": "conceal from public view"
+            },
+            {
+              "key": "B",
+              "text": "contradict without evidence"
+            },
+            {
+              "key": "C",
+              "text": "express in simpler language"
+            },
+            {
+              "key": "D",
+              "text": "support with additional evidence"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “corroborate” means support with additional evidence."
+        },
+        {
+          "id": 2,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “empirical” mean?",
+          "context": "The article relies on empirical evidence gathered through observation.",
+          "options": [
+            {
+              "key": "A",
+              "text": "impossible to measure"
+            },
+            {
+              "key": "B",
+              "text": "deliberately misleading"
+            },
+            {
+              "key": "C",
+              "text": "based on observation or experiment"
+            },
+            {
+              "key": "D",
+              "text": "based only on tradition"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “empirical” means based on observation or experiment."
+        },
+        {
+          "id": 3,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “infer” mean?",
+          "context": "From the pattern in the data, researchers infer that temperatures are rising.",
+          "options": [
+            {
+              "key": "A",
+              "text": "prove a claim beyond any doubt"
+            },
+            {
+              "key": "B",
+              "text": "draw a conclusion from evidence"
+            },
+            {
+              "key": "C",
+              "text": "repeat a statement word for word"
+            },
+            {
+              "key": "D",
+              "text": "collect samples at random"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “infer” means draw a conclusion from evidence."
+        },
+        {
+          "id": 4,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “ambiguous” mean?",
+          "context": "The survey question was ambiguous, so respondents interpreted it differently.",
+          "options": [
+            {
+              "key": "A",
+              "text": "open to more than one interpretation"
+            },
+            {
+              "key": "B",
+              "text": "supported by every participant"
+            },
+            {
+              "key": "C",
+              "text": "extremely detailed and precise"
+            },
+            {
+              "key": "D",
+              "text": "unrelated to the subject"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “ambiguous” means open to more than one interpretation."
+        },
+        {
+          "id": 5,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “significant” mean?",
+          "context": "The analysis found a statistically significant difference between the groups.",
+          "options": [
+            {
+              "key": "A",
+              "text": "large enough to guarantee practical importance"
+            },
+            {
+              "key": "B",
+              "text": "identical in every participant"
+            },
+            {
+              "key": "C",
+              "text": "caused by a known intervention"
+            },
+            {
+              "key": "D",
+              "text": "unlikely to be due to chance under the stated model"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “significant” means unlikely to be due to chance under the stated model."
+        },
+        {
+          "id": 6,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “hypothesis” mean?",
+          "context": "The team proposed a hypothesis that could be tested in the laboratory.",
+          "options": [
+            {
+              "key": "A",
+              "text": "a summary of every publication"
+            },
+            {
+              "key": "B",
+              "text": "an instrument used to measure data"
+            },
+            {
+              "key": "C",
+              "text": "a testable proposed explanation"
+            },
+            {
+              "key": "D",
+              "text": "a result already established as fact"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “hypothesis” means a testable proposed explanation."
+        },
+        {
+          "id": 7,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “variable” mean?",
+          "context": "Researchers controlled each variable that might influence the result.",
+          "options": [
+            {
+              "key": "A",
+              "text": "an accidental spelling error"
+            },
+            {
+              "key": "B",
+              "text": "a factor that can change or be measured"
+            },
+            {
+              "key": "C",
+              "text": "a conclusion that cannot be questioned"
+            },
+            {
+              "key": "D",
+              "text": "a fixed reference list"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “variable” means a factor that can change or be measured."
+        },
+        {
+          "id": 8,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “replicate” mean?",
+          "context": "Another laboratory attempted to replicate the original study.",
+          "options": [
+            {
+              "key": "A",
+              "text": "repeat a study to check its findings"
+            },
+            {
+              "key": "B",
+              "text": "remove all uncertainty from a theory"
+            },
+            {
+              "key": "C",
+              "text": "replace observations with opinions"
+            },
+            {
+              "key": "D",
+              "text": "publish a study without reviewing it"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “replicate” means repeat a study to check its findings."
+        },
+        {
+          "id": 9,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “valid” mean?",
+          "context": "A valid measurement actually assesses the property it claims to measure.",
+          "options": [
+            {
+              "key": "A",
+              "text": "always producing the largest value"
+            },
+            {
+              "key": "B",
+              "text": "free from all possible human judgment"
+            },
+            {
+              "key": "C",
+              "text": "collected from the largest group"
+            },
+            {
+              "key": "D",
+              "text": "appropriate for measuring what is intended"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “valid” means appropriate for measuring what is intended."
+        },
+        {
+          "id": 10,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “bias” mean?",
+          "context": "The sampling method introduced bias into the results.",
+          "options": [
+            {
+              "key": "A",
+              "text": "a complete absence of evidence"
+            },
+            {
+              "key": "B",
+              "text": "a method for displaying data"
+            },
+            {
+              "key": "C",
+              "text": "a systematic tendency that can distort results"
+            },
+            {
+              "key": "D",
+              "text": "a perfectly random fluctuation"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “bias” means a systematic tendency that can distort results."
+        }
+      ]
+    },
+    {
+      "testTitle": "Academic Vocabulary · Set 3",
+      "testCode": "VOCAB-A103 · Bộ 3",
+      "durationMinutes": 15,
+      "passingScorePercent": 70,
+      "questions": [
+        {
+          "id": 1,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “allocate” mean?",
+          "context": "The university will allocate funding to several research teams.",
+          "options": [
+            {
+              "key": "A",
+              "text": "estimate after an event"
+            },
+            {
+              "key": "B",
+              "text": "combine into a single category"
+            },
+            {
+              "key": "C",
+              "text": "distribute for a particular purpose"
+            },
+            {
+              "key": "D",
+              "text": "withdraw without explanation"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “allocate” means distribute for a particular purpose."
+        },
+        {
+          "id": 2,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “synthesize” mean?",
+          "context": "The review will synthesize findings from studies in several disciplines.",
+          "options": [
+            {
+              "key": "A",
+              "text": "copy one source exactly"
+            },
+            {
+              "key": "B",
+              "text": "combine ideas into a coherent whole"
+            },
+            {
+              "key": "C",
+              "text": "ignore conflicting research"
+            },
+            {
+              "key": "D",
+              "text": "divide a document into pages"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “synthesize” means combine ideas into a coherent whole."
+        },
+        {
+          "id": 3,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “feasible” mean?",
+          "context": "The committee asked whether the proposal was feasible within the budget.",
+          "options": [
+            {
+              "key": "A",
+              "text": "possible to carry out in practice"
+            },
+            {
+              "key": "B",
+              "text": "certain to succeed in every case"
+            },
+            {
+              "key": "C",
+              "text": "unrelated to financial limits"
+            },
+            {
+              "key": "D",
+              "text": "designed only for specialists"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “feasible” means possible to carry out in practice."
+        },
+        {
+          "id": 4,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “substantial” mean?",
+          "context": "The policy led to a substantial reduction in energy use.",
+          "options": [
+            {
+              "key": "A",
+              "text": "too small to be measured"
+            },
+            {
+              "key": "B",
+              "text": "temporary and immediately reversed"
+            },
+            {
+              "key": "C",
+              "text": "dependent on a single opinion"
+            },
+            {
+              "key": "D",
+              "text": "considerable in amount or importance"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “substantial” means considerable in amount or importance."
+        },
+        {
+          "id": 5,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “discrepancy” mean?",
+          "context": "The auditors investigated a discrepancy between the two reports.",
+          "options": [
+            {
+              "key": "A",
+              "text": "an official approval"
+            },
+            {
+              "key": "B",
+              "text": "a repeated calculation"
+            },
+            {
+              "key": "C",
+              "text": "a difference that should not be present"
+            },
+            {
+              "key": "D",
+              "text": "a complete agreement"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “discrepancy” means a difference that should not be present."
+        },
+        {
+          "id": 6,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “explicit” mean?",
+          "context": "The instructions provide explicit criteria for selecting participants.",
+          "options": [
+            {
+              "key": "A",
+              "text": "known only to the author"
+            },
+            {
+              "key": "B",
+              "text": "clearly stated and leaving little doubt"
+            },
+            {
+              "key": "C",
+              "text": "hinted at but not stated"
+            },
+            {
+              "key": "D",
+              "text": "contradictory in every detail"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “explicit” means clearly stated and leaving little doubt."
+        },
+        {
+          "id": 7,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “derive” mean?",
+          "context": "The formula can be derived from the basic principles of the model.",
+          "options": [
+            {
+              "key": "A",
+              "text": "obtain through reasoning or calculation"
+            },
+            {
+              "key": "B",
+              "text": "reject without examination"
+            },
+            {
+              "key": "C",
+              "text": "hide within a footnote"
+            },
+            {
+              "key": "D",
+              "text": "apply without understanding"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “derive” means obtain through reasoning or calculation."
+        },
+        {
+          "id": 8,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “precede” mean?",
+          "context": "A review of previous work should precede the discussion of new results.",
+          "options": [
+            {
+              "key": "A",
+              "text": "occur at exactly the same time"
+            },
+            {
+              "key": "B",
+              "text": "replace completely"
+            },
+            {
+              "key": "C",
+              "text": "follow after an interval"
+            },
+            {
+              "key": "D",
+              "text": "come before in time or order"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “precede” means come before in time or order."
+        },
+        {
+          "id": 9,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “consistent” mean?",
+          "context": "The results were consistent with the predictions of the model.",
+          "options": [
+            {
+              "key": "A",
+              "text": "more complicated than"
+            },
+            {
+              "key": "B",
+              "text": "directly opposed to"
+            },
+            {
+              "key": "C",
+              "text": "in agreement with"
+            },
+            {
+              "key": "D",
+              "text": "entirely independent of"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “consistent” means in agreement with."
+        },
+        {
+          "id": 10,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “constrain” mean?",
+          "context": "Limited resources may constrain the scope of the project.",
+          "options": [
+            {
+              "key": "A",
+              "text": "guarantee the success of"
+            },
+            {
+              "key": "B",
+              "text": "restrict or limit"
+            },
+            {
+              "key": "C",
+              "text": "expand without limit"
+            },
+            {
+              "key": "D",
+              "text": "measure with precision"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “constrain” means restrict or limit."
+        }
+      ]
+    },
+    {
+      "testTitle": "Academic Vocabulary · Set 4",
+      "testCode": "VOCAB-A104 · Bộ 4",
+      "durationMinutes": 15,
+      "passingScorePercent": 70,
+      "questions": [
+        {
+          "id": 1,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “mitigate” mean?",
+          "context": "Planting trees can help mitigate some effects of urban heat.",
+          "options": [
+            {
+              "key": "A",
+              "text": "eliminate every possible cause of"
+            },
+            {
+              "key": "B",
+              "text": "make less severe"
+            },
+            {
+              "key": "C",
+              "text": "make more severe"
+            },
+            {
+              "key": "D",
+              "text": "measure for the first time"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “mitigate” means make less severe."
+        },
+        {
+          "id": 2,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “subsequent” mean?",
+          "context": "The subsequent analysis used a larger sample.",
+          "options": [
+            {
+              "key": "A",
+              "text": "occurring afterward"
+            },
+            {
+              "key": "B",
+              "text": "happening beforehand"
+            },
+            {
+              "key": "C",
+              "text": "performed at random"
+            },
+            {
+              "key": "D",
+              "text": "unrelated to any earlier event"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “subsequent” means occurring afterward."
+        },
+        {
+          "id": 3,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “coherent” mean?",
+          "context": "The essay presents a coherent argument supported by evidence.",
+          "options": [
+            {
+              "key": "A",
+              "text": "lengthy but unrelated to the question"
+            },
+            {
+              "key": "B",
+              "text": "based on personal attacks"
+            },
+            {
+              "key": "C",
+              "text": "deliberately difficult to read"
+            },
+            {
+              "key": "D",
+              "text": "logical and well organized"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “coherent” means logical and well organized."
+        },
+        {
+          "id": 4,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “preliminary” mean?",
+          "context": "These preliminary findings will be checked in a larger study.",
+          "options": [
+            {
+              "key": "A",
+              "text": "secret and unavailable to researchers"
+            },
+            {
+              "key": "B",
+              "text": "identical to the conclusion"
+            },
+            {
+              "key": "C",
+              "text": "initial and subject to further examination"
+            },
+            {
+              "key": "D",
+              "text": "final and impossible to revise"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “preliminary” means initial and subject to further examination."
+        },
+        {
+          "id": 5,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “disseminate” mean?",
+          "context": "The team plans to disseminate its findings through public reports.",
+          "options": [
+            {
+              "key": "A",
+              "text": "collect responses from participants"
+            },
+            {
+              "key": "B",
+              "text": "spread information to others"
+            },
+            {
+              "key": "C",
+              "text": "keep information confidential"
+            },
+            {
+              "key": "D",
+              "text": "question the accuracy of data"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “disseminate” means spread information to others."
+        },
+        {
+          "id": 6,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “attribute” mean?",
+          "context": "The authors attribute the improvement to changes in teaching methods.",
+          "options": [
+            {
+              "key": "A",
+              "text": "regard as caused by"
+            },
+            {
+              "key": "B",
+              "text": "show that it never happened"
+            },
+            {
+              "key": "C",
+              "text": "measure with a new instrument"
+            },
+            {
+              "key": "D",
+              "text": "describe without giving a reason"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “attribute” means regard as caused by."
+        },
+        {
+          "id": 7,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “robust” mean?",
+          "context": "The conclusion remained robust when the researchers changed their assumptions.",
+          "options": [
+            {
+              "key": "A",
+              "text": "dependent on one fragile assumption"
+            },
+            {
+              "key": "B",
+              "text": "guaranteed to be universally true"
+            },
+            {
+              "key": "C",
+              "text": "too vague to be examined"
+            },
+            {
+              "key": "D",
+              "text": "remaining reliable under varied conditions"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “robust” means remaining reliable under varied conditions."
+        },
+        {
+          "id": 8,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “retain” mean?",
+          "context": "The archive will retain the original records for future research.",
+          "options": [
+            {
+              "key": "A",
+              "text": "translate into another language"
+            },
+            {
+              "key": "B",
+              "text": "replace with estimates"
+            },
+            {
+              "key": "C",
+              "text": "keep or preserve"
+            },
+            {
+              "key": "D",
+              "text": "permanently destroy"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “retain” means keep or preserve."
+        },
+        {
+          "id": 9,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “fluctuate” mean?",
+          "context": "Rainfall levels fluctuate considerably from year to year.",
+          "options": [
+            {
+              "key": "A",
+              "text": "disappear permanently"
+            },
+            {
+              "key": "B",
+              "text": "rise and fall irregularly"
+            },
+            {
+              "key": "C",
+              "text": "remain exactly constant"
+            },
+            {
+              "key": "D",
+              "text": "decrease at a fixed rate"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “fluctuate” means rise and fall irregularly."
+        },
+        {
+          "id": 10,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “implication” mean?",
+          "context": "The report considers the implications of the policy for rural schools.",
+          "options": [
+            {
+              "key": "A",
+              "text": "a likely consequence or effect"
+            },
+            {
+              "key": "B",
+              "text": "a quotation copied from another report"
+            },
+            {
+              "key": "C",
+              "text": "a list of unrelated facts"
+            },
+            {
+              "key": "D",
+              "text": "a requirement that has already been met"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “implication” means a likely consequence or effect."
+        }
+      ]
+    },
+    {
+      "testTitle": "Academic Vocabulary · Set 5",
+      "testCode": "VOCAB-A105 · Bộ 5",
+      "durationMinutes": 15,
+      "passingScorePercent": 70,
+      "questions": [
+        {
+          "id": 1,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “analogous” mean?",
+          "context": "The authors describe an analogous process in another species.",
+          "options": [
+            {
+              "key": "A",
+              "text": "similar in relevant respects"
+            },
+            {
+              "key": "B",
+              "text": "completely unrelated"
+            },
+            {
+              "key": "C",
+              "text": "identical in every detail"
+            },
+            {
+              "key": "D",
+              "text": "occurring only once"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “analogous” means similar in relevant respects."
+        },
+        {
+          "id": 2,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “comprehensive” mean?",
+          "context": "The database provides a comprehensive overview of the available studies.",
+          "options": [
+            {
+              "key": "A",
+              "text": "limited to a single example"
+            },
+            {
+              "key": "B",
+              "text": "designed to hide key information"
+            },
+            {
+              "key": "C",
+              "text": "written without any sources"
+            },
+            {
+              "key": "D",
+              "text": "covering the subject broadly and thoroughly"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “comprehensive” means covering the subject broadly and thoroughly."
+        },
+        {
+          "id": 3,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “tentative” mean?",
+          "context": "The researchers offered a tentative explanation pending more data.",
+          "options": [
+            {
+              "key": "A",
+              "text": "impossible to understand"
+            },
+            {
+              "key": "B",
+              "text": "strongly opposed to all evidence"
+            },
+            {
+              "key": "C",
+              "text": "provisional and not yet certain"
+            },
+            {
+              "key": "D",
+              "text": "permanently established"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “tentative” means provisional and not yet certain."
+        },
+        {
+          "id": 4,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “quantify” mean?",
+          "context": "The study aims to quantify the effect of noise on concentration.",
+          "options": [
+            {
+              "key": "A",
+              "text": "predict without collecting evidence"
+            },
+            {
+              "key": "B",
+              "text": "express or measure as a number"
+            },
+            {
+              "key": "C",
+              "text": "describe only through anecdotes"
+            },
+            {
+              "key": "D",
+              "text": "remove from consideration"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “quantify” means express or measure as a number."
+        },
+        {
+          "id": 5,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “discrete” mean?",
+          "context": "The responses fall into three discrete categories.",
+          "options": [
+            {
+              "key": "A",
+              "text": "separate and distinct"
+            },
+            {
+              "key": "B",
+              "text": "continuous without boundaries"
+            },
+            {
+              "key": "C",
+              "text": "private or confidential"
+            },
+            {
+              "key": "D",
+              "text": "randomly selected"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “discrete” means separate and distinct."
+        },
+        {
+          "id": 6,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “emerge” mean?",
+          "context": "A new pattern began to emerge as more responses arrived.",
+          "options": [
+            {
+              "key": "A",
+              "text": "cease to exist immediately"
+            },
+            {
+              "key": "B",
+              "text": "be proved false"
+            },
+            {
+              "key": "C",
+              "text": "remain hidden indefinitely"
+            },
+            {
+              "key": "D",
+              "text": "become apparent"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “emerge” means become apparent."
+        },
+        {
+          "id": 7,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “hypothetical” mean?",
+          "context": "The class discussed a hypothetical scenario to test the theory.",
+          "options": [
+            {
+              "key": "A",
+              "text": "required by law"
+            },
+            {
+              "key": "B",
+              "text": "copied directly from a record"
+            },
+            {
+              "key": "C",
+              "text": "imagined for the purpose of discussion"
+            },
+            {
+              "key": "D",
+              "text": "already verified by observation"
+            }
+          ],
+          "correctAnswer": "C",
+          "explanation": "Here, “hypothetical” means imagined for the purpose of discussion."
+        },
+        {
+          "id": 8,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “salient” mean?",
+          "context": "The summary highlights the most salient features of the argument.",
+          "options": [
+            {
+              "key": "A",
+              "text": "impossible to describe"
+            },
+            {
+              "key": "B",
+              "text": "most noticeable or important"
+            },
+            {
+              "key": "C",
+              "text": "least relevant or visible"
+            },
+            {
+              "key": "D",
+              "text": "repeated without any change"
+            }
+          ],
+          "correctAnswer": "B",
+          "explanation": "Here, “salient” means most noticeable or important."
+        },
+        {
+          "id": 9,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “undermine” mean?",
+          "context": "Missing data can undermine confidence in the study’s conclusions.",
+          "options": [
+            {
+              "key": "A",
+              "text": "weaken or erode"
+            },
+            {
+              "key": "B",
+              "text": "strengthen beyond doubt"
+            },
+            {
+              "key": "C",
+              "text": "measure numerically"
+            },
+            {
+              "key": "D",
+              "text": "present in chronological order"
+            }
+          ],
+          "correctAnswer": "A",
+          "explanation": "Here, “undermine” means weaken or erode."
+        },
+        {
+          "id": 10,
+          "topic": "Academic Vocabulary",
+          "cefr": "B2/C1",
+          "question": "In this context, what does “consensus” mean?",
+          "context": "After discussion, the panel reached a consensus on the recommendations.",
+          "options": [
+            {
+              "key": "A",
+              "text": "a vote by one member alone"
+            },
+            {
+              "key": "B",
+              "text": "a detailed disagreement"
+            },
+            {
+              "key": "C",
+              "text": "an unpublished set of results"
+            },
+            {
+              "key": "D",
+              "text": "general agreement among a group"
+            }
+          ],
+          "correctAnswer": "D",
+          "explanation": "Here, “consensus” means general agreement among a group."
+        }
+      ]
+    }
+  ]
+}

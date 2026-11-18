@@ -1,0 +1,204 @@
+:root {font:1rem/1.5 system-ui,sans-serif;color:#21372f;background:#f5eedc}
+* {box-sizing:border-box}
+body {margin:0;padding:clamp(14px,5vw,48px)}
+main {max-width:540px;margin:auto;padding:clamp(18px,5vw,32px);background:#fff9ec;border:2px solid #285649;border-radius:16px}
+header {display:flex;align-items:center;justify-content:space-between}
+header img {width:90px;image-rendering:pixelated}
+a {color:#24564a}
+audio,input {width:100%}
+label {display:block;font-weight:700}
+input,button {font:inherit;padding:10px 12px;border:1px solid #596d62;border-radius:6px}
+button {margin-top:12px;background:#24564a;color:white;font-weight:700}
+footer {border-top:1px solid #c5c4ad;padding-top:14px;font-size:.88rem}
+#result {min-height:1.5em}
+select {width:100%;font:inherit;color:inherit;background:#fff9ec;border:1px solid #596d62;border-radius:6px;padding:10px}
+ 
+[hidden] {display:none!important}
+#skip {background:#fff9ec;color:#24564a}
+#result {font-size:1.12rem;overflow-wrap:anywhere}
+#result del {color:#9b3037} #result strong {color:#1e644d}
+footer {margin-top:20px}
+dialog {max-width:min(380px,92vw);border:2px solid #285649;border-radius:14px;color:inherit;background:#fff9ec;padding:20px}
+dialog::backdrop {background:#15292299}
+select {margin-bottom:10px}
+#preferences input[type=checkbox] {width:auto}
+#pause {font-size:1.25rem;min-width:44px;margin:0}
+#position {font-weight:700}
+#result {line-height:1.9}
+#menu-settings {background:#fff9ec;color:#24564a}
+#exercise h2 {font-size:1.1rem}
+
+#bar {height:18px;display:flex;overflow:hidden;border-radius:8px;background:#d8d6c7}
+#bar .green {background:#278653} #bar .yellow {background:#edb93f} #bar .red {background:#c54b40}
+#translation {border-left:3px solid #548976;padding-left:10px}
+
+main[data-scene="menu"] {padding-block:clamp(28px,7vh,72px)}
+main[data-scene="menu"] header {justify-content:center;margin-bottom:28px}
+main[data-scene="menu"] header img {width:min(65%,240px)}
+#menu {display:grid;gap:10px;max-width:320px;margin:auto}
+#menu :is(button,a) {display:grid;place-items:center;margin:0;min-height:46px;border:2px solid #24564a;border-radius:8px;font:inherit;font-weight:700;text-decoration:none}
+#hub {color:#793c39;background:#fff9ec}
+#last-block {font-size:.94rem}
+
+@media (pointer:coarse) { .keyboard-tip {display:none} }
+
+.practice-actions,.panel-actions {display:grid;gap:6px;align-items:stretch;margin-top:12px}
+.practice-actions {grid-template-columns:repeat(3,minmax(0,1fr))}
+.panel-actions {grid-template-columns:repeat(2,minmax(0,1fr))}
+.practice-actions button,.panel-actions button {min-width:0;margin:0;padding:8px 4px;min-height:44px;line-height:1.2}
+@media(max-width:480px) { .keyboard-tip {display:none} }
+
+.picker-actions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.picker-actions button {min-height:48px;margin:0;padding:8px}
+#close-picker,#back-menu {background:#fff9ec;color:#24564a}
+#pause {display:grid;place-items:center;background:transparent;border:0;padding:0;width:48px;height:48px}
+.pause-icon {width:32px;height:32px;background:url('../arcade/assets/system-controls.png') 0 0 / 400% 300% no-repeat;image-rendering:pixelated}
+@media(hover:hover) {#pause:hover .pause-icon {background-position:33.333333% 0}}
+#pause:active .pause-icon {background-position:66.666667% 0}
+#pause:disabled .pause-icon {background-position:100% 0}
+
+/* Stretch the plain center; keep both raster end caps at native width. */
+main :is(#menu, #picker, #exercise, #summary, #panel, main) .sprite-action,
+main > #retry.sprite-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+  background: transparent;
+  color: #163c36;
+  border: solid transparent;
+  border-width: 0 8px;
+  border-image: var(--frame,var(--art-normal)) 0 8 fill / 0 8px stretch;
+  border-radius: 0;
+  padding: 6px 3px;
+  line-height: 1.15;
+  text-align: center;
+  image-rendering: pixelated;
+  cursor: pointer;
+}
+
+.sprite-action::before {
+  content:"";
+  flex:0 0 var(--icon-size,24px);
+  height:var(--icon-size,24px);
+  background:url('../arcade/assets/ui_spritesheet.png') var(--icon-x,20%) var(--icon-y,0%) / 600% 400% no-repeat;
+  image-rendering:pixelated;
+}
+#menu-settings {--icon-x:40%}
+#hub {--icon-x:0%}
+#close-picker,#back-menu {--icon-x:60%;--icon-y:66.666667%}
+#replay,#retry,#restart {--icon-x:100%;--icon-y:100%}
+.practice-actions [type="submit"] {--icon-x:100%;--icon-y:66.666667%}
+#skip,#next {--icon-x:20%;--icon-y:100%}
+#done {--icon-x:0%;--icon-y:33.333333%}
+
+@media (hover:hover) {
+  main .sprite-action:enabled:hover, main a.sprite-action:hover {--frame:var(--art-hover)}
+}
+main .sprite-action:focus-visible {outline:2px solid #267960;outline-offset:1px}
+main :is(#menu,#picker,#exercise,#summary,#panel,main) .sprite-action:active, main > #retry.sprite-action:active {--frame:var(--art-pressed);color:#fff9df}
+main button.sprite-action:disabled {--frame:var(--art-disabled);color:#4e5750;cursor:default}
+
+@media(max-width:360px) {
+  main #exercise .practice-actions .sprite-action {--icon-size:20px;border-width:0 5px;border-image-width:0 5px;font-size:.87rem;gap:1px;padding-inline:0}
+}
+
+/* Practice history section */
+#history {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+#history[hidden] {
+  display: none !important;
+}
+.history-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.history-controls select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+.history-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-muted, #888);
+  font-style: italic;
+}
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color, rgba(128, 128, 128, 0.25));
+  border-radius: 8px;
+  background: var(--card-bg, rgba(255, 255, 255, 0.04));
+}
+.history-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.history-item-title {
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+.history-tag {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.tag-completed {
+  background: rgba(46, 160, 67, 0.2);
+  color: #3fb950;
+  border: 1px solid rgba(46, 160, 67, 0.4);
+}
+.tag-progress {
+  background: rgba(210, 153, 34, 0.2);
+  color: #e3b341;
+  border: 1px solid rgba(210, 153, 34, 0.4);
+}
+.history-item-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted, #888);
+}
+.history-bar {
+  display: flex;
+  height: 10px;
+  width: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+  background: rgba(128, 128, 128, 0.2);
+}
+.bar-seg {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+.seg-first { background-color: #2ea043; }
+.seg-replayed { background-color: #d29922; }
+.seg-skipped { background-color: #f85149; }
+.seg-remaining { background-color: rgba(128, 128, 128, 0.35); }
+.history-breakdown {
+  font-size: 0.85rem;
+  color: var(--text-muted, #aaa);
+}

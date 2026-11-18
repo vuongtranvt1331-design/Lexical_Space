@@ -23,7 +23,8 @@ def build():
     versioned = [*list((ROOT / 'suite').rglob('*.js')), *list((ROOT / 'suite').rglob('*.css'))]
     versioned += [ROOT / name for name in (
         'js/features/loading.js', 'js/features/appearance.js', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js',
-        'apps/arcade/js/arcade-2.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
+        'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
+        'apps/arcade/js/arcade-2.js', 'apps/arcade/js/game-order.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
         'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
         'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
@@ -55,7 +56,7 @@ def build():
             write_if_changed(page, updated)
 
     # Icon-only controls must be visible on the first offline game launch.
-    core = ['./', './apps/arcade/assets/audio/game-open.mp3', './apps/arcade/assets/audio/game-switch.mp3', './apps/arcade/assets/audio/menu-select.mp3', './apps/arcade/assets/audio/menu-exit.mp3', './apps/arcade/assets/audio/game-unavailable.mp3', './apps/arcade/assets/ui_spritesheet.png',
+    core = ['./', './apps/quick-ears/button-sprites.png', './apps/arcade/assets/audio/game-open.mp3', './apps/arcade/assets/audio/game-switch.mp3', './apps/arcade/assets/audio/menu-select.mp3', './apps/arcade/assets/audio/menu-exit.mp3', './apps/arcade/assets/audio/game-unavailable.mp3', './apps/arcade/assets/ui_spritesheet.png',
             './apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png', './apps/arcade/assets/action-glyphs.png', './apps/arcade/assets/system-controls.png']
     core.extend('./apps/' + module + '/assets/action-buttons.png'
                 for module in ('arcade', 'sky-dominators', 'quick-drawn', 'poker'))
@@ -80,7 +81,7 @@ def build():
     release = {'name': 'SpaceSuite', 'lexicalVersion': VERSION,
                'date': datetime.now(timezone(timedelta(hours=7))).date().isoformat(),
                'root': 'LexicalSpace-project',
-               'modules': ['lexical', 'grammar', 'arcade', 'quick-drawn', 'sky-dominators', 'poker'],
+               'modules': ['lexical', 'grammar', 'arcade', 'quick-drawn', 'sky-dominators', 'poker', 'vocabulary-test'],
                'cacheVersion': digest}
     write_if_changed(ROOT / 'suite/release.json', json.dumps(release, indent=2))
     print(json.dumps({'version': VERSION, 'cache': digest, 'coreFiles': len(core),

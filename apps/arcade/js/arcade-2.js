@@ -39,8 +39,8 @@
           osc.type = "triangle";
           osc.frequency.setValueAtTime(480, now);
           osc.frequency.exponentialRampToValueAtTime(960, now + 0.05);
-          gain.gain.setValueAtTime(0.08 * this.volume, now);
-          gain.gain.exponentialRampToValueAtTime(0.001 * this.volume, now + 0.06);
+          gain.gain.setValueAtTime(0.08 * SpaceEffects.gain(this.volume), now);
+          gain.gain.exponentialRampToValueAtTime(0.001 * SpaceEffects.gain(this.volume), now + 0.06);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
           osc.start(now);
@@ -109,7 +109,24 @@
       function createHubControls() {
         const carousel = document.querySelector('[data-game-carousel]');
         const tiles = [...document.querySelectorAll('[data-game-tile]')];
-        carousel.parentElement.querySelector('[data-library-count]').textContent = tiles.length + (tiles.length === 1 ? ' game' : ' games');
+        if (['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
+          const demo = tiles.find(tile => tile.dataset.gameName === 'Quick Ears');
+          const cover = demo?.querySelector('button.game-cover');
+          if (cover) {
+            const link = document.createElement('a');
+            link.href = '../quick-ears/';
+            link.className = 'game-cover mobile-btn-play';
+            link.dataset.gameLaunch = '';
+            link.dataset.loaderGame = 'quick-ears';
+            link.setAttribute('aria-label', 'Play Quick Ears local preview');
+            link.append(cover.querySelector('img'));
+            cover.replaceWith(link);
+            demo.classList.remove('is-coming-soon');
+            demo.removeAttribute('tabindex');
+            demo.setAttribute('aria-label', 'Quick Ears local preview');
+          }
+        }
+        carousel.parentElement.querySelector('[data-library-count]').textContent = tiles.length + (tiles.length === 1 ? ' application' : ' applications');
         const previous = document.querySelector('[data-game-previous]');
         const next = document.querySelector('[data-game-next]');
         const play = document.querySelector('[data-hub-play]');
@@ -136,7 +153,7 @@
           volumeValue.textContent = volumeSlider.value + '%';
           volumeSlider.setAttribute('aria-valuetext', volumeValue.textContent);
           for (const clip of soundClips) {
-            clip.volume = audio.volume;
+            clip.volume = SpaceEffects.gain(audio.volume) * (clip === switchSound ? 0.5 : 1.0);
             clip.muted = !enabled || audio.volume === 0;
           }
           soundIcon.classList.toggle('icon-sound-on', enabled);
@@ -207,6 +224,15 @@
           playLabel.textContent = playable ? 'Play' : 'Coming soon';
           summary.textContent = tile.dataset.gameName + ' selected. ' + tile.dataset.gameDescription;
         }
+        function triggerTileLift(tile) {
+          const cover = tile?.querySelector('.game-cover');
+          if (!cover || tile.classList.contains('ring-edge')) return;
+          cover.classList.remove('is-lifting');
+          void cover.offsetWidth;
+          cover.classList.add('is-lifting');
+          setTimeout(() => { cover.classList.remove('is-lifting'); }, 500);
+        }
+
         function settle(target, focus = false, arrow = false, onSettled) {
           cancelAnimationFrame(frame);
           const start = position, distance = target - start;
@@ -216,6 +242,7 @@
           function finish() {
             paint(target);
             frame = 0;
+            triggerTileLift(tiles[selected]);
             onSettled?.();
             if (focus) (tiles[selected].querySelector('[data-game-launch]') || tiles[selected]).focus({preventScroll:true});
           }
@@ -243,6 +270,7 @@
         }
         function launchSelected() {
           if (!ready || dialog.open) return;
+          triggerTileLift(tiles[selected]);
           // Always reuse the original launch anchor and its topic validation.
           const link = tiles[selected].querySelector('[data-game-launch]');
           if (link) { link.click(); return; }
@@ -282,6 +310,7 @@
           const link = tile.querySelector('[data-game-launch]');
           link?.addEventListener('click', event => {
             select(index);
+            if (index === selected) triggerTileLift(tile);
             if (!ready) event.preventDefault();
           });
         });
@@ -409,6 +438,8 @@
             ? `https://vuongtranvt1331-design.github.io/Poker/${queryString}` : `../poker/${queryString}`;
           const asUrl = window.SpaceSuite ? SpaceSuite.href('sky-dominators', {mode, topic}) : isGitHubPages
             ? `https://vuongtranvt1331-design.github.io/Sky_Dominators/${queryString}` : `../sky-dominators/${queryString}`;
+          document.getElementById('btnPlayGrammar').href = window.SpaceSuite ? SpaceSuite.href('grammar', {mode, topic: mode === 'topic' ? topic : ''}) : '../grammar/' + queryString;
+          document.getElementById('btnPlayVocabTest').href = window.SpaceSuite ? SpaceSuite.href('vocabulary-test', {mode, topic: mode === 'topic' ? topic : ''}) : '../vocabulary-test/' + queryString;
           btnQD.href = qdUrl;
           btnPK.href = pkUrl;
           btnAS.href = asUrl;
@@ -443,45 +474,60 @@
           switchSound.pause();
           const controller = new AbortController();
           pendingLaunch = controller;
-          const loader = document.createElement('section');
-          loader.className = 'game-logo-loader';
-          loader.dataset.gameLogoLoader = button.dataset.loaderGame;
-          loader.setAttribute('role', 'status');
-          const logo = button.querySelector('img').cloneNode();
-          logo.removeAttribute('aria-hidden');
-          logo.alt = 'Loading ' + button.closest('[data-game-tile]').dataset.gameName;
-          loader.append(logo);
-          document.body.append(loader);
-          let timer;
           const options = {once:true, signal:controller.signal};
+          let timer;
           function finish() {
             if (controller.signal.aborted) return;
             location.assign(button.href);
           }
+          let loader;
           function cancel() {
             controller.abort();
-            loader.remove();
+            loader?.remove();
             clearTimeout(timer);
             launchSound.pause();
             pendingLaunch = null;
           }
           window.addEventListener('pagehide', cancel, options);
-          if (audio.muted || !audio.volume || launchSound.error) { finish(); return; }
-          launchSound.addEventListener('ended', finish, options);
-          launchSound.addEventListener('error', finish, options);
-          // A blocked audio device or a stalled connection must not trap the player.
-          timer = setTimeout(finish, 1800);
-          launchSound.addEventListener('playing', () => {
-            clearTimeout(timer);
-            const duration = Number.isFinite(launchSound.duration) ? launchSound.duration : 10;
-            timer = setTimeout(finish, duration * 1000 + 1500);
-          }, options);
-          launchSound.currentTime = 0;
-          launchSound.play().catch(finish);
+
+          if (!audio.muted && audio.volume && !launchSound.error) {
+            launchSound.addEventListener('ended', finish, options);
+            launchSound.addEventListener('error', finish, options);
+            timer = setTimeout(finish, 1800);
+            launchSound.addEventListener('playing', () => {
+              clearTimeout(timer);
+              const duration = Number.isFinite(launchSound.duration) ? launchSound.duration : 10;
+              timer = setTimeout(finish, duration * 1000 + 1500);
+            }, options);
+            launchSound.currentTime = 0;
+            launchSound.play().catch(finish);
+          }
+
+          const showLoader = () => {
+            if (controller.signal.aborted) return;
+            loader = document.createElement('section');
+            loader.className = 'game-logo-loader';
+            loader.dataset.gameLogoLoader = button.dataset.loaderGame;
+            loader.setAttribute('role', 'status');
+            const logo = button.querySelector('img').cloneNode();
+            logo.removeAttribute('aria-hidden');
+            logo.alt = 'Loading ' + button.closest('[data-game-tile]').dataset.gameName;
+            loader.append(logo);
+            document.body.append(loader);
+            if (audio.muted || !audio.volume || launchSound.error) {
+              finish();
+            }
+          };
+
+          if (reduceMotion.matches) {
+            showLoader();
+          } else {
+            setTimeout(showLoader, 500);
+          }
         }
         document.querySelectorAll('.mobile-btn-play').forEach(button => {
           button.addEventListener('click', event => {
-            if (selectedMode === 'topic' && !selectedTopic) {
+            if (!['grammar', 'vocab-test'].includes(button.dataset.loaderGame) && selectedMode === 'topic' && !selectedTopic) {
               event.preventDefault();
               audio.playBlip();
               modeWarningMsg.style.display = 'block';

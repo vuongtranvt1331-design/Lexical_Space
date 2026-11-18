@@ -2,8 +2,18 @@
 from pathlib import Path
 from http.server import ThreadingHTTPServer,SimpleHTTPRequestHandler
 import argparse,webbrowser,sys
+from tools.quick_ears_lessons import read_lesson
 ROOT=Path(__file__).resolve().parent
 class Handler(SimpleHTTPRequestHandler):
+ def do_GET(self):
+  prefix='/apps/quick-ears/api/lesson/'
+  if not self.path.startswith(prefix):return super().do_GET()
+  try:body=read_lesson(self.path[len(prefix):])
+  except KeyError:return self.send_error(404,'Unknown lesson')
+  except (OSError, ValueError, TypeError):return self.send_error(502,'Lesson unavailable')
+  self.send_response(200);self.send_header('Content-Type','application/json; charset=utf-8')
+  self.send_header('Cache-Control','no-store');self.send_header('Content-Length',str(len(body)))
+  self.end_headers();self.wfile.write(body)
  def __init__(self,*a,**kw):super().__init__(*a,directory=str(ROOT),**kw)
  def end_headers(self):
   if self.path.split('?')[0].endswith(('/','service-worker.js','index.html','manifest.webmanifest')):self.send_header('Cache-Control','no-cache')

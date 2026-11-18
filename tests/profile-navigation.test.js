@@ -135,10 +135,10 @@ test('login, profile switch and sign-out restore only the selected profile’s q
     assert.equal(menuToggle.innerHTML, practiceIcon);
     assert.equal(nav('view-stats'), null);
     assert.equal(nav('view-settings'), null);
-    const grammar = $('btn-drawer-grammarspace'), arcade = $('btn-drawer-arcadespace');
-    assert.equal(grammar.href, 'http://localhost:8769/apps/grammar/');
+    const arcade = $('btn-drawer-arcadespace');
+    assert.equal($('btn-drawer-grammarspace'), null);
     assert.equal(arcade.href, 'http://localhost:8769/apps/arcade/');
-    assert.deepEqual([grammar, arcade].map(link => link.textContent.trim()), ['GrammarSpace', 'ArcadeSpace']);
+    assert.equal(arcade.textContent.trim(), 'ArcadeSpace');
     const footer = $('drawer').lastElementChild;
     assert.equal(footer.tagName, 'FOOTER');
     assert.match(footer.textContent, /LexicalSpace v\d+\.\d+\.\d+/);

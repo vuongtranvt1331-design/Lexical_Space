@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#F5EEDC">
   <title>ArcadeSpace — Game Library</title>
-  <script src="../../suite/js/core.js?v=43.19.0-4ba1a9ac80"></script>
+  <script src="../../suite/js/effects-volume.js?v=44.3.0-ddd24e7a19"></script>
+    <script src="../../suite/js/core.js?v=44.3.0-190dbe27a9"></script>
   <script src="./js/appearance.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../suite/css/components.css?v=43.19.0-69a13ed7c3">
-  <link rel="stylesheet" href="./css/arcade-1.css?v=43.19.0-c93bcd877e">
-  <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=43.19.0-2a571df59e"></noscript>
+  <link rel="stylesheet" href="../../suite/css/components.css?v=44.3.0-69a13ed7c3">
+  <link rel="stylesheet" href="./css/arcade-1.css?v=44.3.0-49fdc26f88">
+  <noscript><link rel="stylesheet" href="../../suite/css/no-script.css?v=44.3.0-2a571df59e"></noscript>
   <link rel="manifest" href="../../manifest.webmanifest">
   <link rel="apple-touch-icon" href="../../assets/icons/icon-192.png">
   <script src="./assets/lexical-vocabulary.js"></script>
-  <script defer src="../../js/core/offline.js?v=43.19.0-39c886b7ac"></script>
-  <link rel="stylesheet" href="../../suite/css/game-logo-loader.css?v=43.19.0-f0a2c333e0">
-  <link rel="stylesheet" href="../../suite/css/loader.css?v=43.19.0-1112a32a51">
-  <script defer src="../../js/features/loading.js?v=43.19.0-0ab2d880db"></script>
-<link rel="stylesheet" href="../../suite/css/game-icons.css?v=43.19.0-18940026b2"><link rel="stylesheet" href="./css/action-frames.css?v=43.19.0-c3a3b6e058"></head>
+  <script defer src="../../js/core/offline.js?v=44.3.0-39c886b7ac"></script>
+  <link rel="stylesheet" href="../../suite/css/game-logo-loader.css?v=44.3.0-f0a2c333e0">
+  <link rel="stylesheet" href="../../suite/css/loader.css?v=44.3.0-1112a32a51">
+  <script defer src="../../js/features/loading.js?v=44.3.0-0ab2d880db"></script>
+<link rel="stylesheet" href="../../suite/css/game-icons.css?v=44.3.0-18940026b2"><link rel="stylesheet" href="./css/action-frames.css?v=44.3.0-c3a3b6e058"></head>
 <body>
   <audio data-unavailable-sound preload="auto" src="./assets/audio/game-unavailable.mp3" hidden></audio>
   <audio data-switch-sound preload="auto" src="./assets/audio/game-switch.mp3" hidden></audio>
@@ -40,15 +41,13 @@
     <main class="game-library" aria-label="Game library">
       <p class="library-count" data-library-count></p>
       <div class="game-carousel" data-game-carousel aria-label="Choose a game with the left and right arrow keys">
-        <article class="game-tile is-selected" data-game-tile data-game-name="Sky Dominators" data-game-description="Vocabulary dogfights" data-game-index="0"><a id="btnPlayAirStrike" data-loader-game="sky" class="game-cover mobile-btn-play" href="../sky-dominators/" aria-label="Play Sky Dominators" data-game-launch><img src="./assets/logo/sky_dominators_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Vocabulary dogfights</p></article>
-        <article class="game-tile" data-game-tile data-game-name="Word Battles" data-game-description="Word duels &amp; chess" data-game-index="1"><a id="btnPlayQuickDrawn" data-loader-game="word-battles" class="game-cover mobile-btn-play" href="../quick-drawn/" aria-label="Play Word Battles" data-game-launch><img src="./assets/logo/word_battles_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Word duels &amp; chess</p></article>
-        <article class="game-tile" data-game-tile data-game-name="Wild West Poker" data-game-description="Synonym card matches" data-game-index="2"><a id="btnPlayPoker" data-loader-game="poker" class="game-cover mobile-btn-play" href="../poker/" aria-label="Play Wild West Poker" data-game-launch><img src="./assets/logo/wild_west_poker_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption">Synonym card matches</p></article>
-        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Farming game, coming soon" data-game-tile data-game-name="Coming Soon" data-game-description="A farming adventure in the making" data-game-index="3"><button id="btnInsertCartridge" class="game-cover" type="button" disabled aria-disabled="true" aria-label="Farming game — coming soon"><img src="./assets/logo/coming_soon_farm.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">A farming adventure in the making</p></article>
-        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Quiz — coming soon" data-game-tile data-game-name="Quiz" data-game-description="Vocabulary quiz show" data-game-index="4"><button class="game-cover" type="button" disabled aria-label="Quiz — coming soon"><img src="./assets/logo/quiz.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Vocabulary quiz show</p></article>
-        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Vocabulary Test — coming soon" data-game-tile data-game-name="Vocabulary Test" data-game-description="Test your vocabulary" data-game-index="5"><button class="game-cover" type="button" disabled aria-label="Vocabulary Test — coming soon"><img src="./assets/logo/vocabulary_test.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Test your vocabulary</p></article>
-        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Spellsmith — coming soon" data-game-tile data-game-name="Spellsmith" data-game-description="Forge words from letters" data-game-index="6"><button class="game-cover" type="button" disabled aria-label="Spellsmith — coming soon"><img src="./assets/logo/spellsmith.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Forge words from letters</p></article>
-        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Fist of Legends — coming soon" data-game-tile data-game-name="Fist of Legends" data-game-description="Ride with Thánh Gióng" data-game-index="7"><button class="game-cover" type="button" disabled aria-label="Fist of Legends — coming soon"><img src="./assets/logo/fist_of_legends.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Ride with Thánh Gióng</p></article>
-        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Quick Ears — coming soon" data-game-tile data-game-name="Quick Ears" data-game-description="Listen and fill in the answer" data-game-index="8"><button class="game-cover" type="button" disabled aria-label="Quick Ears — coming soon"><img src="./assets/logo/quick_ears.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption">Listen and fill in the answer</p></article>
+        <article class="game-tile is-selected" data-game-tile data-game-name="Sky Dominators" data-game-description="Pilot a fighter jet in vocabulary dogfights." data-game-index="0"><a id="btnPlayAirStrike" data-loader-game="sky" class="game-cover mobile-btn-play" href="../sky-dominators/" aria-label="Play Sky Dominators" data-game-launch><img src="./assets/logo/sky_dominators_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption"><strong>Sky Dominators</strong><span>Pilot a fighter jet in vocabulary dogfights.</span></p></article>
+        <article class="game-tile" data-game-tile data-game-name="Word Battles" data-game-description="Challenge a friend to a word duel or chess." data-game-index="1"><a id="btnPlayQuickDrawn" data-loader-game="word-battles" class="game-cover mobile-btn-play" href="../quick-drawn/" aria-label="Play Word Battles" data-game-launch><img src="./assets/logo/word_battles_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption"><strong>Word Battles</strong><span>Challenge a friend to a word duel or chess.</span></p></article>
+        <article class="game-tile" data-game-tile data-game-name="Wild West Poker" data-game-description="Match synonyms to win poker chips." data-game-index="2"><a id="btnPlayPoker" data-loader-game="poker" class="game-cover mobile-btn-play" href="../poker/" aria-label="Play Wild West Poker" data-game-launch><img src="./assets/logo/wild_west_poker_logo.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption"><strong>Wild West Poker</strong><span>Match synonyms to win poker chips.</span></p></article>
+        <article class="game-tile" data-game-tile data-game-name="Vocabulary Test" data-game-description="Test your vocabulary in a timed exam." data-game-index="3"><a id="btnPlayVocabTest" data-loader-game="vocab-test" class="game-cover mobile-btn-play" href="../vocabulary-test/" aria-label="Play Vocabulary Test" data-game-launch><img src="./assets/logo/vocabulary_test.png" width="1254" height="1254" alt="Vocabulary Test" aria-hidden="true" draggable="false"></a><p class="game-caption"><strong>Vocabulary Test</strong><span>Test your vocabulary in a timed exam.</span></p></article>
+        <article class="game-tile" data-game-tile data-game-name="Grammar Space" data-game-description="Practice grammar in an interactive notebook." data-game-index="4"><a id="btnPlayGrammar" data-loader-game="grammar" class="game-cover mobile-btn-play" href="../grammar/" aria-label="Play Grammar Space" data-game-launch><img src="./assets/logo/grammar_space.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></a><p class="game-caption"><strong>Grammar Space</strong><span>Practice grammar in an interactive notebook.</span></p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Quick Ears — coming soon" data-game-tile data-game-name="Quick Ears" data-game-description="Listen to a sentence and type what you hear." data-game-index="5"><button class="game-cover" type="button" disabled aria-label="Quick Ears — coming soon"><img src="./assets/logo/quick_ears.png" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption"><strong>Quick Ears</strong><span>Listen to a sentence and type what you hear.</span></p></article>
+        <article class="game-tile is-coming-soon" tabindex="-1" aria-label="Farming game, coming soon" data-game-tile data-game-name="Farming Game" data-game-description="A farming adventure in the making." data-game-index="6"><button id="btnInsertCartridge" class="game-cover" type="button" disabled aria-disabled="true" aria-label="Farming game — coming soon"><img src="./assets/logo/coming_soon_farm.png" width="1254" height="1254" alt="" aria-hidden="true" draggable="false"></button><p class="game-caption"><strong>Farming Game</strong><span>A farming adventure in the making.</span></p></article>
       </div>
       <p class="sr-only" data-selection-summary aria-live="polite" aria-atomic="true">Sky Dominators selected.</p>
     </main>
@@ -56,6 +55,7 @@
       <button type="button" class="dock-item" data-game-previous aria-label="Previous game"><span class="pixel-icon icon-previous" aria-hidden="true"></span></button>
       <a id="btnBackToLS" class="dock-item" href="../../" aria-label="Return to LexicalSpace"><span class="pixel-icon icon-home" aria-hidden="true"></span><span class="dock-label">Home</span></a>
       <button class="dock-item dock-play" type="button" data-hub-play disabled aria-label="Play Sky Dominators"><span class="pixel-icon icon-play" aria-hidden="true"></span><span class="dock-label" data-play-label>Play</span></button>
+      <button class="dock-item" type="button" data-open-game-order aria-label="Reorder games" aria-pressed="false"><span class="pixel-icon icon-edit" aria-hidden="true"></span><span class="dock-label">Order</span></button>
       <button class="dock-item" type="button" data-open-settings aria-haspopup="dialog" aria-label="Open settings"><span class="pixel-icon icon-settings" aria-hidden="true"></span><span class="dock-label">Settings</span></button>
       <button type="button" class="dock-item" data-game-next aria-label="Next game"><span class="pixel-icon icon-next" aria-hidden="true"></span></button>
     </nav><p class="keyboard-hint">Left / Right to select · Enter to play</p></footer>
@@ -76,6 +76,8 @@
     </label>
     <button type="button" class="settings-done" data-close-settings data-action-face="main">Done</button>
   </dialog>
-  <script src="./js/arcade-2.js?v=43.19.0-bf710493a5"></script>
+
+  <script defer src="./js/game-order.js?v=44.3.0-d5895386e6"></script>
+  <script src="./js/arcade-2.js?v=44.3.0-ce2b3fb54c"></script>
 </body>
 </html>

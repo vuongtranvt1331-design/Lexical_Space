@@ -92,3 +92,10 @@ Game system actions use transparent pixel icons across all three games. Keyboard
 ## 43.7.0 — 2026-11-18
 
 Sky Dominators uses a full mobile field, floating left stick, manual fire up to five volleys per second, safe-area HUD and a right-hand skill control. Arcade return controls share the Hub exit art across games. Removed the remaining obsolete cowboy audio notice and score-key declaration from Word Battles.
+
+
+## 44.0.0 ? 2026-11-18
+
+Grammar Space is available from the Arcade Hub. Vocabulary Test uses the LexicalSpace Ivory, Mist, and Plum themes, with a timed assessment, question navigation, review, and teacher JSON import. The installed app identity and existing data ownership remain unchanged.
+
+Teachers can use `apps/vocabulary-test/assets/vocabulary_test_bank.json` as the custom-test format. Each question needs a prompt, four options keyed A?D, and a matching `correctAnswer`; `topic`, `context`, `explanation`, and `cefr` are optional. `durationMinutes` defaults to 15.

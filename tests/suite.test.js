@@ -12,7 +12,7 @@ async function fixture({tab='Alice',saved='Bob',url='https://example.test/Lexica
 }
 test('all six modules stay in the same installed app, preserving topic/user and bounded return URL',async()=>{
  const d=await fixture(),a=d.window.SpaceSuite;
- for(const name of Object.keys(a.paths)){const u=new URL(a.href(name,{mode:'topic',topic:'People & Places'}));assert.equal(u.origin,'https://example.test');assert.ok(u.pathname.startsWith('/Lexical_Space/'));assert.equal(u.searchParams.get('user'),'Alice');assert.equal(u.searchParams.get('topic'),'People & Places');if(['poker','quick-drawn','sky-dominators'].includes(name)){const back=new URL(u.searchParams.get('returnUrl'));assert.equal(back.pathname,'/Lexical_Space/apps/arcade/');assert.equal(back.searchParams.has('returnUrl'),false)}}
+ for(const name of Object.keys(a.paths)){const u=new URL(a.href(name,{mode:'topic',topic:'People & Places'}));assert.equal(u.origin,'https://example.test');assert.ok(u.pathname.startsWith('/Lexical_Space/'));assert.equal(u.searchParams.get('user'),'Alice');assert.equal(u.searchParams.get('topic'),'People & Places');if(['poker','quick-drawn','sky-dominators','grammar','vocabulary-test'].includes(name)){const back=new URL(u.searchParams.get('returnUrl'));assert.equal(back.pathname,'/Lexical_Space/apps/arcade/');assert.equal(back.searchParams.get('mode'),'topic');assert.equal(back.searchParams.get('topic'),'People & Places');assert.equal(back.searchParams.has('returnUrl'),false)}}
  assert.equal(d.window.document.getElementById('canonical').pathname,'/Lexical_Space/apps/poker/');assert.equal(d.window.document.getElementById('legacy').pathname,'/Lexical_Space/apps/grammar/');assert.equal(d.window.document.getElementById('legacy').target,'_self');assert.equal(new URL(d.window.location.href).searchParams.get('user'),'Alice');d.window.close();
 });
 test('signed-out tab wins over a stale saved/query username; suite never writes a vocabulary schema',async()=>{
@@ -43,6 +43,15 @@ test('the same loader finishes for Grammar/Arcade readiness without audio or for
 test('all child entrypoints use the central manifest and no child worker is registered',async()=>{
  const root=new URL('../',import.meta.url);
  for(const app of ['grammar','arcade','quick-drawn','sky-dominators','poker']){const text=await fs.readFile(new URL('apps/'+app+'/index.html',root),'utf8');assert.match(text,/href="\.\.\/\.\.\/manifest.webmanifest"/);assert.match(text,/\.\.\/\.\.\/suite\/js\/core.js/);assert.doesNotMatch(text,/serviceWorker\.register\(/);if(['grammar','arcade'].includes(app)){assert.doesNotMatch(text,/data-loader-audio|assets\/space-loader\.js/);assert.match(text,/\.\.\/\.\.\/js\/features\/loading.js/)}}
+});
+test('Arcade carousel places playable entries first with matching indices and links',async()=>{
+ const html=await fs.readFile(new URL('../apps/arcade/index.html',import.meta.url),'utf8');
+ const dom=new JSDOM(html),tiles=[...dom.window.document.querySelectorAll('[data-game-tile]')];
+ assert.deepEqual(tiles.map(t=>t.dataset.gameName),['Sky Dominators','Word Battles','Wild West Poker','Vocabulary Test','Grammar Space','Quick Ears','Farming Game']);
+ assert.deepEqual(tiles.map(t=>Number(t.dataset.gameIndex)),[0,1,2,3,4,5,6]);
+ assert.deepEqual(tiles.slice(0,5).map(t=>t.querySelector('[data-game-launch]')?.getAttribute('href')),['../sky-dominators/','../quick-drawn/','../poker/','../vocabulary-test/','../grammar/']);
+ assert.ok(tiles.slice(5).every(t=>t.classList.contains('is-coming-soon') && t.querySelector('button:disabled')));
+ dom.window.close();
 });
 test('offline fetches return the correct child HTML, never the lexical page for another module',async()=>{
  const sw=await fs.readFile(new URL('../service-worker.js',import.meta.url),'utf8'),handlers={},base='https://example.test/Lexical_Space/',entries=new Map([[base+'apps/poker/index.html',{body:'Poker'}],[base+'offline.html',{body:'offline'}]]);

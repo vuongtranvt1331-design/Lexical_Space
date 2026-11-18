@@ -1,7 +1,7 @@
 {
   "release": {
     "name": "SpaceSuite",
-    "lexicalVersion": "43.19.0",
+    "lexicalVersion": "44.3.0",
     "date": "2026-11-18",
     "root": "LexicalSpace-project",
     "modules": [
@@ -10,9 +10,10 @@
       "arcade",
       "quick-drawn",
       "sky-dominators",
-      "poker"
+      "poker",
+      "vocabulary-test"
     ],
-    "cacheVersion": "4e41ad5b5c1d48"
+    "cacheVersion": "797dd0b45268d1"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -1208,13 +1209,13 @@
     },
     {
       "path": "apps/arcade/css/arcade-1.css",
-      "bytes": 18646,
-      "sha256": "c93bcd877ec53d9498989d7caf6c1a4789a2993217c8f511b1eac573072b6e4b"
+      "bytes": 18937,
+      "sha256": "71fc542929d358793d428fe16a4c7246602e7c6d2a2171ca1df64f90a14be950"
     },
     {
       "path": "apps/arcade/index.html",
-      "bytes": 11905,
-      "sha256": "6e3beb5639badf056823189013f0f20c9dd0a15c59215b336a439bd2b19c9e3a"
+      "bytes": 13231,
+      "sha256": "9d043656d2113c86d6ccb5a88b450363388905c626b5969ee737eadcb3dfd5f7"
     },
     {
       "path": "apps/arcade/js/action-frames.js",
@@ -1228,8 +1229,8 @@
     },
     {
       "path": "apps/arcade/js/arcade-2.js",
-      "bytes": 26632,
-      "sha256": "bf710493a508eda8c55c3e03a6f21ec8def436129817e4252614f5943f38e5b9"
+      "bytes": 28565,
+      "sha256": "8185c2add39b58e06efb9646d258ef36bdfbf441357d7076d4af01657cf617b7"
     },
     {
       "path": "apps/grammar/css/notebook-3d.css",
@@ -1238,18 +1239,18 @@
     },
     {
       "path": "apps/grammar/css/style.css",
-      "bytes": 42653,
-      "sha256": "b866daee1c64565dfe0cec49ecfcea945487fc7955a35cfe0b340706cff5f52e"
+      "bytes": 46355,
+      "sha256": "1438a94928bc272fef2d450552e7820915cc9cdca76ccbf5284617faaa79f460"
     },
     {
       "path": "apps/grammar/index.html",
-      "bytes": 6163,
-      "sha256": "8e4db2d590dc6ec5f3ca93e3c912d457d7f40de9c4aad19729b4572ec1288cbe"
+      "bytes": 5846,
+      "sha256": "b23f6a9f4940ffedf9abb54b6bd097843fefd4713fc4f08f1931ea1d787765b8"
     },
     {
       "path": "apps/grammar/js/app.js",
-      "bytes": 25736,
-      "sha256": "1dee084e211e16b1f11cd74fe854a16be980c048754481aee0f9eea19fe272ea"
+      "bytes": 27252,
+      "sha256": "3d0ee9ec419eff701b63f25f1caeee0b1933bd0e089abe7193f2f0c25998e4a0"
     },
     {
       "path": "apps/grammar/js/notebook-ui.js",
@@ -1628,13 +1629,13 @@
     },
     {
       "path": "apps/poker/index.html",
-      "bytes": 14387,
-      "sha256": "c645e07ff50987fca369ba25f5bc7a99ed769638901e086ddfe27e3729cb1263"
+      "bytes": 14573,
+      "sha256": "cd878ce0523435c63a922748f7e64b740179025add62fd6376d504cf5b623984"
     },
     {
       "path": "apps/poker/js/poker-1.js",
-      "bytes": 63740,
-      "sha256": "032442b3d8d634eaf0a0570ba7dc67853cbeeb64442fc837f3de769658aa5142"
+      "bytes": 73495,
+      "sha256": "cbe878546b5bdf63a21c3340fcdfa48781942c4b647f42c56ea4276f0bf28e41"
     },
     {
       "path": "apps/quick-drawn/.gitignore",
@@ -1858,13 +1859,13 @@
     },
     {
       "path": "apps/quick-drawn/index.html",
-      "bytes": 18321,
-      "sha256": "6122b3554a4006672c81961c82d9c99f5576bcbe68cb83f2d96979ab609a763f"
+      "bytes": 18390,
+      "sha256": "973abc62a7c3dba0021415598b67a37db0426b10e47f272f72602f06fc28e1e7"
     },
     {
       "path": "apps/quick-drawn/js/audio.js",
-      "bytes": 2641,
-      "sha256": "934c6d64529dde1c57c79b7a8f83162108d601d90b7deb326fe54c34b4ace5d9"
+      "bytes": 2668,
+      "sha256": "b0f1f53d88fec6ccb1d8c87b6d699a07938cf2414d2a744e666db8377e3cf73a"
     },
     {
       "path": "apps/quick-drawn/js/chess-session.js",
@@ -1925,6 +1926,26 @@
       "path": "apps/quick-drawn/js/ui-sprites.js",
       "bytes": 3701,
       "sha256": "b4a696201ad368ac75e1a7cc04e35196491def561bc7e17ea4b17e5e9523592f"
+    },
+    {
+      "path": "apps/quick-ears/index.html",
+      "bytes": 4002,
+      "sha256": "d8744d511d3d359be1e5fbb1294041aa843f44e1bde00e52d66b5d4b515057e1"
+    },
+    {
+      "path": "apps/quick-ears/lessons.json",
+      "bytes": 107737,
+      "sha256": "2f6f21a5ca771d1d5809ad84fef45e2293cefe7cd2ffbc18245e56cddbbecfd5"
+    },
+    {
+      "path": "apps/quick-ears/practice.css",
+      "bytes": 7372,
+      "sha256": "27b645906aa38b7ae803f4f3faaf4bfebeae476d3c1357d3209bb4df900bec95"
+    },
+    {
+      "path": "apps/quick-ears/practice.js",
+      "bytes": 13351,
+      "sha256": "4e3494d149b12d6deb4f0f6c284cc1b7eb6b62a47b45d320a6971079149fce68"
     },
     {
       "path": "apps/sky-dominators/.gitattributes",
@@ -7283,8 +7304,8 @@
     },
     {
       "path": "apps/sky-dominators/index.html",
-      "bytes": 33265,
-      "sha256": "123efa0981e663c87f7cbe9391ce90f200ffdf3ac544116e86e53946f7d10639"
+      "bytes": 33330,
+      "sha256": "64752853264fd3717a2ffadb7bb6b405ca687a1edc43c35ecbe9b259b9c33251"
     },
     {
       "path": "apps/sky-dominators/js/app.js",
@@ -7468,8 +7489,8 @@
     },
     {
       "path": "apps/sky-dominators/js/systems/audio.js",
-      "bytes": 9957,
-      "sha256": "bfcd9fcb6434e8b4a0982cd6b659c20bbe414bfc0934107d78074dba6c85624c"
+      "bytes": 10110,
+      "sha256": "16dbeadcf2c6a67b9f14a294e6604d965c14bc7484921491022950b4905546ff"
     },
     {
       "path": "apps/sky-dominators/js/systems/boss-director.js",
@@ -7668,8 +7689,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 54833,
-      "sha256": "b45ed586c6665d829c488588553d085a5a56aea43ec3af67174dad1a9801ee83"
+      "bytes": 54669,
+      "sha256": "307c93777bb27a7dbec5d7a9fec1256baca918e5206a5e19f42fdd0dcb90a2ff"
     },
     {
       "path": "js/core/ai-vocabulary.js",
@@ -7733,8 +7754,8 @@
     },
     {
       "path": "js/core/sound-manager.js",
-      "bytes": 6497,
-      "sha256": "3518bb09e5e040572dbff6c8d8391f2682b8ba394dc03afde2481344028b20a9"
+      "bytes": 6551,
+      "sha256": "0a83535ed5a867fa3166157ede8b83f7c6031398d3c47c6efd9fce9542b0c091"
     },
     {
       "path": "js/core/srs.js",
@@ -7848,8 +7869,8 @@
     },
     {
       "path": "run-local.py",
-      "bytes": 1466,
-      "sha256": "3250be0cb6b1a66232493c46ff98e1c58b4a58037ee58955f2c63b81b65c5394"
+      "bytes": 2082,
+      "sha256": "dcd6eede2a9dd154f490b678f9b45dc9f11c36977dca0aab6375be6593044830"
     },
     {
       "path": "run-local.sh",
@@ -7858,8 +7879,8 @@
     },
     {
       "path": "service-worker.js",
-      "bytes": 12984,
-      "sha256": "385e019bd2af2309437ce493c097022932b20ad48d21691ce713d6150311dab2"
+      "bytes": 13427,
+      "sha256": "ae37a8c547ce1dc37f75acb0499766101926a3b92df03dab81fd378923f39d86"
     },
     {
       "path": "start-localhost.bat",
@@ -7913,13 +7934,13 @@
     },
     {
       "path": "suite/js/game-menu-audio.js",
-      "bytes": 2807,
-      "sha256": "56ff82a68886742ea5c2437a491d311eb49b54ca9ab0f12eaa204b77b550ec48"
+      "bytes": 3069,
+      "sha256": "a1553843c35ce3563664f53d990e4ac3a3158089c4e1935dda977a0a2c392e64"
     },
     {
       "path": "suite/release.json",
-      "bytes": 282,
-      "sha256": "94c780b998ff8561dc1c323253de11330140260bf02e10c21252034aa74b4edc"
+      "bytes": 305,
+      "sha256": "4a07f66a0511f3a7aa151f59a29554ea39e84d06612f8885f19fa0241593f03b"
     },
     {
       "path": "teacher/index.html",
@@ -8053,8 +8074,8 @@
     },
     {
       "path": "tools/build-suite.py",
-      "bytes": 5779,
-      "sha256": "6d4fcac483f9d42f13c8f2f55af46030c049e06b818a279ae33fa955816df06d"
+      "bytes": 5919,
+      "sha256": "8405d8c63f70540ba5e4e0aff409ad141749bf9760bbbc23e08affcfdbe54992"
     },
     {
       "path": "tools/enable-deck-ttl.cjs",
@@ -8062,9 +8083,39 @@
       "sha256": "430543d8ac73430edd4307bc22ebf4f48adecc12189705164d9b22ed78e50a92"
     },
     {
+      "path": "tools/quick_ears_lessons.py",
+      "bytes": 1449,
+      "sha256": "9eb0133ed5987d79f009fb1e9e38898930df43c85e342e9143e3c4a4d74a94cc"
+    },
+    {
       "path": "tools/service-worker.template.js",
       "bytes": 3220,
       "sha256": "c58c3911bec3d861c3a42921c35716c6a051a4ea57bec5f6f072b6662451c0e4"
+    },
+    {
+      "path": "apps/quick-ears/pause-headphones.png",
+      "bytes": 612,
+      "sha256": "e53b762e7c56c6b59d36d4252f12c36902e66a9e251c3776a173daf69da8c69f"
+    },
+    {
+      "path": "apps/quick-ears/button-art.js",
+      "bytes": 837,
+      "sha256": "da155ff0de669bd9496e59994411b0ed5fb14eb1471adf62c36b77c6baef101f"
+    },
+    {
+      "path": "apps/quick-ears/button-sprites.png",
+      "bytes": 659,
+      "sha256": "562c1664348f457c8f463108085a41c5ed393a033150ff3e5e5dd58bbac4cb8d"
+    },
+    {
+      "path": "suite/js/effects-volume.js",
+      "bytes": 2709,
+      "sha256": "ddd24e7a1971f8d91c21186cdc0983ab80276ae885fba4b071746d198b535c6e"
+    },
+    {
+      "path": "apps/quick-ears/history.js",
+      "bytes": 10784,
+      "sha256": "0062955a1e3cd1cd960fa6f493f0701ba9ac3d507f5238780a38d47e2f67db55"
     }
   ],
   "currentArchitectureDelta": "docs/architecture-delta-43.19.0.md",
@@ -8397,5 +8448,28 @@
     "exit": "24-0-01.mp3",
     "owner": "suite/js/game-menu-audio.js",
     "exitScope": "Only navigation out of a game; internal close/back/main menu use select."
-  }
+  },
+  "quickEarsPreview": {
+    "scope": "localhost only",
+    "lesson": 407,
+    "liveAudio": true,
+    "liveTranscript": "Selected lesson via run-local.py, eight lessons cached in process memory",
+    "previousObservedArcadeHash": "a8d17b0cc2e87e85933769453e95b5ad8246047885f6ded664c364ed8a6677cb",
+    "catalog": "813 lessons across six topics including 360 IELTS Listening parts",
+    "feedback": "Hints appear on submit only. Empty submission reveals the first word; otherwise reveal the first incorrect or missing word, masking all others. Optional full-answer checkbox shows the entire original sentence on unsuccessful submission.",
+    "translation": "Optional Vietnamese translation requested only after correct submission",
+    "scoring": "First unaided correct / replay or corrected / skipped",
+    "settings": "quick_ears_settings",
+    "checkpoints": "Every 20 completed items; whole-lesson totals at finish",
+    "navigation": "Logo menu, lesson picker, exercise; standalone Ctrl replays audio",
+    "controls": "Equal picker actions (back left/start right), headphone pause sprite, volume and full-answer preferences, always visible progress and automatic Vietnamese translation after correct answers. Same settings dialog and action row from menu and exercise.",
+    "interfaceLanguage": "English; correct answers receive a Vietnamese translation.",
+    "buttons": "Four blank raster frames, separate unframed Arcade Hub glyphs; Pause uses the shared system-controls atlas.",
+    "hubPlacement": "Sixth tile, after Grammar Space and before Quiz. Each carousel card shows a title and short English description.",
+    "audio": "Shared entry, menu and exit cues. Active listening and its pause panel suppress UI sounds. Hub carousel switch plays at half the master volume.",
+    "history": "Per-run aggregate scores stored locally by profile, picker shows completed/in-progress/unstarted. No transcript or cloud writes."
+  },
+  "grammarTopicLibrary": "Overview first; toggle one topic to reveal its lessons. Shared profile, practice and apply progress retained; Hub back icon and exit-only audio.",
+  "grammarTopicOverviewSize": "Full-width responsive overview with all topic buttons visible. Only the selected lesson list has internal scrolling.",
+  "effectsVolume": "Effects gain = 0.20 times displayed slider level; switch cue retains its half trim. Pronunciation and listening media independent."
 }

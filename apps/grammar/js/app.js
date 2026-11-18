@@ -338,6 +338,12 @@ function getGroupBadgeInfo(group) {
   };
 }
 
+let selectedTopic = null;
+
+function getNormalizedTopic(group) {
+  return (group || 'Khác').replace(/^Group\s*\d+\s*:\s*/i, '').trim() || 'Khác';
+}
+
 function createTopicOverviewCard(entries, now = Date.now()) {
   if (!entries || !entries.length) return null;
 
@@ -345,7 +351,7 @@ function createTopicOverviewCard(entries, now = Date.now()) {
   const topicMap = new Map();
   entries.forEach(lesson => {
     const rawGroup = lesson.group || 'Khác';
-    const cleanGroup = rawGroup.replace(/^Group\s*\d+\s*:\s*/i, '').trim();
+    const cleanGroup = getNormalizedTopic(rawGroup);
     if (!topicMap.has(cleanGroup)) {
       topicMap.set(cleanGroup, {
         name: cleanGroup,
@@ -417,19 +423,25 @@ function createTopicOverviewCard(entries, now = Date.now()) {
   topicsGrid.className = 'overview-topics-grid';
 
   topicStats.forEach(t => {
-    const item = document.createElement('div');
-    item.className = 'topic-stat-item';
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.setAttribute('aria-controls', 'topic-lessons');
+    item.className = 'topic-stat-item' + (selectedTopic === t.name ? ' is-active' : '');
+    item.setAttribute('aria-expanded', String(selectedTopic === t.name));
     item.setAttribute('title', `${t.name}: ${t.percent}% (${t.count} bài) · Nhấp để xem bài học`);
     item.setAttribute('aria-label', `${t.name}: ${t.percent}%`);
 
     item.addEventListener('click', (e) => {
       e.stopPropagation();
-      const targetCard = document.querySelector(`.lesson-card[data-topic="${t.name}"]`);
-      if (targetCard) {
-        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        targetCard.classList.add('highlight-pulse');
-        setTimeout(() => targetCard.classList.remove('highlight-pulse'), 1500);
-      }
+      selectedTopic = (selectedTopic === t.name) ? null : t.name;
+      const buttons = topicsGrid.querySelectorAll('.topic-stat-item');
+      buttons.forEach(btn => {
+        const isActive = (btn === item) && (selectedTopic === t.name);
+        btn.setAttribute('aria-expanded', String(isActive));
+        btn.classList.toggle('is-active', isActive);
+      });
+      appendLessonCards(byId('topic-lessons'), entries, now);
+
     });
 
     const header = document.createElement('div');
@@ -480,8 +492,22 @@ function renderLessonCards(listId, entries, now = Date.now()) {
     }
   }
 
+  appendLessonCards(byId('topic-lessons'), entries, now);
+  }
+
+  function appendLessonCards(list, entries, now = Date.now()) {
+    if (!list) return;
+    list.replaceChildren();
+    list.hidden = !selectedTopic;
+    list.scrollTop = 0;
+    if (!selectedTopic) return;
+
+  const targetEntries = selectedTopic
+    ? entries.filter(l => getNormalizedTopic(l.group) === selectedTopic)
+    : [];
+
   // Strict numerical and alphabetical sorting by lesson title / lesson number (01, 02, 03 ... 40)
-  const sorted = [...entries].sort((a, b) => {
+  const sorted = [...targetEntries].sort((a, b) => {
     return (a.title || '').localeCompare(b.title || '', undefined, { numeric: true, sensitivity: 'base' });
   });
 
@@ -489,7 +515,7 @@ function renderLessonCards(listId, entries, now = Date.now()) {
     const item = document.createElement('li');
     item.className = 'lesson-card card-item';
     item.dataset.lessonId = lesson.id;
-    const cleanTopic = (lesson.group || '').replace(/^Group\s*\d+\s*:\s*/i, '').trim();
+    const cleanTopic = getNormalizedTopic(lesson.group);
     if (cleanTopic) item.dataset.topic = cleanTopic;
 
     // Card-level click interaction: binds to the entire card container
