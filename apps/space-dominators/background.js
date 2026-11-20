@@ -171,6 +171,35 @@
     deepSprite(g,2,845,874,306,.133);
     return img;
   }
+  // Twelve line figures, four per atlas. The chart still scrolls as one plane.
+  const zodiacSize=256;
+  const zodiacSheets=[1,2,3].map(index=>{
+    const image=new Image();
+    image.onload=()=>{chart=null;};
+    image.src=new URL('./assets/zodiac-'+index+'.png',document.currentScript.src).href;
+    return image;
+  });
+
+  function paintZodiac(g) {
+    const figureCount=zodiacSheets.length*4;
+    const slotHeight=chartHeight/figureCount;
+    g.save();
+    g.imageSmoothingEnabled=true;
+    g.imageSmoothingQuality='high';
+    g.globalAlpha=.42;
+    for(let i=0;i<figureCount;i++){
+      const image=zodiacSheets[Math.floor(i/4)];
+      if(image.naturalWidth!==2*zodiacSize || image.naturalHeight!==2*zodiacSize)continue;
+      // Keep padding around the chart seam and stagger adjacent figures.
+      const centerX=width*(.19+(i%3)*.31)+(random(i,741)-.5)*156;
+      const centerY=(i+.5)*slotHeight+(random(i,742)-.5)*56;
+      const size=Math.round(150+random(i,743)*44);
+      g.drawImage(image,(i%2)*zodiacSize,(Math.floor(i/2)%2)*zodiacSize,zodiacSize,zodiacSize,
+        Math.round(centerX-size/2),Math.round(centerY-size/2),size,size);
+    }
+    g.restore();
+  }
+
   function makeChart() {
     const img=tile(width,chartHeight),g=img.getContext('2d');
     g.imageSmoothingEnabled=false;
@@ -179,6 +208,7 @@
       const stars=makeStars(layer,count);
       g.drawImage(stars,0,0);g.drawImage(stars,0,tileHeight);
     }
+    paintZodiac(g);
     return img;
   }
   // Stable world-space sectors: their positions change only as the camera travels.

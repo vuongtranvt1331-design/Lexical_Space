@@ -28,6 +28,7 @@ def build():
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
         'apps/quick-ears/history.js', 'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/js/space-chase.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/space-dominators/studio-intro.css', 'apps/space-dominators/station.css', 'apps/space-dominators/station.js',
+        'apps/space-dominators/background.js',
         'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
         'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
         'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
@@ -64,7 +65,7 @@ def build():
             './apps/grammar/assets/matcha-logo.png', './apps/grammar/assets/matcha-topic.png']
     core.extend('./apps/space-dominators/assets/' + name for name in
                 ('celestial-survey.png', 'planet-encounters.png', 'boss-fx/enemy-flight-effects.png',
-                 'player-hulls.png', 'player-exhaust.png'))
+                 'player-hulls.png', 'player-exhaust.png', 'zodiac-1.png', 'zodiac-2.png', 'zodiac-3.png'))
     core.extend('./apps/' + module + '/assets/action-buttons.png'
                 for module in ('arcade', 'sky-dominators', 'quick-drawn', 'poker'))
     excluded = {'tests', 'tools', '.git', 'node_modules', 'firestore', '__pycache__'}
