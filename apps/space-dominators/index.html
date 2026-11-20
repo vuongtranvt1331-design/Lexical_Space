@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#091425"><title>Space Dominators</title><link rel="stylesheet" href="./station.css?v=44.13.0-1a606b355a"><link rel="stylesheet" href="./coop-lobby.css"><link rel="stylesheet" href="./studio-intro.css?v=44.13.0-8748a44ad6"><link rel="stylesheet" href="../arcade/css/space-chase.css"><script defer src="../../suite/js/game-menu-audio.js?v=44.13.0-a1553843c3"></script><link rel="stylesheet" href="../../suite/css/game-icons.css?v=44.13.0-18940026b2">
+</head>
+<body>
+<div class="studio-arrival" hidden>
+  <div class="studio-credits">
+    <span class="studio-and">AND</span>
+  </div>
+  <span class="studio-present">Present</span>
+</div>
+<script>
+const studioEntry = /^#studio-intro(?:=(\d+))?$/.exec(location.hash);
+if (studioEntry) {
+  document.documentElement.classList.add('studio-hold-controls');
+  history.replaceState(history.state, '', location.pathname + location.search);
+  const arrival = document.querySelector('.studio-arrival');
+  const studio = new Image();
+  studio.className = 'studio-mark';
+  studio.alt = '152 Studio';
+  studio.src = '../arcade/assets/logo/152-studio.png';
+  const arcade = new Image();
+  arcade.className = 'studio-arcade-mark';
+  arcade.alt = 'ArcadeSpace';
+  arcade.src = '../arcade/assets/arcade_space_logo.png';
+  const credits = arrival.querySelector('.studio-credits');
+  credits.prepend(studio);
+  credits.append(arcade);
+  arrival.hidden = false;
+  document.addEventListener('DOMContentLoaded', async () => {
+    const station = document.getElementById('station');
+    const masthead = station.querySelector('.masthead-logo');
+    station.inert = true;
+    await Promise.allSettled([studio.decode(), arcade.decode(), masthead.decode(),
+      document.fonts.load('24px StudioPixel')]);
+    const present = arrival.querySelector('.studio-present');
+    const introStyle = getComputedStyle(arrival);
+    const fadeMs = parseFloat(introStyle.getPropertyValue('--intro-fade'));
+    const holdMs = parseFloat(introStyle.getPropertyValue('--intro-beat'));
+    present.addEventListener('animationend', async event => {
+      if (event.animationName === 'studio-out') {
+        // Keep the real masthead in its flex slot, above the same white overlay.
+        station.prepend(arrival);
+        station.classList.add('studio-logo-credit');
+        arrival.classList.add('studio-finish');
+        const timing = {duration: fadeMs, easing: 'ease-in-out'};
+        const menuOpacity = getComputedStyle(masthead).opacity;
+        const reveal = masthead.animate([{opacity: 0}, {opacity: 1}], {...timing, fill: 'forwards'});
+        await reveal.finished;
+        const exitTiming = {...timing, delay: holdMs, fill: 'both'};
+        const settle = masthead.animate([{opacity: 1}, {opacity: menuOpacity}], exitTiming);
+        const uncover = arrival.animate([{opacity: 1}, {opacity: 0}], exitTiming);
+        uncover.startTime = settle.startTime = document.timeline.currentTime;
+        await Promise.all([settle.finished, uncover.finished]);
+        reveal.cancel();
+        settle.cancel();
+        arrival.remove();
+        station.classList.remove('studio-logo-credit');
+        document.documentElement.classList.remove('studio-hold-controls');
+        const controls = station.querySelectorAll('.station-dock, .craft-selector button, .boss-lab-btn');
+        await Promise.allSettled(Array.from(controls, control => control.animate(
+          [{opacity: 0}, {opacity: 1}],
+          timing
+        ).finished));
+        station.inert = false;
+      }
+    });
+    arrival.classList.add('studio-running');
+    document.querySelector('[data-chase-laser]').volume = SpaceEffects.gain();
+    setTimeout(() => {
+      if (arrival.isConnected && !document.hidden) window.SpaceChase.play(arrival);
+    }, fadeMs);
+  }, {once:true});
+}
+</script>
+<canvas id="stationSpace" width="1280" height="720" aria-hidden="true"></canvas>
+<main id="station" aria-label="Space Dominators launch bay">
+  <a id="bossLabLink" class="boss-lab-btn" data-carry-deck href="./boss-practice.html">Boss Lab</a>
+  <img class="masthead-logo" src="../arcade/assets/logo/space_dominator_super_update.png" alt="Space Dominators">
+  <div class="craft-selector" aria-label="Choose your spacecraft">
+    <button type="button" id="previousShip" data-common-game-icon="previous" aria-label="Previous spacecraft"></button>
+    <div class="hangar-pilot">
+      <span id="localPilotName" class="hangar-pilot-name"></span>
+      <canvas id="hero" width="256" height="256" aria-label="Selected spacecraft"></canvas>
+    </div>
+    <button type="button" id="nextShip" data-common-game-icon="next" aria-label="Next spacecraft"></button>
+    <div id="wingmatePreview" class="hangar-pilot is-waiting" hidden>
+      <span id="wingmateName" class="hangar-pilot-name">Waiting for wingmate</span>
+      <canvas id="wingmateHero" width="256" height="256" aria-label="Wingmate spacecraft"></canvas>
+    </div>
+  </div>
+  <div class="craft-name" aria-live="polite"><h1 id="shipName"></h1><span id="hull"></span> · <span id="ability"></span></div>
+  <nav class="station-dock" aria-label="Mission controls">
+    <button id="continueCampaign" class="campaign-resume-btn" hidden>Continue campaign</button>
+    <aside id="lastFlight" class="last-flight" aria-live="polite">
+      <strong>Mission 00 · Awaiting launch</strong>
+      <span>Score — · Rows — · Correct — · Wrong — · Credits —</span>
+    </aside>
+    <div class="dock-grid" id="dockMain">
+      <button class="primary dock-btn" id="launch" disabled>Launch</button>
+      <button class="dock-btn" id="openCoop" disabled>Co-op</button>
+      <button class="dock-btn" id="toggleSettings" aria-expanded="false" aria-controls="dockSettings">Settings</button>
+      <a class="dock-btn dock-danger" data-suite-return href="../arcade/">Arcade Space</a>
+    </div>
+    <div class="dock-grid" id="dockSettings" hidden aria-label="Settings">
+      <div class="grid-top-full setting-vol-row">
+        <span id="volLabel" class="volume-icon" aria-hidden="true">🔊</span>
+        <input id="volSlider" aria-label="Effects volume" type="range" min="0" max="100" value="50">
+      </div>
+      <button id="controlsBtn" class="dock-btn">Control <span data-control-mode-icon aria-hidden="true">&#x1F5B1;&#xFE0F; &#x2328;&#xFE0F;</span></button>
+      <button id="closeSettings" class="dock-btn dock-danger">Back</button>
+    </div>
+    <div class="dock-grid" id="dockCore" hidden aria-label="Co-op">
+      <div class="grid-cell" id="coreCellTopLeft">
+        <input id="roomCodeInput" type="text" inputmode="numeric" maxlength="4" minlength="4" pattern="[0-9]{4}" placeholder="0000" class="dock-input" aria-label="Four-digit room code">
+        <div id="coopRoomBadge" class="dock-badge" hidden>Room <strong id="coopCode">0000</strong></div>
+      </div>
+      <div class="grid-cell" id="coreCellTopRight">
+        <button id="joinRoomBtn" class="dock-btn">Join Room</button>
+        <button id="readyRoom" class="dock-btn primary" hidden>Ready</button>
+      </div>
+      <div class="grid-cell" id="coreCellBottomLeft">
+        <button id="createRoom" class="dock-btn">Create Room</button>
+        <button id="resumeSavedRoom" class="dock-btn" hidden>Reconnect</button>
+        <div id="coopPartnerStatus" class="dock-badge dock-status" hidden>Waiting for wingmate</div>
+      </div>
+      <button id="leaveRoom" class="dock-btn dock-danger">Back</button>
+    </div>
+  </nav>
+</main>
+<section id="mission" hidden>
+  <canvas id="flight" width="1280" height="720" tabindex="0" aria-label="Space Dominators flight arena"></canvas>
+  <button id="pause" aria-label="Pause mission" title="Pause (Esc)" aria-expanded="false" aria-controls="pauseBar">Ⅱ</button>
+  <div id="pauseBar" class="pause-bar" hidden role="region" aria-label="Mission paused">
+    <div class="dock-grid" id="pauseMain">
+      <h2 class="pause-title pause-title-above">PAUSED</h2>
+      <button id="resumeBtn" class="dock-btn">Resume</button>
+      <button id="pauseSound" class="dock-btn">Settings</button>
+      <button id="endFlightBtn" class="dock-btn dock-danger grid-top-full">Stop Mission</button>
+    </div>
+    <div class="dock-grid" id="pauseConfirm" hidden>
+      <div class="grid-top-full confirm-header-cell">
+        <span class="confirm-prompt">Return to the hangar?</span>
+      </div>
+      <button id="cancelEnd" class="primary dock-btn">Keep Playing</button>
+      <button id="confirmEnd" class="dock-btn dock-danger">Stop Mission</button>
+    </div>
+    <div class="dock-grid" id="pauseVolume" hidden>
+      <div class="grid-top-full setting-vol-row">
+        <span id="pauseVolLabel" class="volume-icon" aria-hidden="true">🔊</span>
+        <input id="pauseVolSlider" aria-label="Effects volume" type="range" min="0" max="100" value="50">
+      </div>
+      <button id="pauseControlsBtn" class="dock-btn">Control <span data-control-mode-icon aria-hidden="true">&#x1F5B1;&#xFE0F; &#x2328;&#xFE0F;</span></button>
+      <button id="pauseVolDone" class="dock-btn dock-danger">Back</button>
+    </div>
+  </div>
+<section id="panel" class="pause-bar" aria-labelledby="panelTitle" hidden><div class="dock-grid"><div class="debrief-summary"><h2 id="panelTitle"></h2><div id="panelContent"></div></div><div id="panelActions"></div></div></section>
+</section>
+<audio data-chase-laser preload="none" src="../arcade/assets/audio/space-chase-laser.mp3" hidden></audio>
+<script src="../../suite/js/effects-volume.js?v=44.13.0-ddd24e7a19"></script><script src="../arcade/js/space-chase.js?v=44.13.0-ddfbbe75af"></script>
+<script src="./art.js?v=hangar-preview-2"></script><script src="../../suite/js/core.js?v=44.13.0-a5b98868bd"></script><script src="../arcade/assets/lexical-vocabulary.js"></script><script src="./words.js"></script><script src="./sound.js"></script><script src="./background.js"></script><script src="./capital-art.js"></script><script src="./campaign-entry.js"></script><script src="./vendor/peerjs.min.js"></script><script src="../../suite/js/peer-transport.js?v=44.13.0-8acfb938a6"></script><script src="./coop-room.js?v=coop-stop-1"></script><script src="./campaign-sprites.js"></script><script src="./boss-fx.js"></script><script src="./boss-encounters.js"></script><script src="./miner-art.js"></script><script src="./asteroid-belt.js"></script><script src="./boss-campaign.js"></script><script src="./game.js?v=escape-pause-1"></script><script src="./coop-lobby.js?v=coop-wingmate-2"></script><script src="./station.js?v=44.13.0-777375ca67"></script>
+</body></html>

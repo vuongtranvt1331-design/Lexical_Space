@@ -1,0 +1,572 @@
+:root {
+  color-scheme: dark;
+  font: 16px/1.5 Barlow, "Segoe UI", sans-serif;
+  color: #f0f4fc;
+  background: #070d18;
+  --mint: #79e9d0;
+  --line: #2c4054;
+  --muted: #a4b6c8;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 74% 34%, #1b3548 0%, #0c1929 42%, #070d18 82%);
+}
+
+button {
+  font: inherit;
+  font-weight: 650;
+  color: inherit;
+  border: 1px solid var(--line);
+  background: #101f2f;
+  border-radius: 6px;
+  padding: .48em .95em;
+  cursor: pointer;
+}
+button:hover { border-color: var(--mint); color: #bcfff0; }
+button:focus-visible { outline: 3px solid #ffcb69; outline-offset: 3px; }
+button:disabled { opacity: .55; cursor: wait; }
+[hidden] { display: none !important; }
+
+body > #stationSpace {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  image-rendering: pixelated;
+}
+
+#station, #mission, #flight { background: transparent; }
+#mission { z-index: 1; position: fixed; inset: 0; display: grid; place-items: center; }
+#station { z-index: 2; }
+
+/* ── Hangar Layout & Fleet Picker ─────────────────────────────── */
+#station:not([hidden]) {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(125px, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  overflow: hidden;
+  text-align: center;
+}
+
+#station > .masthead-logo {
+  display: block;
+  flex: none;
+  width: min(92%, clamp(160px, 48vh, 460px));
+  height: auto;
+  max-height: clamp(60px, 14vh, 110px);
+  object-fit: contain;
+  image-rendering: pixelated;
+  opacity: .5;
+  margin-bottom: clamp(4px, 1vh, 12px);
+}
+
+.craft-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 4vw, 48px);
+  flex: none;
+}
+.craft-selector button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font: 28px/1 monospace;
+  border: 1px solid #58818f;
+  border-radius: 50%;
+  background: #0a1b29dc;
+  color: #bcf5eb;
+  cursor: pointer;
+}
+.craft-selector button:hover {
+  border-color: #a8fff0;
+  color: #a8fff0;
+}
+
+#hero {
+  width: clamp(90px, 18vh, 160px);
+  height: clamp(90px, 18vh, 160px);
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.craft-name {
+  color: #b8d3df;
+  font-size: clamp(12px, 1.6vh, 15px);
+  margin-top: 4px;
+  flex: none;
+}
+.craft-name h1 {
+  font-size: clamp(20px, 2.8vh, 32px);
+  color: #eefafb;
+  letter-spacing: .02em;
+  margin: 0 0 2px;
+}
+
+/* ── Boss Lab (Top-Right) ─────────────────────────────────────── */
+.boss-lab-btn {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #a8fff0;
+  text-decoration: none;
+  padding: .42em .9em;
+  background: #101f2fcc;
+  border: 1px solid #314a60;
+  border-radius: 6px;
+  backdrop-filter: blur(6px);
+  transition: border-color .15s, color .15s, background .15s;
+}
+.boss-lab-btn:hover, .boss-lab-btn:focus-visible {
+  border-color: #a8fff0;
+  color: #071c20;
+  background: #a8fff0;
+}
+
+:root {
+  --dock-width: min(420px, calc(100vw - 24px));
+  --dock-row: clamp(44px, 8vh, 54px);
+  --dock-bottom: max(20px, env(safe-area-inset-bottom));
+}
+.station-dock, .pause-bar {
+  position: absolute;
+  left: 50%;
+  bottom: var(--dock-bottom);
+  transform: translateX(-50%);
+  width: var(--dock-width);
+}
+.station-dock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+}
+.pause-bar { z-index: 10; }
+
+.dock-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, var(--dock-row));
+  gap: 10px;
+  width: var(--dock-width);
+  box-sizing: border-box;
+  justify-content: center;
+}
+
+.dock-btn {
+  width: 100%;
+  height: var(--dock-row);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  border-radius: 8px;
+  background: #101f2f;
+  border: 1px solid #314a60;
+  color: #f0f4fc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 0 10px;
+  white-space: nowrap;
+  transition: background .12s, border-color .12s, color .12s;
+}
+
+#controlsBtn, #pauseControlsBtn { gap: .4em; }
+
+.dock-btn:hover, .dock-btn:focus-visible {
+  background: #a8fff0;
+  border-color: #a8fff0;
+  color: #071c20;
+}
+
+/* Primary mint buttons (Launch, Resume, Keep Playing, Ready) */
+.primary.dock-btn {
+  background: #a8fff0;
+  border: 1px solid #a8fff0;
+  color: #071c20;
+  font-weight: 700;
+}
+.primary.dock-btn:hover, .primary.dock-btn:focus-visible {
+  background: #c4fff5;
+  border-color: #c4fff5;
+  color: #071c20;
+}
+.primary.dock-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  background: #101f2f;
+  border-color: #314a60;
+  color: #728a9c;
+}
+
+/* Exit controls (Arcade Space, Stop Mission, Back to Hangar, Back) */
+.dock-btn.dock-danger, .dock-danger {
+  background: #201116 !important;
+  border: 1px solid #7c343a !important;
+  color: #ffa4a4 !important;
+  font-weight: 700;
+}
+.dock-btn.dock-danger:hover, .dock-btn.dock-danger:focus-visible,
+.dock-danger:hover, .dock-danger:focus-visible {
+  background: #34151c !important;
+  border-color: #a4454d !important;
+  color: #ffcece !important;
+}
+
+/* Top full-width cells in Settings, Pause, Stop Confirmation */
+.grid-top-full {
+  grid-column: 1 / -1;
+  width: var(--dock-width);
+  height: var(--dock-row);
+  background: #101f2f;
+  border: 1px solid #314a60;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+.setting-vol-row span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #c4dce6;
+  white-space: nowrap;
+}
+.setting-vol-row input[type=range] {
+  flex: 1;
+  max-width: 140px;
+  margin-left: 12px;
+  accent-color: #a8fff0;
+  cursor: pointer;
+}
+
+.pause-title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: #a8fff0;
+  text-transform: uppercase;
+}
+
+.confirm-header-cell {
+  justify-content: center;
+}
+.confirm-prompt {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f0f4fc;
+  text-align: center;
+  width: 100%;
+}
+
+/* Core Mission cells */
+.grid-cell {
+  width: 100%;
+  height: var(--dock-row);
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  box-sizing: border-box;
+}
+.grid-cell > * {
+  width: 100%;
+  height: 100%;
+}
+
+.dock-input {
+  width: 100%;
+  height: var(--dock-row);
+  background: #101f2f;
+  border: 1px solid #314a60;
+  border-radius: 8px;
+  color: #f0f4fc;
+  font-family: monospace, monospace;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: .2em;
+  outline: none;
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+.dock-input:focus {
+  border-color: #a8fff0;
+  box-shadow: 0 0 0 2px rgba(168, 255, 240, .2);
+}
+
+.dock-badge {
+  width: 100%;
+  height: var(--dock-row);
+  background: #101f2f;
+  border: 1px solid #314a60;
+  border-radius: 8px;
+  color: #f0f4fc;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+.dock-badge strong {
+  color: #a8fff0;
+  font-family: monospace, monospace;
+  font-size: 15px;
+  margin-left: 4px;
+}
+
+.dock-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: #c4dce6;
+  user-select: none;
+}
+
+.campaign-resume-btn {
+  font-size: 13px;
+  font-weight: 700;
+  padding: .45em 1.2em;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: #101f2f;
+  border: 1px solid #314a60;
+  color: #a8fff0;
+}
+.campaign-resume-btn:hover {
+  background: #a8fff0;
+  color: #071c20;
+}
+
+
+/* ── Flight pause trigger icon ────────────────────────────────── */
+#flight {
+  display: block;
+  width: min(100vw, 177.7778vh);
+  height: auto;
+  max-height: 100vh;
+  aspect-ratio: 16/9;
+  touch-action: none;
+  outline: 0;
+}
+#pause {
+  position: absolute;
+  top: max(8px, calc((100vh - 56.25vw)/2 + 8px));
+  right: max(9px, calc((100vw - 177.7778vh)/2 + 9px));
+  padding: 4px 12px;
+  color: #a6c8ca;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: .6;
+  transition: opacity .15s, color .15s;
+  z-index: 5;
+}
+#pause:hover, #pause:focus-visible, #pause[aria-expanded=true] {
+  opacity: 1;
+  color: #a8fff0;
+}
+
+/* ── Dialog styles (debrief panel) ────────────────────────────── */
+dialog {
+  width: min(92vw, 460px);
+  padding: 26px;
+  border: 1px solid #49667b;
+  border-radius: 12px;
+  background: #101f2f;
+  color: #edf5fb;
+  box-shadow: 0 24px 100px #0008;
+}
+dialog::backdrop { background: #030812c9; }
+dialog h2 { font-size: 30px; margin: 0 0 13px; }
+dialog p, dialog li { color: #c2d3e0; }
+dialog ul { padding-left: 19px; }
+#panelActions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.scoreline { font-size: 42px; color: #a8fff0; }
+
+/* ── Departure Animation ──────────────────────────────────────── */
+#station.departing {
+  pointer-events: none;
+  animation: none;
+  overflow: hidden;
+}
+#station.departing :is(.masthead-logo, .craft-name, .station-dock, .craft-selector button, .boss-lab-btn) {
+  transition: opacity .2s;
+  opacity: 0;
+}
+#station.departing #hero { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  #station, #station * {
+    animation-duration: .01s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+.setting-vol-row {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to right, #a8fff0 var(--volume, 50%), #101f2f var(--volume, 50%));
+}
+.setting-vol-row .volume-icon {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  font-size: 18px;
+}
+.setting-vol-row input[type=range] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  appearance: none;
+  background: transparent;
+}
+.setting-vol-row input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  width: 4px;
+  height: 44px;
+  background: #edf9ff;
+}
+.setting-vol-row input[type=range]::-moz-range-thumb {
+  width: 4px;
+  height: 44px;
+  border: 0;
+  background: #edf9ff;
+}
+.setting-vol-row:focus-within { outline: 2px solid #a8fff0; outline-offset: 2px; }
+
+.last-flight {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  gap: 2px;
+  margin: 0 0 8px;
+  padding: 6px 10px;
+  border: 1px solid #587185;
+  border-radius: 8px;
+  color: #edf5fb;
+  text-align: center;
+  font-size: 13px;
+}
+.last-flight span { color: #bbd4e4; }
+#panel .dock-grid { grid-template-rows: auto var(--dock-row); }
+.debrief-summary {
+  grid-column: 1 / -1;
+  background: #101f2f;
+  border: 1px solid #314a60;
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+}
+.debrief-summary h2 { font-size: 16px; }
+.debrief-summary .scoreline { font-size: 26px; }
+.debrief-summary p { font-size: 13px; }
+#panel #panelActions { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; }
+
+#pauseMain .pause-title-above {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+#pauseMain #endFlightBtn { grid-column: 1 / -1; grid-row: 2; width: 100%; }
+
+#panelActions > :only-child { grid-column: 2; }
+
+.craft-selector button[data-common-game-icon] {
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border-color: transparent;
+}
+.craft-selector button[data-common-game-icon]::before { margin: 0; }
+.craft-selector [data-common-game-icon="previous"] { --common-game-icon-position: 0 100%; }
+
+@media (min-width: 640px) {
+  #station > .masthead-logo {
+    position: absolute;
+    top: 3vh;
+    left: 50%;
+    translate: -50% 0;
+    width: auto;
+    height: min(45vh, 450px);
+    max-height: none;
+    max-width: 70vw;
+  }
+  #station .craft-selector {
+    position: absolute;
+    top: min(56%, calc(100% - 175px));
+    left: 50%;
+    translate: -50% -50%;
+  }
+  #station .craft-name {
+    position: absolute;
+    top: min(66%, calc(100% - 200px));
+    left: 0;
+    right: 0;
+  }
+}
+
+.hangar-pilot { position: relative; display: grid; justify-items: center; }
+.hangar-pilot-name {
+  position: absolute;
+  top: 88%;
+  max-width: 100%;
+  color: #e8f6fd;
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+#wingmateHero {
+  width: clamp(90px, 18vh, 160px);
+  height: clamp(90px, 18vh, 160px);
+  image-rendering: pixelated;
+}
+#wingmatePreview.is-waiting canvas {
+  filter: brightness(0) drop-shadow(0 0 1px #7993ac);
+}
+.craft-selector.is-coop-room { gap: clamp(24px, 7vw, 130px); }
+.craft-selector.is-coop-room > button { display: none; }
+#station.departing .hangar-pilot-name {
+  opacity: 0;
+  transition: opacity .2s;
+}
+#station.departing #wingmateHero { opacity: 0; transition: opacity .2s; }
+
+.craft-selector:not(.is-coop-room) .hangar-pilot-name { display: none; }
+#station:has(.craft-selector.is-coop-room) .craft-name { margin-top: 24px; }

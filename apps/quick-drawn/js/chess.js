@@ -42,7 +42,7 @@
   node('[data-spectate-live]').textContent=disconnected?'Mất kết nối':'Trực tiếp';node('[data-spectate-turn]').textContent=disconnected?'ĐANG NỐI LẠI':session?.result?'VÁN ĐÃ KẾT THÚC':session?.turn===0?'LƯỢT TRẮNG':'LƯỢT ĐEN';
  }
  const personalMenu=node('[data-chess-personal-menu]');
- function closePersonalMenu(){if(personalMenu.open)personalMenu.close()}
+ function closePersonalMenu(){personalMenu.hidden=true}
  function setResultView(finished){
   const status=node('[data-chess-status]'),rating=node('[data-chess-result]'),pgn=node('[data-chess-pgn]'),entering=resultPanel.hidden;
   const mount=(el,parent)=>{if(el.parentElement!==parent)parent.append(el)};
@@ -73,8 +73,11 @@
   spectatorConnections.push(c);c.on('open',()=>spectatorState(c));c.on('data',data=>{if(data?.channel==='quickdrawn-chess'&&data.version===2&&data.type==='SPECTATE')spectatorState(c)});const remove=()=>{spectatorConnections=spectatorConnections.filter(item=>item!==c);broadcastSpectators()};c.on('close',remove);c.on('error',remove);return true;
  }
  async function joinSpectator(){
-  const code=$('code').value.trim()||room?.code;if(!/^\d{4}$/.test(code)||typeof Peer==='undefined'){setStatus('Nhập mã phòng cờ vua gồm 4 số.');return}
-  destroy();role='spectator';localSide=-1;const current=epoch;renderRoom();setStatus('Đang vào phòng quan chiến…');const candidate=new Peer();peer=candidate;handshake();
+  const code=$('code').value.trim()||room?.code;
+  if(typeof Peer==='undefined'&&window.SpaceSuitePeerTransport){try{await window.SpaceSuitePeerTransport.ensurePeer()}catch(_){}}
+  if(!/^\d{4}$/.test(code)||typeof Peer==='undefined'){setStatus('Nhập mã phòng cờ vua gồm 4 số.');return}
+  if(window.SpaceSuitePeerTransport){try{await window.SpaceSuitePeerTransport.prepare()}catch(_){}}
+  destroy();role='spectator';localSide=-1;const current=epoch;renderRoom();setStatus('Đang vào phòng quan chiến…');const candidate=window.SpaceSuitePeerTransport?window.SpaceSuitePeerTransport.createPeer():new Peer();peer=candidate;handshake();
   candidate.on('open',()=>{if(current!==epoch||peer!==candidate)return;const c=candidate.connect('anhhung-chess-'+code,{reliable:true,metadata:{role:'SPECTATOR',version:2}});conn=c;c.on('open',()=>spectatorMessage(c,'SPECTATE'));c.on('data',data=>{if(current!==epoch||conn!==c||data?.channel!=='quickdrawn-chess'||data.version!==2)return;
    if(data.type==='SPECTATOR_WAIT'){clearHandshake();setStatus('Đã vào phòng '+code+'. Đang chờ hai người bắt đầu ván.');return}
    if(data.type!=='SPECTATOR_STATE'||!validRoom(data.room)||data.room.code!==code)return;
@@ -85,10 +88,30 @@
 
  function packet(type,body={}){if(conn?.open)try{conn.send({channel:'quickdrawn-chess',version:2,type,...body})}catch(_){loseConnection('Đường truyền bị gián đoạn. Đang kết nối lại…')}}
  function clearHandshake(){clearTimeout(handshakeTimer);handshakeTimer=null}
- function handshake(){clearHandshake();const current=epoch;handshakeTimer=setTimeout(()=>{if(current!==epoch)return;if(role==='spectator'){clearHandshake();for(const id of ['host','join','code'])$(id).disabled=false;setStatus('Chưa vào được phòng quan chiến. Kiểm tra mã và thử lại.');return}loseConnection('Kết nối quá lâu. Hãy tạo hoặc vào phòng lại.')},18000)}
- function destroy(){closePersonalMenu();syncSpectatorLayout(true);setResultView(false);screen.inert=false;board.inert=false;delete screen.dataset.waiting;delete $('pvpMenu').dataset.chessRematch;delete $('pvpMenu').dataset.chessSpectator;const watchers=spectatorConnections;spectatorConnections=[];for(const c of watchers)c.close();roomResults.clear();rackLit=new Set();rackMatch=null;previousCaptureTotal=null;recovery?.reset();recoveryTicket=null;epoch++;clearHandshake();const c=conn,p=peer;conn=null;peer=null;room=null;session=null;role='';localReady=false;linked=false;selected=null;promotion=null;pendingMove=false;disconnected=false;drawnRevision=-1;c?.close();p?.destroy();node('[data-chess-promotion]').hidden=true;screen.hidden=true;document.body.classList.remove('in-chess');node('[data-pvp-room]').hidden=true;for(const id of ['host','join','code'])$(id).disabled=false}
- function menu(active){enabled=active;settings.hidden=!active;node('[data-chess-spectate]').hidden=!active;$('pvpMenu').classList.toggle('is-chess-menu',active);$('pvpTitle').textContent=active?'Cờ vua · Song đấu':'Song đấu';node('[data-chess-room-note]').hidden=!active;renderTime()}
- function open(){destroy();bridge.clean();menu(true);$('pvpMenu').hidden=false;$('closePvpMenu').focus();setStatus('Chọn thời gian rồi tạo phòng, hoặc nhập mã để vào phòng của bạn.');renderRoom()}
+ function handshake(){clearHandshake();const current=epoch;handshakeTimer=setTimeout(()=>{if(current!==epoch)return;const diag=window.SpaceSuitePeerTransport?.diagnosePeerError({type:'ice-timeout'});if(role==='spectator'){clearHandshake();for(const id of ['host','join','code'])$(id).disabled=false;setStatus(diag?.actionable||'Chưa vào được phòng quan chiến. Kiểm tra mã và thử lại.');return}loseConnection(diag?.actionable||'Kết nối quá lâu. Hãy tạo hoặc vào phòng lại.')},18000)}
+ function destroy(){closePersonalMenu();syncSpectatorLayout(true);setResultView(false);screen.inert=false;board.inert=false;delete screen.dataset.waiting;delete $('pvpMenu').dataset.chessRematch;delete $('pvpMenu').dataset.chessSpectator;const watchers=spectatorConnections;spectatorConnections=[];for(const c of watchers)c.close();roomResults.clear();rackLit=new Set();rackMatch=null;previousCaptureTotal=null;recovery?.reset();recoveryTicket=null;epoch++;clearHandshake();const c=conn,p=peer;conn=null;peer=null;room=null;session=null;role='';localReady=false;linked=false;selected=null;promotion=null;pendingMove=false;disconnected=false;drawnRevision=-1;c?.close();p?.destroy();node('[data-chess-promotion]').hidden=true;screen.hidden=true;document.body.classList.remove('in-chess');node('[data-pvp-room]').hidden=true;if($('chessEntryGrid'))$('chessEntryGrid').hidden=true;if($('chessSpectateWrap'))$('chessSpectateWrap').hidden=true;for(const id of ['host','join','code'])$(id).disabled=false}
+ function menu(active){
+  delete $('pvpMenu').dataset.spectateEntry;$('pvpMenu').classList.remove('is-spectate-entry');$('join').textContent='Vào';enabled=active;node('[data-chess-spectate]').hidden=!active;$('pvpMenu').classList.toggle('is-chess-menu',active);$('pvpTitle').textContent=active?'Cờ vua · Song đấu':'Song đấu';node('[data-chess-room-note]').hidden=!active;renderTime();
+  const chessEntry=$('chessEntryGrid'),chessSpectate=$('chessSpectateWrap'),vocabEntry=$('vocabPvpEntry');
+  if(active){
+   if(vocabEntry)vocabEntry.hidden=true;
+   if($('chessCodeSlot')&&$('code'))$('chessCodeSlot').append($('code'));
+   if($('chessJoinSlot')&&$('join'))$('chessJoinSlot').append($('join'));
+   if($('chessHostSlot')&&$('host'))$('chessHostSlot').append($('host'));
+   if(chessEntry)chessEntry.hidden=false;
+   if(chessSpectate)chessSpectate.hidden=false;
+   settings.hidden=true;
+  }else{
+   if($('vocabCodeSlot')&&$('code'))$('vocabCodeSlot').append($('code'));
+   if($('vocabJoinSlot')&&$('join'))$('vocabJoinSlot').append($('join'));
+   if($('vocabHostSlot')&&$('host'))$('vocabHostSlot').append($('host'));
+   if(chessEntry)chessEntry.hidden=true;
+   if(chessSpectate)chessSpectate.hidden=true;
+   if(vocabEntry)vocabEntry.hidden=false;
+   settings.hidden=true;
+  }
+ }
+ function open(spectate=false){destroy();bridge.clean();menu(true);$('pvpMenu').classList.toggle('is-spectate-entry',spectate);$('join').textContent=spectate?'Xem':'Vào';$('pvpMenu').hidden=false;$('code').focus();setStatus('Chọn thời gian rồi tạo phòng, hoặc nhập mã để vào phòng của bạn.');renderRoom()}
  function readTime(){const minutes=Number(node('[data-chess-minutes]').value),increment=Number(node('[data-chess-increment]').value);return validChessTime({minutes,increment})?{minutes,increment}:null}
  function renderTime(){node('[data-chess-minutes]').value=chosenTime.minutes;node('[data-chess-increment]').value=chosenTime.increment;const locked=!!role&&(role!=='host'||!room?.editable||room.starting);for(const input of settings.querySelectorAll('input'))input.disabled=locked;node('[data-chess-apply-time]').disabled=locked;node('[data-chess-time-note]').textContent=role==='guest'?'Thời gian do chủ phòng chọn.':room&&!room.editable?'Đã khóa thời gian. Có thể đổi sau khi kết thúc ván.':'Mỗi bên có thời gian riêng. Giây cộng được thêm sau mỗi nước hợp lệ.'}
  function editTime(){const value=readTime();if(!value){setStatus('Thời gian: 1–180 phút; giây cộng: 0–60.');return}if(role&&(role!=='host'||!room?.editable||room.starting)){renderTime();return}chosenTime=value;if(room){room.time={...value};room.config++;room.ready=[false,false];localReady=false;sendRoom();renderRoom()}}
@@ -97,7 +120,14 @@
  function sendRoom(){packet('ROOM',{room,...(recoveryTicket?{recovery:recoveryTicket}:{})});broadcastSpectators()}
  function renderRoom(){
   const panel=node('[data-pvp-room]'),cards=node('[data-pvp-room-players]'),ready=node('[data-pvp-ready]');
-  panel.hidden=!room||!!session;for(const id of ['host','join','code'])$(id).disabled=!!role;renderTime();if(!room||session)return;
+  panel.hidden=!room||!!session;for(const id of ['host','join','code'])$(id).disabled=!!role;renderTime();
+  if(panel&&!panel.hidden){
+   if($('chessEntryGrid'))$('chessEntryGrid').hidden=true;
+   if($('chessSpectateWrap'))$('chessSpectateWrap').hidden=true;
+   if($('vocabPvpEntry'))$('vocabPvpEntry').hidden=true;
+   settings.hidden=true;
+  }
+  if(!room||session)return;
   node('[data-pvp-room-label]').textContent='Phòng '+room.code+' · Cờ vua · '+timeLabel(room.time);cards.replaceChildren();
   room.profiles.forEach((profile,i)=>{const card=document.createElement('article');card.className='pvp-room-player'+(i===localSide?' is-you':'');const art=bridge.portrait(room.heroes[i]);art.classList.add('pvp-room-portrait');card.append(art);for(const [tag,text]of [['small',(i===localSide?'Bạn · ':'')+(i===0?'Chủ phòng':'Đối thủ')+' · '+(playerColor(i)==='w'?'Trắng':'Đen')],['strong',profile.name],['span',bridge.heroName(room.heroes[i])+' · '+profile.elo+' Elo'],['b',room.ready[i]?'Đã sẵn sàng':'Chưa sẵn sàng']]){const el=document.createElement(tag);el.textContent=text;if(tag==='b'&&room.ready[i])el.className='is-ready';card.append(el)}cards.append(card)});
   ready.disabled=role==='spectator'||!linked||localReady||!validChessTime(room.time);ready.textContent=localReady?'ĐÃ SẴN SÀNG':'SẴN SÀNG';setStatus(localReady?'Bạn đã sẵn sàng. Đang chờ đối thủ…':'Kiểm tra đối thủ và thời gian. Cả hai bấm Sẵn sàng mới bắt đầu.');
@@ -153,19 +183,24 @@
  function loseConnection(text){clearHandshake();if(recovery?.lost(text))return;disconnected=true;pendingMove=false;if(session){session.clocks=session.remaining(now());session.running=false;node('[data-chess-status]').textContent=session.result?text+' Kết quả ván đã hoàn tất được giữ nguyên.':text+' Ván chưa hoàn tất không tính Elo.';render()}else{const c=conn;conn=null;room=null;localReady=false;linked=false;role='';c?.close();renderRoom();setStatus(text)} }
  function listen(c,current){conn=c;recovery?.trackConnection(c);c.on('data',data=>{if(current!==epoch||conn!==c)return;try{if(recovery?.receive(data,c)||recovery?.blocked)return;receive(data)}catch(error){console.warn('Ignored invalid chess message:',error.message)}});c.on('close',()=>{if(current===epoch&&conn===c){conn=null;loseConnection('Đối thủ đã mất kết nối.')}});c.on('error',()=>{if(current===epoch&&conn===c){conn=null;loseConnection('Lỗi kết nối.')}})}
  async function create(attempt=0){
+  if(typeof Peer==='undefined'&&window.SpaceSuitePeerTransport){try{await window.SpaceSuitePeerTransport.ensurePeer()}catch(_){}}
   if(typeof Peer==='undefined'){setStatus('Không tải được kết nối phòng. Hãy kiểm tra mạng.');return}
+  if(window.SpaceSuitePeerTransport){try{await window.SpaceSuitePeerTransport.prepare()}catch(_){}}
   const time=readTime();if(!time){setStatus('Chọn 1–180 phút và 0–60 giây cộng trước khi tạo phòng.');return}chosenTime=time;destroy();role='host';localSide=0;const current=epoch;renderRoom();setStatus('Đang chuẩn bị hồ sơ…');
   myProfile=await bridge.profile();if(current!==epoch||!enabled)return;if(!bridge.validProfile(myProfile)){destroy();renderRoom();setStatus('Tài khoản đã thay đổi. Hãy tạo phòng lại.');return}
-  function attemptHost(n){if(current!==epoch)return;const code=String(Math.floor(1000+Math.random()*9000)),candidate=new Peer('anhhung-chess-'+code);peer=candidate;recovery?.trackPeer(candidate);
+  function attemptHost(n){if(current!==epoch)return;const code=String(Math.floor(1000+Math.random()*9000)),hostId='anhhung-chess-'+code,candidate=window.SpaceSuitePeerTransport?window.SpaceSuitePeerTransport.createPeer(hostId):new Peer(hostId);peer=candidate;recovery?.trackPeer(candidate);
    candidate.on('open',()=>{if(current!==epoch||peer!==candidate)return;if(recovery?.active){recovery.retry();return}room={id:'chess-'+bridge.uid(),code,config:0,time:{...chosenTime},profiles:[myProfile],heroes:[bridge.selectedHero()],ready:[false,false],editable:false,whiteSide:0,scores:[0,0]};renderTime();setStatus('Mã phòng cờ vua: '+code+' · '+timeLabel(chosenTime)+' · Đang chờ đối thủ.');});
    candidate.on('connection',c=>{if(current!==epoch||peer!==candidate){c.close();return}if(acceptSpectatorConnection(c))return;if(recovery?.incoming(c))return;if(conn||!room||session){c.close();return}listen(c,current);handshake();setStatus('Đang xác minh đối thủ…')});
-   candidate.on('error',error=>{if(current!==epoch||peer!==candidate)return;if(recovery?.peerError(error))return;if(error.type==='unavailable-id'&&n<8){candidate.destroy();peer=null;attemptHost(n+1)}else loseConnection('Không tạo được phòng. Hãy thử lại.')});
+   candidate.on('error',error=>{if(current!==epoch||peer!==candidate)return;if(recovery?.peerError(error))return;if(error.type==='unavailable-id'&&n<8){candidate.destroy();peer=null;attemptHost(n+1)}else{const diag=window.SpaceSuitePeerTransport?.diagnosePeerError(error);loseConnection(diag?.actionable||'Không tạo được phòng. Hãy thử lại.')}});
   }attemptHost(attempt);
  }
  async function join(){
-  const code=$('code').value.trim();if(!/^\d{4}$/.test(code)){setStatus('Nhập mã phòng cờ vua gồm 4 số.');return}if(typeof Peer==='undefined'){setStatus('Không tải được kết nối phòng. Hãy kiểm tra mạng.');return}
+  const code=$('code').value.trim();if(!/^\d{4}$/.test(code)){setStatus('Nhập mã phòng cờ vua gồm 4 số.');return}
+  if(typeof Peer==='undefined'&&window.SpaceSuitePeerTransport){try{await window.SpaceSuitePeerTransport.ensurePeer()}catch(_){}}
+  if(typeof Peer==='undefined'){setStatus('Không tải được kết nối phòng. Hãy kiểm tra mạng.');return}
+  if(window.SpaceSuitePeerTransport){try{await window.SpaceSuitePeerTransport.prepare()}catch(_){}}
   destroy();role='guest';localSide=1;const current=epoch;renderRoom();setStatus('Đang chuẩn bị hồ sơ…');myProfile=await bridge.profile();if(current!==epoch||!enabled)return;if(!bridge.validProfile(myProfile)){destroy();renderRoom();setStatus('Tài khoản đã thay đổi. Hãy vào phòng lại.');return}
-  const candidate=new Peer();peer=candidate;recovery?.trackPeer(candidate);handshake();candidate.on('open',()=>{if(current!==epoch||peer!==candidate)return;if(recovery?.active){recovery.retry();return}const c=candidate.connect('anhhung-chess-'+code,{reliable:true});listen(c,current);c.on('open',()=>{if(current!==epoch||conn!==c)return;packet('HELLO',{profile:myProfile,hero:bridge.selectedHero(),recovery:recovery?.offer()});setStatus('Đang vào phòng cờ vua…')})});candidate.on('error',error=>{if(recovery?.peerError(error))return;if(current===epoch&&peer===candidate)loseConnection('Không tìm thấy phòng cờ vua. Kiểm tra mã hoặc thử lại.')});
+  const candidate=window.SpaceSuitePeerTransport?window.SpaceSuitePeerTransport.createPeer():new Peer();peer=candidate;recovery?.trackPeer(candidate);handshake();candidate.on('open',()=>{if(current!==epoch||peer!==candidate)return;if(recovery?.active){recovery.retry();return}const c=candidate.connect('anhhung-chess-'+code,{reliable:true});listen(c,current);c.on('open',()=>{if(current!==epoch||conn!==c)return;packet('HELLO',{profile:myProfile,hero:bridge.selectedHero(),recovery:recovery?.offer()});setStatus('Đang vào phòng cờ vua…')})});candidate.on('error',error=>{if(recovery?.peerError(error))return;if(current===epoch&&peer===candidate){const diag=window.SpaceSuitePeerTransport?.diagnosePeerError(error);loseConnection(diag?.actionable||'Không tìm thấy phòng cờ vua. Kiểm tra mã hoặc thử lại.')}});
  }
  function receive(data){
   if(!data||data.channel!=='quickdrawn-chess'||data.version!==2||typeof data.type!=='string')return;
@@ -228,7 +263,10 @@
  }
  node('[data-chess-rematch]').onclick=()=>{if(role==='spectator'||!session?.result||!conn?.open)return;if(role==='host')resetRoom();else{packet('REMATCH',{id:room.id});node('[data-chess-status]').textContent='Đang chờ chủ phòng mở lại phòng chờ…'}};
  node('[data-chess-pause]').onclick=()=>{
-  if(role!=='spectator'&&session&&!session.result&&!personalMenu.open)personalMenu.showModal();
+  if(role!=='spectator'&&session&&!session.result){
+   personalMenu.hidden=!personalMenu.hidden;
+   if(!personalMenu.hidden)node('[data-chess-resume]').focus();
+  }
  };
  node('[data-chess-resume]').onclick=closePersonalMenu;
  node('[data-chess-leave]').onclick=async()=>{
@@ -305,7 +343,7 @@
   rematch.hidden=!(finished&&player); rematch.disabled=!finished||disconnected;
   const leaveLabel=live?'Rời ván · Xin thua':'Về menu chính';
   node('[data-chess-leave-label]').textContent=leaveLabel;
-  const leave=node('[data-chess-leave]');leave.title=leaveLabel;leave.setAttribute('aria-label',leaveLabel);
+  const leave=node('[data-chess-leave]');leave.title=leaveLabel;leave.setAttribute('aria-label',leaveLabel);leave.dataset.actionFace='danger';
  }
  function render(){
   if(!session||screen.hidden)return;syncSpectatorLayout();renderDojoScore();const g=session.game,history=g.history({verbose:true}),last=history.at(-1),legal=selected?new Set(g.moves({square:selected,verbose:true}).map(m=>m.to)):new Set();
@@ -325,9 +363,23 @@
  portraitMedia?.addEventListener('change',()=>{if(session&&!screen.hidden){drawnRevision=-1;render()}else syncSpectatorLayout()});
  node('[data-chess-spectate]').onclick=joinSpectator;node('[data-chess-watch-retry]').onclick=joinSpectator;
  node('[data-chess-apply-time]').onclick=editTime;
- node('[data-open-chess]').onclick=open;
+ node('[data-open-chess]').onclick=()=>open();
+ $('openChessSpectator').onclick=()=>open(true);
+ if($('chessToCreate'))$('chessToCreate').onclick=()=>{
+  if($('chessEntryGrid'))$('chessEntryGrid').hidden=true;
+  if($('chessSpectateWrap'))$('chessSpectateWrap').hidden=true;
+  settings.hidden=false;
+  node('[data-chess-minutes]').focus();
+ };
+ if($('chessCreateBack'))$('chessCreateBack').onclick=()=>{
+  settings.hidden=true;
+  if($('chessEntryGrid'))$('chessEntryGrid').hidden=false;
+  if($('chessSpectateWrap'))$('chessSpectateWrap').hidden=false;
+  $('chessToCreate')?.focus();
+ };
+ if($('chessEntryBack'))$('chessEntryBack').onclick=()=>{$('closePvpMenu').click()};
  $('openPvpMenu').onclick=()=>{destroy();menu(false);original.pvp()};
- $('host').onclick=()=>enabled?create():original.host();$('join').onclick=()=>enabled?join():original.join();
+ $('host').onclick=()=>enabled?create():original.host();$('join').onclick=()=>enabled?($('pvpMenu').classList.contains('is-spectate-entry')?joinSpectator():join()):original.join();
  $('closePvpMenu').onclick=()=>{if(!enabled){original.close();return}destroy();menu(false);$('lobby').hidden=false;$('pvpMenu').hidden=true;node('[data-open-chess]').focus()};
  node('[data-pvp-ready]').addEventListener('click',()=>{if(enabled)ready()});
  // Backgrounding preserves the in-memory session; recovery probes on return.

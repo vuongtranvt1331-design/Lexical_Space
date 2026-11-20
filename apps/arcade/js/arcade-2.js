@@ -444,6 +444,7 @@
           btnQD.href = qdUrl;
           btnPK.href = pkUrl;
           btnAS.href = asUrl;
+          document.getElementById('btnPlaySpace').href = window.SpaceSuite ? SpaceSuite.href('space-dominators', {mode,topic}) : '../space-dominators/' + queryString;
           modeWarningMsg.style.display = 'none';
           vocabModeBadge.textContent = mode === 'topic' ? 'TOPIC' : 'FULL VOCABULARY';
           topicWrapper.style.opacity = mode === 'full' ? '0.65' : '1';
@@ -473,6 +474,7 @@
           if (pendingLaunch) return;
           unavailableSound.pause();
           switchSound.pause();
+          const studioIntro = button.dataset.loaderGame === 'space';
           const controller = new AbortController();
           pendingLaunch = controller;
           const options = {once:true, signal:controller.signal};
@@ -487,7 +489,9 @@
           function navigate() {
             if (controller.signal.aborted) return;
             if (cueDone && audioDone) {
-              location.assign(button.href);
+              const target = new URL(button.href);
+              if (studioIntro) target.hash = 'studio-intro';
+              location.assign(target.href);
             }
           }
 
@@ -556,6 +560,10 @@
             audioDone = true;
           }
 
+          if (studioIntro) {
+            finishCue();
+            return;
+          }
           ensureLoader();
           if (reduceMotion) {
             finishCue();

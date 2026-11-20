@@ -68,7 +68,8 @@ test('worker precaches PWA resources and activation only retires its own previou
 test('game loader reuses Hub logos without a second network request and leaves other media fresh', async () => {
   const script = await read('service-worker.js');
   const logos = JSON.parse(script.match(/const SHARED_LOGOS=(\[.*?\]);/s)[1]);
-  assert.equal(logos.length, 4);
+  assert.ok(logos.includes('./apps/arcade/assets/arcade_space_logo.png'));
+  assert.ok(logos.includes('./apps/arcade/assets/logo/space_dominator_super_update.png'));
   assert.ok(logos.includes('./apps/arcade/assets/logo/dictation_practice.png'));
   const base = 'https://example.test/Lexical_Space/';
   const entries = new Map(), handlers = {}, puts = [];

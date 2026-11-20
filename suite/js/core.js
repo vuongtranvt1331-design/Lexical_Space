@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const base = new URL('../../', document.currentScript.src);
-  const paths = Object.freeze({ lexical: './', grammar: 'apps/grammar/', arcade: 'apps/arcade/', 'quick-ears': 'apps/quick-ears/', 'quick-drawn': 'apps/quick-drawn/', 'sky-dominators': 'apps/sky-dominators/', poker: 'apps/poker/', 'vocabulary-test': 'apps/vocabulary-test/' });
+  const paths = Object.freeze({ lexical: './', grammar: 'apps/grammar/', arcade: 'apps/arcade/', 'quick-ears': 'apps/quick-ears/', 'quick-drawn': 'apps/quick-drawn/', 'sky-dominators': 'apps/sky-dominators/', 'space-dominators': 'apps/space-dominators/', poker: 'apps/poker/', 'vocabulary-test': 'apps/vocabulary-test/' });
   const clean = value => typeof value === 'string' ? value.trim() : '';
   function profile() {
     try { const value = sessionStorage.getItem('ls_active_profile'); if (value !== null) return clean(value); } catch {}
@@ -14,7 +14,7 @@
     const url = new URL(paths[app], base), user = profile();
     if (user) url.searchParams.set('user', user);
     for (const key of ['mode', 'topic']) if (typeof params[key] === 'string' && params[key]) url.searchParams.set(key, params[key]);
-    if (['quick-drawn', 'sky-dominators', 'poker', 'grammar', 'vocabulary-test'].includes(app)) {
+    if (['quick-drawn', 'space-dominators', 'sky-dominators', 'poker', 'grammar', 'vocabulary-test'].includes(app)) {
       const back = new URL(paths.arcade, base);
       if (user) back.searchParams.set('user', user);
       for (const key of ['mode', 'topic']) if (url.searchParams.has(key)) back.searchParams.set(key, url.searchParams.get(key));

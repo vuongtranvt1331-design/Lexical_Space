@@ -3,7 +3,7 @@
   const duration = 1500;
   const lag = .14;
   const sheet = new Image();
-  sheet.src = './assets/space-chase.png';
+  sheet.src = new URL('../assets/space-chase.png', document.currentScript.src).href;
   const ready = sheet.decode().then(() => true, () => false);
   const laser = document.querySelector('[data-chase-laser]');
   const shotTimes = [160, 440, 740, 1050];
@@ -29,7 +29,7 @@
     return w>=h ? {x:w*along,y:h*across} : {x:w*across,y:h*along};
   }
 
-  async function play() {
+  async function play(parent = document.body) {
     if (active || document.hidden) return;
     const layer = document.createElement('div');
     active = layer;
@@ -43,7 +43,7 @@
     const loaded = await ready;
     if (active !== layer) return;
     if (!loaded || document.hidden) { stop(); return; }
-    document.body.append(layer);
+    parent.append(layer);
     const w = layer.clientWidth, h = layer.clientHeight;
     const size = Math.min(w,h)*.17;
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;

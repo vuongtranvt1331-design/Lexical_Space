@@ -12,7 +12,8 @@ VERSION = json.loads((ROOT / 'package.json').read_text(encoding='utf-8'))['versi
 # cached on first view, not downloaded as part of the installation precache.
 SHARED_LOGOS = ['./apps/arcade/assets/logo/' + name + '_logo.png' for name in
                 ('sky_dominators', 'word_battles', 'wild_west_poker')] + ['./apps/arcade/assets/logo/dictation_practice.png',
-                 './apps/arcade/assets/logo/space_dominator_super_update.png']
+                 './apps/arcade/assets/logo/space_dominator_super_update.png', './apps/arcade/assets/logo/152-studio.png',
+                 './apps/arcade/assets/arcade_space_logo.png']
 
 
 def write_if_changed(path, text):
@@ -26,6 +27,7 @@ def build():
         'js/features/loading.js', 'js/features/appearance.js', 'js/features/interface-language.js', 'css/lexical-layout.css', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
         'apps/quick-ears/history.js', 'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/js/space-chase.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
+        'apps/space-dominators/studio-intro.css', 'apps/space-dominators/station.css', 'apps/space-dominators/station.js',
         'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
         'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
         'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
@@ -60,6 +62,9 @@ def build():
     core = ['./', './apps/arcade/assets/space-chase.png', './apps/arcade/assets/audio/space-chase-laser.mp3', './apps/quick-ears/button-sprites.png', './apps/arcade/assets/audio/game-open.mp3', './apps/arcade/assets/audio/game-switch.mp3', './apps/arcade/assets/audio/menu-select.mp3', './apps/arcade/assets/audio/menu-exit.mp3', './apps/arcade/assets/audio/game-unavailable.mp3', './apps/arcade/assets/ui_spritesheet.png',
             './apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png', './apps/arcade/assets/action-glyphs.png', './apps/arcade/assets/system-controls.png',
             './apps/grammar/assets/matcha-logo.png', './apps/grammar/assets/matcha-topic.png']
+    core.extend('./apps/space-dominators/assets/' + name for name in
+                ('celestial-survey.png', 'planet-encounters.png', 'boss-fx/enemy-flight-effects.png',
+                 'player-hulls.png', 'player-exhaust.png'))
     core.extend('./apps/' + module + '/assets/action-buttons.png'
                 for module in ('arcade', 'sky-dominators', 'quick-drawn', 'poker'))
     excluded = {'tests', 'tools', '.git', 'node_modules', 'firestore', '__pycache__'}
@@ -74,7 +79,7 @@ def build():
         # Sentence data is fetched only when the student opens that lesson.
         if relative.startswith('apps/quick-ears/lesson-packs/') and path.name != 'available.json':
             continue
-        if path.suffix.lower() in {'.js', '.css', '.html', '.json', '.webmanifest', '.svg'} or relative.startswith('assets/icons/'):
+        if path.suffix.lower() in {'.js', '.css', '.html', '.json', '.webmanifest', '.svg'} or relative.startswith('assets/icons/') or relative == 'apps/space-dominators/assets/fonts/PressStart2P-Regular.ttf':
             if path.name.startswith(('test_', 'boss-test')) or path.stat().st_size > 1600000 or path.name in {'package-lock.json', 'package.json'}:
                 continue
             core.append('./' + relative)
@@ -86,7 +91,7 @@ def build():
     release = {'name': 'SpaceSuite', 'lexicalVersion': VERSION,
                'date': datetime.now(timezone(timedelta(hours=7))).date().isoformat(),
                'root': 'LexicalSpace-project',
-               'modules': ['lexical', 'grammar', 'arcade', 'quick-drawn', 'sky-dominators', 'poker', 'vocabulary-test', 'quick-ears'],
+               'modules': ['lexical', 'grammar', 'arcade', 'quick-drawn', 'sky-dominators', 'space-dominators', 'poker', 'vocabulary-test', 'quick-ears'],
                'cacheVersion': digest}
     write_if_changed(ROOT / 'suite/release.json', json.dumps(release, indent=2))
     print(json.dumps({'version': VERSION, 'cache': digest, 'coreFiles': len(core),

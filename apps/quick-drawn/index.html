@@ -1,17 +1,27 @@
 <!doctype html><html lang="vi" data-suite-module="quick-drawn"><head>
-  <script src="../../suite/js/effects-volume.js?v=44.11.0-ddd24e7a19"></script>
-    <script src="../../suite/js/core.js?v=44.11.0-b7b9df761e"></script>
-  <link rel="stylesheet" href="../../suite/css/components.css?v=44.11.0-69a13ed7c3"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Word Battles — Đấu Trí Từ Vựng</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/duel.css?v=44.11.0-d5479a8b0c"><link rel="stylesheet" href="../../suite/css/game-logo-loader.css?v=44.11.0-f0a2c333e0"><link rel="manifest" href="../../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icons/icon-192.png"><script defer src="../../js/core/offline.js?v=44.11.0-39c886b7ac"></script><link rel="stylesheet" href="../../suite/css/game-icons.css?v=44.11.0-18940026b2"><link rel="stylesheet" href="../arcade/css/action-frames.css?v=44.11.0-a19e666164"><script defer src="../../suite/js/game-menu-audio.js?v=44.11.0-a1553843c3"></script></head><body>
+  <script src="../../suite/js/effects-volume.js?v=44.13.0-ddd24e7a19"></script>
+    <script src="../../suite/js/core.js?v=44.13.0-a5b98868bd"></script>
+  <link rel="stylesheet" href="../../suite/css/components.css?v=44.13.0-69a13ed7c3"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Word Battles — Đấu Trí Từ Vựng</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/duel.css?v=44.13.0-232563ae12"><link rel="stylesheet" href="../../suite/css/game-logo-loader.css?v=44.13.0-f0a2c333e0"><link rel="manifest" href="../../manifest.webmanifest"><link rel="apple-touch-icon" href="../../assets/icons/icon-192.png"><script defer src="../../js/core/offline.js?v=44.13.0-39c886b7ac"></script><link rel="stylesheet" href="../../suite/css/game-icons.css?v=44.13.0-18940026b2"><link rel="stylesheet" href="../arcade/css/action-frames.css?v=44.13.0-a19e666164"><script defer src="../../suite/js/game-menu-audio.js?v=44.13.0-a1553843c3"></script></head><body>
 <section class="game-logo-loader" data-game-logo-loader="word-battles" role="status" aria-label="Loading Word Battles"><img src="../arcade/assets/logo/word_battles_logo.png" width="576" height="576" alt="Word Battles" decoding="async"></section>
-<script src="../../suite/components/game-logo-loader.js?v=44.11.0-a94e01bbc5"></script>
+<script src="../../suite/components/game-logo-loader.js?v=44.13.0-a94e01bbc5"></script>
 <main class="shell"><header class="brand-header"><h1 class="brand-title"><img class="brand-logo" src="../arcade/assets/logo/word_battles_logo.png" width="576" height="576" alt="Word Battles — Đấu Trí Từ Vựng" decoding="async" fetchpriority="high"></h1></header>
 <section id="lobby" class="panel lobby-panel">
   <input type="hidden" id="hero" value="">
   <button id="openGallery" class="hero-display" type="button" aria-label="Chọn danh tướng và trang phục"><canvas id="lobbyHero" width="229" height="229" aria-label="Danh tướng đang chọn"></canvas><span class="pedestal"></span><strong id="selectedHeroName"></strong><small>Chạm vào nhân vật để chọn tướng</small></button>
-  <label for="username">Tài khoản Lexical Space</label><input id="username" list="lexicalUsers" maxlength="50" autocomplete="username" placeholder="Tên tài khoản Lexical Space"><datalist id="lexicalUsers"></datalist><p id="vocabNotice" class="note" role="status">Đang tìm tài khoản trên thiết bị…</p>
+  <label for="username">Tài khoản Lexical Space</label><input id="username" list="lexicalUsers" maxlength="50" autocomplete="username" placeholder="Tên tài khoản Lexical Space"><datalist id="lexicalUsers"></datalist><p id="vocabNotice" class="note" role="status" hidden></p>
   <nav class="game-menu-column" aria-label="Chế độ chơi">
-    <button id="openBotMenu" class="battle-cta" type="button" title="Đấu với máy" aria-label="Đấu với máy" data-action-face="main">ĐẤU VỚI MÁY (PvC)</button><button id="openPvpMenu" class="battle-cta" type="button" title="Song đấu từ vựng" aria-label="Song đấu từ vựng" data-action-face="blue">SONG ĐẤU (PvP)</button><button class="battle-cta" type="button" data-open-chess title="Cờ vua PvP" aria-label="Cờ vua PvP" data-action-face="blue">CỜ VUA (PvP)</button>
-    <a data-menu-hub data-suite-return href="../arcade/" data-action-face="danger">Về Arcade Hub</a>
+    <div id="mainMenuGrid" class="menu-grid-2x2">
+      <button id="mainMenuVocab" class="battle-cta" type="button" title="Từ vựng" aria-label="Từ vựng" data-action-face="main">Từ Vựng</button>
+      <button class="battle-cta" type="button" data-open-chess title="Cờ vua" aria-label="Cờ vua" data-action-face="blue">Cờ Vua</button>
+      <button type="button" class="battle-cta" data-open-settings data-common-game-icon="settings" title="Cài đặt" aria-label="Cài đặt" data-action-face="quiet">Cài Đặt</button>
+      <a data-menu-hub data-suite-return href="../arcade/" class="battle-cta" data-action-face="danger" data-common-game-icon="back" title="Trở về ArcadeSpace" aria-label="Trở về ArcadeSpace">ArcadeSpace</a>
+    </div>
+    <div id="vocabSubmenuGrid" class="menu-grid-2x2" hidden>
+      <button id="openBotMenu" class="battle-cta" type="button" title="Đấu với máy" aria-label="Đấu với máy" data-action-face="main">Đấu Với Máy</button>
+      <button id="openPvpMenu" class="battle-cta" type="button" title="Song đấu từ vựng" aria-label="Song đấu từ vựng" data-action-face="blue">Song Đấu</button>
+      <button id="openChessSpectator" type="button" class="battle-cta" data-common-game-icon="hint" data-action-face="quiet">Quan chiến cờ vua</button>
+      <button id="vocabMenuBack" class="battle-cta" type="button" title="Quay lại" aria-label="Quay lại" data-action-face="danger" data-common-game-icon="back">Quay Lại</button>
+    </div>
   </nav>
   <section class="standing-board" aria-label="Bảng xếp hạng">
     <h2 data-common-game-icon="leaderboard">Bảng xếp hạng</h2><p class="standing-survival" data-standing-survival>Kỷ lục sinh tồn: 0 câu đúng</p>
@@ -20,13 +30,13 @@
   </section>
 </section>
 <section id="battle" hidden>
-  <div class="battle-top"><a class="suite-back word-hub-control" data-suite-return data-system-control data-common-game-icon="exit" href="../arcade/" aria-label="Trở về ArcadeSpace" title="Trở về ArcadeSpace" data-bare-control></a><button id="pause" data-system-control data-common-game-icon="pause" class="pause-btn" type="button" aria-label="Tạm dừng" title="Tạm dừng" data-bare-control></button>
+  <div class="battle-top"><button id="pause" data-system-control data-common-game-icon="pause" class="pause-btn" type="button" aria-label="Tạm dừng" title="Tạm dừng" data-bare-control></button>
     <div class="matchup"><span id="name0"></span><b>VS</b><span id="name1"></span></div>
     <div class="hp-row"><div id="lives0" class="hp-track hp-left" role="progressbar" aria-label="Máu người chơi 1" aria-valuemin="0" aria-valuemax="10"><div class="hp-pips"></div></div><span class="hp-vs">VS</span><div id="lives1" class="hp-track hp-right" role="progressbar" aria-label="Máu người chơi 2" aria-valuemin="0" aria-valuemax="10"><div class="hp-pips"></div></div></div>
   </div>
   <div id="scorePanel" class="score-panel" hidden>Điểm: <strong id="scoreValue">0</strong><span id="botSpeed"></span><span data-pvc-countdown></span></div><div class="frame arena"><canvas id="canvas" width="960" height="380" aria-label="Đấu trường danh tướng"></canvas><div class="teacher-taunt" data-teacher-taunt role="status" aria-live="polite" hidden></div><div id="battleMessage" class="battle-message" aria-live="polite"></div><div id="victoryBanner" class="ba-vuong-container" aria-label="Bá Vương" hidden><span>BÁ VƯƠNG</span></div></div>
-  <div class="action-panel"><div class="frame question"><small>CHỌN TỪ ĐỒNG NGHĨA</small><h2 id="word">—</h2><p id="meaning"></p></div><div id="answers" class="answers"></div><div id="rematchPanel" class="rematch-panel" hidden><button id="rematch" type="button" data-common-game-icon="replay" title="Tái đấu" aria-label="Tái đấu" data-action-face="gold">TÁI ĐẤU</button><button id="returnLobby" type="button" class="secondary" data-common-game-icon="back" title="Về sảnh" aria-label="Về sảnh" data-action-face="quiet">Về sảnh</button><p class="standing-result" data-standing-result role="status" hidden></p><p id="rematchStatus" role="status"></p></div><p id="roundStatus" role="status"></p></div>
-  <div id="pauseOverlay" class="pause-overlay" hidden><div class="pause-card" role="dialog" aria-modal="true" aria-labelledby="pauseTitle"><a class="suite-back word-hub-control" data-suite-return data-system-control data-common-game-icon="exit" href="../arcade/" aria-label="Trở về ArcadeSpace" title="Trở về ArcadeSpace" data-bare-control></a><h2 id="pauseTitle">Tạm dừng</h2><div class="game-menu-column"><button id="resume" data-common-game-icon="play" type="button" title="Tiếp tục" aria-label="Tiếp tục" data-action-face="main">Tiếp tục</button><button type="button" data-word-sound data-common-game-icon="sound-on" data-action-face="quiet" aria-pressed="true">Âm thanh · Bật</button><button id="leave" type="button" class="secondary" data-common-game-icon="back" title="Về sảnh" aria-label="Về sảnh" data-action-face="quiet">Về sảnh</button></div></div></div>
+  <div class="action-panel"><div class="frame question"><small>CHỌN TỪ ĐỒNG NGHĨA</small><h2 id="word">—</h2><p id="meaning"></p></div><div class="answer-controls"><div id="answers" class="answers"></div><div id="pauseOverlay" class="pause-overlay" hidden><div class="pause-card" aria-labelledby="pauseTitle"><div class="pause-menu-layout"><h2 id="pauseTitle" class="answer-pause-title">Tạm dừng</h2><button id="resume" data-common-game-icon="play" type="button" title="Tiếp tục" aria-label="Tiếp tục" data-action-face="main">Tiếp tục</button><div class="pause-bottom-row"><button type="button" data-open-settings data-common-game-icon="settings" data-action-face="quiet" title="Cài đặt" aria-label="Cài đặt">Cài đặt</button><button id="leave" type="button" class="secondary" data-common-game-icon="back" title="Về sảnh" aria-label="Về sảnh" data-action-face="danger">Về sảnh</button></div></div></div></div></div><div id="rematchPanel" class="rematch-panel" hidden><p class="standing-result" data-standing-result role="status" hidden></p><p id="rematchStatus" role="status"></p><div class="finish-bottom-row"><button id="rematch" type="button" data-common-game-icon="replay" title="Tái đấu" aria-label="Tái đấu" data-action-face="gold">TÁI ĐẤU</button><button id="returnLobby" type="button" class="secondary" data-common-game-icon="back" title="Về sảnh" aria-label="Về sảnh" data-action-face="danger">Về sảnh</button></div></div><p id="roundStatus" role="status"></p></div>
+  
 </section>
 <section class="chess-screen" data-chess-screen hidden aria-label="Cờ vua song đấu">
  <header class="spectate-header" data-spectate-header hidden aria-label="Tỉ số Quan Chiến">
@@ -58,19 +68,62 @@
   </section>
  </div>
  <small class="chess-room-code" data-chess-room-code></small>
- <dialog data-chess-personal-menu aria-label="Menu ván cờ">
-  <h3>Menu ván cờ</h3><p>Đồng hồ của ván vẫn chạy.</p>
-  <div class="game-menu-column">
+ <section data-chess-personal-menu aria-label="Menu ván cờ" hidden>
+  <p>Đồng hồ của ván vẫn chạy.</p>
+  <div class="pause-menu-layout">
+   <h3>Menu ván cờ</h3>
    <button type="button" data-chess-resume data-action-face="main" data-common-game-icon="play" autofocus>Tiếp tục</button>
-   <button type="button" data-word-sound data-common-game-icon="sound-on" data-action-face="quiet" aria-pressed="true">Âm thanh · Bật</button>
-   <div class="game-menu-column" data-chess-leave-slot></div>
+   <div class="pause-bottom-row">
+    <button type="button" data-open-settings data-common-game-icon="settings" data-action-face="quiet" title="Cài đặt" aria-label="Cài đặt">Cài đặt</button>
+    <div data-chess-leave-slot></div>
+   </div>
   </div>
- </dialog>
+ </section>
  <div class="chess-promotion" data-chess-promotion hidden><section class="chess-promotion-card" role="dialog" aria-modal="true" aria-label="Chọn quân phong cấp"><h3>Phong cấp tốt</h3><div class="chess-promotion-choices"><button type="button" data-chess-promote="q" aria-label="Hậu" title="Hậu" data-action-face="gold"><span class="chess-piece" aria-hidden="true" style="background-image:var(--chess-wq,none)">♕</span><span>Hậu</span></button><button type="button" data-chess-promote="r" aria-label="Xe" title="Xe" data-action-face="gold"><span class="chess-piece" aria-hidden="true" style="background-image:var(--chess-wr,none)">♖</span><span>Xe</span></button><button type="button" data-chess-promote="b" aria-label="Tượng" title="Tượng" data-action-face="gold"><span class="chess-piece" aria-hidden="true" style="background-image:var(--chess-wb,none)">♗</span><span>Tượng</span></button><button type="button" data-chess-promote="n" aria-label="Mã" title="Mã" data-action-face="gold"><span class="chess-piece" aria-hidden="true" style="background-image:var(--chess-wn,none)">♘</span><span>Mã</span></button></div><button type="button" class="secondary" data-chess-cancel-promotion data-common-game-icon="back" title="Hủy phong cấp" aria-label="Hủy phong cấp" data-action-face="quiet">Hủy</button></section></div>
 </section>
 
 
 </main>
-<div id="galleryModal" class="modal-shade" hidden><section class="modal-card simple-corners gallery-card" role="dialog" aria-modal="true" aria-labelledby="galleryTitle"><button id="closeGallery" class="close-modal" type="button" aria-label="Đóng" data-common-game-icon="close" title="Đóng" data-action-face="quiet">Đóng</button><h2 id="galleryTitle">Danh tướng &amp; trang phục</h2><p>Chọn danh tướng và trang phục mặc định.</p><div id="heroGrid" class="hero-grid"></div><h3 id="skinTitle">Trang phục</h3><div id="skinGrid" class="skin-grid"></div></section></div>
-<div id="pvpMenu" class="modal-shade" hidden><section class="modal-card simple-corners" role="dialog" aria-modal="true" aria-labelledby="pvpTitle"><button class="close-modal" id="closePvpMenu" aria-label="Đóng" type="button" data-common-game-icon="close" title="Đóng" data-action-face="quiet">Đóng</button><h2 id="pvpTitle">Song đấu</h2><fieldset class="chess-time" data-chess-time hidden><legend>Thời gian ván cờ</legend><label>Phút mỗi bên<input type="number" min="1" max="180" step="1" value="5" data-chess-minutes></label><label>Giây cộng mỗi nước<input type="number" min="0" max="60" step="1" value="0" data-chess-increment></label><button type="button" class="secondary" data-chess-apply-time data-common-game-icon="check" title="Áp dụng thời gian" aria-label="Áp dụng thời gian" data-action-face="main">Áp dụng thời gian</button><small data-chess-time-note></small></fieldset><p class="note" data-chess-room-note hidden>Chọn lúc tạo phòng. Sau khi kết thúc ván, chủ phòng có thể đổi thời gian trước khi cả hai Sẵn sàng lại.</p><button id="host" class="mode-choice" data-common-game-icon="room" title="Tạo phòng mới" aria-label="Tạo phòng mới" data-action-face="main">Tạo phòng mới</button><div class="join"><input id="code" inputmode="numeric" maxlength="4" placeholder="Mã phòng 4 số" aria-label="Mã phòng"><button id="join" data-common-game-icon="next" title="Vào phòng" aria-label="Vào phòng" data-action-face="main">Vào</button></div><button type="button" class="secondary chess-spectate-button" data-chess-spectate hidden data-common-game-icon="hint" title="Quan chiến" aria-label="Quan chiến" data-action-face="quiet">Quan Chiến (Spectate)</button><section class="pvp-room" data-pvp-room aria-label="Sảnh chờ song đấu" hidden><h3 data-pvp-room-label></h3><div class="pvp-room-players" data-pvp-room-players></div><button type="button" class="pvp-ready-button" data-pvp-ready data-common-game-icon="check" data-action-face="main">SẴN SÀNG</button></section><p id="status" role="status">Chia sẻ mã phòng với đối thủ.</p><p class="note">Cả hai cần mở cùng phiên bản mới nhất và giữ sảnh mở trong khi kết nối.</p></section></div>
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script><script src="js/config.js?v=43.8.0-de6806dde0"></script><script src="./assets/vendor/firebase-app-compat-10.12.2.js?v=43.8.0-24a1fd90a9"></script><script src="./assets/vendor/firebase-firestore-compat-10.12.2.js?v=43.8.0-25133ac64b"></script><script src="./js/standings-service.js?v=43.8.0-20dd2a4ac3"></script><script src="js/firebase-service.js?v=43.8.0-bf3b42352b"></script><script src="js/audio.js?v=43.8.0-934c6d6452"></script><script src="js/sprite-animator.js?v=43.8.0-253692217d"></script><script src="./js/connection-recovery.js?v=44.11.0-455fa507ad"></script><script src="js/duel.js?v=44.11.0-0af4c98c91"></script><script src="./assets/vendor/chess-1.4.0.js?v=43.8.0-720d2c68cd"></script><script src="./js/chess-session.js?v=43.8.0-2f1eb20b74"></script><script src="./js/chess.js?v=44.11.0-932a95b8f0"></script><script src="./js/chess-ui.js?v=43.8.0-289db81b44"></script><script defer src="./js/chess-spectator-ui.js?v=43.8.0-f553997f49"></script><script defer src="./js/ui-sprites.js?v=44.11.0-b4a696201a"></script><script defer src="./js/event-promo.js?v=43.8.0-1f1eb59d46"></script></body></html>
+<div id="galleryModal" class="modal-shade" hidden><section class="modal-card simple-corners gallery-card" role="region" aria-labelledby="galleryTitle"><button id="closeGallery" class="close-modal" type="button" aria-label="Đóng" data-common-game-icon="close" title="Đóng" data-action-face="quiet">Đóng</button><h2 id="galleryTitle">Danh tướng &amp; trang phục</h2><p>Chọn danh tướng và trang phục mặc định.</p><div id="heroGrid" class="hero-grid"></div><h3 id="skinTitle">Trang phục</h3><div id="skinGrid" class="skin-grid"></div></section></div>
+<div id="pvpMenu" class="modal-shade" hidden><section class="modal-card simple-corners" role="region" aria-labelledby="pvpTitle"><button class="close-modal" id="closePvpMenu" aria-label="Đóng" type="button" data-common-game-icon="close" title="Đóng" data-action-face="quiet" hidden>Đóng</button><h2 id="pvpTitle">Song đấu</h2>
+  <div id="vocabPvpEntry" class="menu-grid-2x2">
+    <div id="vocabCodeSlot"><input id="code" inputmode="numeric" maxlength="4" placeholder="Mã phòng" aria-label="Mã phòng"></div>
+    <div id="vocabJoinSlot"><button id="join" data-common-game-icon="next" title="Vào phòng" aria-label="Vào phòng" data-action-face="main">Vào</button></div>
+    <div id="vocabHostSlot"><button id="host" class="mode-choice" data-common-game-icon="room" title="Tạo phòng mới" aria-label="Tạo phòng mới" data-action-face="main">Tạo phòng</button></div>
+    <button type="button" id="vocabPvpBack" class="battle-cta" data-common-game-icon="back" title="Quay lại" aria-label="Quay lại" data-action-face="danger">Quay lại</button>
+  </div>
+  <div id="chessEntryGrid" class="menu-grid-2x2" hidden>
+    <div id="chessCodeSlot"></div>
+    <div id="chessJoinSlot"></div>
+    <button type="button" id="chessToCreate" class="battle-cta" data-common-game-icon="room" title="Tạo phòng" aria-label="Tạo phòng" data-action-face="blue">Tạo phòng</button>
+    <button type="button" id="chessEntryBack" class="battle-cta" data-common-game-icon="back" title="Quay lại" aria-label="Quay lại" data-action-face="danger">Quay lại</button>
+  </div>
+  <div id="chessSpectateWrap" class="chess-spectate-container" hidden>
+    <button type="button" class="secondary chess-spectate-button" data-chess-spectate hidden data-common-game-icon="hint" title="Quan chiến" aria-label="Quan chiến" data-action-face="quiet">Quan Chiến (Spectate)</button>
+  </div>
+  <fieldset class="chess-time" data-chess-time hidden>
+    <legend>Thời gian ván cờ</legend>
+    <div class="menu-grid-2x2 chess-create-grid">
+      <label class="chess-create-field">Phút<input type="number" min="1" max="180" step="1" value="5" data-chess-minutes></label>
+      <label class="chess-create-field">+ Giây<input type="number" min="0" max="60" step="1" value="0" data-chess-increment></label>
+      <div id="chessHostSlot"></div>
+      <button type="button" id="chessCreateBack" class="battle-cta" data-common-game-icon="back" title="Quay lại" aria-label="Quay lại" data-action-face="danger">Quay lại</button>
+    </div>
+    <button type="button" class="secondary" data-chess-apply-time data-common-game-icon="check" title="Áp dụng thời gian" aria-label="Áp dụng thời gian" data-action-face="main" hidden>Áp dụng thời gian</button>
+    <small data-chess-time-note></small>
+  </fieldset>
+  <p class="note" data-chess-room-note hidden>Chọn lúc tạo phòng. Sau khi kết thúc ván, chủ phòng có thể đổi thời gian trước khi cả hai Sẵn sàng lại.</p>
+  <section class="pvp-room" data-pvp-room aria-label="Sảnh chờ song đấu" hidden>
+    <div class="pvp-room-grid-top">
+      <div class="pvp-room-code-badge"><strong data-pvp-room-label></strong></div>
+      <button type="button" class="pvp-ready-button" data-pvp-ready data-common-game-icon="check" data-action-face="main">SẴN SÀNG</button>
+    </div>
+    <div class="pvp-room-players" data-pvp-room-players></div>
+    <button type="button" id="pvpLeaveRoom" class="battle-cta pvp-room-bottom-leave" data-common-game-icon="back" title="Rời phòng" aria-label="Rời phòng" data-action-face="danger">Rời phòng</button>
+  </section>
+  <p id="status" role="status">Chia sẻ mã phòng với đối thủ.</p>
+  <p class="note">Cả hai cần mở cùng phiên bản mới nhất và giữ sảnh mở trong khi kết nối.</p>
+</section></div>
+<div id="settingsModal" class="modal-shade" hidden><section class="modal-card simple-corners settings-card" role="region" aria-labelledby="settingsTitle"><h2 id="settingsTitle">Cài Đặt</h2><div class="settings-content"><div class="settings-volume-cell"><label class="settings-volume-label" for="settingsVolume"><span id="settingsVolumeIcon" aria-hidden="true">🔊</span><strong id="settingsVolumeDisplay">50%</strong></label><input type="range" id="settingsVolume" class="settings-volume-slider" min="0" max="100" step="1" value="50" aria-label="Âm lượng"></div><button type="button" id="settingsMuteToggle" class="battle-cta settings-mute-btn" data-word-sound data-common-game-icon="sound-on" data-action-face="quiet" aria-pressed="true" aria-label="Âm thanh: bật">Bật</button><button type="button" id="closeSettings" class="battle-cta" data-action-face="danger" data-common-game-icon="back" title="Quay lại" aria-label="Quay lại">Quay Lại</button></div></section></div>
+<script src="../space-dominators/vendor/peerjs.min.js"></script><script src="../../suite/js/peer-transport.js?v=44.13.0-8acfb938a6"></script><script src="js/config.js?v=43.8.0-de6806dde0"></script><script src="./assets/vendor/firebase-app-compat-10.12.2.js?v=43.8.0-24a1fd90a9"></script><script src="./assets/vendor/firebase-firestore-compat-10.12.2.js?v=43.8.0-25133ac64b"></script><script src="./js/standings-service.js?v=43.8.0-20dd2a4ac3"></script><script src="js/firebase-service.js?v=43.8.0-bf3b42352b"></script><script src="js/audio.js?v=43.8.0-934c6d6452"></script><script src="js/sprite-animator.js?v=43.8.0-253692217d"></script><script src="./js/connection-recovery.js?v=44.13.0-20990de5e4"></script><script src="js/duel.js?v=44.13.0-ec36e18a8a"></script><script src="./assets/vendor/chess-1.4.0.js?v=43.8.0-720d2c68cd"></script><script src="./js/chess-session.js?v=43.8.0-2f1eb20b74"></script><script src="./js/chess.js?v=44.13.0-778069fd6b"></script><script src="./js/chess-ui.js?v=43.8.0-289db81b44"></script><script defer src="./js/chess-spectator-ui.js?v=43.8.0-f553997f49"></script><script defer src="./js/ui-sprites.js?v=44.13.0-b4a696201a"></script><script defer src="./js/event-promo.js?v=43.8.0-1f1eb59d46"></script></body></html>
+
