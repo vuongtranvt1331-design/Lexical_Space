@@ -1,4 +1,25 @@
 import { loadSettings } from './settings.js';
+import { pronunciation } from './pronunciation.js';
+
+const practiceGains = { correct: .38, retry: .27, complete: .40 };
+const practiceBuffers = new Map();
+let practiceSource, practiceRevision = 0;
+
+function loadPracticeBuffer(ctx, cue) {
+  let buffer = practiceBuffers.get(cue);
+  if (!buffer) {
+    const url = new URL(`../../assets/audio/practice-${cue}.wav`, import.meta.url);
+    buffer = fetch(url).then(response => {
+      if (!response.ok) throw new Error('Practice audio unavailable');
+      return response.arrayBuffer();
+    }).then(bytes => ctx.decodeAudioData(bytes)).catch(() => {
+      practiceBuffers.delete(cue);
+      return null;
+    });
+    practiceBuffers.set(cue, buffer);
+  }
+  return buffer;
+}
 
     /* ================= SOUND MANAGER ================= */
     const SoundManager = {
@@ -18,6 +39,43 @@ import { loadSettings } from './settings.js';
       },
       loadForUser(username) {
         this.enabled = loadSettings(username).soundEffects;
+        if (!this.enabled) this.stopPracticeCue();
+      },
+      preparePracticeCue() {
+        if (!window.SpaceEffects?.gain()) return;
+        // Unlock audio before the asynchronous recall save.
+        try { this.ensureContext(); } catch { /* Audio is optional. */ }
+      },
+      stopPracticeCue() {
+        practiceRevision++;
+        practiceSource?.stop();
+        practiceSource = null;
+      },
+      async playPracticeCue(cue, isCurrent) {
+        if (!Object.hasOwn(practiceGains, cue)) return;
+        const effects = window.SpaceEffects;
+        const allowed = () => this.enabled && !document.hidden && !pronunciation.isPlaying() &&
+          isCurrent() && Boolean(effects?.gain());
+        if (!allowed()) return;
+        const revision = ++practiceRevision;
+        try {
+          const ctx = this.ensureContext();
+          if (!ctx) return;
+          const buffer = await loadPracticeBuffer(ctx, cue);
+          if (!buffer || revision !== practiceRevision || !allowed() || practiceSource || ctx.state !== 'running') return;
+          const source = ctx.createBufferSource(), gain = ctx.createGain();
+          source.buffer = buffer;
+          gain.gain.value = practiceGains[cue];
+          source.connect(gain);
+          gain.connect(effects.output(ctx));
+          source.onended = () => {
+            if (practiceSource === source) practiceSource = null;
+            source.disconnect();
+            gain.disconnect();
+          };
+          source.start();
+          practiceSource = source;
+        } catch { /* A missing audio asset must not block practice. */ }
       },
       playSelect() {
         const ctx = this.ensureContext();

@@ -24,7 +24,7 @@ def write_if_changed(path, text):
 def build():
     versioned = [*list((ROOT / 'suite').rglob('*.js')), *list((ROOT / 'suite').rglob('*.css'))]
     versioned += [ROOT / name for name in (
-        'js/features/loading.js', 'js/features/appearance.js', 'js/features/interface-language.js', 'css/lexical-layout.css', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
+        'js/features/loading.js', 'js/features/appearance.js', 'js/features/interface-language.js', 'css/main.css', 'css/recall-ui.css', 'css/lexical-layout.css', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
         'apps/quick-ears/history.js', 'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/js/space-chase.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/space-dominators/studio-intro.css', 'apps/space-dominators/station.css', 'apps/space-dominators/station.js',
@@ -63,6 +63,7 @@ def build():
     core = ['./', './apps/arcade/assets/space-chase.png', './apps/arcade/assets/audio/space-chase-laser.mp3', './apps/quick-ears/button-sprites.png', './apps/arcade/assets/audio/game-open.mp3', './apps/arcade/assets/audio/game-switch.mp3', './apps/arcade/assets/audio/menu-select.mp3', './apps/arcade/assets/audio/menu-exit.mp3', './apps/arcade/assets/audio/game-unavailable.mp3', './apps/arcade/assets/ui_spritesheet.png',
             './apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png', './apps/arcade/assets/action-glyphs.png', './apps/arcade/assets/system-controls.png',
             './apps/grammar/assets/matcha-logo.png', './apps/grammar/assets/matcha-topic.png']
+    core.extend('./assets/audio/practice-' + cue + '.wav' for cue in ('correct', 'retry', 'complete'))
     core.extend('./apps/space-dominators/assets/' + name for name in
                 ('celestial-survey.png', 'planet-encounters.png', 'boss-fx/enemy-flight-effects.png',
                  'player-hulls.png', 'player-exhaust.png', 'zodiac-1.png', 'zodiac-2.png', 'zodiac-3.png'))

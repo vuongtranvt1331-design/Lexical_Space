@@ -4,10 +4,15 @@ import { mutateWords, readUserWords, idbPut } from '../core/idb-manager.js';
 import { exampleSourceUrl, recallLevelFor, validateVocabulary, wordTopics } from '../core/vocabulary.js';
 import { icon } from '../core/icons.js';
 import { targetSegments } from '../core/recall-utils.js';
-import { trackIntentionalClicks } from '../utils/intentional-click.js';
+import { cardStatus, fillCardBlanks } from '../utils/vocabulary-card.js';
+import { bindMenuScrollDismiss, trackIntentionalClicks } from '../utils/intentional-click.js';
 const flippedCards = new Set();
 const $ = id => document.getElementById(id);
 const esc = value => context.escapeHtml(value);
+export const isLibraryMastered = word => {
+  const level = recallLevelFor(word);
+  return level === 3 || level === 4;
+};
 const isActiveUser = (user, generation) => user === context.currentUser && generation === context.accountGeneration;
 function report(error) { console.error(error); context.showToast(error.message || 'Could not save this change.', 'error'); }
 function closeMergeModal() {
@@ -187,7 +192,7 @@ export async function updateWordMemory(id, status) {
   if (status !== 'mastered' && status !== 'not_remembered') throw new Error('Invalid mastery status.');
   const word = context.wordsData.find(w => w.id === id); if (!word) return;
   const mastered = status === 'mastered';
-  const patch = { masteryOverride: status, recallLevel: mastered ? 4 : 3, masteredReviewPending: mastered };
+  const patch = { masteryOverride: status, recallLevel: mastered ? 4 : 2, masteredReviewPending: mastered };
   await commitVocabularyChanges([{ id, expectedVersion: word, patch }]);
 }
 export function updateLibraryTabsUI() {
@@ -197,9 +202,15 @@ export function renderVocabularyCardHtml(word) {
   const flipped = flippedCards.has(word.id), id = esc(word.id);
   const level = recallLevelFor(word);
   const gradeClass = ` grade-${(level ?? 1) - 1}`;
-  const mastered = word.memoryStatus === 'mastered';
-  const status = mastered ? 'Mastered' : word.masteryOverride === 'not_remembered' ? 'Unknown' : word.reviewCount ? 'Learning' : 'New';
-  const highlighted = targetSegments(word.exampleSentence, word.word, { inflections: true }).map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');
+  const mastered = isLibraryMastered(word);
+  const highlighted = targetSegments(fillCardBlanks(word.exampleSentence, word.word), word.word, { inflections: true })
+    .map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');
+  const value = (text, className = '') => `<p class="${className}${text ? '' : ' vocab-card-empty'}">${text || 'empty'}</p>`;
+  const topics = esc(wordTopics(word).join(' · '));
+  const pos = word.pos ? `<span>(${esc(word.pos)})</span>` : '';
+  const ipa = word.phonetic ? `<span title="${esc(word.phonetic)}">${esc(word.phonetic)}</span>` : '';
+  const synonyms = (word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · ');
+  const collocations = (word.collocations || []).map(phrase => fillCardBlanks(phrase, word.word)).join(' · ');
   const sourceUrl = exampleSourceUrl(word.exampleSourceId);
   const actions = [
     { action: 'flip', label: 'Flip library card', pressed: flipped, controls: `library-flip-${id}` },
@@ -215,30 +226,28 @@ export function renderVocabularyCardHtml(word) {
     const controlsAttribute = controls ? ` aria-controls="${controls}"` : '';
     return `<button type="button" class="library-rail-button" data-action="${action}" data-id="${id}" aria-label="${label}" title="${title}"${toggle}${controlsAttribute}>${icon(symbol || action)}</button>`;
   }).join('');
-  return `<article class="library-flip-card${gradeClass}${flipped ? ' is-flipped' : ''}" data-word-id="${id}" aria-label="${esc(word.word)} vocabulary card">
+  return `<article class="library-flip-card vocabulary-surface${gradeClass}${flipped ? ' is-flipped' : ''}" data-card-status="${cardStatus(word)}" data-word-id="${id}" aria-label="${esc(word.word)} vocabulary card">
     <div class="library-toolbar" role="toolbar" aria-label="Word actions" aria-orientation="vertical">${rail}</div>
-    <div class="library-flip-inner" id="library-flip-${id}">
-      <section class="library-card-face library-card-front" aria-hidden="${flipped}"${flipped ? ' inert' : ''}>
-        <div class="library-face-content">
-          <div class="library-card-heading"><div>
-            <p class="library-meta">${esc(word.pos)}</p>
-            <h3>${esc(word.word)}</h3>
-          </div></div>
-          ${word.phonetic ? `<p class="library-phonetic">${esc(word.phonetic)}</p>` : ''}
+    <div class="library-face-content vocab-card-column">
+      <header class="library-card-heading">
+        <h3 class="vocab-card-title">${esc(word.word)}</h3>
+        <div class="library-card-meta">${ipa}${pos}<span class="library-card-topic" title="${topics}">${topics}</span></div>
+      </header>
+      <div class="library-flip-inner" id="library-flip-${id}">
+        <section class="library-card-face library-card-front vocab-card-body" aria-hidden="${flipped}"${flipped ? ' inert' : ''}>
           <p class="library-meaning" lang="vi">${esc(word.meaning)}</p>
-          <div class="library-word-details"><h4>Synonyms</h4><p>${esc((word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · ')) || '—'}</p>
-          <h4>Collocations</h4><p>${word.collocations.map(esc).join(' · ') || '—'}</p></div>
-          <footer>${wordTopics(word).map(esc).join(' · ')} · ${status}</footer>
-        </div>
-      </section>
-      <section class="library-card-face library-card-back" aria-hidden="${!flipped}"${!flipped ? ' inert' : ''}>
-        <div class="library-face-content"><p class="library-meta">In context</p><h3>${esc(word.word)}</h3>
-          <blockquote class="library-example">${highlighted || 'Add an example sentence using Edit.'}</blockquote>
-          ${sourceUrl ? `<a class="example-source" href="${sourceUrl}" target="_blank" rel="noopener noreferrer">Example from Tatoeba</a>` : ''}
-          <h4>Usage notes</h4><p class="library-usage">${esc(word.usageNotes) || 'No usage notes yet.'}</p>
-          ${word.sense ? `<h4>Target sense</h4><p>${esc(word.sense)}</p>` : ''}
-        </div>
-      </section>
+          <div class="vocab-card-field">
+            <h4>Example</h4>
+            ${value(highlighted, 'library-example vocab-card-example')}
+            ${sourceUrl ? `<a class="example-source" href="${sourceUrl}" target="_blank" rel="noopener noreferrer">Example from Tatoeba</a>` : ''}
+          </div>
+        </section>
+        <section class="library-card-face library-card-back vocab-card-body" aria-hidden="${!flipped}"${!flipped ? ' inert' : ''}>
+          <div class="vocab-card-field"><h4>Collocations</h4>${value(esc(collocations))}</div>
+          <div class="vocab-card-field"><h4>Synonyms</h4>${value(esc(synonyms))}</div>
+          <div class="vocab-card-field"><h4>Usage notes</h4>${value(esc(word.usageNotes), 'library-usage vocab-card-notes')}</div>
+        </section>
+      </div>
     </div>
   </article>`;
 }
@@ -259,11 +268,19 @@ export function renderLibrary() {
   const query = ($('lib-search-input')?.value || '').toLocaleLowerCase();
   $('btn-lib-clear-search')?.classList.toggle('hidden', !query);
   const activeButton = container.contains(document.activeElement) ? document.activeElement.closest('button[data-action]') : null;
-  const filtered = context.wordsData.filter(w => (context.libraryTab !== 'known' || w.memoryStatus === 'mastered') &&
-    (context.libraryTab !== 'unknown' || w.memoryStatus !== 'mastered') && (context.libraryTab !== 'favorites' || w.isFavorite) &&
+  const filtered = context.wordsData.filter(w => (context.libraryTab !== 'known' || isLibraryMastered(w)) &&
+    (context.libraryTab !== 'unknown' || !isLibraryMastered(w)) && (context.libraryTab !== 'favorites' || w.isFavorite) &&
     (context.librarySelectedTopic !== 'FAVORITES' || w.isFavorite) &&
     (['ALL', 'FAVORITES'].includes(context.librarySelectedTopic) || wordTopics(w).includes(context.librarySelectedTopic)) &&
-    [w.word, w.meaning, w.sense, w.pos].some(v => v.toLowerCase().includes(query))).sort((a, b) => a.word.localeCompare(b.word));
+    [w.word, w.meaning, w.sense, w.pos].some(v => v.toLowerCase().includes(query))).sort((a, b) => {
+      const levelA = recallLevelFor(a) ?? 0;
+      const levelB = recallLevelFor(b) ?? 0;
+      if (levelA !== levelB) return levelA - levelB;
+      const reviewA = a.reviewCount || 0;
+      const reviewB = b.reviewCount || 0;
+      if (reviewA !== reviewB) return reviewA - reviewB;
+      return a.word.localeCompare(b.word);
+    });
   $('lib-count-status').textContent = `Showing: ${filtered.length} words`;
   container.innerHTML = filtered.length ? filtered.map(renderVocabularyCardHtml).join('') : '<p class="empty-library">No matching words. Add vocabulary or change your filters.</p>';
   if (activeButton) {
@@ -280,11 +297,12 @@ export function setupLibraryModule() {
   $('lib-search-input')?.addEventListener('input', renderLibrary);
   $('btn-lib-clear-search')?.addEventListener('click', () => { $('lib-search-input').value = ''; renderLibrary(); });
   $('btn-lib-topic-selector')?.addEventListener('click', () => $('lib-topic-upward-menu').classList.toggle('hidden'));
+  bindMenuScrollDismiss($('view-library'), $('lib-topic-upward-menu'), $('btn-lib-topic-selector'));
   const list = $('library-list-container');
   if (!list) return;
   const isIntentionalClick = trackIntentionalClicks(list, target => {
     if (target.closest('button,a,input,select,textarea,[contenteditable]')) return null;
-    return target.closest('.library-card-face:not([inert])');
+    return target.closest('.library-card-heading, .library-card-face:not([inert])');
   });
   list.addEventListener('click', async event => {
     const flipFromFace = isIntentionalClick(event);
@@ -296,7 +314,7 @@ export function setupLibraryModule() {
     const word = context.wordsData.find(w => w.id === button.dataset.id); if (!word) return;
     const user = context.currentUser, generation = context.accountGeneration;
     try {
-      if (button.dataset.action === 'mastery') await updateWordMemory(word.id, word.memoryStatus === 'mastered' ? 'not_remembered' : 'mastered');
+      if (button.dataset.action === 'mastery') await updateWordMemory(word.id, isLibraryMastered(word) ? 'not_remembered' : 'mastered');
       if (button.dataset.action === 'favorite') await toggleWordFavorite(word.id);
       if (button.dataset.action === 'flip') flipLibraryCard(word.id);
       if (button.dataset.action === 'audio') context.playAudio(word);

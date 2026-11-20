@@ -96,21 +96,15 @@ h1, h2, h3, h4, h5, h6, input, textarea, select { color: var(--ink); }
 input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
 input, textarea, select { accent-color: var(--primary); }
 .app-topbar, #drawer, .profile-dropdown, .deck-dialog,
-.entry-sheet, .retrieval-card, .library-card-face, .check-panel, .profile-section {
+.entry-sheet, .check-panel, .profile-section {
   background: var(--surface);
   box-shadow: var(--shadow);
 }
 .app-topbar, #drawer { border-color: var(--line); }
-.word-meta, .recall-card-header, .library-meta, .library-phonetic, .library-word-details h4,
-.library-card-back h4, .recall-answer h3, .deck-dialog-kicker, .entry-heading p,
-.recall-instruction, .entry-sheet p, .deck-import-profile, .deck-dialog-status {
+.deck-dialog-kicker, .entry-heading p, .entry-sheet p, .deck-import-profile, .deck-dialog-status {
   color: var(--muted);
 }
-.library-card-face h3, .entry-heading h2, .check-panel h3, .check-meaning,
-.recall-answer p, .answer-target, .library-meaning, #fc-front-word {
-  color: var(--ink);
-}
-.recall-card-tools::before { background: var(--line); }
+.entry-heading h2, .check-panel h3, .check-meaning { color: var(--ink); }
 .library-rail-button, .topic-option .topic-option-actions button,
 .topbar-menu-button, .drawer-icon-button, .entry-secondary {
   color: var(--primary);
@@ -129,7 +123,7 @@ input, textarea, select { accent-color: var(--primary); }
 .library-rail-button[data-action="favorite"][aria-pressed="true"],
 .library-rail-button[data-action="favorite"][aria-pressed="true"] svg { color: var(--danger); fill: var(--danger); }
 .entry-primary, #btn-login-submit, #btn-fc-reveal, #btn-fc-previous,
-.reverse-recall-form button, .profile-avatar-button {
+.profile-avatar-button {
   background: var(--primary);
   border-color: var(--primary);
   color: var(--on-primary);
@@ -143,7 +137,7 @@ input, textarea, select { accent-color: var(--primary); }
 .topbar-settings-button:hover { background: var(--accent-soft); }
 .profile-connection-dot { border-color: var(--surface); }
 mark { background: var(--accent-soft); color: var(--ink); }
-.entry-input, .reverse-recall-form input, .context-field { color: var(--ink); background: var(--surface); border-color: var(--line); }
+.entry-input, .context-field { color: var(--ink); background: var(--surface); border-color: var(--line); }
 .startup-loader, .space-loader { background: var(--page-bg); color: var(--ink); }
 .space-brand--ls, .space-brand--gs, .space-brand--as { color: var(--primary); background: var(--surface); border-color: var(--line); box-shadow: var(--shadow); }
 .space-brand--ls .space-brand__mark, .space-loader--ls [data-loader-lead],

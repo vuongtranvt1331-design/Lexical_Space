@@ -13,7 +13,7 @@ function translate(source) {
       [/^Word (\d+) of (\d+)$/, 'Từ $1 trên $2'],
       [/^(\d+) not checked in the past 7 days · (\d+) review\.$/, '$1 từ chưa kiểm tra trong 7 ngày · $2 từ ôn.'],
       [/^All eligible words were checked in the past 7 days. 0 new · (\d+) review\.$/, 'Tất cả đã được kiểm tra trong 7 ngày. 0 từ mới · $1 từ ôn.'],
-      [/^Not quite\. The answer is “(.+)”\. (Choose Again \(1\) or Hard \(2\) to continue\.)?$/, 'Đáp án là “$1”.']
+      [/^The answer is “([\s\S]+)”\.$/, 'Đáp án là “$1”.']
     ];
     for (const [pattern, replacement] of patterns) if (pattern.test(source)) return source.replace(pattern, replacement);
   }
@@ -62,7 +62,7 @@ for (const [id, key, previous] of [
   });
 }
 // These elements contain system labels only. Never translate user-created words, examples or topics.
-for (const id of ['check-pool-description','check-progress','check-status','check-history-status','recall-feedback','empty-state-subtitle','empty-state-title','session-continue-label','fc-answer-label','recall-instruction','connection-status-text']) {
+for (const id of ['check-pool-description','check-progress','check-status','check-history-status','recall-feedback','empty-state-subtitle','empty-state-title','session-continue-label','connection-status-text']) {
   const el = document.getElementById(id);
   if (!el) continue;
   const update = () => {

@@ -39,3 +39,52 @@ export function trackIntentionalClicks(surface, resolveRegion) {
     return previousTap.released && !previousTap.blocked && previousTap.region === region;
   };
 }
+
+export function bindMenuScrollDismiss(surface, menu, trigger) {
+  if (!surface || !menu) return;
+  const isMenuTarget = target => Boolean(target && (menu.contains(target) || trigger?.contains(target)));
+  const close = () => {
+    if (!menu.classList.contains('hidden')) {
+      menu.classList.add('hidden');
+    }
+  };
+
+  surface.addEventListener('scroll', event => {
+    if (isMenuTarget(event.target)) return;
+    close();
+  }, { capture: true, passive: true });
+
+  surface.addEventListener('wheel', event => {
+    if (isMenuTarget(event.target)) return;
+    if (event.deltaX || event.deltaY) close();
+  }, { passive: true });
+
+  let touchStart = null;
+  surface.addEventListener('touchstart', event => {
+    if (!event.touches?.length) return;
+    const touch = event.touches[0];
+    touchStart = { x: touch.clientX, y: touch.clientY, inMenu: isMenuTarget(event.target) };
+  }, { passive: true });
+
+  surface.addEventListener('touchmove', event => {
+    if (!touchStart || touchStart.inMenu || !event.touches?.length) return;
+    const touch = event.touches[0];
+    if (Math.hypot(touch.clientX - touchStart.x, touch.clientY - touchStart.y) > TAP_SLOP_PX) {
+      close();
+    }
+  }, { passive: true });
+
+  let pointerStart = null;
+  surface.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+    pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY, inMenu: isMenuTarget(event.target) };
+  }, { passive: true });
+
+  surface.addEventListener('pointermove', event => {
+    if (!pointerStart || pointerStart.id !== event.pointerId || pointerStart.inMenu) return;
+    if (Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) > TAP_SLOP_PX) {
+      close();
+    }
+  }, { passive: true });
+}
+

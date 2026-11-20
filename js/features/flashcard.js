@@ -6,7 +6,8 @@ import { scheduleReview, selectPracticeWords, shufflePracticeWords, calendarDay,
 import { loadSettings, saveSettings } from '../core/settings.js';
 import { pronunciation } from '../core/pronunciation.js';
 import { targetSegments, clozeText, matchesRecallAnswer } from '../core/recall-utils.js';
-import { trackIntentionalClicks } from '../utils/intentional-click.js';
+import { CARD_BLANK, cardStatus, fillCardBlanks } from '../utils/vocabulary-card.js';
+import { bindMenuScrollDismiss, trackIntentionalClicks } from '../utils/intentional-click.js';
 const $ = id => document.getElementById(id);
 let session = null, generation = 0, busy = false, loading = false, refreshRequested = false, dailyLimitReached = false, canContinue = false;
 let nextRetryAt = 0;
@@ -54,9 +55,11 @@ export function resetForUser() {
   const checkMore = $('btn-session-restart');
   if (checkMore) checkMore.disabled = false;
   lastSpokenEntry = ''; lastRenderedEntry = ''; lastFocusedEntry = '';
+  context.SoundManager?.stopPracticeCue();
   pronunciation.cancel(); clearTimeout(rollover);
-  for (const id of ['recall-answer-input', 'fc-front-word', 'fc-front-topic-badge', 'fc-word-meta', 'fc-front-context', 'fc-prompt-collocations',
-    'fc-answer-target', 'fc-back-meaning', 'fc-back-sense', 'fc-answer-context', 'fc-back-synonyms-list', 'fc-collocations', 'recall-feedback']) {
+  for (const id of ['recall-answer-input', 'fc-front-word', 'fc-word-meta', 'fc-front-phonetic', 'fc-front-context',
+    'fc-prompt-collocations', 'fc-answer-target', 'fc-answer-pos', 'fc-back-phonetic',
+    'fc-back-meaning', 'fc-answer-context', 'fc-back-synonyms-list', 'fc-collocations', 'fc-usage-notes', 'recall-feedback']) {
     const element = $(id);
     if (element?.tagName === 'INPUT') element.value = '';
     else if (element) element.textContent = '';
@@ -262,13 +265,96 @@ function current() { return session?.cardQueue[session.queueIndex]; }
 function show(id, visible) { const element = $(id); if (element) { element.hidden = !visible; element.classList.toggle('hidden', !visible); } }
 function setText(id, value) { if ($(id)) $(id).textContent = value; }
 function reverseMode() { return session?.recallDirection === 'vi-en'; }
-function renderSentence(container, sentence, word, cloze = false) {
-  if (!container) return;
-  container.replaceChildren();
-  for (const part of targetSegments(sentence, word, { inflections: true })) {
-    if (!part.target) container.append(document.createTextNode(part.text));
-    else { const mark = document.createElement('mark'); mark.textContent = cloze ? '[ _____ ]' : part.text; container.append(mark); }
+function setCardValue(id, value) {
+  const element = $(id);
+  element.textContent = value || 'empty';
+  element.classList.toggle('vocab-card-empty', !value);
+}
+function renderSentence(id, sentence, word, masked = false) {
+  const container = $(id);
+  setCardValue(id, sentence);
+  if (!sentence) return;
+  const parts = masked
+    ? sentence.split(CARD_BLANK).flatMap((text, index) => index ? [{ text: CARD_BLANK, target: true }, { text }] : [{ text }])
+    : targetSegments(sentence, word, { inflections: true });
+  container.replaceChildren(...parts.map(part => {
+    if (!part.target) return document.createTextNode(part.text);
+    const mark = document.createElement('mark');
+    mark.textContent = part.text;
+    return mark;
+  }));
+}
+// Inline text exposes one rectangle per line, independently of the IPA row.
+function alignRecallMetadata(card) {
+  for (const heading of card.querySelectorAll('.recall-lexical-heading')) {
+    if (!heading.querySelector('.recall-lexical-meta:not([hidden])')) continue;
+    const lines = heading.querySelector('.recall-lexical-word').getClientRects();
+    if (lines.length) heading.classList.toggle('is-one-line', lines.length === 1);
   }
+}
+function renderCardFaces(card, word, item, reverse) {
+  const revealed = item.revealed;
+  const face = revealed ? 'answer' : 'prompt';
+  if (card.dataset.recallFace !== face) card.querySelector('.recall-card-scroll').scrollTop = 0;
+  card.dataset.recallFace = face;
+  card.dataset.recallDirection = reverse ? 'vi-en' : 'en-vi';
+  card.dataset.cardStatus = cardStatus(word);
+
+  show('fc-prompt', !revealed);
+  show('fc-answer', revealed);
+  $('fc-answer').setAttribute('aria-hidden', String(!revealed));
+  show('fc-back-meaning', !reverse);
+  show('fc-answer-details', reverse);
+  show('fc-back-example', reverse);
+  show('fc-usage-field', !reverse);
+
+  setText('card-num-front', `${session.queueIndex + 1} / ${session.cardQueue.length}`);
+  setText('fc-front-word', reverse ? word.meaning : word.word);
+  $('fc-front-word').lang = reverse ? 'vi' : studyLanguage;
+  const pos = word.pos ? `(${word.pos})` : '';
+  for (const id of ['fc-word-meta', 'fc-answer-pos']) {
+    setText(id, pos);
+    show(id, !!pos);
+  }
+  const meta = $('fc-word-meta'), metaParent = $(reverse ? 'fc-front-word-button' : 'fc-prompt-meta');
+  if (meta.parentElement !== metaParent) metaParent.append(meta);
+  show('fc-prompt-meta', !reverse && Boolean(word.phonetic || pos));
+  show('fc-answer-meta', Boolean(word.phonetic || pos));
+  for (const id of ['fc-front-phonetic', 'fc-back-phonetic']) {
+    setText(id, word.phonetic || '');
+    show(id, !!word.phonetic && (id !== 'fc-front-phonetic' || !reverse));
+  }
+  for (const id of ['fc-front-context', 'fc-answer-context', 'fc-answer-target']) $(id).lang = studyLanguage;
+  setText('fc-answer-target', reverse && revealed ? word.word : '');
+  setText('fc-back-meaning', word.meaning);
+  alignRecallMetadata(card);
+
+  const example = fillCardBlanks(word.exampleSentence, word.word);
+  const phrases = (word.collocations || []).map(value => fillCardBlanks(value, word.word));
+  const mask = value => clozeText(value, word.word, { inflections: true });
+  const examplePrompt = reverse ? mask(word.clozeSentence?.includes(CARD_BLANK) ? word.clozeSentence : example) : example;
+  renderSentence('fc-front-context', examplePrompt, word.word, reverse);
+  renderSentence('fc-answer-context', example, word.word);
+  show('fc-prompt-phrases', reverse);
+  renderSentence('fc-prompt-collocations', phrases.map(mask).filter(value => value.includes(CARD_BLANK)).join(' · '), word.word, true);
+  setCardValue('fc-collocations', phrases.join(' · '));
+  setCardValue('fc-back-synonyms-list', (word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · '));
+  setCardValue('fc-usage-notes', word.usageNotes);
+
+  const source = $('fc-answer-source'), sourceUrl = exampleSourceUrl(word.exampleSourceId);
+  if (sourceUrl && example) {
+    source.href = sourceUrl;
+    const parent = $(reverse ? 'fc-back-example' : 'fc-prompt-example');
+    if (source.parentElement !== parent) parent.append(source);
+  } else source.removeAttribute('href');
+  show('fc-answer-source', !!sourceUrl && !!example && (reverse ? revealed : !revealed));
+  const exampleAudio = $('btn-fc-example-audio');
+  if (exampleAudio) exampleAudio.disabled = actionsBlocked() || !revealed || !example;
+
+  const feedback = reverse && revealed ? (item.answerCorrect === true ? 'Correct' : `The answer is “${word.word}”.`) : '';
+  show('recall-feedback', !!feedback);
+  setText('recall-feedback', feedback);
+  $('recall-feedback').dataset.correct = String(item.answerCorrect === true);
 }
 function reviewingWrongAnswer(item) {
   return reverseMode() && item?.answerCorrect === false && Boolean(item.answerAttempt);
@@ -291,8 +377,9 @@ export function renderActiveCard() {
   const reverse = session ? reverseMode() : loadSettings(context.currentUser).recallDirection === 'vi-en';
   const renderedKey = word ? `${session.sessionId}:${item.entryId}:${reverse}` : '';
   if (lastRenderedEntry !== renderedKey) {
+    context.SoundManager?.stopPracticeCue();
     pronunciation.cancel(); lastFocusedEntry = ''; lastRenderedEntry = renderedKey;
-    const content = card.querySelector('.recall-card-content');
+    const content = card.querySelector('.recall-card-scroll');
     if (content) content.scrollTop = 0;
     if ($('recall-answer-input')) $('recall-answer-input').value = '';
   }
@@ -316,57 +403,23 @@ export function renderActiveCard() {
     setText('stat-known-count', session?.successfulIds.length || 0); setText('stat-unknown-count', session?.pendingMisses.length || 0);
     return;
   }
-  card.dataset.recallDirection = reverse ? 'vi-en' : 'en-vi';
-  setText('fc-front-word', reverse ? word.meaning : word.word); $('fc-front-word').lang = reverse ? 'vi' : studyLanguage; setText('fc-front-topic-badge', word.topic);
-  setText('fc-word-meta', word.pos || '');
-  setText('card-num-front', `${session.queueIndex + 1} / ${session.cardQueue.length}`);
-  if (reverse && word.clozeSentence?.includes('[ _____ ]') && !targetSegments(word.clozeSentence, word.word, { inflections: true }).some(part => part.target)) {
-    const prompt = $('fc-front-context'); prompt.replaceChildren();
-    word.clozeSentence.split('[ _____ ]').forEach((part, i) => {
-      if (i) { const blank = document.createElement('mark'); blank.textContent = '[ _____ ]'; prompt.append(blank); }
-      prompt.append(document.createTextNode(part));
-    });
-  } else renderSentence($('fc-front-context'), word.exampleSentence, word.word, true);
-  show('fc-prompt-collocations', reverse && word.collocations.length > 0);
-  setText('fc-prompt-collocations', word.collocations.map(value => clozeText(value, word.word, { inflections: true })).join(' · '));
+  const focusWasOnPrompt = document.activeElement === $('fc-front-word-button');
+  renderCardFaces(card, word, item, reverse);
   const inputVisible = reverse && !item.revealed && !item.graded;
   show('reverse-recall-form', inputVisible);
   $('recall-answer-input').disabled = actionsBlocked(); $('reverse-recall-form').querySelector('button').disabled = actionsBlocked();
-  show('fc-answer', item.revealed); $('fc-answer').setAttribute('aria-hidden', String(!item.revealed));
-  setText('fc-answer-label', reverse ? `${studyName} target` : 'Meaning');
-  show('fc-answer-target', reverse && item.revealed);
-  setText('fc-answer-target', reverse && item.revealed ? word.word : '');
-  setText('fc-back-meaning', word.meaning); setText('fc-back-sense', word.sense);
-  setText('fc-back-synonyms-list', (word.synonyms || [word.synonym1, word.synonym2]).filter(Boolean).join(' · '));
-  setText('fc-collocations', word.collocations.join(' · '));
-  renderSentence($('fc-answer-context'), word.exampleSentence, word.word);
-  const exampleAudio = $('btn-fc-example-audio');
-  if (exampleAudio) exampleAudio.disabled = actionsBlocked() || !item.revealed || !word.exampleSentence;
-  const source = $('fc-answer-source'), sourceUrl = exampleSourceUrl(word.exampleSourceId);
-  if (source) {
-    if (sourceUrl) source.href = sourceUrl;
-    else source.removeAttribute('href');
-    show('fc-answer-source', !!sourceUrl && item.revealed);
-  }
-  const feedback = !reverse || !item.revealed ? '' : reviewingWrongAnswer(item) ?
-    `Not quite. The answer is “${word.word}”. ${item.graded ? '' : 'Choose Again (1) or Hard (2) to continue.'}` : item.assisted ?
-    'Answer hinted. Choose Again to practise in a later round.' : item.answerCorrect ? 'Correct. Choose your recall grade.' : 'Answer shown. Choose Again to practise in a later round.';
-  show('recall-feedback', !!feedback); setText('recall-feedback', feedback);
-  $('recall-feedback').dataset.correct = String(item.answerCorrect === true && !item.assisted);
-  setText('recall-instruction', item.graded ? 'Continue when you have reviewed the answer.' : reverse ?
-    (item.revealed ? 'Recall feedback' : `Recall the ${studyName} word from its meaning and context.`) :
-    (item.revealed ? 'Grade your first recall attempt honestly.' : 'Recall the meaning before flipping.'));
   const flip = $('btn-fc-reveal'), flipLabel = item.revealed ? 'Hide answer (Space)' : 'Flip card (Space)';
   flip.disabled = actionsBlocked() || (reviewingWrongAnswer(item) && !item.graded);
   flip.setAttribute('aria-label', flipLabel); flip.title = flipLabel;
   flip.setAttribute('aria-expanded', String(!!item.revealed));
-  const wordButton = $('fc-front-word');
+  if (focusWasOnPrompt && item.revealed && !flip.disabled) flip.focus({ preventScroll: true });
+  const wordButton = $('fc-front-word-button');
   wordButton.disabled = flip.disabled;
   wordButton.title = flipLabel;
   wordButton.setAttribute('aria-expanded', String(!!item.revealed));
   for (const id of ['btn-fc-fav', 'btn-fc-sound', 'btn-fc-edit', 'btn-fc-delete']) $(id).disabled = actionsBlocked();
   for (const button of document.querySelectorAll('[data-recall-grade]')) {
-    button.hidden = Boolean(item.graded) || (reviewingWrongAnswer(item) && Number(button.dataset.recallGrade) > 1);
+    button.hidden = inputVisible || Boolean(item.graded) || (reviewingWrongAnswer(item) && Number(button.dataset.recallGrade) > 1);
     button.disabled = !canGradeRecall(Number(button.dataset.recallGrade));
   }
   $('btn-fc-previous').disabled = actionsBlocked() || adjacentCardIndex(-1) < 0;
@@ -413,6 +466,7 @@ export async function submitReverseAnswer() {
   const answer = $('recall-answer-input').value;
   if (!answer.trim()) { $('recall-answer-input').focus(); return; }
   const correct = matchesRecallAnswer(answer, word);
+  if (!correct || !loadSettings(context.currentUser).autoPronounce) context.SoundManager?.preparePracticeCue();
   busy = true;
   const ticket = generation, user = context.currentUser, navigation = context.navigationGeneration, next = clone(session);
   Object.assign(next.cardQueue[next.queueIndex], { revealed: true, answerCorrect: correct, answerAttempt: answer });
@@ -421,7 +475,13 @@ export async function submitReverseAnswer() {
   finally { finishAction(ticket); }
   if (ticket !== generation || session !== next || user !== context.currentUser ||
       navigation !== context.navigationGeneration || !practiceIsVisible($('practice-card'))) return;
-  if (correct && !document.hidden && loadSettings(user).autoPronounce) void pronunciation.say(word);
+  if (loadSettings(user).autoPronounce && correct) {
+    if (!document.hidden) void pronunciation.say(word);
+  } else {
+    void context.SoundManager?.playPracticeCue(correct ? 'correct' : 'retry', () =>
+      session === next && user === context.currentUser && navigation === context.navigationGeneration &&
+      practiceIsVisible($('practice-card')));
+  }
   document.querySelector(`[data-recall-grade="${!correct || current().assisted ? 0 : 2}"]`)?.focus({ preventScroll: true });
 }
 async function useWordHint(action) {
@@ -437,8 +497,12 @@ export function replayCurrentAudio() { return useWordHint(playAudio); }
 function readCurrentExample() {
   const item = current();
   if (!item?.revealed || actionsBlocked() || !practiceIsVisible($('practice-card'))) return;
-  const example = context.wordsData.find(word => word.id === item.wordId)?.exampleSentence;
-  if (example && !pronunciation.sayExample(example)) context.showToast('Example audio is unavailable in this browser.', 'error');
+  const word = context.wordsData.find(word => word.id === item.wordId);
+  const example = word && fillCardBlanks(word.exampleSentence, word.word);
+  if (example) {
+    context.SoundManager?.stopPracticeCue();
+    if (!pronunciation.sayExample(example)) context.showToast('Example audio is unavailable in this browser.', 'error');
+  }
 }
 export async function revealCard() {
   if (actionsBlocked() || !current() || (reviewingWrongAnswer(current()) && !current().graded)) return;
@@ -457,8 +521,11 @@ export async function gradeRecall(grade) {
   if (!canGradeRecall(grade)) return;
   if (session.day !== calendarDay()) { await startNewSession(); return; }
   const word = context.wordsData.find(w => w.id === item.wordId); if (!word) return;
+  const navigation = context.navigationGeneration;
+  if (session.queueIndex === session.cardQueue.length - 1) context.SoundManager?.preparePracticeCue();
   busy = true; renderActiveCard();
   const ticket = generation, user = context.currentUser, next = clone(session), graded = next.cardQueue[next.queueIndex];
+  let finishedRound = false;
   try {
     await writes.catch(() => {});
     if (ticket !== generation || user !== context.currentUser) return;
@@ -487,7 +554,8 @@ export async function gradeRecall(grade) {
     await context.commitVocabularyChanges([{ id: word.id, patch: { ...scheduled, lastRecallDirection: next.recallDirection || 'en-vi' }, expectedVersion: word }], [next, ledger], user);
     if (ticket !== generation || user !== context.currentUser) return;
     session = next; context.recordLearningActivity('recall_attempt');
-    if (!current()) refreshRequested = true;
+    finishedRound = !current();
+    if (finishedRound) refreshRequested = true;
   } catch (error) {
     if (ticket !== generation) return;
     if (error?.code === 'daily-limit' || error?.code === 'daily-review-complete') {
@@ -498,6 +566,11 @@ export async function gradeRecall(grade) {
     } else notifyFailure(error);
   }
   finally { await finishAction(ticket); }
+  if (finishedRound) {
+    void context.SoundManager?.playPracticeCue('complete', () =>
+      session?.sessionId === next.sessionId && !current() && user === context.currentUser &&
+      navigation === context.navigationGeneration && practiceIsVisible($('practice-card')));
+  }
 }
 function adjacentCardIndex(offset) {
   return session.queueIndex + offset;
@@ -545,8 +618,16 @@ export function updateCardFavoriteVisual(favorite) {
   $('btn-fc-fav')?.setAttribute('aria-pressed', String(favorite));
 }
 export function updateQuickCollectionButtonsUI() {}
-export function playAudio(word) { context.recordLearningActivity('audio_pronounce'); return pronunciation.say(word); }
-export function pausePracticeAudio() { lastFocusedEntry = ''; pronunciation.cancel(); }
+export function playAudio(word) {
+  context.SoundManager?.stopPracticeCue();
+  context.recordLearningActivity('audio_pronounce');
+  return pronunciation.say(word);
+}
+export function pausePracticeAudio() {
+  lastFocusedEntry = '';
+  context.SoundManager?.stopPracticeCue();
+  pronunciation.cancel();
+}
 function updatePracticeScope() {
   for (const [id, mode] of [['btn-mode-learning', 'learning'], ['btn-mode-review', 'review'], ['btn-bottom-fav', 'favorites']]) $(id)?.setAttribute('aria-pressed', String(context.reviewMode === mode));
   setText('review-selected-topic-label', `Topic: ${context.activeTopic === 'ALL' ? 'All topics' : context.activeTopic}`);
@@ -581,9 +662,15 @@ export function renderSettings() {
 export function setupPracticeControls() {
   $('btn-fc-reveal')?.addEventListener('click', () => void revealCard());
   const card = $('practice-card'), content = card.querySelector('.recall-card-content');
+  const alignMetadata = () => alignRecallMetadata(card);
+  if (window.ResizeObserver) {
+    const observer = new window.ResizeObserver(alignMetadata);
+    for (const heading of card.querySelectorAll('.recall-lexical-heading')) observer.observe(heading);
+  }
+  document.fonts?.ready.then(alignMetadata);
   const isIntentionalClick = trackIntentionalClicks(content, target => {
     const control = target.closest('form,button,a,input,select,textarea,[contenteditable]');
-    return !control || control.id === 'fc-front-word' ? content : null;
+    return !control || control.id === 'fc-front-word-button' ? content : null;
   });
   content.addEventListener('click', event => { if (isIntentionalClick(event)) void revealCard(); });
   $('btn-fc-previous')?.addEventListener('click', () => void previousCard());
@@ -602,6 +689,7 @@ export function setupPracticeControls() {
   });
   for (const [id, mode] of [['btn-mode-learning', 'learning'], ['btn-mode-review', 'review'], ['btn-bottom-fav', 'favorites']]) $(id)?.addEventListener('click', () => { if (busy) return; context.reviewMode = mode; void startNewSession(); });
   $('btn-review-topic-selector')?.addEventListener('click', () => $('review-topic-upward-menu').classList.toggle('hidden'));
+  bindMenuScrollDismiss($('view-review'), $('review-topic-upward-menu'), $('btn-review-topic-selector'));
   document.addEventListener('keydown', event => {
     if (event.repeat || event.ctrlKey || event.metaKey || event.altKey || event.target.closest?.('input,textarea,select,[contenteditable="true"]') ||
       !$('drawer')?.classList.contains('-translate-x-full') || $('profile-dropdown')?.hidden === false || context.deckDialogOpen || $('modal-settings')?.hidden === false ||
@@ -622,10 +710,10 @@ export function setupPracticeControls() {
   document.addEventListener('click', pronunciation.unlock, { capture: true });
   document.addEventListener('keydown', pronunciation.unlock, { capture: true });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) pronunciation.cancel();
+    if (document.hidden) pausePracticeAudio();
     else if (session && session.day !== calendarDay()) void startNewSession();
   });
-  window.addEventListener('pagehide', pronunciation.cancel);
+  window.addEventListener('pagehide', pausePracticeAudio);
   $('setting-auto-pronounce')?.addEventListener('change', event => {
     const user = context.currentUser, input = event.target;
     if (!user) return;

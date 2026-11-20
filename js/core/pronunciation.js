@@ -209,7 +209,12 @@ export function createPronunciationController({
     return true;
   }
 
-  return { say, sayExample, cancel, unlock };
+  function isPlaying() {
+    return Boolean(active && (active.running || speech?.speaking || speech?.pending ||
+      (player && !player.paused && !player.ended)));
+  }
+
+  return { say, sayExample, cancel, unlock, isPlaying };
 }
 
 export const pronunciation = createPronunciationController();

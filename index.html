@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" data-suite-module="lexical" data-lexical-theme="ivory">
 <head>
-  <script src="suite/js/effects-volume.js?v=44.14.0-ddd24e7a19"></script>
-    <script src="./suite/js/core.js?v=44.14.0-a5b98868bd"></script>
-  <link rel="stylesheet" href="./suite/css/components.css?v=44.14.0-69a13ed7c3">
+  <script src="suite/js/effects-volume.js?v=44.20.0-ddd24e7a19"></script>
+    <script src="./suite/js/core.js?v=44.20.0-a5b98868bd"></script>
+  <link rel="stylesheet" href="./suite/css/components.css?v=44.20.0-69a13ed7c3">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>LexicalSpace - Smart Vocabulary Notebook</title>
 
   <meta name="theme-color" content="#F5F1E8" />
-  <script src="./js/features/appearance.js?v=44.14.0-600e490765"></script>
+  <script src="./js/features/appearance.js?v=44.20.0-600e490765"></script>
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
@@ -25,15 +25,15 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 
   <script src="./js/features/loading-failsafe.js"></script>
-  <link rel="stylesheet" href="./css/main.css?v=43.8.0-light1">
+  <link rel="stylesheet" href="./css/main.css?v=44.20.0-9ddee70001">
   <link rel="stylesheet" href="./css/animations.css?v=43.8.0-light1">
-  <link rel="stylesheet" href="./css/recall-ui.css?v=43.8.0-light1">
-  <link rel="stylesheet" href="./css/entry-ui.css?v=44.14.0-bddea1d69e">
-  <link rel="stylesheet" href="./css/theme.css?v=44.14.0-0d9f0e4ae0">
-  <link rel="stylesheet" href="./css/lexical-layout.css?v=44.14.0-e1278009c9">
-  <script defer src="./js/features/loading.js?v=44.14.0-0ab2d880db"></script>
-  <script defer src="./js/core/offline.js?v=44.14.0-39c886b7ac"></script>
-<link rel="stylesheet" href="./suite/css/loader.css?v=44.14.0-1112a32a51"></head>
+  <link rel="stylesheet" href="./css/recall-ui.css?v=44.20.0-c8d389e07f">
+  <link rel="stylesheet" href="./css/entry-ui.css?v=44.20.0-bddea1d69e">
+  <link rel="stylesheet" href="./css/theme.css?v=44.20.0-0020c01c18">
+  <link rel="stylesheet" href="./css/lexical-layout.css?v=44.20.0-e1278009c9">
+  <script defer src="./js/features/loading.js?v=44.20.0-0ab2d880db"></script>
+  <script defer src="./js/core/offline.js?v=44.20.0-39c886b7ac"></script>
+<link rel="stylesheet" href="./suite/css/loader.css?v=44.20.0-1112a32a51"></head>
 <body class="flex flex-col antialiased selection:theme-primary selection:theme-on-primary overflow-hidden">
   <section id="space-loader" class="startup-loader" role="status" aria-label="Opening LexicalSpace">
     <div class="startup-panel"><div class="startup-mark" aria-hidden="true">&gt;/_</div>
@@ -120,7 +120,7 @@
 
     <footer class="drawer-footer">
       <div class="drawer-build">
-        <p>LexicalSpace v44.14.0 <span class="drawer-build-ref">LexicalSpace-v44.14.0</span></p>
+        <p>LexicalSpace v44.20.0 <span class="drawer-build-ref">LexicalSpace-v44.20.0</span></p>
         <p>Updated <time datetime="2026-11-20">Nov 20, 2026</time></p>
       </div>
       <button id="btn-close-drawer" type="button" aria-label="Close menu" class="drawer-control drawer-icon-button">
@@ -193,7 +193,7 @@
             </div>
           </div>
 
-          <article id="practice-card" class="retrieval-card" aria-label="Vocabulary recall card">
+          <article id="practice-card" class="retrieval-card vocabulary-surface" data-card-status="0" aria-label="Vocabulary recall card">
             <div class="library-toolbar recall-card-tools" role="group" aria-label="Flashcard actions">
               <button id="btn-fc-reveal" class="library-rail-button" data-action="flip" type="button" aria-label="Flip card (Space)" title="Flip card (Space)" aria-keyshortcuts="Space" aria-controls="fc-answer" aria-expanded="false">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h14l-4-4m6 12H6l4 4M4 8v5m16 3v-5"/></svg>
@@ -220,34 +220,63 @@
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></svg>
               </button>
             </div>
-            <div class="recall-card-content">
-              <div class="recall-card-header"><span id="fc-front-topic-badge"></span><span id="card-num-front"></span></div>
-              <p id="fc-word-meta" class="word-meta"></p>
-              <h2><button id="fc-front-word" type="button" title="Flip card (Space)" aria-controls="fc-answer" aria-expanded="false"></button></h2>
-              <p id="fc-front-context" class="context-example"></p>
-              <p id="fc-prompt-collocations" class="prompt-collocations" hidden></p>
-              <form id="reverse-recall-form" class="reverse-recall-form" hidden autocomplete="off">
-                <label for="recall-answer-input" class="visually-hidden">English word or phrase</label>
-                <input id="recall-answer-input" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Type the English word…" aria-describedby="reverse-recall-help" maxlength="200">
-                <button type="submit" aria-label="Check English answer" title="Check answer (Enter)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></button>
-                <p id="reverse-recall-help">Enter to check · Target word or synonym</p>
-              </form>
-              <p id="recall-feedback" class="recall-feedback" role="status" aria-live="polite" hidden></p>
-              <div id="fc-answer" class="hidden recall-answer" aria-hidden="true" hidden>
-                <h3 id="fc-answer-label">Meaning</h3><p id="fc-answer-target" class="answer-target" hidden></p><p id="fc-back-meaning"></p><p id="fc-back-sense"></p>
-                <p id="fc-answer-context" class="context-example" lang="en"></p>
-                <a id="fc-answer-source" class="example-source hidden" target="_blank" rel="noopener noreferrer" hidden>Example from Tatoeba</a>
-                <h3>Collocations</h3><p id="fc-collocations"></p>
-                <h3>Related words</h3><p id="fc-back-synonyms-list"></p>
+            <div class="recall-card-content vocab-card-column">
+              <header class="recall-card-header vocab-card-header">
+                <p id="recall-feedback" class="recall-feedback" role="status" aria-live="polite" hidden></p>
+                <span id="card-num-front"></span>
+              </header>
+              <div class="recall-card-scroll vocab-card-scroll">
+                <div id="fc-prompt" class="vocab-card-body">
+                  <div class="vocab-card-field recall-study-heading">
+                    <h2 id="fc-prompt-title" class="vocab-card-title">
+                      <button id="fc-front-word-button" class="recall-lexical-heading" type="button" title="Flip card (Space)" aria-controls="fc-answer" aria-expanded="false">
+                        <span id="fc-front-word" class="recall-lexical-word"></span>
+                        <span id="fc-prompt-meta" class="recall-lexical-meta" hidden>
+                          <span id="fc-front-phonetic" class="vocab-card-ipa" hidden></span>
+                          <span id="fc-word-meta" class="vocab-card-pos" hidden></span>
+                        </span>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="fc-prompt-example" class="vocab-card-field">
+                    <h3>Example</h3><p id="fc-front-context" class="vocab-card-example"></p>
+                  </div>
+                  <div id="fc-prompt-phrases" class="vocab-card-field" hidden>
+                    <h3>Collocations</h3><p id="fc-prompt-collocations"></p>
+                  </div>
+                </div>
+                <div id="fc-answer" class="hidden vocab-card-body" aria-hidden="true" hidden>
+                  <h2 id="fc-back-meaning" class="vocab-card-title recall-study-heading" lang="vi"></h2>
+                  <div id="fc-answer-details" class="vocab-card-field" hidden>
+                    <h2 class="vocab-card-title recall-lexical-heading">
+                      <span id="fc-answer-target" class="recall-lexical-word"></span>
+                      <span id="fc-answer-meta" class="recall-lexical-meta" hidden>
+                        <span id="fc-back-phonetic" class="vocab-card-ipa" hidden></span>
+                        <span id="fc-answer-pos" class="vocab-card-pos" hidden></span>
+                      </span>
+                    </h2>
+                  </div>
+                  <div id="fc-back-example" class="vocab-card-field" hidden>
+                    <h3>Example</h3><p id="fc-answer-context" class="vocab-card-example"></p>
+                  </div>
+                  <div class="vocab-card-field"><h3>Collocations</h3><p id="fc-collocations"></p></div>
+                  <div class="vocab-card-field"><h3>Synonyms</h3><p id="fc-back-synonyms-list"></p></div>
+                  <div id="fc-usage-field" class="vocab-card-field"><h3>Usage notes</h3><p id="fc-usage-notes" class="vocab-card-notes"></p></div>
+                </div>
               </div>
+              <a id="fc-answer-source" class="example-source hidden" target="_blank" rel="noopener noreferrer" hidden>Example from Tatoeba</a>
             </div>
-            <p id="recall-instruction" class="recall-instruction">Recall the meaning before revealing the answer.</p>
           </article>
         </div>
       </div>
 
       <div id="retrieval-controls" class="retrieval-controls">
         <div class="recall-action-bar" role="group" aria-label="Recall actions">
+          <form id="reverse-recall-form" class="reverse-recall-form" hidden autocomplete="off">
+            <label for="recall-answer-input" class="visually-hidden">English word or phrase</label>
+            <input id="recall-answer-input" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Type the English word…" maxlength="200">
+            <button type="submit" aria-label="Check English answer" title="Check answer (Enter)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6"/></svg></button>
+          </form>
           <button type="button" class="grade-button grade-0" data-recall-grade="0" aria-keyshortcuts="1" disabled>Again <kbd>1</kbd></button>
           <button type="button" class="grade-button grade-1" data-recall-grade="1" aria-keyshortcuts="2" disabled>Hard <kbd>2</kbd></button>
           <button type="button" class="grade-button grade-2" data-recall-grade="2" aria-keyshortcuts="3" disabled>Good <kbd>3</kbd></button>
@@ -715,7 +744,7 @@
     </div>
   </div>
 
-  <script type="module" src="./js/features/interface-language.js?v=44.14.0-1782b81eed"></script>
+  <script type="module" src="./js/features/interface-language.js?v=44.20.0-44315b983d"></script>
   <script id="lexicalspace-app" type="module" src="./js/main.js"></script>
 </body>
 </html>

@@ -49,7 +49,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     sample.innerHTML = renderVocabularyCardHtml({ ...records[0], memoryStatus: 'mastered', lastGrade: 2, recallLevel: undefined });
     assert.ok(sample.firstElementChild.classList.contains('grade-3'));
 
-    const heading = card().querySelector('.library-card-front h3');
+    const heading = card().querySelector('.library-card-heading h3');
     const selection = window.getSelection();
     selection.selectAllChildren(heading);
     heading.click();
@@ -57,7 +57,7 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     selection.removeAllRanges();
     heading.click();
     assert.equal(card().querySelector('.library-card-front').hasAttribute('inert'), true);
-    card().querySelector('.library-card-back h3').click();
+    card().querySelector('.library-card-back h4').click();
     assert.equal(card().querySelector('.library-card-back').hasAttribute('inert'), true);
     card().querySelector('[data-action="flip"]').click();
     assert.equal(card().querySelector('[data-action="flip"]').getAttribute('aria-pressed'), 'true');
@@ -102,13 +102,13 @@ test('library flips from either face, preserves rail focus, and clears profile-l
     const selectedTabs = () => tabs.filter(tab => tab.getAttribute('aria-pressed') === 'true');
     $('btn-lib-tab-known').click();
     assert.deepEqual(selectedTabs(), [tabs[2]]);
-    assert.match(card().querySelector('footer').textContent, /Mastered$/);
+    assert.equal(card().querySelector('[data-action="mastery"]').getAttribute('aria-pressed'), 'true');
     assert.ok(card().classList.contains('grade-3'));
-    assert.equal(await toggleMastery(true, 'Mark as Unknown', 3), 'not_remembered');
+    assert.equal(await toggleMastery(true, 'Mark as Unknown', 2), 'not_remembered');
     $('btn-lib-tab-unknown').click();
     assert.deepEqual(selectedTabs(), [tabs[0]]);
-    assert.match(card().querySelector('footer').textContent, /Unknown$/);
-    assert.ok(card().classList.contains('grade-2'));
+    assert.equal(card().querySelector('[data-action="mastery"]').getAttribute('aria-pressed'), 'false');
+    assert.ok(card().classList.contains('grade-1'));
     assert.equal(card().classList.contains('is-flipped'), true);
 
     $('lib-search-input').value = 'ad';

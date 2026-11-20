@@ -264,15 +264,19 @@ function editImportInput(message = '', error = false) {
   status('batch-import-status', message, error);
   if (viewIsVisible('view-entry') && !$('section-ai-library').hidden) $('import-raw-input').focus();
 }
-function previewImportWord(word) {
+function previewImportWord(word, correction) {
   const item = document.createElement('li'), target = document.createElement('h4'), meaning = document.createElement('p');
   target.lang = studyLanguage; target.textContent = word.word;
   meaning.className = 'ai-review-meaning'; meaning.lang = 'vi'; meaning.textContent = word.meaning;
   const details = document.createElement('details'), summary = document.createElement('summary'), list = document.createElement('dl');
   details.className = 'entry-details'; summary.textContent = 'Word details';
-  for (const [label, value] of Object.entries({ IPA: word.phonetic, POS: word.pos, Sense: word.sense,
+  const detailFields = {
+    ...(correction ? { 'Corrected from': correction.original } : {}),
+    IPA: word.phonetic, POS: word.pos, Sense: word.sense,
     Synonyms: word.synonyms.join(', '), Collocations: word.collocations.join(', '), Example: word.exampleSentence,
-    Cloze: word.clozeSentence, 'Usage notes': word.usageNotes, 'Source topic': word.topic })) {
+    Cloze: word.clozeSentence, 'Usage notes': word.usageNotes, 'Source topic': word.topic
+  };
+  for (const [label, value] of Object.entries(detailFields)) {
     if (!value) continue;
     const term = document.createElement('dt'), description = document.createElement('dd');
     term.textContent = label; description.textContent = value; list.append(term, description);
@@ -312,19 +316,21 @@ export function setupQuickImport() {
   $('btn-edit-import')?.addEventListener('click', () => { if (!importing) editImportInput(); });
   function reviewBatch(input) {
     try {
-      let repairs = 0, cleaned = false, issues = [];
+      let repairs = 0, cleaned = false, issues = [], corrections = [];
       const entries = parseAIBatch(input.raw, input.words, {
         onRepair: count => { repairs = count; },
         onCleanup: () => { cleaned = true; },
-        onIssues: errors => { issues = errors; }
+        onIssues: errors => { issues = errors; },
+        onCorrections: list => { corrections = list; }
       });
-      $('ai-import-preview-list').replaceChildren(...entries.map(previewImportWord));
+      $('ai-import-preview-list').replaceChildren(...entries.map(word => previewImportWord(word, corrections.find(c => c.corrected === word.word))));
       importPreview = { input, entries, hasIssues: Boolean(issues.length) };
       $('ai-import-preview-heading').textContent = `Review ${entries.length} ${entries.length === 1 ? 'word' : 'words'}`;
       const repairNotice = repairs ? `Fixed ${repairs} malformed word ${repairs === 1 ? 'field' : 'fields'}. ` : '';
+      const correctionNotice = corrections.length ? `Corrected ${corrections.length} ${corrections.length === 1 ? 'spelling' : 'spellings'}: ${corrections.map(c => `${c.original} → ${c.corrected}`).join(', ')}. ` : '';
       const matchingNotice = input.overwrite ? 'Matching words will be updated and keep their review history.' :
         'Existing word details are kept. Choosing a target topic also adds matching words to that topic.';
-      $('ai-import-preview-summary').textContent = (cleaned ? 'Cleaned up copied JSON formatting. ' : '') + repairNotice + matchingNotice;
+      $('ai-import-preview-summary').textContent = (cleaned ? 'Cleaned up copied JSON formatting. ' : '') + repairNotice + correctionNotice + matchingNotice;
       const issuesPanel = $('ai-import-issues');
       issuesPanel.hidden = !issues.length;
       issuesPanel.open = Boolean(issues.length);
@@ -342,7 +348,11 @@ export function setupQuickImport() {
       $('ai-import-editor').hidden = true;
       $('ai-import-preview').hidden = false;
       $('ai-import-preview-list').scrollTop = 0;
-      status('batch-import-status');
+      if (corrections.length) {
+        status('batch-import-status', `Corrected: ${corrections.map(c => `${c.original} → ${c.corrected}`).join(', ')}`);
+      } else {
+        status('batch-import-status');
+      }
       $('ai-import-preview-heading').focus();
     } catch (error) { status('batch-import-status', error.message, true); }
   }
