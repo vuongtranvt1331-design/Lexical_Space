@@ -1,5 +1,5 @@
 /* One worker for the installed suite; runtime media is cached after it is used. */
-const VERSION='44.48.0-87c4eef807aed7';
+const VERSION='44.50.0-b629f0e5d09170';
 const BASE = new URL('./', self.registration.scope);
 const PREFIX = 'lexicalspace-shell-' + encodeURIComponent(BASE.pathname) + '-';
 const SHELL = PREFIX + VERSION;

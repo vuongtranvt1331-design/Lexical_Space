@@ -377,7 +377,7 @@
         if(a.special && crossed(2.0))
           object(b,'bayMissile',b.x,b.y+38,13,1);
         for(const m of b.objects)if(m.kind==='bayMissile' && m.hp>0){
-          m.y+=80*dt;
+          m.y+=80*dt*(api.projectileScale??1);
           if(m.y>=b.y+82){
             const rocket=api.makeHazard(m.x,m.y,Math.PI/2,185,'missile');
             if(rocket)rocket.lock=0;

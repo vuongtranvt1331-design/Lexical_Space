@@ -44,8 +44,8 @@ function createFlight(words = ['old', 'aged', 'tall', 'bright', 'slow', 'blue'])
   for (const name of ['dreadnought-config.js','dreadnought-ending.js','dreadnought-formations.js','dreadnought.js','asteroid-belt.js','boss-encounters.js', 'boss-campaign.js','fleet-arrival.js','boss-six-preview.js','dock-nine-story.js','fleet-study.js']) vm.runInContext(source(name), scope);
   vm.runInContext(source('game.js').replace('  window.SpaceGame=Object.freeze(', `
     window.probe={
-      world:()=>sim,runStep,signature,damage,advancePilot,executeDockShopBuy,drawScene,
-      queueNextRow,beginBoss,advanceDialogue,releaseCore,tick,pack,unpack,
+      world:()=>sim,runStep,simulateCoop,signature,damage,advancePilot,executeDockShopBuy,drawScene,
+      queueNextRow,beginBoss,advanceDialogue,releaseCore,tick,pack,unpack,activateSkill,updateHomingSalvos,makeFormation,fleetArrival,
     };
     window.SpaceGame=Object.freeze(`), scope);
   return {
@@ -53,9 +53,9 @@ function createFlight(words = ['old', 'aged', 'tall', 'bright', 'slow', 'blue'])
     boss: scope.SpaceBosses,
     probe: scope.probe,
     packets: packetLog,
-    start(role, lab = null) {
+    start(role, lab = null, hostShip='kestrel', guestShip='tempest') {
       scope.SpaceGame.startCoop({
-        role, lab, matchId: 'fixture', hostShip: 'kestrel', guestShip: 'aegis',
+        role, lab, matchId: 'fixture', hostShip, guestShip,
         send: (type, payload) => packetLog.push({ type, payload: jsonCopy(payload) }),
       });
     },
@@ -86,8 +86,8 @@ test('dreadnought co-op completes the shared intro and replays deck formations i
   assert.equal(host.scope.introStops,1,'siren stops exactly when combat begins');
   assert.equal(a.boss.dread.fighters.length,30);
   assert.deepEqual(jsonCopy(a.boss.dread),jsonCopy(b.boss.dread));
-  assert.equal(a.player.hp,3,'intro is noncombat');
-  for(const world of [a,b]){world.player.hp=999;world.wingman.hp=999;}
+  assert.equal(a.player.hp,6,'intro is noncombat');
+  for(const world of [a,b])world.player.hp=999;
   for(let i=0;i<1500;i++)step(host,guest);
   assert.deepEqual(jsonCopy(host.probe.world().boss?.dread),jsonCopy(guest.probe.world().boss?.dread));
 });
@@ -395,42 +395,78 @@ test('Boss Lab sends both pilots straight to the selected encounter and applies 
   near(host.boss.cooldown(host.boss.create(4), 2), 2);
 });
 
-test('pilots lose their own lives, respawn with one second of immunity, and buy their own extra life', () => {
-  const host = createFlight();
-  host.start('host');
-  const world = host.probe.world();
-  const { player, wingman } = world;
-  assert.equal(player.hp, 3);
-  assert.equal(wingman.hp, 3);
-  assert.equal(player.shields, undefined);
-  player.level = 3;
-  const before = { x: player.x, y: player.y };
-  host.probe.damage(false, player);
-  assert.equal(player.hp, 2);
-  assert.equal(wingman.hp, 3);
-  assert.equal(player.level, 2);
-  assert.ok(player.y > 720);
-  assert.ok(world.miniBlasts.some(blast => blast.x === before.x && blast.y === before.y));
-  host.probe.damage(false, player);
-  assert.equal(player.hp, 2);
-  host.probe.advancePilot(player, controls, 0.4, 0);
-  assert.ok(player.y < 720 && player.y > 605);
-  host.probe.advancePilot(player, controls, 0.4, 0);
-  near(player.y, 605);
-  near(player.grace, 1);
-  host.probe.damage(true, player);
-  assert.equal(player.hp, 2);
-  host.probe.advancePilot(player, controls, 1, 0);
-  host.probe.damage(false, player);
-  assert.equal(player.hp, 1);
+test('either pilot spends team lives while respawn, grace and weapon loss apply to the hit pilot', () => {
+  const host=createFlight();host.start('host');
+  const w=host.probe.world(),{player,wingman}=w;
+  const lives=n=>assert.deepEqual([player.hp,wingman.hp],[n,n]);
+  lives(6);
+  player.level=3;
+  const before={x:player.x,y:player.y};
+  host.probe.damage(false,player);lives(5);
+  assert.equal(player.level,2);assert.ok(player.y>720 && !wingman.respawn);
+  assert.ok(w.miniBlasts.some(blast=>blast.x===before.x && blast.y===before.y));
+  host.probe.damage(false,player);lives(5);
+  host.probe.damage(false,wingman);lives(4);
+  host.probe.advancePilot(player,controls,.4,0);
+  assert.ok(player.y<720 && player.y>605);
+  host.probe.advancePilot(player,controls,.4,0);
+  near(player.grace,1);host.probe.damage(true,player);lives(4);
+  host.probe.advancePilot(player,controls,1,0);
+  host.probe.damage(true,player,2);lives(2);
+  host.probe.advancePilot(wingman,controls,1,1);
+  host.probe.advancePilot(wingman,controls,1,1);
+  host.probe.damage(false,wingman,2);lives(0);
+  host.probe.tick(.2);assert.equal(w.outcome,'defeat');
+});
 
-  world.phase = 'dock-shop';
-  world.credits = 200;
-  host.probe.executeDockShopBuy(1);
-  host.probe.executeDockShopBuy(1);
-  assert.equal(wingman.hp, 4);
-  assert.equal(player.hp, 1);
-  assert.equal(world.credits, 100);
+test('team shop shares its cap and displays a single life meter on both screens after reconnect', () => {
+  const h=createFlight(),g=createFlight();h.start('host');g.start('guest');sync(h,g);
+  const w=h.probe.world();w.phase='dock-shop';w.credits=400;
+  for(const seat of [1,0,1])h.probe.executeDockShopBuy(seat);
+  assert.equal(w.player.hp,8);assert.equal(w.credits,200);
+  w.phase='match';h.probe.damage(false,w.wingman);
+  h.game.setCoopConnected(false);g.game.setCoopConnected(false);
+  h.game.setCoopConnected(true);g.game.setCoopConnected(true);sync(h,g);
+  for(const f of [h,g]){
+    assert.equal(f.probe.world().wingman.hp,7);
+    assert.equal(f.probe.world().player.hp,7);
+    const labels=[];
+    f.scope.document.getElementById('flight').getContext('2d').fillText=s=>labels.push(s);
+    f.probe.drawScene();
+    assert.deepEqual(labels.filter(s=>String(s).includes('LIVES')),['TEAM LIVES  7']);
+  }
+  const solo=createFlight();solo.game.start('kestrel');
+  const single=solo.probe.world();assert.equal(single.player.hp,3);
+  single.phase='dock-shop';single.credits=200;
+  solo.probe.executeDockShopBuy();solo.probe.executeDockShopBuy();
+  assert.equal(single.player.hp,4);assert.equal(single.credits,100);
+});
+
+test('old room snapshots pool remaining lives once and bring back a grounded wingmate', () => {
+  const f=createFlight();f.start('host');
+  const old=jsonCopy(f.probe.pack());old.livesVersion=1;old.player.hp=3;old.wingman.hp=0;
+  const restored=f.probe.unpack(old);
+  assert.equal(restored.player.hp,3);assert.equal(restored.wingman.hp,3);
+  assert.ok(restored.wingman.respawn>0);
+  const resumed=createFlight();
+  resumed.scope.sessionStorage.getItem=key=>key==='space_dominators_checkpoint_v1'
+    ? JSON.stringify({match:'fixture',world:old}):null;
+  resumed.start('host');
+  const again=f.probe.unpack(jsonCopy(resumed.probe.pack()));
+  assert.equal(again.player.hp,3);assert.equal(again.wingman.hp,3);
+  delete old.livesVersion;old.teamHp=5;
+  assert.equal(f.probe.unpack(old).player.hp,5);
+});
+
+test('Tempest pulses originate at the firing ships even when both pilots activate in one step',()=>{
+  const h=createFlight(),g=createFlight();h.start('host');g.start('guest');sync(h,g);
+  for(const f of [h,g]){
+    const w=f.probe.world();w.phase='match';
+    w.player.ship=w.wingman.ship='tempest';
+    const expected=[w.player,w.wingman].map(p=>({x:p.x,y:p.y,at:w.time}));
+    f.probe.runStep({controls:[controls,controls],commands:[['skill',0],['skill',1]]});
+    assert.deepEqual(jsonCopy([w.player.pulseFx,w.wingman.pulseFx]),expected);
+  }
 });
 
 test('boss five holds both pilots for the fleet arrival then resumes regular fleets', () => {
@@ -587,5 +623,133 @@ test('white escorts flank the flagship with port lower and a small purple hull i
     if(!starboard)continue;
     const clearance=(starboard.x-starboard.width/2)-(port.x+port.width/2);
     assert.ok(clearance>=120,'white escorts need clear space at frame '+frame);
+  }
+});
+
+
+test('Aegis shares one charge, spills excess damage and only recharges in combat',()=>{
+  const host=createFlight(),guest=createFlight();
+  host.start('host',null,'aegis','aegis');guest.start('guest',null,'aegis','aegis');
+  const w=host.probe.world();
+  host.probe.damage(false,w.wingman);
+  assert.equal(w.player.hp,6);assert.equal(w.armorCooldown,60);assert.equal(w.wingman.respawn,0);
+  host.probe.damage(false,w.player);
+  assert.equal(w.player.hp,5);assert.ok(w.player.respawn>0);
+  w.phase='dock-shop';host.probe.tick(7);assert.equal(w.armorCooldown,60);
+  sync(host,guest);assert.equal(guest.probe.world().armorCooldown,60);
+  assert.equal(guest.probe.world().wingman.hp,5);
+  w.phase='match';w.armorCooldown=.1;host.probe.tick(.05);near(w.armorCooldown,.05);
+  host.probe.tick(.05);assert.equal(w.armorCooldown,0);
+  host.probe.damage(true,w.wingman,2);assert.equal(w.player.hp,4);assert.equal(w.armorCooldown,60);
+  const solo=createFlight();solo.game.start('aegis');
+  solo.probe.damage(false);assert.equal(solo.probe.world().player.hp,3);
+  solo.probe.damage(false);assert.equal(solo.probe.world().player.hp,2);
+});
+
+test('Spectre clears precisely one paired fleet on both peers without vocabulary score',()=>{
+  const host=createFlight(),guest=createFlight();
+  host.start('host',null,'spectre','spectre');guest.start('guest',null,'spectre','spectre');
+  const w=host.probe.world();w.phase='match';
+  for(let i=0;i<3;i++)host.probe.fleetArrival(host.probe.makeFormation(i+2));
+  assert.equal(w.reserve[0].escort,true);
+  const expected=w.reserve.map(f=>f.id),first=w.formation.id;
+  sync(host,guest);
+  const frame={controls:[controls,controls],commands:[['skill',0],['skill',1]]};
+  host.probe.runStep(frame);guest.probe.runStep(jsonCopy(frame));
+  assert.equal(w.salvos.length,1);assert.equal(w.salvos[0].missiles.length,w.row.length);
+  assert.ok(w.player.cooldown>27);assert.equal(w.wingman.cooldown,0);
+  for(let i=0;i<30;i++)step(host,guest);
+  sync(host,guest);
+  assert.deepEqual(jsonCopy(host.probe.world().salvos),jsonCopy(guest.probe.world().salvos));
+  for(let i=0;i<22;i++)step(host,guest);
+  for(const peer of [host,guest]){
+    const s=peer.probe.world();assert.equal(s.cleared,1);assert.equal(s.score,0);
+    assert.equal(s.correct,0);assert.equal(s.wrong,0);assert.equal(s.credits,0);
+    assert.deepEqual(jsonCopy([s.formation.id,...s.reserve.map(f=>f.id)]),jsonCopy(expected));
+    assert.notEqual(s.formation.id,first);assert.equal(s.salvos.length,0);
+  }
+});
+
+test('missile clearance of fleet ten summons boss one and an invalidated lock cannot clear a new fleet',()=>{
+  const f=createFlight();f.game.start('spectre');
+  const w=f.probe.world();w.phase='match';w.wave=10;w.cleared=9;
+  f.probe.activateSkill(w.player,'spectre');f.probe.updateHomingSalvos(1);
+  assert.equal(w.cleared,10);assert.equal(w.phase,'chain');f.probe.tick(1.26);
+  assert.equal(w.boss.index,1);
+  const g=createFlight();g.game.start('spectre');const a=g.probe.world();a.phase='match';
+  g.probe.activateSkill(a.player,'spectre');a.formation.id++;g.probe.updateHomingSalvos(1);
+  assert.equal(a.cleared,0);assert.equal(a.salvos.length,0);
+});
+
+test('Spectre respects boss exposure and only damages live destructible deck targets',()=>{
+  const f=createFlight();f.game.startBossPractice(1,'spectre');const w=f.probe.world();
+  f.probe.activateSkill(w.player,'spectre');assert.equal(w.salvos.length,0);
+  w.boss.entryRemaining=0;
+  const expected=w.boss.max*.02*(f.boss.targets(w.boss).some(t=>t.id==='vent')?1:.55),before=w.boss.hp;
+  f.probe.activateSkill(w.player,'spectre');assert.equal(w.salvos[0].missiles.length,5);
+  f.probe.updateHomingSalvos(1);near(before-w.boss.hp,expected);assert.equal(w.player.cooldown,28);
+  f.game.startBossPractice(6,'spectre');const d=f.probe.world(),deck=d.boss.dread;d.boss.clock=30;
+  deck.turrets.push({id:'sprinkler',type:'sprinkler',hp:null,x:500,y:180},{id:'deck-test',type:'fan',hp:10,x:300,y:100});
+  deck.fighters.push({id:'fighter-test',hp:1,x:640,y:200});
+  deck.projectiles.push({id:'missile-test',hp:1,missile:true,x:600,y:200});
+  f.probe.activateSkill(d.player,'spectre');f.probe.updateHomingSalvos(1);
+  assert.equal(deck.kills,1);assert.equal(deck.turrets[0].hp,null);assert.equal(deck.turrets[1].hp,7);
+  assert.equal(deck.projectiles[0].hp,1);assert.ok(!deck.finish);
+});
+
+test('Kestrel halves projectile travel for four seconds without slowing boss or turret timers',()=>{
+  const f=createFlight();f.game.startBossPractice(6,'kestrel');
+  const w=f.probe.world(),b=w.boss,s=b.dread;b.clock=30;
+  s.nextSpawn=s.nextGrid=999;
+  const shot=()=>({type:'fan',hp:1,x:40,y:50,angle:0,speed:120,radius:5,age:0});
+  s.beams.push({x:0,y:0,angle:0,remaining:2,hit:[]});s.projectiles.push(shot());
+  f.probe.activateSkill(w.player,'kestrel');assert.equal(w.slow,4);assert.equal(w.player.cooldown,12);
+  f.probe.tick(.1);near(s.projectiles[0].x,46);near(s.beams[0].remaining,1.9);near(b.clock,30.1);
+  s.projectiles.push(shot());f.probe.tick(.1);near(s.projectiles[1].x,46);
+  for(let i=0;i<38;i++)f.probe.tick(.1);
+  near(w.slow,0);s.projectiles.push(shot());f.probe.tick(.1);near(s.projectiles.at(-1).x,52);
+});
+
+test('Tempest clears flying salvos and waves, leaving armed mines, laser beams and hulls intact',()=>{
+  const f=createFlight();f.game.startBossPractice(6,'tempest');
+  const w=f.probe.world(),s=w.boss.dread;w.boss.clock=30;
+  s.beams.push({remaining:.4});s.turrets.push({type:'sprinkler',hp:null});
+  s.projectiles.push({type:'homing',hp:2,x:4,y:5});w.hostiles.push({type:'bolt',x:1,y:2});
+  f.probe.activateSkill(w.player,'tempest');assert.equal(w.player.cooldown,18);
+  assert.equal(s.projectiles.length,0);assert.equal(w.hostiles.length,0);
+  assert.equal(s.beams.length,1);assert.equal(s.turrets.length,1);
+  f.game.startBossPractice(1,'tempest');const a=f.probe.world();a.boss.entryRemaining=0;
+  a.boss.beaconWaves.push({radius:120});a.boss.objects.push({kind:'mine',hp:2});
+  f.probe.activateSkill(a.player,'tempest');
+  assert.equal(a.boss.beaconWaves.length,0);assert.equal(a.boss.objects[0].hp,2);
+});
+
+test('all four hulls reserve the skill input for asteroid words and reactor fire',()=>{
+  for(const ship of ['kestrel','spectre','aegis','tempest']){
+    const f=createFlight();f.game.startBossPractice(5,ship);const belt=f.probe.world();belt.phase='core';
+    f.probe.activateSkill(belt.player,ship);assert.equal(belt.player.cooldown,0);assert.equal(belt.slow,0);
+    f.game.startBossPractice(6,ship,{reactorFinish:true});const w=f.probe.world(),end=w.boss.dread.finish;
+    end.phase='open';end.elapsed=3.1;
+    f.probe.activateSkill(w.player,ship);assert.equal(end.phase,'missile');assert.equal(w.player.cooldown,0);
+  }
+});
+
+
+test('guest skill input makes new fleet bullets travel at half speed on both screens, leaving the fleet beat alone',()=>{
+  const h=createFlight(),g=createFlight();h.start('host',null,'tempest','kestrel');g.start('guest',null,'tempest','kestrel');
+  const w=h.probe.world();w.phase='match';w.enemyBeat=2.5;
+  sync(h,g);
+  h.game.receiveCoop('controls',{...controls,skill:0});
+  h.game.receiveCoop('controls',{...controls,skill:1});
+  // Consume the remote input on the host, then restore that active field on the guest.
+  h.probe.simulateCoop(1000);h.probe.simulateCoop(1020);
+  sync(h,g);
+  for(const f of [h,g]){
+    const live=f.probe.world();assert.ok(live.slow>3.9);
+    live.hostiles.push({type:'bolt',x:44,y:55,vx:120,vy:0,life:2});
+    const before=live.enemyBeat;
+    f.probe.tick(.25);
+    near(live.hostiles.at(-1).x,59);near(live.hostiles.at(-1).life,1.75);
+    near(before-live.enemyBeat,.25);
   }
 });

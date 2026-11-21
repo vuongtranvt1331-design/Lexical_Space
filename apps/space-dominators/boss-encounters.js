@@ -908,7 +908,7 @@ window.SpaceEncounterObjects = (function () {
       if(!b.beaconWaves?.length)return;
       for(const wave of b.beaconWaves){
         const previous=wave.radius;
-        wave.radius+=wave.speed*dt;
+        wave.radius+=wave.speed*dt*(api.projectileScale??1);
         const arcs=segments(wave.gapAngle);
         api.pilots.forEach((p,i)=>{
           const seat=api.pilotSeat?.(p)??i;

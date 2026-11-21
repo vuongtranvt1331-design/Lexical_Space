@@ -1,10 +1,10 @@
 (() => {
   'use strict';
   const fleet = [
-    {id:'kestrel',name:'Kestrel',skill:'Target slow',price:1800},
-    {id:'spectre',name:'Spectre',skill:'Phase shift',price:2400},
-    {id:'aegis',name:'Aegis',skill:'Point defense',price:2600},
-    {id:'tempest',name:'Tempest',skill:'Disruption pulse',price:2800}
+    {id:'kestrel',name:'Kestrel',price:1800},
+    {id:'spectre',name:'Spectre',price:2400},
+    {id:'aegis',name:'Aegis',price:2600},
+    {id:'tempest',name:'Tempest',price:2800}
   ];
   const allUnlocked = true;
   const key = 'space_dominators_pilot_v1';
@@ -37,11 +37,18 @@
     SpaceArt.draw(c,id,canvas.width/2+dx,canvas.height/2-size*.125+dy,size,size,Math.floor(time*8));
   }
 
+  function showStartingLives(inRoom){
+    const perPilot=SpaceGame.startingLives;
+    el('hull').textContent=inRoom?(2*perPilot)+' team lives':perPilot+' lives';
+  }
+
   function update() {
     const ship=selected();
     el('shipName').textContent=ship.name;
-    el('hull').textContent=({kestrel:6,spectre:5,aegis:7,tempest:6})[ship.id]+' HP';
-    el('ability').textContent=ship.skill;
+    showStartingLives(!!SpaceCoop.state.role);
+    const ability=SpaceGame.ability(ship.id);
+    el('ability').textContent=ability.skill+' · '+(ship.id==='aegis'?'Passive':'E')+' · '+ability.cooldown+'s';
+    el('ability').title=ability.detail;
     const launch=el('launch');
     launch.firstChild.textContent=owned(ship)?'Launch':'Buy · '+ship.price;
     launch.disabled=!artLoaded || (!owned(ship) && profile.credits < ship.price);
@@ -66,6 +73,7 @@
   let wingmateShip=fleet[0].id;
   function renderRoomPilots(state) {
     const inRoom=!!state.role;
+    showStartingLives(inRoom);
     const remoteSide=state.role==='host' ? 1 : 0;
     const preview=el('wingmatePreview');
     const connected=inRoom && state.connected;

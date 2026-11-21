@@ -3,7 +3,7 @@
   'use strict';
   const KEY = 'space_dominators_room_v1';
   const PREFIX = 'space-dominators-coop-v1-';
-  const VERSION = 4;
+  const VERSION = 6;
   const ships = ['kestrel','spectre','aegis','tempest'];
   const pilotName = value => typeof value === 'string' ? value.trim().slice(0, 32) : '';
   const localName = pilotName(new URLSearchParams(location.search).get('user')) || 'Pilot';

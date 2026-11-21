@@ -155,6 +155,7 @@
   }
   function updateProjectiles(b,dt,api){
     const s=b.dread;
+    const travel=dt*(api.projectileScale??1);
     for(const p of s.projectiles){
       if(p.hp<=0)continue;
       p.age+=dt;
@@ -168,7 +169,7 @@
         p.speed=p.baseSpeed*(1+.6*Math.min(1,p.age/1.2));
       }
       if(p.type==='orb')p.radius=Math.min(27,5+p.age*4);
-      p.x+=Math.cos(p.angle)*p.speed*dt;p.y+=Math.sin(p.angle)*p.speed*dt;
+      p.x+=Math.cos(p.angle)*p.speed*travel;p.y+=Math.sin(p.angle)*p.speed*travel;
       for(const pilot of api.pilots)if(pilot.hp>0 && !pilot.respawn &&
           Math.hypot(pilot.x-p.x,pilot.y-p.y)<p.radius+10){
         p.hp=0;api.damage(pilot);break;

@@ -25,3 +25,18 @@ All four hull designs in the final nine-ship formation use a neutral shadow. Its
 The three destroyers in the launch cinematic are permanent gate guards. Two timed radio lines accompany the existing deployment. The subsequent distress call explains the explosion, the five thousand residents and Gate Control’s refusal to release Kite’s cargo. The convoy delivers its cores after the sixth encounter. The Radio Log includes the patrol exchange as well as the campaign transmissions.
 
 Hangar and pause Settings use the same two-by-two layout. Volume and Dialogue occupy the first row, Control and Back the second. Dialogue defaults to on for solo flights and Boss Lab. The local key `space_dominators_dialogue_v1` records the pilot’s choice separately from effects volume. Co-op always skips dialogue on both seats. Switching dialogue off during a paused transmission advances to its destination when the simulation resumes.
+
+## Co-op lives in 44.49.0
+
+Both players draw from one life pool. A co-op mission or Boss Lab starts at six, with a maximum of eight. A hit deducts from the team and respawns the ship hit. Its pilot gets one second of grace on re-entry. Two independent hits can spend two lives. A missed asteroid ends the attempt and costs one shared life. Either player can buy a team life at the dock for 100 credits. Solo starts at three and caps at four.
+
+The lead pilot stores remaining lives. The wingmate exposes the same value to targeting and damage effects. Co-op checkpoint version 2 carries the current total through replay and reconnect. Loading a version 1 room sums the two personal reserves once. Peer protocol 5 keeps peers using different damage rules out of the same simulation. Tempest records the firing ship’s coordinates for its pulse.
+
+
+## Space Dominators pilot abilities in 44.50.0
+
+The hangar and the flight HUD read the same ability definitions. Kestrel slows hostile projectiles to half speed for four seconds with a twelve-second cooldown. Fleet movement, weapon warnings and boss attack schedules continue at their usual pace. Tempest clears live projectiles and detached beacon waves once per activation, with an eighteen-second cooldown. Anchored beams, mines and ships remain active.
+
+Spectre locks one vocabulary fleet by its stable formation ID. Its missiles follow individual targets and count one fleet toward the next encounter. Automated clears earn neither vocabulary points nor fleet credits. The twenty-eight-second salvo does up to two percent of a conventional boss's maximum hull, once per cast, subject to exposure and armor. On the dreadnought deck, each of up to six missiles deals three damage to one fighter or destructible turret. Reactor timing and asteroid typing retain priority over abilities.
+
+Aegis starts each mission with one point of passive armor for the solo pilot or the entire co-op team. Absorbing a hit starts sixty seconds of combat recharge. Excess damage costs lives immediately. A second Aegis shares the charge and timer. Peer protocol 6 replays casts and their impacts from ordered inputs. Snapshots include live salvos, the slow field and the remaining armor recharge. Older checkpoints initialize these new fields on load.

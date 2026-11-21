@@ -111,7 +111,8 @@
       if(t<1)continue;
       // An impact ends this attempt for both pilots, without awarding a clear.
       s.rocks=[];
-      (api.asteroidImpact||api.damage)(api.pilots.find(p=>p.hp>0));
+      const target=api.pilots.find((p,i)=>(api.pilotSeat?.(p)??i)===(r.seat??0) && p.hp>0);
+      if(target)(api.asteroidImpact||api.damage)(target);
       s.nextAt=s.time+.85;
       break;
     }
