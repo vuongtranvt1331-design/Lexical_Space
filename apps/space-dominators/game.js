@@ -176,9 +176,20 @@
     sim.reserve.push(formation);
     layoutFleets();
   }
+  function replaceTargets(f,dt){
+    for(const e of f.ships){
+      if(e.reinforceAfter===undefined)continue;
+      e.reinforceAfter-=dt;
+      if(e.reinforceAfter>0)continue;
+      delete e.reinforceAfter;
+      Object.assign(e,{hp:e.maxHp,x:e.tx,y:-32,action:0,dive:null});
+      previousCenters.delete(e);
+    }
+  }
   function advanceReserves(dt){
     for(const f of sim.reserve){
       if(!f.ready){advanceFormation(f,dt);continue;}
+      replaceTargets(f,dt);
       const settle=1-Math.exp(-4*dt);
       for(const e of f.ships){
         e.driftPhase+=dt;
@@ -211,7 +222,7 @@
     advanceFormation(f,dt);
     if(!f.ready)return;
     if(f.destY!==ROW_Y){
-      // A waiting squadron drops into the scoring lane; shots remain disarmed in transit.
+      // A waiting squadron drops into the scoring lane before accepting vocabulary answers.
       f.deploy=(f.deploy||0)+dt/0.8;
       const u=clamp(f.deploy,0,1), ease=u*u*(3-2*u);
       for(const e of sim.row)e.y=f.destY+(ROW_Y-f.destY)*ease;
@@ -239,7 +250,7 @@
     if(index===6)window.SpaceFleetStudy?.load();
   }
   function bossAPI(){
-    return {projectileScale:sim.slow>0?.5:1,award:points=>{sim.score+=points;},chooseWord:choice,wordPool:window.SpaceWords.typingWords,hazards:sim.hostiles, pilots:pilots().filter(p=>p.hp>0), pilotSeat:p=>p===sim.player?0:1, makeHazard, miniBlast, damage:p=>damage(false,p), penalty:p=>damage(true,p,2), asteroidImpact:p=>damage(true,p), burst,sound};
+    return {touchesPilot,projectileScale:sim.slow>0?.5:1,award:points=>{sim.score+=points;},chooseWord:choice,wordPool:window.SpaceWords.typingWords,hazards:sim.hostiles, pilots:pilots().filter(p=>p.hp>0), pilotSeat:p=>p===sim.player?0:1, makeHazard, miniBlast, damage:p=>damage(false,p), penalty:p=>damage(true,p,2), asteroidImpact:p=>damage(true,p), burst,sound};
   }
   function releaseCore() {
     const boss=sim.boss;
@@ -316,49 +327,32 @@
     sim.reserve=[];sim.pendingFleet=null;sim.fleetClock=fleetPeriod();
     sim.phase='capital-arrival';sim.phaseTime=0;sim.message=null;
     sim.hostiles=[];sim.shots=[];sim.missileBonus=0;
-    const hp=3+sim.weaponLevel*4;
-    sim.capital={x:WIDTH/2,y:-85,beat:.45,turn:0,turrets:[-138,0,138].map((offset,i)=>({
-      x:WIDTH/2+offset,y:-67,offset,hp,maxHp:hp,warning:0,flash:0,launcher:i===1
-    }))};
+    sim.capital=window.SpaceInspectingDock.create(WIDTH/2,-96,3+sim.weaponLevel*4);
+    window.CapitalArt?.loadDock?.();
     sound('boss');
   }
   function updateCapital(dt) {
     const c=sim.capital;
     if(sim.phase==='capital-arrival') {
       const u=clamp(sim.phaseTime/1.7,0,1);
-      c.y=-85+211*u*u*(3-2*u);
-      for(const t of c.turrets)t.y=c.y+18;
+      window.SpaceInspectingDock.position(c,-96+222*u*u*(3-2*u));
       if(u===1){sim.phase='capital';sim.phaseTime=0;sim.player.gun=.2;}
       return;
     }
-    c.beat-=dt;
-    const live=c.turrets.filter(t=>t.hp>0);
-    if(c.beat<=0 && live.length){
-      const next=live[c.turn%live.length];
-      const target=nearestPilot(next.x,next.y);
-      next.aim=Math.atan2(target.y-next.y,target.x-next.x);
-      next.warning=.76;c.turn++;c.beat=1.18;
-    }
-    for(const t of live){
-      t.flash=Math.max(0,t.flash-dt);
-      if(t.warning<=0)continue;
-      t.warning-=dt;
-      if(t.warning<=0){
-        if(t.launcher)makeHazard(t.x,t.y+14,t.aim,172,'missile');
-        else for(const spread of [-.15,0,.15])makeHazard(t.x,t.y+14,t.aim+spread,230);
-      }
-    }
+    window.SpaceInspectingDock.update(c,dt,pilots(),makeHazard);
   }
   function hitTurret(t,amount) {
+    if(!t || t.hp<=0 || !(amount>0))return;
     t.hp=Math.max(0,t.hp-amount);t.flash=.15;sound('impact');burst(t.x,t.y,'#ffbd78',t.hp?5:26);
     if(t.hp)return;
     sim.score+=350;
     if(sim.capital.turrets.some(t=>t.hp>0))return;
     sim.score+=950;burst(sim.capital.x,sim.capital.y,'#ffba79',55);
     sim.hostiles=[];sim.shots=[];sim.phase='capital-clear';sim.phaseTime=0;
-    sound('clear');note('GUN DECK SILENCED   +950','#ffd793',1.6);
+    sound('clear');note('INSPECTING DOCK DISABLED   +950','#ffd793',1.6);
   }
   function completeRow(bySalvo=false) {
+    sim.formation.wordsShown=true;
     sim.cleared++;
     if(!sim.practice && sim.cleared > (sim.rewardedFleetMax || 0)) {
       sim.rewardedFleetMax = sim.cleared;
@@ -677,14 +671,36 @@
     e.y=ROW_Y+(dive.y-ROW_Y)*progress;
     if(!outward && t>=1){e.action=0;e.dive=null;}
   }
+  // Sweep the relative motion of both hulls. Fast entry routes can cross a
+  // pilot between two simulation samples, even when neither endpoint overlaps.
+  const previousCenters=new WeakMap();
+  function rememberCenter(body){
+    const pos=previousCenters.get(body);
+    if(pos){pos.x=body.x;pos.y=body.y;}
+    else previousCenters.set(body,{x:body.x,y:body.y});
+  }
+  function touchesPilot(ship,pilot,radius){
+    if(!pilot.hp || pilot.respawn)return false;
+    const p=previousCenters.get(pilot)??pilot, e=previousCenters.get(ship)??ship;
+    const x=e.x-p.x,y=e.y-p.y;
+    const dx=ship.x-pilot.x-x,dy=ship.y-pilot.y-y;
+    const length=dx*dx+dy*dy;
+    const t=length?clamp(-(x*dx+y*dy)/length,0,1):0;
+    return (x+t*dx)**2+(y+t*dy)**2<=radius*radius;
+  }
+  function burstFighter(f,e){
+    e.hp=0;e.action=0;e.dive=null;
+    miniBlast(e.x,e.y,65);burst(e.x,e.y,'#ff9957',16);sound('impact');
+    if(f.pair.has(e.word) && !e.selected)e.reinforceAfter=.9;
+  }
   function ramFormation(f,staged) {
     if(!f)return;
     for(const e of f.ships){
-      if(!e.hp || e.visible===false || e.x<0 || e.y<0 || e.x>WIDTH || e.y>HEIGHT)continue;
+      if(!e.hp || e.popped || e.visible===false)continue;
       if(e.action===2 && e.dive){
         for(const [side,pilot] of pilots().entries()){
           const hit=1<<side;
-          if(pilot.hp<=0 || distance(e,pilot)>(staged?26:35) || (e.dive.contactMask & hit))continue;
+          if(!touchesPilot(e,pilot,staged?26:35) || (e.dive.contactMask & hit))continue;
           // Sustained overlap is one hit per pilot for this dive.
           e.dive.contactMask=(e.dive.contactMask || 0)|hit;
           damage(false,pilot);
@@ -692,12 +708,9 @@
         }
         continue;
       }
-      const pilot=nearestPilot(e.x,e.y);
-      if(pilot.hp<=0 || distance(e,pilot)>(staged?26:35))continue;
-      e.hp=0;e.action=0;e.dive=null;
-      miniBlast(e.x,e.y,65);burst(e.x,e.y,'#ff9957',16);sound('impact');
-      // A replacement must carry an unanswered target so the vocabulary row stays solvable.
-      if(f.pair.has(e.word))e.reinforceAfter=.9;
+      const pilot=pilots().find(p=>touchesPilot(e,p,staged?26:35));
+      if(!pilot)continue;
+      burstFighter(f,e);
       damage(false,pilot);
       if(sim.state!=='active')return;
     }
@@ -719,7 +732,10 @@
     }
     if(sim.phase==='dialogue' || sim.phase==='briefing' || sim.phase==='dock-shop')return;
     const chainContinues=sim.phase==='chain' && sim.cleared%ROWS_PER_BOSS!==0 && !capitalAfter(sim.wave);
-    if(chainContinues || ['arrival','match','fleet-wait'].includes(sim.phase)){
+    const latest=sim.reserve.at(-1)??sim.formation;
+    const canReveal=latest===sim.formation ? sim.phase==='match' : latest.ready;
+    if(!latest.wordsShown && canReveal && latest.ships.some(e=>e.hp || e.selected))latest.wordsShown=true;
+    if(sim.phase==='fleet-wait' || (latest.wordsShown && (chainContinues || ['arrival','match'].includes(sim.phase)))){
       sim.fleetClock-=dt;
       if(sim.fleetClock<=FLEET_WARNING+1e-8 && !sim.pendingFleet){
         sim.pendingFleet=makeFormation(chainContinues?sim.cleared+1:sim.wave+1);
@@ -739,14 +755,7 @@
     } else if(sim.phase==='capital-clear'){
       if(sim.phaseTime>=1.5){sim.capital=null;queueNextRow();}
     } else if(sim.phase==='match') {
-      for(const e of sim.row){
-        if(e.reinforceAfter===undefined)continue;
-        e.reinforceAfter-=dt;
-        if(e.reinforceAfter<=0){
-          delete e.reinforceAfter;
-          Object.assign(e,{hp:e.maxHp,x:e.tx,y:-32,action:0,dive:null});
-        }
-      }
+      replaceTargets(sim.formation,dt);
       sim.enemyBeat-=dt;
       if(sim.enemyBeat<=0) {
         const ready=sim.row.filter(e=>e.hp && !e.action);
@@ -832,7 +841,7 @@
         return stepX>0?Math.min(x,shot.stopX):Math.max(x,shot.stopX);
       }
       let contact=null,first=Infinity;
-      function check(type,obj,w,h) {
+      function check(type,obj,w,h,fleet) {
         // Sweep to the earliest impact; converging rounds may also enter via a side edge.
         let enter=Math.max(0,(startY-obj.y-h)/rise);
         const exit=Math.min(1,(startY-obj.y+h)/rise);
@@ -845,11 +854,18 @@
           if(xAt(exit)>right)return;
           enter=(right-startX)/stepX;
         }
-        if(enter<first){first=enter;contact={type,obj};}
+        if(enter<first){first=enter;contact={type,obj,fleet};}
       }
       for(const m of sim.hostiles)if(m.type==='missile' && m.life>0)check('missile',m,16,18);
-      if(sim.phase==='match')for(const e of sim.row){
-        if(e.hp && (shot.wordLock===undefined || shot.wordLock===e.word))check('word',e,37,26);
+      if(['arrival','match','chain'].includes(sim.phase)){
+        if(sim.phase!=='chain')for(const e of sim.row){
+          if(!e.hp || e.popped || e.visible===false)continue;
+          if(sim.phase==='arrival')check('hull',e,31,24,sim.formation);
+          else if(shot.wordLock===undefined || shot.wordLock===e.word)check('word',e,37,26);
+        }
+        for(const f of sim.reserve)for(const e of f.ships){
+          if(e.hp && !e.popped && e.visible!==false)check('hull',e,19,17,f);
+        }
       }
       if(sim.phase==='capital')for(const turret of sim.capital.turrets)if(turret.hp>0)check('turret',turret,32,25);
       if(sim.phase==='core' && sim.boss)for(const part of window.SpaceBosses.targets(sim.boss))check('boss',part,part.w,part.h);
@@ -865,6 +881,10 @@
           }
           hitWord(obj,amount,shot.owner===1?sim.wingman:sim.player);
           miniBlast(shot.x,shot.y,24);
+        }else if(type==='hull'){
+          obj.hp=Math.max(0,obj.hp-amount);
+          if(!obj.hp)burstFighter(contact.fleet,obj);
+          else{miniBlast(shot.x,shot.y,24);sound('impact');}
         }else if(type==='boss'){
           hitBoss(obj.id,amount,shot.x,shot.y);
         }else if(type==='turret'){
@@ -927,7 +947,7 @@
       p.x+=(aim.x-p.x)*ratio;p.y+=(aim.y-p.y)*ratio;
     }
     p.x=clamp(p.x,28,WIDTH-28);p.y=clamp(p.y,42,HEIGHT-42);
-    if(input.fire && !p.gun && !sim.boss?.dread?.finish && ['match','core','capital'].includes(sim.phase)){
+    if(input.fire && !p.gun && !sim.boss?.dread?.finish && ['arrival','match','core','capital'].includes(sim.phase)){
       fireSalvo(p,owner);
       p.gun=gunPeriod[p.level-1];sound('shoot');
     }
@@ -985,6 +1005,14 @@
     }
     if(sim.phase==='dialogue' || sim.phase==='briefing' || sim.phase==='dock-shop')return;
     if(skillCombat() && sim.armorCooldown>0)sim.armorCooldown=Math.max(0,sim.armorCooldown-dt);
+    for(const pilot of pilots())rememberCenter(pilot);
+    if(['arrival','match','chain'].includes(sim.phase)){
+      for(const fleet of [sim.formation,...sim.reserve])for(const e of fleet.ships){
+        if(e.hp && !(e.x===-128 && e.y===-128))rememberCenter(e);
+        else previousCenters.delete(e);
+      }
+    }
+    for(const f of sim.boss?.dread?.fighters??[])rememberCenter(f);
     advancePilot(p,streamStep?.controls[0]||readControls(),dt,0);
     if(sim.wingman)advancePilot(sim.wingman,streamStep?.controls[1]||coop.remote,dt,1);
     updateRow(dt);
@@ -1190,6 +1218,10 @@
     for(const f of sim.reserve)for(const e of f.ships) {
       if(!e.hp || e.visible===false) continue;
       sprite(e.role,e.x,e.y+3*Math.sin(e.driftPhase*1.4),46,37);
+      if(f.ready && !f.escort){
+        ctx.font='600 15px system-ui, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillStyle='#edf6ff';ctx.fillText(e.word,e.x,e.y+24,Math.min(150,1050/f.ships.length));
+      }
     }
     ctx.restore();
   }
@@ -1199,12 +1231,18 @@
     const clear=sim.phase==='capital-clear';
     ctx.save();
     if(clear) ctx.globalAlpha=Math.max(.12,1-sim.phaseTime*.65);
-    window.CapitalArt.drawHull(ctx,cap.x,cap.y,430,130);
+    window.CapitalArt.drawDock(ctx,cap.x,cap.y);
     for(const turret of cap.turrets) {
-      const angle=turret.warning>0 ? turret.aim : Math.atan2(sim.player.y-turret.y,sim.player.x-turret.x);
-      window.CapitalArt.drawTurret(ctx,turret.x,turret.y,48,angle,turret.hp<=0);
+      const angle=turret.aim;
+      if(!turret.launcher)window.CapitalArt.drawTurret(ctx,turret.x,turret.y,46,angle,turret.hp<=0);
+      else if(turret.hp<=0){
+        rectangle(turret.x-19,turret.y-13,38,28,'#182133');
+        for(const dx of [-11,0,11])rectangle(turret.x+dx-3,turret.y+4,6,3,'#86523f');
+      }
       if(turret.hp<=0 || sim.phase==='capital-arrival') continue;
-      if(turret.warning>0) {
+      if(turret.warning>0 && turret.launcher){
+        ring(turret.x,turret.y,21,'#ffa254',2);
+      }else if(turret.warning>0) {
         const dx=Math.cos(angle),dy=Math.sin(angle);
         ctx.setLineDash([6,8]);
         line(turret.x+dx*23,turret.y+dy*23,turret.x+dx*185,turret.y+dy*185,'rgba(255,174,91,.8)',2);
@@ -1576,11 +1614,11 @@
     if(sim.phase==='core')return;
     const mid=WIDTH/2, y=HEIGHT/2, capital=sim.phase.startsWith('capital');
     const center=sim.phase==='fleet-wait'?'Incoming fleet':
-      capital ? (sim.phase==='capital-clear'?'Battery neutralized':'Destroy the gun turrets')
+      capital ? (sim.phase==='capital-clear'?'Dock disabled':'Destroy the weapon mounts')
       :
         sim.phase==='core-drop'?'Recover the upgrade core':
         ['boss-explosion','reward','dialogue'].includes(sim.phase)?'Sector secured':sim.clue;
-    const category=capital?'CAPITAL SHIP':'ROW';
+    const category=capital?'INSPECTING DOCK':'ROW';
     const number=sim.phase==='fleet-wait'?sim.cleared+1:sim.wave;
     ctx.save();
     const fresh=sim.phase==='match' || sim.phase==='capital';
@@ -1847,7 +1885,7 @@
     sim={ship,state:'active',wave:0,cleared:0,correct:0,wrong:0,score:0,time:0,slow:0,armorCooldown:0,salvos:[],hitFlash:0,
       runId:coop?.matchId||globalThis.crypto?.randomUUID?.()||String(Date.now()),bossIndex:0,rewarded:0,core:null,line:0,
       livesVersion:1,player:{ship,level:1,correct:0,x:WIDTH/2,y:HEIGHT-115,hp:START_LIVES,gun:0,grace:0,respawn:0,cooldown:0},
-      weaponLevel:1,upgradeFlash:0,credits:getProfileCredits(),drops:[],rewardedFleetMax:0,reserve:[],fleetClock:7,fleetSerial:0,pendingFleet:null,staging:null,capital:null,routes:[],particles:[]};
+      weaponLevel:1,upgradeFlash:0,credits:getProfileCredits(),drops:[],rewardedFleetMax:0,spawnClockVersion:2,reserve:[],fleetClock:7,fleetSerial:0,pendingFleet:null,staging:null,capital:null,routes:[],particles:[]};
     lastTime=0;
   }
   function beginMission() {
@@ -1919,9 +1957,23 @@
       world.bossIndex=6;world.rewarded=6;world.boss=null;world.core=null;world.phase='chapter-fleet';
       world.scene=null;world.line=0;world.phaseTime=0;world.dreadDeparted=true;
     }
+    if(world.capital){
+      const dock=world.capital;
+      if(!Array.isArray(dock.turrets) || dock.turrets.length!==3 ||
+        !dock.turrets.every(t=>t && Number.isFinite(t.hp) && Number.isFinite(t.maxHp) && t.maxHp>0))return null;
+      world.capital=dock.gunAt===undefined
+        ? window.SpaceInspectingDock.create(dock.x,dock.y,dock.turrets[1].maxHp,dock.turrets)
+        : window.SpaceInspectingDock.reinforceHull(dock);
+    }
     const reserve=world.reserve??(world.staging?[world.staging]:[]);
     if(!Array.isArray(reserve)||reserve.length>5)return null;
-    const pending=world.pendingFleet;
+    let pending=world.pendingFleet;
+    const lastFleet=reserve.at(-1)??world.formation;
+    const clearedBeforeSave=world.spawnClockVersion!==2 && world.phase==='chain' && !reserve.length;
+    if(!clearedBeforeSave && world.spawnClockVersion!==2 && ['arrival','match','chain'].includes(world.phase) && !lastFleet?.ready){
+      world.fleetClock=Math.max(3.5,7-world.cleared*.1);pending=null;
+    }
+    world.spawnClockVersion=2;
     if(world.phase==='fleet-wait' && !pending)return null;
     const fleets=[world.formation,...reserve];
     if(pending)fleets.push(pending);
@@ -1931,6 +1983,7 @@
     }
     const restore=f=>({...f,pair:new Set(f.pair)});
     const formation=restore(world.formation);
+    if(clearedBeforeSave)formation.wordsShown=true;
     world={...world,player:{...world.player}};
     if(!solo)world.wingman={...world.wingman};
     const seats=solo?[world.player]:[world.player,world.wingman];

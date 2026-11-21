@@ -28,7 +28,7 @@ def build():
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
         'apps/quick-ears/history.js', 'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/js/space-chase.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/space-dominators/studio-intro.css', 'apps/space-dominators/station.css', 'apps/space-dominators/station.js',
-        'apps/space-dominators/background.js', 'apps/space-dominators/game.js', 'apps/space-dominators/coop-room.js',
+        'apps/space-dominators/art.js', 'apps/space-dominators/inspecting-dock.js', 'apps/space-dominators/capital-art.js', 'apps/space-dominators/background.js', 'apps/space-dominators/game.js', 'apps/space-dominators/coop-room.js',
         'apps/space-dominators/coop-lobby.js', 'apps/space-dominators/boss-campaign.js',
         'apps/space-dominators/boss-encounters.js', 'apps/space-dominators/asteroid-belt.js', 'apps/space-dominators/boss-six-preview.js',
         'apps/space-dominators/dreadnought-config.js', 'apps/space-dominators/dreadnought.js', 'apps/space-dominators/dreadnought-formations.js', 'apps/space-dominators/dreadnought-ending.js',
@@ -77,7 +77,8 @@ def build():
                 for event in {event['file']: event for event in dread_sfx['events'].values()}.values())
     core.extend('./apps/space-dominators/assets/' + name for name in
                 ('dock-nine-radio.png', 'fleet-lab-dreadnought.png', 'fleet-lab-venator.png', 'fleet-lab-acclamator.png', 'fleet-lab-imperial.png', 'audio/hyperspaceexit.mp3', 'celestial-survey.png', 'planet-encounters.png', 'boss-fx/enemy-flight-effects.png',
-                 'player-hulls.png', 'player-exhaust.png', 'zodiac-1.png', 'zodiac-2.png', 'zodiac-3.png'))
+                 'boss-fx/beacon-hulls.png', 'boss-fx/rail-hulls.png', 'boss-fx/hound-hulls.png', 'boss-fx/miner-hulls.png', 'inspecting-dock.png',
+                 'player-hulls.png', 'player-exhaust.png', 'enemy-flight-atlas.png', 'zodiac-1.png', 'zodiac-2.png', 'zodiac-3.png'))
     core.extend('./apps/' + module + '/assets/action-buttons.png'
                 for module in ('arcade', 'sky-dominators', 'quick-drawn', 'poker'))
     excluded = {'tests', 'tools', '.git', 'node_modules', 'firestore', '__pycache__'}

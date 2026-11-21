@@ -27,7 +27,7 @@
     ctx.restore();
     return true;
   }
-  const hullFiles = {1:'beacon-hulls.png',2:'rail-hulls.png',3:'hound-hulls.png'};
+  const hullFiles = {1:'beacon-hulls.png',2:'rail-hulls.png',3:'hound-hulls.png',4:'miner-hulls.png'};
   const hullSheets = new Map();
   function loadHull(index) {
     if (hullSheets.has(index)) return hullSheets.get(index);
@@ -48,7 +48,8 @@
       if (!image.complete) return true;
       if (!cell || image.naturalWidth !== cell * 2) return paint(ctx,boss.index,0,0,x,y,size,0,false);
       const damaged = boss.hp <= boss.max * 0.5;
-      const extent = boss.index===3 && size===172 ? window.SpaceEncounterEngine.houndHullExtent : Math.round(size * 1.1);
+      const extent = boss.index===3 && size===172 ? window.SpaceEncounterEngine.houndHullExtent :
+        boss.index===4 ? size : Math.round(size * 1.1);
       ctx.save();
       ctx.imageSmoothingEnabled = false;
       ctx.drawImage(image, damaged ? cell : 0, 0, cell, cell,

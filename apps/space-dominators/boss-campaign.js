@@ -7,7 +7,7 @@
   const specials = [
     ['Echo Fan','Watch the staggered bolts, then slip through a reopened lane.'],
     ['Afterimage Rail','Land five hits during the charge to freeze the fan, then leave its firing sector.'],
-    ['Brood Splitters','Intercept each mother missile before it releases three smaller missiles.'],
+    ['Brood Splitters','Intercept each mother missile before it releases six smaller missiles.'],
     ['Bridge Mine','Break the white-ringed mine to cancel its echo blast.'],
     ['Shift Change','Follow the glowing vent. The extra volley aims at your previous position.'],
     ['Dreadnought assault','Destroy the marked deck weapons and fighter formations.'],

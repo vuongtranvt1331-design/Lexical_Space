@@ -1,7 +1,7 @@
 {
   "release": {
     "name": "SpaceSuite",
-    "lexicalVersion": "44.50.0",
+    "lexicalVersion": "44.56.0",
     "date": "2026-11-21",
     "root": "LexicalSpace-project",
     "modules": [
@@ -15,7 +15,7 @@
       "vocabulary-test",
       "quick-ears"
     ],
-    "cacheVersion": "b629f0e5d09170"
+    "cacheVersion": "c5acbce0c3a47a"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -1217,7 +1217,7 @@
     {
       "path": "apps/arcade/index.html",
       "bytes": 12737,
-      "sha256": "efc21df7993978312e7c1ecb9e54711fc5314f490362f1e437d801eab550c817"
+      "sha256": "abfa3b95601bf65fe8d11ceae3706ccd1afcb49eb16b1dde946d6515bf84a637"
     },
     {
       "path": "apps/arcade/js/action-frames.js",
@@ -1247,7 +1247,7 @@
     {
       "path": "apps/grammar/index.html",
       "bytes": 5921,
-      "sha256": "b6087e04919ad30e96203f4eb010ca888b5e2f58bba3b7db907de2378e839ac9"
+      "sha256": "3963e59f2bd48688c1409d60a858dd30fa3d4b9259699fc4b7405a47bb710d72"
     },
     {
       "path": "apps/grammar/js/app.js",
@@ -1632,7 +1632,7 @@
     {
       "path": "apps/poker/index.html",
       "bytes": 14584,
-      "sha256": "0075c34e352a3de06e54299265ec36ddc749def5a5c40c1de62571a58fe3dce5"
+      "sha256": "fa2de6a0dd2d25b037576fc88a00181f12742f2c1bc5bc251d8060c2ebc88ebb"
     },
     {
       "path": "apps/poker/js/poker-1.js",
@@ -1862,7 +1862,7 @@
     {
       "path": "apps/quick-drawn/index.html",
       "bytes": 21712,
-      "sha256": "afa813f6f62fe81109867802c64b9cfe6a2eda6135da5a831146930f65a872a3"
+      "sha256": "63899432522e46a179dfb7fbc84f2ef5307d3e09bb103dee19d01e97bc338775"
     },
     {
       "path": "apps/quick-drawn/js/audio.js",
@@ -1947,7 +1947,7 @@
     {
       "path": "apps/quick-ears/index.html",
       "bytes": 4132,
-      "sha256": "42e3aa09db9530b4e6ed7a56ea112dd6e44d851225618e861088cce804a340c5"
+      "sha256": "303ac54d48ad0d200060151fa889bb4ba796f82fe4921c9a17abf177ebff7223"
     },
     {
       "path": "apps/quick-ears/lessons.json",
@@ -7327,7 +7327,7 @@
     {
       "path": "apps/sky-dominators/index.html",
       "bytes": 33364,
-      "sha256": "f509517769aa5415125b52b409cbf7fa698366b179bb7279fc72d260fd6f5e91"
+      "sha256": "d03f87f5cc21d8279e72d2d8ec063dda28567e2a3c3fd158f2ce9134e0d6407d"
     },
     {
       "path": "apps/sky-dominators/js/app.js",
@@ -7630,9 +7630,34 @@
       "sha256": "70c4f93a0ec9974d9251d860fa9ac553292142cb300ef3a53eb61f8e306cb472"
     },
     {
+      "path": "apps/space-dominators/art.js",
+      "bytes": 5019,
+      "sha256": "e95cbb36e30f5393c9499ac87ede0b190c540ed35c3db7ca7228b502c86f97cf"
+    },
+    {
       "path": "apps/space-dominators/assets/audio/hyperspaceexit.mp3",
       "bytes": 103807,
       "sha256": "e2046a2d8989334039208f6137767269232f80fb7e9f76b58a6dbc1c255beaac"
+    },
+    {
+      "path": "apps/space-dominators/assets/boss-fx/beacon-hulls.png",
+      "bytes": 6913,
+      "sha256": "d973e38e803a213b6f66cbc004ff0e4c6dd5dee8603cd4a9e02ad91799d71aca"
+    },
+    {
+      "path": "apps/space-dominators/assets/boss-fx/hound-hulls.png",
+      "bytes": 9217,
+      "sha256": "5e2176b81bd236bed85198148f8f79363a2bca4cf04bf3010d20bdb19a9cd9f7"
+    },
+    {
+      "path": "apps/space-dominators/assets/boss-fx/miner-hulls.png",
+      "bytes": 7888,
+      "sha256": "0abdf265471fb67baf5a9770dff5638f0c88c7bb7f08cae308e18dc249bf5ab2"
+    },
+    {
+      "path": "apps/space-dominators/assets/boss-fx/rail-hulls.png",
+      "bytes": 5105,
+      "sha256": "9b318af7281cfb673b08f52f7c33ff6fad0291b244fd3f0010734186629e195e"
     },
     {
       "path": "apps/space-dominators/assets/boss-six-ending/hull-bitten.png",
@@ -7675,6 +7700,11 @@
       "sha256": "4cc04c0bd3f3623bcbed4390cc5dd52bf898d0700fbf0cc8b8805c1a18887a0f"
     },
     {
+      "path": "apps/space-dominators/assets/enemy-flight-atlas.png",
+      "bytes": 3181,
+      "sha256": "134b33610087ae7ad3297a12f729d20c8b9d5cd4eda2caadb4ff22906962365d"
+    },
+    {
       "path": "apps/space-dominators/assets/fleet-lab-acclamator.png",
       "bytes": 21260,
       "sha256": "7fd0ea2eca5a8093c5552385b14e24fbc42044691cb33c07996de75b1891d097"
@@ -7695,19 +7725,39 @@
       "sha256": "1a43a5da224b777a43b0ea9269d8555687802273e7b869891a1c0a8daa31ad4b"
     },
     {
+      "path": "apps/space-dominators/assets/inspecting-dock.png",
+      "bytes": 6719,
+      "sha256": "e87c5090d47fb7fa2ab56ddf02e077135b68fcbf8f42b34122ded1c028348cda"
+    },
+    {
+      "path": "apps/space-dominators/assets/player-hulls.png",
+      "bytes": 5770,
+      "sha256": "b4e5b51828faa9297a33891f1d6bbc8526cfa3e10860fa7c7264dead6a44fb30"
+    },
+    {
       "path": "apps/space-dominators/assets/sfx/manifest.json",
       "bytes": 7114,
       "sha256": "03d179456a34e2db94d285bb31ae7dc1d9e75a7158fe38d5db902381736d47d3"
     },
     {
       "path": "apps/space-dominators/assets/sprites/enemies/enemy_fighter.png",
-      "bytes": 23553,
-      "sha256": "3c86b627770ae6f57d040855e6ec3982e149609367b8febbbfcfc4f63d1b18a9"
+      "bytes": 1878,
+      "sha256": "847e694d84686a8cec88aca66c56309a1f28b6a2c2eca7037bf6c1b44fcb5e78"
+    },
+    {
+      "path": "apps/space-dominators/assets/sprites/enemies/enemy_laser_fighter.png",
+      "bytes": 1537,
+      "sha256": "e51e8646239070daa4cb1ab27f5712b8987fc8ef70d47521e2588f7d4dca3625"
+    },
+    {
+      "path": "apps/space-dominators/assets/sprites/enemies/enemy_missile_fighter.png",
+      "bytes": 1718,
+      "sha256": "d51696d3837c7f29d1984389a20259a5cb67036dbc05e6e4ec2f01a05ba5289d"
     },
     {
       "path": "apps/space-dominators/assets/sprites/manifest.json",
-      "bytes": 10068,
-      "sha256": "74e989261cae0fd7566c05c9388516ddf4daf58a3ce25b353907ea8b0a52fb56"
+      "bytes": 10746,
+      "sha256": "2e5c0c5ee473342eb40397de25816a58dce202602f8f95f1a9470eb9b1651afc"
     },
     {
       "path": "apps/space-dominators/assets/sprites/projectiles/beam_laser_charge.png",
@@ -7816,23 +7866,28 @@
     },
     {
       "path": "apps/space-dominators/boss-campaign.js",
-      "bytes": 32013,
-      "sha256": "7b9cecb0c5372ecb0cdba01eb697686f6645645493af5fe78195c48b48374b45"
+      "bytes": 32011,
+      "sha256": "7e49b568e3b6aaf1c1a48e629972a9f43d53d1fe5ebce444d7e48e7f8eae76db"
     },
     {
       "path": "apps/space-dominators/boss-encounters.js",
-      "bytes": 92228,
-      "sha256": "f058aea627c69e7ddc7ae03042c857ea51bfb5ec9bae115a7e4b5af0fbd138d3"
+      "bytes": 92455,
+      "sha256": "0c7304f36294846c87addd84ce76f6b87fcbf05704620feb85dbdcb7a82e993e"
+    },
+    {
+      "path": "apps/space-dominators/boss-fx.js",
+      "bytes": 9772,
+      "sha256": "be6d181345099fca11b7c8fa5540a1c774bc575c7e444de6fc387306f49a8321"
     },
     {
       "path": "apps/space-dominators/boss-practice.html",
-      "bytes": 4851,
-      "sha256": "4832535a6a929508c5c95e730fefab09260c09b9568a72e8bdddae061fae0453"
+      "bytes": 4958,
+      "sha256": "c55cec62af63824c414d562a781dc7a19d64817b4d9a244d911829ee444cd37b"
     },
     {
       "path": "apps/space-dominators/boss-practice.js",
-      "bytes": 11658,
-      "sha256": "90748213517fc2f7456b6fc43eeff348e19a78a08e9f90f72cc9c407c08343a3"
+      "bytes": 11429,
+      "sha256": "4a2added644e8b1f0c60b2c9c927a6803832cc2820dc88504cff5b42425e7a55"
     },
     {
       "path": "apps/space-dominators/boss-six-preview.js",
@@ -7841,13 +7896,18 @@
     },
     {
       "path": "apps/space-dominators/campaign-entry.js",
-      "bytes": 5971,
-      "sha256": "e872ca877cdd67a05b5b6304e7d6c802a2c4d651c6de8c5a6e97a367d3632321"
+      "bytes": 5860,
+      "sha256": "0215c8b731349f892f558a5ca51e9117247d7eaf3a3bf174c80ac90504e86d18"
+    },
+    {
+      "path": "apps/space-dominators/capital-art.js",
+      "bytes": 1348,
+      "sha256": "cd8dcb217f67a450a869532a136f5d1845760f05b13d2e0776eb7b1121798fd9"
     },
     {
       "path": "apps/space-dominators/coop-room.js",
-      "bytes": 15163,
-      "sha256": "4d6f9f98064822efd8d7b4c6fa71d13cc8649e34837ffb8c5395b8b36706885d"
+      "bytes": 15164,
+      "sha256": "4c13cb4df8b77145237e45c9d69da471acbb2af45e0b4639d9ea5cf95640ac30"
     },
     {
       "path": "apps/space-dominators/dock-nine-story.js",
@@ -7866,13 +7926,13 @@
     },
     {
       "path": "apps/space-dominators/dreadnought-formations.js",
-      "bytes": 5801,
-      "sha256": "f0fff698d970c86bbd61d282bff711672fb3c023dc845ac5896551fbc9880239"
+      "bytes": 5910,
+      "sha256": "71526580d5757de5f0f105ffc66dd4f2b2d9327254b64293c08f11b9c7d5994d"
     },
     {
       "path": "apps/space-dominators/dreadnought.js",
-      "bytes": 15316,
-      "sha256": "3248af94730c42b9395d229533493fab465320d05e03186e5b43fce335371eb8"
+      "bytes": 16731,
+      "sha256": "37fee20826463bcf8f7902631eb3fb8a0984fd17dd8f57461eead073e9fc9366"
     },
     {
       "path": "apps/space-dominators/fleet-study.js",
@@ -7881,13 +7941,18 @@
     },
     {
       "path": "apps/space-dominators/game.js",
-      "bytes": 102090,
-      "sha256": "e8e1ad018bd75f24bd6ec463a348812bc6292af9842cbb9d6d46f3351768d544"
+      "bytes": 104986,
+      "sha256": "e0e8262a95d0a57c120df754fc9c0a112f83ce37870433eafcdf862e8c43f164"
     },
     {
       "path": "apps/space-dominators/index.html",
-      "bytes": 12480,
-      "sha256": "b19021397e6abff5a0d979e6ca78f3695d39ffb90a9d1b3c35f018ddd28cdfa2"
+      "bytes": 12568,
+      "sha256": "4711d3ca0bec20ed0567b7decc63447ed1101d4deddc8b3721a5ba29750292fc"
+    },
+    {
+      "path": "apps/space-dominators/inspecting-dock.js",
+      "bytes": 3240,
+      "sha256": "989c475cfd35b9a727d3c9cbc3f26752ed05000100032750be84877cf3f56b40"
     },
     {
       "path": "apps/space-dominators/sfx-config.js",
@@ -7908,6 +7973,11 @@
       "path": "apps/space-dominators/station.js",
       "bytes": 22666,
       "sha256": "fd976857cce7666dc1994b852be3124b1129d4c3cbfdb26689ec30c727ca38a1"
+    },
+    {
+      "path": "apps/vocabulary-test/index.html",
+      "bytes": 4316,
+      "sha256": "d650e7a63362cfefd9051dcef98e2edf6aff3b087605d210b0dd8cc5b71eb69b"
     },
     {
       "path": "assets/icons/icon-192.png",
@@ -7986,8 +8056,8 @@
     },
     {
       "path": "docs/architecture-delta-44.43.0.md",
-      "bytes": 6943,
-      "sha256": "86687657762d80dc17072c495c1756151c3e9911474749d2c3e2bb54c0540259"
+      "bytes": 11106,
+      "sha256": "c736c90c032a1f1d12a56eff44d09b517dd0be5291e6052d7f6fd96445118fba"
     },
     {
       "path": "firestore/README.md",
@@ -8007,7 +8077,7 @@
     {
       "path": "index.html",
       "bytes": 57880,
-      "sha256": "846e5e8447b5748a31270dd5404eb44f19a4d99d450e2e433c109fc0c41fd317"
+      "sha256": "08e4ae2f3a732c0f65ff5736e3312192c4d10fa3f1719c2bdaed73b8442affc8"
     },
     {
       "path": "js/core/ai-vocabulary.js",
@@ -8167,17 +8237,17 @@
     {
       "path": "offline.html",
       "bytes": 678,
-      "sha256": "7182b9442bb0fbfb9dec707b537f05ccb748faadbc940149f9fbb2eefdcb5593"
+      "sha256": "597a6eb940b0ba3fe19449770c5cd1e6634010485a6caa3fb7dbdfb0373c9e8d"
     },
     {
       "path": "package-lock.json",
       "bytes": 13732,
-      "sha256": "da6464b46548c722fa733bd5c89068a044e67a49288bbddb4473a3dfe0c3b4f3"
+      "sha256": "fbe8418decdeef2cbb4549d286b184227603e239cd12cc713a96ed0dd0fbef5d"
     },
     {
       "path": "package.json",
       "bytes": 248,
-      "sha256": "e397b0747d89942612803a8f3bc5d3c891078bc979653c064c623bca8d9c1d2d"
+      "sha256": "54dbcad2cadefdb13d61a562b4c6667fd127aaa3eb1713807f038e59e60e781c"
     },
     {
       "path": "run-local.bat",
@@ -8196,8 +8266,8 @@
     },
     {
       "path": "service-worker.js",
-      "bytes": 19243,
-      "sha256": "9c6d9db77de155529a9e77bf4f89dedef59ee1488e08f6aeaf97d830b42eb58a"
+      "bytes": 19782,
+      "sha256": "218ba0ce6e0b3f5b7d91d074339ca78dae5eba8689bce8be265a72d903793570"
     },
     {
       "path": "start-localhost.bat",
@@ -8262,12 +8332,12 @@
     {
       "path": "suite/release.json",
       "bytes": 350,
-      "sha256": "43c037091d953c03c49711f03e80f644dcded9e36a2873044b99d6a4f5ce4833"
+      "sha256": "286c0f58d830f6084b66f1de585e49cb25a600bcb1c7475aae047a91e6291698"
     },
     {
       "path": "teacher/index.html",
       "bytes": 24406,
-      "sha256": "cd6103de0fbd60f04058e61d9092fe7c8a73d7769dba4c099608dba2942dd516"
+      "sha256": "4e9bed7739c93782c65cd4c94f738829416d7ba3eb4f8106d57f0ef5303f1abe"
     },
     {
       "path": "tests/ai-entry.test.js",
@@ -8291,8 +8361,8 @@
     },
     {
       "path": "tests/coop-room-solo.test.js",
-      "bytes": 10394,
-      "sha256": "0031751fea5dcb7f608b5f09709a10616653a81f0bd3f469de679c49718bbfc5"
+      "bytes": 10402,
+      "sha256": "154a98d389701411deee22bb0ba096a04262c541bc3dbe371e400d521d922652"
     },
     {
       "path": "tests/core.test.js",
@@ -8376,8 +8446,8 @@
     },
     {
       "path": "tests/space-dominators-flight.test.js",
-      "bytes": 41214,
-      "sha256": "03dfa93970273633f28475dd0436aa313a9e1891f9db1b6b418cc57b0d97ea81"
+      "bytes": 52460,
+      "sha256": "a51fa3b44693a75cca199e995855a65ab3b0457a4cf7c6b23dde88c772371394"
     },
     {
       "path": "tests/space-dominators-sound.test.js",
@@ -8411,8 +8481,8 @@
     },
     {
       "path": "tools/build-suite.py",
-      "bytes": 9221,
-      "sha256": "00456d1688d88ae3e108dc01e120a76e28084752872fa5cc68cb514da6e3b386"
+      "bytes": 9512,
+      "sha256": "53c4ab506ee961e5479f569a0f0c4079f3d2adffa35decf4a77a0221cb643e38"
     },
     {
       "path": "tools/enable-deck-ttl.cjs",
@@ -10723,6 +10793,822 @@
         "path": "tests/space-dominators-flight.test.js",
         "bytes": 41214,
         "sha256": "03dfa93970273633f28475dd0436aa313a9e1891f9db1b6b418cc57b0d97ea81"
+      }
+    ]
+  },
+  "playerHulls44_51": {
+    "logicalCellPixels": 64,
+    "atlasBytes": 5770,
+    "originalBytes": 267818,
+    "verification": {
+      "suitePassed": 213,
+      "suiteFailed": 0,
+      "browser": "All four hulls render in the hangar and at combat size in Boss Lab, including four exhaust frames. Eight nozzle centers match the dark openings."
+    },
+    "files": [
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "b1ba8036b1e6fd1ac78cb89f81a4eb542a76f17754c9001cd5aed6d947ca2a53"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "65e6814cc3b6acb91b188c7ccca7aab4533cbe60c2e4cf9c48f25b94e64eba6e"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "64c17e5d74c61c4ca4aa640824f1adcc32d7b332e31a6b93040cb4de0ccda576"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "06b36afe42797df4426a62a30583cb11af8c49765269bd11a166bad2521af58b"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "4dc1a3099e8493c3b26ff0af2a56ca115e8112dd17ba0f0e6a6a7c8f0cf507e6"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "44e5dacbe7cc858b00e01f8c3ed7ac887c04c0dde23d031e59f9bbd50de530de"
+      },
+      {
+        "path": "apps/space-dominators/art.js",
+        "bytes": 5038,
+        "sha256": "196ab29cf7bae3d56eace33ff273db832d00a5f6cc45449cc898293f2cc56745"
+      },
+      {
+        "path": "apps/space-dominators/assets/player-hulls.png",
+        "bytes": 5770,
+        "sha256": "b4e5b51828faa9297a33891f1d6bbc8526cfa3e10860fa7c7264dead6a44fb30"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 4872,
+        "sha256": "ca92c202d88c4b14aa2f175def2240007a30b191dfd29bb66c106dd898ee0830"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 12482,
+        "sha256": "afe4bcc520250cfd77f1c97ec19697f97696320fbbfb7b78fef8d5000b89fe55"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "6bd5c070f6834cc462fbb261e156deff7ed6be8138e8646315a3cd94fc2675a9"
+      },
+      {
+        "path": "docs/architecture-delta-44.43.0.md",
+        "bytes": 7390,
+        "sha256": "bb37f8e1e3cb52fd2ae7d8c75c5b66ffa65939c55c1cce1f1940456b62cabd03"
+      },
+      {
+        "path": "index.html",
+        "bytes": 57880,
+        "sha256": "242b2aebe134cf0b1d2339e8ef6dd13c5f54b8a9d27ceae5c76e8192ef3b7409"
+      },
+      {
+        "path": "offline.html",
+        "bytes": 678,
+        "sha256": "3d9b08665ebc10d05a321116296e73928f7fc323ad4adfaccd0e60033331c1c5"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "bda798a7544b097fa91abdf7724d5cc4fe423579ea1d5e6062cdac02d7a87813"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "21e09bdd28644a96a2145845faec2b0b6399dbfe0c0d777da19f897b10d12708"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19243,
+        "sha256": "e4a0516296ade24f2277fbd93a28a87d0b12c09a6be31f0e61bb9566742dbcda"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "bdb12583d5b1d9f129fc0bde4ab3c32b4bce7e3e1de49978551700c2b0912e93"
+      },
+      {
+        "path": "teacher/index.html",
+        "bytes": 24406,
+        "sha256": "2f3d42e1687ebdf401d4741529b31d8315398966e572e2fbd323497a10329de7"
+      },
+      {
+        "path": "tools/build-suite.py",
+        "bytes": 9253,
+        "sha256": "98bc1c1374df9c86acdb9205ddd69e0ee0d6851daaa13fcce94dd59f4e2c15ee"
+      }
+    ]
+  },
+  "enemyFighters44_52": {
+    "vocabularyHulls": 4,
+    "framesPerEnemyHull": 1,
+    "deckLoadouts": [
+      "cannon",
+      "missile",
+      "laser"
+    ],
+    "fighterLaserWarningSeconds": 0.75,
+    "coopProtocol": 7,
+    "verification": {
+      "suitePassed": 218,
+      "suiteFailed": 0,
+      "browser": "Chrome loaded four player hulls, four distinct fixed vocabulary hulls, three deck hulls and both beam states, then launched the boss encounter."
+    },
+    "files": [
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "567e8c0e3ea583ba50950f36de7628d341174328ddb3b4171b64050ea3c87b1f"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "7d41ee02719ee05210fa8d1c6b47aa79ddb3c3d7bad6fac15f1512e542868fa6"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "586c1c1d85ec6077f6fe9a7507ad26b76eada375a053f4288b7904fe57e6e44b"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "22639ade5458b7d2e0be1b6f798c7c046fc261a4dd444879454caf8b3cce9f11"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "5258203bdfdd6f593100a9b5ed16cf5911817a983ab3257b70c763c1629a6e81"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "41edb198340ff7231a645c4e43c164349e2e32fb0758ab6b3052b3f1ab36850a"
+      },
+      {
+        "path": "apps/space-dominators/art.js",
+        "bytes": 5019,
+        "sha256": "e95cbb36e30f5393c9499ac87ede0b190c540ed35c3db7ca7228b502c86f97cf"
+      },
+      {
+        "path": "apps/space-dominators/assets/enemy-flight-atlas.png",
+        "bytes": 3181,
+        "sha256": "134b33610087ae7ad3297a12f729d20c8b9d5cd4eda2caadb4ff22906962365d"
+      },
+      {
+        "path": "apps/space-dominators/assets/sprites/enemies/enemy_fighter.png",
+        "bytes": 1878,
+        "sha256": "847e694d84686a8cec88aca66c56309a1f28b6a2c2eca7037bf6c1b44fcb5e78"
+      },
+      {
+        "path": "apps/space-dominators/assets/sprites/enemies/enemy_laser_fighter.png",
+        "bytes": 1537,
+        "sha256": "e51e8646239070daa4cb1ab27f5712b8987fc8ef70d47521e2588f7d4dca3625"
+      },
+      {
+        "path": "apps/space-dominators/assets/sprites/enemies/enemy_missile_fighter.png",
+        "bytes": 1718,
+        "sha256": "d51696d3837c7f29d1984389a20259a5cb67036dbc05e6e4ec2f01a05ba5289d"
+      },
+      {
+        "path": "apps/space-dominators/assets/sprites/manifest.json",
+        "bytes": 10746,
+        "sha256": "2e5c0c5ee473342eb40397de25816a58dce202602f8f95f1a9470eb9b1651afc"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 4872,
+        "sha256": "7b72a336589176561d7d67f06b149f1ed366dca9e315ab6d2b8e5e2236bb3ca3"
+      },
+      {
+        "path": "apps/space-dominators/campaign-entry.js",
+        "bytes": 5860,
+        "sha256": "0215c8b731349f892f558a5ca51e9117247d7eaf3a3bf174c80ac90504e86d18"
+      },
+      {
+        "path": "apps/space-dominators/coop-room.js",
+        "bytes": 15163,
+        "sha256": "bf76f291385b3dcbe94d05004670e1346a10bbb92769511039f34b06753a25cb"
+      },
+      {
+        "path": "apps/space-dominators/dreadnought-formations.js",
+        "bytes": 5910,
+        "sha256": "71526580d5757de5f0f105ffc66dd4f2b2d9327254b64293c08f11b9c7d5994d"
+      },
+      {
+        "path": "apps/space-dominators/dreadnought.js",
+        "bytes": 16731,
+        "sha256": "37fee20826463bcf8f7902631eb3fb8a0984fd17dd8f57461eead073e9fc9366"
+      },
+      {
+        "path": "apps/space-dominators/game.js",
+        "bytes": 104924,
+        "sha256": "11d45c9d4a7fcc32a1cceda7fd1ab24129a226f367fac991026ac4db7ea250c0"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 12482,
+        "sha256": "79dd75715d1c233fc03436b93561e75d3cfa3b889e545ca340e7bc049d06e63d"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "205040e75c9d240f97737b4455be84295ae2fbceea86e8d4e0c96c99b1bbf266"
+      },
+      {
+        "path": "docs/architecture-delta-44.43.0.md",
+        "bytes": 8429,
+        "sha256": "6cbf0095738305c8acf0c6e517ad6852a67e91dfbf3810188830b2695d26308d"
+      },
+      {
+        "path": "index.html",
+        "bytes": 57880,
+        "sha256": "00eb002a4289d32abf3b35376654d35301cf0398dcc16308fc9257a1217e6e85"
+      },
+      {
+        "path": "offline.html",
+        "bytes": 678,
+        "sha256": "4bb8e38ca7000b03b76e4cd5df794dc71751f63f779e06145303257f7be80a18"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "c1d48ca3c35d56ff2eb467ab4e97ea7b495556fb68c8cd2e4ee4785e6646e2f4"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "44c0effe39207384636041d851a89fd2f85743e23e8f2dc54e90f11c3eba7da2"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19450,
+        "sha256": "3d445b8f7c4b5ab1efd3800f92cccca290c225acd5ea08ba60bed283c8ff8575"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "8ef93f24684cc81aac8eea8cdad2d75e5878fb995018e7cc3e7be57044cb6cad"
+      },
+      {
+        "path": "teacher/index.html",
+        "bytes": 24406,
+        "sha256": "c5c25317a89adfb8160e4d00cd006f28aa2123d4a52c6cbf6c8d22b6980f717e"
+      },
+      {
+        "path": "tests/coop-room-solo.test.js",
+        "bytes": 10394,
+        "sha256": "a2f898463d98057aff90c8863d2e6d2e7975e16bd1f2be0280fab2735095a7fc"
+      },
+      {
+        "path": "tests/space-dominators-flight.test.js",
+        "bytes": 46127,
+        "sha256": "c2754678dd46bd9128bad94a21cecaaaee11d850f7701082b3392dcf4779a4ec"
+      },
+      {
+        "path": "tools/build-suite.py",
+        "bytes": 9279,
+        "sha256": "f295de422168b7cd957acfd1529f32c3404cdb3ca998f624a7fe2d4332678ee6"
+      }
+    ]
+  },
+  "bossHulls44_53": {
+    "bosses": [
+      "beacon",
+      "rail",
+      "hound",
+      "miner"
+    ],
+    "cell": 128,
+    "states": [
+      "intact",
+      "damaged at half hull"
+    ],
+    "verification": {
+      "suitePassed": 218,
+      "suiteFailed": 0,
+      "browser": "All eight hull cells appeared correctly in the Boss Lab selector and the combat renderer on localhost and in the standalone file build.",
+      "launchPorts": "All ten carrier launch origins lie on hatch pixels in both states."
+    },
+    "files": [
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "3fd70c5193708e51fe595ce7a65991de237e36166e2ae9a7b556b84a6a299023"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "9f1f24bceaed99651947e4f2e15e65bba053c28fbdc07561d9e606e862d08324"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "0a2cb13e4e83246c18c7730e68be198e0086bad613b6339df52026c91e037a94"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "ffa2e87fa23e1f98d0dd34118f0417fed262807b68ea69a833d7e6a758a7a68e"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "7536853aa0ab79d2b2b57a05b526b9a1febfc6a5a0a9363c9289c50bf0f5a85a"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "d4d1bc3195b1e8b009d5b890bce66a0c454d0a98d74ebfde9ff78d7102987896"
+      },
+      {
+        "path": "apps/space-dominators/assets/boss-fx/beacon-hulls.png",
+        "bytes": 6913,
+        "sha256": "d973e38e803a213b6f66cbc004ff0e4c6dd5dee8603cd4a9e02ad91799d71aca"
+      },
+      {
+        "path": "apps/space-dominators/assets/boss-fx/hound-hulls.png",
+        "bytes": 9217,
+        "sha256": "5e2176b81bd236bed85198148f8f79363a2bca4cf04bf3010d20bdb19a9cd9f7"
+      },
+      {
+        "path": "apps/space-dominators/assets/boss-fx/miner-hulls.png",
+        "bytes": 7888,
+        "sha256": "0abdf265471fb67baf5a9770dff5638f0c88c7bb7f08cae308e18dc249bf5ab2"
+      },
+      {
+        "path": "apps/space-dominators/assets/boss-fx/rail-hulls.png",
+        "bytes": 5105,
+        "sha256": "9b318af7281cfb673b08f52f7c33ff6fad0291b244fd3f0010734186629e195e"
+      },
+      {
+        "path": "apps/space-dominators/boss-fx.js",
+        "bytes": 9772,
+        "sha256": "be6d181345099fca11b7c8fa5540a1c774bc575c7e444de6fc387306f49a8321"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 4872,
+        "sha256": "5a5a68b05b1078b78acf55b2783e5c7ba1e4dbdecafe10d6ee61ec6a3565d8ea"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.js",
+        "bytes": 11429,
+        "sha256": "4a2added644e8b1f0c60b2c9c927a6803832cc2820dc88504cff5b42425e7a55"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 12482,
+        "sha256": "7e7a5e5dcf93662c4ae3804fc4a557040e715b97430a09ced2dcf67a7ce25956"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "b9392d43328760e24bb67dfb3f4b7e224c408092d708a1a6484688a3c0493235"
+      },
+      {
+        "path": "docs/architecture-delta-44.43.0.md",
+        "bytes": 8998,
+        "sha256": "defcc1fdbfe78757a6213eda7019ca2f5cd067d93c6241f2a3f098d5515e8fbf"
+      },
+      {
+        "path": "index.html",
+        "bytes": 57880,
+        "sha256": "2f51bbefdd09a3ec547dff6449a12956f238353cd09523a6a5ed03c26a08c36e"
+      },
+      {
+        "path": "offline.html",
+        "bytes": 678,
+        "sha256": "b5bee92cdbcbc5bdc40621c39b31d6ae8ef25bd4425f160385a7e61e9cfca499"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "5e6759625e26c8fe31e35c5a4cb5dd24476c0619959bace9c2ba6468492edc69"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "cb9519615df304f1e392e7c649c1efac59e492bb9b102c052bcf66fe159c5cfc"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19682,
+        "sha256": "7133db525a8b2017f107c65d7436f764d95f2c280f3b35c189fefb2fb9704609"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "cddb0404552a18fa61737be96e59328ec5a07530e19f7847d8255030c9683628"
+      },
+      {
+        "path": "teacher/index.html",
+        "bytes": 24406,
+        "sha256": "13e756f99d87844b3cfa6d3c1a4581d2c592002070f577fc31a1d6eb880cc25e"
+      },
+      {
+        "path": "tools/build-suite.py",
+        "bytes": 9405,
+        "sha256": "44cd8d241853dbbf9cf4a05c5d0f688dad96f35fd91e7a1874b2639c43b67300"
+      }
+    ]
+  },
+  "inspectingDock44_54": {
+    "rowInSector": 6,
+    "sideHealthMultiplier": 1.25,
+    "centerHealthMultiplier": 1.5,
+    "rocketSalvoSolo": 6,
+    "rocketSalvoCoop": 12,
+    "gunShots": 8,
+    "gunBurstSeconds": 1,
+    "gunRecoverySeconds": 2,
+    "missileSalvoPeriod": 5.5,
+    "verification": {
+      "suitePassed": 220,
+      "suiteFailed": 0,
+      "browser": "Simulated sixth fleet clear on the normal campaign path in Chrome, both HTTP and file. The named HUD and the new station hull render. Host/guest simulation restores a partially fired salvo and a destroyed launcher."
+    },
+    "files": [
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "7efd119d6c34c70be47dd311262d68c40be08318164461bab49d6a78ad4d95eb"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "cea87fefe90e7f810fc9c4b9d61cc0dde08f564a8d2f71b0e8c47780d5c295b7"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "fa502b14e28186206ab8aaf4059d438ed4ead47b7e5021ff61767e249ec8a67a"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "62a545be4ad4bf134b3b48f2a210ec83691605bc4a8ce1c5a516e002b3ceca48"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "38bf3efc69d3171addde41577cd15d8ebe97980533a76fcfd519a14a28e5e973"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "415338670a0a30964007ccda5d1659a8a280a744eacde7cf63e53ead5fa772ef"
+      },
+      {
+        "path": "apps/space-dominators/assets/inspecting-dock.png",
+        "bytes": 6719,
+        "sha256": "e87c5090d47fb7fa2ab56ddf02e077135b68fcbf8f42b34122ded1c028348cda"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 4958,
+        "sha256": "36105b4308b7f09fcb5711f2f60e1fd1e1876a9e3dd177502d1495abc0fa107c"
+      },
+      {
+        "path": "apps/space-dominators/capital-art.js",
+        "bytes": 1348,
+        "sha256": "cd8dcb217f67a450a869532a136f5d1845760f05b13d2e0776eb7b1121798fd9"
+      },
+      {
+        "path": "apps/space-dominators/coop-room.js",
+        "bytes": 15163,
+        "sha256": "ae8b59afb24f94f37cf71a17016eb1234bc309c21effa239c63a977583dac87c"
+      },
+      {
+        "path": "apps/space-dominators/game.js",
+        "bytes": 105027,
+        "sha256": "8b6c8704f618480dfff1d0b0b57ec09590a3f74d2a78609831c272bf528d02c7"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 12568,
+        "sha256": "299b876b96600ddcc8e000099e51b2e4a7e79d8215319a27848c7deae6fb9b16"
+      },
+      {
+        "path": "apps/space-dominators/inspecting-dock.js",
+        "bytes": 2930,
+        "sha256": "515f6b59324bd8b273531e667af32d2c0788d2d402d65781d015305d872dc6fc"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "6d9723159cd6681b14c84dcd9be39ac86b425809daa847658bb9566d3a4084e1"
+      },
+      {
+        "path": "docs/architecture-delta-44.43.0.md",
+        "bytes": 9995,
+        "sha256": "7b30423f4161e95be5004e99bf601c5677c9e56f46828bc4bad038a0e3db1d33"
+      },
+      {
+        "path": "index.html",
+        "bytes": 57880,
+        "sha256": "8c3e35a694f282ba232e38bb0d8d18ddceada37575539b4a3b21e07fab26528a"
+      },
+      {
+        "path": "offline.html",
+        "bytes": 678,
+        "sha256": "ad3dcea3db4a569bb1d5a50b59fde7b3989956666ad0b99c7646ce0915236414"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "b73d3d3c6a91a437138f6d8491dec1afe34e36920fad15c2f7cde708841fe004"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "21f9c7de399f06c10f493e372ee78a1622d1a17059f4b71e4d6acd86d2e7854b"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19782,
+        "sha256": "988b509631d9ce27443da589c927d8795da77fbab717b9e1267abb6a13206431"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "8e8cdf1ae034102d76491363b72f72f4b4a0fed171d9cd2763e09d01f18637f3"
+      },
+      {
+        "path": "teacher/index.html",
+        "bytes": 24406,
+        "sha256": "9d47d5d67bf647499140b245641a328ca5219615d1b4c708250dfe1570ccf16e"
+      },
+      {
+        "path": "tests/coop-room-solo.test.js",
+        "bytes": 10394,
+        "sha256": "945d2646ae0a7d777571bc3cfea35a0a81998f37c2aa97745a877aa03659faa6"
+      },
+      {
+        "path": "tests/space-dominators-flight.test.js",
+        "bytes": 48990,
+        "sha256": "665f542aa2a81cfb093df75b7351bf9c4b109f579317e75281cdfb7bec34c872"
+      },
+      {
+        "path": "tools/build-suite.py",
+        "bytes": 9512,
+        "sha256": "53c4ab506ee961e5479f569a0f0c4079f3d2adffa35decf4a77a0221cb643e38"
+      }
+    ]
+  },
+  "houndSalvos44_55": {
+    "rain": 12,
+    "splitterMothersSolo": 2,
+    "splitterMothersCoop": 4,
+    "childrenPerMother": 6,
+    "maximumHomingChildrenPerCast": 3,
+    "verification": {
+      "suitePassed": 222,
+      "suiteFailed": 0,
+      "browser": "Chrome confirmed 12 rain missiles in both modes and two/four simultaneous mothers on localhost and the standalone file build."
+    },
+    "files": [
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "a4be48072d9c120df53ccefbedc6af889671caaf9865dbd5def896825cadd16c"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "8bb405b0db9d6c7e30ad0213bfbbd82e7b713bbd810e5c98dbecbfc24e2de3a7"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "4ea4f86836907a51bf9cc68ba6cbcb8b2bd930e6fcf8841558428d4dde0bdb3d"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "9f6f9778ed0f5ddba5d6690019151692f14160c1c912527377183fa98e98031e"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "38605664ca290a57e37d719cdf2aa3aadaaf0343df63ec43b9ae4851d1c46284"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "23711a97e7901e4351c199709da794b7bb583aa63c0ae122096366e08306a1b9"
+      },
+      {
+        "path": "apps/space-dominators/boss-campaign.js",
+        "bytes": 32011,
+        "sha256": "7e49b568e3b6aaf1c1a48e629972a9f43d53d1fe5ebce444d7e48e7f8eae76db"
+      },
+      {
+        "path": "apps/space-dominators/boss-encounters.js",
+        "bytes": 92455,
+        "sha256": "0c7304f36294846c87addd84ce76f6b87fcbf05704620feb85dbdcb7a82e993e"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 4958,
+        "sha256": "29b5c7e5a02db62f784d6778a9e10ed398fd092b36a971b86b8c4219474812bd"
+      },
+      {
+        "path": "apps/space-dominators/coop-room.js",
+        "bytes": 15163,
+        "sha256": "5a5f1cac0fd6c9e826a61932baa9f7c8ce238aeaadcfd81df6bc007c0477570d"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 12568,
+        "sha256": "bf1687c0aea68846132ba529a94cc086a01889fa8eb7f193d5cbb046711c7072"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "82b344aa10ecc5dc67c6d9cff3f00475aa564454dd8f03b60baefedae92a9e08"
+      },
+      {
+        "path": "docs/architecture-delta-44.43.0.md",
+        "bytes": 10629,
+        "sha256": "74a2a5df7882019cf1042b42b4e25698d5ccd4da38c5fd2742ca5e093bbb7229"
+      },
+      {
+        "path": "index.html",
+        "bytes": 57880,
+        "sha256": "c287959ca6bceefe65a9c6e1284054a87c3b43f01f81d72457ec95e648a50a82"
+      },
+      {
+        "path": "offline.html",
+        "bytes": 678,
+        "sha256": "2a61f47abcc02bb6df1cd9d592e15ab4483de2ba4c319bddd13dc2562ed3a0f5"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "163a57db5658be98da2017dbf527f7c885311d2a7259b11fa6be306122609b88"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "c4e42b6b2697ab863fe480c2d58e6eecefd0291ac6f69bf606834ddc74ab7433"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19782,
+        "sha256": "15407461f7fc35fe4c95ec28722ccdfb7f1b3c0644d3d4330464d556f6e99309"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "b2eb5ae7511c43b512601213151ca6a5cbdec486cd2eb9cb721b133b5fae0fe5"
+      },
+      {
+        "path": "teacher/index.html",
+        "bytes": 24406,
+        "sha256": "ffa195dc6928d71e3e11ba3d237ec66eb4fd79d51a4d499018bfa2e17519921a"
+      },
+      {
+        "path": "tests/coop-room-solo.test.js",
+        "bytes": 10394,
+        "sha256": "9651ffeee7386d2e68b0840adac28c3c6405b0b3612c51649d3ffda7758a3e94"
+      },
+      {
+        "path": "tests/space-dominators-flight.test.js",
+        "bytes": 51344,
+        "sha256": "b8675c74a72012edb644f67c2e559cfc07b742e3e8f5647c053e0e8caf7f1c78"
+      }
+    ]
+  },
+  "inspectingDockHealth44_56": {
+    "multiplier": 3,
+    "levelOneMounts": [
+      27,
+      33,
+      27
+    ],
+    "healthFormat": 2,
+    "suitePassed": 223,
+    "suiteFailed": 0,
+    "files": [
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "abfa3b95601bf65fe8d11ceae3706ccd1afcb49eb16b1dde946d6515bf84a637"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "3963e59f2bd48688c1409d60a858dd30fa3d4b9259699fc4b7405a47bb710d72"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "fa2de6a0dd2d25b037576fc88a00181f12742f2c1bc5bc251d8060c2ebc88ebb"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "63899432522e46a179dfb7fbc84f2ef5307d3e09bb103dee19d01e97bc338775"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "303ac54d48ad0d200060151fa889bb4ba796f82fe4921c9a17abf177ebff7223"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "d03f87f5cc21d8279e72d2d8ec063dda28567e2a3c3fd158f2ce9134e0d6407d"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 4958,
+        "sha256": "c55cec62af63824c414d562a781dc7a19d64817b4d9a244d911829ee444cd37b"
+      },
+      {
+        "path": "apps/space-dominators/coop-room.js",
+        "bytes": 15164,
+        "sha256": "4c13cb4df8b77145237e45c9d69da471acbb2af45e0b4639d9ea5cf95640ac30"
+      },
+      {
+        "path": "apps/space-dominators/game.js",
+        "bytes": 104986,
+        "sha256": "e0e8262a95d0a57c120df754fc9c0a112f83ce37870433eafcdf862e8c43f164"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 12568,
+        "sha256": "4711d3ca0bec20ed0567b7decc63447ed1101d4deddc8b3721a5ba29750292fc"
+      },
+      {
+        "path": "apps/space-dominators/inspecting-dock.js",
+        "bytes": 3240,
+        "sha256": "989c475cfd35b9a727d3c9cbc3f26752ed05000100032750be84877cf3f56b40"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "d650e7a63362cfefd9051dcef98e2edf6aff3b087605d210b0dd8cc5b71eb69b"
+      },
+      {
+        "path": "docs/architecture-delta-44.43.0.md",
+        "bytes": 11106,
+        "sha256": "c736c90c032a1f1d12a56eff44d09b517dd0be5291e6052d7f6fd96445118fba"
+      },
+      {
+        "path": "index.html",
+        "bytes": 57880,
+        "sha256": "08e4ae2f3a732c0f65ff5736e3312192c4d10fa3f1719c2bdaed73b8442affc8"
+      },
+      {
+        "path": "offline.html",
+        "bytes": 678,
+        "sha256": "597a6eb940b0ba3fe19449770c5cd1e6634010485a6caa3fb7dbdfb0373c9e8d"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "fbe8418decdeef2cbb4549d286b184227603e239cd12cc713a96ed0dd0fbef5d"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "54dbcad2cadefdb13d61a562b4c6667fd127aaa3eb1713807f038e59e60e781c"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19782,
+        "sha256": "218ba0ce6e0b3f5b7d91d074339ca78dae5eba8689bce8be265a72d903793570"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "286c0f58d830f6084b66f1de585e49cb25a600bcb1c7475aae047a91e6291698"
+      },
+      {
+        "path": "teacher/index.html",
+        "bytes": 24406,
+        "sha256": "4e9bed7739c93782c65cd4c94f738829416d7ba3eb4f8106d57f0ef5303f1abe"
+      },
+      {
+        "path": "tests/coop-room-solo.test.js",
+        "bytes": 10402,
+        "sha256": "154a98d389701411deee22bb0ba096a04262c541bc3dbe371e400d521d922652"
+      },
+      {
+        "path": "tests/space-dominators-flight.test.js",
+        "bytes": 52460,
+        "sha256": "a51fa3b44693a75cca199e995855a65ab3b0457a4cf7c6b23dde88c772371394"
       }
     ]
   }

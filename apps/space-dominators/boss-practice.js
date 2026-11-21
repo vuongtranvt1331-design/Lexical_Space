@@ -81,7 +81,7 @@
       }
       strip.hidden=false;
     });
-    if(boss<=3) SpaceBossFX.loadHull(boss).ready.then(ready=>{
+    if(boss<=4) SpaceBossFX.loadHull(boss).ready.then(ready=>{
       if(!ready || Number(el('encounter').value)!==boss || Number(el('phase').value)!==phase) return;
       const ctx=el('bossPreview').getContext('2d');
       ctx.clearRect(0,0,152,152);
@@ -123,9 +123,9 @@
     ctx.clearRect(0,0,152,152);
     if(index===5)window.SpaceDreadnought.sprite(ctx,'enemy_fighter',76,76,110);
     else if(index===4)window.SpaceBackdrop.drawMeteor(ctx,76,76,115,0,1);
-    else if(index>=3) SpaceCampaignSprites.draw(ctx,index,76,76,150,150);
+    else if(index>=4) SpaceCampaignSprites.draw(ctx,index,76,76,150,150);
     SpaceBossFX.load(index+1).ready.then(ready=>{
-      if (!ready || index===4 || index===5 || index<3 || Number(el('encounter').value)!==index+1) return;
+      if (!ready || index===4 || index===5 || index<4 || Number(el('encounter').value)!==index+1) return;
       ctx.clearRect(0,0,152,152);
       SpaceBossFX.drawHull(ctx,{index:index+1},0,76,76,150,0);
     });

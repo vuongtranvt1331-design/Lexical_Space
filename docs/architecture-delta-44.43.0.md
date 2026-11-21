@@ -40,3 +40,31 @@ The hangar and the flight HUD read the same ability definitions. Kestrel slows h
 Spectre locks one vocabulary fleet by its stable formation ID. Its missiles follow individual targets and count one fleet toward the next encounter. Automated clears earn neither vocabulary points nor fleet credits. The twenty-eight-second salvo does up to two percent of a conventional boss's maximum hull, once per cast, subject to exposure and armor. On the dreadnought deck, each of up to six missiles deals three damage to one fighter or destructible turret. Reactor timing and asteroid typing retain priority over abilities.
 
 Aegis starts each mission with one point of passive armor for the solo pilot or the entire co-op team. Absorbing a hit starts sixty seconds of combat recharge. Excess damage costs lives immediately. A second Aegis shares the charge and timer. Peer protocol 6 replays casts and their impacts from ordered inputs. Snapshots include live salvos, the slow field and the remaining armor recharge. Older checkpoints initialize these new fields on load.
+
+## Space Dominators player hull art in 44.51.0
+
+The hangar, flight scenes and Boss Lab draw the same four transparent hulls. Each occupies a 64 by 64 logical pixel cell with 11 to 13 opaque colors. The 1024 by 256 PNG stores four nearest-neighbor enlargements in Kestrel, Spectre, Aegis and Tempest order. The renderer mounts the existing four-frame exhaust strip over the two measured engine openings on each hull. The atlas is 5,770 bytes.
+
+## Space Dominators single-seat fighters in 44.52.0
+
+The four vocabulary hulls each use one fixed 64-pixel image in the shared atlas. Scout, Guardian, Diver and Tracker keep their individual silhouettes throughout flight. The fleet intro reuses those same images. Boss 6 formations mix cannon, homing-missile and straight-laser fighters. Each type has its own static hull. The laser locks a visible firing line for 0.75 seconds. Destroying the fighter or withdrawing the formation cancels a pending shot.
+
+Incoming vocabulary fighters and deck fighters can hit a pilot as soon as their hulls overlap. Contact uses both objects' motion across the simulation step. Undisclosed vocabulary can take hull damage without grading an answer. A lost required target gets a replacement. The next arrival clock starts when the newest vocabulary fleet displays its words, including waiting formations. The normal entry warning still uses the last three seconds of that clock. Host and wingmate use flight protocol 7 for the revised simulation.
+
+## Space Dominators boss hulls in 44.53.0
+
+Beacon Frigate, Rail Warden, Hound Carrier and Anchor Miner each use a 256 by 128 indexed transparent PNG with two registered 128-pixel cells. Combat and Boss Lab select the intact image above half health and the damaged image at or below half. The carrier's ten magazine doors line up with the existing missile origin coordinates. Boss 4 uses the same static hull selector as the first three while its cable, gate and mine equipment continue to draw separately. The four small hull sheets are part of the offline shell.
+
+## Inspecting Dock in 44.54.0
+
+The mini-boss after the sixth vocabulary fleet is an orbital inspection station. Its two destructible side magazines fire three missile pairs solo or six pairs with a wingmate. Pairs leave 0.14 seconds apart and a new salvo begins every 5.5 seconds. The missiles use the Hound Carrier's outward arc, one second of pursuit and straight final flight. Removing a magazine suppresses its half of every remaining salvo.
+
+The central turret aims at one pilot for eight rounds from the first shot to the last in one second. It rests two seconds after the last shot and alternates the target between available pilots in co-op. Each side mount has 125% of the former mount's health and the central gun has 150%, rounded up. All three are independently destructible. Saved battery encounters retain the fraction of health on each mount. The host snapshot includes both firing schedules, target seats and the current salvo positions. Arcade Space uses co-op protocol 8.
+
+## Hound Carrier missile counts in 44.55.0
+
+Crescent Salvo fires six pairs. The final pair launches from the top magazine doors again. Brood Splitters fires two mother missiles solo and four simultaneously in co-op. The second pair uses the second bay from the top on each side. Each surviving mother releases six children after 0.95 seconds. Three child slots across the entire cast are selected for brief homing before the parents launch. Intercepting a mother removes its assigned six slots. The warning flashes use the same port coordinates as the missiles. Arcade Space flight protocol 9 keeps both peers on the same rules.
+
+## Inspecting Dock durability in 44.56.0
+
+All three mounts have three times their 44.55.0 HP at each weapon level in solo and co-op. At weapon level one each missile rack has 27 HP and the central gun has 33 HP. Old station checkpoints triple current and maximum HP exactly once, including zero HP on destroyed mounts. Loading a current checkpoint preserves each exact damage value and the current salvo timers. Arcade Space flight protocol 10 identifies this simulation.

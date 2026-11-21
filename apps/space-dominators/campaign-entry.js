@@ -20,15 +20,14 @@
   })));
   const classes = ['scout', 'tracker', 'diver', 'guardian'];
   const miniatures = new Map();
-  function miniature(role, frame) {
-    const key = role + frame;
-    if (!miniatures.has(key)) {
+  function miniature(role) {
+    if (!miniatures.has(role)) {
       const image = document.createElement('canvas');
       image.width = image.height = 22;
-      window.SpaceArt.draw(image.getContext('2d'), role, 11, 11, 15, 15, frame);
-      miniatures.set(key, image);
+      window.SpaceArt.draw(image.getContext('2d'), role, 11, 11, 15, 15);
+      miniatures.set(role, image);
     }
-    return miniatures.get(key);
+    return miniatures.get(role);
   }
   function clamp(value) { return Math.max(0, Math.min(1, value)); }
   function smooth(value) {
@@ -94,8 +93,7 @@
         const x=originX+(exitX-originX)*u*u+side*spread*(46+lane*10);
         const y=originY+(182+lane*39-originY)*u+spread*(85+lane*7+22*Math.sin(5*u+lane));
         const size=Math.round(7+u*8);
-        const frame=limited ? 0 : (Math.floor(age*8)+rank)%4;
-        ctx.drawImage(miniature(classes[(group+rank)%4],frame),Math.round(x-size/2),Math.round(y-size/2),size,size);
+        ctx.drawImage(miniature(classes[(group+rank)%4]),Math.round(x-size/2),Math.round(y-size/2),size,size);
       }
     }
   }

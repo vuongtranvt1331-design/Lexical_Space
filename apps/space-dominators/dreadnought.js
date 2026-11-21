@@ -14,7 +14,8 @@
     ind_priority_target:'ui',ind_sprinkler_marker:'ui',ind_fleet_entry_red:'ui',
     proj_standard_fan:'projectiles',proj_expanding_orb:'projectiles',proj_twin_cross:'projectiles',
     proj_missile_homing:'projectiles',proj_missile_shotgun:'projectiles',proj_sprinkler_orb:'projectiles',
-    beam_laser_charge:'projectiles',beam_laser_fire:'projectiles',enemy_fighter:'enemies'
+    beam_laser_charge:'projectiles',beam_laser_fire:'projectiles',enemy_fighter:'enemies',
+    enemy_missile_fighter:'enemies',enemy_laser_fighter:'enemies'
   };
   const ready=Promise.all(Object.entries(files).map(([name,folder])=>new Promise(resolve=>{
     const image=new Image();images.set(name,image);
@@ -105,6 +106,10 @@
     }
     api.sound?.(({fan:'fanFire',orb:'orbFire',twin:'twinFire',homing:'missileLaunch',shotgun:'shotgunLaunch',sprinkler:'sprinklerFire',laser:'laserFire'})[t.type]);
   }
+  function laserSlotsUsed(s){
+    return s.beams.length+s.turrets.filter(t=>t.type==='laser' && t.charge>0 && t.hp>0).length+
+      s.fighters.filter(f=>f.hp>0 && f.laser).length;
+  }
   function updateTurrets(b,dt,api){
     const s=b.dread,restricted=waveActive(s);
     for(const t of s.turrets){
@@ -124,7 +129,7 @@
           t.next=s.time+spec.cooldown;
         }
       }else if(s.time>=t.next){
-        if(t.type==='laser' && (s.beams.length>=C.maxBeams || s.turrets.some(o=>o!==t && o.type==='laser' && o.charge)))continue;
+        if(t.type==='laser' && (laserSlotsUsed(s)>=C.maxBeams || s.turrets.some(o=>o!==t && o.type==='laser' && o.charge)))continue;
         const cue=({laser:'laserCharge',orb:'orbCharge',homing:'missileLock',shotgun:'missileLock',fan:'fanCharge',twin:'twinCharge'})[t.type];
         if(cue)api.sound?.(cue);
         t.charge=spec.chargeTime;t.lock={x:pilot.x,y:pilot.y};
@@ -137,18 +142,35 @@
     for(const f of s.fighters){
       f.age+=dt;
       if(f.age<0 || f.hp<=0)continue;
+      for(const p of api.pilots){
+        const contact=api.touchesPilot?api.touchesPilot(f,p,30):Math.hypot(p.x-f.x,p.y-f.y)<=30;
+        if(p.hp<=0 || p.respawn || !contact)continue;
+        f.hp=0;f.laser=null;countKill(b,f);api.damage(p);api.miniBlast(f.x,f.y,42);api.sound?.('fighterExplosion');break;
+      }
+      if(f.hp<=0 || s.finish)continue;
+      if(f.laser){
+        if(s.time+1e-8>=f.laser.fireAt){
+          s.beams.push({...f.laser,remaining:.26,halfWidth:9,hit:[]});
+          f.laser=null;api.sound?.('laserFire');
+        }
+        continue;
+      }
       const pilot=nearest(api,f.x,f.y);
       if(pilot)f.angle=Math.atan2(pilot.y-f.y,pilot.x-f.x);
-      if(pilot && s.time>=f.next && f.y>0 && f.y<H){
+      if(!pilot || s.time<f.next || f.x<0 || f.x>W || f.y<0 || f.y>H)continue;
+      const x=f.x+Math.cos(f.angle)*22,y=f.y+Math.sin(f.angle)*22;
+      if(f.loadout==='laser'){
+        if(s.formation?.phase!=='holding' || laserSlotsUsed(s)>=C.maxBeams)continue;
+        f.laser={x,y,angle:f.angle,fireAt:s.time+.75};
+        f.next=s.time+6+between(0,1.5);api.sound?.('laserCharge');
+      }else if(f.loadout==='missile'){
+        f.next=s.time+5+between(0,1.5);
+        addProjectile(s,x,y,f.angle,'homing',.95);api.sound?.('missileLaunch');
+      }else{
         f.next=s.time+C.fighterCooldown+between(0,1);
         if(random()<C.fighterShotChance){
-          addProjectile(s,f.x+Math.cos(f.angle)*22,f.y+Math.sin(f.angle)*22,f.angle,
-            random()<.25?'homing':'fan',random()<.5?1:.95);
-          api.sound?.('fighterFire');
+          addProjectile(s,x,y,f.angle,'fan',random()<.5?1:.95);api.sound?.('fighterFire');
         }
-      }
-      for(const p of api.pilots)if(p.hp>0 && !p.respawn && Math.hypot(p.x-f.x,p.y-f.y)<30){
-        f.hp=0;countKill(b,f);api.damage(p);api.miniBlast(f.x,f.y,42);api.sound?.('fighterExplosion');break;
       }
     }
     s.fighters=s.fighters.filter(f=>f.hp>0 && !f.retired);
@@ -181,7 +203,7 @@
       for(const [seat,p] of api.pilots.entries()){
         const dx=p.x-beam.x,dy=p.y-beam.y,c=Math.cos(beam.angle),sn=Math.sin(beam.angle);
         if(!beam.hit.includes(seat) && p.hp>0 && !p.respawn &&
-           dx*c+dy*sn>=0 && Math.abs(dx*sn-dy*c)<17){
+           dx*c+dy*sn>=0 && Math.abs(dx*sn-dy*c)<(beam.halfWidth??17)){
           beam.hit.push(seat);api.damage(p);
         }
       }
@@ -251,9 +273,9 @@
     if(sprite(ctx,name,x,y,24,32,angle))return;
     ctx.fillStyle='#ff4c56';ctx.font='bold 26px monospace';ctx.textAlign='center';ctx.fillText('!',x,y);
   }
-  function beam(ctx,x,y,angle,live){
+  function beam(ctx,x,y,angle,live,halfWidth=17){
     ctx.save();ctx.translate(x,y);ctx.rotate(angle-Math.PI/2);
-    const width=live?44:8;
+    const width=live?halfWidth*2+10:8;
     if(!sprite(ctx,live?'beam_laser_fire':'beam_laser_charge',0,850,width,1700)){
       ctx.fillStyle=live?'#ff91f4':'#e872b65c';ctx.fillRect(-width/2,0,width,1700);
     }
@@ -284,7 +306,12 @@
     }
     for(const f of s.fighters){
       if(f.age<0 || f.hp<=0)continue;
-      if(!sprite(ctx,'enemy_fighter',f.x,f.y,46,46,f.angle-Math.PI/2)){
+      if(f.laser && !s.finish){
+        ctx.save();ctx.globalAlpha=.65+.30*Math.sin(s.time*20)**2;
+        beam(ctx,f.laser.x,f.laser.y,f.laser.angle,false,9);ctx.restore();
+      }
+      const spriteName=f.loadout==='missile'?'enemy_missile_fighter':f.loadout==='laser'?'enemy_laser_fighter':'enemy_fighter';
+      if(!sprite(ctx,spriteName,f.x,f.y,46,46,f.angle-Math.PI/2)){
         ctx.fillStyle='#b3d4df';ctx.fillRect(f.x-17,f.y-12,34,24);
       }
     }
@@ -294,7 +321,7 @@
         ctx.fillStyle=p.missile?'#ffab6b':'#66e9ff';ctx.fillRect(p.x-size/2,p.y-size/2,size,size);
       }
     }
-    for(const ray of s.beams)beam(ctx,ray.x,ray.y,ray.angle,true);
+    for(const ray of s.beams)beam(ctx,ray.x,ray.y,ray.angle,true,ray.halfWidth);
     if(s.pending){
       const p=s.pending;
       const x=p.route==='left'?240:p.route==='right'?1040:p.sign>0?32:W-32;

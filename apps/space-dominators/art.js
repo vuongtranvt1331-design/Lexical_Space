@@ -18,14 +18,22 @@
   });
   sheet.src = "./assets/fleet.png";
 
-  const enemyRows = {scout:0,guardian:1,diver:2,tracker:3};
+  const enemyColumns = {scout:0,guardian:1,diver:2,tracker:3};
   const enemySheet = new Image();
   // The intro caches miniatures. Wait for the enemy atlas before sampling them.
   const enemyReady = new Promise(resolve => {
     enemySheet.onload = resolve;
     enemySheet.onerror = resolve; // The original fleet atlas provides a fallback.
   });
-  const playerRows={kestrel:0,spectre:1,aegis:2,tempest:3};
+  // Mouth centers are measured in each 256px hull cell. The four ships share
+  // one animated exhaust strip and the same vertical mounting point.
+  const playerHulls={
+    kestrel:{column:0,exhaustX:[100,158]},
+    spectre:{column:1,exhaustX:[96,158]},
+    aegis:{column:2,exhaustX:[94,158]},
+    tempest:{column:3,exhaustX:[94,158]}
+  };
+  const exhaustY=226;
   function atlas(src,width,height){
     const image=new Image();
     const loaded=new Promise((resolve,reject)=>{
@@ -43,20 +51,19 @@
   enemySheet.src = "./assets/enemy-flight-atlas.png";
 
   function draw(ctx, key, x, y, width, height, frame = 0) {
-    if(Object.hasOwn(playerRows,key)){
+    if(Object.hasOwn(playerHulls,key)){
+      const hull=playerHulls[key];
       if(!hulls.image.naturalWidth || !exhaust.image.naturalWidth)return;
       const size=Math.min(width,height);
       const left=Math.round(x-size/2),top=Math.round(y-size/2);
       ctx.save();
       ctx.imageSmoothingEnabled=false;
-      ctx.drawImage(hulls.image,playerRows[key]*256,0,256,256,left,top,size,size);
+      ctx.drawImage(hulls.image,hull.column*256,0,256,256,left,top,size,size);
       if(frame>=0){
-        // Mouth centers measured on the 256px hull cells. Overlay the luminous
-        // throat inside the dark opening, keeping the outer metal rim visible.
-        const ports=[[94,161,235],[94,161,234],[94,162,235],[94,162,234]][playerRows[key]];
         const sx=(Math.floor(frame)%4)*64, w=size*.095, h=size*.30;
-        for(const px of ports.slice(0,2)){
-          const cx=left+size*px/256, cy=top+size*ports[2]/256;
+        const cy=top+size*exhaustY/256;
+        for(const px of hull.exhaustX){
+          const cx=left+size*px/256;
           ctx.drawImage(exhaust.image,sx,0,64,128,Math.round(cx-w/2),Math.round(cy-1),w,h);
           ctx.fillStyle='#bcffff';
           const throat=Math.max(1,Math.round(size*.028));
@@ -68,11 +75,11 @@
     }
     const sprite = sprites[key];
     if (!sprite || !(width > 0 && height > 0) || !sheet.naturalWidth) return;
-    if (Object.hasOwn(enemyRows,key) && enemySheet.naturalWidth === 512 && enemySheet.naturalHeight === 512) {
+    if (Object.hasOwn(enemyColumns,key) && enemySheet.naturalWidth === 256 && enemySheet.naturalHeight === 64) {
       const size = Math.min(width,height);
       ctx.save();
       ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(enemySheet, (Math.floor(frame)%4)*128, enemyRows[key]*128, 128,128,
+      ctx.drawImage(enemySheet, enemyColumns[key]*64, 0, 64,64,
         Math.round(x-size/2), Math.round(y-size/2), size,size);
       ctx.restore();
       return;

@@ -41,11 +41,11 @@ function createFlight(words = ['old', 'aged', 'tall', 'bright', 'slow', 'blue'])
     },
   });
   scope.window = scope;
-  for (const name of ['dreadnought-config.js','dreadnought-ending.js','dreadnought-formations.js','dreadnought.js','asteroid-belt.js','boss-encounters.js', 'boss-campaign.js','fleet-arrival.js','boss-six-preview.js','dock-nine-story.js','fleet-study.js']) vm.runInContext(source(name), scope);
+  for (const name of ['capital-art.js','inspecting-dock.js','dreadnought-config.js','dreadnought-ending.js','dreadnought-formations.js','dreadnought.js','asteroid-belt.js','boss-encounters.js', 'boss-campaign.js','fleet-arrival.js','boss-six-preview.js','dock-nine-story.js','fleet-study.js']) vm.runInContext(source(name), scope);
   vm.runInContext(source('game.js').replace('  window.SpaceGame=Object.freeze(', `
     window.probe={
-      world:()=>sim,runStep,simulateCoop,signature,damage,advancePilot,executeDockShopBuy,drawScene,
-      queueNextRow,beginBoss,advanceDialogue,releaseCore,tick,pack,unpack,activateSkill,updateHomingSalvos,makeFormation,fleetArrival,
+      world:()=>sim,runStep,simulateCoop,signature,damage,ramFormation,rememberCenter,updateShots,advancePilot,executeDockShopBuy,drawScene,
+      queueNextRow,beginBoss,beginCapital,updateCapital,hitTurret,advanceDialogue,releaseCore,tick,pack,unpack,activateSkill,updateHomingSalvos,makeFormation,fleetArrival,
     };
     window.SpaceGame=Object.freeze(`), scope);
   return {
@@ -351,6 +351,12 @@ test('co-op replays the host fleet roster and warns for three seconds before ent
   assert.equal(world.pendingFleet, null);
   assert.equal(world.formation.id, 1);
   assert.ok(world.formation.age < 0);
+  let approach=0;
+  while(world.phase==='arrival' && approach++<600){
+    assert.equal(step(host, guest),undefined);
+    near(world.fleetClock,7);
+  }
+  assert.equal(world.phase,'match');
   for (let i = 0; i < 239; i++) assert.equal(step(host, guest), undefined);
   assert.equal(world.pendingFleet, null);
   const plans = step(host, guest);
@@ -369,6 +375,12 @@ test('co-op replays the host fleet roster and warns for three seconds before ent
   assert.equal(world.pendingFleet, null);
   assert.equal(world.reserve[0].id, 2);
   assert.deepEqual(jsonCopy(guest.probe.world().reserve), jsonCopy(world.reserve));
+  const arriving=world.reserve[0];
+  for(let i=0;!arriving.ready && i<600;i++){
+    step(host,guest);near(world.fleetClock,7);assert.equal(world.pendingFleet,null);
+  }
+  assert.equal(arriving.ready,true);
+  step(host,guest);near(world.fleetClock,7-1/60);
   assert.equal(host.probe.signature(), guest.probe.signature());
 });
 
@@ -752,4 +764,206 @@ test('guest skill input makes new fleet bullets travel at half speed on both scr
     near(live.hostiles.at(-1).x,59);near(live.hostiles.at(-1).life,1.75);
     near(before-live.enemyBeat,.25);
   }
+});
+
+
+test('incoming vocabulary and reserve fighters collide anywhere along their approach',()=>{
+  for(const staged of [false,true]){
+    const f=createFlight();f.game.start('kestrel');const w=f.probe.world();
+    const fleet=staged?f.probe.makeFormation(2):w.formation;
+    if(staged){f.probe.fleetArrival(fleet);w.phase='match';}
+    else w.phase='arrival';
+    const e=fleet.ships[0];fleet.route='pincer';fleet.sign=1;fleet.age=.8;e.delay=0;
+    // Find one position on the actual entry curve, then fly the pilot across it.
+    f.probe.tick(1/60);
+    const x=e.x,y=e.y;
+    w.player.x=x-80;w.player.y=y;w.player.hp=3;
+    // Simulate the same swept hull transition as a low-rate movement sample.
+    f.probe.rememberCenter(w.player);f.probe.rememberCenter(e);
+    w.player.x=x+80;
+    f.probe.ramFormation(fleet,staged);
+    assert.equal(w.player.hp,2);assert.equal(e.hp,0);
+    assert.equal(w.correct,0);assert.equal(w.wrong,0);
+    if(fleet.pair.has(e.word))assert.equal(e.reinforceAfter,.9);
+  }
+});
+
+test('shooting an arriving word ship has physical impact without grading a hidden answer',()=>{
+  const f=createFlight();f.game.start('kestrel');
+  const w=f.probe.world();w.phase='arrival';const e=w.row.find(e=>w.pair.has(e.word));
+  e.x=640;e.y=300;e.hp=2;
+  w.player.x=640;w.player.y=380;w.player.gun=0;
+  f.probe.advancePilot(w.player,{...controls,fire:true},.01,0);
+  assert.ok(w.shots.length);f.probe.updateShots(.09);
+  assert.equal(e.hp,0);assert.equal(w.correct,0);assert.equal(w.wrong,0);assert.equal(w.player.hp,3);
+  assert.equal(e.reinforceAfter,.9);
+});
+
+test('deck wings mix three single-seat hulls and specialists telegraph one locked straight beam for 750ms',()=>{
+  const f=createFlight(),mod=f.scope.SpaceDreadnought,b=f.boss.create(6),s=b.dread;
+  const pilot={x:640,y:610,hp:3},hits=[],cues=[];
+  const api={pilots:[pilot],damage:p=>hits.push(p),miniBlast(){},sound:k=>cues.push(k)};
+  b.clock=30;s.nextSpawn=Infinity;
+  const move=seconds=>{for(let left=seconds;left>1e-8;){const dt=Math.min(.01,left);mod.update(b,dt,api);left-=dt;}};
+  move(2.46);
+  assert.equal(s.formation.phase,'holding');assert.deepEqual([...new Set(s.fighters.map(f=>f.loadout))].sort(),['cannon','laser','missile']);
+  for(const ship of s.fighters)ship.next=Infinity;
+  const laser=s.fighters.find(f=>f.loadout==='laser'),missile=s.fighters.find(f=>f.loadout==='missile');
+  laser.next=missile.next=s.time;move(.01);
+  assert.ok(s.projectiles.some(p=>p.type==='homing'));assert.ok(cues.includes('missileLaunch'));
+  const lock={...laser.laser};near(lock.fireAt-s.time,.75);assert.ok(cues.includes('laserCharge'));
+  pilot.x=40;move(.74);assert.equal(s.beams.length,0);near(laser.angle,lock.angle);
+  move(.01);assert.equal(s.beams.length,1);
+  for(const field of ['x','y','angle'])near(s.beams[0][field],lock[field]);
+  assert.equal(hits.length,0);
+  pilot.x=640;move(.03);assert.equal(hits.length,1);
+  move(.1);assert.equal(hits.length,1);
+  move(.2);assert.equal(s.beams.length,0);
+  laser.next=s.time;move(.01);assert.ok(laser.laser);
+  mod.hit(b,laser.id,99,api);move(.8);assert.equal(s.beams.length,0);
+});
+
+test('a newly entering dreadnought fighter damages the pilot and counts exactly once',()=>{
+  const f=createFlight(),b=f.boss.create(6),s=b.dread; b.clock=30;s.nextSpawn=Infinity;
+  const p={x:640,y:630,hp:3},api={pilots:[p],miniBlast(){},sound(){},damage(p){p.hp--;}};
+  for(let i=0;i<300;i++){
+    f.scope.SpaceDreadnought.update(b,.01,api);
+    const ship=s.fighters.find(f=>f.x>40&&f.x<1240&&f.y>40&&f.y<680);
+    if(!ship)continue;
+    assert.equal(s.formation.phase,'entering');p.x=ship.x;p.y=ship.y;
+    f.scope.SpaceDreadnought.update(b,.001,api);
+    assert.equal(p.hp,2);assert.equal(s.kills,1);assert.ok(!s.fighters.includes(ship));return;
+  }
+  assert.fail('a fighter should cross into the field');
+});
+
+test('an older checkpoint taken after scoring keeps the countdown for the next row',()=>{
+  const f=createFlight();f.game.start('kestrel');
+  const old=jsonCopy(f.probe.pack());delete old.spawnClockVersion;
+  old.phase='chain';old.wave=1;old.cleared=1;old.fleetClock=1.25;old.formation.ready=true;
+  for(const ship of old.formation.ships){ship.hp=0;ship.selected=false;}
+  const restored=f.probe.unpack(old,true);
+  assert.equal(restored.formation.wordsShown,true);
+  near(restored.fleetClock,1.25);
+});
+
+test('Inspecting Dock mounts fire six or twelve interceptable missiles and eight aimed shots per burst',()=>{
+  for(const coop of [false,true]){
+    const f=createFlight();
+    if(coop)f.start('host');else f.game.start('kestrel');
+    const w=f.probe.world();f.probe.beginCapital();w.phaseTime=1.7;f.probe.updateCapital(0);
+    assert.equal(w.phase,'capital');
+    const c=w.capital;
+    assert.deepEqual(Array.from(c.turrets,t=>t.maxHp),[27,33,27]);
+    w.player.x=260;w.player.y=620;
+    if(coop){w.wingman.x=1000;w.wingman.y=620;}
+    const bolts=[],missiles=[];
+    for(let i=0;i<500;i++){
+      const before=w.hostiles.length;f.probe.updateCapital(.01);
+      for(const h of w.hostiles.slice(before)){
+        if(h.type==='bolt')bolts.push({at:c.time,vx:h.vx});
+        else missiles.push(h);
+      }
+    }
+    assert.equal(missiles.length,coop?12:6);
+    for(const side of [-1,1]){
+      const fromSide=missiles.filter(m=>m.houndSide===side);
+      assert.equal(fromSide.length,coop?6:3);
+      for(const h of fromSide){
+        assert.equal(h.type,'missile');assert.equal(h.houndKind,'arc');near(h.houndHomingTime,1);
+        assert.equal(Math.sign(h.vx),side);assert.equal(h.targetSeat,coop&&side===1?1:0);
+        assert.ok(Math.abs(h.x-c.turrets[side+1].x)<=11);
+      }
+    }
+    assert.equal(bolts.length,16);
+    near(bolts[7].at-bolts[0].at,1);near(bolts[8].at-bolts[7].at,2);
+    near(bolts[15].at-bolts[8].at,1);
+    assert.ok(bolts.slice(0,8).every(b=>b.vx<0));
+    assert.ok(bolts.slice(8).every(b=>coop?b.vx>0:b.vx<0));
+  }
+});
+
+test('Inspecting Dock snapshots resume mid-burst, with destroyed racks silent and older hull damage preserved',()=>{
+  const host=createFlight(),guest=createFlight();host.start('host');guest.start('guest');
+  const w=host.probe.world();host.probe.beginCapital();w.phaseTime=1.7;host.probe.updateCapital(0);
+  host.probe.hitTurret(w.capital.turrets[0],100);
+  for(let i=0;i<102;i++)host.probe.updateCapital(.01);
+  assert.equal(w.capital.gunShot,2);
+  sync(host,guest);
+  for(let i=0;i<115;i++){host.probe.updateCapital(.01);guest.probe.updateCapital(.01);}
+  const g=guest.probe.world();
+  assert.deepEqual(jsonCopy(g.capital),jsonCopy(w.capital));assert.deepEqual(jsonCopy(g.hostiles),jsonCopy(w.hostiles));
+  assert.ok(w.hostiles.some(h=>h.houndSide===1));assert.ok(!w.hostiles.some(h=>h.houndSide===-1));
+  const saved=jsonCopy(host.probe.pack());
+  saved.capital={x:640,y:126,turn:0,beat:.4,turrets:[0,3,7].map(hp=>({hp,maxHp:7}))};
+  const old=host.probe.unpack(saved);
+  assert.deepEqual(Array.from(old.capital.turrets,t=>t.hp),[0,15,27]);
+  for(const t of w.capital.turrets)host.probe.hitTurret(t,99);
+  assert.equal(w.phase,'capital-clear');assert.equal(w.hostiles.length,0);
+});
+
+test('Hound Carrier rain releases six pairs from five physical bays in solo and co-op',()=>{
+  for(const coop of [false,true]){
+    const f=createFlight(),lab={boss:3,skillIndex:1,phase:1,level:1};
+    if(coop)f.start('host',lab);else f.game.startBossPractice(3,'kestrel',lab);
+    const w=f.probe.world(), seen=new Set(),rain=[];
+    for(let i=0;i<500 && rain.length<12;i++){
+      if(coop)step(f);else f.probe.tick(1/60);
+      for(const m of w.hostiles){
+        if(m.houndKind!=='arc' || seen.has(m))continue;
+        seen.add(m);rain.push({x:m.x-w.boss.x,y:m.y-w.boss.y,side:m.houndSide});
+      }
+    }
+    assert.equal(rain.length,12);
+    for(const side of [-1,1]){
+      const rack=rain.filter(m=>m.side===side);
+      assert.equal(rack.length,6);assert.ok(rack.every(m=>Number.isFinite(m.x)&&Number.isFinite(m.y)));
+      assert.ok(rack[4].y-rack[0].y>55);
+      assert.ok(Math.abs(rack[5].y-rack[0].y)<3,'sixth pair fires from the top bay again');
+    }
+  }
+});
+
+test('Brood Splitters launches two or four mothers together; intercepting one prevents its six children',()=>{
+  for(const [coop,intercept] of [[false,false],[true,false],[true,true]]){
+    const f=createFlight(),lab={boss:3,skillIndex:2,phase:2,level:1};
+    if(coop)f.start('host',lab);else f.game.startBossPractice(3,'kestrel',lab);
+    const w=f.probe.world(),tick=()=>coop?step(f):f.probe.tick(1/60);
+    for(let i=0;i<500 && !w.hostiles.some(m=>m.houndKind==='mother');i++)tick();
+    const mothers=w.hostiles.filter(m=>m.houndKind==='mother');
+    assert.equal(mothers.length,coop?4:2);
+    assert.equal(new Set(mothers.map(m=>[Math.round(m.x),Math.round(m.y)].join(','))).size,mothers.length);
+    assert.ok(!w.hostiles.some(m=>m.houndKind==='child'));
+    assert.equal(mothers.flatMap(m=>Array.from(m.seekerSlots)).length,3);
+    const victim=mothers[0];
+    if(intercept){
+      w.shots.push({x:victim.x,y:victim.y+12,damage:2});
+      f.probe.updateShots(.02);
+      assert.equal(victim.life,0);
+    }
+    for(let i=0;i<65 && !w.hostiles.some(m=>m.houndKind==='child');i++)tick();
+    const children=w.hostiles.filter(m=>m.houndKind==='child');
+    assert.equal(children.length,(mothers.length-Number(intercept))*6);
+    assert.equal(children.filter(m=>m.seeker).length,3-(intercept?victim.seekerSlots.length:0));
+  }
+});
+
+test('Inspecting Dock triples each rounded mount at all eight weapon levels and restores damage only once',()=>{
+  const f=createFlight();f.game.start('kestrel');
+  const w=f.probe.world();
+  for(let level=1;level<=8;level++){
+    w.weaponLevel=level;f.probe.beginCapital();
+    const base=3+4*level,side=Math.ceil(1.25*base),center=Math.ceil(1.5*base);
+    assert.deepEqual(Array.from(w.capital.turrets,t=>t.maxHp),[side*3,center*3,side*3]);
+    assert.ok(w.capital.turrets.every(t=>t.hp===t.maxHp));
+  }
+  const saved=jsonCopy(f.probe.pack()),dock=saved.capital;
+  delete dock.hullVersion;
+  for(const [i,t] of dock.turrets.entries()){t.maxHp=[44,53,44][i];t.hp=[0,11,29][i];}
+  dock.gunShot=5;dock.rackRound=2;
+  const restored=f.probe.unpack(saved,true);
+  assert.deepEqual(Array.from(restored.capital.turrets,t=>[t.hp,t.maxHp]),[[0,132],[33,159],[87,132]]);
+  assert.equal(restored.capital.gunShot,5);assert.equal(restored.capital.rackRound,2);
+  saved.capital=jsonCopy(restored.capital);
+  assert.deepEqual(jsonCopy(f.probe.unpack(saved,true).capital),jsonCopy(restored.capital));
 });

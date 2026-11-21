@@ -1291,14 +1291,16 @@ function drawHoundBay(ctx, x, y, skill, charge, angle) {
     const cellSize = 128;
     const hullExtent = Math.round(172 * 1.1);
     const portRows = [35.5,46,56.5,67,77.5];
-    const volleyCounts = [4,5,1];
-    function port(b, side, skill, round) {
-      const row = skill === 2 ? 4 : round;
-      const column = side < 0 ? 33.5 : 93.5;
-      return {
-        x:Math.round(b.x-hullExtent/2) + column*hullExtent/cellSize,
-        y:Math.round(b.y-hullExtent/2) + portRows[row]*hullExtent/cellSize
-      };
+    const volleyCounts = [4,6,1];
+    function launchPorts(b, skill, round) {
+      // The sixth rain pair reuses the first physical bay. Duo splitters use two separated bay pairs.
+      const rows = skill === 2 ? (b.coop ? [4,1] : [4]) : [round % portRows.length];
+      const left = Math.round(b.x-hullExtent/2), top = Math.round(b.y-hullExtent/2);
+      return rows.flatMap(row => [-1,1].map(side => ({
+        side,
+        x:left + (side < 0 ? 33.5 : 93.5)*hullExtent/cellSize,
+        y:top + portRows[row]*hullExtent/cellSize
+      })));
     }
     function cast(b, a, skill, prev, sys) {
       const arc = a.skillIndex === 1;
@@ -1310,15 +1312,15 @@ function drawHoundBay(ctx, x, y, skill, charge, angle) {
         const living = a.skillIndex === 0
           ? (sys.hazards || []).filter(h => h.houndKind === 'persistent' && h.life > 0 && h.hp !== 0)
           : [];
-        // Select three distinct slots across both carriers once, before either can be intercepted.
+        const ports = launchPorts(b,a.skillIndex,round);
+        // Pick three homing children across the entire cast before any mother can be intercepted.
         const seekers = [];
         if (a.skillIndex === 2) {
-          const slots = Array.from({length:12}, (_, i) => i);
+          const slots = Array.from({length:ports.length*6}, (_, i) => i);
           for (let i=0;i<3;i++) seekers.push(slots.splice(Math.floor((window.SpaceFlightRandom?.() ?? Math.random())*slots.length),1)[0]);
         }
-        for (const side of [-1, 1]) {
+        for (const [mount,{side,x,y}] of ports.entries()) {
           if (a.skillIndex === 0 && (living.filter(h => h.houndSide === side).length >= volleys)) continue;
-          const {x,y} = port(b,side,a.skillIndex,round);
           const pilot = livingPilots[(a.turn - 1 + (side === 1 ? 1 : 0)) % Math.max(livingPilots.length,1)];
           const aim = Math.atan2((pilot?.y ?? a.py) - y, (pilot?.x ?? a.px) - x);
           const angle = arc ? Math.PI / 2 - side * (1.38 - round * .11)
@@ -1335,7 +1337,7 @@ function drawHoundBay(ctx, x, y, skill, charge, angle) {
             missile.houndHomingTime = 1;
           } else if (a.skillIndex === 2) {
             missile.houndSplitAt = .95;
-            missile.seekerSlots = seekers.filter(i => (i < 6) === (side < 0)).map(i => i % 6);
+            missile.seekerSlots = seekers.filter(slot => Math.floor(slot / 6) === mount).map(slot => slot % 6);
           } else {
             living.push(missile);
           }
@@ -1348,8 +1350,7 @@ function drawHoundBay(ctx, x, y, skill, charge, angle) {
       if (!a.active || a.t > skill.windup + .1 * lastRound) return;
       const charge=Math.min(1,a.t / skill.windup);
       const round = clamp(Math.floor((a.t-skill.windup)/.1)+1,0,lastRound);
-      for (const side of [-1,1]) {
-        const {x,y}=port(b,side,a.skillIndex,round);
+      for (const {side,x,y} of launchPorts(b,a.skillIndex,round)) {
         const angle=a.skillIndex===0 ? Math.atan2(a.py-y,a.px-x)-side*.42
           : a.skillIndex===1 ? Math.PI/2-side*(1.38-round*.11) : (side<0 ? Math.PI : 0);
         drawHoundBay(ctx,x,y,a.skillIndex,charge,angle);
@@ -1761,7 +1762,7 @@ window.SpaceEncounterSkills = [
     },
     {
       "name": "Crescent Salvo",
-      "hint": "Five missiles peel away from each wing. Move across their path once their one-second lock expires.",
+      "hint": "Six missiles peel away from each wing. Move across their path once their one-second lock expires.",
       "windup": 1,
       "cooldown": 8,
       "hardCooldown": 6.2,
@@ -1775,7 +1776,7 @@ window.SpaceEncounterSkills = [
     },
     {
       "name": "Brood Splitters",
-      "hint": "Intercept the two carriers flying sideways. Six missiles split from each: three track pilots for half a second then fly straight. The other nine sway downward in formation.",
+      "hint": "Intercept the mother missiles before they split into six each. Two launch solo and four in co-op. Three of the fragments can track a pilot for half a second.",
       "windup": 1.1,
       "cooldown": 9.5,
       "hardCooldown": 7.5,

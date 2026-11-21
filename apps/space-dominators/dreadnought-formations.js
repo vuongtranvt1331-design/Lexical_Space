@@ -51,6 +51,7 @@
     s.formationSequence=(s.formationSequence??0)+1;s.lastFormation=p.layout;s.pending=null;
     for(const [order,point] of p.positions.entries())s.fighters.push({id:'fighter-'+(++s.serial),kind:'formation',formationId:id,
       x:point.x+at.x,y:point.y+at.y,tx:point.x,ty:point.y,hp:C.fighterHP,age:0,angle:Math.PI/2,
+      loadout:['missile','laser'][(order+s.formationSequence)%8] || 'cannon',
       next:s.time+2.5+between(0,2),order});
     api.sound?.('fighterWave');
   }
@@ -58,7 +59,7 @@
     const f=s.formation;if(!f || f.phase==='exiting'&&!refresh)return;
     f.exitFrom=f.phase==='entering'?clamp(f.age/C.formationEntrySeconds):f.phase==='exiting'?f.exitFrom*(1-clamp(f.age/C.formationExitSeconds)):1;
     f.exitOffset=offset(f.route,f.sign,f.exitFrom);f.phase='exiting';f.age=0;
-    for(const ship of s.fighters)if(ship.formationId===f.id){ship.exitX=ship.x;ship.exitY=ship.y;}
+    for(const ship of s.fighters)if(ship.formationId===f.id){ship.laser=null;ship.exitX=ship.x;ship.exitY=ship.y;}
   }
   function onKill(s,ship){
     const f=s.formation;if(!f || ship.formationId!==f.id)return;
@@ -87,7 +88,7 @@
       }else if(f.phase==='holding'){
         const settle=clamp(f.age/.35),ease=settle*settle*(3-2*settle);
         const dx=Math.sin(s.time*.9)*8*ease,dy=Math.sin(s.time*.7)*3*ease;
-        for(const ship of members){ship.x=ship.tx+dx;ship.y=ship.ty+dy;}
+        for(const ship of members)if(!ship.laser){ship.x=ship.tx+dx;ship.y=ship.ty+dy;}
         if(f.age>=C.formationDuration || f.kills>=C.formationKillLimit)retire(s);
       }else{
         const p=clamp(f.age/C.formationExitSeconds),d=offset(f.route,f.sign,f.exitFrom*(1-p));

@@ -407,6 +407,36 @@
         32
       ],
       "direction": "down"
+    },
+    {
+      "id": "enemy_missile_fighter",
+      "path": "enemies/enemy_missile_fighter.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 7,
+      "description": "Single-seat missile interceptor with amber missile pods.",
+      "pivot": [
+        64,
+        64
+      ],
+      "direction": "down"
+    },
+    {
+      "id": "enemy_laser_fighter",
+      "path": "enemies/enemy_laser_fighter.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 7,
+      "description": "Single-seat laser interceptor with a violet axial emitter.",
+      "pivot": [
+        64,
+        64
+      ],
+      "direction": "down"
     }
   ],
   "waveArtContract": {

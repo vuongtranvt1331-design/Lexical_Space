@@ -5,6 +5,18 @@
     image.src='./assets/'+name+'.png';
     return image;
   });
+  let dock;
+  function loadDock(){
+    if(!dock){dock=new Image();dock.src='./assets/inspecting-dock.png';}
+    return dock;
+  }
+  function drawDock(ctx,x,y){
+    const image=loadDock();
+    if(!image.naturalWidth)return;
+    ctx.save();ctx.imageSmoothingEnabled=false;
+    ctx.drawImage(image,Math.round(x-224),Math.round(y-92),448,184);
+    ctx.restore();
+  }
   function drawHull(ctx,x,y,w,h){
     if(!hull.naturalWidth)return;
     ctx.save();
@@ -26,5 +38,5 @@
     }
     ctx.restore();
   }
-  window.CapitalArt=Object.freeze({drawHull,drawTurret});
+  window.CapitalArt=Object.freeze({drawHull,drawTurret,loadDock,drawDock});
 })();
