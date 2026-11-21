@@ -68,3 +68,13 @@ Crescent Salvo fires six pairs. The final pair launches from the top magazine do
 ## Inspecting Dock durability in 44.56.0
 
 All three mounts have three times their 44.55.0 HP at each weapon level in solo and co-op. At weapon level one each missile rack has 27 HP and the central gun has 33 HP. Old station checkpoints triple current and maximum HP exactly once, including zero HP on destroyed mounts. Loading a current checkpoint preserves each exact damage value and the current salvo timers. Arcade Space flight protocol 10 identifies this simulation.
+
+## Aegis titanium hull in 44.57.0
+
+The third player-hull cell contains the dark titanium Aegis, with stepped shoulder armor and a short cyan cockpit slit. The two nozzle centers remain at (94, 226) and (158, 226) in the 256-pixel cell. The hangar and flight renderer sample the same static hull beneath the existing exhaust animation.
+
+## Space Dominators flight standings in 44.58.0
+
+The hangar switches between Solo and Team records. Count enemy spacecraft destroyed by pilots, their fleet clears and collisions. Ignore fleet overflow, projectiles, asteroids and turret mounts. Boss Lab and Boss Rush are practice. Campaign results belong to the launch profile. For a co-op mission only the host records the full team totals. The wingmate keeps the existing credit settlement and sees the debrief.
+
+Firestore uses separate spaceFlightSolo and spaceFlightTeam collections in the suite project. Each pilot document holds one best mission and its missions subcollection records completed flights by unique ID. Atomic conditional writes deduplicate retries and protect the best score across devices. Queued uploads persist across reloads. The board reads six entries, the pilot's own record, and a count of higher scores only when that pilot is outside the first six. Equal scores share rank. Cached boards last five minutes. No vocabulary or chess data is written.

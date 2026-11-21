@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "project": "SpaceSuite",
+  "purpose": "Bản đồ bảo trì dùng cho chat mới. Đọc một lần, tra đúng mục theo yêu cầu hiện tại.",
+  "repo_root": "C:/Users/ADMIN/OneDrive/Máy tính/LexicalSpace-v29/LexicalSpace-project",
+  "canonical_file": "PROJECT-CONTEXT.json",
+  "workflow": [
+    "Mở repo_root và xác nhận suite/release.json. Đọc AGENTS.md áp dụng trong thư mục đích; chỉ mở các tài liệu chi tiết liên quan.",
+    "Dùng routes để chọn mô-đun, rồi tìm theo tên tính năng bằng rg. Kiểm tra điểm vào, đoạn mã sở hữu hành vi, tham chiếu trực tiếp và hash trong baseline nếu có. Mở thêm khi cần xác minh phụ thuộc.",
+    "Thực hiện yêu cầu hiện tại trong bản tích hợp. Tái sử dụng cơ chế hiện có; kiểm tra đường dùng thật và trường hợp cũ liên quan. Áp dụng quy ước phiên bản trong AGENTS.md, chạy tools/build-suite.py khi cập nhật app và các bài kiểm thử liên quan.",
+    "Sau khi xác minh thay đổi, cập nhật trực tiếp file JSON trong repo: sửa routes hoặc contracts nếu đổi cấu trúc, đồng bộ checkpoint với suite/release.json, thêm ghi chú ngắn vào recent_changes. Giữ 5 ghi chú mới nhất; chi tiết đặt trong tài liệu hiện có. Ghi rõ phần chưa kiểm tra hoặc chưa phát hành.",
+    "Khi mở chat mới, mở cùng thư mục repo_root và gửi file này hoặc yêu cầu đọc PROJECT-CONTEXT.json trước khi làm nhiệm vụ mới."
+  ],
+  "sources": {
+    "instructions": "AGENTS.md",
+    "overview": "README-SUITE.md",
+    "current_release": "suite/release.json",
+    "hashes": "docs/suite-baseline.json",
+    "recent_space_game": "docs/architecture-delta-44.43.0.md",
+    "checks": "package.json",
+    "build": "tools/build-suite.py"
+  },
+  "routes": {
+    "LexicalSpace | học từ, thư viện, hồ sơ": [
+      "index.html",
+      "js/main.js",
+      "js/features/",
+      "js/core/",
+      "css/",
+      "js/core/study-language.js"
+    ],
+    "GrammarSpace | chủ đề, bài học, tiến độ": [
+      "apps/grammar/index.html",
+      "apps/grammar/js/app.js",
+      "apps/grammar/js/storage-decay.js"
+    ],
+    "Arcade Space | thẻ game, thứ tự, giao diện, intro thẻ": [
+      "apps/arcade/index.html",
+      "apps/arcade/js/arcade-2.js",
+      "apps/arcade/css/arcade-1.css",
+      "apps/arcade/js/space-chase.js"
+    ],
+    "Word Battles | từ vựng và cờ vua": [
+      "apps/quick-drawn/index.html",
+      "apps/quick-drawn/js/duel.js",
+      "apps/quick-drawn/js/chess.js",
+      "apps/quick-drawn/js/chess-session.js",
+      "apps/quick-drawn/js/standings-service.js"
+    ],
+    "Sky Dominators | Legacy": [
+      "apps/sky-dominators/index.html",
+      "apps/sky-dominators/js/"
+    ],
+    "Space Dominators | sảnh, tàu, intro, trận, co-op": [
+      "apps/space-dominators/index.html",
+      "apps/space-dominators/station.js",
+      "apps/space-dominators/station.css",
+      "apps/space-dominators/studio-intro.css",
+      "apps/space-dominators/art.js",
+      "apps/space-dominators/game.js",
+      "apps/space-dominators/coop-room.js"
+    ],
+    "Space Dominators | boss, hoạt ảnh, hội thoại": [
+      "apps/space-dominators/boss-practice.html",
+      "apps/space-dominators/boss-encounters.js",
+      "apps/space-dominators/asteroid-belt.js",
+      "apps/space-dominators/dreadnought.js",
+      "apps/space-dominators/dreadnought-ending.js",
+      "apps/space-dominators/dock-nine-story.js",
+      "apps/space-dominators/fleet-study.js"
+    ],
+    "Space Dominators | bảng hạng và Firebase": [
+      "apps/space-dominators/flight-ranks.js",
+      "apps/space-dominators/flight-ranks-store.js",
+      "apps/space-dominators/game.js",
+      "tests/space-dominators-flight.test.js"
+    ],
+    "Wild West Poker": [
+      "apps/poker/index.html",
+      "apps/poker/js/poker-1.js"
+    ],
+    "Vocabulary Test": [
+      "apps/vocabulary-test/index.html",
+      "apps/vocabulary-test/js/exam.js"
+    ],
+    "Dictation Practice | nghe, lưu lượt": [
+      "apps/quick-ears/index.html",
+      "apps/quick-ears/practice.js",
+      "apps/quick-ears/history.js"
+    ],
+    "Toàn bộ suite | điều hướng, âm lượng, PWA": [
+      "suite/js/core.js",
+      "suite/js/effects-volume.js",
+      "tools/service-worker.template.js",
+      "tools/build-suite.py"
+    ]
+  },
+  "contracts": [
+    "Bản tích hợp là nguồn chính. Bản standalone và các bản thử là lịch sử trừ khi người dùng chỉ định.",
+    "LexicalSpaceDB v3 do LexicalSpace quản lý; game chỉ đọc từ vựng. Bộ từ tiếng Pháp lưu trên máy. Dùng luồng hồ sơ và điều hướng của suite.",
+    "Giữ manifest, dữ liệu, quyền sở hữu và giao thức hiện có trong các thay đổi ngoài phạm vi. Commit, push hoặc triển khai khi có yêu cầu."
+  ],
+  "checkpoint": {
+    "version": "44.59.0",
+    "release_date": "2026-11-22",
+    "cache": "8407ccc3b4f024",
+    "validation": "Kiểm thử bản khóa đang chạy.",
+    "deployment": "Chưa tải lên GitHub."
+  },
+  "recent_changes": [
+    {
+      "version": "44.59.0",
+      "scope": "Space Dominators",
+      "note": "Tạm ẩn Radio Log và Boss Lab, đường Boss Lab chuyển về sảnh. Cần mở lại khi người dùng yêu cầu."
+    },
+    {
+      "version": "44.58.0",
+      "scope": "Space Dominators",
+      "note": "Sảnh có bảng Solo/Team tối đa 6 hàng. Team lưu tổng cả đội một lần dưới hồ sơ chủ phòng. Firebase thật đã xác nhận đọc; ghi và chống trùng đã kiểm tra với Firestore giả lập.",
+      "source": "docs/architecture-delta-44.43.0.md"
+    },
+    {
+      "version": "44.57.0",
+      "scope": "Space Dominators",
+      "note": "Đã thay sprite tàu Aegis bằng thân titan tối và kiểm tra tại sảnh lẫn trong trận.",
+      "source": "docs/architecture-delta-44.43.0.md"
+    }
+  ]
+}

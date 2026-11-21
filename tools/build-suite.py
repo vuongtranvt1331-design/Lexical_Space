@@ -27,7 +27,7 @@ def build():
         'js/features/loading.js', 'js/features/appearance.js', 'js/features/interface-language.js', 'css/main.css', 'css/recall-ui.css', 'css/lexical-layout.css', 'css/theme.css', 'css/entry-ui.css', 'js/core/offline.js', 'apps/grammar/js/app.js', 'apps/grammar/css/style.css',
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
         'apps/quick-ears/history.js', 'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/js/space-chase.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
-        'apps/space-dominators/studio-intro.css', 'apps/space-dominators/station.css', 'apps/space-dominators/station.js',
+        'apps/space-dominators/studio-intro.css', 'apps/space-dominators/station.css', 'apps/space-dominators/station.js', 'apps/space-dominators/flight-ranks.js',
         'apps/space-dominators/art.js', 'apps/space-dominators/inspecting-dock.js', 'apps/space-dominators/capital-art.js', 'apps/space-dominators/background.js', 'apps/space-dominators/game.js', 'apps/space-dominators/coop-room.js',
         'apps/space-dominators/coop-lobby.js', 'apps/space-dominators/boss-campaign.js',
         'apps/space-dominators/boss-encounters.js', 'apps/space-dominators/asteroid-belt.js', 'apps/space-dominators/boss-six-preview.js',

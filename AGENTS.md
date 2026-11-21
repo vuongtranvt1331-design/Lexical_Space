@@ -1,5 +1,7 @@
 # LexicalSpace release conventions
 
+For maintenance tasks, start with PROJECT-CONTEXT.json in this directory. Use its routes to select the affected files, then update its checkpoint and recent changes after verification.
+
 These instructions apply to this LexicalSpace project.
 
 - After every code update, refresh the last-updated date in the side-menu footer in index.html to the actual release/edit date, using Asia/Saigon time.

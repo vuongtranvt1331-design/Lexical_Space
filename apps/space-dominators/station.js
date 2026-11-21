@@ -171,10 +171,11 @@
 
   /* ── Hangar View Switcher (Main / Settings / Core) ────────────── */
   function setHangarView(view) {
+    station.dataset.hangar=view;
     const radioOpen=view==='radio';
     station.classList.toggle('reading-radio',radioOpen);
     el('radioLog').hidden=!radioOpen;
-    el('openRadioLog').hidden=view!=='main';
+    el('openRadioLog').hidden=true;
     if(radioOpen){
       populateRadioLog();
       el('radioLogTitle').focus();
@@ -472,7 +473,7 @@
     const previous=!activeMatch && d.runId && profile.campaignPayout?.id===d.runId ? profile.campaignPayout.credits : 0;
     const earned=practice || (activeMatch && profile.lastCoopAward===activeMatch) ? 0 : Math.max(0,payout-previous);
     if(!practice && (!activeMatch || profile.lastCoopAward!==activeMatch)){
-      profile.credits+=earned;profile.best=Math.max(profile.best,score);
+      profile.credits+=earned;if(!coOpResult || room.role==='host')profile.best=Math.max(profile.best,score);
       if(activeMatch) profile.lastCoopAward=activeMatch;
       else if(d.runId) profile.campaignPayout={id:d.runId,credits:Math.max(previous,payout)};
       save();

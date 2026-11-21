@@ -250,10 +250,11 @@
     if(index===6)window.SpaceFleetStudy?.load();
   }
   function bossAPI(){
-    return {touchesPilot,projectileScale:sim.slow>0?.5:1,award:points=>{sim.score+=points;},chooseWord:choice,wordPool:window.SpaceWords.typingWords,hazards:sim.hostiles, pilots:pilots().filter(p=>p.hp>0), pilotSeat:p=>p===sim.player?0:1, makeHazard, miniBlast, damage:p=>damage(false,p), penalty:p=>damage(true,p,2), asteroidImpact:p=>damage(true,p), burst,sound};
+    return {fighterDown:()=>{sim.shipsDown++;},touchesPilot,projectileScale:sim.slow>0?.5:1,award:points=>{sim.score+=points;},chooseWord:choice,wordPool:window.SpaceWords.typingWords,hazards:sim.hostiles, pilots:pilots().filter(p=>p.hp>0), pilotSeat:p=>p===sim.player?0:1, makeHazard, miniBlast, damage:p=>damage(false,p), penalty:p=>damage(true,p,2), asteroidImpact:p=>damage(true,p), burst,sound};
   }
   function releaseCore() {
     const boss=sim.boss;
+    if(boss.index!==5)sim.shipsDown++;
     if(boss.index===6)sim.dreadAftermath={clock:boss.clock,dread:{finish:{...boss.dread.finish,fx:[],shards:[]}}};
     const {x,y}=boss;
     const hullXs=window.SpaceBosses.hulls?.(boss)||[x];
@@ -352,6 +353,7 @@
     sound('clear');note('INSPECTING DOCK DISABLED   +950','#ffd793',1.6);
   }
   function completeRow(bySalvo=false) {
+    sim.shipsDown+=sim.row.filter(ship=>ship.hp>0).length;
     sim.formation.wordsShown=true;
     sim.cleared++;
     if(!sim.practice && sim.cleared > (sim.rewardedFleetMax || 0)) {
@@ -384,10 +386,19 @@
     for(const e of sim.row) { e.action=0; e.y=ROW_Y; e.popAt=.07+Math.abs(e.tx-WIDTH/2)/900; }
     note(message,'#9dfff3',2);
   }
+  function recordFlight(status) {
+    if(!sim || sim.practice || sim.rush || (coop && coop.role!=='host') || !sim.rankPilot)return;
+    if(status==='stopped' && !sim.shipsDown && !sim.score && !sim.correct && !sim.wrong)return;
+    const detail={id:sim.flightId||sim.runId,pilot:sim.rankPilot,mode:coop?'team':'solo',
+      ship:sim.player.ship,score:sim.score,kills:sim.shipsDown||0,rows:sim.cleared,
+      correct:sim.correct,wrong:sim.wrong,status,endedAt:Date.now()};
+    window.dispatchEvent(new CustomEvent('spaceflight:record',{detail}));
+  }
   function end(status='defeat') {
     window.SpaceSound?.missileFlight?.(false);
     if(!sim || sim.state==='ended') return;
     sim.state='ended';sim.outcome=status;
+    recordFlight(status);
     if(status==='victory' && !sim.practice && sim.rewarded===6){try{localStorage.setItem(RUSH_UNLOCK,'1');}catch{}}
     if(status==='victory' && !coop && !sim.practice){try{localStorage.removeItem(SOLO_SAVE);}catch{}}
     resetInput(); cancelAnimationFrame(raf);
@@ -439,6 +450,7 @@
     e.hp=Math.max(0,e.hp-amount); e.flash=.11; sound('impact');
     burst(e.x,e.y+14,roleColors[e.role],4);
     if(e.hp) return;
+    sim.shipsDown++;
     sound('explosion');
     burst(e.x,e.y,roleColors[e.role],23);
     if(sim.pair.has(e.word)) {
@@ -514,6 +526,7 @@
         miniBlast(x,y,36);
         if(salvo.kind==='fleet'){
           const ship=sim.row[m.id];
+          if(ship.hp>0)sim.shipsDown++;
           ship.hp=0;ship.action=0;ship.popped=true;
           delete ship.reinforceAfter;
         }
@@ -689,6 +702,7 @@
     return (x+t*dx)**2+(y+t*dy)**2<=radius*radius;
   }
   function burstFighter(f,e){
+    sim.shipsDown++;
     e.hp=0;e.action=0;e.dive=null;
     miniBlast(e.x,e.y,65);burst(e.x,e.y,'#ff9957',16);sound('impact');
     if(f.pair.has(e.word) && !e.selected)e.reinforceAfter=.9;
@@ -1812,7 +1826,7 @@
     sim.state='active';lastTime=0;if(coop && notify)coop.send('resume',{});
     if(coop?.connected!==false)raf=requestAnimationFrame(animate);
   }
-  function stop() {window.SpaceSound?.silence?.();cancelAnimationFrame(raf);coop=null;sim=null;window.SpaceBelt.resetDraft();resetInput();}
+  function stop() {if(sim && sim.state!=='ended')recordFlight('stopped');window.SpaceSound?.silence?.();cancelAnimationFrame(raf);coop=null;sim=null;window.SpaceBelt.resetDraft();resetInput();}
   function position(event) {
     const r=canvas.getBoundingClientRect();
     if(r.width && r.height) target={x:clamp((event.clientX-r.left)*WIDTH/r.width,28,WIDTH-28),y:clamp((event.clientY-r.top)*HEIGHT/r.height,42,HEIGHT-42)};
@@ -1882,7 +1896,7 @@
   function initialize(shipId) {
     bindCanvas();window.SpaceSound?.prepareIntro?.();
     const ship=Object.hasOwn(hulls,shipId)?shipId:'kestrel';
-    sim={ship,state:'active',wave:0,cleared:0,correct:0,wrong:0,score:0,time:0,slow:0,armorCooldown:0,salvos:[],hitFlash:0,
+    sim={ship,rankPilot:window.SpaceSuite?.profile()||'',shipsDown:0,state:'active',wave:0,cleared:0,correct:0,wrong:0,score:0,time:0,slow:0,armorCooldown:0,salvos:[],hitFlash:0,
       runId:coop?.matchId||globalThis.crypto?.randomUUID?.()||String(Date.now()),bossIndex:0,rewarded:0,core:null,line:0,
       livesVersion:1,player:{ship,level:1,correct:0,x:WIDTH/2,y:HEIGHT-115,hp:START_LIVES,gun:0,grace:0,respawn:0,cooldown:0},
       weaponLevel:1,upgradeFlash:0,credits:getProfileCredits(),drops:[],rewardedFleetMax:0,spawnClockVersion:2,reserve:[],fleetClock:7,fleetSerial:0,pendingFleet:null,staging:null,capital:null,routes:[],particles:[]};
@@ -2014,6 +2028,7 @@
       s && ['fleet','capital','deck','boss'].includes(s.kind) && Number.isSafeInteger(s.encounter) &&
       Number.isFinite(s.age) && Array.isArray(s.missiles) && s.missiles.length<=7 &&
       s.missiles.every(m=>m && [m.x,m.y,m.sx,m.sy,m.cx,m.cy,m.tx,m.ty,m.vx,m.vy,m.duration].every(Number.isFinite) && m.duration>0)))return null;
+    if(!Number.isSafeInteger(world.shipsDown) || world.shipsDown<0)world.shipsDown=0;
     delete world.pulse;
     delete world.teamHp;delete world.teamShield;delete world.teamShieldMax;
     if(!Array.isArray(world.drops)) world.drops = [];
@@ -2036,7 +2051,10 @@
   function continueCampaign(){
     const saved=savedCampaign();
     if(!saved)return false;
-    stop();initialize(saved.ship);sim=saved;
+    stop();initialize(saved.ship);
+    saved.rankPilot ??= sim.rankPilot;
+    saved.flightId=sim.runId;
+    sim=saved;
     if(sim.bossIndex===6)window.SpaceFleetStudy?.load();
     sim.state='active';drawScene();raf=requestAnimationFrame(animate);return true;
   }
@@ -2070,6 +2088,7 @@
         }catch{}
       }
       if(saved){
+        saved.rankPilot ??= sim.rankPilot;
         sim=saved;
         if(sim.bossIndex===6)window.SpaceFleetStudy?.load();
       }

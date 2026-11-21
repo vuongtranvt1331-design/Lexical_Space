@@ -145,7 +145,7 @@
       for(const p of api.pilots){
         const contact=api.touchesPilot?api.touchesPilot(f,p,30):Math.hypot(p.x-f.x,p.y-f.y)<=30;
         if(p.hp<=0 || p.respawn || !contact)continue;
-        f.hp=0;f.laser=null;countKill(b,f);api.damage(p);api.miniBlast(f.x,f.y,42);api.sound?.('fighterExplosion');break;
+        f.hp=0;f.laser=null;countKill(b,f);api.fighterDown?.();api.damage(p);api.miniBlast(f.x,f.y,42);api.sound?.('fighterExplosion');break;
       }
       if(f.hp<=0 || s.finish)continue;
       if(f.laser){
@@ -248,6 +248,7 @@
     if(!entity.missile)s.shake=Math.max(s.shake||0,entity.type?.14:.06);
     if(!entity.missile){
       countKill(b,entity);
+      if(!entity.type)api.fighterDown?.();
       api.award?.(entity.type?250:75);
     }
     updateProgress(b);

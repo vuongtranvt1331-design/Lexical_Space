@@ -44,7 +44,7 @@ function createFlight(words = ['old', 'aged', 'tall', 'bright', 'slow', 'blue'])
   for (const name of ['capital-art.js','inspecting-dock.js','dreadnought-config.js','dreadnought-ending.js','dreadnought-formations.js','dreadnought.js','asteroid-belt.js','boss-encounters.js', 'boss-campaign.js','fleet-arrival.js','boss-six-preview.js','dock-nine-story.js','fleet-study.js']) vm.runInContext(source(name), scope);
   vm.runInContext(source('game.js').replace('  window.SpaceGame=Object.freeze(', `
     window.probe={
-      world:()=>sim,runStep,simulateCoop,signature,damage,ramFormation,rememberCenter,updateShots,advancePilot,executeDockShopBuy,drawScene,
+      world:()=>sim,end,hitWord,runStep,simulateCoop,signature,damage,ramFormation,rememberCenter,updateShots,advancePilot,executeDockShopBuy,drawScene,
       queueNextRow,beginBoss,beginCapital,updateCapital,hitTurret,advanceDialogue,releaseCore,tick,pack,unpack,activateSkill,updateHomingSalvos,makeFormation,fleetArrival,
     };
     window.SpaceGame=Object.freeze(`), scope);
@@ -966,4 +966,34 @@ test('Inspecting Dock triples each rounded mount at all eight weapon levels and 
   assert.equal(restored.capital.gunShot,5);assert.equal(restored.capital.rackRound,2);
   saved.capital=jsonCopy(restored.capital);
   assert.deepEqual(jsonCopy(f.probe.unpack(saved,true).capital),jsonCopy(restored.capital));
+});
+
+test('campaign ranks store team totals once under the host; a wingmate and Boss Lab never record a mission', async()=>{
+  const host=createFlight(), guest=createFlight(), events=[];
+  for(const [flight,name] of [[host,'Captain'],[guest,'Wingmate']]){
+    flight.scope.SpaceSuite={profile:()=>name};
+    flight.scope.CustomEvent=class {constructor(type,{detail}={}){this.type=type;this.detail=detail;}};
+    flight.scope.dispatchEvent=e=>{if(e.type==='spaceflight:record')events.push(e.detail);};
+  }
+  host.start('host');guest.start('guest');sync(host,guest);
+  const world=host.probe.world();
+  world.phase='match';
+  const size=world.row.length;
+  for(const ship of world.row.filter(e=>world.pair.has(e.word)))host.probe.hitWord(ship,999,world.wingman);
+  assert.equal(world.shipsDown,size);
+  host.probe.end('defeat');
+  const finish=host.packets.findLast(p=>p.type==='finish');
+  guest.game.receiveCoop(finish.type,finish.payload);
+  guest.game.receiveCoop(finish.type,finish.payload);
+  host.game.stop();guest.game.stop();
+  await Promise.resolve();
+  assert.equal(events.length,1);
+  assert.equal(events[0].pilot,'Captain');assert.equal(events[0].mode,'team');
+  assert.equal(events[0].id,'fixture');assert.equal(events[0].score,world.score);
+  assert.equal(events[0].kills,size);
+  host.start('host',{boss:1,phase:1,level:1});host.probe.end('victory');
+  assert.equal(events.length,1);
+  host.game.start('aegis');const solo=host.probe.world();solo.score=800;
+  host.game.stop();assert.equal(events.length,2);assert.equal(events[1].mode,'solo');
+  assert.equal(events[1].status,'stopped');assert.equal(events[1].ship,'aegis');
 });
