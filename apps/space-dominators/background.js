@@ -343,10 +343,11 @@
     ctx.drawImage(img,0,shift-img.height);
     if(shift<height)ctx.drawImage(img,0,shift);
   }
-  function draw(ctx,seconds) {
+  function draw(ctx,seconds,deepSpace=false) {
     haze ||= makeHaze();
-    chart ||= makeChart();
     scrollPlane(ctx,haze,seconds);   // 8 design pixels per second
+    if(deepSpace)return;
+    chart ||= makeChart();
     scrollPlane(ctx,chart,seconds);  // 16 for all celestial landmarks
     landmarks(ctx,seconds);
   }

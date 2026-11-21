@@ -1,0 +1,82 @@
+[
+  {
+    "id": "tur_base",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-30b75fe9-c961-40fd-961a-29e6977ba63e.png"
+  },
+  {
+    "id": "head_fan_wave",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-175adca9-ea87-4dce-82e1-d707215a835f.png"
+  },
+  {
+    "id": "head_expanding_orb",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-6a361a24-5e1b-449e-861c-0475468680e2.png"
+  },
+  {
+    "id": "head_twin_crossfire",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-c5516fd7-a2ef-494e-b3e9-81ca1f024896.png"
+  },
+  {
+    "id": "head_homing_missile",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-b919fd9a-cf20-4159-aa59-6afa6cea7fe8.png"
+  },
+  {
+    "id": "turret_sprinkler",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-00624467-7884-424d-88c8-0952966f81e3.png"
+  },
+  {
+    "id": "head_charging_laser",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-d72f811d-7fb5-4d6b-a7ef-b68b6935798a.png"
+  },
+  {
+    "id": "ind_priority_target",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-17986b6d-bc08-4703-bc9a-3a7358ddec44.png"
+  },
+  {
+    "id": "ind_sprinkler_marker",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-3d976c5e-05e3-4c7a-a355-144e799d8fc8.png"
+  },
+  {
+    "id": "proj_standard_fan",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-3c35b6cc-dee4-4958-981b-f7e19613850d.png"
+  },
+  {
+    "id": "proj_expanding_orb",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-854d7aaf-9ae2-46e7-82ac-bf47d42fd040.png"
+  },
+  {
+    "id": "proj_twin_cross",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-d3a64db7-09a5-496b-98f4-99b104240345.png"
+  },
+  {
+    "id": "proj_sprinkler_orb",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-40266a2f-c961-47b3-9065-1c49264ee259.png"
+  },
+  {
+    "id": "proj_missile_homing",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-0dcb20a1-ac9d-4443-8207-addb7f1fdc9a.png"
+  },
+  {
+    "id": "proj_missile_shotgun",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-90a96df7-1cfa-48a7-92ff-b9f4aeced0a9.png"
+  },
+  {
+    "id": "beam_laser_charge",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-7034231d-3cb2-4b01-adbc-200e35a32fcf.png"
+  },
+  {
+    "id": "beam_laser_fire",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-a673d542-79d8-48f5-80f6-6830483284a1.png"
+  },
+  {
+    "id": "ind_fleet_entry_red",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-77501a1a-ed92-439d-a0e7-2cde944e1c51.png"
+  },
+  {
+    "id": "enemy_fighter",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-27340737-67e0-4ea1-bd32-aa78ec680b72.png"
+  },
+  {
+    "id": "head_shotgun_missile",
+    "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-14f169bb-8e55-4816-a816-6494f1f47346.png"
+  }
+]

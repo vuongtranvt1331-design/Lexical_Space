@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "source": "https://kenney.nl/assets/sci-fi-sounds",
+  "license": "CC0-1.0",
+  "notes": "Reuse existing local OGGs; no duplicate downloads. All events have synthesized offline fallback. No shield event: current game uses lives.",
+  "voiceLimit": 8,
+  "events": {
+    "shoot": {
+      "file": "../audio/laserSmall_000.ogg",
+      "level": 0.22,
+      "cooldown": 0.095,
+      "duration": 0.11,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "triangle",
+        "frequency": 850,
+        "endFrequency": 220
+      }
+    },
+    "fanCharge": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.065,
+      "cooldown": 0.3,
+      "duration": 0.25,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 260,
+        "endFrequency": 420
+      }
+    },
+    "twinCharge": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.065,
+      "cooldown": 0.3,
+      "duration": 0.25,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 320,
+        "endFrequency": 490
+      }
+    },
+    "fanFire": {
+      "file": "../audio/laserRetro_001.ogg",
+      "level": 0.13,
+      "cooldown": 0.18,
+      "duration": 0.16,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "sawtooth",
+        "frequency": 650,
+        "endFrequency": 180
+      }
+    },
+    "orbCharge": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.14,
+      "cooldown": 0.4,
+      "duration": 0.5,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 140,
+        "endFrequency": 650
+      }
+    },
+    "orbFire": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.19,
+      "cooldown": 0.3,
+      "duration": 0.32,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 720,
+        "endFrequency": 95
+      }
+    },
+    "twinFire": {
+      "file": "../audio/laserSmall_000.ogg",
+      "level": 0.15,
+      "cooldown": 0.18,
+      "duration": 0.16,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "triangle",
+        "frequency": 850,
+        "endFrequency": 190
+      }
+    },
+    "missileLock": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.1,
+      "cooldown": 0.5,
+      "duration": 0.25,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 380,
+        "endFrequency": 600
+      }
+    },
+    "missileLaunch": {
+      "file": "../audio/thrusterFire_000.ogg",
+      "level": 0.17,
+      "cooldown": 0.22,
+      "duration": 0.3,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 160,
+        "endFrequency": 70
+      }
+    },
+    "shotgunLaunch": {
+      "file": "../audio/thrusterFire_000.ogg",
+      "level": 0.2,
+      "cooldown": 0.3,
+      "duration": 0.4,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 220,
+        "endFrequency": 50
+      }
+    },
+    "sprinklerFire": {
+      "file": "../audio/laserSmall_000.ogg",
+      "level": 0.075,
+      "cooldown": 0.35,
+      "duration": 0.09,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 560,
+        "endFrequency": 250
+      }
+    },
+    "laserCharge": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.18,
+      "cooldown": 0.65,
+      "duration": 1.1,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 120,
+        "endFrequency": 1250
+      }
+    },
+    "laserFire": {
+      "file": "../audio/laserRetro_001.ogg",
+      "level": 0.24,
+      "cooldown": 0.4,
+      "duration": 0.45,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "sawtooth",
+        "frequency": 1200,
+        "endFrequency": 160
+      }
+    },
+    "fighterFire": {
+      "file": "../audio/laserSmall_000.ogg",
+      "level": 0.08,
+      "cooldown": 0.22,
+      "duration": 0.11,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "triangle",
+        "frequency": 750,
+        "endFrequency": 220
+      }
+    },
+    "fighterExplosion": {
+      "file": "../audio/explosionCrunch_000.ogg",
+      "level": 0.24,
+      "cooldown": 0.09,
+      "duration": 0.28,
+      "maxVoices": 3,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 120,
+        "endFrequency": 40
+      }
+    },
+    "turretExplosion": {
+      "file": "../audio/lowFrequency_explosion_000.ogg",
+      "level": 0.38,
+      "cooldown": 0.22,
+      "duration": 0.7,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 90,
+        "endFrequency": 28
+      }
+    },
+    "turretSecondary": {
+      "file": "../audio/explosionCrunch_003.ogg",
+      "level": 0.15,
+      "cooldown": 0.15,
+      "duration": 0.22,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 160,
+        "endFrequency": 55
+      }
+    },
+    "projectilePop": {
+      "file": "../audio/impactMetal_000.ogg",
+      "level": 0.1,
+      "cooldown": 0.1,
+      "duration": 0.13,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 480,
+        "endFrequency": 100
+      }
+    },
+    "armorHit": {
+      "file": "../audio/impactMetal_000.ogg",
+      "level": 0.1,
+      "cooldown": 0.08,
+      "duration": 0.1,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "triangle",
+        "frequency": 500,
+        "endFrequency": 160
+      }
+    },
+    "playerDamage": {
+      "file": "../audio/explosionCrunch_003.ogg",
+      "level": 0.32,
+      "cooldown": 0.35,
+      "duration": 0.4,
+      "maxVoices": 2,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 200,
+        "endFrequency": 45
+      }
+    },
+    "priorityWarning": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.09,
+      "cooldown": 0.8,
+      "duration": 0.16,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 420,
+        "endFrequency": 700
+      }
+    },
+    "waveWarning": {
+      "file": "../audio/forceField_000.ogg",
+      "level": 0.16,
+      "cooldown": 1,
+      "duration": 0.36,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "triangle",
+        "frequency": 300,
+        "endFrequency": 620
+      }
+    },
+    "fighterWave": {
+      "file": "../audio/spaceEngineSmall_000.ogg",
+      "level": 0.16,
+      "cooldown": 1,
+      "duration": 0.65,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "noise",
+        "frequency": 240,
+        "endFrequency": 70
+      }
+    },
+    "phaseChange": {
+      "file": "../audio/engineCircular_001.ogg",
+      "level": 0.2,
+      "cooldown": 1,
+      "duration": 0.6,
+      "maxVoices": 1,
+      "fallback": {
+        "kind": "sine",
+        "frequency": 240,
+        "endFrequency": 720
+      }
+    }
+  }
+}

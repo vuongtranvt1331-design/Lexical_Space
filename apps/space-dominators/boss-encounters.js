@@ -995,8 +995,7 @@ const RailPatterns = (() => {
     a.halfAngle=(high-low)/2;
   }
 
-  const escortPeriod = 3, escortHold = .55;
-  const escortChargeStart = escortPeriod - 1;
+  const escortHold = .55;
   function updateEscorts(b, api) {
     if (!b.railEscorts) {
       b.railEscorts = [-1,1].map(side => ({
@@ -1005,8 +1004,9 @@ const RailPatterns = (() => {
         aimX:640, aimY:600, lockBeat:-1, hit:[]
       }));
     }
-    const beat=Math.floor((b.clock+1e-9)/escortPeriod);
-    const elapsed=Math.max(0,b.clock-beat*escortPeriod);
+    const period=window.SpaceBosses.cooldown(b,3), escortChargeStart=period-1;
+    const beat=Math.floor((b.clock+1e-9)/period);
+    const elapsed=Math.max(0,b.clock-beat*period);
     const living=api.pilots.filter(p=>p.hp>0);
     for(const [i,ship] of b.railEscorts.entries()){
       if(elapsed>=escortChargeStart && ship.lockBeat!==beat+1 && living.length){
@@ -1167,8 +1167,9 @@ const RailPatterns = (() => {
 
   function drawGuns(ctx,b,a,time){
     ctx.save();
-    const beat=Math.floor((b.clock+1e-9)/escortPeriod);
-    const elapsed=Math.max(0,b.clock-beat*escortPeriod);
+    const period=window.SpaceBosses.cooldown(b,3), escortChargeStart=period-1;
+    const beat=Math.floor((b.clock+1e-9)/period);
+    const elapsed=Math.max(0,b.clock-beat*period);
     for(const ship of b.railEscorts || []){
         const side=ship.side, m=escortMuzzle(b,ship);
         const charging=ship.lockBeat===beat+1 && elapsed>=escortChargeStart;
@@ -1938,144 +1939,12 @@ window.SpaceEncounterSkills = [
       "span": 3.334
     }
   ],
-  [
-    {
-      "name": "Four-Laser Rotor",
-      "hint": "Destroy rotor node or slip between rotating laser spokes",
-      "windup": 0.95,
-      "cooldown": 6.4,
-      "hardCooldown": 4.9,
-      "recovery": 0.75,
-      "events": [
-        {
-          "type": "rotor",
-          "at": 0.0,
-          "count": 4,
-          "angle": 0,
-          "travel": 180,
-          "duration": 1.2,
-          "width": 14,
-          "color": "#ff3b30"
-        }
-      ],
-      "span": 2.9
-    },
-    {
-      "name": "Overheat Ring",
-      "hint": "Land three shots on the lit core during windup to cancel both rings. Otherwise, slip through a gap.",
-      "windup": 0.85,
-      "cooldown": 8.5,
-      "hardCooldown": 6.6,
-      "recovery": 0.8,
-      "events": [
-        {
-          "type": "ring",
-          "at": 0.0,
-          "count": 10,
-          "angle": 18,
-          "speed": 215,
-          "color": "#ff9500"
-        },
-        {
-          "type": "ring",
-          "at": 0.25,
-          "count": 12,
-          "angle": 0,
-          "speed": 245,
-          "color": "#ff3b30"
-        }
-      ],
-      "span": 2.0
-    },
-    {
-      "name": "Crucible Droplets",
-      "hint": "Bait gravity arcs downward and slide horizontally between drip lanes",
-      "windup": 0.9,
-      "cooldown": 7.0,
-      "hardCooldown": 5.4,
-      "recovery": 0.7,
-      "events": [
-        {
-          "type": "fan",
-          "at": 0.0,
-          "count": 5,
-          "spread": 0.24,
-          "speed": 185,
-          "dy": 40,
-          "color": "#ffcc00",
-          "gravity": 110,
-          "angle": -29
-        },
-        {
-          "type": "fan",
-          "at": 0.3,
-          "count": 5,
-          "spread": 0.24,
-          "speed": 210,
-          "dy": 40,
-          "color": "#ff9500",
-          "gravity": 110,
-          "angle": 23
-        }
-      ],
-      "span": 2.0
-    },
-    {
-      "name": "Cooling Vent",
-      "hint": "Hold center lane directly beneath boss while flank vents purge",
-      "windup": 1.0,
-      "cooldown": 9.5,
-      "hardCooldown": 7.6,
-      "recovery": 0.85,
-      "events": [
-        {
-          "type": "fan",
-          "at": 0.0,
-          "count": 4,
-          "spread": 0.11,
-          "speed": 175,
-          "dx": -62,
-          "dy": 20,
-          "angle": -45,
-          "color": "#5ac8fa"
-        },
-        {
-          "type": "fan",
-          "at": 0.0,
-          "count": 4,
-          "spread": 0.11,
-          "speed": 175,
-          "dx": 62,
-          "dy": 20,
-          "angle": 45,
-          "color": "#5ac8fa"
-        },
-        {
-          "type": "fan",
-          "at": 0.35,
-          "count": 4,
-          "spread": 0.11,
-          "speed": 200,
-          "dx": -62,
-          "dy": 20,
-          "angle": -50,
-          "color": "#007aff"
-        },
-        {
-          "type": "fan",
-          "at": 0.35,
-          "count": 4,
-          "spread": 0.11,
-          "speed": 200,
-          "dx": 62,
-          "dy": 20,
-          "angle": 50,
-          "color": "#007aff"
-        }
-      ],
-      "span": 2.3
-    }
-  ],
+  Object.entries(window.SpaceDreadnoughtConfig.types).map(([name,spec])=>({
+    name:{fan:'Fan Wave',orb:'Expanding Orb',twin:'Twin Crossfire',homing:'Light Homing Missiles',
+      shotgun:'Shotgun Missiles',sprinkler:'Sprinkler',laser:'Telegraphed Laser'}[name],
+    hint:'Deck weapon. Watch the charge, destroy priority targets and leave the marked fighter corridors.',
+    cooldown:spec.cooldown,hardCooldown:spec.cooldown,windup:spec.chargeTime,span:spec.fireDuration,events:[]
+  })),
   [
     {
       "name": "Folding Hinges",
@@ -2791,7 +2660,7 @@ window.SpaceMiner = (() => {
       if(b.practiceSkill!==undefined && b.practiceSkill!==k)continue;
       if(b.clock+1e-8<m.next[k])continue;
       cast(b,m,k,api);
-      m.next[k]+=b.phase===1?skills[k].cooldown:skills[k].hardCooldown;
+      m.next[k]+=window.SpaceBosses.cooldown(b,b.phase===1?skills[k].cooldown:skills[k].hardCooldown);
     }
     for(const mine of m.mines){
       mine.age+=dt;

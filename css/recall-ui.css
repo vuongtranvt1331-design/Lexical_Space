@@ -94,7 +94,6 @@
   overflow-wrap: anywhere;
 }
 #fc-front-word-button { display: block; width: 100%; }
-.retrieval-card[data-recall-direction="vi-en"] #fc-word-meta { margin-inline-start: .35em; }
 .retrieval-card[data-recall-direction="en-vi"] :is(#fc-prompt-title, #fc-back-meaning) { margin: 0; }
 .vocab-card-pos, .vocab-card-ipa { color: var(--card-muted); font-size: 13px; font-weight: 600; }
 .vocab-card-field :is(h3, h4) {
@@ -147,14 +146,11 @@
 .reverse-recall-form button svg { width: 22px; height: 22px; }
 .recall-feedback {
   min-width: 0;
-  padding: 3px 8px;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, .82);
+  margin: 0;
   color: #991b1b;
   font-weight: 750;
 }
-.recall-feedback[data-correct="true"] { border-color: #86efac; color: #166534; }
+.recall-feedback[data-correct="true"] { color: #166534; }
 
 .retrieval-controls { flex-shrink: 0; padding: 7px 0 4px; }
 .practice-mode-button {

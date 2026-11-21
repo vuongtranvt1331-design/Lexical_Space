@@ -1,0 +1,27 @@
+{
+  "version": "44.38.0",
+  "generatedBy": "built-in imagegen",
+  "sourcePrompts": "tools/asset-packs/boss-six/hull-damage-atlas-sources.json",
+  "files": [
+    {
+      "file": "hull-damage-1.png",
+      "bytes": 370761,
+      "sha256": "ddb80684c94192818ca8f367f112609a766c847253e1ca1e1f184875239b87e5"
+    },
+    {
+      "file": "hull-damage-2.png",
+      "bytes": 375606,
+      "sha256": "1d13d8a3d9767aa6840d46969d9012145fa832e06a298ff93b704bdd58246c90"
+    },
+    {
+      "file": "reactor.png",
+      "bytes": 12174,
+      "sha256": "17a7e09d88aa226ae4cb812be5073c002b537b28828aaeed5dbc23a69a2065c5"
+    },
+    {
+      "file": "reactor-closed.png",
+      "bytes": 12947,
+      "sha256": "0804d7f787fd6f155179031ad29a754592628f013e5e9cef3e64d7b153827d69"
+    }
+  ]
+}

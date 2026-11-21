@@ -128,38 +128,6 @@
     }
     ctx.restore();
   }
-  function drawBriefingMap(ctx,time,line) {
-    ctx.save();
-    window.SpaceBackdrop.draw(ctx,time);
-    ctx.fillStyle='rgba(6,16,29,.84)';
-    ctx.fillRect(60,34,1160,420);
-    function label(value,x,y,size,color){
-      ctx.fillStyle=color;ctx.font='600 '+size+'px system-ui, sans-serif';
-      ctx.textBaseline='middle';ctx.textAlign='left';ctx.fillText(value,x,y);
-    }
-    label('THE LAST CONVOY',94,82,38,'#ebf2f1');
-    label('EVACUATION ROUTES  /  TWELVE COLONIES',96,126,17,'#8ac5c4');
-    for(let i=0;i<12;i++){
-      const x=123+(i%3)*74, y=166+i*22;
-      ctx.strokeStyle='#365e69';ctx.lineWidth=2;
-      ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+62,y);ctx.lineTo(574,280);ctx.stroke();
-      ctx.fillStyle='#8de5ca';ctx.fillRect(x-3,y-3,6,6);
-    }
-    ctx.strokeStyle='#559c98';ctx.beginPath();ctx.moveTo(574,280);ctx.lineTo(1030,280);ctx.stroke();
-    const travel=still.matches ? .35 : (time*.11)%1;
-    for(let i=0;i<5;i++){
-      const x=610+travel*142-i*11;
-      ctx.fillStyle=i===0?'#ffcc7a':'#a8d1c9';
-      ctx.fillRect(Math.round(x),276+(i%2)*10,8,5);
-    }
-    label('CIVILIAN CONVOY',536,240,15,'#b7d7cf');
-    label(line===6?'SCHOOL FERRY  /  SIGNAL LOST':'SCHOOL FERRY',532,324,15,line===6?'#f5a17f':'#ffca87');
-    ctx.fillStyle='#fc927e';
-    ctx.fillRect(1018,250,6,60);ctx.fillRect(1030,250,6,60);
-    label('JUMP GATE',941,216,18,'#f9e1c0');
-    label('SEALED',999,337,15,'#fa9b8d');
-    ctx.restore();
-  }
-  window.SpaceCampaign=Object.freeze({duration,departure,ready,draw,drawBriefingMap,
+  window.SpaceCampaign=Object.freeze({duration,departure,ready,draw,
     audioCues:[[departure,'boss'],[departure+carriers[0].release+chargeDuration+holdBeforeJump,'warp']],get reducedMotion(){return still.matches;}});
 })();

@@ -1,0 +1,14 @@
+[
+  {
+    "file": "apps/space-dominators/assets/boss-six-deck/preview.png",
+    "sha256": "8b35ab9131c3b189ab9811a17d665b23eba77432a714a31b1c226f53784fca35"
+  },
+  {
+    "file": "apps/space-dominators/assets/capital-turret.png",
+    "sha256": "12206094b781b3cbf794d42a04540e7f9da5790352ca08eb43f3906789bcfae4"
+  },
+  {
+    "file": "apps/space-dominators/assets/enemy-flight-atlas.png",
+    "sha256": "867d6860fac3cc935ac24356d3b83ca83ccf6bd711b8b29a66c4e6395c0744a6"
+  }
+]

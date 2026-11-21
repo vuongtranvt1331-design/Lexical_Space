@@ -1,0 +1,47 @@
+Bạn hãy triển khai toàn bộ hệ thống súng/ụ súng, đạn, wave máy bay địch và gameplay màn đấu tiến công tàu khổng lồ phong cách Star Wars cho dự án hiện tại. Hiện tại dự án mới chỉ có nền và một vài hình ảnh ban đầu; phần bộ hình ảnh chi tiết cho súng, đạn, indicator và máy bay địch đang được tạo/bổ sung, vì vậy hãy xây dựng kiến trúc có fallback vẽ canvas/vector tạm rõ ràng khi ảnh chưa tải xong và tự động dùng sprite ảnh thật ngay khi file ảnh tồn tại đúng đường dẫn.
+
+Dưới đây là toàn bộ gameplay và luật kỹ thuật bạn PHẢI tuân thủ:
+
+1. BỐI CẢNH & CẤU TRÚC MÀN CHƠI:
+- Màn chơi tiến tới tấn công tàu khổng lồ (Capital Ship / Dreadnought) kết hợp các hạm đội máy bay địch nhỏ.
+- Có các ụ súng bố trí ở hai bên đường đi / trên mặt phẳng tàu (vì tàu người chơi bay phía trên tàu, các ụ súng hai bên bắn vào người chơi).
+- Có các đội hình máy bay địch nhỏ:
+  + Đội hình dày đặc phía trên dạng lưới 3 x 12 (36 chiếc) để người chơi bắn liên tục.
+  + Các hạm đội máy bay nhỏ bay theo hình vòng cung chéo màn hình, bắn tên lửa hoặc tia laser về phía người chơi.
+  + Các đợt/wave Fighter địch bay vào giao tranh trực tiếp với người chơi.
+
+2. CẤU TRÚC Ụ SÚNG 2 PHẦN & ĐỘ BỀN:
+- Mọi ụ súng đều tách 2 lớp:
+  + Phần đế (base): gắn cố định vào nền / thân tàu đang di chuyển theo màn chơi.
+  + Phần đầu/nòng (head): xoay được về phía người chơi (trừ vòi tưới nước quay tròn đều 360 độ).
+- Khả năng phá hủy:
+  + Tất cả các loại ụ súng tấn công đều PHÁ HỦY ĐƯỢC, NGOẠI TRỪ ụ Vòi tưới nước (Sprinkler) là ụ DUY NHẤT KHÔNG THỂ PHÁ HỦY (bất tử, xoay tròn đều, đạn khá thưa để người chơi né được nhưng bay xuyên suốt từ đầu đến cuối màn hình).
+  + Về số lượng đạn cần để tiêu diệt các ụ súng phá hủy được: tự tư duy và thiết kế hệ thống máu/HP của từng loại ụ súng theo số lượng đạn tiêu diệt hợp lý (dễ cân bằng, có thể chỉnh thông số tập trung ở file config).
+- Indicator trên đầu mục tiêu ưu tiên:
+  + Gắn indicator trực quan phía trên các ụ súng ưu tiên/nguy hiểm (như tên lửa đuổi nhẹ, tên lửa shotgun, laser cảnh báo...) để nhắc người chơi ưu tiên bắn hạ.
+
+3. ĐỦ 7 LOẠI Ụ SÚNG / CƠ CHẾ TẤN CÔNG:
+1) Sóng tỏa quạt (Fan Wave Turret): phá hủy được, đầu xoay hướng player, sạc ngắn (~0.3s–0.5s), bắn chùm đạn hình quạt, mở từ đầu màn (`0s`).
+2) Đạn nở dần (Expanding Orb Turret): phá hủy được, đầu xoay hướng player, sạc nhẹ (~0.4s–0.6s), đạn lúc mới bắn ra rất nhỏ rồi nở dần kích thước theo quãng đường/thời gian bay, tới cuối màn đạt kích thước khá lớn ở mức vừa phải (không quá to che hết đường né).
+3) Đạn đôi hai bên (Twin Crossfire Turret): phá hủy được, cụm 2 bên đầu xoay, sạc nhẹ (~0.3s–0.4s), bắn đan chéo/lệch nhịp hai bên đường bay.
+4) Tên lửa đuổi nhẹ (Light Homing Missile Turret): phá hủy được, đầu xoay hướng player, có indicator trên đầu, khóa/sạc ~0.5s–0.7s, phóng tên lửa bẻ góc nhẹ trong giai đoạn đầu rồi bay thẳng tiếp.
+5) Tên lửa shotgun (Shotgun Missile Turret): phá hủy được, đầu xoay hướng player, có indicator trên đầu, nạp/sạc ~0.6s–0.8s, bắn chùm tên lửa tỏa rộng kiểu shotgun.
+6) Vòi tưới nước (Sprinkler Turret): KHÔNG THỂ PHÁ HỦY, có indicator/ký hiệu riêng trên đầu, quay tròn đều 360 độ, đạn thưa để né nhưng đi từ đầu đến cuối màn hình.
+7) Laser cảnh báo (Telegraphed Laser Turret): phá hủy được, đầu xoay hướng player, có indicator trên đầu, có thời gian sạc rõ rệt (~0.8s–1.2s) kèm vạch/tia báo hiệu trước khi bắn tia thật.
+
+4. HỆ QUY CHIẾU TỐC ĐỘ BAY CỦA ĐẠN (LẤY ĐẠN THƯỜNG / SÓNG QUẠT LÀM GỐC `1.0x`):
+- Đạn thường / sóng tỏa quạt: `1.0x` (tốc độ gốc chuẩn).
+- Đạn vòi tưới nước (Sprinkler): chậm nhất trong nhóm đạn thường (`~0.65x–0.8x`), thưa, bay suốt từ đầu đến cuối màn.
+- Đạn nở dần: `~0.75x–0.9x` (tốc độ bay vừa phải để người chơi quan sát độ phình to dần).
+- Đạn đôi hai bên: `~1.05x–1.2x`.
+- Tên lửa đuổi nhẹ & tên lửa shotgun: khởi đầu ~`0.85x` để bẻ lái/mở chùm, sau đó tăng tốc lên `~1.25x–1.45x`.
+- Tia laser cảnh báo: sau khi sạc xong thì tia/chùm phát ra cực nhanh/tức thì theo đường tia (điểm nhấn nằm ở thời gian sạc & cảnh báo).
+
+5. CƠ CHẾ HỒI CHIÊU (COOLDOWN), MỐC THỜI GIAN & TỈ LỆ XUẤT HIỆN:
+- Mỗi loại ụ/đợt tấn công có: mốc thời gian mở khóa (`unlockTime`), thời gian hồi chiêu (`cooldown`), thời gian sạc/báo hiệu (`chargeTime`), thời gian bắn/duy trì (`fireDuration`), và tỉ lệ xuất hiện (`spawnChance` + cơ chế cộng dồn pity nhẹ khi trượt), kèm giới hạn tránh chồng chéo đạn/tên lửa quá dày cùng lúc.
+
+6. QUY TẮC KHI CÓ WAVE FIGHTER (MÁY BAY ĐỊCH BAY VÀO CHIẾN ĐẤU):
+- Khi các wave Fighter địch bay vào giao tranh với người chơi: loại ụ súng DUY NHẤT được phép xuất hiện trên đường/tàu chỉ bao gồm **Vòi tưới nước (Sprinkler)** và **các ụ Tên lửa** (đuổi nhẹ / shotgun); các loại ụ kia tạm nghỉ/không xuất hiện trong lúc wave fighter đang đánh.
+- Bản thân các máy bay Fighter địch sẽ có hành vi bắn **đạn ngẫu nhiên** và **tên lửa đuổi nhẹ**.
+
+Hãy kiểm tra cấu trúc mã nguồn hiện tại của dự án, tạo các module/file rõ ràng, tách riêng phần cấu hình thông số (cooldown, tỉ lệ xuất hiện, tốc độ đạn, HP/số lượng đạn tiêu diệt, wave fighter) để dễ tinh chỉnh, và báo cáo lại chi tiết các file đã tạo/chỉnh sửa cùng cách chạy thử màn chơi.

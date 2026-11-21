@@ -28,7 +28,11 @@ def build():
         'apps/vocabulary-test/js/exam.js', 'apps/vocabulary-test/css/exam.css',
         'apps/quick-ears/history.js', 'apps/quick-ears/practice.js', 'apps/arcade/js/arcade-2.js', 'apps/arcade/js/space-chase.js', 'apps/arcade/css/arcade-1.css', 'apps/arcade/css/action-frames.css',
         'apps/space-dominators/studio-intro.css', 'apps/space-dominators/station.css', 'apps/space-dominators/station.js',
-        'apps/space-dominators/background.js',
+        'apps/space-dominators/background.js', 'apps/space-dominators/game.js', 'apps/space-dominators/coop-room.js',
+        'apps/space-dominators/coop-lobby.js', 'apps/space-dominators/boss-campaign.js',
+        'apps/space-dominators/boss-encounters.js', 'apps/space-dominators/asteroid-belt.js', 'apps/space-dominators/boss-six-preview.js',
+        'apps/space-dominators/dreadnought-config.js', 'apps/space-dominators/dreadnought.js', 'apps/space-dominators/dreadnought-formations.js', 'apps/space-dominators/dreadnought-ending.js',
+        'apps/space-dominators/dock-nine-story.js', 'apps/space-dominators/campaign-entry.js', 'apps/space-dominators/fleet-study.js', 'apps/space-dominators/sfx-config.js', 'apps/space-dominators/fleet-arrival.js', 'apps/space-dominators/boss-practice.js', 'apps/space-dominators/sound.js',
         'apps/poker/js/poker-1.js', 'apps/poker/css/poker-1.css',
         'apps/quick-drawn/css/duel.css', 'apps/quick-drawn/js/chess.js', 'apps/quick-drawn/js/duel.js',
         'apps/quick-drawn/js/ui-sprites.js', 'apps/quick-drawn/js/connection-recovery.js',
@@ -64,8 +68,15 @@ def build():
             './apps/quick-drawn/assets/images/chess/chess_toolbar_emojis.png', './apps/arcade/assets/action-glyphs.png', './apps/arcade/assets/system-controls.png',
             './apps/grammar/assets/matcha-logo.png', './apps/grammar/assets/matcha-topic.png']
     core.extend('./assets/audio/practice-' + cue + '.wav' for cue in ('correct', 'retry', 'complete'))
+    dread_root = ROOT / 'apps/space-dominators/assets'
+    dread_sprites = json.loads((dread_root / 'sprites/manifest.json').read_text(encoding='utf-8'))
+    core.extend('./apps/space-dominators/assets/sprites/' + asset['path'] for asset in dread_sprites['assets'])
+    core.extend('./apps/space-dominators/assets/' + name for name in ('boss-six-deck/preview.png', 'star-destroyer.png', 'boss-six-ending/hull-damage-1.png', 'boss-six-ending/hull-damage-2.png', 'boss-six-ending/reactor.png', 'boss-six-ending/reactor-closed.png'))
+    dread_sfx = json.loads((dread_root / 'sfx/manifest.json').read_text(encoding='utf-8'))
+    core.extend('./' + (dread_root / 'sfx' / event['file']).resolve().relative_to(ROOT).as_posix()
+                for event in {event['file']: event for event in dread_sfx['events'].values()}.values())
     core.extend('./apps/space-dominators/assets/' + name for name in
-                ('celestial-survey.png', 'planet-encounters.png', 'boss-fx/enemy-flight-effects.png',
+                ('dock-nine-radio.png', 'fleet-lab-dreadnought.png', 'fleet-lab-venator.png', 'fleet-lab-acclamator.png', 'fleet-lab-imperial.png', 'audio/hyperspaceexit.mp3', 'celestial-survey.png', 'planet-encounters.png', 'boss-fx/enemy-flight-effects.png',
                  'player-hulls.png', 'player-exhaust.png', 'zodiac-1.png', 'zodiac-2.png', 'zodiac-3.png'))
     core.extend('./apps/' + module + '/assets/action-buttons.png'
                 for module in ('arcade', 'sky-dominators', 'quick-drawn', 'poker'))

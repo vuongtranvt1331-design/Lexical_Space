@@ -3,7 +3,7 @@
   const fleet = [
     {id:'kestrel',name:'Kestrel',skill:'Target slow',price:1800},
     {id:'spectre',name:'Spectre',skill:'Phase shift',price:2400},
-    {id:'aegis',name:'Aegis',skill:'Shield',price:2600},
+    {id:'aegis',name:'Aegis',skill:'Point defense',price:2600},
     {id:'tempest',name:'Tempest',skill:'Disruption pulse',price:2800}
   ];
   const allUnlocked = true;
@@ -110,9 +110,11 @@
   }
   SpaceSound.volume(profile.volume);
 
+  let audibleVolume=profile.volume || .5;
   function setVolume(pct) {
     const val = Math.max(0, Math.min(100, Math.round(Number(pct) || 0)));
     profile.volume = val / 100;
+    if(profile.volume>0)audibleVolume=profile.volume;
     SpaceSound.volume(profile.volume); save();
     renderVolume();
   }
@@ -125,6 +127,8 @@
       input.parentElement.style.setProperty('--volume', value + '%');
       input.setAttribute('aria-valuetext', value === 0 ? 'Muted' : value + '%');
       el(iconId).textContent = value === 0 ? '❌' : '🔊';
+      el(iconId).setAttribute('aria-label',value===0?'Unmute effects':'Mute effects');
+      el(iconId).setAttribute('aria-pressed',String(value===0));
     }
   }
 
@@ -159,6 +163,14 @@
 
   /* ── Hangar View Switcher (Main / Settings / Core) ────────────── */
   function setHangarView(view) {
+    const radioOpen=view==='radio';
+    station.classList.toggle('reading-radio',radioOpen);
+    el('radioLog').hidden=!radioOpen;
+    el('openRadioLog').hidden=view!=='main';
+    if(radioOpen){
+      populateRadioLog();
+      el('radioLogTitle').focus();
+    }
     const dockMain = el('dockMain');
     const dockSettings = el('dockSettings');
     const dockCore = el('dockCore');
@@ -179,12 +191,73 @@
   }
   window.setHangarView = setHangarView;
 
+  function populateRadioLog(){
+    const list=el('radioTransmissions');
+    if(list.childElementCount)return;
+    const {cast,scenes}=window.SpaceStory;
+    const titles={
+      patrol:'The Imperial gate patrol',opening:'Distress call from Dock Nine',boss1:'Boss 1 · Beacon Frigate',
+      boss2:'Boss 2 · Rail Warden',boss3:'Boss 3 · Hound Carrier',boss4:'Boss 4 · Anchor Miner',
+      intercept:'Boss 5 · Intercepted signal',boss5:'Boss 5 · The delivery',
+      boss6:'Boss 6 · Rescue channel',reveal:'Final transmission',training:'Boss Lab · Training'
+    };
+    for(const [scene,lines] of Object.entries(scenes)){
+      const section=document.createElement('details'),title=document.createElement('summary');
+      title.textContent=titles[scene]||scene;
+      section.append(title);
+      section.open=scene==='opening';
+      for(const [actor,body] of lines){
+        const [name,tile]=cast[actor];
+        const row=document.createElement('div'),face=document.createElement('span');
+        row.className='radio-line';face.className='radio-face';
+        face.style.backgroundPosition=(tile%5)*25+'% '+Math.floor(tile/5)*100+'%';
+        face.setAttribute('aria-hidden','true');
+        const message=document.createElement('div'),speaker=document.createElement('strong'),line=document.createElement('p');
+        speaker.textContent=name;speaker.style.color=window.SpaceStory.nameColor(actor);line.textContent=body;
+        message.append(speaker,line);row.append(face,message);section.append(row);
+      }
+      list.append(section);
+    }
+  }
+  function closeRadioLog(){
+    setHangarView('main');el('openRadioLog').focus();
+  }
+  el('openRadioLog').addEventListener('click',()=>setHangarView('radio'));
+  el('radioLogBack').addEventListener('click',closeRadioLog);
+  const allRadioOpen=()=>!el('radioTransmissions').querySelector('details:not([open])');
+  el('radioLogExpand').addEventListener('click',()=>{
+    const expand=!allRadioOpen();
+    for(const scene of el('radioTransmissions').children)scene.open=expand;
+  });
+  el('radioTransmissions').addEventListener('toggle',()=>{
+    el('radioLogExpand').textContent=allRadioOpen()?'Collapse all':'Expand all';
+  },true);
+
+  function renderDialogueSetting() {
+    const inRoom=!!SpaceCoop.state.role;
+    const enabled=!inRoom && SpaceStory.enabled;
+    for(const id of ['dialogueBtn','pauseDialogueBtn']){
+      const button=el(id);
+      button.disabled=inRoom;
+      button.textContent=enabled?'Dialogue · On':'Dialogue · Off';
+      button.setAttribute('aria-pressed',String(enabled));
+      button.title=inRoom?'Dialogue is always off in co-op':'Show story dialogue in solo play';
+    }
+  }
+  for(const id of ['dialogueBtn','pauseDialogueBtn'])el(id).addEventListener('click',()=>{
+    if(SpaceCoop.state.role)return;
+    SpaceStory.setEnabled(!SpaceStory.enabled);
+    renderDialogueSetting();
+  });
+  window.addEventListener('storage',renderDialogueSetting);
   function syncStationSettings() {
+    renderDialogueSetting();
     renderVolume();
     updateControlsButtons();
   }
 
   el('volSlider')?.addEventListener('input', () => setVolume(el('volSlider').value));
+  for(const id of ['volLabel','pauseVolLabel'])el(id)?.addEventListener('click',()=>setVolume(profile.volume>0?0:audibleVolume*100));
   el('toggleSettings')?.addEventListener('click', () => {
     setHangarView(el('dockSettings')?.hidden ? 'settings' : 'main');
   });
@@ -223,10 +296,7 @@
     el('pause').setAttribute('aria-expanded', 'true');
     el('pause').setAttribute('aria-label', 'Resume mission');
     showPauseRow('pauseMain');
-    const val = Math.round(profile.volume * 100);
-    if (el('pauseVolSlider')) el('pauseVolSlider').value = val;
-    if (el('pauseVolLabel')) el('pauseVolLabel').textContent = 'Effects volume · ' + val + '%';
-    updateControlsButtons();
+    syncStationSettings();
   }
   function closePauseBar() {
     el('pauseBar').hidden = true;
@@ -278,6 +348,7 @@
 
   function onRoomState(state){
     renderRoomPilots(state);
+    renderDialogueSetting();
     SpaceLobby.render(state);
     if(!state.role){
       if(activeMatch) openHangar();
@@ -359,6 +430,7 @@
         return;
       }
       if (mode === 'hangar') {
+        if(!el('radioLog').hidden){e.preventDefault();closeRadioLog();return;}
         if (!el('dockSettings')?.hidden) {
           e.preventDefault();
           setHangarView('main');
@@ -404,6 +476,7 @@
     title.textContent=(coOpResult ? 'Co-op · ' : '')+outcome+' · '+score.toLocaleString('en-US')+' pts';
     stats.textContent=rows+' rows · '+correct+' correct · '+wrong+' wrong · +'+earned+' CR';
     last.replaceChildren(title,stats);
+    if(d.chapterComplete){leaveFlight();return;}
     if(d.status==='defeat'){
       if (!coOpResult) leaveFlight();
       else if (room.role==='host') SpaceCoop.resetMatch();
@@ -417,7 +490,7 @@
   });
 
   update();
-  Promise.all([window.SpaceArt?.ready,window.SpaceCampaign?.ready,SpaceWords.ready]).then(()=>{
+  Promise.all([window.SpaceArt?.ready,window.SpaceCampaign?.ready,SpaceWords.ready,window.SpaceDreadnoughtEnding?.ready,window.SpaceDreadnought?.ready,window.SpaceBossSixPreview?.ready]).then(()=>{
     if(!window.SpaceArt || !window.SpaceGame || !window.SpaceWords)throw Error('Missing flight module');
     artLoaded=true;update();el('openCoop').disabled=false;
     if(SpaceCoop.state.code){onRoomState(SpaceCoop.state);SpaceCoop.reconnect();}

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#091425"><title>Space Dominators</title><link rel="stylesheet" href="./station.css?v=44.20.0-1a606b355a"><link rel="stylesheet" href="./coop-lobby.css"><link rel="stylesheet" href="./studio-intro.css?v=44.20.0-8748a44ad6"><link rel="stylesheet" href="../arcade/css/space-chase.css"><script defer src="../../suite/js/game-menu-audio.js?v=44.20.0-a1553843c3"></script><link rel="stylesheet" href="../../suite/css/game-icons.css?v=44.20.0-18940026b2">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#091425"><title>Space Dominators</title><link rel="stylesheet" href="./station.css?v=44.48.0-a6769099a1"><link rel="stylesheet" href="./coop-lobby.css"><link rel="stylesheet" href="./studio-intro.css?v=44.48.0-8748a44ad6"><link rel="stylesheet" href="../arcade/css/space-chase.css"><script defer src="../../suite/js/game-menu-audio.js?v=44.48.0-a1553843c3"></script><link rel="stylesheet" href="../../suite/css/game-icons.css?v=44.48.0-18940026b2">
 </head>
 <body>
 <div class="studio-arrival" hidden>
@@ -75,6 +75,15 @@ if (studioEntry) {
 </script>
 <canvas id="stationSpace" width="1280" height="720" aria-hidden="true"></canvas>
 <main id="station" aria-label="Space Dominators launch bay">
+  <button type="button" id="openRadioLog" class="boss-lab-btn" aria-controls="radioLog">Radio Log</button>
+  <section id="radioLog" aria-labelledby="radioLogTitle" hidden>
+    <header class="radio-log-header">
+      <h1 id="radioLogTitle" tabindex="-1">Radio Log</h1>
+      <button type="button" id="radioLogExpand">Expand all</button>
+      <button type="button" id="radioLogBack" class="dock-danger">Back</button>
+    </header>
+    <div id="radioTransmissions"></div>
+  </section>
   <a id="bossLabLink" class="boss-lab-btn" data-carry-deck href="./boss-practice.html">Boss Lab</a>
   <img class="masthead-logo" src="../arcade/assets/logo/space_dominator_super_update.png" alt="Space Dominators">
   <div class="craft-selector" aria-label="Choose your spacecraft">
@@ -103,14 +112,16 @@ if (studioEntry) {
       <a class="dock-btn dock-danger" data-suite-return href="../arcade/">Arcade Space</a>
     </div>
     <div class="dock-grid" id="dockSettings" hidden aria-label="Settings">
-      <div class="grid-top-full setting-vol-row">
-        <span id="volLabel" class="volume-icon" aria-hidden="true">🔊</span>
+      <div class="setting-vol-row">
+        <button id="volLabel" class="volume-icon" type="button" aria-label="Mute effects" aria-pressed="false">🔊</button>
         <input id="volSlider" aria-label="Effects volume" type="range" min="0" max="100" value="50">
       </div>
+      <button id="dialogueBtn" type="button" class="dock-btn dialogue-toggle" aria-label="Dialogue" aria-pressed="true">Dialogue · On</button>
       <button id="controlsBtn" class="dock-btn">Control <span data-control-mode-icon aria-hidden="true">&#x1F5B1;&#xFE0F; &#x2328;&#xFE0F;</span></button>
       <button id="closeSettings" class="dock-btn dock-danger">Back</button>
     </div>
     <div class="dock-grid" id="dockCore" hidden aria-label="Co-op">
+      <p id="coopLabLabel" class="coop-lab-label" aria-live="polite" hidden></p>
       <div class="grid-cell" id="coreCellTopLeft">
         <input id="roomCodeInput" type="text" inputmode="numeric" maxlength="4" minlength="4" pattern="[0-9]{4}" placeholder="0000" class="dock-input" aria-label="Four-digit room code">
         <div id="coopRoomBadge" class="dock-badge" hidden>Room <strong id="coopCode">0000</strong></div>
@@ -146,10 +157,11 @@ if (studioEntry) {
       <button id="confirmEnd" class="dock-btn dock-danger">Stop Mission</button>
     </div>
     <div class="dock-grid" id="pauseVolume" hidden>
-      <div class="grid-top-full setting-vol-row">
-        <span id="pauseVolLabel" class="volume-icon" aria-hidden="true">🔊</span>
+      <div class="setting-vol-row">
+        <button id="pauseVolLabel" class="volume-icon" type="button" aria-label="Mute effects" aria-pressed="false">🔊</button>
         <input id="pauseVolSlider" aria-label="Effects volume" type="range" min="0" max="100" value="50">
       </div>
+      <button id="pauseDialogueBtn" type="button" class="dock-btn dialogue-toggle" aria-label="Dialogue" aria-pressed="true">Dialogue · On</button>
       <button id="pauseControlsBtn" class="dock-btn">Control <span data-control-mode-icon aria-hidden="true">&#x1F5B1;&#xFE0F; &#x2328;&#xFE0F;</span></button>
       <button id="pauseVolDone" class="dock-btn dock-danger">Back</button>
     </div>
@@ -157,6 +169,6 @@ if (studioEntry) {
 <section id="panel" class="pause-bar" aria-labelledby="panelTitle" hidden><div class="dock-grid"><div class="debrief-summary"><h2 id="panelTitle"></h2><div id="panelContent"></div></div><div id="panelActions"></div></div></section>
 </section>
 <audio data-chase-laser preload="none" src="../arcade/assets/audio/space-chase-laser.mp3" hidden></audio>
-<script src="../../suite/js/effects-volume.js?v=44.20.0-ddd24e7a19"></script><script src="../arcade/js/space-chase.js?v=44.20.0-ddfbbe75af"></script>
-<script src="./art.js?v=hangar-preview-2"></script><script src="../../suite/js/core.js?v=44.20.0-a5b98868bd"></script><script src="../arcade/assets/lexical-vocabulary.js"></script><script src="./words.js"></script><script src="./sound.js"></script><script src="./background.js?v=44.20.0-f6f05b5941"></script><script src="./capital-art.js"></script><script src="./campaign-entry.js"></script><script src="./vendor/peerjs.min.js"></script><script src="../../suite/js/peer-transport.js?v=44.20.0-8acfb938a6"></script><script src="./coop-room.js?v=coop-stop-1"></script><script src="./campaign-sprites.js"></script><script src="./boss-fx.js"></script><script src="./boss-encounters.js"></script><script src="./miner-art.js"></script><script src="./asteroid-belt.js"></script><script src="./boss-campaign.js"></script><script src="./game.js?v=escape-pause-1"></script><script src="./coop-lobby.js?v=coop-wingmate-2"></script><script src="./station.js?v=44.20.0-777375ca67"></script>
+<script src="../../suite/js/effects-volume.js?v=44.48.0-ddd24e7a19"></script><script src="../arcade/js/space-chase.js?v=44.48.0-ddfbbe75af"></script>
+<script src="./art.js?v=hangar-preview-2"></script><script src="../../suite/js/core.js?v=44.48.0-a5b98868bd"></script><script src="../arcade/assets/lexical-vocabulary.js"></script><script src="./words.js"></script><script src="./sfx-config.js?v=44.48.0-f326aea785"></script><script src="./sound.js?v=44.48.0-6c06c0c734"></script><script src="./background.js?v=44.48.0-08238a87e7"></script><script src="./capital-art.js"></script><script src="./campaign-entry.js?v=44.48.0-e872ca877c"></script><script src="./vendor/peerjs.min.js"></script><script src="../../suite/js/peer-transport.js?v=44.48.0-8acfb938a6"></script><script src="./coop-room.js?v=44.48.0-ee2ed2c114"></script><script src="./campaign-sprites.js"></script><script src="./boss-fx.js"></script><script src="./dreadnought-config.js?v=44.48.0-a7d7b25b7e"></script><script src="./dreadnought-ending.js?v=44.48.0-684a050362"></script><script src="./dreadnought-formations.js?v=44.48.0-f0fff698d9"></script><script src="./dreadnought.js?v=44.48.0-7b0ca92ae3"></script><script src="./boss-encounters.js?v=44.48.0-e060411050"></script><script src="./miner-art.js"></script><script src="./asteroid-belt.js?v=44.48.0-843f1b32e6"></script><script src="./boss-campaign.js?v=44.48.0-1e5b4d6a02"></script><script src="./fleet-arrival.js?v=44.48.0-e82172afe9"></script><script src="./boss-six-preview.js?v=44.48.0-16eedb6c55"></script><script src="./dock-nine-story.js?v=44.48.0-afb4d8a77b"></script><script src="./fleet-study.js?v=44.48.0-be22d2091d"></script><script src="./game.js?v=44.48.0-d8f3c7b2f5"></script><script src="./coop-lobby.js?v=44.48.0-1a1aa2ae2d"></script><script src="./station.js?v=44.48.0-ee273fd45f"></script>
 </body></html>

@@ -22,7 +22,7 @@ const dictionaryResponse = lookupResponse([{ phonetic: fixtureWord.phonetic, mea
   synonyms: fixtureWord.synonyms, definitions: [{ example: fixtureWord.exampleSentence }] }] }]);
 const translationResponse = lookupResponse({ responseStatus: 200, responseData: { translatedText: fixtureWord.meaning } });
 await storage.mutateWords(Array.from({ length: 8 }, (_, i) => ({ id: `fixture_${i}`, username: 'UIFixture', patch: i === 0 ? fixtureWord :
-  { word: `term${i}`, meaning: `nghĩa ${i}`, exampleSentence: `Use term${i} in context.`, synonyms: [`alias ${i}`], collocations: [`term${i} first`, `term${i} second`] } })));
+  { word: `term${i}`, meaning: `nghĩa ${i}`, pos: 'n', exampleSentence: `Use term${i} in context.`, synonyms: [`alias ${i}`], collocations: [`term${i} first`, `term${i} second`] } })));
 localStorage.setItem('vocab_user', 'UIFixture');
 await import('../js/features/application.js');
 const flash = await import('../js/features/flashcard.js'), entry = await import('../js/features/entry.js');
@@ -113,7 +113,10 @@ test('practice, library, and entry workflows', async t => {
       await flash.setRecallDirection('vi-en'); assert.equal(flash.getSessionState().sessionId, before.sessionId);
       assert.notEqual(current().wordId, previousWordId);
       const target = context.wordsData.find(word => word.id === current().wordId);
-      assert.equal($('fc-front-word').textContent, target.meaning); assert.match($('fc-front-context').textContent, /\[ _____ \]/);
+      assert.equal($('fc-front-word').textContent, target.meaning);
+      assert.ok($('fc-word-meta').hidden && $('fc-prompt-meta').hidden);
+      assert.equal($('fc-word-meta').textContent, '');
+      assert.match($('fc-front-context').textContent, /\[ _____ \]/);
       assert.ok(!$('fc-prompt-collocations').textContent.toLowerCase().includes(target.word.toLowerCase()));
       const form = $('reverse-recall-form');
       assert.equal(form.parentElement, gradeButton(0).parentElement);
@@ -132,7 +135,9 @@ test('practice, library, and entry workflows', async t => {
       assert.equal($('fc-answer-context').textContent, target.exampleSentence);
       assert.equal($('fc-answer-context').querySelector('mark').textContent, target.word);
       assert.ok($('fc-collocations').textContent.includes(target.word));
-      assert.match($('recall-feedback').textContent, /The answer is/);
+      assert.equal($('recall-feedback').textContent, 'The answer is');
+      assert.equal($('fc-answer-pos').textContent, '('+target.pos+')');
+      assert.ok(!$('fc-answer-pos').hidden);
       flash.resetForUser(); await flash.startNewSession({ restore: true });
       assert.ok([0, 1].every(g => !gradeButton(g).hidden && !gradeButton(g).disabled));
       assert.ok([2, 3].every(g => gradeButton(g).hidden && gradeButton(g).disabled));

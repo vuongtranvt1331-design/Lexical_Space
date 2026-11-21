@@ -1,7 +1,7 @@
 {
   "name": "SpaceSuite",
-  "lexicalVersion": "44.20.0",
-  "date": "2026-11-20",
+  "lexicalVersion": "44.48.0",
+  "date": "2026-11-21",
   "root": "LexicalSpace-project",
   "modules": [
     "lexical",
@@ -14,5 +14,5 @@
     "vocabulary-test",
     "quick-ears"
   ],
-  "cacheVersion": "f52ed3c0559e83"
+  "cacheVersion": "87c4eef807aed7"
 }

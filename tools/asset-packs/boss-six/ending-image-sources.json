@@ -1,0 +1,17 @@
+{
+  "mode": "built-in imagegen",
+  "assets": {
+    "hull": {
+      "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-0f5c075b-d273-4202-82ec-d6a92fb22f55.png",
+      "prompt": "EDIT the attached exact capital ship sprite for a retro 8-bit space game. Preserve its exact top-down camera, proportions, pointed bow UP, slate-gray armor, bridge and original engines. Make ONE damaged variant of this SAME vessel. Crucial change: SIX substantial chunks of hull armor are physically MISSING around its outer edges, like bites taken out of a triangular biscuit, NOT just black scorch marks painted on intact armor. Three jagged missing chunks on left edge and three on right edge at roughly 36%,62%,85% of ship length. The missing areas are TRANSPARENT voids connected to outside silhouette, with torn stepped pixel metal edges, tiny exposed dark interior ribs and orange embers. Keep central spine/bridge/bow intact; mostly intact vessel with localized breaches, NOT total wreck. No detached debris baked into image (animated separately in code). Preserve clear silhouette registration/alignment with intact reference. Crisp stepped pixel art, no smooth photoreal blur. Isolated same single ship with transparent background, no stars/no text/no explosion cloud."
+    },
+    "core": {
+      "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-7ab76818-b538-4284-91c4-66c392111418.png",
+      "prompt": "Generate ONE isolated transparent PNG sprite for an 8-bit pixel-art space-shooter: a circular exposed reactor aperture viewed directly from above, dark slate-gray armored mechanical rim, small cyan clamps, and a deep black circular core with a crisp violet/cyan energy halo. Clearly readable at 64 pixels, centered and symmetric, strong dark outlines, limited palette, crisp stepped pixel edges, no photoreal gradients, no text, no scenery, no blur. Match gray-blue spacecraft armor with cyan/orange accents. Full sprite contained with 10 percent transparent margin. The dark center is the missile target, not a planet."
+    },
+    "closed": {
+      "path": "C:\\Users\\ADMIN\\.codex\\generated_images\\01a1ab49-6504-7ba3-b4b6-4bc0edd17a1a\\exec-177f2cc0-9939-470e-98f8-9186bafd8880.png",
+      "prompt": "EDIT TARGET: attached top-down reactor aperture sprite. Create its CLOSED state. Keep the identical outer frame, cyan clamps, orange marks, pixel-art style, camera, silhouette and exact layout. Replace ONLY the black center and glowing purple/cyan inner aperture with an opaque closed armored iris hatch of six dark gray metallic shutter segments meeting at center. No open dark hole, no purple light escaping. One centered transparent-background sprite, no text or scenery. Must align over the open reference in game."
+    }
+  }
+}

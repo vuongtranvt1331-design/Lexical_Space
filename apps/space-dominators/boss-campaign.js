@@ -2,6 +2,7 @@
    warning, target coordinates, destructible objects and exposed components. */
 (() => {
   'use strict';
+  const cooldown=(b,seconds)=>seconds*(b.coop ? 0.7 : 1);
   const hardCooldowns=[2.5,5,5.8,6.6,5.9,6.5,6.5,8.5,6,7];
   const specials = [
     ['Echo Fan','Watch the staggered bolts, then slip through a reopened lane.'],
@@ -9,7 +10,7 @@
     ['Brood Splitters','Intercept each mother missile before it releases three smaller missiles.'],
     ['Bridge Mine','Break the white-ringed mine to cancel its echo blast.'],
     ['Shift Change','Follow the glowing vent. The extra volley aims at your previous position.'],
-    ['Overheat Ring','Hit the flashing core three times during braking to cancel the ring.'],
+    ['Dreadnought assault','Destroy the marked deck weapons and fighter formations.'],
     ['Crosslink','Break either hinge to cut the diagonal. An outside corridor stays open.'],
     ['Polarity Reversal','Follow the gap as the push reverses, or destroy the emitter.'],
     ['Pincer Flight','Stay in the middle gap, or shoot down the marked leader.'],
@@ -21,13 +22,13 @@
     ['Hound Carrier', 660, 7, '#e8b3ff', 'boss3', 'Intercept homing missiles and fire into the launch bay.'],
     ['Anchor Miner', 1110, 8, '#ffa64f', 'boss2', 'Follow the mine warnings, skirt the gates and break the four cables.'],
     ['Asteroid Belts', 1290, 7, '#a9ebff', 'boss', 'Engines disabled. Type each word directly on its asteroid. Correct letters turn green.'],
-    ['Helix Foundry', 1480, 8, '#fbd477', 'boss3', 'Follow the rotating gap. Attack while the rotor brakes.'],
+    ['Dreadnought Assault', window.SpaceDreadnoughtConfig.objective, 8, '#91eee4', 'boss3', 'Assault the warship deck. Destroy turrets and fighter wings; avoid the marked crossing corridors.'],
     ['Gate Weaver', 1660, 8, '#88f7d4', 'boss3', 'Shoot a hinge to open a passage.'],
     ['Gravity Shepherd', 1840, 11, '#bfb2ff', 'boss2', 'Steer against the field or disable its emitter.'],
     ['Swarm Regent', 2020, 8, '#ffac91', 'boss', 'Destroy the marked leader to scatter the diving swarm.'],
     ['Eclipse Citadel', 2200, 9, '#ffda88', 'boss3', 'Destroy the turrets, then both reactors, then the central core.']
   ].map(([name,hp,cooldown,color,sprite,hint], i) => Object.freeze({
-    index:i+1,name,hp,cooldown,skills:i===4 ? ['Short Signals','Word Run','Phrase Drift'].map(name=>({name,hint})) : window.SpaceEncounterSkills?.[i] || [],moveName:specials[i][0],hardHint:specials[i][1],hardCooldown:hardCooldowns[i],color,sprite,hint,seconds:60+20*i,phases:i===9?3:2
+    index:i+1,name,hp,cooldown,skills:i===4 ? ['Short Signals','Word Run','Phrase Drift'].map(name=>({name,hint})) : window.SpaceEncounterSkills?.[i] || [],moveName:specials[i][0],hardHint:specials[i][1],hardCooldown:hardCooldowns[i],color,sprite,hint,seconds:i===5?110:60+20*i,phases:i===5?1:i===9?3:2
   }));
   const TAU = 2*Math.PI, clamp = (n,lo,hi) => Math.max(lo,Math.min(n,hi));
   const phaseOf = b => b.index===10 ? (b.hp>b.mid?1:b.hp>b.last?2:3) : (b.hp>b.mid?1:2);
@@ -38,13 +39,14 @@
     const mid=Math.floor(max*(index===10?.70:.50)), last=Math.floor(max*.35);
     const phase=clamp(Number(options.phase)||1,1,def.phases);
     const b={index,name:def.name,x:640,y:112,hp:phase===1?max:phase===2?mid:last,max,mid,last,
-      phase,clock:0,cycle:0,serial:0,attack:null,objects:[],units:[]};
+      phase,coop:!!options.coop,clock:0,cycle:0,serial:0,attack:null,objects:[],units:[]};
     if (Number.isInteger(options.skillIndex) && def.skills[options.skillIndex]) b.practiceSkill=options.skillIndex;
     if(index===1 || index===2 || index===3){
       b.entryRemaining=1.6;
       b.y=-110;
       if(index===1)b.beaconWaves=[];
     }
+    if(index===6)window.SpaceDreadnought.initialize(b);
     if(index===10) installCitadelParts(b);
     return b;
   }
@@ -79,7 +81,6 @@
       const skill=catalog[b.index-1].skills[a.skillIndex];
       if(b.index===2 && a.railVersion===3)return t>=a.fireAt && t<a.span;
       if(b.index===10)return b.phase===3 && t>=skill.windup && t<skill.windup+5;
-      if(b.index===6 && a.skillIndex===1 && !a.cancelled)return t<a.span;
       return t>=skill.windup && t<a.span;
     }
     switch(b.index){
@@ -87,12 +88,12 @@
       case 2:return t>=2.2 && t<5.5;
       case 3:return t>=.9 && t<5.5;
       case 5:return t>=.6 && t<4.6;
-      case 6:return t>=4.8;
       case 10:return b.phase===3 && t>=2 && t<7;
       default:return true;
     }
   }
   function targets(b){
+    if(b.index===6)return window.SpaceDreadnought.targets(b);
     if(b.index===5)return [];
     if(b.entryRemaining>0)return [];
     const parts=b.objects.filter(o=>o.hp>0).map(o=>slot(b,o.id,o.x,o.y,o.r,o.r));
@@ -118,6 +119,7 @@
     return parts;
   }
   function hit(b,id,amount,api){
+    if(b.index===6){window.SpaceDreadnought.hit(b,id,amount,api);return;}
     if(b.index===5)return;
     if(b.hp<=0 || b.entryRemaining>0 || !(amount>0))return;
     const o=b.objects.find(o=>o.id===id && o.hp>0);
@@ -149,19 +151,6 @@
       if(id==='armor'&&b.index===5)return;
       b.hp=Math.max(0,b.hp-amount*(id==='vent'?1:.55));
       if(b.index===2 && b.hp>0 && b.attack?.railVersion===3)window.SpaceEncounterEngine.railHit(b,b.attack);
-    }
-    // Three distinct impacts on the braking rotor disarm this cycle only.
-    const heat=b.attack;
-    if(b.index===6 && id==='vent' && heat?.mode==='encounter' && heat.skillIndex===1 && !heat.cancelled && heat.t<catalog[5].skills[1].windup){
-      heat.ventHits=(heat.ventHits||0)+1;
-      if(heat.ventHits===3){heat.cancelled=true;api.burst(b.x,b.y+26,'#99ffff',18);}
-    }
-    if(b.index===6 && id==='vent' && heat?.overheat && !heat.disarmed && heat.t>=4.8 && heat.t<5.6){
-      heat.ventHits=(heat.ventHits||0)+1;
-      if(heat.ventHits===3){
-        heat.disarmed=true;b.cycle+=.8;
-        api.burst(b.x,b.y+26,'#9cfff5',15);
-      }
     }
     const phase=phaseOf(b);
     if(phase!==b.phase){
@@ -196,7 +185,7 @@
       beginEncounter(b,a,spec);
       return;
     }
-    b.attack=a;b.cycle=a.hard?spec.hardCooldown:spec.cooldown;b.objects=[];
+    b.attack=a;b.cycle=cooldown(b,a.hard?spec.hardCooldown:spec.cooldown);b.objects=[];
     switch(b.index){
       case 2:{
         const left=a.hard?108:35, right=1280-left;
@@ -212,7 +201,6 @@
           object(b,'bridgeMine',middle.x+side*78,middle.y-72,18,3,{at:middle.at+.9,sourceId:middle.id});
         }
         break;
-      case 6:a.overheat=b.phase===2;break;
       case 7:
         a.crossGate=b.phase===2;
         for(let i=0;i<(b.phase===1?2:3);i++){
@@ -269,10 +257,10 @@
     b.cycle=b.index===10 && b.phase===3 ? Math.max(skill.span,skill.windup+5) : skill.span;
     if(b.index===1){
       // Advance a clock deadline, so quantization to a display frame never accumulates.
-      b.nextBeaconAt=(b.nextBeaconAt??b.clock)+skill.cooldown;
+      b.nextBeaconAt=(b.nextBeaconAt??b.clock)+cooldown(b,skill.cooldown);
       b.cycle=b.nextBeaconAt-b.clock;
     }
-    ready[index]=b.clock+Math.max(skill.span,phaseSpeed);
+    ready[index]=b.clock+Math.max(b.cycle,cooldown(b,phaseSpeed));
     // Every object belongs to this skill's complete cast and recovery window.
     b.objects=[];
     window.SpaceEncounterEngine.begin(b,a,skill);
@@ -305,14 +293,8 @@
     const last=b.objects.find(o=>o.kind==='hinge'&&o.port===2&&o.hp>0);
     return first&&last?[first,last]:null;
   }
-  function helixAngle(a,phase){
-    const direction=phase===2?a.side:1;
-    const warning=a.overheat?1.2:.8;
-    const t=clamp(a.t-warning,0,4.8-warning);
-    const brake=Math.max(0,t-(3.8-warning));
-    return .5+(t-.5*brake*brake)*direction*.48;
-  }
   function update(b,dt,api){
+    if(b.index===6){window.SpaceDreadnought.update(b,dt,api);return;}
     if(b.index===5){b.clock+=dt;window.SpaceBelt.update(b,dt,api);return;}
     if(!(dt>0)||b.hp<=0)return;
     if((b.index===1||b.index===2||b.index===3) && b.entryRemaining>0){
@@ -421,10 +403,6 @@
           }
         }
         break;
-      case 6:
-        if(a.t>=(a.overheat?1.2:.8)&&a.t<4.8)for(let i=0;i<4;i++)beam(a.x,a.y,helixAngle(a,b.phase)+i*TAU/4,1350,6);
-        if(a.overheat && !a.disarmed && crossed(5.6))fan(api,b.x,b.y+26,a.aim,10,TAU/10,184);
-        break;
       case 7:
         for(const o of b.objects)if(o.hp>0){
           if(a.t>=1.3){o.y+=dt*75;beam(o.x,o.y,o.dir===1?0:Math.PI,Math.abs(gateEndX(o,a)-o.x),7);}
@@ -512,9 +490,12 @@
     if(b.index===1){
       const next=isolated ? b.practiceSkill : 1-(b.attack?.skillIndex??1);
       const delay=Math.max(0,(b.nextBeaconAt??0)-b.clock);
-      return entry+delay+(index===next?0:skills[next].cooldown);
+      return entry+delay+(index===next?0:cooldown(b,skills[next].cooldown));
     }
-    if(escort)return entry+skills[1].cooldown-(b.clock%skills[1].cooldown);
+    if(escort){
+      const period=cooldown(b,skills[1].cooldown);
+      return entry+period-(b.clock%period);
+    }
     if(b.index===4){
       const due=b.miner?.next[index] ?? (isolated?0:index*4);
       return Math.max(0,due-b.clock);
@@ -539,6 +520,7 @@
     ctx.restore();
   }
   function draw(ctx,b,time,seat=0){
+    if(b.index===6){window.SpaceDreadnought.draw(ctx,b);return;}
     if(b.index===5){window.SpaceBelt.draw(ctx,b,time,seat);return;}
     const def=catalog[b.index-1],a=b.attack,t=a?.t||0;
     ctx.save();ctx.imageSmoothingEnabled=false;
@@ -581,15 +563,7 @@
           ctx.setLineDash([]);
         }
       }
-      if(b.index===6&&t<4.8){
-        const warning=a.overheat?1.2:.8;
-        if(t<warning)ctx.setLineDash([10,9]);
-        for(let i=0;i<4;i++){
-          const angle=helixAngle(a,b.phase)+i*TAU/4;
-          line(ctx,a.x,a.y,a.x+Math.cos(angle)*1350,a.y+Math.sin(angle)*1350,t<warning?'#dec18b88':'#ffdf86',t<warning?2:9);
-        }
-        ctx.setLineDash([]);
-      }
+
       if(b.index===8&&!a.cancelled&&(t<5.2||(a.reverseField&&t<7.25))){
         const reverse=t>=5.2, direction=reverse?-a.side:a.side, color=reverse?'#9adfff':def.color;
         ctx.globalAlpha=t<1.2||reverse&&t<6.1?.32:.65;
@@ -658,13 +632,7 @@
       circle(ctx,b.x,b.y+35,r,'#ffaa54');
       ctx.fillStyle='#fff0af';ctx.fillRect(b.x-3,b.y+32,6,6);
     }
-    if(b.index===6&&a?.overheat&&t>=4.8&&t<5.6&&!a.disarmed){
-      const remaining=3-(a.ventHits||0);
-      circle(ctx,b.x,b.y+26,21+Math.sin(t*20)*3,'#ff966a');
-      for(let i=0;i<remaining;i++){
-        ctx.fillStyle='#fff3b2';ctx.fillRect(b.x-8+i*7,b.y+49,4,5);
-      }
-    }
+
     if(b.index===10&&b.phase<3)for(const u of b.units){
       const x=b.x+u.dx,y=b.y+17;
       if(b.phase===1)window.CapitalArt?.drawTurret(ctx,x,y,48,0,u.hp<=0);
@@ -716,5 +684,5 @@
     if(b.hp>0 && def.skills.length)drawSkillTimers(ctx,b,def.skills);
     ctx.restore();
   }
-  window.SpaceBosses=Object.freeze({catalog:Object.freeze(catalog),create,update,hit,targets,hulls,draw,drawCell});
+  window.SpaceBosses=Object.freeze({catalog:Object.freeze(catalog),create,update,hit,targets,hulls,draw,drawCell,cooldown});
 })();

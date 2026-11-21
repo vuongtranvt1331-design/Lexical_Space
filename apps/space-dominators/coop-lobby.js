@@ -9,9 +9,21 @@
   const skill = query.get('skill');
   if (lab && skill !== null && /^\d$/.test(skill) && window.SpaceBosses?.catalog?.[lab.boss-1]?.skills?.[Number(skill)]) lab.skillIndex=Number(skill);
 
+  const sameLab=(a,b)=>!!a && !!b && ['boss','phase','level','skillIndex'].every(key=>(a[key]??null)===(b[key]??null));
+
   function render(state) {
     if (!state) state = room.state || {};
     const inRoom = !!state.role;
+    const configuredLab=inRoom?state.lab:lab;
+    const label=el('coopLabLabel');
+    if(label){
+      label.hidden=!configuredLab;
+      if(configuredLab){
+        const boss=window.SpaceBosses.catalog[configuredLab.boss-1];
+        const skillName=boss.skills[configuredLab.skillIndex]?.name;
+        label.textContent=['Boss Lab',boss.name,'Phase '+configuredLab.phase,'Cannon '+configuredLab.level,skillName].filter(Boolean).join(' \u00b7 ');
+      }
+    }
 
     // Top-left: four-digit input or room badge
     const input = el('roomCodeInput');
@@ -59,7 +71,8 @@
     } else {
       if (statusEl) statusEl.hidden = true;
       const saved = room.savedRoom;
-      if (saved) {
+      if(createBtn)createBtn.textContent=configuredLab?'Create Lab Room':'Create Room';
+      if (saved && (!lab || sameLab(saved.lab,lab))) {
         if (createBtn) createBtn.hidden = true;
         if (resumeBtn) {
           resumeBtn.hidden = false;
@@ -122,7 +135,10 @@
     render,
     init(getShip) {
       selectedShip = getShip;
-      if (lab && !room.state?.role) open();
+      if(lab){
+        if(room.state.role && !sameLab(room.state.lab,lab))room.leave();
+        open();
+      }
     }
   };
 })();

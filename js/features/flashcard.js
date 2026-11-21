@@ -312,14 +312,12 @@ function renderCardFaces(card, word, item, reverse) {
   setText('fc-front-word', reverse ? word.meaning : word.word);
   $('fc-front-word').lang = reverse ? 'vi' : studyLanguage;
   const pos = word.pos ? `(${word.pos})` : '';
-  for (const id of ['fc-word-meta', 'fc-answer-pos']) {
-    setText(id, pos);
-    show(id, !!pos);
-  }
-  const meta = $('fc-word-meta'), metaParent = $(reverse ? 'fc-front-word-button' : 'fc-prompt-meta');
-  if (meta.parentElement !== metaParent) metaParent.append(meta);
+  setText('fc-word-meta', reverse ? '' : pos);
+  show('fc-word-meta', !reverse && !!pos);
+  setText('fc-answer-pos', reverse ? pos : '');
+  show('fc-answer-pos', reverse && !!pos);
   show('fc-prompt-meta', !reverse && Boolean(word.phonetic || pos));
-  show('fc-answer-meta', Boolean(word.phonetic || pos));
+  show('fc-answer-meta', reverse && Boolean(word.phonetic || pos));
   for (const id of ['fc-front-phonetic', 'fc-back-phonetic']) {
     setText(id, word.phonetic || '');
     show(id, !!word.phonetic && (id !== 'fc-front-phonetic' || !reverse));
@@ -351,7 +349,7 @@ function renderCardFaces(card, word, item, reverse) {
   const exampleAudio = $('btn-fc-example-audio');
   if (exampleAudio) exampleAudio.disabled = actionsBlocked() || !revealed || !example;
 
-  const feedback = reverse && revealed ? (item.answerCorrect === true ? 'Correct' : `The answer is “${word.word}”.`) : '';
+  const feedback = reverse && revealed ? (item.answerCorrect === true ? 'Correct' : 'The answer is') : '';
   show('recall-feedback', !!feedback);
   setText('recall-feedback', feedback);
   $('recall-feedback').dataset.correct = String(item.answerCorrect === true);

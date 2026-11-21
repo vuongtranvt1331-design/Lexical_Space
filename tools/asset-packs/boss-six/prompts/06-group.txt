@@ -1,0 +1,16 @@
+Create the actual PNG game assets listed below, using the attached deck-reference.png and fighter-reference.png as color/pixel references. The tiny old turret-reference.png is only a palette reference. Invent entirely NEW turret heads and barrels with much stronger silhouettes; do not upscale or trace the old turret. Generate images now, then use code to export exact individual PNG files and a downloadable ZIP.
+
+Style contract
+Original science-fiction warship equipment. Strict 8-BIT PIXEL ART. Strict top-down orthographic view with consistent light from upper-left. Deliberate chunky arcade pixel art with stepped edges and nearest-neighbor scaling. Match the steel/slate-blue deck, dark outlines, cyan and amber lights of the references. Use readable silhouettes at 40-64 display pixels. No photorealistic microtextures, isometric camera, perspective vanishing point, text, labels, logos, background scene or decorative rectangular frame.
+RGBA PNG with genuinely transparent corners and surrounding padding. No checkerboard printed into the artwork. Bright visible cores with bounded halos, so projectiles remain visible over dark deck and space.
+Every listed dimension is the exact OUTPUT image size. You can generate larger artwork first, then downsample with nearest-neighbor and export each exact file using code. Export one static sprite per named PNG. Do not combine distinct heads or projectiles into one final cell.
+Turret heads point UP at zero rotation. All turret head/body cells are 128x128, with mechanical rotation center exactly at (64,64), and at least 8px clear outer margin. Heads must not include a second base, floor or ground shadow. The base alone is stationary. Align listed muzzle coordinates in the final output. The sprinkler PNG is its four-way rotating HEAD, mounted on the same separate base.
+Only enemy_fighter.png points DOWN. Directional bolts and missiles point UP with the tail below.
+Do not alter the established color palette or invent UI labels. Use shapes as well as color to distinguish hazards.
+
+Group 6
+
+- beam_laser_charge.png | 32x256 px | Thin segmented magenta telegraph stripe down vertical center, transparent surrounding area. Core 2-4 px wide, repeatable middle. | metadata {"pivot": [16, 128], "repeatAxis": "y"}
+- beam_laser_fire.png | 32x256 px | Vertical continuous white-hot laser core with magenta inner body and bounded violet outer rim. Even intensity, repeatable middle. | metadata {"pivot": [16, 128], "repeatAxis": "y"}
+ 
+Before delivering, inspect every exported PNG with code. Verify dimensions, true alpha transparency, centered registration, sharp pixel edges, complete silhouette and no accidental clipping. For the two laser strip assets, make the first and last row pixel-identical to allow seamless repetition. Provide a ZIP containing only the named PNGs, plus a separate contact-sheet preview on the supplied dark deck background. List the exact filenames actually generated. Do not claim uncreated files exist.

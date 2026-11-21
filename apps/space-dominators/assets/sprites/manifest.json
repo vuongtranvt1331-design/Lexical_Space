@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "assetRoot": "apps/space-dominators/assets/sprites",
+  "style": "Space Dominators gray-blue armored pixel art",
+  "coordinates": "Image pixels. Origin top-left. Rotating heads and directional projectiles point UP at rotation 0. Enemy fighter nose points DOWN.",
+  "turretAssembly": "Base at entity center. Head rotations use measured per-image pivots (mechanical joint), not bounding-box center. Same pivot map in dreadnought-config.js.",
+  "assets": [
+    {
+      "id": "tur_base",
+      "path": "turrets/tur_base.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 1,
+      "description": "Fixed octagonal armored mounting ring, bolts, radial joint. No barrel.",
+      "pivot": [
+        64,
+        64
+      ]
+    },
+    {
+      "id": "head_fan_wave",
+      "path": "turrets/head_fan_wave.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 1,
+      "description": "Three short fan-arranged muzzles. Cyan throat accents.",
+      "pivot": [
+        64,
+        88
+      ],
+      "muzzles": [
+        [
+          48,
+          16
+        ],
+        [
+          64,
+          12
+        ],
+        [
+          80,
+          16
+        ]
+      ]
+    },
+    {
+      "id": "head_expanding_orb",
+      "path": "turrets/head_expanding_orb.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 1,
+      "description": "Circular magnetic accelerator with concentric rings, amber energy chamber.",
+      "pivot": [
+        64,
+        78
+      ],
+      "muzzles": [
+        [
+          64,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "head_twin_crossfire",
+      "path": "turrets/head_twin_crossfire.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 1,
+      "description": "Two parallel long barrels with clearly separated muzzle tips.",
+      "pivot": [
+        64,
+        94
+      ],
+      "muzzles": [
+        [
+          48,
+          12
+        ],
+        [
+          80,
+          12
+        ]
+      ]
+    },
+    {
+      "id": "head_homing_missile",
+      "path": "turrets/head_homing_missile.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 2,
+      "description": "Compact twin missile tubes and red tracking sensor.",
+      "pivot": [
+        64,
+        91
+      ],
+      "muzzles": [
+        [
+          48,
+          12
+        ],
+        [
+          80,
+          12
+        ]
+      ],
+      "priority": true
+    },
+    {
+      "id": "head_shotgun_missile",
+      "path": "turrets/head_shotgun_missile.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 2,
+      "description": "Five tube mouths fanning outward from one compact rotating housing, orange warning accents.",
+      "pivot": [
+        64,
+        86
+      ],
+      "muzzles": [
+        [
+          38,
+          22
+        ],
+        [
+          51,
+          15
+        ],
+        [
+          64,
+          12
+        ],
+        [
+          77,
+          15
+        ],
+        [
+          90,
+          22
+        ]
+      ],
+      "priority": true
+    },
+    {
+      "id": "turret_sprinkler",
+      "path": "turrets/turret_sprinkler.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 2,
+      "description": "Rotating head only. Four evenly spaced radial spouts and teal armored core. Symmetric four-way silhouette. Uses the separate tur_base.",
+      "pivot": [
+        64,
+        64
+      ],
+      "muzzles": [
+        [
+          64,
+          12
+        ],
+        [
+          116,
+          64
+        ],
+        [
+          64,
+          116
+        ],
+        [
+          12,
+          64
+        ]
+      ],
+      "destructible": false
+    },
+    {
+      "id": "head_charging_laser",
+      "path": "turrets/head_charging_laser.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 2,
+      "description": "Single focusing cannon with pale magenta crystalline lens and exposed charge chamber.",
+      "pivot": [
+        64,
+        108
+      ],
+      "muzzles": [
+        [
+          64,
+          12
+        ]
+      ],
+      "priority": true
+    },
+    {
+      "id": "ind_priority_target",
+      "path": "ui/ind_priority_target.png",
+      "size": [
+        48,
+        48
+      ],
+      "group": 3,
+      "description": "Red/orange compact chevron-reticle with a bright warning dot. No text or box.",
+      "pivot": [
+        24,
+        24
+      ]
+    },
+    {
+      "id": "ind_sprinkler_marker",
+      "path": "ui/ind_sprinkler_marker.png",
+      "size": [
+        48,
+        48
+      ],
+      "group": 3,
+      "description": "Teal four-spoke rotation glyph surrounding an unbroken small armor ring. No text or box.",
+      "pivot": [
+        24,
+        24
+      ]
+    },
+    {
+      "id": "proj_standard_fan",
+      "path": "projectiles/proj_standard_fan.png",
+      "size": [
+        32,
+        32
+      ],
+      "group": 4,
+      "description": "Small cyan energy bead with crisp white center and a restrained 1-2 pixel halo.",
+      "pivot": [
+        16,
+        16
+      ],
+      "collisionRadius": 5
+    },
+    {
+      "id": "proj_expanding_orb",
+      "path": "projectiles/proj_expanding_orb.png",
+      "size": [
+        64,
+        64
+      ],
+      "group": 4,
+      "description": "Round amber energy orb, white-hot core, precise bright circular rim. Plenty of transparent margin for growth.",
+      "pivot": [
+        32,
+        32
+      ],
+      "collisionRadius": 22
+    },
+    {
+      "id": "proj_twin_cross",
+      "path": "projectiles/proj_twin_cross.png",
+      "size": [
+        32,
+        64
+      ],
+      "group": 4,
+      "description": "One slim orange-white energy bolt pointing UP, transparent padding. Render the same asset twice for twins.",
+      "pivot": [
+        16,
+        32
+      ],
+      "collisionRadius": 5
+    },
+    {
+      "id": "proj_sprinkler_orb",
+      "path": "projectiles/proj_sprinkler_orb.png",
+      "size": [
+        32,
+        32
+      ],
+      "group": 4,
+      "description": "Small teal-green bead, white core, clear round boundary. Different shape and color from cyan fan bolts.",
+      "pivot": [
+        16,
+        16
+      ],
+      "collisionRadius": 5
+    },
+    {
+      "id": "proj_missile_homing",
+      "path": "projectiles/proj_missile_homing.png",
+      "size": [
+        32,
+        64
+      ],
+      "group": 5,
+      "description": "Slim silver missile pointing UP, red nose sensor, tiny orange exhaust below. No long smoke trail.",
+      "pivot": [
+        16,
+        32
+      ],
+      "collisionRadius": 6,
+      "exhaust": [
+        16,
+        49
+      ]
+    },
+    {
+      "id": "proj_missile_shotgun",
+      "path": "projectiles/proj_missile_shotgun.png",
+      "size": [
+        32,
+        64
+      ],
+      "group": 5,
+      "description": "One chunky dark-gold missile pointing UP, wide fins, short orange-white exhaust below. No cluster baked into image.",
+      "pivot": [
+        16,
+        32
+      ],
+      "collisionRadius": 7,
+      "exhaust": [
+        16,
+        49
+      ]
+    },
+    {
+      "id": "beam_laser_charge",
+      "path": "projectiles/beam_laser_charge.png",
+      "size": [
+        32,
+        256
+      ],
+      "group": 6,
+      "description": "Thin segmented magenta telegraph stripe down vertical center, transparent surrounding area. Core 2-4 px wide, repeatable middle.",
+      "pivot": [
+        16,
+        128
+      ],
+      "repeatAxis": "y"
+    },
+    {
+      "id": "beam_laser_fire",
+      "path": "projectiles/beam_laser_fire.png",
+      "size": [
+        32,
+        256
+      ],
+      "group": 6,
+      "description": "Vertical continuous white-hot laser core with magenta inner body and bounded violet outer rim. Even intensity, repeatable middle.",
+      "pivot": [
+        16,
+        128
+      ],
+      "repeatAxis": "y"
+    },
+    {
+      "id": "enemy_fighter",
+      "path": "enemies/enemy_fighter.png",
+      "size": [
+        128,
+        128
+      ],
+      "group": 7,
+      "description": "NEW original interstellar fighter with a spherical armored cockpit between two upright hexagonal wing panels, slim reinforced struts, dark slate armor and cyan engines. Evokes the readable twin-panel silhouette of a TIE fighter with an original panel pattern and chassis. Strict top-down view, nose DOWN. Pixel 8-bit only.",
+      "pivot": [
+        64,
+        64
+      ],
+      "muzzles": [
+        [
+          64,
+          116
+        ]
+      ],
+      "exhausts": [
+        [
+          48,
+          18
+        ],
+        [
+          80,
+          18
+        ]
+      ]
+    },
+    {
+      "id": "ind_fleet_entry_red",
+      "path": "ui/ind_fleet_entry_red.png",
+      "size": [
+        48,
+        64
+      ],
+      "group": 3,
+      "description": "Red fleet entry warning arrow with bright exclamation mark and stepped pixel outline, transparent outside the arrow. Points DOWN at zero rotation; can be rotated toward horizontal, diagonal and side entry lanes.",
+      "pivot": [
+        24,
+        32
+      ],
+      "direction": "down"
+    }
+  ],
+  "waveArtContract": {
+    "orientations": "Rotate enemy_fighter from its native DOWN direction to follow each trajectory. Avoid regenerating inconsistent views.",
+    "warning": "ind_fleet_entry_red points along the announced entry trajectory. Gameplay should pulse its alpha before entry.",
+    "routes": [
+      "horizontal crossing",
+      "diagonal crossing",
+      "vertical left corridor",
+      "vertical right corridor"
+    ],
+    "designIntent": "Moving fleet corridors deny those marked regions; the timing and layout must preserve a reachable safe region for the player."
+  }
+}

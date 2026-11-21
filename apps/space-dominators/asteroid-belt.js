@@ -1,7 +1,13 @@
 (() => {
   'use strict';
 
-  const CENTER = {x:640,y:360};
+  const CENTER = {x:640,y:540};
+  const BELT_COUNT = 18;
+  const beltY = progress => 120 + 170 * (2 * progress - 1) ** 2;
+  const scatter = value => {
+    const n = Math.sin(value * 127.1 + 311.7) * 43758.5453;
+    return n - Math.floor(n);
+  };
   const random = (lo,hi) => lo + (window.SpaceFlightRandom?.() ?? Math.random())*(hi-lo);
   const clamp = (v,lo,hi) => Math.max(lo,Math.min(hi,v));
   const normalize = text => typeof text==='string' ?
@@ -27,20 +33,21 @@
     return options.length ? options[Math.floor(Math.random()*options.length)] : null;
   }
 
-  function addRock(b,api,p,side){
+  function addRock(b,api,p){
     const s=b.belt, word=api.chooseWord ? api.chooseWord(()=>pickWord(b,api)) : pickWord(b,api);
     if(!word)return;
     // WPM uses five characters per word; reading and finding Enter have their own allowance.
     const duration=(3 + Array.from(normalize(word)).length*12/s.wpm)*Math.pow(.97,s.cleared);
     const id=++s.serial;
-    side??=(id+s.offset)%4;
-    const x=side===0?115:side===2?1165:random(165,1115);
-    const y=side===1?72:side===3?614:random(98,605);
-    const dx=p.x-x, dy=p.y-y, dist=Math.hypot(dx,dy);
+    const position=random(.12,.88), x=-90+1460*position, y=beltY(position);
+    const seat=api.pilotSeat?.(p)??api.pilots.indexOf(p);
+    const targetX=CENTER.x+(s.coop?(seat?48:-48):0);
+    const dx=targetX-x, dy=CENTER.y-y, dist=Math.hypot(dx,dy);
     const hitDistance=42;
-    s.rocks.push({id,word,startX:x,startY:y,x,y,targetX:p.x-dx/dist*hitDistance,
-      targetY:p.y-dy/dist*hitDistance,seat:api.pilotSeat?.(p)??api.pilots.indexOf(p),
-      side,age:0,duration,variant:id%3,spin:random(-.65,.65),size:random(76,92)});
+    s.rocks.push({id,word,startX:x,startY:y,x,y,targetX:targetX-dx/dist*hitDistance,
+      targetY:CENTER.y-dy/dist*hitDistance,seat,
+      bendX:clamp(x+160,80,1200),bendY:y+30,
+      age:0,duration,variant:id%3,spin:random(-.65,.65),size:random(76,92)});
     s.recent.push(normalize(word));
     if(s.recent.length>12)s.recent.shift();
   }
@@ -48,13 +55,13 @@
   function update(b,dt,api){
     if(!(dt>0) || b.hp<=0)return;
     if(!b.belt){
-      const coop=api.pilots.length>1;
-      const goal=coop?64:24;
+      const coop=!!b.coop;
+      const goal=24;
       const progress=clamp(b.hp/b.max,0,1);
       b.max=goal;b.mid=Math.floor(goal/2);b.hp=Math.max(1,Math.ceil(goal*progress));
       b.x=CENTER.x;b.y=CENTER.y;
       b.belt={time:0,serial:0,offset:Math.floor(random(0,4)),rocks:[],recent:[],coop,
-        origins:api.pilots.map(p=>({x:p.x,y:p.y})),done:[false,false],cleared:0,wpm:b.phase===2?18:15,nextAt:1.1,nextSeat:0,errorUntil:[0,0]};
+        origins:api.pilots.map(p=>({x:p.x,y:p.y})),pairedTurns:true,done:[false,false],cleared:0,wpm:b.phase===2?18:15,nextAt:1.1,nextSeat:0,errorUntil:[0,0]};
       for(const p of api.pilots){
         const seat=api.pilotSeat?.(p)??api.pilots.indexOf(p);
         if(!coop){p.x=CENTER.x;p.y=CENTER.y;}
@@ -64,29 +71,31 @@
       api.sound?.('impact');
     }
     const s=b.belt;
-    if(s.cleared===undefined){
-      s.cleared=b.max-b.hp;
-      b.max*=2;b.mid=b.max/2;b.hp=b.max-s.cleared;
+    if(!s.pairedTurns){
+      const progress=clamp(b.hp/b.max,0,1);
+      b.max=24;b.mid=12;b.hp=Math.max(1,Math.ceil(24*progress));
+      s.cleared=24-b.hp;s.rocks=[];s.nextAt=s.time+.85;s.pairedTurns=true;
+      s.origins=api.pilots.map(p=>({x:p.x,y:p.y}));
     }
-    if(s.coop && b.max!==64){
-      const progress=b.max-b.hp;b.max=64;b.mid=32;b.hp=64-progress;
-    }
-    if(s.rocks.length>1)s.rocks.length=1; // Migrate old simultaneous-target checkpoints.
     s.time+=dt;
     // Keep target positions fixed even if controls or a restored checkpoint supply an old aim.
     for(const p of api.pilots){
+      if(p.respawn)continue;
       const seat=api.pilotSeat?.(p)??api.pilots.indexOf(p);
-      const centerX=CENTER.x+(s.coop?(seat?34:-34):0);
+      const centerX=CENTER.x+(s.coop?(seat?48:-48):0);
       const from=s.origins?.[seat],u=Math.min(1,s.time/.85),ease=u*u*(3-2*u);
-      if(s.coop && from && u<1){
+      if(from && u<1){
         p.x=from.x+(centerX-from.x)*ease;p.y=from.y+(CENTER.y-from.y)*ease+22*Math.sin(u*Math.PI);
       }else{p.x=centerX;p.y=CENTER.y;}
     }
     for(let i=s.rocks.length-1;i>=0;i--){
       const r=s.rocks[i];
+      if(r.resolved)continue;
       r.age+=dt;
       const t=Math.min(1,r.age/r.duration);
-      r.x=r.startX+(r.targetX-r.startX)*t;r.y=r.startY+(r.targetY-r.startY)*t;
+      const v=1-t;
+      r.x=v*v*r.startX+2*v*t*(r.bendX??r.startX)+t*t*r.targetX;
+      r.y=v*v*r.startY+2*v*t*(r.bendY??r.startY)+t*t*r.targetY;
       if(r.interceptor){
         const shot=r.interceptor;
         shot.elapsed+=dt;
@@ -94,37 +103,41 @@
         shot.x=shot.fromX+(r.x-shot.fromX)*u;
         shot.y=shot.fromY+(r.y-shot.fromY)*u;
         if(u<1)continue;
-        s.rocks.splice(i,1);
+        r.resolved=true;
         api.miniBlast?.(r.x,r.y,92);api.burst?.(r.x,r.y,'#e9b875',16);api.sound?.('explosion');
-        b.hp=Math.max(0,b.hp-1);b.phase=b.hp>b.mid?1:2;
-        s.cleared++;s.nextSeat=1-r.seat;s.nextAt=s.time+.65;
+
         continue;
       }
       if(t<1)continue;
-      s.rocks.splice(i,1);
-      api.miniBlast?.(r.x,r.y,68);
-      const pilot=api.pilots.find((p,i)=>(api.pilotSeat?.(p)??i)===r.seat && p.hp>0);
-      if(pilot)(api.asteroidImpact||api.damage)(pilot);
-      s.nextAt=Math.max(s.nextAt,s.time+.65);
+      // An impact ends this attempt for both pilots, without awarding a clear.
+      s.rocks=[];
+      (api.asteroidImpact||api.damage)(api.pilots.find(p=>p.hp>0));
+      s.nextAt=s.time+.85;
+      break;
+    }
+    if(s.rocks.length && s.rocks.every(r=>r.resolved)){
+      s.rocks=[];s.cleared++;
+      b.hp=Math.max(0,b.hp-1);b.phase=b.hp>b.mid?1:2;
+      s.nextAt=s.time+.65;
     }
     const alive=api.pilots.filter(p=>p.hp>0);
-    if(!b.hp || !alive.length || s.rocks.length || s.time<s.nextAt)return;
-    const pilot=alive.find(p=>api.pilotSeat?.(p)===s.nextSeat) || alive[0];
-    addRock(b,api,pilot,Math.floor(random(0,4)));
+    if(!b.hp || !alive.length || s.rocks.length || s.time<s.nextAt || alive.some(p=>p.respawn))return;
+    for(const pilot of alive)addRock(b,api,pilot);
     s.nextAt=s.time+1.05;
   }
 
   function targetId(b,text){
     const answer=normalize(text);
-    return b?.belt?.rocks.find(r=>normalize(r.word)===answer)?.id ?? null;
+    return b?.belt?.rocks.find(r=>!r.resolved && normalize(r.word)===answer)?.id ?? null;
   }
 
   function submit(b,p,text,api,expectedId){
     const s=b?.belt;
-    if(!s || !p || p.hp<=0 || b.hp<=0 || !s.rocks.length || typeof text!=='string' || text.length>80)return 'ignored';
+    if(!s || !p || p.hp<=0 || p.respawn || b.hp<=0 || !s.rocks.length || typeof text!=='string' || text.length>80)return 'ignored';
     if(expectedId!=null && !s.rocks.some(r=>r.id===expectedId))return 'ignored';
     const seat=api.pilotSeat?.(p)??api.pilots.indexOf(p);
-    const owned=s.rocks.filter(r=>!s.coop || r.seat===seat);
+    const owned=s.rocks.filter(r=>!r.resolved && (!s.coop || r.seat===seat));
+    if(!owned.length)return 'ignored';
     if(expectedId!=null && !owned.some(r=>r.id===expectedId))return 'ignored';
     const id=owned.find(r=>normalize(r.word)===normalize(text) && (expectedId==null || r.id===expectedId))?.id;
     if(id==null || (expectedId!=null && expectedId!==id)){
@@ -146,7 +159,7 @@
   function resetDraft(){draft=null;}
   function typeKey(b,key,seat,complete,wrong){
     const s=b?.belt;
-    if(!s?.rocks.length || s.rocks[0].interceptor){resetDraft();return;}
+    if(!s?.rocks.some(r=>!r.resolved && !r.interceptor && (!s.coop || r.seat===seat))){resetDraft();return;}
     if(draft && !s.rocks.some(r=>r.id===draft.id))resetDraft();
     if(draft?.failedAt!=null){
       if(s.time-draft.failedAt<.48)return;
@@ -159,7 +172,7 @@
     if(key.length!==1 || draft?.pending)return;
     const ch=key.normalize('NFKC').toLowerCase().replace(/[‘’]/g,"'");
     const prefix=(draft?.prefix||'')+ch;
-    const rocks=s.rocks.filter(r=>!s.coop || r.seat===seat);
+    const rocks=s.rocks.filter(r=>!r.resolved && !r.interceptor && (!s.coop || r.seat===seat));
     if(!rocks.length){resetDraft();return;}
     const matching=rocks.filter(r=>normalize(r.word).startsWith(prefix));
     const chosen=matching.find(r=>r.id===draft?.id)||matching[0]||rocks.find(r=>r.id===draft?.id)||rocks[0];
@@ -185,7 +198,19 @@
     ctx.save();ctx.imageSmoothingEnabled=false;
     ctx.textAlign='center';ctx.font='bold 16px system-ui';
     ctx.fillStyle='#c5d4e2';ctx.fillText('ENGINE OFFLINE  ·  TYPE TO CLEAR    '+(b.max-b.hp)+' / '+b.max,640,38);
+    // This decorative stream is derived from the encounter clock, not combat randomness.
+    for(let i=0;i<BELT_COUNT;i++){
+      const duration=16+scatter(i+1)*12;
+      const progress=((i+scatter(i+40))/BELT_COUNT+s.time/duration)%1;
+      const x=-90+1460*progress;
+      const y=beltY(progress)+(scatter(i+80)-.5)*90;
+      const size=22+scatter(i+120)*36;
+      ctx.globalAlpha=.55+scatter(i+160)*.28;
+      stone(ctx,x,y,size,s.time*(scatter(i+200)-.5)*.3,i%6);
+    }
+    ctx.globalAlpha=1;
     for(const r of s.rocks){
+      if(r.resolved)continue;
       const orbit=r.age*.95+r.id*2;
       function satellites(front){
         for(let i=0;i<3;i++){
@@ -204,16 +229,11 @@
         }
         continue;
       }
+      if(s.coop && r.seat!==seat)continue;
       ctx.font='bold 23px system-ui';ctx.textAlign='left';ctx.textBaseline='middle';
       const word=normalize(r.word),w=ctx.measureText(word).width;
       const x=clamp(r.x-w/2,12,1280-w-12),y=r.y;
       ctx.fillStyle='rgba(8,15,28,.92)';ctx.fillRect(x-7,y-16,w+14,32);
-      if(s.coop){
-        ctx.font='bold 13px system-ui';ctx.textAlign='center';
-        ctx.fillStyle=r.seat===seat?'#a4ffd3':'#aebcce';
-        ctx.fillText(r.seat===seat?'YOUR WORD':'WINGMATE',r.x,y+25);
-        ctx.font='bold 23px system-ui';ctx.textAlign='left';
-      }
       const active=draft?.id===r.id?draft:null;
       const blink=active?.failedAt!=null && Math.floor((s.time-active.failedAt)/.12)%2===0;
       ctx.fillStyle=blink?'#ff5869':'#f3f7ff';ctx.fillText(word,x,y);

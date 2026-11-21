@@ -178,12 +178,12 @@ test('Host converts to solo when guest leaves active match', async () => {
 
   // Guest connects
   const guestSecret = '11112222333344445555666677778888';
-  const conn = new MockDataConnection({ v: 3, identity: guestSecret });
+  const conn = new MockDataConnection({ v: 4, identity: guestSecret });
   hostPeer.emit('connection', conn);
-  conn.emit('data', { v: 3, kind: 'hello', identity: guestSecret });
+  conn.emit('data', { v: 4, kind: 'hello', identity: guestSecret });
 
   // Both ready up to start match
-  conn.emit('data', { v: 3, kind: 'ready', value: true, ship: 'tempest' });
+  conn.emit('data', { v: 4, kind: 'ready', value: true, ship: 'tempest' });
   hostCtx.SpaceCoop.ready(true, 'kestrel');
 
   assert.equal(hostCtx.SpaceCoop.state.phase, 'playing');
@@ -194,7 +194,7 @@ test('Host converts to solo when guest leaves active match', async () => {
   assert.ok(hostCtx.windowObj.sessionStorage.getItem('space_dominators_room_v1'));
 
   // Guest leaves during match
-  conn.emit('data', { v: 3, kind: 'leave' });
+  conn.emit('data', { v: 4, kind: 'leave' });
 
   // Solo signal emitted with details
   const soloEvents = hostCtx.events.filter(e => e.type === 'spacecoop:solo');
@@ -211,7 +211,7 @@ test('Host converts to solo when guest leaves active match', async () => {
   assert.ok(hostCtx.SpaceCoop.isSolo(activeMatchId));
 
   // Late packets must not overwrite solo
-  conn.emit('data', { v: 3, kind: 'event', matchId: activeMatchId, type: 'action' });
+  conn.emit('data', { v: 4, kind: 'event', matchId: activeMatchId, type: 'action' });
   assert.equal(hostCtx.SpaceCoop.state.matchId, '');
   assert.equal(hostCtx.events.filter(e => e.type === 'spacecoop:solo').length, 1);
 });
@@ -230,7 +230,7 @@ test('Guest converts to solo when host transport is lost during active match', a
   // Active match state received from host
   const matchSecret = 'aaaabbbbccccddddeeeeffff00001111';
   conn.emit('data', {
-    v: 3,
+    v: 4,
     kind: 'state',
     phase: 'playing',
     matchId: matchSecret,
@@ -265,7 +265,7 @@ test('Idempotency: multiple disconnects or packets do not re-emit spacecoop:solo
   const matchSecret = 'ababcdcd12123434ababcdcd12123434';
   const conn = ctx.createdPeers[0].outgoing;
   conn.emit('data', {
-    v: 3,
+    v: 4,
     kind: 'state',
     phase: 'playing',
     matchId: matchSecret,
@@ -291,7 +291,7 @@ test('Intentional local leave does not emit spacecoop:solo locally but transmits
   const matchSecret = '99998888777766665555444433332222';
   const conn = ctx.createdPeers[0].outgoing;
   conn.emit('data', {
-    v: 3,
+    v: 4,
     kind: 'state',
     phase: 'playing',
     matchId: matchSecret,
