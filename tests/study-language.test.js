@@ -56,6 +56,22 @@ test('French bootstraps existing words once and syncs only its own library after
   assert.equal(cloud.has('words_fr/other'), false);
   assert.equal(cloud.has('metadata/userWordStats_v3:Language%20fixture'), false);
   assert.deepEqual((await indexedDB.databases()).map(db=>db.name), ['LexicalSpaceFrenchDB']);
+
+  const { createPronunciationController } = await import('../js/core/pronunciation.js');
+  const remoteFrench = { lang:'fr-FR', localService:false }, english = { lang:'en-GB', localService:true };
+  let voices = [english, remoteFrench];
+  const spoken = [];
+  const audio = createPronunciationController({
+    speech:{ getVoices:()=>voices, speak:utterance=>spoken.push(utterance), cancel() {} },
+    Utterance:class { constructor(text) { this.text = text; } },
+    fetcher:()=>assert.fail('French speech must bypass the English dictionary')
+  });
+  await audio.say('bonjour');
+  assert.equal(spoken[0].voice, remoteFrench);
+  voices = [];
+  assert.equal(audio.sayExample('Je vais à l’école.'), true);
+  assert.equal(spoken[1].lang,'fr-FR');
+  assert.equal(spoken[1].text,'Je vais à l’école.');
 });
 
 test('teacher and Arcade consumers keep the shared English database preference', async () => {

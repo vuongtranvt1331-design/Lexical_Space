@@ -1,7 +1,7 @@
 {
   "release": {
     "name": "SpaceSuite",
-    "lexicalVersion": "44.60.0",
+    "lexicalVersion": "44.60.2",
     "date": "2026-11-24",
     "root": "LexicalSpace-project",
     "modules": [
@@ -15,7 +15,7 @@
       "vocabulary-test",
       "quick-ears"
     ],
-    "cacheVersion": "501430775b3756"
+    "cacheVersion": "1bd6ec2ee5813a"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -1096,8 +1096,8 @@
     },
     {
       "path": "PROJECT-CONTEXT.json",
-      "bytes": 7311,
-      "sha256": "3569608d0a18d3266195ec4f136dec36f51fc8357f3eb8a88b73ef6b6f80a34c"
+      "bytes": 7110,
+      "sha256": "eac63894d95deee7d99fa5121faee0bad9b021a367330a7106923ca08a4f1c36"
     },
     {
       "path": "README-SUITE.md",
@@ -1222,7 +1222,7 @@
     {
       "path": "apps/arcade/index.html",
       "bytes": 12737,
-      "sha256": "e3f3183face8f1e9cf771332759b3196ec0ccb98357647a67c798135cbbc6485"
+      "sha256": "b9278ebbed866fc53e5b3f34a95c4cb73a25a052f966570a9f956d2d7d90f529"
     },
     {
       "path": "apps/arcade/js/action-frames.js",
@@ -1252,7 +1252,7 @@
     {
       "path": "apps/grammar/index.html",
       "bytes": 5921,
-      "sha256": "015f9e05645671a05cc1140543c3500f493d70db696bb45dcc7e3fa6e5cfe00a"
+      "sha256": "34433b8c32d7c765182ca788e1c8d8ffd0be4a71171793a8a00e3cb812864d06"
     },
     {
       "path": "apps/grammar/js/app.js",
@@ -1637,7 +1637,7 @@
     {
       "path": "apps/poker/index.html",
       "bytes": 14584,
-      "sha256": "65f44d72b6adb9658a0da834f72b9eb4eb888c96127fda4de56fe576bf19dff5"
+      "sha256": "11cdbd14f9c833336b7cb510c376cbde10c4ad05b74a4381292ed565425e5ef9"
     },
     {
       "path": "apps/poker/js/poker-1.js",
@@ -1867,7 +1867,7 @@
     {
       "path": "apps/quick-drawn/index.html",
       "bytes": 21712,
-      "sha256": "b6f73ed36f9dc499c69abbbf2cc0d7ff07e1d3e21280c46e26d6c066b1a205c0"
+      "sha256": "40840c24fe6740e009b9434e1e391557d5209932cd6a405d4b2ade16e94ca2a5"
     },
     {
       "path": "apps/quick-drawn/js/audio.js",
@@ -1952,7 +1952,7 @@
     {
       "path": "apps/quick-ears/index.html",
       "bytes": 4132,
-      "sha256": "f5bd4c2d23fe4560d0bbefeef72b9eb51fc896e8a6eee050ec13f31bd3c9a093"
+      "sha256": "4c8d9832173eda387d68b356f58e8da3c4d50e91270b797e5aa7b4eeddc984ae"
     },
     {
       "path": "apps/quick-ears/lessons.json",
@@ -7332,7 +7332,7 @@
     {
       "path": "apps/sky-dominators/index.html",
       "bytes": 33364,
-      "sha256": "ad4a4cf41c55a544e8f2d4535c3c51c745bf593f3be5fe954db997be2dcf052d"
+      "sha256": "1aa912d198e89e423f114e264bff4a31e28953ba5861a7edfd58bd35ee65d576"
     },
     {
       "path": "apps/sky-dominators/js/app.js",
@@ -7887,7 +7887,7 @@
     {
       "path": "apps/space-dominators/boss-practice.html",
       "bytes": 5024,
-      "sha256": "3ef6992e34e6d47abd703111ae703e0885a5b6bf6af3bc556f77fb40103d0006"
+      "sha256": "ae39a931edf9f5ba9e90a6f763bfbcd6d8a19f79cbf124f60c2fda03f6c41ec4"
     },
     {
       "path": "apps/space-dominators/boss-practice.js",
@@ -7962,7 +7962,7 @@
     {
       "path": "apps/space-dominators/index.html",
       "bytes": 13125,
-      "sha256": "e0a1d178572ec629dee776ce64e8225caeb349d0995fa1081e37c7b3b5552495"
+      "sha256": "8ea0a5857d598a21954ef949cc277ebfc0ce8cfd5ec736feae42f0ee79a77c0e"
     },
     {
       "path": "apps/space-dominators/inspecting-dock.js",
@@ -7992,7 +7992,7 @@
     {
       "path": "apps/vocabulary-test/index.html",
       "bytes": 4316,
-      "sha256": "0c616cb4204993888433994fcb6cb17ac743ccfe1692307d16bac34b46fbe7b5"
+      "sha256": "dbbc788aa9435e3948196a4199719709fe443975bf499a1ec1c4e7e442980f13"
     },
     {
       "path": "assets/icons/icon-192.png",
@@ -8015,19 +8015,24 @@
       "sha256": "51f1f83cd8da7deb5f776cb777af4da4a9ee627d12feba1fa7ac63cbb08447dc"
     },
     {
+      "path": "assets/icons/language-flag-zh.png",
+      "bytes": 5271,
+      "sha256": "5d6f80ad5139724a62d5af6d89912c92e1455b0ee25812564c00417bc2b46c6f"
+    },
+    {
       "path": "css/animations.css",
       "bytes": 6657,
       "sha256": "20fb3e4de0b6b3072bd231dfd3fe7cd9fcfce23893ef2a377f9e0b7d33afc398"
     },
     {
       "path": "css/entry-ui.css",
-      "bytes": 6681,
-      "sha256": "bddea1d69ee5f0a90cc1fb31109fb947fa26a8fe6734bfbcfbf7b8d252f7265d"
+      "bytes": 6985,
+      "sha256": "371e6fcf8e1685e7a97c53adb313a0e8be2fb8622caf77cce69637dc3f1b889b"
     },
     {
       "path": "css/lexical-layout.css",
-      "bytes": 3234,
-      "sha256": "61c0e6aed5a832b9b0af1d3ff51dcd99a0fe8cb715325fafc715b45a49ef3948"
+      "bytes": 3071,
+      "sha256": "a42cafc98bfd0fc81a73298dc1fc0b4999d1403ed92d105a335284ebee8e049f"
     },
     {
       "path": "css/main.css",
@@ -8096,8 +8101,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 58303,
-      "sha256": "9e9d921d6129f9c49187fea9b0c82206bc02a7c68b088d6ac01b02b9980fedc3"
+      "bytes": 58310,
+      "sha256": "c41ce02f0026444d7403db1a48567ba04df12cb68be0de02df18b79c3057f154"
     },
     {
       "path": "js/core/ai-vocabulary.js",
@@ -8136,8 +8141,8 @@
     },
     {
       "path": "js/core/pronunciation.js",
-      "bytes": 8889,
-      "sha256": "52c7c3cb3a09b35afc0b7e5a8c17ff37df434a129ee7f8f8041249d1b0aa90c8"
+      "bytes": 9283,
+      "sha256": "b9a1d2ed44693e8012a2b997761c344d0fa04e75e0c6b5165701ee61a3c596ba"
     },
     {
       "path": "js/core/quick-fill.js",
@@ -8211,8 +8216,8 @@
     },
     {
       "path": "js/features/flashcard.js",
-      "bytes": 45412,
-      "sha256": "e06e76e06d3c3fe47704169f26b804d8df7b2a06aa327c5f65d95b43de324502"
+      "bytes": 46025,
+      "sha256": "3a2429af3e0e9ff9a8ed73a858312531b39db01ea206d2b5387e921273f88dfa"
     },
     {
       "path": "js/features/in-class-check.js",
@@ -8226,13 +8231,13 @@
     },
     {
       "path": "js/features/interface-messages-zh.js",
-      "bytes": 13616,
-      "sha256": "82bdb93ca6125868656d595770638848b9724501240cdf7a03a4f778ab9ba7bc"
+      "bytes": 13702,
+      "sha256": "090b8e5f5d1567dd3b3cd00700e5b7354dc5980fea73da2d90e31b5af942f980"
     },
     {
       "path": "js/features/interface-messages.js",
-      "bytes": 11725,
-      "sha256": "fcb3b64dbc94f1e4011ef7d886753051b295c3fe2c89f00b313e5c27fafd7881"
+      "bytes": 11939,
+      "sha256": "fd16862ee01c4ee0cbacd2d88c099ab869c829ca72f4ab83cec348fb48698d68"
     },
     {
       "path": "js/features/interface-text.js",
@@ -8287,12 +8292,12 @@
     {
       "path": "package-lock.json",
       "bytes": 13732,
-      "sha256": "257ccee412ecfb995b09a06743703b761639c3bfae5aa01fad44a1097dfbf8e3"
+      "sha256": "474eda96506580df31ced4d8714e5e78c86395c26a1f62d07fddff93db5f3674"
     },
     {
       "path": "package.json",
       "bytes": 248,
-      "sha256": "2aef695f621926bd788feb71a05f1f19b9a8c06728d064ecbc6b6a2154dc8aaf"
+      "sha256": "b723bc341a0b7140bf42bb38ca319a88913bf3e5c818a996e9737298edb35452"
     },
     {
       "path": "run-local.bat",
@@ -8311,8 +8316,8 @@
     },
     {
       "path": "service-worker.js",
-      "bytes": 19951,
-      "sha256": "485dd9c80d8723ffba6d757072ee79534d201d75c53ac4686b82b49543ca1a81"
+      "bytes": 19990,
+      "sha256": "fcd7d9ed081d40c3cdf27e09ca7ee97d0dae4016cf289938fa36d3a8c588f6b8"
     },
     {
       "path": "start-localhost.bat",
@@ -8377,7 +8382,7 @@
     {
       "path": "suite/release.json",
       "bytes": 350,
-      "sha256": "4b35dd610dc7bb92fbf699d4b861e1cf421f44c92ca53ac212ac0a90aad3f215"
+      "sha256": "37e101a5a473ff5b10c1b91de24b2dfdfa8ddcc9e3e327e54e2b424395081880"
     },
     {
       "path": "teacher/index.html",
@@ -8511,8 +8516,8 @@
     },
     {
       "path": "tests/study-language.test.js",
-      "bytes": 3653,
-      "sha256": "19c4bde262639205d7d0343319f6d2af6617a3b37dda8aa593158eb05258b077"
+      "bytes": 4473,
+      "sha256": "933103102d6e2a51ba81e953c1fac539eb383d3f2b8fb3053852ee96265790bb"
     },
     {
       "path": "tests/suite.test.js",
@@ -8521,8 +8526,8 @@
     },
     {
       "path": "tests/ui-v30.test.js",
-      "bytes": 30651,
-      "sha256": "1e835299086dba2f2ad4f62d80ec25d49d987f3cc3957767cc2d241a9ae076fd"
+      "bytes": 33606,
+      "sha256": "3ba9985d9a4f5d25359add4d6f3c182033524c40886b4aa049abeac374c50c84"
     },
     {
       "path": "tests/vocabulary-update.test.js",
@@ -12130,6 +12135,223 @@
         "path": "tools/build-suite.py",
         "bytes": 9577,
         "sha256": "7255e345fa9250ef4efc27242e81ecf638d6d936caa1946af6930928d2c32b7f"
+      }
+    ]
+  },
+  "settingsLayout44_60_1": {
+    "browserWidths": [
+      320,
+      390,
+      421,
+      1280,
+      1920
+    ],
+    "tileHeight": 44,
+    "files": [
+      {
+        "path": "PROJECT-CONTEXT.json",
+        "bytes": 7192,
+        "sha256": "7f6cca6844bab22e65c266ab0f1190bd1939980b9815068b2c9498f88bf58c53"
+      },
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "f7aba7d09a97566ea3cf1ef4b6cf51e43d795e9c3319bf525ab03ad146b4e65e"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "51c07048558093d5910d9246f1be03eeece4a3d2090f443b714b53e116255302"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "9170addfab1d2131065ce7f621a5570c3b02846e0cb833b45a9a87f9248ead3d"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "daa1ca3efef8f08d6ef623b0759a7fba30ccbd7e274a2a2872aae2887ec065d7"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "cf72df1fe88c89dbd9807214093234d29cbd66820b85325953913276d3173275"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "ed4bfc5f475cd5cbca9a54c1c1fef7e402eafa49e79fcc74c96f5b01696701f9"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 5024,
+        "sha256": "9fd688b5d48358bd5599967102f83cf441b409d28b27ca82eeb92729a8b9b31d"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 13125,
+        "sha256": "716c7dcdb77cd8d5f6f3f30c3162b67540c9e66a9807666966c74ea2f44d5446"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "68df73e65f334994cfb5ef7484847d0c0e9ff0e72de63aa86a0a308104524808"
+      },
+      {
+        "path": "assets/icons/language-flag-zh.png",
+        "bytes": 5271,
+        "sha256": "5d6f80ad5139724a62d5af6d89912c92e1455b0ee25812564c00417bc2b46c6f"
+      },
+      {
+        "path": "css/entry-ui.css",
+        "bytes": 6985,
+        "sha256": "371e6fcf8e1685e7a97c53adb313a0e8be2fb8622caf77cce69637dc3f1b889b"
+      },
+      {
+        "path": "css/lexical-layout.css",
+        "bytes": 3068,
+        "sha256": "e6177cfbf786f1a6086cb4f70dff6ae35cb789abdbf625757c66d962eec1ef8a"
+      },
+      {
+        "path": "index.html",
+        "bytes": 58310,
+        "sha256": "7de4181f7a646686171be3a24ae63420669ee7318c5942a1c79d50c2118229b4"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "ba932c2170c909f8a5aa0ef6af09c1da1be7dcd8a24dc96faae2371d35894167"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "dbf216e1549fa94bea32aabda4c49f5ba84934bf48690f1d3e970123c852609b"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19990,
+        "sha256": "5a6aed78dcae5b18622a0a06c99447bb5a923537a8a29d5820cf49ebeb8b7f04"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "85c24543c5ca1daadea316d018960872036588ae530bbd443e3d1904eb140288"
+      }
+    ]
+  },
+  "lexicalPronunciation44_60_2": {
+    "suitePassed": 225,
+    "files": [
+      {
+        "path": "PROJECT-CONTEXT.json",
+        "bytes": 7110,
+        "sha256": "eac63894d95deee7d99fa5121faee0bad9b021a367330a7106923ca08a4f1c36"
+      },
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "b9278ebbed866fc53e5b3f34a95c4cb73a25a052f966570a9f956d2d7d90f529"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "34433b8c32d7c765182ca788e1c8d8ffd0be4a71171793a8a00e3cb812864d06"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "11cdbd14f9c833336b7cb510c376cbde10c4ad05b74a4381292ed565425e5ef9"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "40840c24fe6740e009b9434e1e391557d5209932cd6a405d4b2ade16e94ca2a5"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "4c8d9832173eda387d68b356f58e8da3c4d50e91270b797e5aa7b4eeddc984ae"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "1aa912d198e89e423f114e264bff4a31e28953ba5861a7edfd58bd35ee65d576"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 5024,
+        "sha256": "ae39a931edf9f5ba9e90a6f763bfbcd6d8a19f79cbf124f60c2fda03f6c41ec4"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 13125,
+        "sha256": "8ea0a5857d598a21954ef949cc277ebfc0ce8cfd5ec736feae42f0ee79a77c0e"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "dbbc788aa9435e3948196a4199719709fe443975bf499a1ec1c4e7e442980f13"
+      },
+      {
+        "path": "css/lexical-layout.css",
+        "bytes": 3071,
+        "sha256": "a42cafc98bfd0fc81a73298dc1fc0b4999d1403ed92d105a335284ebee8e049f"
+      },
+      {
+        "path": "index.html",
+        "bytes": 58310,
+        "sha256": "c41ce02f0026444d7403db1a48567ba04df12cb68be0de02df18b79c3057f154"
+      },
+      {
+        "path": "js/core/pronunciation.js",
+        "bytes": 9283,
+        "sha256": "b9a1d2ed44693e8012a2b997761c344d0fa04e75e0c6b5165701ee61a3c596ba"
+      },
+      {
+        "path": "js/features/flashcard.js",
+        "bytes": 46025,
+        "sha256": "3a2429af3e0e9ff9a8ed73a858312531b39db01ea206d2b5387e921273f88dfa"
+      },
+      {
+        "path": "js/features/interface-messages-zh.js",
+        "bytes": 13702,
+        "sha256": "090b8e5f5d1567dd3b3cd00700e5b7354dc5980fea73da2d90e31b5af942f980"
+      },
+      {
+        "path": "js/features/interface-messages.js",
+        "bytes": 11939,
+        "sha256": "fd16862ee01c4ee0cbacd2d88c099ab869c829ca72f4ab83cec348fb48698d68"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "474eda96506580df31ced4d8714e5e78c86395c26a1f62d07fddff93db5f3674"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "b723bc341a0b7140bf42bb38ca319a88913bf3e5c818a996e9737298edb35452"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19990,
+        "sha256": "fcd7d9ed081d40c3cdf27e09ca7ee97d0dae4016cf289938fa36d3a8c588f6b8"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "37e101a5a473ff5b10c1b91de24b2dfdfa8ddcc9e3e327e54e2b424395081880"
+      },
+      {
+        "path": "tests/study-language.test.js",
+        "bytes": 4473,
+        "sha256": "933103102d6e2a51ba81e953c1fac539eb383d3f2b8fb3053852ee96265790bb"
+      },
+      {
+        "path": "tests/ui-v30.test.js",
+        "bytes": 33606,
+        "sha256": "3ba9985d9a4f5d25359add4d6f3c182033524c40886b4aa049abeac374c50c84"
       }
     ]
   }

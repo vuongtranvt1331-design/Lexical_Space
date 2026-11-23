@@ -82,6 +82,19 @@
 .user-guide-tools dt { font-weight: 800; color: var(--ink); }
 .user-guide-tools dd { margin: 2px 0 0; }
 #toast { z-index: 70; }
+#modal-settings,
+.settings-dialog,
+.settings-content {
+  grid-template-columns: minmax(0, 1fr);
+}
+.settings-dialog {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.settings-dialog fieldset, .settings-dialog .settings-limit-grid input {
+  min-inline-size: 0;
+}
 .settings-content { display: grid; gap: 14px; }
 .settings-section { display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 14px; }
 .settings-section > h3, .settings-content > h3 { color: var(--ink); font-size: 14px; font-weight: 800; }

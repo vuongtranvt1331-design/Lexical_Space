@@ -1,4 +1,4 @@
-import { chineseStudy, englishStudy, studyLanguage, studyLocale } from './study-language.js';
+import { englishStudy, studyLanguage, studyLocale } from './study-language.js';
 const DICTIONARY_ENDPOINT = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 const CACHE_LIMIT = 128;
 const EXAMPLE_CHUNK_LENGTH = 150;
@@ -111,19 +111,22 @@ export function createPronunciationController({
   }
 
   function speak(attempt) {
-    if (active !== attempt || !speech || !Utterance) return;
+    if (active !== attempt) return;
+    if (!speech || !Utterance) { attempt.onUnavailable?.(); return; }
     try {
       const next = new Utterance(attempt.chunks?.[attempt.chunkIndex] ?? attempt.word);
-      next.lang = studyLocale;
       const voices = speech.getVoices?.() || [];
-      const voice = englishStudy ? voices.find(candidate => /^en[-_]gb$/i.test(candidate.lang)) :
-        voices.find(candidate => candidate.localService && candidate.lang.replace('_', '-').toLowerCase() === studyLocale.toLowerCase()) ||
-        voices.find(candidate => candidate.localService && candidate.lang.split(/[-_]/)[0].toLowerCase() === studyLanguage);
-      if (!englishStudy && !chineseStudy && !voice) return;
+      const exactLocale = voice => voice.lang.replace('_', '-').toLowerCase() === studyLocale.toLowerCase();
+      const matching = voices.filter(voice => voice.lang.split(/[-_]/)[0].toLowerCase() === studyLanguage);
+      const voice = englishStudy ? voices.find(exactLocale) : matching.find(voice => voice.localService && exactLocale(voice)) ||
+        matching.find(voice => voice.localService) || matching.find(exactLocale) || matching[0];
+      next.lang = voice?.lang.replace('_', '-') || studyLocale;
       if (voice) next.voice = voice;
       utterance = next;
       next.onerror = event => {
-        if (active === attempt && utterance === next && ['not-allowed', 'audio-busy'].includes(event.error)) attempt.blocked = 'speech';
+        if (active !== attempt || utterance !== next) return;
+        if (['not-allowed', 'audio-busy'].includes(event.error)) attempt.blocked = 'speech';
+        else if (!['canceled', 'interrupted'].includes(event.error)) attempt.onUnavailable?.();
       };
       next.onend = () => {
         if (active !== attempt || utterance !== next) return;
@@ -132,7 +135,9 @@ export function createPronunciationController({
       };
       speech.speak(next);
     } catch (error) {
-      if (active === attempt && error?.name === 'NotAllowedError') attempt.blocked = 'speech';
+      if (active !== attempt) return;
+      if (error?.name === 'NotAllowedError') attempt.blocked = 'speech';
+      else attempt.onUnavailable?.();
     }
   }
 
@@ -178,19 +183,20 @@ export function createPronunciationController({
     return run(attempt, () => blocked === 'recording' ? playNext(attempt) : speak(attempt));
   }
 
-  function say(value) {
+  function say(value, { onUnavailable } = {}) {
     const card = typeof value === 'string' ? { word: value } : value;
     const word = typeof card?.word === 'string' ? card.word.trim() : '';
     const dictionary = [card?.dictionaryAudioUrl, card?.oxfordAudioUrl].map(trustedDictionaryUrl).filter(Boolean);
     const custom = [card?.audioUrl, card?.audioURL, card?.customAudioUrl].map(pronunciationUrl).find(Boolean);
     const identity = JSON.stringify([word, dictionary, custom]);
     if (active?.identity === identity) {
+      if (onUnavailable) active.onUnavailable = onUnavailable;
       if (active.running) return active.task;
       if (active.blocked) return unlock();
     }
     cancel();
     if (!word) return Promise.resolve();
-    const attempt = { identity, word, dictionary, custom, abort: new AbortController(), urls: [], index: 0 };
+    const attempt = { identity, word, dictionary, custom, onUnavailable, abort: new AbortController(), urls: [], index: 0 };
     active = attempt;
     return run(attempt, () => {
       if (!englishStudy || !AudioClass) return speak(attempt);
@@ -202,11 +208,11 @@ export function createPronunciationController({
     });
   }
 
-  function sayExample(value) {
+  function sayExample(value, { onUnavailable } = {}) {
     const text = typeof value === 'string' ? value.trim() : '';
     if (!text || !speech || !Utterance) return false;
     cancel();
-    const attempt = { chunks: exampleChunks(text), chunkIndex: 0, abort: new AbortController() };
+    const attempt = { chunks: exampleChunks(text), chunkIndex: 0, onUnavailable, abort: new AbortController() };
     active = attempt;
     speak(attempt);
     return true;

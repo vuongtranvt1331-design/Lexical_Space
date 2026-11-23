@@ -109,13 +109,23 @@
     "Giữ manifest, dữ liệu, quyền sở hữu và giao thức hiện có trong các thay đổi ngoài phạm vi. Commit, push hoặc triển khai khi có yêu cầu."
   ],
   "checkpoint": {
-    "version": "44.60.0",
+    "version": "44.60.2",
     "release_date": "2026-11-24",
-    "cache": "501430775b3756",
-    "validation": "225 kiểm thử đạt; Chrome đã thử đổi độc lập ngôn ngữ học và giao diện. Đồng bộ ngôn ngữ đã kiểm tra bằng dữ liệu giả lập.",
-    "deployment": "Bản cập nhật đã tích hợp trên máy."
+    "cache": "1bd6ec2ee5813a",
+    "validation": "225 kiểm thử đạt; Chrome xác nhận hai hàng cờ giữ nguyên kích thước ô và hình cờ Trung Quốc dùng đúng tỷ lệ.",
+    "deployment": "Bản sửa đã tích hợp trên máy."
   },
   "recent_changes": [
+    {
+      "version": "44.60.2",
+      "scope": "LexicalSpace",
+      "note": "Cờ Trung Quốc giữ tỷ lệ; nhận giọng Pháp từ trình duyệt; đọc ví dụ cả hai mặt thẻ, giữ chỗ trống ở mặt trước khi điền từ."
+    },
+    {
+      "version": "44.60.1",
+      "scope": "LexicalSpace",
+      "note": "Hotfix Cài đặt: ô cờ bằng ô màu, sửa tràn ngang, thêm cờ Trung Quốc cho hai hàng chọn."
+    },
     {
       "version": "44.60.0",
       "scope": "LexicalSpace",
@@ -131,18 +141,6 @@
       "version": "44.59.0",
       "scope": "Space Dominators",
       "note": "Tạm ẩn Radio Log và Boss Lab, đường Boss Lab chuyển về sảnh. Cần mở lại khi người dùng yêu cầu."
-    },
-    {
-      "version": "44.58.0",
-      "scope": "Space Dominators",
-      "note": "Sảnh có bảng Solo/Team tối đa 6 hàng. Team lưu tổng cả đội một lần dưới hồ sơ chủ phòng. Firebase thật đã xác nhận đọc; ghi và chống trùng đã kiểm tra với Firestore giả lập.",
-      "source": "docs/architecture-delta-44.43.0.md"
-    },
-    {
-      "version": "44.57.0",
-      "scope": "Space Dominators",
-      "note": "Đã thay sprite tàu Aegis bằng thân titan tối và kiểm tra tại sảnh lẫn trong trận.",
-      "source": "docs/architecture-delta-44.43.0.md"
     }
   ]
 }

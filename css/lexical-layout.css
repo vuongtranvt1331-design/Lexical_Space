@@ -21,23 +21,13 @@ body {
 }
 
 .language-flags .flag-tile {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 1;
-  min-height: 44px;
   background: url("../assets/icons/language-flags.png") no-repeat left center / 300% 100%;
 }
 .flag-tile[data-flag="vi"] { background-position-x: 50%; }
 .flag-tile[data-flag="fr"] { background-position-x: 100%; }
 .language-flags .flag-tile[data-flag="zh"] {
-  display: grid;
-  place-items: center;
-  background: #bc2627;
-  color: #fff6cf;
-  font-size: 1rem;
-  font-weight: 700;
+  background: #de2910 url("../assets/icons/language-flag-zh.png") no-repeat left center / contain;
 }
-.flag-tile[data-flag="zh"]::before { content: "中文"; }
 .language-flags input:checked + .flag-tile {
   box-shadow: inset 0 0 0 2px var(--ink);
 }

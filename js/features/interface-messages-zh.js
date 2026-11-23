@@ -229,6 +229,7 @@ export const chineseMessages = {
   "Could not save practice progress.": "无法保存练习进度。",
   "This topic is already empty.": "该主题中没有词汇。",
   "Finish the current word before switching direction.": "请先完成当前词卡，再切换练习方向。",
+  "Word audio is unavailable in this browser.": "此浏览器无法朗读此词。",
   "Example audio is unavailable in this browser.": "此浏览器无法播放例句音频。",
   "LexicalSpace - Smart Vocabulary Notebook": "LexicalSpace 智能词汇笔记",
   "Local library ready · sync unavailable": "本地词库已就绪，暂时无法同步",

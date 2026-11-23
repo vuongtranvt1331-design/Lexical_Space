@@ -108,7 +108,7 @@ test('practice, library, and entry workflows', async t => {
         assert.equal(flash.getSessionState().cardQueue[s.queueIndex].grade, grade);
       }
     });
-    await t.test('reverse mode masks the target and audio, autofocuses, and queues wrong answers atomically', async () => {
+    await t.test('reverse mode reads the masked example first and the full example after revealing', async () => {
       const before = flash.getSessionState(), previousWordId = current().wordId, count = spoken.length;
       await flash.setRecallDirection('vi-en'); assert.equal(flash.getSessionState().sessionId, before.sessionId);
       assert.notEqual(current().wordId, previousWordId);
@@ -123,9 +123,11 @@ test('practice, library, and entry workflows', async t => {
       assert.ok([...document.querySelectorAll('[data-recall-grade]')].every(button => button.hidden));
       assert.equal(document.activeElement, $('recall-answer-input')); assert.equal(spoken.length, count);
       const exampleAudio = $('btn-fc-example-audio');
-      assert.equal(exampleAudio.disabled, true);
+      assert.equal(exampleAudio.disabled, false);
       exampleAudio.click();
-      assert.equal(spoken.length, count);
+      const maskedExample = $('fc-front-context').textContent.replaceAll('[ _____ ]', '…');
+      assert.deepEqual(spoken.slice(count), [maskedExample]);
+      assert.ok(!maskedExample.toLowerCase().includes(target.word.toLowerCase()));
       $('recall-answer-input').value = 'not the word'; form.querySelector('button[type=submit]').click();
       await until(() => current().answerCorrect === false && current().revealed);
       assert.equal(flash.getSessionState().queueIndex, before.queueIndex);
@@ -152,12 +154,12 @@ test('practice, library, and entry workflows', async t => {
       assert.equal(failed.cardQueue.filter(item => item.wordId === target.id).length, 1);
       assert.equal((await storage.readUserWord('UIFixture', target.id)).lastGrade, 0);
       assert.equal((await storage.idbGet('metadata', failed.key)).queueIndex, before.queueIndex + 1);
-      assert.equal(spoken.length, count);
+      assert.equal(spoken.length, count + 1);
       await flash.previousCard();
       assert.equal($('fc-answer-target').textContent, target.word);
       assert.equal(exampleAudio.disabled, false);
       exampleAudio.click();
-      assert.deepEqual(spoken.slice(count), [target.exampleSentence]);
+      assert.deepEqual(spoken.slice(count), [maskedExample, target.exampleSentence]);
       $('btn-fc-next').click();
       await until(() => flash.getSessionState().queueIndex === before.queueIndex + 1);
       assert.ok($('btn-fc-next').hidden);

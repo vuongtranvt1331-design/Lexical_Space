@@ -271,6 +271,17 @@ function setCardValue(id, value) {
   element.textContent = value || interfaceText('empty');
   element.classList.toggle('vocab-card-empty', !value);
 }
+function cardExample(word, masked = false) {
+  const example = fillCardBlanks(word.exampleSentence, word.word);
+  if (!masked) return example;
+  const prompt = word.clozeSentence?.includes(CARD_BLANK) ? word.clozeSentence : example;
+  const cloze = clozeText(prompt, word.word, { inflections: true });
+  return cloze.includes(CARD_BLANK) ? cloze : '';
+}
+function audibleExample(word, masked) {
+  const sentence = cardExample(word, masked).replaceAll(CARD_BLANK, '…');
+  return /[\p{L}\p{N}]/u.test(sentence) ? sentence : '';
+}
 function renderSentence(id, sentence, word, masked = false) {
   const container = $(id);
   setCardValue(id, sentence);
@@ -328,10 +339,10 @@ function renderCardFaces(card, word, item, reverse) {
   setText('fc-back-meaning', word.meaning);
   alignRecallMetadata(card);
 
-  const example = fillCardBlanks(word.exampleSentence, word.word);
+  const example = cardExample(word);
   const phrases = (word.collocations || []).map(value => fillCardBlanks(value, word.word));
   const mask = value => clozeText(value, word.word, { inflections: true });
-  const examplePrompt = reverse ? mask(word.clozeSentence?.includes(CARD_BLANK) ? word.clozeSentence : example) : example;
+  const examplePrompt = cardExample(word, reverse);
   renderSentence('fc-front-context', examplePrompt, word.word, reverse);
   renderSentence('fc-answer-context', example, word.word);
   show('fc-prompt-phrases', reverse);
@@ -348,7 +359,7 @@ function renderCardFaces(card, word, item, reverse) {
   } else source.removeAttribute('href');
   show('fc-answer-source', !!sourceUrl && !!example && (reverse ? revealed : !revealed));
   const exampleAudio = $('btn-fc-example-audio');
-  if (exampleAudio) exampleAudio.disabled = actionsBlocked() || !revealed || !example;
+  if (exampleAudio) exampleAudio.disabled = actionsBlocked() || !audibleExample(word, reverse && !revealed);
 
   const feedback = reverse && revealed ? (item.answerCorrect === true ? 'Correct' : 'The answer is') : '';
   show('recall-feedback', !!feedback);
@@ -495,12 +506,13 @@ async function useWordHint(action) {
 export function replayCurrentAudio() { return useWordHint(playAudio); }
 function readCurrentExample() {
   const item = current();
-  if (!item?.revealed || actionsBlocked() || !practiceIsVisible($('practice-card'))) return;
+  if (!item || actionsBlocked() || !practiceIsVisible($('practice-card'))) return;
   const word = context.wordsData.find(word => word.id === item.wordId);
-  const example = word && fillCardBlanks(word.exampleSentence, word.word);
+  const example = word && audibleExample(word, reverseMode() && !item.revealed);
   if (example) {
     context.SoundManager?.stopPracticeCue();
-    if (!pronunciation.sayExample(example)) context.showToast('Example audio is unavailable in this browser.', 'error');
+    const onUnavailable = () => context.showToast('Example audio is unavailable in this browser.', 'error');
+    if (!pronunciation.sayExample(example, { onUnavailable })) onUnavailable();
   }
 }
 export async function revealCard() {
@@ -620,7 +632,7 @@ export function updateQuickCollectionButtonsUI() {}
 export function playAudio(word) {
   context.SoundManager?.stopPracticeCue();
   context.recordLearningActivity('audio_pronounce');
-  return pronunciation.say(word);
+  return pronunciation.say(word, { onUnavailable: () => context.showToast('Word audio is unavailable in this browser.', 'error') });
 }
 export function pausePracticeAudio() {
   lastFocusedEntry = '';

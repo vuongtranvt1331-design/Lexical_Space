@@ -51,6 +51,8 @@ export const messages = {
   "Unspecified": "Chưa chọn",
   "comma-separated": "cách nhau bằng dấu phẩy",
   "Correct": "Chính xác",
+  "Example audio is unavailable in this browser.": "Trình duyệt chưa phát được câu ví dụ.",
+  "Word audio is unavailable in this browser.": "Trình duyệt chưa phát được âm thanh của từ.",
   "The answer is": "Đáp án là",
   "Pinyin": "Pinyin",
   "Synonyms": "Từ đồng nghĩa",
