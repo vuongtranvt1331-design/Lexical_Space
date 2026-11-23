@@ -93,21 +93,40 @@
       "suite/js/effects-volume.js",
       "tools/service-worker.template.js",
       "tools/build-suite.py"
+    ],
+    "LexicalSpace | ngôn ngữ học, bản dịch và Firebase": [
+      "js/core/study-language.js",
+      "js/core/idb-manager.js",
+      "js/core/firebase-sync.js",
+      "js/features/interface-language.js",
+      "js/features/interface-text.js",
+      "js/features/interface-messages-zh.js"
     ]
   },
   "contracts": [
     "Bản tích hợp là nguồn chính. Bản standalone và các bản thử là lịch sử trừ khi người dùng chỉ định.",
-    "LexicalSpaceDB v3 do LexicalSpace quản lý; game chỉ đọc từ vựng. Bộ từ tiếng Pháp lưu trên máy. Dùng luồng hồ sơ và điều hướng của suite.",
+    "LexicalSpaceDB v3 do LexicalSpace quản lý; game chỉ đọc từ vựng. Tiếng Anh, Pháp và Trung học trong thư viện riêng và đồng bộ với Firebase theo hồ sơ; thư viện khách lưu trên máy. Dùng luồng hồ sơ và điều hướng của suite.",
     "Giữ manifest, dữ liệu, quyền sở hữu và giao thức hiện có trong các thay đổi ngoài phạm vi. Commit, push hoặc triển khai khi có yêu cầu."
   ],
   "checkpoint": {
-    "version": "44.59.0",
-    "release_date": "2026-11-22",
-    "cache": "8407ccc3b4f024",
-    "validation": "Kiểm thử bản khóa đang chạy.",
-    "deployment": "Chưa tải lên GitHub."
+    "version": "44.60.0",
+    "release_date": "2026-11-24",
+    "cache": "501430775b3756",
+    "validation": "225 kiểm thử đạt; Chrome đã thử đổi độc lập ngôn ngữ học và giao diện. Đồng bộ ngôn ngữ đã kiểm tra bằng dữ liệu giả lập.",
+    "deployment": "Bản cập nhật đã tích hợp trên máy."
   },
   "recent_changes": [
+    {
+      "version": "44.60.0",
+      "scope": "LexicalSpace",
+      "note": "Đồng bộ thư viện Pháp và Trung theo hồ sơ. Đưa dữ liệu Pháp cũ vào hàng chờ một lần. Thêm học tiếng Trung có pinyin và giao diện giản thể độc lập.",
+      "source": "docs/architecture-delta-44.43.0.md"
+    },
+    {
+      "version": "44.59.1",
+      "scope": "Space Dominators",
+      "note": "Ẩn Radio Log ngay từ HTML và đặt bảng xếp hạng sát lề trái."
+    },
     {
       "version": "44.59.0",
       "scope": "Space Dominators",

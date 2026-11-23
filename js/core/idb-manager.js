@@ -1,7 +1,7 @@
-import { localFrench } from './study-language.js';
+import { studyLanguage } from './study-language.js';
 import { canSyncProfile } from './context.js';
 import { normalizeRemoteVocabulary, withoutLegacyLevel, compareVersions, newId } from './vocabulary.js';
-export const DB_NAME = localFrench ? 'LexicalSpaceFrenchDB' : 'LexicalSpaceDB', DB_VERSION = 3;
+export const DB_NAME = { en: 'LexicalSpaceDB', fr: 'LexicalSpaceFrenchDB', zh: 'LexicalSpaceChineseDB' }[studyLanguage], DB_VERSION = 3;
 let connection, upgradeBlocked = false;
 const blockedListeners = new Set();
 const owned = value => typeof value === 'string' && value.trim() !== '';
@@ -268,6 +268,35 @@ export function mergeUserVocabulary(username, markerKey, plan) {
     };
   });
 }
+// Queue existing French records and the per-profile marker in one transaction.
+export async function queueExistingFrenchLibrary(username) {
+  if (studyLanguage !== 'fr' || !canSyncProfile(username)) return;
+  const db = await openIndexedDB();
+  const tx = db.transaction(['words', 'pendingOps', 'metadata'], 'readwrite');
+  const meta = tx.objectStore('metadata'), ops = tx.objectStore('pendingOps');
+  const key = 'frenchCloudBootstrap:' + username;
+  const marker = meta.get(key);
+  marker.onsuccess = () => {
+    if (marker.result) return;
+    const words = tx.objectStore('words').index('username').getAll(username);
+    const queued = ops.index('usernameSequence').getAll(outboxRange(username));
+    const sequence = meta.get('_outbox_sequence');
+    sequence.onsuccess = () => {
+      let next = sequence.result?.value || 0;
+      const queuedWords = new Set(queued.result.map(op => op.wordId));
+      for (const row of words.result) {
+        if (queuedWords.has(row.id)) continue;
+        const record = normalizeRemoteVocabulary(row);
+        ops.put({ id: 'fr_bootstrap_' + newId(), sequence: ++next, wordId: record.id, username,
+          type: record.deleted ? 'DELETE' : 'UPSERT', record, createdAt: record.updatedAt });
+      }
+      meta.put({ key: '_outbox_sequence', value: next });
+      meta.put({ key, value: true });
+    };
+  };
+  return completed(tx);
+}
+
 export async function pendingOperations(username) {
   if (!owned(username)) return [];
   const db = await openIndexedDB(), tx = db.transaction('pendingOps');

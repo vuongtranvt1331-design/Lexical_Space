@@ -78,3 +78,9 @@ The third player-hull cell contains the dark titanium Aegis, with stepped should
 The hangar switches between Solo and Team records. Count enemy spacecraft destroyed by pilots, their fleet clears and collisions. Ignore fleet overflow, projectiles, asteroids and turret mounts. Boss Lab and Boss Rush are practice. Campaign results belong to the launch profile. For a co-op mission only the host records the full team totals. The wingmate keeps the existing credit settlement and sees the debrief.
 
 Firestore uses separate spaceFlightSolo and spaceFlightTeam collections in the suite project. Each pilot document holds one best mission and its missions subcollection records completed flights by unique ID. Atomic conditional writes deduplicate retries and protect the best score across devices. Queued uploads persist across reloads. The board reads six entries, the pilot's own record, and a count of higher scores only when that pilot is outside the first six. Equal scores share rank. Cached boards last five minutes. No vocabulary or chess data is written.
+
+## LexicalSpace multilingual libraries in 44.60.0
+
+Keep the English IndexedDB and Firebase paths. French continues to use LexicalSpaceFrenchDB, and Mandarin uses LexicalSpaceChineseDB. Their Firebase words and stats are isolated in words_fr / words_zh and vocabulary_stats_fr / vocabulary_stats_zh. Existing French records enter the durable outbox once per profile and device without incrementing their versions. Normal conflict resolution and retries apply. Guest libraries and session history stay local.
+
+The new zh-Hans interface and Mandarin study toggles are independent. Mandarin uses pinyin in the existing phonetic field, uses Mandarin speech where available, and lets the IME finalize characters before form submission. Shared deck codes and English dictionary lookups still use the existing English workflows.

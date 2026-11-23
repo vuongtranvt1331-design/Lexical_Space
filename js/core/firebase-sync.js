@@ -1,12 +1,15 @@
+import { englishStudy, studyLanguage } from './study-language.js';
 import { canSyncProfile } from './context.js';
 import { normalizeRemoteVocabulary, withoutLegacyLevel, compareVersions } from './vocabulary.js';
-import { nextPendingOperation, readUserWord, acknowledgeOperation, applyRemoteWord } from './idb-manager.js';
+import { nextPendingOperation, readUserWord, acknowledgeOperation, applyRemoteWord, queueExistingFrenchLibrary } from './idb-manager.js';
 import { getStudentKey, getLegacyStudentKey } from '../utils/helpers.js';
 const flights = new Map();
+const wordCollection = englishStudy ? 'words' : 'words_' + studyLanguage;
+const statsCollection = englishStudy ? 'metadata' : 'vocabulary_stats_' + studyLanguage;
 
 export const studentStatsId = username => `userWordStats_v3:${getStudentKey(username)}`;
 export async function readStudentStats(db, username, get = ref => ref.get()) {
-  const collection = db.collection('metadata');
+  const collection = db.collection(statsCollection);
   const ref = collection.doc(studentStatsId(username));
   const snapshot = await get(ref);
   if (snapshot.exists) {
@@ -14,6 +17,7 @@ export async function readStudentStats(db, username, get = ref => ref.get()) {
     if (data.username !== username) throw new Error('Student metadata ownership mismatch.');
     return { ref, data };
   }
+  if (!englishStudy) return { ref, data: {} };
   // A lossy legacy key may belong to a different username. Only migrate an exact owner.
   const legacy = await get(collection.doc(`userWordStats_${getLegacyStudentKey(username)}`));
   const data = legacy.exists ? legacy.data() : null;
@@ -27,6 +31,7 @@ export function flushMutationOutbox({ db, username, onStatus = () => {}, onChang
   const flight = (async () => {
     let changed = false;
     try {
+      await queueExistingFrenchLibrary(username);
       for (;;) {
         const op = await nextPendingOperation(username);
         if (!navigator.onLine) break;
@@ -40,7 +45,7 @@ export function flushMutationOutbox({ db, username, onStatus = () => {}, onChang
         const local = await readUserWord(username, op.wordId);
         // Discard superseded snapshots in FIFO order rather than sending stale state.
         if (local && compareVersions(local, op.record) > 0) { await acknowledgeOperation(op); continue; }
-        const ref = db.collection('words').doc(op.wordId);
+        const ref = db.collection(wordCollection).doc(op.wordId);
         const winner = await db.runTransaction(async tx => {
           const snapshot = await tx.get(ref);
           const remote = snapshot.exists ? normalizeRemoteVocabulary(snapshot.data(), snapshot.id || op.wordId) : null;
@@ -79,7 +84,7 @@ export function createVocabularySync({ db, onChange, onStatus }) {
     let queue = Promise.resolve();
     const ticket = generation;
     const current = () => ticket === generation && activeUser === username;
-    unsubscribe = db.collection('words').where('username', '==', username).onSnapshot({ includeMetadataChanges: true }, snapshot => {
+    unsubscribe = db.collection(wordCollection).where('username', '==', username).onSnapshot({ includeMetadataChanges: true }, snapshot => {
       queue = queue.then(async () => {
         if (!current()) return;
         let changed = false;

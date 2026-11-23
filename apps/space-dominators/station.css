@@ -604,7 +604,7 @@ dialog ul { padding-left: 19px; }
   position: absolute;
   top: 3vh;
   bottom: var(--dock-bottom);
-  left: clamp(14px, calc(20vw - 156px), 115px);
+  left: max(16px, env(safe-area-inset-left));
   width: clamp(224px, calc(36vw - 150px), 326px);
   display: flex;
   flex-direction: column;

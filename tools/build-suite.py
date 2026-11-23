@@ -88,7 +88,7 @@ def build():
         relative = path.relative_to(ROOT).as_posix()
         if any(part in excluded for part in Path(relative).parts):
             continue
-        if relative in {'service-worker.js', 'suite/release.json', 'docs/suite-baseline.json'} or relative.endswith('/service-worker.js'):
+        if relative in {'service-worker.js', 'suite/release.json', 'docs/suite-baseline.json', 'PROJECT-CONTEXT.json'} or relative.endswith('/service-worker.js'):
             continue
         # Sentence data is fetched only when the student opens that lesson.
         if relative.startswith('apps/quick-ears/lesson-packs/') and path.name != 'available.json':

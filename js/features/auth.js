@@ -1,4 +1,4 @@
-import { localFrench } from '../core/study-language.js';
+import { englishStudy } from '../core/study-language.js';
 import { canSyncProfile, context, GUEST_PROFILE } from '../core/context.js';
 import { flushMutationOutbox } from '../core/firebase-sync.js';
 import { icon } from '../core/icons.js';
@@ -51,7 +51,7 @@ function renderProfileMenu(user) {
   const named = Boolean(user && user !== GUEST_PROFILE);
   $('current-user-name').textContent = user || 'Signed out';
   $('header-user-avatar').textContent = [...user][0]?.toLocaleUpperCase() || '–';
-  $('connection-dot').hidden = !named || localFrench;
+  $('connection-dot').hidden = !named;
   $('btn-switch-user').hidden = !named;
   $('btn-logout').hidden = !named;
   $('btn-profile-sign-in').hidden = named;
@@ -221,7 +221,7 @@ export async function activateUser(name) {
     showProfileDialog(true, { focus: false });
     applyUser(user, { forceReset });
     switchView('view-review', { render: false });
-    if (!localFrench) await migrateLocalStorageToIndexedDB(user);
+    if (englishStudy) await migrateLocalStorageToIndexedDB(user);
     if (!isCurrent()) return false;
     context.loadUserTopics();
     await context.loadIndexedDBWordsData();
@@ -242,8 +242,7 @@ export async function activateUser(name) {
       context.profileLoading = false;
       showProfileDialog(!opened);
       if (opened) {
-        if (localFrench) updateStatusBadge(false, 'Saved on this device');
-        else if (user === GUEST_PROFILE) updateStatusBadge(false, 'Guest library · saved on this device');
+        if (user === GUEST_PROFILE) updateStatusBadge(false, 'Guest library · saved on this device');
         else if (!context.db) updateStatusBadge(false, navigator.onLine ? 'Local library ready' : 'Offline · saved locally');
         context.renderActiveCard();
         void context.showPendingDeck();

@@ -1,4 +1,4 @@
-import { localFrench, studyLanguage } from '../core/study-language.js';
+import { englishStudy, studyLanguage } from '../core/study-language.js';
 import { context } from '../core/context.js';
 import { exampleSourceUrl, validateVocabulary, validateImportTopic, senseKey, newId, wordTopics } from '../core/vocabulary.js';
 import { buildAIPrompt, parseAIBatch } from '../core/ai-vocabulary.js';
@@ -120,7 +120,7 @@ export async function importVocabulary(entries, { overwrite = false, targetTopic
   return { added, updated, skipped };
 }
 export async function quickFillEntry() {
-  if (localFrench) return;
+  if (!englishStudy) return;
   if (!context.currentUser) return;
   const word = $('input-word').value.trim(), ticket = context.accountGeneration, activeEditor = editor;
   if (!word || word.length > 200) { status('quickfill-status', 'Enter a target word or phrase first.', true); focusEntryWord(); return; }

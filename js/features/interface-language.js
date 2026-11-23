@@ -1,37 +1,17 @@
-import { messages } from './interface-messages.js';
-import { localFrench, studyLanguage } from '../core/study-language.js';
+import { chineseStudy, englishStudy, studyLanguage } from '../core/study-language.js';
+import { interfaceLanguage as ui, interfaceLanguageKey as uiKey, interfaceText as translate } from './interface-text.js';
 
-const uiKey = 'lexical_ui_language';
-let ui = 'en';
-try { if (localStorage.getItem(uiKey) === 'vi') ui = 'vi'; } catch {}
-const english = new Map(Object.entries(messages).map(([en, vi]) => [vi, en]));
-english.set('Quick Fill / Điền nhanh', 'Quick Fill');
-
-function translate(source) {
-  if (ui === 'vi') {
-    const patterns = [
-      [/^Word (\d+) of (\d+)$/, 'Từ $1 trên $2'],
-      [/^(\d+) not checked in the past 7 days · (\d+) review\.$/, '$1 từ chưa kiểm tra trong 7 ngày · $2 từ ôn.'],
-      [/^All eligible words were checked in the past 7 days. 0 new · (\d+) review\.$/, 'Tất cả đã được kiểm tra trong 7 ngày. 0 từ mới · $1 từ ôn.'],
-      [/^The answer is “([\s\S]+)”\.$/, 'Đáp án là “$1”.']
-    ];
-    for (const [pattern, replacement] of patterns) if (pattern.test(source)) return source.replace(pattern, replacement);
-  }
-  const key = english.get(source) || source;
-  let result = ui === 'vi' ? (messages[key] || source) : key;
-  if (localFrench && (Object.hasOwn(messages, key) || key === 'Type the English word…')) result = result.replaceAll('English', 'French').replaceAll('tiếng Anh', 'tiếng Pháp').replaceAll('Tiếng Anh', 'Tiếng Pháp');
-  return result;
-}
-
-document.documentElement.lang = ui;
+const uiLocale = ui === 'zh' ? 'zh-Hans' : ui;
+document.documentElement.lang = uiLocale;
+document.title = translate(document.title);
 document.documentElement.dataset.learningLanguage = studyLanguage;
-document.getElementById('modal-settings').lang = ui;
+document.getElementById('modal-settings').lang = uiLocale;
 // The original static DOM contains interface text only. Vocabulary is mounted by main.js afterwards.
 const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
 for (let node; (node = walker.nextNode());) {
   if (node.parentElement.closest('script,style,svg,input,textarea')) continue;
   const original = node.data.trim();
-  if (original && (english.has(original) || Object.hasOwn(messages, original))) {
+  if (original) {
     node.data = node.data.replace(original, () => translate(original));
   }
 }
@@ -41,11 +21,32 @@ for (const el of document.querySelectorAll('[aria-label],[title],[placeholder]')
     if (source) el.setAttribute(attr, translate(source));
   }
 }
-if (localFrench) {
-  const placeholders = {'input-word':'école, apprendre','input-phonetic':'/e.kɔl/','input-synonyms':'étudier, apprendre','input-collocations':'aller à l’école','input-example':'Je vais à l’école.','input-cloze':'Je vais à l’[ _____ ].','ai-raw-words':'livre\nécole\napprendre','import-raw-input':'livre | sách | n | Je lis un livre.'};
+if (!englishStudy) {
+  const placeholders = chineseStudy ? { 'input-word':'学校、学习', 'input-phonetic':'xuéxiào', 'input-synonyms':'学习, 研习', 'input-collocations':'去学校', 'input-example':'我明天去学校。', 'input-cloze':'我明天去[ _____ ]。', 'ai-raw-words':'学校\n学习\n老师', 'import-raw-input':'学校 | trường học' } : {'input-word':'école, apprendre','input-phonetic':'/e.kɔl/','input-synonyms':'étudier, apprendre','input-collocations':'aller à l’école','input-example':'Je vais à l’école.','input-cloze':'Je vais à l’[ _____ ].','ai-raw-words':'livre\nécole\napprendre','import-raw-input':'livre | sách | n | Je lis un livre.'};
   for (const [id, value] of Object.entries(placeholders)) document.getElementById(id)?.setAttribute('placeholder', value);
 }
-document.getElementById('french-storage-note').hidden = !localFrench;
+if (chineseStudy) {
+  document.getElementById('input-phonetic-label').textContent = translate('Pinyin');
+  for (const id of ['recall-answer-input', 'check-answer', 'input-word']) document.getElementById(id).lang = 'zh-Hans';
+  for (const id of ['reverse-recall-form', 'check-form', 'single-entry-form']) {
+    const form = document.getElementById(id);
+    let composing = false, compositionEnter = false;
+    form.addEventListener('compositionstart', () => { composing = true; });
+    form.addEventListener('compositionend', () => { composing = false; });
+    form.addEventListener('focusout', () => { composing = false; });
+    form.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' || !(composing || event.isComposing || event.keyCode === 229)) return;
+      compositionEnter = true;
+      // Let the IME commit its selection. Suppress only the resulting form submission.
+      setTimeout(() => { compositionEnter = false; }, 0);
+    });
+    form.addEventListener('submit', event => {
+      if (!composing && !compositionEnter) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }, { capture: true });
+  }
+}
 for (const [id, key, previous] of [
   ['interface-language', uiKey, ui],
   ['learning-language', 'lexical_learning_language', studyLanguage]
@@ -62,7 +63,7 @@ for (const [id, key, previous] of [
   });
 }
 // These elements contain system labels only. Never translate user-created words, examples or topics.
-for (const id of ['check-pool-description','check-progress','check-status','check-history-status','recall-feedback','empty-state-subtitle','empty-state-title','session-continue-label','connection-status-text']) {
+for (const id of ['check-pool-description','check-progress','check-status','check-history-status','recall-feedback','empty-state-subtitle','empty-state-title','session-continue-label','connection-status-text','sync-status','lib-count-status','review-topic-menu-count']) {
   const el = document.getElementById(id);
   if (!el) continue;
   const update = () => {
@@ -70,5 +71,6 @@ for (const id of ['check-pool-description','check-progress','check-status','chec
     const value = translate(source);
     if (source !== value) el.textContent = value;
   };
+  update();
   new MutationObserver(update).observe(el, {childList:true, characterData:true, subtree:true});
 }

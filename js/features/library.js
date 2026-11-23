@@ -1,4 +1,5 @@
-import { localFrench, studyStorageKey } from '../core/study-language.js';
+import { interfaceText } from './interface-text.js';
+import { englishStudy, studyStorageKey } from '../core/study-language.js';
 import { canSyncProfile, context } from '../core/context.js';
 import { mutateWords, readUserWords, idbPut } from '../core/idb-manager.js';
 import { exampleSourceUrl, recallLevelFor, validateVocabulary, wordTopics } from '../core/vocabulary.js';
@@ -31,7 +32,7 @@ export function resetLibraryForUser() {
   for (const id of ['btn-lib-clear-search', 'lib-topic-create-box', 'lib-topic-upward-menu']) $(id)?.classList.add('hidden');
   for (const id of ['library-list-container', 'lib-topic-options-list', 'merge-topic-checkboxes']) $(id)?.replaceChildren();
   if ($('lib-count-status')) $('lib-count-status').textContent = 'Showing: 0 words';
-  if ($('lib-selected-topic-label')) $('lib-selected-topic-label').textContent = 'Topic: All topics';
+  if ($('lib-selected-topic-label')) $('lib-selected-topic-label').textContent = interfaceText('Topic: All topics');
   if ($('lib-topic-menu-count')) $('lib-topic-menu-count').textContent = '0 topics';
   updateLibraryTabsUI();
   closeMergeModal();
@@ -121,7 +122,7 @@ export async function commitVocabularyChanges(changes, metadata = [], user = con
     records.forEach(w => w.deleted ? byId.delete(w.id) : byId.set(w.id, w));
     context.wordsData = [...byId.values()]; updateBadges();
     if (render && !$('view-library')?.classList.contains('hidden')) renderLibrary();
-    context.updateStatusBadge(false, localFrench ? 'Saved on this device' : canSyncProfile(user) ? 'Saved locally · sync pending' : 'Guest library · saved on this device');
+    context.updateStatusBadge(false, canSyncProfile(user) ? 'Saved locally · sync pending' : 'Guest library · saved on this device');
     void context.syncPendingOperations();
     if (!metadata.length) void context.reconcileSession().catch(error => { if (isActiveUser(user, generation)) report(error); });
   } else if (user === context.currentUser) {
@@ -143,7 +144,7 @@ export function renderLibraryTopicUpwardMenu(topics) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'topic-option-label';
-    button.textContent = topic === 'ALL' ? 'All topics' : topic === 'FAVORITES' ? 'Favorites' : topic;
+    button.textContent = topic === 'ALL' ? interfaceText('All topics') : topic === 'FAVORITES' ? interfaceText('Favorites') : topic;
     button.addEventListener('click', () => { context.librarySelectedTopic = topic; $('lib-topic-upward-menu').classList.add('hidden'); renderLibrary(); updateTopicDropdowns(); });
     row.append(button);
     if (!['ALL', 'FAVORITES'].includes(topic)) {
@@ -155,7 +156,7 @@ export function renderLibraryTopicUpwardMenu(topics) {
       if (topic !== context.DEFAULT_TOPIC) controls.push(['merge', 'Merge Decks', () => window.openMergeModalForTopic(topic)]);
       controls.push(['clear', 'Clear Topic Words', control => void clearTopicWords(topic, control)]);
       if (topic !== context.DEFAULT_TOPIC) controls.push(['delete', 'Delete Deck', () => window.deleteTopicDirectly(topic)]);
-      if (!localFrench) controls.push(['share', 'Share Deck', control => context.shareTopic(topic, control)]);
+      if (englishStudy) controls.push(['share', 'Share Deck', control => context.shareTopic(topic, control)]);
       for (const [symbol, label, action] of controls) {
         const control = document.createElement('button');
         control.type = 'button';
@@ -173,7 +174,7 @@ export function renderLibraryTopicUpwardMenu(topics) {
     list.append(row);
   }
   $('lib-topic-menu-count').textContent = `${topics.length} topics`;
-  $('lib-selected-topic-label').textContent = `Topic: ${context.librarySelectedTopic === 'ALL' ? 'All topics' : context.librarySelectedTopic}`;
+  $('lib-selected-topic-label').textContent = interfaceText('Topic') + ': ' + (context.librarySelectedTopic === 'ALL' ? interfaceText('All topics') : context.librarySelectedTopic);
 }
 export function updateTopicDropdowns() {
   const topics = getAlphabeticalTopics(); saveUserTopics();
@@ -205,7 +206,7 @@ export function renderVocabularyCardHtml(word) {
   const mastered = isLibraryMastered(word);
   const highlighted = targetSegments(fillCardBlanks(word.exampleSentence, word.word), word.word, { inflections: true })
     .map(part => part.target ? `<mark>${esc(part.text)}</mark>` : esc(part.text)).join('');
-  const value = (text, className = '') => `<p class="${className}${text ? '' : ' vocab-card-empty'}">${text || 'empty'}</p>`;
+  const value = (text, className = '') => `<p class="${className}${text ? '' : ' vocab-card-empty'}">${text || esc(interfaceText('empty'))}</p>`;
   const topics = esc(wordTopics(word).join(' · '));
   const pos = word.pos ? `<span>(${esc(word.pos)})</span>` : '';
   const ipa = word.phonetic ? `<span title="${esc(word.phonetic)}">${esc(word.phonetic)}</span>` : '';
@@ -224,10 +225,10 @@ export function renderVocabularyCardHtml(word) {
   const rail = actions.map(({ action, symbol, label, title = label, pressed, controls }) => {
     const toggle = pressed === undefined ? '' : ` aria-pressed="${pressed}"`;
     const controlsAttribute = controls ? ` aria-controls="${controls}"` : '';
-    return `<button type="button" class="library-rail-button" data-action="${action}" data-id="${id}" aria-label="${label}" title="${title}"${toggle}${controlsAttribute}>${icon(symbol || action)}</button>`;
+    return `<button type="button" class="library-rail-button" data-action="${action}" data-id="${id}" aria-label="${esc(interfaceText(label))}" title="${esc(interfaceText(title))}"${toggle}${controlsAttribute}>${icon(symbol || action)}</button>`;
   }).join('');
   return `<article class="library-flip-card vocabulary-surface${gradeClass}${flipped ? ' is-flipped' : ''}" data-card-status="${cardStatus(word)}" data-word-id="${id}" aria-label="${esc(word.word)} vocabulary card">
-    <div class="library-toolbar" role="toolbar" aria-label="Word actions" aria-orientation="vertical">${rail}</div>
+    <div class="library-toolbar" role="toolbar" aria-label="${esc(interfaceText('Word actions'))}" aria-orientation="vertical">${rail}</div>
     <div class="library-face-content vocab-card-column">
       <header class="library-card-heading">
         <h3 class="vocab-card-title">${esc(word.word)}</h3>
@@ -237,15 +238,15 @@ export function renderVocabularyCardHtml(word) {
         <section class="library-card-face library-card-front vocab-card-body" aria-hidden="${flipped}"${flipped ? ' inert' : ''}>
           <p class="library-meaning" lang="vi">${esc(word.meaning)}</p>
           <div class="vocab-card-field">
-            <h4>Example</h4>
+            <h4>${esc(interfaceText('Example'))}</h4>
             ${value(highlighted, 'library-example vocab-card-example')}
-            ${sourceUrl ? `<a class="example-source" href="${sourceUrl}" target="_blank" rel="noopener noreferrer">Example from Tatoeba</a>` : ''}
+            ${sourceUrl ? `<a class="example-source" href="${sourceUrl}" target="_blank" rel="noopener noreferrer">${esc(interfaceText('Example from Tatoeba'))}</a>` : ''}
           </div>
         </section>
         <section class="library-card-face library-card-back vocab-card-body" aria-hidden="${!flipped}"${!flipped ? ' inert' : ''}>
-          <div class="vocab-card-field"><h4>Collocations</h4>${value(esc(collocations))}</div>
-          <div class="vocab-card-field"><h4>Synonyms</h4>${value(esc(synonyms))}</div>
-          <div class="vocab-card-field"><h4>Usage notes</h4>${value(esc(word.usageNotes), 'library-usage vocab-card-notes')}</div>
+          <div class="vocab-card-field"><h4>${esc(interfaceText('Collocations'))}</h4>${value(esc(collocations))}</div>
+          <div class="vocab-card-field"><h4>${esc(interfaceText('Synonyms'))}</h4>${value(esc(synonyms))}</div>
+          <div class="vocab-card-field"><h4>${esc(interfaceText('Usage notes'))}</h4>${value(esc(word.usageNotes), 'library-usage vocab-card-notes')}</div>
         </section>
       </div>
     </div>
@@ -282,7 +283,7 @@ export function renderLibrary() {
       return a.word.localeCompare(b.word);
     });
   $('lib-count-status').textContent = `Showing: ${filtered.length} words`;
-  container.innerHTML = filtered.length ? filtered.map(renderVocabularyCardHtml).join('') : '<p class="empty-library">No matching words. Add vocabulary or change your filters.</p>';
+  container.innerHTML = filtered.length ? filtered.map(renderVocabularyCardHtml).join('') : '<p class="empty-library">' + interfaceText("No matching words. Add vocabulary or change your filters.") + '</p>';
   if (activeButton) {
     const { id, action } = activeButton.dataset;
     const replacement = [...container.querySelectorAll('button[data-action]')].find(button => button.dataset.id === id && button.dataset.action === action);

@@ -1,4 +1,5 @@
-import { localFrench } from '../core/study-language.js';
+import { interfaceText } from './interface-text.js';
+import { englishStudy } from '../core/study-language.js';
 import { openFirebaseServices } from '../core/firebase-config.js';
 import { createVocabularySync } from '../core/firebase-sync.js';
 import * as storage from '../core/idb-manager.js';
@@ -15,6 +16,7 @@ import * as classCheck from './in-class-check.js';
 import * as decks from './deck-sharing.js';
 import * as vocabularyUpdate from './vocabulary-update.js';
 Object.assign(context, storage, helpers, activity, auth, library, entry, flashcard, classCheck, decks, vocabularyUpdate, {
+  showToast: (message, type) => helpers.showToast(interfaceText(message), type),
   db: null, firebasePersistenceReady: Promise.resolve(), SoundManager, DEFAULT_TOPIC: 'New Words', currentUser: '', wordsData: [], userTopics: [],
   reviewMode: 'learning', libraryTab: 'unknown', activeTopic: 'ALL', librarySelectedTopic: 'ALL', activeSpecialCollection: null,
   dbSyncError: null, activeSessionWords: [], sessionCurrentIndex: 0, sessionCompleted: false, userLoadGeneration: 0,
@@ -55,7 +57,6 @@ const vocabularySync = db => createVocabularySync({ db, onStatus: auth.updateSta
 context.vocabularySync = vocabularySync(null);
 let cloudTask;
 context.connectCloud = function connectCloud() {
-  if (localFrench) return Promise.resolve(false);
   if (context.db) return Promise.resolve(true);
   if (cloudTask) return cloudTask;
   cloudTask = openFirebaseServices().then(({ db, persistenceReady }) => {
@@ -126,7 +127,7 @@ async function initialize() {
     flashcard.setupPracticeControls(); flashcard.setupSessionEndButtons();
     classCheck.setupInClassCheck();
     entry.setupEntryModule(); entry.setupQuickImport(); library.setupLibraryModule(); library.setupMergeTopicsModal();
-    if (localFrench) {
+    if (!englishStudy) {
       for (const id of ['btn-entry-code', 'btn-entry-quickfill', 'btn-update-old-vocabulary']) {
         const control = document.getElementById(id);
         if (control) control.hidden = true;

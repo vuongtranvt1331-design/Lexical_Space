@@ -1,4 +1,4 @@
-import { localFrench } from './study-language.js';
+import { chineseStudy, englishStudy, studyLanguage, studyLocale } from './study-language.js';
 const DICTIONARY_ENDPOINT = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 const CACHE_LIMIT = 128;
 const EXAMPLE_CHUNK_LENGTH = 150;
@@ -114,9 +114,12 @@ export function createPronunciationController({
     if (active !== attempt || !speech || !Utterance) return;
     try {
       const next = new Utterance(attempt.chunks?.[attempt.chunkIndex] ?? attempt.word);
-      next.lang = localFrench ? 'fr-FR' : 'en-GB';
-      const voice = speech.getVoices?.()?.find(candidate => localFrench ? candidate.localService && /^fr(?:[-_]|$)/i.test(candidate.lang) : /^en[-_]gb$/i.test(candidate.lang));
-      if (localFrench && !voice) return;
+      next.lang = studyLocale;
+      const voices = speech.getVoices?.() || [];
+      const voice = englishStudy ? voices.find(candidate => /^en[-_]gb$/i.test(candidate.lang)) :
+        voices.find(candidate => candidate.localService && candidate.lang.replace('_', '-').toLowerCase() === studyLocale.toLowerCase()) ||
+        voices.find(candidate => candidate.localService && candidate.lang.split(/[-_]/)[0].toLowerCase() === studyLanguage);
+      if (!englishStudy && !chineseStudy && !voice) return;
       if (voice) next.voice = voice;
       utterance = next;
       next.onerror = event => {
@@ -190,7 +193,7 @@ export function createPronunciationController({
     const attempt = { identity, word, dictionary, custom, abort: new AbortController(), urls: [], index: 0 };
     active = attempt;
     return run(attempt, () => {
-      if (localFrench || !AudioClass) return speak(attempt);
+      if (!englishStudy || !AudioClass) return speak(attempt);
       const term = word.toLowerCase();
       const cached = cache.get(term);
       if (cached?.expires > Date.now()) return playRecordings(attempt, cached.sources);

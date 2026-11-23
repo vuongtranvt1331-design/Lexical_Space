@@ -1,8 +1,8 @@
 {
   "release": {
     "name": "SpaceSuite",
-    "lexicalVersion": "44.59.0",
-    "date": "2026-11-22",
+    "lexicalVersion": "44.60.0",
+    "date": "2026-11-24",
     "root": "LexicalSpace-project",
     "modules": [
       "lexical",
@@ -15,7 +15,7 @@
       "vocabulary-test",
       "quick-ears"
     ],
-    "cacheVersion": "8407ccc3b4f024"
+    "cacheVersion": "501430775b3756"
   },
   "primaryRoot": "LexicalSpace-v29/LexicalSpace-project",
   "modules": {
@@ -1095,6 +1095,11 @@
       "sha256": "9504c950c732e820956d9686fd8113fcef56fcf48446be4bf9d3b0931649623c"
     },
     {
+      "path": "PROJECT-CONTEXT.json",
+      "bytes": 7311,
+      "sha256": "3569608d0a18d3266195ec4f136dec36f51fc8357f3eb8a88b73ef6b6f80a34c"
+    },
+    {
       "path": "README-SUITE.md",
       "bytes": 9513,
       "sha256": "9d0e279e28c68b58f98293f06d5922d6efa7bc7334294a87b42a6b40e4c9a199"
@@ -1217,7 +1222,7 @@
     {
       "path": "apps/arcade/index.html",
       "bytes": 12737,
-      "sha256": "9c25d1c83e9d557d6b60612712e8123a35e49a8eeb1a2e1f83b72c12eac8ab1e"
+      "sha256": "e3f3183face8f1e9cf771332759b3196ec0ccb98357647a67c798135cbbc6485"
     },
     {
       "path": "apps/arcade/js/action-frames.js",
@@ -1247,7 +1252,7 @@
     {
       "path": "apps/grammar/index.html",
       "bytes": 5921,
-      "sha256": "225bd5d2ad5b821e5172eb82ea199f57b996ad591fb8549d65244d5533936fb6"
+      "sha256": "015f9e05645671a05cc1140543c3500f493d70db696bb45dcc7e3fa6e5cfe00a"
     },
     {
       "path": "apps/grammar/js/app.js",
@@ -1632,7 +1637,7 @@
     {
       "path": "apps/poker/index.html",
       "bytes": 14584,
-      "sha256": "89a25e0c809fafbbaecaedeba1315847b1030bee8ffed19cba7544215bc8ef9d"
+      "sha256": "65f44d72b6adb9658a0da834f72b9eb4eb888c96127fda4de56fe576bf19dff5"
     },
     {
       "path": "apps/poker/js/poker-1.js",
@@ -1862,7 +1867,7 @@
     {
       "path": "apps/quick-drawn/index.html",
       "bytes": 21712,
-      "sha256": "9c593667073d7c81fd58c52b81ac416d1b334005e5cb6872c9f2f0a02098e6ed"
+      "sha256": "b6f73ed36f9dc499c69abbbf2cc0d7ff07e1d3e21280c46e26d6c066b1a205c0"
     },
     {
       "path": "apps/quick-drawn/js/audio.js",
@@ -1947,7 +1952,7 @@
     {
       "path": "apps/quick-ears/index.html",
       "bytes": 4132,
-      "sha256": "a111e57dbbae46a02b71370eb466d3529de8bdba7e59b13ec624dad41a8fc363"
+      "sha256": "f5bd4c2d23fe4560d0bbefeef72b9eb51fc896e8a6eee050ec13f31bd3c9a093"
     },
     {
       "path": "apps/quick-ears/lessons.json",
@@ -7327,7 +7332,7 @@
     {
       "path": "apps/sky-dominators/index.html",
       "bytes": 33364,
-      "sha256": "55efcd282b8207835f0cd1ca18505e6d1515623fb270461631bf69be04b82e09"
+      "sha256": "ad4a4cf41c55a544e8f2d4535c3c51c745bf593f3be5fe954db997be2dcf052d"
     },
     {
       "path": "apps/sky-dominators/js/app.js",
@@ -7882,7 +7887,7 @@
     {
       "path": "apps/space-dominators/boss-practice.html",
       "bytes": 5024,
-      "sha256": "d6970e186ab7e7624e1218da75e5a063c5dcebaac4e071e543a5516aa5d904c5"
+      "sha256": "3ef6992e34e6d47abd703111ae703e0885a5b6bf6af3bc556f77fb40103d0006"
     },
     {
       "path": "apps/space-dominators/boss-practice.js",
@@ -7956,8 +7961,8 @@
     },
     {
       "path": "apps/space-dominators/index.html",
-      "bytes": 13118,
-      "sha256": "0eaf874d727c91d28a52d2e4210bf8037682ce3a491e4d25a92bef3b41d4c138"
+      "bytes": 13125,
+      "sha256": "e0a1d178572ec629dee776ce64e8225caeb349d0995fa1081e37c7b3b5552495"
     },
     {
       "path": "apps/space-dominators/inspecting-dock.js",
@@ -7976,8 +7981,8 @@
     },
     {
       "path": "apps/space-dominators/station.css",
-      "bytes": 18803,
-      "sha256": "875a627f604178967ad58b75541787791edf06572d88de9b26b54eee91ce16f3"
+      "bytes": 18801,
+      "sha256": "99ad5715e46f6aaffcc6054d00709e49ffa464d5249b3db2095e1f7b698d0f53"
     },
     {
       "path": "apps/space-dominators/station.js",
@@ -7987,7 +7992,7 @@
     {
       "path": "apps/vocabulary-test/index.html",
       "bytes": 4316,
-      "sha256": "ab1f92408742bde6f7e0a64da139e3aee7d893420200c839639e620712170f0e"
+      "sha256": "0c616cb4204993888433994fcb6cb17ac743ccfe1692307d16bac34b46fbe7b5"
     },
     {
       "path": "assets/icons/icon-192.png",
@@ -8018,6 +8023,11 @@
       "path": "css/entry-ui.css",
       "bytes": 6681,
       "sha256": "bddea1d69ee5f0a90cc1fb31109fb947fa26a8fe6734bfbcfbf7b8d252f7265d"
+    },
+    {
+      "path": "css/lexical-layout.css",
+      "bytes": 3234,
+      "sha256": "61c0e6aed5a832b9b0af1d3ff51dcd99a0fe8cb715325fafc715b45a49ef3948"
     },
     {
       "path": "css/main.css",
@@ -8066,8 +8076,8 @@
     },
     {
       "path": "docs/architecture-delta-44.43.0.md",
-      "bytes": 12481,
-      "sha256": "99d1760c8942452f1e45cba90d9ca9c0c4e158438163f784517c0b776b18507b"
+      "bytes": 13309,
+      "sha256": "9f09c331c143de0d6e467bf71219456eb5fcd2e233a417ed90156c33110a6f74"
     },
     {
       "path": "firestore/README.md",
@@ -8086,13 +8096,13 @@
     },
     {
       "path": "index.html",
-      "bytes": 57880,
-      "sha256": "ce1dd9e2995ae4bd0eb6fdd7c8b5c01e06ffbc012e26e28016aabd4ee1fb6794"
+      "bytes": 58303,
+      "sha256": "9e9d921d6129f9c49187fea9b0c82206bc02a7c68b088d6ac01b02b9980fedc3"
     },
     {
       "path": "js/core/ai-vocabulary.js",
-      "bytes": 10271,
-      "sha256": "2c4dce0727e4864e4b66fdd5f2d1072cca8d0b5a6b2dc3fcf420beca6834d644"
+      "bytes": 13458,
+      "sha256": "eb7086cee0022c6c582b993dba633c606d7f341e5656c99df788802ad166252d"
     },
     {
       "path": "js/core/context.js",
@@ -8106,8 +8116,8 @@
     },
     {
       "path": "js/core/firebase-sync.js",
-      "bytes": 5591,
-      "sha256": "89f5ad5de887fdee2848e2f27147bb26ad010415887aac63c3bf3d0190a733d7"
+      "bytes": 5965,
+      "sha256": "19ea41fe5a4cffd3f46b0453b99f04ffa70c06d60e3d2c1c2fd5eb1880103cc5"
     },
     {
       "path": "js/core/icons.js",
@@ -8116,8 +8126,8 @@
     },
     {
       "path": "js/core/idb-manager.js",
-      "bytes": 18661,
-      "sha256": "c5cf144804d448a7066d85c93d22e338f604d47acadc3a73003bd8b898c8e896"
+      "bytes": 20172,
+      "sha256": "92ed471cf53cd9e35c5e0be611e80dc783ff5f02f823c926d44c3f6ced045f1d"
     },
     {
       "path": "js/core/offline.js",
@@ -8126,18 +8136,18 @@
     },
     {
       "path": "js/core/pronunciation.js",
-      "bytes": 8218,
-      "sha256": "549cfd4ad95b221a0f606a681ff5573d845040bf7227a5834d6ceaa401065763"
+      "bytes": 8889,
+      "sha256": "52c7c3cb3a09b35afc0b7e5a8c17ff37df434a129ee7f8f8041249d1b0aa90c8"
     },
     {
       "path": "js/core/quick-fill.js",
-      "bytes": 8155,
-      "sha256": "8d455d806a18a6676dc8e92e6730533dad1720542c6e0d7cf855b833f6f06585"
+      "bytes": 8293,
+      "sha256": "87693e61ed822fb5aad112eb677bb65fff6cad78425270105e8aa4414ff5170f"
     },
     {
       "path": "js/core/recall-utils.js",
-      "bytes": 3348,
-      "sha256": "6e0f76e0f7a5c858fcdbdda997171f457c9b87a42c509e525e7636f9081f72e4"
+      "bytes": 3669,
+      "sha256": "11d7a6e008b423cb25b22676c27ddf018b0550a460d84052723b7bbd2aafed39"
     },
     {
       "path": "js/core/settings.js",
@@ -8160,6 +8170,11 @@
       "sha256": "2046aa91666468c96d0870daddbf507c9ffb5306d48e585d731a6692f1384255"
     },
     {
+      "path": "js/core/study-language.js",
+      "bytes": 897,
+      "sha256": "68815fe4b9ed7838ca3fab829f754e6540c6086dd29415fcf58dd1612507ddc4"
+    },
+    {
       "path": "js/core/vocabulary.js",
       "bytes": 10095,
       "sha256": "c4308beb5b41d0f37d0c467fd70d613ba0c133eaffb050afab4df15a3728e59a"
@@ -8176,13 +8191,13 @@
     },
     {
       "path": "js/features/application.js",
-      "bytes": 8051,
-      "sha256": "aebfb2908097ce392098e2227740f7d9aff10d6518d20d6db327066136b09b32"
+      "bytes": 8485,
+      "sha256": "bee6f7765b9b0afeb35b0268bcd3e485dab2391181679b9940bf7c235d7a1df5"
     },
     {
       "path": "js/features/auth.js",
-      "bytes": 21736,
-      "sha256": "d3bc0519cbba830c791b2c1482caf49e530dbe62c94248a018f75e23d8cd4fdd"
+      "bytes": 22346,
+      "sha256": "c00beb62459c8c49d8a07cb72ec6d09eae612f04ac608c6076e78a583869dc2c"
     },
     {
       "path": "js/features/deck-sharing.js",
@@ -8191,13 +8206,13 @@
     },
     {
       "path": "js/features/entry.js",
-      "bytes": 25025,
-      "sha256": "c757f97a8fc77f6d87fd04bea2c383173bf1e453ca18b6740cd5a451894d0717"
+      "bytes": 25832,
+      "sha256": "4ec702932304c61d0209e7d04abeaa4480785e465076628e6cebef3fb6747aea"
     },
     {
       "path": "js/features/flashcard.js",
-      "bytes": 42865,
-      "sha256": "28a03f1bd6fa0c7cb222e4ac852f198dbaafb59d062145c6b54c25c7463d69ef"
+      "bytes": 45412,
+      "sha256": "e06e76e06d3c3fe47704169f26b804d8df7b2a06aa327c5f65d95b43de324502"
     },
     {
       "path": "js/features/in-class-check.js",
@@ -8205,9 +8220,29 @@
       "sha256": "b52469f31e4836822613efe0b1572dbe11d13d4ec2be1df1d489ce072ac0364d"
     },
     {
+      "path": "js/features/interface-language.js",
+      "bytes": 4401,
+      "sha256": "583176a829cf70053e0e0a5f23f7178c4e9b4fab7b8517c2a9c189cbbe71bdcc"
+    },
+    {
+      "path": "js/features/interface-messages-zh.js",
+      "bytes": 13616,
+      "sha256": "82bdb93ca6125868656d595770638848b9724501240cdf7a03a4f778ab9ba7bc"
+    },
+    {
+      "path": "js/features/interface-messages.js",
+      "bytes": 11725,
+      "sha256": "fcb3b64dbc94f1e4011ef7d886753051b295c3fe2c89f00b313e5c27fafd7881"
+    },
+    {
+      "path": "js/features/interface-text.js",
+      "bytes": 2621,
+      "sha256": "1316768c1114d0ecc4cf27f3a91f177e56b1771304cbe1ee846fc48dff2d5207"
+    },
+    {
       "path": "js/features/library.js",
-      "bytes": 24794,
-      "sha256": "a3119586f15b47ac61dc0df621524c58a74588d234f516896627ee83b7efa26f"
+      "bytes": 25773,
+      "sha256": "edf2df3b29f36921618b350415bcd8801765f802c40422c9a1e0bcdc7c64132b"
     },
     {
       "path": "js/features/loading-failsafe.js",
@@ -8252,12 +8287,12 @@
     {
       "path": "package-lock.json",
       "bytes": 13732,
-      "sha256": "5145cacbd870675a90bb0d67b949314b66da77f8952581b9f838ffc2af022dda"
+      "sha256": "257ccee412ecfb995b09a06743703b761639c3bfae5aa01fad44a1097dfbf8e3"
     },
     {
       "path": "package.json",
       "bytes": 248,
-      "sha256": "ba419a05476bafd37b630a1015840716960503e2caddcdb1c1faff06b39d9d80"
+      "sha256": "2aef695f621926bd788feb71a05f1f19b9a8c06728d064ecbc6b6a2154dc8aaf"
     },
     {
       "path": "run-local.bat",
@@ -8276,8 +8311,8 @@
     },
     {
       "path": "service-worker.js",
-      "bytes": 19900,
-      "sha256": "de11e6a51c926cf519060591f282ed5bb1c57a6617b93bd51a898ff3ca56fbae"
+      "bytes": 19951,
+      "sha256": "485dd9c80d8723ffba6d757072ee79534d201d75c53ac4686b82b49543ca1a81"
     },
     {
       "path": "start-localhost.bat",
@@ -8342,7 +8377,7 @@
     {
       "path": "suite/release.json",
       "bytes": 350,
-      "sha256": "a9178add9d86b7aee312601298c79f74b8345dddd80d2f49988d26821d5d9509"
+      "sha256": "4b35dd610dc7bb92fbf699d4b861e1cf421f44c92ca53ac212ac0a90aad3f215"
     },
     {
       "path": "teacher/index.html",
@@ -8363,6 +8398,11 @@
       "path": "tests/check-more-cards.test.js",
       "bytes": 6987,
       "sha256": "e028b3b931f2750be43fb7bf4d28f31e18e5361c792db53e720b8c8e6dffa873"
+    },
+    {
+      "path": "tests/chinese-study.test.js",
+      "bytes": 4966,
+      "sha256": "a8657c63b781202b51c4a0275b0b15adf0b65358ecaf892c5ef42122b8732313"
     },
     {
       "path": "tests/cloud-bootstrap.test.js",
@@ -8470,6 +8510,11 @@
       "sha256": "c95574a954e54620c08582fcc7c4f31257f4a48e418d69e1a759d71f0993316d"
     },
     {
+      "path": "tests/study-language.test.js",
+      "bytes": 3653,
+      "sha256": "19c4bde262639205d7d0343319f6d2af6617a3b37dda8aa593158eb05258b077"
+    },
+    {
       "path": "tests/suite.test.js",
       "bytes": 8839,
       "sha256": "37a6209db754d99c0a84c92ae6c487a6465290c14542eb3ee875d39f920f8a63"
@@ -8491,8 +8536,8 @@
     },
     {
       "path": "tools/build-suite.py",
-      "bytes": 9553,
-      "sha256": "a7ef73e74602e352af31b57c638f793c597493dc6d081c069ec320ac6f368e2f"
+      "bytes": 9577,
+      "sha256": "7255e345fa9250ef4efc27242e81ecf638d6d936caa1946af6930928d2c32b7f"
     },
     {
       "path": "tools/enable-deck-ttl.cjs",
@@ -11879,6 +11924,212 @@
         "path": "tools/build-suite.py",
         "bytes": 9553,
         "sha256": "a7ef73e74602e352af31b57c638f793c597493dc6d081c069ec320ac6f368e2f"
+      }
+    ]
+  },
+  "lexicalMultilingual44_60": {
+    "studyLanguages": [
+      "en",
+      "fr",
+      "zh"
+    ],
+    "interfaceLanguages": [
+      "en",
+      "vi",
+      "zh"
+    ],
+    "suitePassed": 225,
+    "browserVerified": true,
+    "files": [
+      {
+        "path": "PROJECT-CONTEXT.json",
+        "bytes": 7311,
+        "sha256": "3569608d0a18d3266195ec4f136dec36f51fc8357f3eb8a88b73ef6b6f80a34c"
+      },
+      {
+        "path": "apps/arcade/index.html",
+        "bytes": 12737,
+        "sha256": "e3f3183face8f1e9cf771332759b3196ec0ccb98357647a67c798135cbbc6485"
+      },
+      {
+        "path": "apps/grammar/index.html",
+        "bytes": 5921,
+        "sha256": "015f9e05645671a05cc1140543c3500f493d70db696bb45dcc7e3fa6e5cfe00a"
+      },
+      {
+        "path": "apps/poker/index.html",
+        "bytes": 14584,
+        "sha256": "65f44d72b6adb9658a0da834f72b9eb4eb888c96127fda4de56fe576bf19dff5"
+      },
+      {
+        "path": "apps/quick-drawn/index.html",
+        "bytes": 21712,
+        "sha256": "b6f73ed36f9dc499c69abbbf2cc0d7ff07e1d3e21280c46e26d6c066b1a205c0"
+      },
+      {
+        "path": "apps/quick-ears/index.html",
+        "bytes": 4132,
+        "sha256": "f5bd4c2d23fe4560d0bbefeef72b9eb51fc896e8a6eee050ec13f31bd3c9a093"
+      },
+      {
+        "path": "apps/sky-dominators/index.html",
+        "bytes": 33364,
+        "sha256": "ad4a4cf41c55a544e8f2d4535c3c51c745bf593f3be5fe954db997be2dcf052d"
+      },
+      {
+        "path": "apps/space-dominators/boss-practice.html",
+        "bytes": 5024,
+        "sha256": "3ef6992e34e6d47abd703111ae703e0885a5b6bf6af3bc556f77fb40103d0006"
+      },
+      {
+        "path": "apps/space-dominators/index.html",
+        "bytes": 13125,
+        "sha256": "e0a1d178572ec629dee776ce64e8225caeb349d0995fa1081e37c7b3b5552495"
+      },
+      {
+        "path": "apps/vocabulary-test/index.html",
+        "bytes": 4316,
+        "sha256": "0c616cb4204993888433994fcb6cb17ac743ccfe1692307d16bac34b46fbe7b5"
+      },
+      {
+        "path": "css/lexical-layout.css",
+        "bytes": 3234,
+        "sha256": "61c0e6aed5a832b9b0af1d3ff51dcd99a0fe8cb715325fafc715b45a49ef3948"
+      },
+      {
+        "path": "docs/architecture-delta-44.43.0.md",
+        "bytes": 13309,
+        "sha256": "9f09c331c143de0d6e467bf71219456eb5fcd2e233a417ed90156c33110a6f74"
+      },
+      {
+        "path": "index.html",
+        "bytes": 58303,
+        "sha256": "9e9d921d6129f9c49187fea9b0c82206bc02a7c68b088d6ac01b02b9980fedc3"
+      },
+      {
+        "path": "js/core/ai-vocabulary.js",
+        "bytes": 13458,
+        "sha256": "eb7086cee0022c6c582b993dba633c606d7f341e5656c99df788802ad166252d"
+      },
+      {
+        "path": "js/core/context.js",
+        "bytes": 220,
+        "sha256": "f2fda7dcccfd542d31dd7b31ce636ea894f00522e96a15fb75de903dc1cef552"
+      },
+      {
+        "path": "js/core/firebase-config.js",
+        "bytes": 1967,
+        "sha256": "9d583e4f08ebb50f96dae9b2cc0b9c82b40b63c68509e89bd03cf0a3cb76842a"
+      },
+      {
+        "path": "js/core/firebase-sync.js",
+        "bytes": 5965,
+        "sha256": "19ea41fe5a4cffd3f46b0453b99f04ffa70c06d60e3d2c1c2fd5eb1880103cc5"
+      },
+      {
+        "path": "js/core/idb-manager.js",
+        "bytes": 20172,
+        "sha256": "92ed471cf53cd9e35c5e0be611e80dc783ff5f02f823c926d44c3f6ced045f1d"
+      },
+      {
+        "path": "js/core/pronunciation.js",
+        "bytes": 8889,
+        "sha256": "52c7c3cb3a09b35afc0b7e5a8c17ff37df434a129ee7f8f8041249d1b0aa90c8"
+      },
+      {
+        "path": "js/core/quick-fill.js",
+        "bytes": 8293,
+        "sha256": "87693e61ed822fb5aad112eb677bb65fff6cad78425270105e8aa4414ff5170f"
+      },
+      {
+        "path": "js/core/recall-utils.js",
+        "bytes": 3669,
+        "sha256": "11d7a6e008b423cb25b22676c27ddf018b0550a460d84052723b7bbd2aafed39"
+      },
+      {
+        "path": "js/core/study-language.js",
+        "bytes": 897,
+        "sha256": "68815fe4b9ed7838ca3fab829f754e6540c6086dd29415fcf58dd1612507ddc4"
+      },
+      {
+        "path": "js/features/application.js",
+        "bytes": 8485,
+        "sha256": "bee6f7765b9b0afeb35b0268bcd3e485dab2391181679b9940bf7c235d7a1df5"
+      },
+      {
+        "path": "js/features/auth.js",
+        "bytes": 22346,
+        "sha256": "c00beb62459c8c49d8a07cb72ec6d09eae612f04ac608c6076e78a583869dc2c"
+      },
+      {
+        "path": "js/features/entry.js",
+        "bytes": 25832,
+        "sha256": "4ec702932304c61d0209e7d04abeaa4480785e465076628e6cebef3fb6747aea"
+      },
+      {
+        "path": "js/features/flashcard.js",
+        "bytes": 45412,
+        "sha256": "e06e76e06d3c3fe47704169f26b804d8df7b2a06aa327c5f65d95b43de324502"
+      },
+      {
+        "path": "js/features/interface-language.js",
+        "bytes": 4401,
+        "sha256": "583176a829cf70053e0e0a5f23f7178c4e9b4fab7b8517c2a9c189cbbe71bdcc"
+      },
+      {
+        "path": "js/features/interface-messages-zh.js",
+        "bytes": 13616,
+        "sha256": "82bdb93ca6125868656d595770638848b9724501240cdf7a03a4f778ab9ba7bc"
+      },
+      {
+        "path": "js/features/interface-messages.js",
+        "bytes": 11725,
+        "sha256": "fcb3b64dbc94f1e4011ef7d886753051b295c3fe2c89f00b313e5c27fafd7881"
+      },
+      {
+        "path": "js/features/interface-text.js",
+        "bytes": 2621,
+        "sha256": "1316768c1114d0ecc4cf27f3a91f177e56b1771304cbe1ee846fc48dff2d5207"
+      },
+      {
+        "path": "js/features/library.js",
+        "bytes": 25773,
+        "sha256": "edf2df3b29f36921618b350415bcd8801765f802c40422c9a1e0bcdc7c64132b"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 13732,
+        "sha256": "257ccee412ecfb995b09a06743703b761639c3bfae5aa01fad44a1097dfbf8e3"
+      },
+      {
+        "path": "package.json",
+        "bytes": 248,
+        "sha256": "2aef695f621926bd788feb71a05f1f19b9a8c06728d064ecbc6b6a2154dc8aaf"
+      },
+      {
+        "path": "service-worker.js",
+        "bytes": 19951,
+        "sha256": "485dd9c80d8723ffba6d757072ee79534d201d75c53ac4686b82b49543ca1a81"
+      },
+      {
+        "path": "suite/release.json",
+        "bytes": 350,
+        "sha256": "4b35dd610dc7bb92fbf699d4b861e1cf421f44c92ca53ac212ac0a90aad3f215"
+      },
+      {
+        "path": "tests/chinese-study.test.js",
+        "bytes": 4966,
+        "sha256": "a8657c63b781202b51c4a0275b0b15adf0b65358ecaf892c5ef42122b8732313"
+      },
+      {
+        "path": "tests/study-language.test.js",
+        "bytes": 3653,
+        "sha256": "19c4bde262639205d7d0343319f6d2af6617a3b37dda8aa593158eb05258b077"
+      },
+      {
+        "path": "tools/build-suite.py",
+        "bytes": 9577,
+        "sha256": "7255e345fa9250ef4efc27242e81ecf638d6d936caa1946af6930928d2c32b7f"
       }
     ]
   }

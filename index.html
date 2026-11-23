@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" data-suite-module="lexical" data-lexical-theme="ivory">
 <head>
-  <script src="suite/js/effects-volume.js?v=44.59.0-ddd24e7a19"></script>
-    <script src="./suite/js/core.js?v=44.59.0-a5b98868bd"></script>
-  <link rel="stylesheet" href="./suite/css/components.css?v=44.59.0-69a13ed7c3">
+  <script src="suite/js/effects-volume.js?v=44.60.0-ddd24e7a19"></script>
+    <script src="./suite/js/core.js?v=44.60.0-a5b98868bd"></script>
+  <link rel="stylesheet" href="./suite/css/components.css?v=44.60.0-69a13ed7c3">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>LexicalSpace - Smart Vocabulary Notebook</title>
 
   <meta name="theme-color" content="#F5F1E8" />
-  <script src="./js/features/appearance.js?v=44.59.0-600e490765"></script>
+  <script src="./js/features/appearance.js?v=44.60.0-600e490765"></script>
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
@@ -25,15 +25,15 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 
   <script src="./js/features/loading-failsafe.js"></script>
-  <link rel="stylesheet" href="./css/main.css?v=44.59.0-9ddee70001">
+  <link rel="stylesheet" href="./css/main.css?v=44.60.0-9ddee70001">
   <link rel="stylesheet" href="./css/animations.css?v=43.8.0-light1">
-  <link rel="stylesheet" href="./css/recall-ui.css?v=44.59.0-9379e95e06">
-  <link rel="stylesheet" href="./css/entry-ui.css?v=44.59.0-bddea1d69e">
-  <link rel="stylesheet" href="./css/theme.css?v=44.59.0-0020c01c18">
-  <link rel="stylesheet" href="./css/lexical-layout.css?v=44.59.0-e1278009c9">
-  <script defer src="./js/features/loading.js?v=44.59.0-0ab2d880db"></script>
-  <script defer src="./js/core/offline.js?v=44.59.0-39c886b7ac"></script>
-<link rel="stylesheet" href="./suite/css/loader.css?v=44.59.0-1112a32a51"></head>
+  <link rel="stylesheet" href="./css/recall-ui.css?v=44.60.0-9379e95e06">
+  <link rel="stylesheet" href="./css/entry-ui.css?v=44.60.0-bddea1d69e">
+  <link rel="stylesheet" href="./css/theme.css?v=44.60.0-0020c01c18">
+  <link rel="stylesheet" href="./css/lexical-layout.css?v=44.60.0-61c0e6aed5">
+  <script defer src="./js/features/loading.js?v=44.60.0-0ab2d880db"></script>
+  <script defer src="./js/core/offline.js?v=44.60.0-39c886b7ac"></script>
+<link rel="stylesheet" href="./suite/css/loader.css?v=44.60.0-1112a32a51"></head>
 <body class="flex flex-col antialiased selection:theme-primary selection:theme-on-primary overflow-hidden">
   <section id="space-loader" class="startup-loader" role="status" aria-label="Opening LexicalSpace">
     <div class="startup-panel"><div class="startup-mark" aria-hidden="true">&gt;/_</div>
@@ -120,8 +120,8 @@
 
     <footer class="drawer-footer">
       <div class="drawer-build">
-        <p>LexicalSpace v44.59.0 <span class="drawer-build-ref">LexicalSpace-v44.59.0</span></p>
-        <p>Updated <time datetime="2026-11-21">Nov 21, 2026</time></p>
+        <p>LexicalSpace v44.60.0 <span class="drawer-build-ref">LexicalSpace-v44.60.0</span></p>
+        <p>Updated <time datetime="2026-11-24">Nov 24, 2026</time></p>
       </div>
       <button id="btn-close-drawer" type="button" aria-label="Close menu" class="drawer-control drawer-icon-button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
@@ -350,7 +350,7 @@
           <label for="confirm-input-meaning">Vietnamese Meaning</label><textarea id="confirm-input-meaning" class="entry-input" rows="2" maxlength="2000" lang="vi" placeholder="Nghĩa tiếng Việt…" required></textarea>
           <details id="entry-details" class="entry-details"><summary>Pronunciation &amp; context</summary>
             <div class="entry-detail-grid">
-              <label>IPA<input id="input-phonetic" class="entry-input" placeholder="/rɪˈzɪliənt/" maxlength="200"></label>
+              <label><span id="input-phonetic-label">IPA</span><input id="input-phonetic" class="entry-input" placeholder="/rɪˈzɪliənt/" maxlength="200"></label>
               <label>POS<select id="input-pos" class="entry-input"><option value="">Unspecified</option><option value="n">n</option><option value="v">v</option><option value="adj">adj</option><option value="adv">adv</option><option value="pron">pron</option><option value="prep">prep</option><option value="conj">conj</option><option value="det">det</option><option value="interj">interj</option><option value="phrase">phrase</option></select></label>
               <label class="entry-wide">Collocations <small>comma-separated</small><input id="input-collocations" class="entry-input" placeholder="highly resilient, resilient community"></label>
               <label class="entry-wide">Synonyms <small>comma-separated</small><input id="input-synonyms" class="entry-input" placeholder="hardy, adaptable"></label>
@@ -627,13 +627,14 @@
             <legend>Interface language</legend>
             <label title="English"><input type="radio" name="interface-language" value="en" aria-label="English" lang="en" checked><span class="palette-strip flag-tile" data-flag="en" aria-hidden="true"></span></label>
             <label title="Tiếng Việt"><input type="radio" name="interface-language" value="vi" aria-label="Tiếng Việt" lang="vi"><span class="palette-strip flag-tile" data-flag="vi" aria-hidden="true"></span></label>
+            <label title="简体中文"><input type="radio" name="interface-language" value="zh" aria-label="简体中文" lang="zh-Hans"><span class="palette-strip flag-tile" data-flag="zh" aria-hidden="true"></span></label>
           </fieldset>
           <fieldset id="learning-language" class="lexical-appearance language-flags">
             <legend>Learning language</legend>
             <label title="English"><input type="radio" name="learning-language" value="en" aria-label="English" lang="en" checked><span class="palette-strip flag-tile" data-flag="en" aria-hidden="true"></span></label>
             <label title="Français"><input type="radio" name="learning-language" value="fr" aria-label="Français" lang="fr"><span class="palette-strip flag-tile" data-flag="fr" aria-hidden="true"></span></label>
+            <label title="中文（普通话）"><input type="radio" name="learning-language" value="zh" aria-label="中文（普通话）" lang="zh-Hans"><span class="palette-strip flag-tile" data-flag="zh" aria-hidden="true"></span></label>
           </fieldset>
-          <p id="french-storage-note" hidden>French is saved only on this device.</p>
         </section>
         <fieldset class="lexical-appearance">
           <legend>Giao diện</legend>
@@ -744,7 +745,7 @@
     </div>
   </div>
 
-  <script type="module" src="./js/features/interface-language.js?v=44.59.0-44315b983d"></script>
+  <script type="module" src="./js/features/interface-language.js?v=44.60.0-583176a829"></script>
   <script id="lexicalspace-app" type="module" src="./js/main.js"></script>
 </body>
 </html>

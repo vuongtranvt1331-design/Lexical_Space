@@ -1,3 +1,4 @@
+import { interfaceText } from './interface-text.js';
 import { studyLanguage, studyName } from '../core/study-language.js';
 import { context } from '../core/context.js';
 import { idbGet, updateMetadata } from '../core/idb-manager.js';
@@ -267,7 +268,7 @@ function setText(id, value) { if ($(id)) $(id).textContent = value; }
 function reverseMode() { return session?.recallDirection === 'vi-en'; }
 function setCardValue(id, value) {
   const element = $(id);
-  element.textContent = value || 'empty';
+  element.textContent = value || interfaceText('empty');
   element.classList.toggle('vocab-card-empty', !value);
 }
 function renderSentence(id, sentence, word, masked = false) {
@@ -628,12 +629,12 @@ export function pausePracticeAudio() {
 }
 function updatePracticeScope() {
   for (const [id, mode] of [['btn-mode-learning', 'learning'], ['btn-mode-review', 'review'], ['btn-bottom-fav', 'favorites']]) $(id)?.setAttribute('aria-pressed', String(context.reviewMode === mode));
-  setText('review-selected-topic-label', `Topic: ${context.activeTopic === 'ALL' ? 'All topics' : context.activeTopic}`);
+  setText('review-selected-topic-label', interfaceText('Topic') + ': ' + (context.activeTopic === 'ALL' ? interfaceText('All topics') : context.activeTopic));
 }
 export function renderReviewTopicUpwardMenu(topics) {
   const list = $('review-topic-options-list'); if (!list) return; list.replaceChildren();
   for (const topic of ['ALL', ...topics]) {
-    const button = document.createElement('button'); button.type = 'button'; button.className = 'topic-choice'; button.textContent = topic === 'ALL' ? 'All topics' : topic;
+    const button = document.createElement('button'); button.type = 'button'; button.className = 'topic-choice'; button.textContent = topic === 'ALL' ? interfaceText('All topics') : topic;
     button.addEventListener('click', () => { context.activeTopic = topic; $('review-topic-upward-menu').classList.add('hidden'); context.updateTopicDropdowns(); void startNewSession(); });
     list.append(button);
   }

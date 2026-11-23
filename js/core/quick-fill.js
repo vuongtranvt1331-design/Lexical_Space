@@ -1,4 +1,4 @@
-import { localFrench } from './study-language.js';
+import { englishStudy } from './study-language.js';
 import { exampleSourceUrl, normalizePartOfSpeech, normalizeTerm } from './vocabulary.js';
 import { clozeText } from './recall-utils.js';
 import { isBritishPronunciation } from './pronunciation.js';
@@ -21,7 +21,7 @@ function uniqueTerms(items, target, limit) {
 }
 
 async function request(url, { signal, fetcher = globalThis.fetch } = {}) {
-  if (localFrench) throw new Error('Online lookup is unavailable in the local French library.');
+  if (!englishStudy) throw new Error('Quick Fill currently supports English words.');
   signal?.throwIfAborted();
   const controller = new AbortController();
   const abort = () => controller.abort(signal.reason);
